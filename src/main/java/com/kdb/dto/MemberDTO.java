@@ -1,19 +1,14 @@
 package com.kdb.dto;
+
+import com.kdb.member.MemberRole;
+
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.util.List;
 
 @Getter
 @Setter
-@ToString
 public class MemberDTO {
-    private Long id;
-    private String userId;
-    private String memberEmail;
-    private String memberPassword;
-    private String memberName;
-
+    private String username; //행번
+    private String password; //패스워드 
+    private MemberRole role = MemberRole.ROLE_MEMBER; //권한
 }

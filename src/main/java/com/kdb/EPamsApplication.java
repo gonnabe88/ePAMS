@@ -1,5 +1,11 @@
 package com.kdb;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
+import java.util.Base64.Encoder;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -10,4 +16,5 @@ public class EPamsApplication {
 		SpringApplication.run(EPamsApplication.class, args);
 	}
 
+	
 }

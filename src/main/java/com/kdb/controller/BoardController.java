@@ -1,24 +1,25 @@
 package com.kdb.controller;
 
-import com.kdb.dto.BoardDTO;
-import com.kdb.dto.BoardFileDTO;
-import com.kdb.service.BoardService;
-import lombok.RequiredArgsConstructor;
+import java.io.IOException;
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.io.IOException;
-import java.util.List;
+import com.kdb.dto.BoardDTO;
+import com.kdb.dto.BoardFileDTO;
+import com.kdb.service.BoardService;
+
+import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequiredArgsConstructor
 public class BoardController {
+    /*
     private final BoardService boardService;
-    
     @GetMapping("/save")
     public String save() {
         return "save";
@@ -75,6 +76,7 @@ public class BoardController {
         boardService.delete(id);
         return "redirect:/list";
     }
+     */
 
 }
 

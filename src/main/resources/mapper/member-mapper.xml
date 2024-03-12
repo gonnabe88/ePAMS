@@ -6,6 +6,10 @@
         insert into member_table(memberEmail, memberPassword, memberName, memberAge, memberMobile)
         values (#{memberEmail}, #{memberPassword}, #{memberName}, #{memberAge}, #{memberMobile})
     </insert>
+    <insert id="regist" parameterType="member">
+        insert into member_table(userId, memberPassword, memberName)
+        values (#{userId}, #{memberPassword}, #{memberName})
+    </insert>
     <select id="login" parameterType="member" resultType="member">
         select * from member_table where userId=#{userId} and memberPassword=#{memberPassword}
     </select>
@@ -28,7 +32,7 @@
         <select id="findByUserId" parameterType="String" resultType="member">
         select * from member_table where userId=#{userId}
     </select>
-    <select id="auth" parameterType="String" resultType="member">
+    <select id="pwLogin" parameterType="member" resultType="member">
         select * from member_table where userId=#{userId} and memberPassword=#{memberPassword}
     </select>
 </mapper>

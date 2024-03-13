@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>회원가입</title>
+  <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+</head>
+<body>
+
+<div class="container">
+  <div class="my-4">
+    <h2>회원가입</h2>
+  </div>
+  <form th:action method="post" th:object="${member}">
+    <div class="mb-3">
+      <label th:for="username" class="form-label">username</label>
+      <input type="text" class="form-control" th:field="*{username}">
+    </div>
+    <div class="mb-3">
+      <label th:for="password" class="form-label">Password</label>
+      <input type="password" class="form-control" th:field="*{password}">
+    </div>
+
+    <hr class="my-3">
+    <div class="mb-3">
+      <div th:each="r : ${roles}" class="form-check form-check-inline">
+        <input type="radio" th:field="*{role}" th:value="${r.value}" class="form-check-input">
+        <label th:for="${#ids.prev('role')}" th:text="${r.key}" class="form-check-label"></label>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary">회원가입</button>
+  </form>
+</div>
+</body>
+</html>

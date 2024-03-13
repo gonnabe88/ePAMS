@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper SYSTEM "mybatis-3-mapper.dtd">
+
+<mapper namespace="Member">
+    <insert id="save" parameterType="member">
+        insert into member_table(memberEmail, memberPassword, memberName, memberAge, memberMobile)
+        values (#{memberEmail}, #{memberPassword}, #{memberName}, #{memberAge}, #{memberMobile})
+    </insert>
+    <insert id="regist" parameterType="member">
+        insert into member_table(userId, memberPassword, memberName)
+        values (#{userId}, #{memberPassword}, #{memberName})
+    </insert>
+    <select id="login" parameterType="member" resultType="member">
+        select * from member_table where userId=#{userId} and memberPassword=#{memberPassword}
+    </select>
+    <select id="findAll" resultType="member">
+        select * from member_table
+    </select>
+    <select id="findById" parameterType="Long" resultType="member">
+        select * from member_table where id=#{id}
+    </select>
+    <delete id="delete" parameterType="Long">
+        delete from member_table where id=#{id}
+    </delete>
+    <select id="findByMemberEmail" parameterType="String" resultType="member">
+        select * from member_table where memberEmail=#{loginEmail}
+    </select>
+    <update id="update" parameterType="member">
+        update member_table set memberAge=#{memberAge}, memberMobile=#{memberMobile}
+        where id=#{id}
+    </update>
+        <select id="findByUserId" parameterType="String" resultType="member">
+        select * from member_table where userId=#{userId}
+    </select>
+    <select id="pwLogin" parameterType="member" resultType="member">
+        select * from member_table where userId=#{userId} and memberPassword=#{memberPassword}
+    </select>
+</mapper>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration SYSTEM "mybatis-3-config.dtd">
+<configuration>
+    <typeAliases>
+        <typeAlias type="com.kdb.dto.BoardDTO" alias="board"></typeAlias>
+        <typeAlias type="com.kdb.dto.BoardFileDTO" alias="boardFile"></typeAlias>
+        <typeAlias type="com.kdb.dto.MemberDTO" alias="member"></typeAlias>        
+    </typeAliases>
+</configuration>

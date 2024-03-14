@@ -79,18 +79,7 @@
 					<br>
 					<button id="pwlogin" class="btn btn-primary btn-block btn-lg shadow-lg mt-2"
 						onclick="pwlogin()">로그인</button>
-
-					<th:block sec:authorize="isAnonymous()">
-						<div class="header_columns">
-							로그아웃 상태
-						</div>
-					</th:block>
-					<th:block sec:authorize="isAuthenticated()">
-						<div class="header_columns">
-							로그인 상태
-						</div>
-					</th:block>
-
+			
 					<div class="text-center mt-5 text-lg fs-8">
 						<p>
 							<a class="font-bold" href="/auth-register">도움이 필요하신가요?</a>

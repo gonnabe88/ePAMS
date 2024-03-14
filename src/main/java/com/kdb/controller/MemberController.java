@@ -69,8 +69,8 @@ public class MemberController {
     public Map<String, MemberRole> roles() {
         Map<String, MemberRole> map = new LinkedHashMap<>();
         map.put("관리자", MemberRole.ROLE_ADMIN);
-        map.put("매니저", MemberRole.ROLE_MANAGER);
-        map.put("일반 사용자", MemberRole.ROLE_MEMBER);
+        map.put("매니저", MemberRole.ROLE_KDB);
+        map.put("일반 사용자", MemberRole.ROLE_ITO);
         return map;
     }
 }

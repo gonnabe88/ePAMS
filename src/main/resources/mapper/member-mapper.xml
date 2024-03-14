@@ -11,7 +11,7 @@
         values (#{userId}, #{memberPassword}, #{memberName})
     </insert>
     <select id="login" parameterType="member" resultType="member">
-        select * from member_table where userId=#{userId} and memberPassword=#{memberPassword}
+        select * from member where username=#{username} and password=#{password}
     </select>
     <select id="findAll" resultType="member">
         select * from member_table

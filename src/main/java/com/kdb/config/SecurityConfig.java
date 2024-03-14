@@ -27,7 +27,10 @@ public class SecurityConfig {
             .csrf(CsrfConfigurer::disable)
             .authorizeHttpRequests((authorizeRequests) ->
                 authorizeRequests                                
-                    .requestMatchers("/", "/login", "/registry", 
+                    .requestMatchers(
+            		"/index", //임시
+            		"/", "/login", "/registry", 
+            		"/pwlogin", "/otplogin",
                     "/css/**",
                     "/js/**",
                     "/extensions/**",

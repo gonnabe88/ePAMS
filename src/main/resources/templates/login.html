@@ -24,19 +24,22 @@
 
 <body>
 	<script src="js/initTheme.js"></script>
-
 	<div id="auth">
 		<div class="row h-100">
 			<div class="col-lg-5 col-12">
 				<div id="auth-left">
-					KDB산업은행 모바일 근태 시스템
-					<h6 class="auth-title">ePAMS</h6>
+					<div class="d-flex justify-content-center">
+						KDB산업은행 모바일 근태 시스템
+					</div>
+					<div class="d-flex justify-content-center">
+					<h6 class="auth-title mb-5">ePAMS</h6>
 					<!-- <p class="auth-subtitle mb-5"></p> -->
-
-					<form action="pwlogin" method="post">
+					</div>
+					<form action="pwlogin" method="post" name="loginform">
 						<div class="form-group position-relative has-icon-left mb-1">
+						
 							<input type="text" name="username" id="username" class="form-control form-control-xl"
-								placeholder="K행번">
+								placeholder="K행번" style="text-transform: uppercase;">
 							<p id="check-result"></p>
 							<div class="form-control-icon">
 								<i class="bi bi-person"></i>
@@ -44,34 +47,34 @@
 						</div>
 						<div class="form-group position-relative has-icon-left mb-1">
 							<input type="password" name="memberPassword" id="memberPassword"
-								class="form-control form-control-xl" placeholder="ESSO비밀번호">
+								class="form-control form-control-xl" placeholder="ESSO비밀번호" onkeypress="JavaScript:if(event.keyCode==13)pwlogin();">
 							<div class="form-control-icon">
 								<i class="bi bi-shield-lock"></i>
 							</div>
 						</div>
 						<div class="form-check form-check-lg d-flex align-items-end">
-							<input class="form-check-input me-2" type="checkbox" value="checked" id="flexCheckDefault">
+							<input class="form-check-input me-2 mt-3" type="checkbox" value="checked" id="flexCheckDefault" name="remember">
 							<label class="form-check-label text-gray-600" for="flexCheckDefault"> ID 기억하기 </label>
 						</div>
 					</form>
 					<br><br>
-					<div class="text-center">
-						<fieldset>
+					<div class="d-flex justify-content-center">
+						<fieldset style="border:5">
 							<label>
 								<input class="form-check-input" type="radio" name="twofactor" id="sms" value="SMS"
 									checked />
 								<span>SMS</span>
 							</label>
-							<label>
-								<input class="form-check-input" type="radio" name="twofactor" id="kakao" value="카카오톡" />
-								<span>카카오톡</span>
+							<label >
+								<input class="form-check-input ms-1" type="radio" name="twofactor" id="kakao" value="카카오톡" />
+								<span>카카오</span>
 							</label>
 							<label>
-								<input class="form-check-input" type="radio" name="twofactor" id="kakao" value="OTP" />
+								<input class="form-check-input ms-1" type="radio" name="twofactor" id="kakao" value="OTP" />
 								<span>OTP</span>
 							</label>
-							<label>
-								<input class="form-check-input" type="radio" name="twofactor" id="kakao" value="FIDO" />
+							<label >
+								<input class="form-check-input ms-1" type="radio" name="twofactor" id="kakao" value="FIDO" />
 								<span>FIDO</span>
 							</label>
 						</fieldset>
@@ -79,16 +82,13 @@
 					<br>
 					<button id="pwlogin" class="btn btn-primary btn-block btn-lg shadow-lg mt-2"
 						onclick="pwlogin()">로그인</button>
-			
+
 					<div class="text-center mt-5 text-lg fs-8">
 						<p>
-							<a class="font-bold" href="/auth-register">도움이 필요하신가요?</a>
+							<a class="font-bold" href="/register">도움이 필요하신가요?</a>
 						</p>
 					</div>
 				</div>
-			</div>
-			<div class="col-lg-7 d-none d-lg-block">
-				<div id="auth-right"></div>
 			</div>
 		</div>
 	</div>
@@ -96,6 +96,59 @@
 	<script src="extensions/sweetalert2/sweetalert2.min.js"></script>
 	<script src="extensions/jquery/jquery.min.js"></script>
 
+	<!-- ID 기억하기 -->
+	<script>
+	$(document).ready(function(){
+		var key = getCookie("idChk"); //user1
+		if(key!=""){ //idChk 쿠키에 값이 있다면
+			$("#username").val(key); 
+		}
+		 
+		if($("#username").val() != ""){ //username 폼에 값이 있다면
+			$("#flexCheckDefault").attr("checked", true); 
+		}
+		 
+		$("#flexCheckDefault").change(function(){ 
+			if($("#flexCheckDefault").is(":checked")){ 
+				setCookie("idChk", $("#username").val(), 30); 
+			}else{ 
+				deleteCookie("idChk");
+			}
+		});
+		 
+		$("#username").keyup(function(){ 
+			if($("#flexCheckDefault").is(":checked")){
+				setCookie("idChk", $("#username").val(), 30); 
+			}
+		});
+	});
+	function setCookie(cookieName, value, exdays){
+	    var exdate = new Date();
+	    exdate.setDate(exdate.getDate() + exdays);
+	    var cookieValue = escape(value) + ((exdays==null) ? "" : "; expires=" + exdate.toGMTString());
+	    document.cookie = cookieName + "=" + cookieValue;
+	}
+	 
+	function deleteCookie(cookieName){
+		var expireDate = new Date();
+		expireDate.setDate(expireDate.getDate() - 1);
+		document.cookie = cookieName + "= " + "; expires=" + expireDate.toGMTString();
+	}
+		 
+	function getCookie(cookieName) {
+		cookieName = cookieName + '=';
+		var cookieData = document.cookie;
+		var start = cookieData.indexOf(cookieName);
+		var cookieValue = '';
+		if(start != -1){
+			start += cookieName.length;
+			var end = cookieData.indexOf(';', start);
+			if(end == -1)end = cookieData.length;
+			cookieValue = cookieData.substring(start, end);
+		}
+		return unescape(cookieValue);
+	}
+	</script>
 
 	<!--로그인 처리-->
 	<script>
@@ -108,62 +161,293 @@
 			//var header = $("meta[name='_csrf_header']").attr('content');
 			//var token = $("meta[name='_csrf']").attr('content');
 
-			console.log("입력한 ID/PW", username);
-			console.log("인증방법", twofactor);
-
-			Swal.fire({
-
-				title: "OTP번호를 입력해주세요",
-				input: "text",
-				inputAttributes: {
-					autocapitalize: "off"
-				},
-				showCancelButton: true,
-				confirmButtonText: "Submit",
-				showLoaderOnConfirm: true,
-				preConfirm: async (pwlogin) => {},
-				allowOutsideClick: () => !Swal.isLoading()
-
-			}).then((result) => {
-				if (result.isConfirmed) {
-					const OTP = result.value
-					console.log("otp 번호 : ", OTP)	
-					$.ajax({
+			$.ajax({
 						type: "post",
-						url: "/authenticate",
-						dataType: 'json',
+						url: "/pwlogin",
+						dataType: "json",
 						data: {
 							"username": username,
-							"password": password,
-							"OTP": OTP
+							"password": password
 						},
 						//beforeSend: function (xhr) {
 						//console.log("otp csrf : ", OTP)	
 						//	xhr.setRequestHeader(header, token);
 						//},
 						
-						//success로 진입이 안되는 이슈로 complete 사용
 						complete: function(data) {
-							if (data.status==200) {
-								window.location.href = '/index'
+							console.log("PW 검증 응답 성공", data.responseText)
+							if(data.responseText == "success"){
+								console.log("PW 검증 성공", data)	
+								console.log("인증방법", twofactor);			
+								switch(twofactor){
+								case 'OTP':										
+									Swal.fire({
+										title: "OTP 인증",
+										text : "OTP번호를 입력해주세요",
+										input: "text",
+										inputAttributes: {autocapitalize: "off"},
+										showCancelButton: true,
+										confirmButtonText: "Submit",
+										showLoaderOnConfirm: true,
+										preConfirm: async (pwlogin) => {},
+										allowOutsideClick: () => !Swal.isLoading()	
+									}).then((result) => {	
+										if (result.isConfirmed) {
+											const OTP = result.value
+											console.log("otp 번호 :", OTP)										
+											$.ajax({
+												type: "post",
+												url: "/otplogin",
+												dataType: "json",
+												data: {
+													"username": username,
+													"OTP": OTP
+												},
+												complete: function(otpdata) {
+													if(otpdata.responseText == "success"){
+														console.log("최종 로그인", )	
+														
+														$.ajax({
+															type: "post",
+															url: "/authenticate",
+															dataType: 'json',
+															data: {
+																"username": username,
+																"password": password,
+																"OTP": OTP
+															},
+															//beforeSend: function (xhr) {
+															//console.log("otp csrf : ", OTP)	
+															//	xhr.setRequestHeader(header, token);
+															//},
+															
+															//success로 진입이 안되는 이슈로 complete 사용
+															complete: function(data) {
+																	console.log("최종 로그인")	
+																	window.location.href = '/index'
+															}
+														}); //ajax
+														
+													}
+													else {
+														Swal.fire({
+															title: '인증 오류',
+															text: 'OTP를 다시 확인해주세요.',
+															icon: 'error',
+															confirmButtonText: '확인'
+														})
+													}
+												}
+											})											
+										}
+									});//Swal(OTP 인증)
+									break; //case(OTP)
+								case 'SMS':										
+									Swal.fire({
+										title: "SMS 인증",
+										text : "SMS번호를 입력해주세요",
+										input: "text",
+										inputAttributes: {autocapitalize: "off"},
+										showCancelButton: true,
+										confirmButtonText: "Submit",
+										showLoaderOnConfirm: true,
+										preConfirm: async (pwlogin) => {},
+										allowOutsideClick: () => !Swal.isLoading()	
+									}).then((result) => {	
+										if (result.isConfirmed) {
+											const SMS = result.value
+											console.log("SMS 번호 :", SMS)										
+											$.ajax({
+												type: "post",
+												url: "/otplogin",
+												dataType: "json",
+												data: {
+													"username": username,
+													"OTP": SMS
+												},
+												complete: function(otpdata) {
+													if(otpdata.responseText == "success"){
+														console.log("최종 로그인", )	
+														
+														$.ajax({
+															type: "post",
+															url: "/authenticate",
+															dataType: 'json',
+															data: {
+																"username": username,
+																"password": password,
+																"OTP": SMS
+															},
+															//beforeSend: function (xhr) {
+															//console.log("otp csrf : ", OTP)	
+															//	xhr.setRequestHeader(header, token);
+															//},
+															
+															//success로 진입이 안되는 이슈로 complete 사용
+															complete: function(data) {
+																	console.log("최종 로그인")	
+																	window.location.href = '/index'
+															}
+														}); //ajax(authenticate)
+														
+													}
+													else {
+														Swal.fire({
+															title: '인증 오류',
+															text: 'OTP를 다시 확인해주세요.',
+															icon: 'error',
+															confirmButtonText: '확인'
+														})
+													}
+												}
+											})											
+										}
+									});//Swal(SMS 인증)
+									break; //case(SMS)
+									
+									case '카카오톡':										
+										Swal.fire({
+											title: "카카오톡 인증",
+											text : "인증번호를 입력해주세요",
+											input: "text",
+											inputAttributes: {autocapitalize: "off"},
+											showCancelButton: true,
+											confirmButtonText: "Submit",
+											showLoaderOnConfirm: true,
+											preConfirm: async (pwlogin) => {},
+											allowOutsideClick: () => !Swal.isLoading()	
+										}).then((result) => {	
+											if (result.isConfirmed) {
+												const KAKAO = result.value
+												console.log("인증 번호 :", KAKAO)										
+												$.ajax({
+													type: "post",
+													url: "/otplogin",
+													dataType: "json",
+													data: {
+														"username": username,
+														"OTP": KAKAO
+													},
+													complete: function(otpdata) {
+														if(otpdata.responseText == "success"){
+															console.log("최종 로그인", )	
+															
+															$.ajax({
+																type: "post",
+																url: "/authenticate",
+																dataType: 'json',
+																data: {
+																	"username": username,
+																	"password": password,
+																	"OTP": KAKAO
+																},
+																//beforeSend: function (xhr) {
+																//console.log("otp csrf : ", OTP)	
+																//	xhr.setRequestHeader(header, token);
+																//},
+																
+																//success로 진입이 안되는 이슈로 complete 사용
+																complete: function(data) {
+																		console.log("최종 로그인")	
+																		window.location.href = '/index'
+																}
+															}); //ajax(authenticate)
+															
+														}
+														else {
+															Swal.fire({
+																title: '인증 오류',
+																text: '인증번호를 다시 확인해주세요.',
+																icon: 'error',
+																confirmButtonText: '확인'
+															})
+														}
+													}
+												})											
+											}
+										});//Swal(카카오톡 인증)
+										break; //case(카카오톡)
+										
+										case 'FIDO':										
+											Swal.fire({
+												title: "FIDO 인증",
+												text : "휴대폰에서 FIDO 인증 후 제출을 눌러해주세요",
+												input: "text",
+												inputAttributes: {autocapitalize: "off"},
+												showCancelButton: true,
+												confirmButtonText: "Submit",
+												showLoaderOnConfirm: true,
+												preConfirm: async (pwlogin) => {},
+												allowOutsideClick: () => !Swal.isLoading()	
+											}).then((result) => {	
+												if (result.isConfirmed) {
+													const FIDO = result.value
+													console.log("인증 번호 :", KAKAO)										
+													$.ajax({
+														type: "post",
+														url: "/otplogin",
+														dataType: "json",
+														data: {
+															"username": username,
+															"OTP": FIDO
+														},
+														complete: function(otpdata) {
+															if(otpdata.responseText == "success"){
+																console.log("최종 로그인", )	
+																
+																$.ajax({
+																	type: "post",
+																	url: "/authenticate",
+																	dataType: 'json',
+																	data: {
+																		"username": username,
+																		"password": password,
+																		"OTP": FIDO
+																	},
+																	//beforeSend: function (xhr) {
+																	//console.log("otp csrf : ", OTP)	
+																	//	xhr.setRequestHeader(header, token);
+																	//},
+																	
+																	//success로 진입이 안되는 이슈로 complete 사용
+																	complete: function(data) {
+																			console.log("최종 로그인")	
+																			window.location.href = '/index'
+																	}
+																}); //ajax(authenticate)
+																
+															}
+															else {
+																Swal.fire({
+																	title: '인증 오류',
+																	text: '인증을 다시 진행해주세요.',
+																	icon: 'error',
+																	confirmButtonText: '확인'
+																})
+															}
+														}
+													})											
+												}
+											});//Swal(FIDO 인증)
+											break; //case(FIDO)
+										
+								}//switch(twofactor)
 							}
 							else {
+								console.log("PW 검증 오류")
 								Swal.fire({
 									title: '인증 오류',
-									text: '인증번호를 다시 확인해주세요.',
+									text: 'ID/비밀번호를 다시 확인해주세요.',
 									icon: 'error',
 									confirmButtonText: '확인'
 								})
-								return "/login"
-							}
-   						}
-					}); //ajax
-				}
-			});
+							}								
+						}						
+					}); //ajax			
 		}
 
 		
 	</script>
 </body>
 
-</html>
+</html> 

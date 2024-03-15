@@ -31,9 +31,9 @@ public class MemberController {
 
     private final MemberRepository memberRepository;
     //private final BCryptPasswordEncoder passwordEncoder;
-    private CustomPasswordEncoder passwordEncoder; // KDB에서 사용하는 암호화 방식으로 커스텀
+    private CustomPasswordEncoder passwordEncoder; // KDB�뿉�꽌 �궗�슜�븯�뒗 �븫�샇�솕 諛⑹떇�쑝濡� 而ㅼ뒪��
 
-    //생성자 삭제 시 아래의 NullPointerException 발생
+    //�깮�꽦�옄 �궘�젣 �떆 �븘�옒�쓽 NullPointerException 諛쒖깮
     //java.lang.NullPointerException: Cannot invoke "com.kdb.config.CustomPasswordEncoder.encode(java.lang.CharSequence)" because "this.passwordEncoder" is null
     @Autowired
     public MemberController(MemberRepository memberRepository,
@@ -42,10 +42,7 @@ public class MemberController {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @GetMapping(value = {"/index"})
-	public String indexMain() {
-    	return "index";
-    }    	
+  	
 
     @GetMapping("/registry")
     public String registryForm(Model model) {
@@ -68,9 +65,9 @@ public class MemberController {
     @ModelAttribute("roles")
     public Map<String, MemberRole> roles() {
         Map<String, MemberRole> map = new LinkedHashMap<>();
-        map.put("관리자", MemberRole.ROLE_ADMIN);
-        map.put("매니저", MemberRole.ROLE_KDB);
-        map.put("일반 사용자", MemberRole.ROLE_ITO);
+        map.put("愿�由ъ옄", MemberRole.ROLE_ADMIN);
+        map.put("留ㅻ땲��", MemberRole.ROLE_KDB);
+        map.put("�씪諛� �궗�슜�옄", MemberRole.ROLE_ITO);
         return map;
     }
 }

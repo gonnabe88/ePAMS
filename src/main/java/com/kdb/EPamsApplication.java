@@ -1,15 +1,11 @@
 package com.kdb;
 
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.Base64;
-import java.util.Base64.Encoder;
-
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 
-@SpringBootApplication
+
+@SpringBootApplication(exclude = SecurityAutoConfiguration.class)
 public class EPamsApplication {
 
 	public static void main(String[] args) {

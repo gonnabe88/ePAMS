@@ -18,7 +18,7 @@ import lombok.RequiredArgsConstructor;
 @Controller
 @RequiredArgsConstructor
 public class BoardController {
-    /*
+    
     private final BoardService boardService;
     @GetMapping("/save")
     public String save() {
@@ -43,9 +43,9 @@ public class BoardController {
     // /10, /1
     @GetMapping("/{id}")
     public String findById(@PathVariable("id") Long id, Model model) {
-        // 조회수 처리
+        // 議고쉶�닔 泥섎━
         boardService.updateHits(id);
-        // 상세내용 가져옴
+        // �긽�꽭�궡�슜 媛��졇�샂
         BoardDTO boardDTO = boardService.findById(id);
         model.addAttribute("board", boardDTO);
         System.out.println("boardDTO = " + boardDTO);
@@ -76,7 +76,7 @@ public class BoardController {
         boardService.delete(id);
         return "redirect:/list";
     }
-     */
+     
 
 }
 

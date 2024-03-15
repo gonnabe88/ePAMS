@@ -12,10 +12,6 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-    /*@Bean
-    public BCryptPasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }*/
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new CustomPasswordEncoder();
@@ -23,12 +19,13 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    	
         http
             .csrf(CsrfConfigurer::disable)
             .authorizeHttpRequests((authorizeRequests) ->
-                authorizeRequests                                
+                authorizeRequests   /*             
                     .requestMatchers(
-            		"/index", //임시
+            		"/index", "index2",//
             		"/", "/login", "/registry", 
             		"/pwlogin", "/otplogin",
                     "/css/**",
@@ -37,16 +34,18 @@ public class SecurityConfig {
                     "/fonts/**",
                     "/images/**",
                     "/svg/**", 
-                    "/forbidden").permitAll() // 모두 접속 허용
+                    "/forbidden").permitAll() // 紐⑤몢 �젒�냽 �뿀�슜
                     
-                    .requestMatchers("/manager/**").hasAnyRole("MANAGER", "ADMIN") // 매니저, 관리자 접근 가능
-                    .requestMatchers("/admin/**").hasRole("ADMIN") // 관리자만 접근 가능
-                    .anyRequest().authenticated() // 그외 모두 일반사용자 접근 가능
-                    
+                    .requestMatchers("/manager/**").hasAnyRole("MANAGER", "ADMIN") // 留ㅻ땲��, 愿�由ъ옄 �젒洹� 媛��뒫
+                    .requestMatchers("/admin/**").hasRole("ADMIN") // 愿�由ъ옄留� �젒洹� 媛��뒫
+                    .anyRequest().authenticated() // 洹몄쇅 紐⑤몢 �씪諛섏궗�슜�옄 �젒洹� 媛��뒫
+                    */
                    // .exceptionHandling()
                    // .accessDeniedPage("/forbidden")
+                    
+                    .anyRequest() .permitAll()
             )
-            
+            /*
             .formLogin((formLogin) ->
                 formLogin
                     .loginPage("/login")
@@ -65,8 +64,11 @@ public class SecurityConfig {
                     .deleteCookies("JSESSIONID")
                     
             )
+            */
         ;
+        
         return http.build();
+        
     }
 }
 
@@ -114,14 +116,14 @@ public class SecurityConfig {
 
                 .formLogin((formLogin) ->
                         formLogin
-                                .loginPage("/login") // 1번
-                                .usernameParameter("userId") // 2번
-                                .passwordParameter("memberPassword") // 3번
+                                .loginPage("/login") // 1踰�
+                                .usernameParameter("userId") // 2踰�
+                                .passwordParameter("memberPassword") // 3踰�
                                 .defaultSuccessUrl("/",true)
                                 .successHandler(successHandler())
                                 //.failureHandler(failureHandler())
-                                //.loginProcessingUrl("/pwlogin") // 4번
-                                //.permitAll() // 5번
+                                //.loginProcessingUrl("/pwlogin") // 4踰�
+                                //.permitAll() // 5踰�
                 )
 
                 .logout((logout) -> logout
@@ -147,7 +149,7 @@ public class SecurityConfig {
 
     @Bean
     public AuthenticationSuccessHandler successHandler() {
-        return new CustomLoginSuccessHandler("/");//default로 이동할 url
+        return new CustomLoginSuccessHandler("/");//default濡� �씠�룞�븷 url
     }
 }
  */

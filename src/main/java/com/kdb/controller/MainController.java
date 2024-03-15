@@ -13,9 +13,14 @@ public class MainController {
         return "/login";
     }
 
-    @GetMapping("/main")
-    public String main(){
-        return "main";
+    @GetMapping(value = {"/index"})
+	public String indexMain() {
+    	return "index";
+    }  
+    
+    @GetMapping("/index2")
+    public String indexMain2(){
+        return "index2";
     }
 
     @GetMapping("/admin")

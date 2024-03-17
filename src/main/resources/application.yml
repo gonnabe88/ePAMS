@@ -1,6 +1,6 @@
 # server port
 server:
-  port: 8090
+  port: 8081
 
 # database
 spring:
@@ -15,6 +15,7 @@ spring:
   thymeleaf:
     prefix: classpath:/templates/
     suffix: .html
+    cache: false
 
   jpa:
     open-in-view: true

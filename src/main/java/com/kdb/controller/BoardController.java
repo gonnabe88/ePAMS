@@ -32,11 +32,18 @@ public class BoardController {
         return "redirect:/list";
     }
 
-    @GetMapping("/list")
+    @GetMapping("/editor")
     public String findAll(Model model) {
         List<BoardDTO> boardDTOList = boardService.findAll();
         model.addAttribute("boardList", boardDTOList);
         System.out.println("boardDTOList = " + boardDTOList);
+        return "editor";
+    }
+    
+    @GetMapping("/list")
+    public String list(Model model) {
+        List<BoardDTO> boardDTOList = boardService.findAll();
+        model.addAttribute("boardList", boardDTOList);
         return "list";
     }
 

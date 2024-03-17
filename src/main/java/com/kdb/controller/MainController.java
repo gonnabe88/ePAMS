@@ -7,7 +7,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 @Slf4j
 public class MainController {
-
+    @GetMapping(value = {"/test"})
+	public String test() {
+    	return "test";
+    } 
     @GetMapping({"/", "/login"})
     public String login(){
         return "/login";
@@ -16,12 +19,8 @@ public class MainController {
     @GetMapping(value = {"/index"})
 	public String indexMain() {
     	return "index";
-    }  
-    
-    @GetMapping("/index2")
-    public String indexMain2(){
-        return "index2";
-    }
+    }      
+
 
     @GetMapping("/admin")
     public String admin(){

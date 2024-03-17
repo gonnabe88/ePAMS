@@ -65,9 +65,9 @@ public class MemberController {
     @ModelAttribute("roles")
     public Map<String, MemberRole> roles() {
         Map<String, MemberRole> map = new LinkedHashMap<>();
-        map.put("愿�由ъ옄", MemberRole.ROLE_ADMIN);
-        map.put("留ㅻ땲��", MemberRole.ROLE_KDB);
-        map.put("�씪諛� �궗�슜�옄", MemberRole.ROLE_ITO);
+        map.put("ADMIN", MemberRole.ROLE_ADMIN);
+        map.put("KDB", MemberRole.ROLE_KDB);
+        map.put("ITO", MemberRole.ROLE_ITO);
         return map;
     }
 }

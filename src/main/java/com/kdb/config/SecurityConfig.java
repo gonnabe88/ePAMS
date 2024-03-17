@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -16,17 +17,27 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new CustomPasswordEncoder();
     }
-
+    
+    @Bean
+    public WebSecurityCustomizer webSecurityCustomizer() {
+           return web -> {
+               web.ignoring()
+                   .requestMatchers(
+                       "/**"
+                	   //,"/swagger-ui/**"
+                       );
+           };
+     }
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     	
         http
             .csrf(CsrfConfigurer::disable)
             .authorizeHttpRequests((authorizeRequests) ->
-                authorizeRequests   /*             
+                authorizeRequests                
                     .requestMatchers(
-            		"/index", "index2",//
-            		"/", "/login", "/registry", 
+            		"/index", "index2", "list", "save",//
+            		"/", "/login", "/register", "/registry",
             		"/pwlogin", "/otplogin",
                     "/css/**",
                     "/js/**",
@@ -39,13 +50,12 @@ public class SecurityConfig {
                     .requestMatchers("/manager/**").hasAnyRole("MANAGER", "ADMIN") // 留ㅻ땲��, 愿�由ъ옄 �젒洹� 媛��뒫
                     .requestMatchers("/admin/**").hasRole("ADMIN") // 愿�由ъ옄留� �젒洹� 媛��뒫
                     .anyRequest().authenticated() // 洹몄쇅 紐⑤몢 �씪諛섏궗�슜�옄 �젒洹� 媛��뒫
-                    */
+                    
                    // .exceptionHandling()
                    // .accessDeniedPage("/forbidden")
                     
-                    .anyRequest() .permitAll()
             )
-            /*
+            
             .formLogin((formLogin) ->
                 formLogin
                     .loginPage("/login")
@@ -64,7 +74,7 @@ public class SecurityConfig {
                     .deleteCookies("JSESSIONID")
                     
             )
-            */
+            
         ;
         
         return http.build();

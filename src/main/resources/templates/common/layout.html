@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+    
+	<head>	
+		<div th:replace="~{common/head :: commonHead}"></div>
+	</head>
+	
+	<body>
+	<script src="js/initTheme.js"></script>
+	<div id="app">
+		<div th:replace="~{common/sidebar :: commonSidebar}"></div>
+		<div id="main" class='layout-navbar navbar-fixed'>
+			<div th:replace="~{common/header :: commonHeader}"></div>
+			<th:block layout:fragment="contents"></th:block>
+		</div>		
+	</div>
+	</body>
+	
+	<script src="js/components/dark.js"></script>
+	<script src="extensions/perfect-scrollbar/perfect-scrollbar.min.js"></script>	
+	<script src="js/app.js"></script>	
+	
+	<th:block layout:fragment="script"></th:block>
+
+</html>

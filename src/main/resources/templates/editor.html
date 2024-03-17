@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vertical Navbar - Mazer Admin Dashboard</title>
+
+<link rel="shortcut icon" href="svg/favicon.svg" type="image/x-icon">
+
+<link rel="stylesheet" href="extensions/datatables.net-bs5/css/dataTables.bootstrap5.min.css">
+<link rel="stylesheet" href="css/table-datatable-jquery.css">
+
+<link rel="stylesheet" href="css/app.css">
+<link rel="stylesheet" href="css/app-dark.css">
+
+<link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+<style>
+.ck-editor__editable_inline {
+    min-height: 400px;
+}
+</style>
+
+</head>
+
+<body>
+	<script src="js/initTheme.js"></script>
+
+	<div id="app">
+		<div id="sidebar">
+			<div class="sidebar-wrapper active">
+				<div class="sidebar-header position-relative">
+					<div class="d-flex justify-content-between align-items-center">
+						<div class="logo">
+							<a href="index"><img src="images/kdb/H_KDB_CI.png" alt="Logo" srcset=""></a>
+						</div>
+						<div class="theme-toggle d-flex gap-2  align-items-center mt-2">
+							<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--system-uicons" width="20" height="20" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21">
+                    <g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M10.5 14.5c2.219 0 4-1.763 4-3.982a4.003 4.003 0 0 0-4-4.018c-2.219 0-4 1.781-4 4c0 2.219 1.781 4 4 4zM4.136 4.136L5.55 5.55m9.9 9.9l1.414 1.414M1.5 10.5h2m14 0h2M4.135 16.863L5.55 15.45m9.899-9.9l1.414-1.415M10.5 19.5v-2m0-14v-2" opacity=".3"></path>
+                        <g transform="translate(-210 -1)">
+                            <path d="M220.5 2.5v2m6.5.5l-1.5 1.5"></path>
+                            <circle cx="220.5" cy="11.5" r="4"></circle>
+                            <path d="m214 5l1.5 1.5m5 14v-2m6.5-.5l-1.5-1.5M214 18l1.5-1.5m-4-5h2m14 0h2"></path>
+                        </g>
+                    </g>
+                </svg>
+							<div class="form-check form-switch fs-6">
+								<input class="form-check-input  me-0" type="checkbox" id="toggle-dark" style="cursor: pointer"> <label class="form-check-label"></label>
+							</div>
+							<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--mdi" width="20" height="20" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
+                    <path fill="currentColor" d="m17.75 4.09l-2.53 1.94l.91 3.06l-2.63-1.81l-2.63 1.81l.91-3.06l-2.53-1.94L12.44 4l1.06-3l1.06 3l3.19.09m3.5 6.91l-1.64 1.25l.59 1.98l-1.7-1.17l-1.7 1.17l.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95l2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85c-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14c.4-.4.82-.76 1.27-1.08c.75-.53 1.93.36 1.85 1.19c-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82c-2.81 3.14-2.7 7.96.31 10.98c3.02 3.01 7.84 3.12 10.98.31Z">
+                    </path>
+                </svg>
+						</div>
+						<div class="sidebar-toggler  x">
+							<a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
+						</div>
+					</div>
+				</div>
+				<div class="sidebar-menu">
+					<ul class="menu">
+						<li class="sidebar-title">Menu</li>
+
+						<li class="sidebar-item  "><a href="index" class='sidebar-link'> <i class="bi bi-grid-fill"></i> <span>Dashboard</span>
+						</a></li>
+
+						<li class="sidebar-item  has-sub"><a href="#" class='sidebar-link'> <i class="bi bi-stack"></i> <span>Components</span>
+						</a>
+
+							<ul class="submenu ">
+
+								<li class="submenu-item  "><a href="component-accordion" class="submenu-link">Accordion</a></li>
+
+								<li class="submenu-item  "><a href="component-alert" class="submenu-link">Alert</a></li>
+
+								<li class="submenu-item  "><a href="component-badge" class="submenu-link">Badge</a></li>
+
+								<li class="submenu-item  "><a href="component-breadcrumb" class="submenu-link">Breadcrumb</a></li>
+
+								<li class="submenu-item  "><a href="component-button" class="submenu-link">Button</a></li>
+
+								<li class="submenu-item  "><a href="component-card" class="submenu-link">Card</a></li>
+
+								<li class="submenu-item  "><a href="component-carousel" class="submenu-link">Carousel</a></li>
+
+								<li class="submenu-item  "><a href="component-collapse" class="submenu-link">Collapse</a></li>
+
+								<li class="submenu-item  "><a href="component-dropdown" class="submenu-link">Dropdown</a></li>
+
+								<li class="submenu-item  "><a href="component-list-group" class="submenu-link">List Group</a></li>
+
+								<li class="submenu-item  "><a href="component-modal" class="submenu-link">Modal</a></li>
+
+								<li class="submenu-item  "><a href="component-navs" class="submenu-link">Navs</a></li>
+
+								<li class="submenu-item  "><a href="component-pagination" class="submenu-link">Pagination</a></li>
+
+								<li class="submenu-item  "><a href="component-progress" class="submenu-link">Progress</a></li>
+
+								<li class="submenu-item  "><a href="component-spinner" class="submenu-link">Spinner</a></li>
+
+								<li class="submenu-item  "><a href="component-toasts" class="submenu-link">Toasts</a></li>
+
+								<li class="submenu-item  "><a href="component-tooltip" class="submenu-link">Tooltip</a></li>
+
+							</ul></li>
+
+						<li class="sidebar-item  has-sub"><a href="#" class='sidebar-link'> <i class="bi bi-collection-fill"></i> <span>Extra Components</span>
+						</a>
+
+							<ul class="submenu ">
+
+								<li class="submenu-item  "><a href="extra-component-avatar" class="submenu-link">Avatar</a></li>
+
+								<li class="submenu-item  "><a href="extra-component-divider" class="submenu-link">Divider</a></li>
+
+								<li class="submenu-item  "><a href="extra-component-date-picker" class="submenu-link">Date Picker</a></li>
+
+								<li class="submenu-item  "><a href="extra-component-sweetalert" class="submenu-link">Sweet Alert</a></li>
+
+								<li class="submenu-item  "><a href="extra-component-toastify" class="submenu-link">Toastify</a></li>
+
+								<li class="submenu-item  "><a href="extra-component-rating" class="submenu-link">Rating</a></li>
+
+							</ul></li>
+
+						<li class="sidebar-item active has-sub"><a href="#" class='sidebar-link'> <i class="bi bi-grid-1x2-fill"></i> <span>Layouts</span>
+						</a>
+
+							<ul class="submenu active">
+
+								<li class="submenu-item  "><a href="layout-default" class="submenu-link">Default Layout</a></li>
+
+								<li class="submenu-item  "><a href="layout-vertical-1-column" class="submenu-link">1 Column</a></li>
+
+								<li class="submenu-item active "><a href="layout-vertical-navbar" class="submenu-link">Vertical Navbar</a></li>
+
+								<li class="submenu-item  "><a href="layout-rtl" class="submenu-link">RTL Layout</a></li>
+
+								<li class="submenu-item  "><a href="layout-horizontal" class="submenu-link">Horizontal Menu</a></li>
+
+							</ul></li>
+
+						<li class="sidebar-title">Forms &amp; Tables</li>
+
+						<li class="sidebar-item  has-sub"><a href="#" class='sidebar-link'> <i class="bi bi-hexagon-fill"></i> <span>Form Elements</span>
+						</a>
+
+							<ul class="submenu ">
+
+								<li class="submenu-item  "><a href="form-element-input" class="submenu-link">Input</a></li>
+
+								<li class="submenu-item  "><a href="form-element-input-group" class="submenu-link">Input Group</a></li>
+
+								<li class="submenu-item  "><a href="form-element-select" class="submenu-link">Select</a></li>
+
+								<li class="submenu-item  "><a href="form-element-radio" class="submenu-link">Radio</a></li>
+
+								<li class="submenu-item  "><a href="form-element-checkbox" class="submenu-link">Checkbox</a></li>
+
+								<li class="submenu-item  "><a href="form-element-textarea" class="submenu-link">Textarea</a></li>
+
+							</ul></li>
+
+						<li class="sidebar-item  "><a href="form-layout" class='sidebar-link'> <i class="bi bi-file-earmark-medical-fill"></i> <span>Form Layout</span>
+						</a></li>
+
+						<li class="sidebar-item  has-sub"><a href="#" class='sidebar-link'> <i class="bi bi-journal-check"></i> <span>Form Validation</span>
+						</a>
+
+							<ul class="submenu ">
+
+								<li class="submenu-item  "><a href="form-validation-parsley" class="submenu-link">Parsley</a></li>
+
+							</ul></li>
+
+						<li class="sidebar-item  has-sub"><a href="#" class='sidebar-link'> <i class="bi bi-pen-fill"></i> <span>Form Editor</span>
+						</a>
+
+							<ul class="submenu ">
+
+								<li class="submenu-item  "><a href="form-editor-quill" class="submenu-link">Quill</a></li>
+
+								<li class="submenu-item  "><a href="form-editor-ckeditor" class="submenu-link">CKEditor</a></li>
+
+								<li class="submenu-item  "><a href="form-editor-summernote" class="submenu-link">Summernote</a></li>
+
+								<li class="submenu-item  "><a href="form-editor-tinymce" class="submenu-link">TinyMCE</a></li>
+
+							</ul></li>
+
+						<li class="sidebar-item  "><a href="table" class='sidebar-link'> <i class="bi bi-grid-1x2-fill"></i> <span>Table</span>
+						</a></li>
+
+						<li class="sidebar-item  has-sub"><a href="#" class='sidebar-link'> <i class="bi bi-file-earmark-spreadsheet-fill"></i> <span>Datatables</span>
+						</a>
+
+							<ul class="submenu ">
+
+								<li class="submenu-item  "><a href="table-datatable" class="submenu-link">Datatable</a></li>
+
+								<li class="submenu-item  "><a href="table-datatable-jquery" class="submenu-link">Datatable (jQuery)</a></li>
+
+							</ul></li>
+
+						<li class="sidebar-title">Extra UI</li>
+
+						<li class="sidebar-item  has-sub"><a href="#" class='sidebar-link'> <i class="bi bi-pentagon-fill"></i> <span>Widgets</span>
+						</a>
+
+							<ul class="submenu ">
+
+								<li class="submenu-item  "><a href="ui-widgets-chatbox" class="submenu-link">Chatbox</a></li>
+
+								<li class="submenu-item  "><a href="ui-widgets-pricing" class="submenu-link">Pricing</a></li>
+
+								<li class="submenu-item  "><a href="ui-widgets-todolist" class="submenu-link">To-do List</a></li>
+
+							</ul></li>
+
+						<li class="sidebar-item  has-sub"><a href="#" class='sidebar-link'> <i class="bi bi-egg-fill"></i> <span>Icons</span>
+						</a>
+
+							<ul class="submenu ">
+
+								<li class="submenu-item  "><a href="ui-icons-bootstrap-icons" class="submenu-link">Bootstrap Icons </a></li>
+
+								<li class="submenu-item  "><a href="ui-icons-fontawesome" class="submenu-link">Fontawesome</a></li>
+
+								<li class="submenu-item  "><a href="ui-icons-dripicons" class="submenu-link">Dripicons</a></li>
+
+							</ul></li>
+
+						<li class="sidebar-item  has-sub"><a href="#" class='sidebar-link'> <i class="bi bi-bar-chart-fill"></i> <span>Charts</span>
+						</a>
+
+							<ul class="submenu ">
+
+								<li class="submenu-item  "><a href="ui-chart-chartjs" class="submenu-link">ChartJS</a></li>
+
+								<li class="submenu-item  "><a href="ui-chart-apexcharts" class="submenu-link">Apexcharts</a></li>
+
+							</ul></li>
+
+						<li class="sidebar-item  "><a href="ui-file-uploader" class='sidebar-link'> <i class="bi bi-cloud-arrow-up-fill"></i> <span>File Uploader</span>
+						</a></li>
+
+						<li class="sidebar-item  has-sub"><a href="#" class='sidebar-link'> <i class="bi bi-map-fill"></i> <span>Maps</span>
+						</a>
+
+							<ul class="submenu ">
+
+								<li class="submenu-item  "><a href="ui-map-google-map" class="submenu-link">Google Map</a></li>
+
+								<li class="submenu-item  "><a href="ui-map-jsvectormap" class="submenu-link">JS Vector Map</a></li>
+
+							</ul></li>
+
+						<li class="sidebar-item  has-sub"><a href="#" class='sidebar-link'> <i class="bi bi-three-dots"></i> <span>Multi-level Menu</span>
+						</a>
+
+							<ul class="submenu ">
+
+								<li class="submenu-item  has-sub"><a href="#" class="submenu-link">First Level</a>
+
+									<ul class="submenu submenu-level-2 ">
+
+
+										<li class="submenu-item "><a href="ui-multi-level-menu" class="submenu-link">Second Level</a></li>
+
+										<li class="submenu-item "><a href="#" class="submenu-link">Second Level Menu</a></li>
+
+
+									</ul></li>
+
+								<li class="submenu-item  has-sub"><a href="#" class="submenu-link">Another Menu</a>
+
+									<ul class="submenu submenu-level-2 ">
+
+
+										<li class="submenu-item "><a href="#" class="submenu-link">Second Level Menu</a></li>
+
+
+									</ul></li>
+
+							</ul></li>
+
+						<li class="sidebar-title">Pages</li>
+
+						<li class="sidebar-item  "><a href="application-email" class='sidebar-link'> <i class="bi bi-envelope-fill"></i> <span>Email Application</span>
+						</a></li>
+
+						<li class="sidebar-item  "><a href="application-chat" class='sidebar-link'> <i class="bi bi-chat-dots-fill"></i> <span>Chat Application</span>
+						</a></li>
+
+						<li class="sidebar-item  "><a href="application-gallery" class='sidebar-link'> <i class="bi bi-image-fill"></i> <span>Photo Gallery</span>
+						</a></li>
+
+						<li class="sidebar-item  "><a href="application-checkout" class='sidebar-link'> <i class="bi bi-basket-fill"></i> <span>Checkout Page</span>
+						</a></li>
+
+						<li class="sidebar-item  has-sub"><a href="#" class='sidebar-link'> <i class="bi bi-person-badge-fill"></i> <span>Authentication</span>
+						</a>
+
+							<ul class="submenu ">
+
+								<li class="submenu-item  "><a href="auth-login" class="submenu-link">Login</a></li>
+
+								<li class="submenu-item  "><a href="auth-register" class="submenu-link">Register</a></li>
+
+								<li class="submenu-item  "><a href="auth-forgot-password" class="submenu-link">Forgot Password</a></li>
+
+							</ul></li>
+
+						<li class="sidebar-item  has-sub"><a href="#" class='sidebar-link'> <i class="bi bi-x-octagon-fill"></i> <span>Errors</span>
+						</a>
+
+							<ul class="submenu ">
+
+								<li class="submenu-item  "><a href="error-403" class="submenu-link">403</a></li>
+
+								<li class="submenu-item  "><a href="error-404" class="submenu-link">404</a></li>
+
+								<li class="submenu-item  "><a href="error-500" class="submenu-link">500</a></li>
+
+							</ul></li>
+
+						<li class="sidebar-title">Raise Support</li>
+
+						<li class="sidebar-item  "><a href="https://zuramai.github.io/mazer/docs" class='sidebar-link'> <i class="bi bi-life-preserver"></i> <span>Documentation</span>
+						</a></li>
+
+						<li class="sidebar-item  "><a href="https://github.com/zuramai/mazer/blob/main/CONTRIBUTING.md" class='sidebar-link'> <i class="bi bi-puzzle"></i> <span>Contribute</span>
+						</a></li>
+
+						<li class="sidebar-item  "><a href="https://github.com/zuramai/mazer#donation" class='sidebar-link'> <i class="bi bi-cash"></i> <span>Donate</span>
+						</a></li>
+
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div id="main" class='layout-navbar navbar-fixed'>
+			<header>
+				<nav class="navbar navbar-expand navbar-light navbar-top">
+					<div class="container-fluid">
+						<a href="#" class="burger-btn d-block"> <i class="bi bi-justify fs-2"></i>
+						</a>
+
+
+						<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+							<span class="navbar-toggler-icon"></span>
+						</button>
+
+						<div class="collapse navbar-collapse" id="navbarSupportedContent">
+							<ul class="navbar-nav ms-auto mb-lg-0">
+								<li class="nav-item dropdown me-1"></li>
+							</ul>
+							<div class="dropdown">
+								<a href="#" data-bs-toggle="dropdown" aria-expanded="false">
+									<div class="user-menu d-flex">
+										<div class="user-name text-end me-3">
+											<h6 class="mb-0 text-gray-600">박종훈</h6>
+											<p class="mb-0 text-sm text-gray-600">과장(팀원)</p>
+										</div>
+									</div>
+								</a>
+
+								<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton" style="min-width: 11rem;">
+									<li>
+										<h6 class="dropdown-header">Hello, John!</h6>
+									</li>
+									<li><a class="dropdown-item" href="#"><i class="icon-mid bi bi-person me-2"></i> My Profile</a></li>
+									<li><a class="dropdown-item" href="#"><i class="icon-mid bi bi-gear me-2"></i> Settings</a></li>
+									<li><a class="dropdown-item" href="#"><i class="icon-mid bi bi-wallet me-2"></i> Wallet</a></li>
+									<li>
+										<hr class="dropdown-divider">
+									</li>
+									<li><a class="dropdown-item" href="#"><i class="icon-mid bi bi-box-arrow-left me-2"></i> Logout</a></li>
+								</ul>
+							</div>
+							<div class="col-1 ms-3 justify-content-center">
+								<a class="icon-mid bi bi-box-arrow-right fs-1"></a>
+							</div>
+						</div>
+					</div>
+				</nav>
+			</header>
+			<div id="main-content">
+				<div class="page-heading">
+
+					<h1>Classic editor</h1>
+					<input class="form-control" type="text" placeholder="Default input" aria-label="default input example" id="title"> <br>
+					<div id="editor"></div>
+					<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+						<button class="btn btn-primary mt-3 align-rignt" type="submit" id="submit" onclick="save()">Button</button>
+					</div>
+
+					<br>
+					<div class="table-responsive">
+						<table class="table" id="table1">
+							<thead>
+								<tr>
+									<th>번호</th>
+									<th>제목</th>
+									<th>작성자</th>
+									<th>작성시간</th>
+									<th>조회수</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="board: ${boardList}" id="list">
+									<td th:text="${board.id}"></td>
+									<td><a th:text="${board.boardTitle}" th:href="@{|/${board.id}|}"></a></td>
+									<td th:text="${board.boardWriter}"></td>
+									<td th:text="${board.createdAt}"></td>
+									<td th:text="${board.boardHits}"></td>
+								</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script src="js/components/dark.js"></script>
+		<script src="extensions/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+
+		<script src="js/app.js"></script>
+
+		<script src="extensions/jquery/jquery.min.js"></script>
+
+
+		<!-- <script src="https://cdn.ckeditor.com/ckeditor5/41.2.0/classic/ckeditor.js"></script>
+		<script src="https://ckeditor.com/apps/ckfinder/3.5.0/ckfinder.js"></script> -->
+		<script src="js/ckeditor.js"></script>
+		
+		<!-- <script src="https://cdn.jsdelivr.net/npm/ckeditor5-full-free-plugin@23.1.2/build/ckeditor.min.js"></script> -->
+		
+		<script src="extensions/datatables.net/js/jquery.dataTables.min.js"></script>
+		<script src="extensions/datatables.net-bs5/js/dataTables.bootstrap5.min.js"></script>
+		<script src="js/pages/datatables.js"></script>
+
+		<script>
+	    let editor;
+	    
+	    ClassicEditor
+	    .create( document.querySelector( '#editor' ), {
+			
+	    	fontSize: {
+	            options: [
+	            	9,
+	                11,
+	                13,
+	                'default',
+	                17,
+	                19,
+	                21
+	            ],
+	            supportAllValues: true
+	        },
+	        toolbar: {
+                items: [
+                    'selectAll', '|',
+                    'heading', '|',
+                    'bold', 'italic', 'strikethrough', 'underline', 'code', 'subscript', 'superscript', 'removeFormat', '|',
+                    'bulletedList', 'numberedList','|',
+                    'outdent', 'indent', '|',
+                    'undo', 'redo',
+                    'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', 'highlight', '|',
+                    'alignment', '|',
+                    'link', 'blockQuote', 'insertTable', 'codeBlock', 'htmlEmbed', '|',
+                    'specialCharacters', 'horizontalLine', 'pageBreak', '|',
+                ],
+                shouldNotGroupWhenFull: true
+            },
+            fontFamily:{
+				options: ['맑은고딕', '나눔고딕', '휴먼명조']
+            
+			},
+	        heading: {
+	            options: [
+	                { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
+	                { model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1' },
+	                { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' }
+	            ]
+	        }
+	    } ).then( newEditor => {
+	        editor = newEditor;
+	    } )
+	    .catch( error => {
+	        console.log( error );
+	    } );
+	    </script>
+
+		<script>
+	    function save(){    
+	    	$.ajax({
+				type: "post",
+				url: "/save",
+				dataType: "json",
+				data: {
+					"boardTitle": document.getElementById("title").value,
+					"boardContents": editor.getData()	
+				},
+				//beforeSend: function (xhr) {
+				//console.log("otp csrf : ", OTP)	
+				//	xhr.setRequestHeader(header, token);
+				//},			
+				complete: function(data) {
+					//document.getElementById("exampleFormControlTextarea1").value = editor.getData();
+					console.log( editor.getData(), document.getElementById("title").value , data);
+					//$("#list").replaceWith(list);
+					window.location.href = '/list'
+				}
+	    	});
+		}
+	    </script>
+</body>
+
+</html>

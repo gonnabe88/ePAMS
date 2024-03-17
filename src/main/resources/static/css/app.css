@@ -6841,8 +6841,11 @@ fieldset:disabled .btn {
 }
 
 .carousel .carousel-inner,.carousel .carousel-inner .carousel-item,.carousel .carousel-inner .item,.slider .carousel {
+    position: relative;
+    width: 100%;
     min-height: 350px;
-    max-height: 550px
+    max-height: 550px;
+    overflow: hidden
 }
 
 .carousel-inner {

@@ -6083,7 +6083,7 @@
             this.init()
         }
         init() {
-            //document.querySelectorAll(".burger-btn").forEach(r=>r.addEventListener("click", this.toggle.bind(this))),
+            document.querySelectorAll(".burger-btn").forEach(r=>r.addEventListener("click", this.toggle.bind(this))),
             document.querySelectorAll(".sidebar-hide").forEach(r=>r.addEventListener("click", this.toggle.bind(this))),
             window.addEventListener("resize", this.onResize.bind(this));
             const k = r=>{
@@ -6125,8 +6125,8 @@
             this.options.recalculateHeight && Cr(Xe)
         }
         onResize() {
-            Ct(window) ? (this.sidebarEL.classList.add("active"),
-            this.sidebarEL.classList.remove("inactive")) : this.sidebarEL.classList.remove("active"),
+            Ct(window) ? (this.sidebarEL.classList.add("inactive"),
+            this.sidebarEL.classList.remove("active")) : this.sidebarEL.classList.remove("inactive"),
             this.deleteBackdrop(),
             this.toggleOverflowBody(!0)
         }
@@ -6177,14 +6177,14 @@
     const Bn = U=>{
         if (!Xe)
             return;
-        Ct(window) && (U.classList.add("active"),
+        Ct(window) && (U.classList.add("inactive"),
         U.classList.add("sidebar-desktop"));
         let k = document.querySelectorAll(".sidebar-item.has-sub .submenu");
         for (var s = 0; s < k.length; s++) {
             let f = k[s];
             const r = f.parentElement;
             f.clientHeight,
-            r.classList.contains("active") ? f.classList.add("submenu-open") : f.classList.add("submenu-closed"),
+            r.classList.contains("inactive") ? f.classList.add("submenu-open") : f.classList.add("submenu-closed"),
             setTimeout(()=>{
                 nn(f, !0)
             }
@@ -6199,7 +6199,7 @@
             let f = k[s];
             const r = f.parentElement;
             f.clientHeight,
-            r.classList.contains("active") ? f.classList.add("submenu-open") : f.classList.add("submenu-closed"),
+            r.classList.contains("inactive") ? f.classList.add("submenu-open") : f.classList.add("submenu-closed"),
             setTimeout(()=>{
                 nn(f, !0)
             }

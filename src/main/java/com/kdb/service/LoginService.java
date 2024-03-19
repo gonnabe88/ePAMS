@@ -12,40 +12,31 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class LoginService {
     private final LoginRepository loginRepository;
-    private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final EncShaService encshaService;
-    private final String OTP = "111111";
+    private final String OTP = "111111"; // 임시 OTP 검증용
 
 
     public boolean otpLogin(MemberDTO memberDTO) {
-        System.out.println("OTP 검증 : " + memberDTO.getOTP() +" " + OTP);
-        if (memberDTO.getOTP().equals(OTP)) {
-            System.out.println("TRUE");
-            return true;
-        } else {
-            return false;
-        }
+        if (memberDTO.getOTP().equals(OTP)) return true;
+        else return false;
     }  
 	
     public boolean pwLogin(MemberDTO memberDTO) {
 
         memberDTO.setPassword(encshaService.encrypt(memberDTO.getPassword()));
-        System.out.println(memberDTO.toString());
     	MemberDTO ismemberDTO = loginRepository.login(memberDTO);        
         
-        if (ismemberDTO != null) {
-            return true;
-        } else {
-            return false;
-        }
+        if (ismemberDTO != null)  return true;
+        else return false;
     }
+    
     public String idCheck(String userId) {
+    	
         MemberDTO memberDTO = loginRepository.findByUserId(userId);
-        if (memberDTO == null) {
-            return "ok";
-        } else {
-            return "no";
-        }
+        
+        if (memberDTO == null) return "ok";
+        else return "no";
+        
     }
 
 }

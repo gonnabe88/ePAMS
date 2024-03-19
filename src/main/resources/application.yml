@@ -2,7 +2,7 @@
 server:
   port: 8081
 
-# database
+# spring
 spring:
   devtools.livereload.enabled: true  
 
@@ -28,6 +28,11 @@ spring:
       dialect: org.hibernate.dialect.MySQL8InnoDBDialect
       hibernate:
         "[format_sql]": true
+    
+  session:
+    jdbc:
+      initialize-schema: always
+
 
 # mybatis
 mybatis:

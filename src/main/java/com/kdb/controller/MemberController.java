@@ -42,8 +42,6 @@ public class MemberController {
         this.passwordEncoder = passwordEncoder;
     }
 
-  	
-
     @GetMapping("/registry")
     public String registryForm(Model model) {
         model.addAttribute("member", new MemberDTO());

@@ -13,7 +13,6 @@ public class LoginRepository {
     private final SqlSessionTemplate sql;
 
     public MemberDTO login(MemberDTO memberDTO) {
-    	System.out.println("REP" + memberDTO.toString());
         return sql.selectOne("Member.login", memberDTO);
     }
     public MemberDTO findByUserId(String userId) {

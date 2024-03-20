@@ -12,7 +12,7 @@
 <body>
 	<script src="js/initTheme.js"></script>	
 	<div id="app">
-	<div id="sidebar" th:fragment="commonSidebar">
+	<div id="sidebar" class="sidebar-desktop inactive" th:fragment="commonSidebar">
 			<div class="sidebar-wrapper">
 				<div class="sidebar-header position-relative">
 						<div class="logo mt-3">
@@ -57,24 +57,20 @@
 						  </div>
 						</div>
 					</div> -->
-					<div class="card-body py-4 px-4" style="background-color:#edf3fb; border-radius:9rem;">
-                    <div class="d-flex align-items-center">
-                        <div class="avatar avatar-xl">
-                            <img src="images/faces/1.jpg" alt="Face 1">
-                        </div>
-                        <div class="ms-3 name">
-                            <h5 class="font-bold">박종훈</h5>
-                            <h6 class="text-muted mb-0">K140024</h6>
-                            <h6 class="text-muted mb-0">과장(팀원)</h6>
-                        </div>
-                    </div>
-               		 </div>
+<!-- 					<div class="card-body py-4 px-4">
+	                    <div class="d-flex align-items-center">
+	                        <div class="ms-3 name">
+	                            <h5 class="font-bold">박종훈</h5><h6 class="text-muted mb-0">과장(팀원)</h6>
+	                            <h6 class="text-muted mb-0">K140024</h6>                            
+	                        </div>
+	                    </div>
+               		 </div> -->
 				
 					<ul class="menu">
 						<li class="sidebar-title">공통</li>
 
 						<li class="sidebar-item">
-							<a href="index" class='sidebar-link'> 
+							<a href="list" class='sidebar-link'> 
 								<i class="bi bi-grid-fill"></i> 
 								<span>공지사항</span>
 							</a>

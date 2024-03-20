@@ -5,16 +5,14 @@
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
 
-<link rel="stylesheet" href="css/app.css">
-<link rel="stylesheet" href="css/app-dark.css">
+	<link rel="stylesheet" href="css/app.css">
+	<link rel="stylesheet" href="css/app-dark.css">
 
 </head>
  
 <body>
 	<script src="js/initTheme.js"></script>	
-	
-	<div th:fragment="commonHeader">
-	<nav class="navbar navbar-expand navbar-light navbar-top">
+	<nav class="navbar navbar-expand navbar-light navbar-top" th:fragment="commonHeader">
 		<div class="container-fluid">
 			<div class="col-4">
 				<a href="#" class="burger-btn d-block"> <i class="bi bi-justify fs-2"></i>
@@ -22,14 +20,13 @@
 			</div>
 
 			<div class="col-4">
-				<h1 class="auth-subtitle text-center" style="font-family:Nunito">ePAMS</h1>
+				<h1 class="auth-subtitle text-center" style="font-family:Nunito"><a href="/index">ePAMS</a></h1>
 			</div>
 			<div class="col-4">
 				
 			</div>
 		</div>
 	</nav>
-	</div>
 	<script src="js/components/dark.js"></script>
 	<script src="extensions/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 	<script src="js/app.js"></script>

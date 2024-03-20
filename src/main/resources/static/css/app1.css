@@ -6844,7 +6844,8 @@ fieldset:disabled .btn {
 .carousel .carousel-inner,.carousel .carousel-inner .carousel-item,.carousel .carousel-inner .item,.slider .carousel {
     position: relative;
     width: 100%;
-    min-height: auto;
+    /*min-height: auto;*/
+    height:300px;
     overflow: hidden
 }
 
@@ -23351,7 +23352,7 @@ body .bi:before,
 
 .navbar {
     height: var(--navbar-height);
-    padding: 1.5rem
+    padding: 1.0rem
 }
 
 .navbar .navbar-brand img {
@@ -23981,7 +23982,7 @@ body .bi:before,
 }
 
 #main #main-content {
-    padding: 2rem
+    padding: 1rem
 }
 
 #main,

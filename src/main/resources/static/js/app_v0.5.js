@@ -6083,6 +6083,7 @@
             this.init()
         }
         init() {
+			
             document.querySelectorAll(".burger-btn").forEach(r=>r.addEventListener("click", this.toggle.bind(this))),
             document.querySelectorAll(".sidebar-hide").forEach(r=>r.addEventListener("click", this.toggle.bind(this))),
             window.addEventListener("resize", this.onResize.bind(this));
@@ -6134,6 +6135,7 @@
             this.sidebarEL.classList.contains("active") ? this.hide() : this.show()
         }
         show() {
+			
             this.sidebarEL.classList.add("active"),
             this.sidebarEL.classList.remove("inactive"),
             this.createBackdrop(),
@@ -6146,6 +6148,7 @@
             this.toggleOverflowBody()
         }
         createBackdrop() {
+			
             if (Ct(window))
                 return;
             this.deleteBackdrop();
@@ -6175,6 +6178,7 @@
     }
     let Xe = document.getElementById("sidebar");
     const Bn = U=>{
+		
         if (!Xe)
             return;
         Ct(window) && (U.classList.add("inactive"),

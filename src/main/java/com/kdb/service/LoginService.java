@@ -18,8 +18,22 @@ public class LoginService {
     private final UUID uuid = UUID.randomUUID();
 
     public boolean otpLogin(MemberDTO memberDTO) {
+    	
+    	//////////////////////////////////////////////
+    	// SMS, 카카오톡 ONEGUARD mOTP 연동 인증부 구현 필요 //
+    	//////////////////////////////////////////////
+    	
         if (memberDTO.getOTP().equals(OTP)) return true;
         else return false;
+    }  
+    
+    public boolean fidoLogin(MemberDTO memberDTO) {
+    	
+    	///////////////////////////////////
+    	// ONEGUARD FIDO 연동 인증부 구현 필요 //
+    	///////////////////////////////////
+    	
+        return true;
     }  
 	
     public boolean pwLogin(MemberDTO memberDTO) {
@@ -45,7 +59,9 @@ public class LoginService {
     	String UUID = loginRepository.findUuid(memberDTO.getUsername());   
     	System.out.println("저장된 UUID : " + UUID);
     	System.out.println("보내온 UUID : " + memberDTO.getUUID());        
-        if (UUID == null || UUID == memberDTO.getUUID())  return true;
+    	
+        if (UUID.equals(null)) return true;
+        else if (UUID.equals(memberDTO.getUUID())) return true;
         else return false;
     }
     

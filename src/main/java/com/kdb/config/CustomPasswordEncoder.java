@@ -25,16 +25,14 @@ public class CustomPasswordEncoder implements PasswordEncoder {
                 throw new RuntimeException();
             }
        //String hashed = BCrypt.hashpw(rawPassword.toString(), BCrypt.gensalt(12));  
-
-        //return hashed;
+       //return hashed;
     }
 
     @Override
     public boolean matches(CharSequence rawPassword, String encodedPassword) {
-        System.out.println("Custom match "+ rawPassword + "  " + encodedPassword);
+        System.out.println("Custom match 입력 : "+ rawPassword + " 원본 : " + encodedPassword);
         //if(encode(rawPassword).equals(encodedPassword)) return true;
     	if(rawPassword.equals(encodedPassword)) return true;
         else return false;
-
     }
 }

@@ -70,18 +70,27 @@ public class LoginController {
         
         
         if (loginResult) return "success";
-        //else return "fail";
-        else return "success";
+        else return "fail";
     }
 	
     @PostMapping("/otplogin")
     public @ResponseBody String otplogin(@ModelAttribute MemberDTO memberDTO, HttpSession session) {
         boolean loginResult = loginService.otpLogin(memberDTO); 
-        System.out.println("UUID 검증");
         boolean uuidResult = loginService.isValidUUID(memberDTO); 
-        
-        if (loginResult) return "success";
-        else return "fail";
+        System.out.println("UUID 검증"+ uuidResult + " 인증번호 : " + loginResult);
+        if (loginResult && uuidResult) return "success"; // 동일기기, 인증성공
+        else if (loginResult) return "newdevice"; // 다른기기, 인증성공
+        else return "fail"; // 인증실패
+    }
+    
+    @PostMapping("/fidologin")
+    public @ResponseBody String fidologin(@ModelAttribute MemberDTO memberDTO, HttpSession session) {
+        boolean loginResult = loginService.fidoLogin(memberDTO); 
+        boolean uuidResult = loginService.isValidUUID(memberDTO); 
+        System.out.println("UUID 검증"+ uuidResult + " 인증번호 : " + loginResult);
+        if (loginResult && uuidResult) return "success"; // 동일기기, 인증성공
+        else if (loginResult) return "newdevice"; // 다른기기, 인증성공
+        else return "fail"; // 인증실패
     }
  
 	

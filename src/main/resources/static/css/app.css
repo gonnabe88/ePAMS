@@ -2761,6 +2761,11 @@ textarea.form-control-lg {
     margin-left: -1.7em
 }
 
+.form-check .form-check-input2 {
+    float: left;
+    margin-left: -1.7em
+}
+
 .form-check-reverse {
     padding-right: 1.7em;
     padding-left: 0;
@@ -2768,6 +2773,12 @@ textarea.form-control-lg {
 }
 
 .form-check-reverse .form-check-input {
+    float: right;
+    margin-right: -1.7em;
+    margin-left: 0
+}
+
+.form-check-reverse .form-check-input2 {
     float: right;
     margin-right: -1.7em;
     margin-left: 0
@@ -2793,6 +2804,7 @@ textarea.form-control-lg {
     transition: background-color .15s ease-in-out, background-position .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out
 }
 
+
 @media (prefers-reduced-motion: reduce) {
     .form-check-input {
         transition: none
@@ -2817,10 +2829,12 @@ textarea.form-control-lg {
     box-shadow: 0 0 0 .25rem rgba(67, 94, 190, .25)
 }
 
+
 .form-check-input:checked {
     background-color: #435ebe;
     border-color: #435ebe
 }
+
 
 .form-check-input:checked[type=checkbox] {
     --bs-form-check-bg-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10l3 3l6-6'/%3e%3c/svg%3e")
@@ -2847,6 +2861,86 @@ textarea.form-control-lg {
     cursor: default;
     opacity: .5
 }
+
+
+
+form-check-input2 {
+    --bs-form-check-bg: #fff;
+    flex-shrink: 0;
+    width: 1.2em;
+    height: 1.2em;
+    margin-top: .15em;
+    vertical-align: top;
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: var(--bs-form-check-bg);
+    background-image: var(--bs-form-check-bg-image);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    border: 3px solid #e1e3ea;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    transition: background-color .15s ease-in-out, background-position .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .form-check-input2 {
+        transition: none
+    }
+}
+
+.form-check-input2[type=checkbox] {
+    border-radius: .3em
+}
+
+.form-check-input2[type=radio] {
+    border-radius: 50%
+}
+
+.form-check-input2:active {
+    filter: brightness(90%)
+}
+
+.form-check-input2:focus {
+    border-color: #a1afdf;
+    outline: 0;
+    box-shadow: 0 0 0 .25rem rgba(255, 255, 128, .25)
+}
+
+.form-check-input2:checked {
+    background-color: #FFC107;
+    border-color: #FFC107
+}
+
+.form-check-input2:checked[type=checkbox] {
+    --bs-form-check-bg-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10l3 3l6-6'/%3e%3c/svg%3e")
+}
+
+.form-check-input2:checked[type=radio] {
+    --bs-form-check-bg-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='2' fill='%23fff'/%3e%3c/svg%3e")
+}
+
+.form-check-input2[type=checkbox]:indeterminate {
+    background-color: #435ebe;
+    border-color: #435ebe;
+    --bs-form-check-bg-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10h8'/%3e%3c/svg%3e")
+}
+
+.form-check-input2:disabled {
+    pointer-events: none;
+    filter: none;
+    opacity: .5
+}
+
+.form-check-input2[disabled]~.form-check-label,
+.form-check-input2:disabled~.form-check-label {
+    cursor: default;
+    opacity: .5
+}
+
+
+
 
 .form-switch {
     padding-left: 2.5em

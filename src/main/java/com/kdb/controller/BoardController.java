@@ -27,7 +27,7 @@ public class BoardController {
 
     @PostMapping("/save")
     public String save(BoardDTO boardDTO) throws IOException {
-        System.out.println("boardDTO = " + boardDTO);
+        //System.out.println("boardDTO = " + boardDTO);
         boardService.save(boardDTO);
         return "redirect:/list";
     }
@@ -36,7 +36,7 @@ public class BoardController {
     public String findAll(Model model) {
         List<BoardDTO> boardDTOList = boardService.findAll();
         model.addAttribute("boardList", boardDTOList);
-        System.out.println("boardDTOList = " + boardDTOList);
+        //System.out.println("boardDTOList = " + boardDTOList);
         return "editor";
     }
     

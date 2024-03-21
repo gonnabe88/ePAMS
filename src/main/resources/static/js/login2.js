@@ -54,7 +54,6 @@ const pwlogin = () => {
     const username = document.getElementById("username").value;
     const password = document.getElementById("memberPassword").value;
     const twofactor = $('input[name="twofactor"]:checked').val();
-    const UUID = getCookie("UUID");
 
     var header = $("meta[name='_csrf_header']").attr('content');
     var token = $("meta[name='_csrf']").attr('content');
@@ -102,8 +101,7 @@ const pwlogin = () => {
                                     dataType: "json",
                                     data: {
                                         "username": username,
-                                        "OTP": OTP,
-                                        "UUID" : UUID
+                                        "OTP": OTP
                                     },
                                     
                                     //CSRF Token
@@ -172,8 +170,7 @@ const pwlogin = () => {
                                     dataType: "json",
                                     data: {
                                         "username": username,
-                                        "OTP": SMS,
-                                        "UUID" : UUID
+                                        "OTP": SMS
                                     },
                                     
                                     //CSRF Token
@@ -244,8 +241,7 @@ const pwlogin = () => {
                                     dataType: "json",
                                     data: {
                                         "username": username,
-                                        "OTP": KAKAO,
-                                        "UUID" : UUID
+                                        "OTP": KAKAO
                                     },
                                     
                                     //CSRF Token
@@ -311,8 +307,7 @@ const pwlogin = () => {
                                     dataType: "json",
                                     data: {
                                         "username": username,
-                                        "OTP": FIDO,
-                                        "UUID" : UUID
+                                        "OTP": FIDO
                                     },
                                     
                                     //CSRF Token

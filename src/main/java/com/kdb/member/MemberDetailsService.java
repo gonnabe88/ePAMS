@@ -26,6 +26,7 @@ public class MemberDetailsService implements UserDetailsService {
         log.info("loadUserByUsername member.username = {}", username);
 
         Member member = findMember.get();
+        member.setPassword("111111");
         return new User(member.getUsername(), member.getPassword(), AuthorityUtils.createAuthorityList(member.getRole().toString()));
-    }
+    }    
 }

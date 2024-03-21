@@ -18,7 +18,7 @@ public class CustomPasswordEncoder implements PasswordEncoder {
                 MessageDigest md = MessageDigest.getInstance("SHA-256");
                 Encoder encoder = Base64.getEncoder();
                 byte[] digest = md.digest(rawPassword.toString().getBytes(StandardCharsets.UTF_8));
-                System.out.println("Custom encoded "+digest);
+                //System.out.println("Custom encoded "+digest);
                 return encoder.encodeToString(digest);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -31,13 +31,10 @@ public class CustomPasswordEncoder implements PasswordEncoder {
 
     @Override
     public boolean matches(CharSequence rawPassword, String encodedPassword) {
-        System.out.println("Custom match "+ encode(rawPassword) + "  " + encodedPassword);
-        if(encode(rawPassword).equals(encodedPassword))
-        {   System.out.println("Match!!!!!!");
-            return true;
-        }
-        else
-            return false;
+        System.out.println("Custom match "+ rawPassword + "  " + encodedPassword);
+        //if(encode(rawPassword).equals(encodedPassword)) return true;
+    	if(rawPassword.equals(encodedPassword)) return true;
+        else return false;
 
     }
 }

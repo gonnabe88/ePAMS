@@ -21,4 +21,10 @@ public class LoginRepository {
     public MemberDTO auth(MemberDTO memberDTO) {
         return sql.selectOne("Member.auth", memberDTO);
     }
+    public String findUuid(String username) {
+        return sql.selectOne("Member.findUuid", username);
+    }    
+    public void updateUuid(MemberDTO memberDTO) {
+    	sql.update("Member.updateUuid", memberDTO);
+    }
 }

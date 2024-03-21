@@ -3,36 +3,43 @@
 
 <mapper namespace="Member">
     <insert id="save" parameterType="member">
-        insert into member_table(memberEmail, memberPassword, memberName, memberAge, memberMobile)
+        insert into member(memberEmail, memberPassword, memberName, memberAge, memberMobile)
         values (#{memberEmail}, #{memberPassword}, #{memberName}, #{memberAge}, #{memberMobile})
     </insert>
     <insert id="regist" parameterType="member">
-        insert into member_table(userId, memberPassword, memberName)
+        insert into member(userId, memberPassword, memberName)
         values (#{userId}, #{memberPassword}, #{memberName})
     </insert>
     <select id="login" parameterType="member" resultType="member">
         select * from member where username=#{username} and password=#{password}
     </select>
     <select id="findAll" resultType="member">
-        select * from member_table
+        select * from member
     </select>
     <select id="findById" parameterType="Long" resultType="member">
-        select * from member_table where id=#{id}
+        select * from member where id=#{id}
     </select>
     <delete id="delete" parameterType="Long">
-        delete from member_table where id=#{id}
+        delete from member where id=#{id}
     </delete>
     <select id="findByMemberEmail" parameterType="String" resultType="member">
-        select * from member_table where memberEmail=#{loginEmail}
+        select * from member where memberEmail=#{loginEmail}
     </select>
     <update id="update" parameterType="member">
-        update member_table set memberAge=#{memberAge}, memberMobile=#{memberMobile}
+        update member set memberAge=#{memberAge}, memberMobile=#{memberMobile}
         where id=#{id}
     </update>
-        <select id="findByUserId" parameterType="String" resultType="member">
-        select * from member_table where userId=#{userId}
+    <select id="findByUserId" parameterType="member" resultType="member">
+        select * from member where username=#{username}
     </select>
+    <select id="findUuid" parameterType="String" resultType="String">
+        select UUID from member where username=#{username}
+    </select>
+    <update id="updateUuid" parameterType="member">
+        update member set UUID=#{UUID}
+        where username=#{username}
+    </update>
     <select id="pwLogin" parameterType="member" resultType="member">
-        select * from member_table where userId=#{userId} and memberPassword=#{memberPassword}
+        select * from member where userId=#{userId} and memberPassword=#{memberPassword}
     </select>
 </mapper>

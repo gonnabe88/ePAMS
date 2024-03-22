@@ -1,3 +1,12 @@
+$(document).ready(function() {
+    let key = getCookie("MFAChk"); 
+    if (key != "") // 쿠키가 있는 경우 
+		$("input:radio[name=MFA]:radio[value='"+key+"']").prop("checked", true);
+        
+    $('input[name="MFA"]').change(function() {
+		setCookie("MFAChk", $('input[name="MFA"]:checked').val(), 30);
+    });
+});
 
 $(document).ready(function() {
     let key = getCookie("idChk"); 

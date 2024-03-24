@@ -26,8 +26,7 @@ $(document).ready(function() {
 
     $("#username").keyup(function() {
         if ($("#flexCheckDefault").is(":checked")) 
-            setCookie("idChk", $("#username").val(), 30);
-        
+            setCookie("idChk", $("#username").val(), 30);        
     });
 });
 
@@ -47,13 +46,16 @@ function deleteCookie(cookieName) {
 function getCookie(cookieName) {
     cookieName = cookieName + '=';
     let cookieData = document.cookie;
+    console.log("cookieData : ", cookieData);
     let start = cookieData.indexOf(cookieName);
+    console.log("cookieData start : ", start);
     let cookieValue = '';
     if (start != -1) {
         start += cookieName.length;
         let end = cookieData.indexOf(';', start);
         if (end == -1) end = cookieData.length;
         cookieValue = cookieData.substring(start, end);
+        console.log("cookieValue : ", cookieValue);
     }
     return unescape(cookieValue);
 }
@@ -62,28 +64,27 @@ function getCookie(cookieName) {
 const login= () => {
     const username = document.getElementById("username").value;
     const MFA = $('input[name="MFA"]:checked').val();
-    const UUID = getCookie("UUID");
     let header = $("meta[name='_csrf_header']").attr('content');
     let token = $("meta[name='_csrf']").attr('content');
     
     switch (MFA) {
         case 'OTP':            
-            otpPreAuthAlert(username, MFA, header, token, UUID); //OTP 인증
+            otpPreAuthAlert(username, MFA, header, token); //OTP 인증
             break; 
         case 'SMS':
-            otpPreAuthAlert(username, MFA, header, token, UUID); //SMS 인증
+            otpPreAuthAlert(username, MFA, header, token); //SMS 인증
             break; 
         case '카카오톡':
-            otpPreAuthAlert(username, MFA, header, token, UUID); //카카오톡 인증
+            otpPreAuthAlert(username, MFA, header, token); //카카오톡 인증
             break; 
         case 'FIDO':
-            fidoPreAuthAlert(username, MFA, header, token, UUID); //FIDO 인증
+            fidoPreAuthAlert(username, MFA, header, token); //FIDO 인증
             break; 
     } //switch(MFA)
 }
 
 // FIDO 인증화면
-const fidoPreAuthAlert = (username, MFA, header, token, UUID) => {
+const fidoPreAuthAlert = (username, MFA, header, token) => {
 
 	Swal.fire({
 	        title: MFA+ " 인증",
@@ -102,8 +103,7 @@ const fidoPreAuthAlert = (username, MFA, header, token, UUID) => {
                 dataType: "json",
                 data: {
                     "username" : username,
-                    "OTP" : MFA,
-                    "UUID" : UUID
+                    "OTP" : MFA
                 },                
                 //CSRF Token
                 beforeSend: function (xhr) {
@@ -124,7 +124,7 @@ const fidoPreAuthAlert = (username, MFA, header, token, UUID) => {
 }
 
 // OTP 유형(SMS, 카카오, mOTP) 인증화면
-const otpPreAuthAlert = (username, MFA, header, token, UUID) => {
+const otpPreAuthAlert = (username, MFA, header, token) => {
 	
     Swal.fire({
         title: MFA+" 인증",
@@ -151,8 +151,7 @@ const otpPreAuthAlert = (username, MFA, header, token, UUID) => {
                 dataType: "json",
                 data: {
                     "username": username,
-                    "OTP": OTP,
-                    "UUID" : UUID
+                    "OTP": OTP
                 },                
                 //CSRF Token
                 beforeSend: function (xhr) {

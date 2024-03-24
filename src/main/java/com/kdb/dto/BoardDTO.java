@@ -11,7 +11,8 @@ import java.util.List;
 @Setter
 @ToString
 public class BoardDTO {
-    private Long id;
+
+	private Long id;
     private String boardWriter;
     private String boardPass;
     private String boardTitle;
@@ -20,4 +21,5 @@ public class BoardDTO {
     private String createdAt;
     private int fileAttached;
     private List<MultipartFile> boardFile;
+    
 }

@@ -1,4 +1,4 @@
-package com.kdb.repository;
+/*package com.kdb.repository;
 
 import com.kdb.dto.BoardDTO;
 import com.kdb.dto.BoardFileDTO;
@@ -45,3 +45,4 @@ public class BoardRepository {
         return sql.selectList("Board.findFile", id);
     }
 }
+*/

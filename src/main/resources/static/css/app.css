@@ -5,6 +5,14 @@
  * Copyright 2011-2023 The Bootstrap Authors
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
+ 
+ :root {
+ 	--bs-body-bg: #E4F0FF;
+	--bs-btn-bg: #6570C5;
+	--bs-btn-border-color: #6570C5;
+	--bs-btn-bg: background: linear-gradient(90deg, rgba(68,119,197,1) 0%, rgba(101,112,197,1) 50%);
+ }
+ 
 .ps {
     overflow: hidden !important;
     overflow-anchor: none;
@@ -22080,12 +22088,19 @@ body .bi:before,
     vertical-align: sub
 }
 
+
+@font-face {
+  font-family: "Dongle";
+  font-weight: 400;
+  font-style: normal;
+  src: url(./fonts/Dongle-Regular.ttf) format("truetype");
+}
+
 @font-face {
   font-family: "Madimi One";
   font-weight: 400;
   font-style: normal;
   src: url(./fonts/MadimiOne-Regular.ttf) format("truetype");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD
 }
 
 @font-face {
@@ -22093,7 +22108,6 @@ body .bi:before,
   font-weight: 400;
   font-style: normal;
   src: url(./fonts/NanumGothic-Regular.ttf) format("truetype");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD
 }
 
 @font-face {

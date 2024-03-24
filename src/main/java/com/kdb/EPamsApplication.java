@@ -10,7 +10,5 @@ public class EPamsApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(EPamsApplication.class, args);
-	}
-
-	
+	}	
 }

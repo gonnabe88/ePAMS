@@ -8,6 +8,11 @@
 <th:block layout:fragment="css">
 	<link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
 	<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+	
+	<link rel="stylesheet" href="extensions/owlcarousel/owl.carousel.min.css">
+	<link rel="stylesheet" href="extensions/owlcarousel/owl.theme.default.min.css">
+  
 </th:block>
 <!-- (end) private script -->
 
@@ -37,18 +42,12 @@
 								<div class="align-items-center ms-4">
 									<div class="col-lg-12 pe-xl-12">
 										<br>
-										<h6 class="fw-500 ms-1 mb-3 letter-spacing-2 text-dark">모바일근태시스템</h6>
-
-										<h6 class="display-4 text-dark fw-600 mb-3">
-											ePAMS에 <BR> 오신걸 환영합니다.
-										</h6>
-
-										<div
-											class="d-grid gap-2 d-md-flex justify-content-end mt-3 me-3">
-											<div class="pt-3 pb-3">
-												<!-- <a class="btn btn-primary" th:href="@{/logout}">바로가기</a> -->
-											</div>
-										</div>
+										<span class="animate__animated animate__bounceIn animate__slower" 
+										style="font-family:Dongle; font-size:40px; line-height:60px;">"모바일근태시스템"</span><br>
+										<span class="animate__animated animate__bounceIn animate__slower" 
+										style="font-family:Dongle; font-size:65px; line-height:60px; color:#435ebe;">ePAMS</span>
+										<span class="animate__animated animate__bounceIn animate__slower" 
+										style="font-family:Dongle; font-size:60px; line-height:60px;">에<br> 오신걸 환영합니다.</span>
 									</div>
 								</div>
 							</div>
@@ -61,10 +60,10 @@
 								<div class="align-items-center ms-4">
 									<div class="col-lg-12 pe-xl-12">
 										<br>
-										<h6 class="fw-500 ms-1 mb-3 letter-spacing-2 text-dark">연차 및 저축휴가</h6>
-										<h6 class="display-4 text-dark fw-600 mb-3">
-											언제 어디서든 <BR> 바로 신청하세요.
-										</h6>
+										<span style="font-family:Dongle; font-size:40px; line-height:60px;">"연차 및 저축휴가"</span><br>
+										<span class="animate__animated animate__flash animate__slower" 
+										style="font-family:Dongle; font-size:65px; line-height:60px; color:#435ebe;">언제 어디서든<br></span>
+										<span style="font-family:Dongle; font-size:60px; line-height:60px;">편리하게 신청하세요!</span>	
 									</div>
 								</div>
 							</div>
@@ -87,126 +86,91 @@
 			</div>
 		</div>
 
-		<!-- carousel (rolling image) -->
+		<!-- end carousel (rolling image) -->
+		
 		<div id="main-content">
-			<div class="row col-lg-6 col-sm-12">
-				<div class="col-lg-3">
+		<div class="d-flex justify-content-center">
+		<div class="row col-lg-10 col-md-12 d-flex justify-content-center">
+			<div class="row col-lg-6 col-md-6 col-sm-12">
+				<div class="col-lg-6">
 					<div data-aos="fade-up" data-aos-offset="200"
 										data-aos-easing="ease-out-cubic" data-aos-duration="2000">
 						<section class="section">
 							<div class="card">
-								<div class="card-header">
-									<h4 class="card-title">연차 휴가</h4>
-								</div>
 								<div class="card-body">
-									<p> 오늘 하루 신청하기 </p>
-									<p> 2024-04-06(월) </p>
-								</div>
-								<div class="ps-3 pb-3">
-									<a class="btn btn-primary" href="/index">신청하기</a>
+								<span style="font-family:Dongle; font-size:40px; line-height:60px; color:#435ebe;">연차 휴가</span>
+								<span style="font-family:Dongle; font-size:40px; line-height:60px;">신청하기</span>
+									<div class="d-flex gap-1 justify-content-around">
+										<img class="animate__animated animate__pulse animate__slow animate__infinite infinite " src="png/1/calendar_empty.png"/>
+										<img class="animate__animated animate__pulse animate__slow animate__delay-1s animate__infinite infinite " src="png/1/calendar_empty.png"/>
+									</div>
 								</div>
 							</div>
 						</section>
 					</div>
 				</div>
-				<div class="col-lg-3">	
+				<div class="col-lg-6">
 					<div data-aos="fade-up" data-aos-offset="200"
 										data-aos-easing="ease-out-cubic" data-aos-duration="2000">
 						<section class="section">
 							<div class="card">
-								<div class="card-header">
-									<h4 class="card-title">연차 휴가</h4>
-								</div>
 								<div class="card-body">
-									<p> 내일 하루 신청하기 </p>
-									<p> 2024-04-07(화) </p>
-								</div>
-								<div class="ps-3 pb-3">
-									<a class="btn btn-primary" href="/index">신청하기</a>
-								</div>
-							</div>
-						</section>
-					</div>
-				</div>	
-				
-				<div class="col-lg-3">
-					<div data-aos="fade-up" data-aos-offset="200"
-										data-aos-easing="ease-out-cubic" data-aos-duration="2000">
-						<section class="section">
-							<div class="card">
-								<div class="card-header">
-									<h4 class="card-title">연차 휴가</h4>
-								</div>
-								<div class="card-body">
-									<p> 오늘 하루 신청하기 </p>
-									<p> 2024-04-06(월) </p>
-								</div>
-								<div class="ps-3 pb-3">
-									<a class="btn btn-primary" href="/index">신청하기</a>
+								<span style="font-family:Dongle; font-size:40px; line-height:60px; color:#B351A8;">저축 휴가</span>
+								<span style="font-family:Dongle; font-size:40px; line-height:60px;">신청하기</span>
+									<div class="d-flex gap-1 justify-content-around">
+										<img class="animate__animated animate__pulse animate__slow animate__infinite	infinite " src="png/1/calendar_empty.png"/>
+										<img class="animate__animated animate__pulse animate__slow animate__delay-1s animate__infinite	infinite " src="png/1/calendar_empty.png"/>
+									</div>
 								</div>
 							</div>
 						</section>
 					</div>
 				</div>
-				<div class="col-lg-3">	
-					<div data-aos="fade-up" data-aos-offset="200"
-										data-aos-easing="ease-out-cubic" data-aos-duration="2000">
-						<section class="section">
-							<div class="card">
-								<div class="card-header">
-									<h4 class="card-title">연차 휴가</h4>
-								</div>
-								<div class="card-body">
-									<p> 내일 하루 신청하기 </p>
-									<p> 2024-04-07(화) </p>
-								</div>
-								<div class="ps-3 pb-3">
-									<a class="btn btn-primary" href="/index">신청하기</a>
-								</div>
-							</div>
-						</section>
-					</div>
-				</div>	
-				
-				<div data-aos="fade-up" data-aos-offset="200"
-									data-aos-easing="ease-out-cubic" data-aos-duration="2000">
+			</div>
+		</div>		
+		</div>
+			
+		</div>
+		
+		<div class="d-flex justify-content-center">
+			<div class="container">
+				<div class="col-lg-12">
 					<section class="section">
 						<div class="card">
-							<div class="card-header">
-								<h4 class="card-title">저축 휴가</h4>
-							</div>
-							<div class="card-body">
-								<p> 오늘 하루 신청하기 </p>
-								<p> 2024-04-06(월) </p>
-							</div>
-							<div class="ps-3 pb-3">
-								<a class="btn btn-primary" href="/index">신청하기</a>
-							</div>
-						</div>
-					</section>
-				</div>
-				
-				<div data-aos="fade-up" data-aos-offset="200"
-									data-aos-easing="ease-out-cubic" data-aos-duration="2000">
-					<section class="section">
-						<div class="card">
-							<div class="card-header">
-								<h4 class="card-title">저축 휴가</h4>
-							</div>
-							<div class="card-body">
-								<p> 내일 하루 신청하기 </p>
-								<p> 2024-04-07(화) </p>
-							</div>
-							<div class="ps-3 pb-3">
-								<a class="btn btn-primary" href="/index">신청하기</a>
+							<div class="card-body" style="padding:1.0rem;">
+							<span style="font-family:Dongle; font-size:40px; line-height:60px;">1일 미만 휴가</span>
+							<span style="font-family:Dongle; font-size:40px; line-height:60px;">신청하기</span>
+								<div class="d-flex gap-1 justify-content-around">
+									<div class="owl-carousel">
+										<img class="animate__animated animate__pulse animate__slow animate__infinite infinite" src="png/1/calendar_empty.png" style="width:80px; height:80px;"/>
+										<img class="animate__animated animate__pulse animate__slow animate__delay-1s animate__infinite infinite" src="png/1/calendar_empty.png" style="width:80px; height:80px;"/>
+										<img class="animate__animated animate__pulse animate__slow animate__infinite infinite" src="png/1/calendar_empty.png" style="width:80px; height:80px;"/>
+										<img class="animate__animated animate__pulse animate__slow animate__delay-1s animate__infinite infinite" src="png/1/calendar_empty.png" style="width:80px; height:80px;"/>
+										<img class="animate__animated animate__pulse animate__slow animate__infinite infinite" src="png/1/calendar_empty.png" style="width:80px; height:80px;"/>
+										<img class="animate__animated animate__pulse animate__slow animate__delay-1s animate__infinite infinite" src="png/1/calendar_empty.png" style="width:80px; height:80px;"/>
+										<img class="animate__animated animate__pulse animate__slow animate__infinite infinite" src="png/1/calendar_empty.png" style="width:80px; height:80px;"/>
+										<img class="animate__animated animate__pulse animate__slow animate__delay-1s animate__infinite infinite" src="png/1/calendar_empty.png" style="width:80px; height:80px;"/>
+									</div>
+								</div>
 							</div>
 						</div>
 					</section>
 				</div>
 			</div>
+		</div>
+		
+		
+		<div class="row d-flex justify-content-center">
+			<div class="container">
+				<span style="font-family:Dongle; font-size:40px; line-height:60px;">직접 신청하러 가기</span>
+			</div>
+		</div>
+		
+		
+		<div class="row d-flex justify-content-center">
+			<div class="container" style="background-image:url(png/cool-background.png)">
 			
-			
-			
+			</div>
 		</div>
 	</div>
 
@@ -215,7 +179,32 @@
 	<th:block layout:fragment="script">
 		<script>
 			AOS.init(); // 자바스크립트로 init()을 해야 동작한다.
+			$(document).ready(function(){
+				  $(".owl-carousel").owlCarousel(
+				  {
+					    items:4,
+					    loop:true,
+					    margin:10,
+					    autoplay:true,
+					    autoplayTimeout:1000,
+					    autoplayHoverPause:true
+				  });
+				  $('.play').on('click',function(){
+					    owl.trigger('play.owl.autoplay',[1000])
+					})
+				  $('.stop').on('click',function(){
+				    owl.trigger('stop.owl.autoplay')
+				})
+				});
 		</script>
+		<script src="https://unpkg.com/hangul-js"></script>
+		<script src="https://unpkg.com/type-hangul@latest/dist/type-hangul.min.js"></script>
+		<script>
+	    	TypeHangul.type('#banner');
+		</script>
+		
+		<script src="extensions/owlcarousel/owl.carousel.min.js"></script>
+		
 	</th:block>
 	<!-- (end) private script -->
 </body>

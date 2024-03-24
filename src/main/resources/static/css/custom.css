@@ -1,86 +1,28 @@
-.radioButtonStyle{
-    display: flex;
-    flex-direction: row;
-}
-
-.radioStyle{
-    font-size: 14px;
-}
-
-.radioStyle [type='radio']{
-    display: none;
-}
-
-.radioStyle span{
-    text-align: center;
-    height: auto;
-    width:150px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    box-sizing: border-box;
-    border-radius: 15px;
-    background-color: #ffffff;
-    margin:10px;
-    padding:15px;
-    box-shadow: 3px 3px 10px #dcdcdc;
-    border:2px solid #ffffff;
-}
-
-.rsTitle{
-    display: flex;
-    flex-direction: row;
-    width:100%;
-    font-weight: 700;
-    font-size: 16px;
-    padding:5px 0px 15px 0px;
-    align-items: center;
-}
-
-.rsTitle >div{
+.custom-shape-divider-top-1711120872 {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-    text-align: left;
+    overflow: hidden;
+    line-height: 0;
 }
 
-.rsTitle >p{
-    margin:0px;
-    width:15px;
-    min-width:15px;
-    max-width: 15px;
-    height:15px;
-    min-height: 15px;
-    max-height: 15px;
-    border:5px solid #dcdcdc;
-    box-sizing: border-box;
-    border-radius: 250px;
+.custom-shape-divider-top-1711120872 svg {
+    position: relative;
+    display: block;
+    width: calc(274% + 1.3px);
+    height: 322px;
+    transform: rotateY(180deg);
 }
 
-.rsContents{
-    width:100%;
-    text-align: left;
-    font-size: 13px;
-    padding-bottom:5px;
+.custom-shape-divider-top-1711120872 .shape-fill {
+    fill: #4477C5;
 }
 
-.radioStyle [type='radio']:checked + span{
-    border:2px solid #ee8432;
-    background-color: #fff5ee;
-}
-
-.radioStyle [type='radio']:checked + span >div > p{
-    border:5px solid #ee8432;
-    width:100%;
-    height:100%;
-}
-
-.radioStyle [type='radio']:disabled + span{
-    color:#dcdcdc;
-}
-
-.radioStyle [type='radio']:disabled + span > div >p{
-    background-color: #f3f3f3;
-    border:0px;
-    width:100%;
-    height:100%;
+/** For mobile devices **/
+@media (max-width: 767px) {
+    .custom-shape-divider-top-1711120872 svg {
+        width: calc(299% + 1.3px);
+        height: 263px;
+    }
 }

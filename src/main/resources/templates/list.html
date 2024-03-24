@@ -1,70 +1,88 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" 
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
-      xmlns:sec="http://www.thymeleaf.org"
-      layout:decorate="~{common/layout}">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.thymeleaf.org" layout:decorate="~{common/layout}">
 
 <head>
-	<!-- (start) private script -->
-	<th:block layout:fragment="css">
-		<link rel="stylesheet" href="extensions/datatables.net-bs5/css/dataTables.bootstrap5.min.css">
-		<link rel="stylesheet" href="css/table-datatable-jquery.css">
-		<style>
-			.ck-editor__editable_inline {
-			    min-height: 400px;
-			}
-		</style>
-	</th:block>
-	<!-- (end) private script -->	
+<!-- (start) private script -->
+<th:block layout:fragment="css">
+	<link rel="stylesheet" href="/extensions/datatables.net-bs5/css/dataTables.bootstrap5.min.css">
+	<link rel="stylesheet" href="/css/table-datatable-jquery.css">
+	<style>
+.ck-editor__editable_inline {
+	min-height: 400px;
+}
+</style>
+</th:block>
+<!-- (end) private script -->
 </head>
 
 <body>
 
 	<div layout:fragment="contents">
-			<div id="main-content">
-				<div class="page-heading">
-
-					<h1>공지사항</h1> <br>
-					<div class="table-responsive">
+		<div id="main-content">
+			<div class="d-flex justify-content-center">
+				<div class="row col-lg-10 col-md-12 d-flex justify-content-center">
+					<div class="page-heading">
+						<h1>공지사항</h1>
+						<br>
 						<div class="d-flex gap-2 flex-row-reverse">
-							<a class="btn btn-primary mb-3" type="submit" id="submit" th:href="@{/editor}">글쓰기</a><br>
+							<a class="btn btn-primary mb-3" type="submit" id="submit" th:href="@{/board/editor}">글쓰기</a><br>
 						</div>
-						<table class="table" id="table1">
-							<thead>
-								<tr>
-									<th>번호</th>
-									<th>제목</th>
-									<th>작성자</th>
-									<th>작성시간</th>
-									<th>조회수</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr th:each="board: ${boardList}" id="list">
-									<td th:text="${board.id}"></td>
-									<td><a th:text="${board.boardTitle}" th:href="@{|/${board.id}|}"></a></td>
-									<td th:text="${board.boardWriter}"></td>
-									<td th:text="${board.createdAt}"></td>
-									<td th:text="${board.boardHits}"></td>
-								</tr>
-						</table>
 					</div>
+					<div class="table-responsive d-flex gap-2 flex-row-reverse">
+						<div class="row col-lg-12 col-md-12 col-sm-12">
+							<div class="col-lg-12">
+								<div data-aos="fade-up" data-aos-offset="200" data-aos-easing="ease-out-cubic" data-aos-duration="2000">
+									<section class="section"  th:each="board: ${boardList}">
+										<div class="card"> 										
+											<div class="card-body">												
+												<a th:href="@{|/${board.id}|}"><h4 th:text="${board.boardTitle}"></h4></a>
+												<p th:utext="${board.boardContents}"></p>												
+												<p class="text-end" th:text="'작성자 : '+${board.boardWriter}+' / 작성일 : '+${board.boardCreatedTime}+' / 조회수 : '+${board.boardHits}"></p>												
+											</div>											
+										</div>
+									</section>
+								</div>
+							</div>
+						</div>
+
+						<!-- <table class="table" id="table1">
+								<thead>
+									<tr>
+										<th>번호</th>
+										<th>제목</th>
+										<th>작성자</th>
+										<th>작성시간</th>
+										<th>조회수</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="board: ${boardList}" id="list">
+										<td th:text="${board.id}"></td>
+										<td><a th:text="${board.boardTitle}" th:href="@{|/${board.id}|}"></a></td>
+										<td th:text="${board.boardWriter}"></td>
+										<td th:text="${board.createdAt}"></td>
+										<td th:text="${board.boardHits}"></td>
+									</tr>
+							</table> -->
+					</div>
+
 				</div>
 			</div>
+		</div>
 	</div>
-	
+
 	<!-- (start) private script -->
 	<th:block layout:fragment="script">
 
 		<!-- <script src="https://cdn.ckeditor.com/ckeditor5/41.2.0/classic/ckeditor.js"></script>
 		<script src="https://ckeditor.com/apps/ckfinder/3.5.0/ckfinder.js"></script> -->
-		<script src="js/ckeditor.js"></script>		
-		<!-- <script src="https://cdn.jsdelivr.net/npm/ckeditor5-full-free-plugin@23.1.2/build/ckeditor.min.js"></script> -->		
-		<script src="extensions/datatables.net/js/jquery.dataTables.min.js"></script>
-		<script src="extensions/datatables.net-bs5/js/dataTables.bootstrap5.min.js"></script>
-		<script src="js/pages/datatables.js"></script>
-		
-   	</th:block>
+		<script src="/js/ckeditor.js"></script>
+		<!-- <script src="https://cdn.jsdelivr.net/npm/ckeditor5-full-free-plugin@23.1.2/build/ckeditor.min.js"></script> -->
+		<script src="/extensions/datatables.net/js/jquery.dataTables.min.js"></script>
+		<script src="/extensions/datatables.net-bs5/js/dataTables.bootstrap5.min.js"></script>
+		<script src="/js/pages/datatables.js"></script>
+
+	</th:block>
 	<!-- (end) private script -->
 </body>
 

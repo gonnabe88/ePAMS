@@ -1,4 +1,4 @@
-package com.kdb.controller;
+/*package com.kdb.controller;
 
 import java.io.IOException;
 import java.util.List;
@@ -99,3 +99,4 @@ public class BoardController {
 
 
 
+*/

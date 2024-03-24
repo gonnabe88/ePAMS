@@ -1,11 +1,22 @@
 # server port
 server:
-  port: 8081
+  port: 8080
+  servlet: 
+    session:
+      timeout: 30m
+      persistent: true
+      tracking-modes: cookie
+      cookie:
+        domain: epams.iptime.org
+        http-only: true
+        path: /
+        max-age: -1 # infinite
+        #secure: true # https only allowed
 
 # spring
 spring:
   devtools.livereload.enabled: true  
-
+  
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/board?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
@@ -32,6 +43,9 @@ spring:
   session:
     jdbc:
       initialize-schema: always
+  web:
+    resources:
+      static-locations: classpath:/templates
 
 
 # mybatis

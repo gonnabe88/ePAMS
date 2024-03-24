@@ -19,21 +19,26 @@ public class LoginService {
 
     public boolean otpLogin(MemberDTO memberDTO) {
     	
+    	MemberDTO ismemberDTO = loginRepository.findByUserId(memberDTO.getUsername());
+    	
     	//////////////////////////////////////////////
     	// SMS, 카카오톡 ONEGUARD mOTP 연동 인증부 구현 필요 //
     	//////////////////////////////////////////////
     	
-        if (memberDTO.getOTP().equals(OTP)) return true;
+    	if (ismemberDTO != null && memberDTO.getOTP().equals(OTP)) return true;
         else return false;
     }  
     
     public boolean fidoLogin(MemberDTO memberDTO) {
     	
+    	MemberDTO ismemberDTO = loginRepository.findByUserId(memberDTO.getUsername());
+    	
     	///////////////////////////////////
     	// ONEGUARD FIDO 연동 인증부 구현 필요 //
     	///////////////////////////////////
     	
-        return true;
+    	if (ismemberDTO == null ) return false;
+    	else return true;
     }  
 	
     public boolean pwLogin(MemberDTO memberDTO) {
@@ -60,7 +65,7 @@ public class LoginService {
     	System.out.println("저장된 UUID : " + UUID);
     	System.out.println("보내온 UUID : " + memberDTO.getUUID());        
     	
-        if (UUID.equals(null)) return true;
+        if (UUID == null) return true;
         else if (UUID.equals(memberDTO.getUUID())) return true;
         else return false;
     }

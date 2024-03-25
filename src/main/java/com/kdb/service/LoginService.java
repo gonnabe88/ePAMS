@@ -15,7 +15,7 @@ public class LoginService {
     private final LoginRepository loginRepository;
     private final EncShaService encshaService;
     private final String OTP = "111111"; // 임시 OTP 검증용
-    private final UUID uuid = UUID.randomUUID();
+    private UUID uuid = UUID.randomUUID();
 
     public boolean otpLogin(MemberDTO memberDTO) {
     	
@@ -72,6 +72,7 @@ public class LoginService {
     
     public String updateUUID(String username) {
 
+    	uuid = UUID.randomUUID();
     	MemberDTO ismemberDTO = loginRepository.findByUserId(username);
     	ismemberDTO.setUUID(uuid.toString());
     	loginRepository.updateUuid(ismemberDTO);        

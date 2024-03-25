@@ -122,4 +122,6 @@ public class BoardService {
         Page<BoardDTO> boardDTOS = boardEntities.map(board -> new BoardDTO(board.getId(), board.getBoardWriter(), board.getBoardTitle(), board.getBoardHits(), board.getCreatedTime()));
         return boardDTOS;
     }
+    
+    
 }

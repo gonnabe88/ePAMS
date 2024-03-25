@@ -32,39 +32,44 @@
 						<div class="row col-lg-12 col-md-12 col-sm-12">
 							<div class="col-lg-12">
 								<div data-aos="fade-up" data-aos-offset="200" data-aos-easing="ease-out-cubic" data-aos-duration="2000">
-									<section class="section"  th:each="board: ${boardList}">
-										<div class="card"> 										
-											<div class="card-body">												
+									<section class="section" th:each="board: ${boardList}">
+										<div class="card">
+											<div class="card-body">
 												<a th:href="@{|/${board.id}|}"><h4 th:text="${board.boardTitle}"></h4></a>
-												<p th:utext="${board.boardContents}"></p>												
-												<p class="text-end" th:text="'작성자 : '+${board.boardWriter}+' / 작성일 : '+${board.boardCreatedTime}+' / 조회수 : '+${board.boardHits}"></p>												
-											</div>											
+												<p th:utext="${board.boardContents}"></p>
+												<p class="text-end" th:text="'작성자 : '+${board.boardWriter}+' / 작성일 : '+${board.boardCreatedTime}+' / 조회수 : '+${board.boardHits}"></p>
+											</div>
 										</div>
 									</section>
 								</div>
 							</div>
 						</div>
 
-						<!-- <table class="table" id="table1">
-								<thead>
-									<tr>
-										<th>번호</th>
-										<th>제목</th>
-										<th>작성자</th>
-										<th>작성시간</th>
-										<th>조회수</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr th:each="board: ${boardList}" id="list">
-										<td th:text="${board.id}"></td>
-										<td><a th:text="${board.boardTitle}" th:href="@{|/${board.id}|}"></a></td>
-										<td th:text="${board.boardWriter}"></td>
-										<td th:text="${board.createdAt}"></td>
-										<td th:text="${board.boardHits}"></td>
-									</tr>
-							</table> -->
 					</div>
+
+<!-- 페이징처리 시작 -->
+    <div th:if="${!boardList.isEmpty()}">
+        <ul class="pagination justify-content-center">
+            <li class="page-item" th:classappend="${!boardList.hasPrevious} ? 'disabled'">
+                <a class="page-link"
+                    th:href="@{|?page=${boardList.number-1}|}">
+                    <span>이전</span>
+                </a>
+            </li>
+            <li th:each="page: ${#numbers.sequence(1, boardList.totalPages)}" 
+                th:if="${page >= boardList.number-3 and page <= boardList.number+3}"
+                th:classappend="${page == boardList.number+1} ? 'active'" 
+                class="page-item">
+                <a th:text="${page}" class="page-link" th:href="@{|?page=${page}|}"></a>
+            </li>
+            <li class="page-item" th:classappend="${!boardList.hasNext} ? 'disabled'">
+                <a class="page-link" th:href="@{|?page=${boardList.number+1}|}">
+                    <span>다음</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <!-- 페이징처리 끝 -->
 
 				</div>
 			</div>

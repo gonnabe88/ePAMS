@@ -13,6 +13,12 @@
 	--bs-btn-bg: background: linear-gradient(90deg, rgba(68,119,197,1) 0%, rgba(101,112,197,1) 50%);
  }
  
+ /* 반응형 웹 우측 여백 제거*/
+ html, body {
+  margin: 0px;
+  overflow-x: hidden;
+}
+ 
 .ps {
     overflow: hidden !important;
     overflow-anchor: none;
@@ -311,7 +317,7 @@ body {
     text-align: var(--bs-body-text-align);
     background-color: var(--bs-body-bg);
     -webkit-text-size-adjust: 100%;
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0)
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
 hr {

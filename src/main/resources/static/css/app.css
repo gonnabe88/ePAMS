@@ -11,6 +11,7 @@
 	--bs-btn-bg: #6570C5;
 	--bs-btn-border-color: #6570C5;
 	--bs-btn-bg: background: linear-gradient(90deg, rgba(68,119,197,1) 0%, rgba(101,112,197,1) 50%);
+	--bs-btn-font-family: "Nanum Gothic"
  }
  
  /* 반응형 웹 우측 여백 제거*/
@@ -189,6 +190,7 @@
     --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
     --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, .15), rgba(255, 255, 255, 0));
     --bs-body-font-family: "Nanum Gothic";
+    --bs-btn-font-family: "Nanum Gothic";
     --bs-body-font-size: 1rem;
     --bs-body-font-weight: 400;
     --bs-body-line-height: 1.5;
@@ -336,6 +338,16 @@ hr {
     color: white;
 }
 
+
+h7,
+.h7{
+    margin-top: 0;
+    margin-bottom: .5rem;
+    font-weight: 700;
+    line-height: 1.2;
+    color: grey;
+}
+
 h6,
 .h6,
 h5,
@@ -420,6 +432,12 @@ h5,
 h6,
 .h6 {
     font-size: 1rem
+}
+
+
+h7,
+.h7 {
+    font-size: 0.75rem
 }
 
 p {

@@ -7,6 +7,7 @@ server:
       persistent: true
       tracking-modes: cookie
       cookie:
+        #domain: epams.iptime.org
         domain: localhost
         http-only: true
         path: /

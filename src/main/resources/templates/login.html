@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="viewport" content="width=device-width, height=device-height,initial-scale=1.0">
 	
 	<meta name="_csrf_header" th:content="${_csrf.headerName}">
 	<meta name="_csrf" th:content="${_csrf.token}">
@@ -25,7 +25,7 @@
 <body>
 	<script src="js/initTheme.js"></script>
 	<div id="auth">
-		<div class="row h-100">
+		<div class="row ">
 			<div class="col-lg-5 col-12">
 				<div id="auth-left">
 					<div class="d-flex justify-content-center" >
@@ -93,10 +93,6 @@
 				</div>
 			</div>
 		
-			<div class="col-lg-7 d-none d-lg-block">
-        		<div id="auth-right">
-        		</div>
-       		</div>
 
         </div>
     </div>

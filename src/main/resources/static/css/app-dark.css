@@ -10828,7 +10828,7 @@ html[data-bs-theme=dark] #main.layout-horizontal {
 }
 
 html[data-bs-theme=dark] #main #main-content {
-    padding: 2rem
+    padding: 1rem
 }
 
 html[data-bs-theme=dark] #main,

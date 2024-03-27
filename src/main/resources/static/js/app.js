@@ -6083,8 +6083,7 @@
             this.init()
         }
         init() {
-            //document.querySelectorAll(".burger-btn").forEach(r=>r.addEventListener("click", this.toggle.bind(this))),
-            console.out("here")
+            document.querySelectorAll(".burger-btn").forEach(r=>r.addEventListener("click", this.toggle.bind(this))),
             document.querySelectorAll(".sidebar-hide").forEach(r=>r.addEventListener("click", this.toggle.bind(this))),
             window.addEventListener("resize", this.onResize.bind(this));
             const k = r=>{

@@ -2,12 +2,8 @@
 <html
     xmlns:th="http://www.thymeleaf.org"
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-<head>
-
-<link rel="stylesheet" href="css/app.css">
-<link rel="stylesheet" href="css/app-dark.css">
-
-</head>
+    
+<head></head>
  
 <body>
 	<script src="js/initTheme.js"></script>	
@@ -89,20 +85,16 @@
 								<span>로그아웃</span>
 							</a>
 						</li>												
-					</ul>
-
-
-					
-				</div>
-						
+					</ul>					
+				</div>	
+				
 			</div>
-
 		</div>
-
-	</div>
-	<script src="js/components/dark.js"></script>
-	<script src="extensions/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-	<script src="js/app.js"></script>
-	
+	</div>	
+	<th:block layout:fragment="script">
+		<script>			
+			console.log("ON");
+		</script>
+	</th:block>
 </body>
 </html>

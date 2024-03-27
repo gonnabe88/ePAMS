@@ -328,6 +328,14 @@ hr {
     opacity: .25
 }
 
+.banner_text {
+    font-family: Dongle;
+    font-size: 40px;
+    font-weight: 400;
+    line-height: 10px;
+    color: white;
+}
+
 h6,
 .h6,
 h5,
@@ -358,6 +366,11 @@ h1,
     .h1 {
         font-size: 2.5rem
     }
+}
+
+h1,
+.auth-subtitle {
+	font-family: "Nunito";
 }
 
 h2,
@@ -3545,7 +3558,7 @@ textarea.form-control.is-invalid {
 .btn {
     --bs-btn-padding-x: .75rem;
     --bs-btn-padding-y: .375rem;
-    --bs-btn-font-family: ;
+    --bs-btn-font-family: var(--bs-btn-font-family);
     --bs-btn-font-size: 1rem;
     --bs-btn-font-weight: 400;
     --bs-btn-line-height: 1.5;
@@ -6953,7 +6966,7 @@ fieldset:disabled .btn {
     position: relative;
     width: 100%;
     /*min-height: auto;*/
-    height:300px;
+    max-height:250px;
     overflow: hidden
 }
 
@@ -7045,7 +7058,8 @@ fieldset:disabled .btn {
     background: none;
     border: 0;
     opacity: .5;
-    transition: opacity .15s ease
+    transition: opacity .15s ease;
+    max-height: 250px
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -7102,7 +7116,7 @@ fieldset:disabled .btn {
     justify-content: center;
     padding: 0;
     margin-right: 15%;
-    margin-bottom: 1rem;
+    margin-bottom: 0rem;
     margin-left: 15%
 }
 
@@ -23439,7 +23453,7 @@ body .bi:before,
 }
 
 .layout-navbar {
-    --navbar-height: 90px
+    --navbar-height: 70px
 }
 
 .layout-navbar footer {

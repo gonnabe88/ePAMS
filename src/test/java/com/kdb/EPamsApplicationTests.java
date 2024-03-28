@@ -6,8 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.kdb.Board.BoardDTO;
-import com.kdb.Board.BoardService;
+import com.kdb.common.dto.BoardDTO;
+import com.kdb.common.service.BoardService;
 
 @SpringBootTest
 class EPamsApplicationTests {

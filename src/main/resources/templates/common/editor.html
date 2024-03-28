@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+      xmlns:sec="http://www.thymeleaf.org"
+      layout:decorate="~{common/layout/layout}">
+
+<head>
+	<!-- (start) private script -->
+	<th:block layout:fragment="css">
+		
+<link rel="stylesheet" href="/extensions/summernote/summernote-lite.css">		
+<link rel="stylesheet" crossorigin="" href="/css/form-editor-summernote.css">
+
+	</th:block>
+	<!-- (end) private script -->	
+</head>
+
+<body>
+
+	<div layout:fragment="contents">
+		<div id="main-content">
+
+
+
+
+
+
+
+
+			<div class="page-heading">
+
+				<h1>공지사항</h1>
+				<br> <input class="form-control" type="text" placeholder="제목" aria-label="default input example" id="title"> <br>
+
+				<!-- <div id="editor"></div> -->
+			<div class="card">
+
+				<div class="card-body">
+					<div id="summernote" style="display: none;"></div>
+				</div>
+			</div>
+				<div class="d-flex gap-2 flex-row-reverse">
+					<button class="btn btn-primary mt-3" type="submit" id="submit" onclick="save()">등록</button>
+					<a class="btn btn-secondary mt-3" type="submit" id="submit" th:href="@{/board/list}">목록</a>
+				</div>
+
+				<br>
+			</div>
+		</div>
+	</div>
+
+	<!-- (start) private script -->
+	<th:block layout:fragment="script">
+<script src="/extensions/jquery/jquery.min.js"></script>
+<script src="/extensions/summernote/summernote-lite.min.js"></script>
+<script src="/js/pages/summernote.js"></script>
+		<script>
+	    function save()
+	    {    
+	        var header = $("meta[name='_csrf_header']").attr('content');
+	        var token = $("meta[name='_csrf']").attr('content');
+	    	$.ajax({
+				type: "post",
+				url: "/board/save",
+				dataType: "json",
+				data: {
+					"boardTitle": document.getElementById("title").value,
+					"boardContents": $('#summernote').summernote('code'),
+				},
+                //CSRF Token
+                beforeSend: function (xhr) {
+		        	xhr.setRequestHeader(header, token);
+		        },		
+				complete: function(data) {
+					//document.getElementById("exampleFormControlTextarea1").value = editor.getData();
+					//console.log( editor.getData(), document.getElementById("title").value , data);
+					//$("#list").replaceWith(list);
+					window.location.href = '/board/list'
+				}
+	    	});
+		}
+	    </script>
+	    	
+    	</th:block>
+		<!-- (end) private script -->
+	    
+</body>
+
+</html>

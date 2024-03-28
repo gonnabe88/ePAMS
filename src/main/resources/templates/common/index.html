@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org" layout:decorate="~{common/layout/layout}">
+
+<head>
+<!-- (start) private script -->
+<th:block layout:fragment="css">
+	<link rel="stylesheet" href="/extensions/aos/aos.css">
+	
+	<link rel="stylesheet"
+		href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+	<link rel="stylesheet"
+		href="extensions/owlcarousel/owl.carousel.min.css">
+	<link rel="stylesheet"
+		href="extensions/owlcarousel/owl.theme.default.min.css">
+</th:block>
+<!-- (end) private script -->
+
+</head>
+
+<body>
+	<div layout:fragment="contents">
+		<div class="row">
+			<div id="carouselExampleIndicators" class="carousel slide"
+				data-bs-ride="carousel">
+				<div class="carousel-indicators">
+					<button type="button"
+						style="border-radius: 50%; width: 10px; height: 10px;"
+						data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
+						class="active" aria-current="true" aria-label="Slide 1"></button>
+					<button type="button"
+						style="border-radius: 50%; width: 10px; height: 10px;"
+						data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+						aria-label="Slide 2"></button>
+					<!--	<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+					<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3" aria-label="Slide 4"></button> -->
+				</div>
+				<div class="carousel-inner">
+					<div class="carousel-item active">
+						<div class="bg-no-repeat bg-cover bg-50 px-8"
+							style="background-image: url(images/kdb/BACKGROUND3.png); background-repeat: no-repeat; background-size: cover; position: relative; height: 50vh;">
+							<div class="container-md">
+								<div class="align-items-center ms-5">
+									<div class="col-lg-12 pe-xl-12">
+										<div class="row">
+											<p class="banner_text mt-5 mb-5">"모바일근태시스템"</p>
+										</div>
+										<h2 style="color: white;">ePAMS에 오신걸</h2>
+										<h2 style="color: white;">진심으로 환영합니다</h2>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="carousel-item">
+						<div class="bg-no-repeat bg-cover bg-50 px-8"
+							style="background-image: url(images/kdb/BACKGROUND4.png); background-repeat: no-repeat; background-size: cover; position: relative; height: 50vh;">
+							<div class="container-md">
+								<div class="align-items-center ms-5">
+									<div class="col-lg-12 pe-xl-12">
+										<div class="row">
+											<p class="banner_text mt-5 mb-5">"연차 및 저축휴가"</p>
+										</div>
+										<h2 style="color: white;">언제 어디서든</h2>
+										<h2 style="color: white;">편리하게 신청하세요</h2>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+				<button class="carousel-control-prev" type="button"
+					style="height: 300px;" data-bs-target="#carouselExampleIndicators"
+					data-bs-slide="prev">
+					<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+					<span class="visually-hidden">Previous</span>
+				</button>
+				<button class="carousel-control-next" type="button"
+					style="height: 300px;" data-bs-target="#carouselExampleIndicators"
+					data-bs-slide="next">
+					<span class="carousel-control-next-icon" aria-hidden="true"></span>
+					<span class="visually-hidden">Next</span>
+				</button>
+			</div>
+		</div>
+
+		<!-- end carousel (rolling image) -->
+
+		<div id="main-content">
+		<div class="container">
+			<div class="row d-flex justify-content-start mt-2 mb-1">				
+				<h5 class="text-start"><i class="bi bi-stars"></i> 빠른 신청</h5>
+			</div>
+		</div>
+			<div class="d-flex justify-content-center">
+				<div class="row col-lg-10 col-md-12 d-flex justify-content-center">
+					<div class="row col-lg-10 col-md-12 col-sm-12">
+						<div class="col-lg-4" style="height: 5rem;">
+							<div data-aos="fade-up" data-aos-offset="100"
+								data-aos-easing="ease-out-cubic" data-aos-duration="1000">
+								<section class="section">
+									<div class="card">
+										<div class="card-body align-content-center"
+											style="height: 4rem; padding: 0.8rem;">
+											<div class="d-flex justify-content-center ">
+												<div class="col-8 mb-0 align-content-center">
+													<h6 style="margin-bottom: 0;">연차휴가 1일</h6>
+													<h7>2024-03-28(목) 하루 8시간</h7>
+												</div>
+												<div class="col-4 d-flex justify-content-end">
+													<div class="btn btn-primary btn-sm" style="height:35px;" onclick="ApplAlert()">신청</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</section>
+							</div>
+						</div>
+						<div class="col-lg-4" style="height: 5rem;">
+							<div data-aos="fade-up" data-aos-offset="100"
+								data-aos-easing="ease-out-cubic" data-aos-duration="1000">
+								<section class="section">
+									<div class="card">
+										<div class="card-body align-content-center"
+											style="height: 4rem; padding: 0.8rem;">
+											<div class="d-flex justify-content-center ">
+												<div class="col-8 mb-0 align-content-center">
+													<h6 style="margin-bottom: 0;">연차휴가 오전(반차)</h6>
+													<h7>2024-03-28(목) 오전 4시간</h7></h7>
+												</div>
+												<div class="col-4 d-flex justify-content-end">
+													<div class="btn btn-primary btn-sm" style="height:35px;" onclick="ApplAlert()">신청</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</section>
+							</div>
+						</div>
+						<div class="col-lg-4" style="height: 5rem;">
+							<div data-aos="fade-up" data-aos-offset="100"
+								data-aos-easing="ease-out-cubic" data-aos-duration="1000">
+								<section class="section">
+									<div class="card">
+										<div class="card-body align-content-center"
+											style="height: 4rem; padding: 0.8rem;">
+											<div class="d-flex justify-content-center ">
+												<div class="col-8 mb-0 align-content-center">
+													<h6 style="margin-bottom: 0;">연차휴가 오전(반반차)</h6>
+													<h7>2024-03-28(목) 오전 2시간</h7></h7>
+												</div>
+												<div class="col-4 d-flex justify-content-end">
+													<div class="btn btn-primary btn-sm" style="height:35px;" onclick="ApplAlert()">신청</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</section>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="container">
+				<div class="row d-flex justify-content-end">
+					<h6 class="text-end">직접 신청하러 가기 <i class="bi bi-arrow-right-circle-fill"></i></h6>
+				</div>
+			</div>
+
+		</div>
+		
+		<div class="divider">
+          <div class="divider-text" style="background-color:transparent;"><img class="divider-text" src="/images/kdb/epams_r_cw_action.gif"
+						style="width: 50px; height: 50px; border-radius: 50%; padding: 0;" /></div>
+        </div>
+
+		<div id="main-content">
+			<div class="container">
+				<div class="row d-flex justify-content-start mb-2">
+					<h5 class="text-start"><i class="bi bi-bell-fill"></i> 최근 공지사항</h5>
+				</div>
+			</div>
+			<div class="row col-lg-12 col-md-12 col-sm-12">
+				<div class="col-12">
+					
+						<section class="section" th:each="board: ${boardList}">
+						<div data-aos="fade-up" class="aos-init aos-animate">
+							<div class="card">
+								<div class="card-body">
+									<a class="card-title" th:href="@{|/${board.id}|}"><h6 th:text="${board.boardTitle}"></h6></a>
+									<p class="card-text" th:utext="${board.boardContents}"></p>
+									
+									<div class="d-flex justify-content-around">
+									<div>
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
+									  <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"/>
+									</svg>
+									<small class="text-body-secondary" th:text="${#temporals.format(board.boardCreatedTime, 'yyyy-MM-dd')}"></small>
+									</div>
+									
+									<div>
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark" viewBox="0 0 16 16">
+									  <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1z"/>
+									</svg>
+									<small class="text-body-secondary" th:text="${board.boardHits}"></small>
+									</div>
+									
+									<div>
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-building" viewBox="0 0 16 16">
+									  <path d="M4 2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zM4 5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zM7.5 5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm2.5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zM4.5 8a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm2.5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5z"/>
+									  <path d="M2 1a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1zm11 0H3v14h3v-2.5a.5.
+3z"/>
+									</svg>
+									<small class="text-body-secondary" th:text="${board.boardWriter}"></small>
+									</div>
+									</div>
+									
+								</div>
+							</div>
+							</div>
+						</section>
+					
+				</div>
+			</div>
+		</div>
+		
+		<div class="divider">
+          <div class="divider-text" style="background-color:transparent;"><img class="divider-text" src="/images/kdb/epams_r_cw_action.gif"
+						style="width: 50px; height: 50px; border-radius: 50%; padding: 0;" /></div>
+        </div>
+
+		<div id="main-content">
+		
+		<div class="container">
+	<div class="row d-flex justify-content-start mb-2">
+		<h5 class="text-start"><i class="bi bi-search"></i> 직원검색</h5>
+	</div>
+</div>
+		<div class="d-flex justify-content-center">
+		
+		<section id="input-group-buttons">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">담당자가 궁금하신가요?</h4>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-body">
+                            <p>이름, 팀/부서, 업무명으로 검색하세요</p>
+                            <div class="row">
+                                <div class="col-md-6 mb-1">
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text" id="basic-addon1"><i class="bi bi-search"></i></span>
+                                        <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2">
+                                        <button class="btn btn-primary" type="button" id="button-addon2">조회</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+<!--                     <div class="card-header">
+                        <h4 class="card-title">조회결과</h4>
+                    </div> -->
+                    
+					<div class="divider">
+                        <div class="divider-text" style="background-color:transparent;"><h5>조회결과</h5></div>
+                    </div>
+			<div class="row col-lg-12 col-md-12 col-sm-12">
+				<div class="col-12">					
+					<section class="section" th:each="board: ${boardList}">
+						<div data-aos="fade-up" class="aos-init aos-animate">
+							<div class="card" style="background-color: #F2F7FF; margin:1rem;">
+								<div class="card-body">
+									<a class="card-title" th:href="@{|/${board.id}|}"><h6 th:text="${board.boardTitle}"></h6></a>
+									<p class="card-text" th:utext="${board.boardContents}"></p>
+									
+									<div class="d-flex justify-content-around">
+									<div>
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
+									  <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"/>
+									</svg>
+									<small class="text-body-secondary" th:text="${#temporals.format(board.boardCreatedTime, 'yyyy-MM-dd')}"></small>
+									</div>
+									
+									<div>
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark" viewBox="0 0 16 16">
+									  <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1z"/>
+									</svg>
+									<small class="text-body-secondary" th:text="${board.boardHits}"></small>
+									</div>
+									
+									<div>
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-building" viewBox="0 0 16 16">
+									  <path d="M4 2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zM4 5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zM7.5 5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm2.5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zM4.5 8a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm2.5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5z"/>
+									  <path d="M2 1a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1zm11 0H3v14h3v-2.5a.5.
+3z"/>
+									</svg>
+									<small class="text-body-secondary" th:text="${board.boardWriter}"></small>
+									</div>
+									</div>
+									
+								</div>
+							</div>
+							</div>
+						</section>
+					
+				</div>
+			</div>
+    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </section>
+    </div>
+    
+    
+    
+    		<div class="divider">
+          <div class="divider-text" style="background-color:transparent;"><img class="divider-text" src="/images/kdb/epams_r_cw_action.gif"
+						style="width: 50px; height: 50px; border-radius: 50%; padding: 0;" /></div>
+        </div>
+		
+
+<div id="main-content">
+		<div class="d-flex justify-content-center">
+			<div class="container">
+				<div class="row d-flex justify-content-start mb-2">
+					<h5 class="text-start"><i class="bi bi-diagram-3-fill"></i> 관련 사이트</h5>
+				</div>
+				<div class="col-lg-12">
+					<section class="section">
+						<div class="card">
+						
+							<div class="card-body" style="padding: 1.0rem;">
+								
+								<div class="d-flex gap-1 justify-content-around">
+									<div class="owl-carousel">
+										<img
+											class="animate__animated animate__pulse animate__slow animate__infinite infinite"
+											src="png/1/calendar_empty.png"
+											style="width: 80px; height: 80px;" /> <img
+											class="animate__animated animate__pulse animate__slow animate__delay-1s animate__infinite infinite"
+											src="png/1/calendar_empty.png"
+											style="width: 80px; height: 80px;" /> <img
+											class="animate__animated animate__pulse animate__slow animate__infinite infinite"
+											src="png/1/calendar_empty.png"
+											style="width: 80px; height: 80px;" /> <img
+											class="animate__animated animate__pulse animate__slow animate__delay-1s animate__infinite infinite"
+											src="png/1/calendar_empty.png"
+											style="width: 80px; height: 80px;" /> <img
+											class="animate__animated animate__pulse animate__slow animate__infinite infinite"
+											src="png/1/calendar_empty.png"
+											style="width: 80px; height: 80px;" /> <img
+											class="animate__animated animate__pulse animate__slow animate__delay-1s animate__infinite infinite"
+											src="png/1/calendar_empty.png"
+											style="width: 80px; height: 80px;" /> <img
+											class="animate__animated animate__pulse animate__slow animate__infinite infinite"
+											src="png/1/calendar_empty.png"
+											style="width: 80px; height: 80px;" /> <img
+											class="animate__animated animate__pulse animate__slow animate__delay-1s animate__infinite infinite"
+											src="png/1/calendar_empty.png"
+											style="width: 80px; height: 80px;" />
+									</div>
+								</div>
+							</div>
+						</div>
+					</section>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+
+	<!-- (start) private script -->
+	<th:block layout:fragment="script">
+		<script src="/extensions/aos/aos.js"></script>		
+		<script src="/extensions/owlcarousel/owl.carousel.min.js"></script>
+		<script>
+
+		AOS.init({
+			easing: 'ease-out-back',
+			duration: 1000
+		});
+		</script>
+		<script>
+			$(document).ready(function() {
+				$(".owl-carousel").owlCarousel({
+					items : 4,
+					loop : true,
+					margin : 10,
+					autoplay : true,
+					autoplayTimeout : 1000,
+					autoplayHoverPause : true
+				});
+				$('.play').on('click', function() {
+					owl.trigger('play.owl.autoplay', [ 1000 ])
+				})
+				$('.stop').on('click', function() {
+					owl.trigger('stop.owl.autoplay')
+				})
+			});
+		</script>
+		
+		<script>
+
+		AOS.init({
+			easing: 'ease-out-back',
+			duration: 1000
+		});
+		</script>
+		
+		<script>
+			$(document).ready(function() {
+				$(".owl-carousel").owlCarousel({
+					items : 4,
+					loop : true,
+					margin : 10,
+					autoplay : true,
+					autoplayTimeout : 1000,
+					autoplayHoverPause : true
+				});
+				$('.play').on('click', function() {
+					owl.trigger('play.owl.autoplay', [ 1000 ])
+				})
+				$('.stop').on('click', function() {
+					owl.trigger('stop.owl.autoplay')
+				})
+			});
+		</script>
+		
+		<script>
+			const ApplAlert = () => {	
+				Swal.fire({
+					  title: "신청하시겠습니까?",
+					  html: "<p style=\"text-align:center\">2024-03-28(월) 연차 1일</p>",
+					  icon: "info",
+					  showCancelButton: true,
+					  confirmButtonColor: "#3085d6",
+					  cancelButtonColor: "#d33",
+					  confirmButtonText: "네, 신청할게요!",
+					  cancelButtonText: "아니요"
+					}).then((result) => {
+					  if (result.isConfirmed) {
+					    Swal.fire({
+					      title: "신청되었습니다.",
+					      html: "<p style=\"text-align:center\">2024-03-28(월) 연차 1일</p>",
+					      icon: "success"
+					    });
+					  }
+					});
+			}
+		</script>
+	</th:block>
+	<!-- (end) private script -->
+</body>
+</html>

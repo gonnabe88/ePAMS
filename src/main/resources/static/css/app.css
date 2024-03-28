@@ -22129,23 +22129,73 @@ body .bi:before,
 
 @font-face {
   font-family: "Dongle";
-  font-weight: 400;
-  font-style: normal;
-  src: url(./fonts/Dongle-Regular.ttf) format("truetype");
+  font-weight: 300;
+  font-style: light;
+  src: url(./fonts/DongleLight.woff2) format("woff2"), url(./fonts/DongleLight.woff) format("woff");
 }
 
 @font-face {
-  font-family: "Madimi One";
+  font-family: "Dongle";
   font-weight: 400;
   font-style: normal;
-  src: url(./fonts/MadimiOne-Regular.ttf) format("truetype");
+  src: url(./fonts/DongleRegular.woff2) format("woff2"), url(./fonts/DongleRegular.woff) format("woff");
+}
+
+@font-face {
+  font-family: "Dongle";
+  font-weight: 600;
+  font-style: semi bold;
+  src: url(./fonts/DongleBold.woff2) format("woff2"), url(./fonts/DongleBold.woff) format("woff");
+}
+
+@font-face {
+  font-family: "Dongle";
+  font-weight: 700;
+  font-style: bold;
+  src: url(./fonts/DongleBold.woff2) format("woff2"), url(./fonts/DongleBold.woff) format("woff");
+}
+
+@font-face {
+  font-family: "Dongle";
+  font-weight: 800;
+  font-style: bold;
+  src: url(./fonts/DongleBold.woff2) format("woff2"), url(./fonts/DongleBold.woff) format("woff");
+}
+
+
+@font-face {
+  font-family: "Nanum Gothic";
+  font-weight: 300;
+  font-style: light;
+  src: url(./fonts/NanumGothicLight.woff2) format("woff2"),url(./fonts/NanumGothicLight.woff) format("woff");
 }
 
 @font-face {
   font-family: "Nanum Gothic";
   font-weight: 400;
   font-style: normal;
-  src: url(./fonts/NanumGothic-Regular.ttf) format("truetype");
+  src: url(./fonts/NanumGothic.woff2) format("woff2"),url(./fonts/NanumGothic.woff) format("woff");
+}
+
+@font-face {
+  font-family: "Nanum Gothic";
+  font-weight: 600;
+  font-style: Semi Bold;
+  src: url(./fonts/NanumGothicBold.woff2) format("woff2"),url(./fonts/NanumGothicBold.woff) format("woff");
+}
+
+@font-face {
+  font-family: "Nanum Gothic";
+  font-weight: 700;
+  font-style: Bold;
+  src: url(./fonts/NanumGothicExtraBold.woff2) format("woff2"),url(./fonts/NanumGothicExtraBold.woff) format("woff");
+}
+
+@font-face {
+  font-family: "Nanum Gothic";
+  font-weight: 800;
+  font-style: Bold;
+  src: url(./fonts/NanumGothicExtraBold.woff2) format("woff2"),url(./fonts/NanumGothicExtraBold.woff) format("woff");
 }
 
 @font-face {

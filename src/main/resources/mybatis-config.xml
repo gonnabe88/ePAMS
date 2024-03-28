@@ -2,8 +2,8 @@
 <!DOCTYPE configuration SYSTEM "mybatis-3-config.dtd">
 <configuration>
     <typeAliases>
-        <typeAlias type="com.kdb.dto.BoardDTO" alias="board"></typeAlias>
-        <typeAlias type="com.kdb.dto.BoardFileDTO" alias="boardFile"></typeAlias>
-        <typeAlias type="com.kdb.dto.MemberDTO" alias="member"></typeAlias>        
+        <typeAlias type="com.kdb.example.board.BoardDTO" alias="board"></typeAlias>
+        <typeAlias type="com.kdb.example.board.BoardFileDTO" alias="boardFile"></typeAlias>
+        <typeAlias type="com.kdb.example.member.MemberDTO" alias="member"></typeAlias>        
     </typeAliases>
 </configuration>

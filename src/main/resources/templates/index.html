@@ -170,6 +170,11 @@
 			</div>
 
 		</div>
+		
+		<div class="divider">
+          <div class="divider-text" style="background-color:transparent;"><img class="divider-text" src="/images/kdb/epams_r_cw_action.gif"
+						style="width: 50px; height: 50px; border-radius: 50%; padding: 0;" /></div>
+        </div>
 
 		<div id="main-content">
 			<div class="container">
@@ -205,7 +210,8 @@
 									<div>
 									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-building" viewBox="0 0 16 16">
 									  <path d="M4 2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zM4 5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zM7.5 5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm2.5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zM4.5 8a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm2.5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5z"/>
-									  <path d="M2 1a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1zm11 0H3v14h3v-2.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5V15h3z"/>
+									  <path d="M2 1a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1zm11 0H3v14h3v-2.5a.5.
+3z"/>
 									</svg>
 									<small class="text-body-secondary" th:text="${board.boardWriter}"></small>
 									</div>
@@ -219,6 +225,106 @@
 				</div>
 			</div>
 		</div>
+		
+		<div class="divider">
+          <div class="divider-text" style="background-color:transparent;"><img class="divider-text" src="/images/kdb/epams_r_cw_action.gif"
+						style="width: 50px; height: 50px; border-radius: 50%; padding: 0;" /></div>
+        </div>
+
+		<div id="main-content">
+		
+		<div class="container">
+	<div class="row d-flex justify-content-start mb-2">
+		<h5 class="text-start"><i class="bi bi-search"></i> 직원검색</h5>
+	</div>
+</div>
+		<div class="d-flex justify-content-center">
+		
+		<section id="input-group-buttons">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">담당자가 궁금하신가요?</h4>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-body">
+                            <p>이름, 팀/부서, 업무명으로 검색하세요</p>
+                            <div class="row">
+                                <div class="col-md-6 mb-1">
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text" id="basic-addon1"><i class="bi bi-search"></i></span>
+                                        <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2">
+                                        <button class="btn btn-primary" type="button" id="button-addon2">조회</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+<!--                     <div class="card-header">
+                        <h4 class="card-title">조회결과</h4>
+                    </div> -->
+                    
+					<div class="divider">
+                        <div class="divider-text" style="background-color:transparent;"><h5>조회결과</h5></div>
+                    </div>
+			<div class="row col-lg-12 col-md-12 col-sm-12">
+				<div class="col-12">					
+					<section class="section" th:each="board: ${boardList}">
+						<div data-aos="fade-up" class="aos-init aos-animate">
+							<div class="card" style="background-color: #F2F7FF; margin:1rem;">
+								<div class="card-body">
+									<a class="card-title" th:href="@{|/${board.id}|}"><h4 th:text="${board.boardTitle}"></h4></a>
+									<p class="card-text" th:utext="${board.boardContents}"></p>
+									
+									<div class="d-flex justify-content-around">
+									<div>
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
+									  <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"/>
+									</svg>
+									<small class="text-body-secondary" th:text="${#temporals.format(board.boardCreatedTime, 'yyyy-MM-dd')}"></small>
+									</div>
+									
+									<div>
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark" viewBox="0 0 16 16">
+									  <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1z"/>
+									</svg>
+									<small class="text-body-secondary" th:text="${board.boardHits}"></small>
+									</div>
+									
+									<div>
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-building" viewBox="0 0 16 16">
+									  <path d="M4 2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zM4 5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zM7.5 5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm2.5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zM4.5 8a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm2.5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5z"/>
+									  <path d="M2 1a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1zm11 0H3v14h3v-2.5a.5.
+3z"/>
+									</svg>
+									<small class="text-body-secondary" th:text="${board.boardWriter}"></small>
+									</div>
+									</div>
+									
+								</div>
+							</div>
+							</div>
+						</section>
+					
+				</div>
+			</div>
+    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </section>
+    </div>
+    
+    
+    
+    		<div class="divider">
+          <div class="divider-text" style="background-color:transparent;"><img class="divider-text" src="/images/kdb/epams_r_cw_action.gif"
+						style="width: 50px; height: 50px; border-radius: 50%; padding: 0;" /></div>
+        </div>
+		
 
 <div id="main-content">
 		<div class="d-flex justify-content-center">

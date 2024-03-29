@@ -4,91 +4,106 @@
 <head>
 <!-- (start) private script -->
 <th:block layout:fragment="css">
-	<link rel="stylesheet" href="/extensions/datatables.net-bs5/css/dataTables.bootstrap5.min.css">
-	<link rel="stylesheet" href="/css/table-datatable-jquery.css">
-	<script src="https://cdn.tiny.cloud/1/g33pgeufv3yp0lovn9pyvo74t7256669f1tv4n1uzjriavzq/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
-	
-	<style>
-.ck-editor__editable_inline {
-	min-height: 400px;
-}
-</style>
 </th:block>
 <!-- (end) private script -->
 </head>
 
 <body>
-
 	<div layout:fragment="contents">
 		<div id="main-content">
 			<div class="d-flex justify-content-center">
 				<div class="row col-lg-10 col-md-12 d-flex justify-content-center">
-					<div class="page-heading">
-						<h1>공지사항</h1>
-						<br>
-						<div class="d-flex gap-2 flex-row-reverse">
-							<a class="btn btn-primary mb-3" type="submit" id="submit" th:href="@{/board/editor}">글쓰기</a><br>
+					<div class="page-heading">		
+						
+						<div class="align-middle">		
+							<h2><i class="bi bi-bell-fill"></i> 공지사항</h2>
+							<br>
+							</div>	
 						</div>
-					</div>
-					<div class="table-responsive d-flex gap-2 flex-row-reverse">
+						
 						<div class="row col-lg-12 col-md-12 col-sm-12">
+							<div class="d-flex gap-2 flex-row-reverse">
+								<a class="btn btn-primary mb-3" type="submit" id="submit" th:href="@{/board/editor}">글쓰기</a><br>
+							</div>
 							<div class="col-lg-12">
 								<div data-aos="fade-up" data-aos-offset="200" data-aos-easing="ease-out-cubic" data-aos-duration="2000">
 									<section class="section" th:each="board: ${boardList}">
 										<div class="card">
 											<div class="card-body">
 												<a th:href="@{|/${board.id}|}"><h4 th:text="${board.boardTitle}"></h4></a>
-												<p th:utext="${board.boardContents}"></p>
-												<p class="text-end" th:text="'작성자 : '+${board.boardWriter}+' / 작성일 : '+${board.boardCreatedTime}+' / 조회수 : '+${board.boardHits}"></p>
+												<p th:utext="${board.boardContents}"></p>												
+												<div class="d-flex justify-content-around">												
+													<!-- 작성시간 -->
+													<div>
+														<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
+												  		<path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z" />
+														</svg>
+														<small class="text-body-secondary" th:text="${#temporals.format(board.boardCreatedTime, 'yyyy-MM-dd')}"></small>
+													</div>													
+													<!-- 조회수 -->
+													<div>
+														<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark" viewBox="0 0 16 16">
+														  <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1z" />
+														</svg>
+														<small class="text-body-secondary" th:text="${board.boardHits}"></small>
+													</div>													
+													<!-- 작성자 -->
+													<div>
+														<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-building" viewBox="0 0 16 16">
+														  <path d="M4 2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zM4 5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zM7.5 5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm2.5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zM4.5 8a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm2.5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5z" />
+														  <path d="M2 1a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1zm11 0H3v14h3v-2.5a.5.3z" />
+														</svg>
+														<small class="text-body-secondary" th:text="${board.boardWriter}"></small>
+													</div>													
+												</div>												
 											</div>
 										</div>
 									</section>
 								</div>
 							</div>
 						</div>
+
+						<!-- 페이징처리 시작 -->
+					    <div th:if="${!boardList.isEmpty()}">
+					        <ul class="pagination justify-content-center">
+					            <li class="page-item me-1" th:classappend="${!boardList.hasPrevious} ? 'disabled'">
+					                <a class="page-link me-1"
+					                    th:href="@{|?page=${boardList.number-2}|}" th:if="${boardList.number-2 > 0}">
+					                    <span><i class="bi bi-caret-left-fill"></i></span>
+					                </a>
+					            </li>
+					            <li th:each="page: ${#numbers.sequence(0, boardList.totalPages-1)}" 
+					                th:if="${page >= boardList.number-2 and page <= boardList.number+2}" th:classappend="${page == boardList.number} ? 'active'" class="page-item me-1">
+					                <a th:text="${page}+1" class="page-link" th:href="@{|?page=${page+1}|}"></a>
+					            </li>
+					            <li class="page-item me-1" th:classappend="${!boardList.hasNext} ? 'disabled'">
+					                <a class="page-link" th:href="@{|?page=${boardList.number+4}|}" th:if="${boardList.number+4 <= boardList.totalPages}">
+					                    <span><i class="bi bi-caret-right-fill"></i></span>
+					                </a>
+					            </li>
+					        </ul>
+					    </div>
+    					<!-- 페이징처리 끝 -->
+
 					</div>
-
-<!-- 페이징처리 시작 -->
-    <div th:if="${!boardList.isEmpty()}">
-        <ul class="pagination justify-content-center">
-            <li class="page-item" th:classappend="${!boardList.hasPrevious} ? 'disabled'">
-                <a class="page-link"
-                    th:href="@{|?page=${boardList.number-2}|}" th:if="${boardList.number-2 > 0}">
-                    <span>이전</span>
-                </a>
-            </li>
-            <li th:each="page: ${#numbers.sequence(0, boardList.totalPages-1)}" 
-                th:if="${page >= boardList.number-2 and page <= boardList.number+2}" th:classappend="${page == boardList.number} ? 'active'" class="page-item">
-                <a th:text="${page}+1" class="page-link" th:href="@{|?page=${page+1}|}"></a>
-            </li>
-            <li class="page-item" th:classappend="${!boardList.hasNext} ? 'disabled'">
-                <a class="page-link" th:href="@{|?page=${boardList.number+4}|}" th:if="${boardList.number+4 <= boardList.totalPages}">
-                    <span>다음</span>
-                </a>
-            </li>
-        </ul>
-    </div>
-    <!-- 페이징처리 끝 -->
-
 				</div>
 			</div>
 		</div>
-	</div>
 
-	<!-- (start) private script -->
-	<th:block layout:fragment="script">
-
-
-		<!-- <script src="https://cdn.ckeditor.com/ckeditor5/41.2.0/classic/ckeditor.js"></script>
-		<script src="https://ckeditor.com/apps/ckfinder/3.5.0/ckfinder.js"></script> -->
-		<script src="/js/ckeditor.js"></script>
-		<!-- <script src="https://cdn.jsdelivr.net/npm/ckeditor5-full-free-plugin@23.1.2/build/ckeditor.min.js"></script> -->
-		<script src="/extensions/datatables.net/js/jquery.dataTables.min.js"></script>
-		<script src="/extensions/datatables.net-bs5/js/dataTables.bootstrap5.min.js"></script>
-		<script src="/js/pages/datatables.js"></script>
-
-	</th:block>
-	<!-- (end) private script -->
+		<!-- (start) private script -->
+		<th:block layout:fragment="script">
+	
+	
+			<!-- <script src="https://cdn.ckeditor.com/ckeditor5/41.2.0/classic/ckeditor.js"></script>
+			<script src="https://ckeditor.com/apps/ckfinder/3.5.0/ckfinder.js"></script> -->
+			<script src="/js/ckeditor.js"></script>
+			<!-- <script src="https://cdn.jsdelivr.net/npm/ckeditor5-full-free-plugin@23.1.2/build/ckeditor.min.js"></script> -->
+			<script src="/extensions/datatables.net/js/jquery.dataTables.min.js"></script>
+			<script src="/extensions/datatables.net-bs5/js/dataTables.bootstrap5.min.js"></script>
+			<script src="/js/pages/datatables.js"></script>
+	
+		</th:block>
+		<!-- (end) private script -->
 </body>
 
 </html>

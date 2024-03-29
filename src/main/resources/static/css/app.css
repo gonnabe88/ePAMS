@@ -383,6 +383,7 @@ h1,
 h1,
 .auth-subtitle {
 	font-family: "Nunito";
+	font-size: calc(1.5rem + 2.5vw);
 }
 
 h2,

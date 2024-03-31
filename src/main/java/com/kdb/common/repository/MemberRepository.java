@@ -1,4 +1,4 @@
-package com.kdb.example.member;
+package com.kdb.common.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

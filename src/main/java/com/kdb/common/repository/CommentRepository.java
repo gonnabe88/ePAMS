@@ -1,4 +1,4 @@
-package com.kdb.common.repositogy;
+package com.kdb.common.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

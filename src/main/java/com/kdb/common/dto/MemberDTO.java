@@ -1,4 +1,4 @@
-package com.kdb.example.member;
+package com.kdb.common.dto;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -13,4 +13,8 @@ public class MemberDTO {
     private MemberRole role = MemberRole.ROLE_KDB; //권한
     private String OTP;
     private String UUID;
+    private String MFA;
+    
+    
+    
 }

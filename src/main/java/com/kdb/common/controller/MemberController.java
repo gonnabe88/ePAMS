@@ -14,11 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.kdb.common.config.CustomPasswordEncoder;
+import com.kdb.common.dto.MemberDTO;
+import com.kdb.common.dto.MemberRole;
 import com.kdb.common.entity.MemberEntity;
-import com.kdb.example.member.MemberDTO;
-import com.kdb.example.member.MemberRepository;
-import com.kdb.example.member.MemberRole;
+import com.kdb.common.repository.MemberRepository;
+import com.kdb.util.CustomPasswordEncoder;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -38,6 +38,7 @@ public class MemberController {
                        @Lazy CustomPasswordEncoder passwordEncoder){
         this.memberRepository = memberRepository;
         this.passwordEncoder = passwordEncoder;
+        System.out.println("MemberController");
     }
 
     @GetMapping("/registry")

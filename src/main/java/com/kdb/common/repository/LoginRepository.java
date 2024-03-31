@@ -1,9 +1,9 @@
-package com.kdb.common.repositogy;
+package com.kdb.common.repository;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.kdb.example.member.MemberDTO;
+import com.kdb.common.dto.MemberDTO;
 
 import lombok.RequiredArgsConstructor;
 

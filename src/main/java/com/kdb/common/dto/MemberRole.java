@@ -1,4 +1,4 @@
-package com.kdb.example.member;
+package com.kdb.common.dto;
 
 public enum MemberRole {
     ROLE_ADMIN("ADMIN"),

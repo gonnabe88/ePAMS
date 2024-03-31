@@ -5,8 +5,8 @@ import org.springframework.stereotype.Service;
 import com.kdb.common.dto.CommentDTO;
 import com.kdb.common.entity.BoardEntity;
 import com.kdb.common.entity.CommentEntity;
-import com.kdb.common.repositogy.BoardRepository;
-import com.kdb.common.repositogy.CommentRepository;
+import com.kdb.common.repository.BoardRepository;
+import com.kdb.common.repository.CommentRepository;
 
 import java.util.ArrayList;
 import java.util.List;

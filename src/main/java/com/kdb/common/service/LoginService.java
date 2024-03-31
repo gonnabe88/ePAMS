@@ -1,11 +1,14 @@
 package com.kdb.common.service;
 
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
-import com.kdb.common.repositogy.LoginRepository;
-import com.kdb.example.member.MemberDTO;
+import com.kdb.common.dto.MemberDTO;
+import com.kdb.common.entity.MfaEntity;
+import com.kdb.common.repository.LoginRepository;
+import com.kdb.common.repository.MfaRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -13,19 +16,22 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class LoginService {
     private final LoginRepository loginRepository;
+    private final MfaRepository mfaRepository;
     private final EncShaService encshaService;
-    private final String OTP = "111111"; // 임시 OTP 검증용
+    private String OTP = "111111"; // 임시 OTP 검증용
     private UUID uuid = UUID.randomUUID();
 
+    
     public boolean otpLogin(MemberDTO memberDTO) {
     	
     	MemberDTO ismemberDTO = loginRepository.findByUserId(memberDTO.getUsername());
+    	Optional<MfaEntity> otp = mfaRepository.findTop1ByUsernameOrderByIdDesc(memberDTO.getUsername());
     	
     	//////////////////////////////////////////////
     	// SMS, 카카오톡 ONEGUARD mOTP 연동 인증부 구현 필요 //
     	//////////////////////////////////////////////
     	
-    	if (ismemberDTO != null && memberDTO.getOTP().equals(OTP)) return true;
+    	if (ismemberDTO != null && memberDTO.getOTP().equals(otp.get().getOTP())) return true;
         else return false;
     }  
     
@@ -79,5 +85,7 @@ public class LoginService {
     	System.out.println("UUID 생성 : " + uuid); 
         return uuid.toString();
     }
+
+
 
 }

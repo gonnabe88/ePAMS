@@ -10,16 +10,18 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.kdb.common.dto.MemberDTO;
 import com.kdb.common.service.LoginService;
-import com.kdb.example.member.MemberDTO;
+import com.kdb.common.service.MemberDetailsService;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
-
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 public class LoginController {
@@ -32,25 +34,26 @@ public class LoginController {
 	    return authentication;
 	}
 	
-	
     @GetMapping("/logout")
     public String logout(HttpServletRequest request) throws Exception{
     	HttpSession session = request.getSession(false);
     	session.invalidate();
     	return "redirect:/common/index";     
-    }
+    }   
+
     
     @GetMapping({"/", "/login"})
     public String login(@CookieValue(value="UUIDChk", required=false) String UUID, HttpServletResponse response)  throws Exception{    	
     	Authentication auth = Authentication();
-    	if(auth != null && auth.isAuthenticated()) {  		
+    	if(auth != null && auth.isAuthenticated()) {
     		Cookie cookie = new Cookie("UUIDChk",loginService.updateUUID(auth.getName()));
+    		System.out.println("LOGIN 성공 method");
     		//cookie.setHttpOnly(true); 
 			//cookie.setSecure(true);
     		//cookie.setDomain(domain);
 			//cookie.setPath("/");
 			//cookie.setMaxAge(30*60*1000);
-			response.addCookie(cookie);	
+    		response.addCookie(cookie);	
     		return "/common/index";
     	}
     	return "/common/login";	    	
@@ -66,7 +69,7 @@ public class LoginController {
     }
 	
     @PostMapping("/otplogin")
-    public @ResponseBody String otplogin(@ModelAttribute MemberDTO memberDTO, @CookieValue(value="UUIDChk", required=false) String UUID) {    	
+    public @ResponseBody String otplogin(@ModelAttribute MemberDTO memberDTO, @CookieValue(value="UUIDChk", required=false) String UUID, HttpServletResponse response) {    	
     	
     	memberDTO.setUUID(UUID);
         boolean loginResult = loginService.otpLogin(memberDTO); 
@@ -78,7 +81,7 @@ public class LoginController {
     }
     
     @PostMapping("/fidologin")
-    public @ResponseBody String fidologin(@ModelAttribute MemberDTO memberDTO, @CookieValue(value="UUIDChk", required=false) String UUID) {
+    public @ResponseBody String fidologin(@ModelAttribute MemberDTO memberDTO, @CookieValue(value="UUIDChk", required=false) String UUID, HttpServletResponse response) {
     	
     	memberDTO.setUUID(UUID);    	
     	boolean loginResult = loginService.fidoLogin(memberDTO); 

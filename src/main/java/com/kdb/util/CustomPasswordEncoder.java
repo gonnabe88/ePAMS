@@ -1,4 +1,4 @@
-package com.kdb.common.config;
+package com.kdb.util;
 
 
 import java.nio.charset.StandardCharsets;

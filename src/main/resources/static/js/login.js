@@ -66,21 +66,37 @@ const login= () => {
     const MFA = $('input[name="MFA"]:checked').val();
     let header = $("meta[name='_csrf_header']").attr('content');
     let token = $("meta[name='_csrf']").attr('content');
-    
-    switch (MFA) {
-        case 'OTP':            
-            otpPreAuthAlert(username, MFA, header, token); //OTP 인증
-            break; 
-        case 'SMS':
-            otpPreAuthAlert(username, MFA, header, token); //SMS 인증
-            break; 
-        case '카카오톡':
-            otpPreAuthAlert(username, MFA, header, token); //카카오톡 인증
-            break; 
-        case 'FIDO':
-            fidoPreAuthAlert(username, MFA, header, token); //FIDO 인증
-            break; 
-    } //switch(MFA)
+    console.log("MFA login")
+    $.ajax({
+        type: "post",
+        url: "/api/mfa",
+        dataType: "json",
+        data: {
+            "username": username,
+            "MFA": MFA
+        },       
+        //CSRF Token
+        beforeSend: function (xhr) {
+        	xhr.setRequestHeader(header, token);
+        },                
+        complete: function(data) {         
+			console.log("MFA reply : " + data.responseText)
+		    switch (MFA) {
+		        case 'OTP':            
+		            otpPreAuthAlert(username, MFA, header, token); //OTP 인증
+		            break; 
+		        case 'SMS':
+		            otpPreAuthAlert(username, MFA, header, token); //SMS 인증
+		            break; 
+		        case '카카오톡':
+		            otpPreAuthAlert(username, MFA, header, token); //카카오톡 인증
+		            break; 
+		        case 'FIDO':
+		            fidoPreAuthAlert(username, MFA, header, token); //FIDO 인증
+		            break; 
+		    } //switch(MFA)
+	    }
+    });
 }
 
 // FIDO 인증화면
@@ -245,11 +261,36 @@ const authentication = (username, KEY, header, token) => {
     
 }
 
-const errorAlert = () => {	
+const errorAlert2 = () => {	
 	Swal.fire({
             title: '인증 오류',
             text: '인증을 다시 진행해주세요.',
             icon: 'error',
             confirmButtonText: '확인'
         })
+}
+
+const errorAlert = () => {	
+	let timerInterval;
+	Swal.fire({
+	  title: "Auto close alert!",
+	  html: "I will close in <b></b> milliseconds.",
+	  timer: 11000,
+	  timerProgressBar: true,
+	  didOpen: () => {
+	    Swal.showLoading();
+	    const timer = Swal.getPopup().querySelector("b");
+	    timerInterval = setInterval(() => {
+	      timer.textContent = (`${Swal.getTimerLeft()}`/1000).toFixed();
+	    }, 10);
+	  },
+	  willClose: () => {
+	    clearInterval(timerInterval);
+	  }
+	}).then((result) => {
+	  /* Read more about handling dismissals below */
+	  if (result.dismiss === Swal.DismissReason.timer) {
+	    console.log("I was closed by the timer");
+	  }
+	});
 }

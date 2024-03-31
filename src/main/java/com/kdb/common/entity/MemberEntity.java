@@ -2,7 +2,7 @@ package com.kdb.common.entity;
 
 import java.io.Serializable;
 
-import com.kdb.example.member.MemberRole;
+import com.kdb.common.dto.MemberRole;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

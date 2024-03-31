@@ -1,29 +1,29 @@
 package com.kdb.common.config;
 
 
-import javax.sql.DataSource;
-
 //import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestBuilders.formLogin;
 //import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestBuilders.logout;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.jdbc.datasource.DataSourceTransactionManager;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.session.jdbc.config.annotation.web.http.EnableJdbcHttpSession;
-import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+
+import com.kdb.security.CustomAuthenticationSuccessHandler;
+import com.kdb.util.CustomPasswordEncoder;
 
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {	
 	
+	@Bean
+    public AuthenticationSuccessHandler SuccessHandler() {
+        return new CustomAuthenticationSuccessHandler();
+    }
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new CustomPasswordEncoder();
@@ -44,7 +44,7 @@ public class SecurityConfig {
                     .requestMatchers(
             		/*"/index", "index2", "list", "save",*/
             		"/", "/login", "/register", "/registry",
-            		"/pwlogin", "/otplogin", "/logout",
+            		"/api/mfa", "/pwlogin", "/otplogin", "/otplogin", "/logout",
                     "/css/**",
                     "/js/**",
                     "/extensions/**",
@@ -57,6 +57,7 @@ public class SecurityConfig {
                     .requestMatchers("/admin/**").hasRole("ADMIN") // ADMIN 단독 허용 예시
                     .anyRequest().authenticated() // 그 외 전체 허용
                     
+                    
                    // .exceptionHandling()
                    // .accessDeniedPage("/forbidden")
                     
@@ -68,7 +69,8 @@ public class SecurityConfig {
                     .loginProcessingUrl("/authenticate")
                     .usernameParameter("username")
                     .passwordParameter("password")
-                    .defaultSuccessUrl("/index", true)                    
+                    .defaultSuccessUrl("/index", true)     
+                    .successHandler(SuccessHandler())
             )
 
             

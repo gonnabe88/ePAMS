@@ -29,10 +29,13 @@ public class MemberEntity implements Serializable {
     private Long id;
     private String username;
     private String password;
+    private String dept;
+    private String team;
     private boolean enabled;
     @Enumerated(EnumType.STRING)
     private MemberRole role;
     private String uuid;
+    private String responsibility;
 
     @Builder
     public MemberEntity(String username, String password, boolean enabled, MemberRole role, String uuid) {
@@ -42,5 +45,4 @@ public class MemberEntity implements Serializable {
         this.role = role;
         this.uuid = uuid;
     }
-
 }

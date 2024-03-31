@@ -28,31 +28,19 @@ public class RestApiService {
 		return secureRandom.nextInt(upperLimit);
     }
 	
-	public Map<String, String> updateUUID(){
-		
-		Map<String, String> uuid = new HashMap<>();
-		uuid.put("username", "K140024");
-		uuid.put("uuid", UUID.randomUUID().toString());
-		
-		return uuid;
-	}	
-	
 	public Map<String, String> requestMFA(MemberDTO memberDTO) throws NoSuchAlgorithmException{
 		
-		String OTP = String.format("%06d",generateOTP(6));
-		log.info("otp : {}", OTP);
-		
-	
+		String OTP = String.format("%06d",generateOTP(6));	
 		MfaEntity mfaEntity = MfaEntity.toSaveEntity(memberDTO);
 		Map<String, String> uuid = new HashMap<>();
-		
+
+		log.info("otp : {}", OTP);
 		
 		mfaEntity.setOTP(OTP);
-		log.info("mfaEntity : {}", mfaEntity);
         mfaRepository.save(mfaEntity);		
 		
 		uuid.put("username", "K140024");
-		uuid.put("mfa", "SMS");
+		uuid.put("mfa", memberDTO.getMFA());
 		uuid.put("otp", OTP);
 		
 		return uuid;

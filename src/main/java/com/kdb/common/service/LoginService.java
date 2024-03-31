@@ -11,14 +11,15 @@ import com.kdb.common.repository.LoginRepository;
 import com.kdb.common.repository.MfaRepository;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class LoginService {
     private final LoginRepository loginRepository;
     private final MfaRepository mfaRepository;
     private final EncShaService encshaService;
-    private String OTP = "111111"; // 임시 OTP 검증용
     private UUID uuid = UUID.randomUUID();
 
     
@@ -38,6 +39,7 @@ public class LoginService {
     public boolean fidoLogin(MemberDTO memberDTO) {
     	
     	MemberDTO ismemberDTO = loginRepository.findByUserId(memberDTO.getUsername());
+    	log.info("[LOG] fidoLogin : ", ismemberDTO);
     	
     	///////////////////////////////////
     	// ONEGUARD FIDO 연동 인증부 구현 필요 //

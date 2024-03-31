@@ -9,8 +9,8 @@
 
 	<link rel="stylesheet" href="/extensions/aos/aos.css">	
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-	<link rel="stylesheet" href="extensions/owlcarousel/owl.carousel.min.css">
-	<link rel="stylesheet" href="extensions/owlcarousel/owl.theme.default.min.css">
+	<link rel="stylesheet" href="/extensions/owlcarousel/owl.carousel.min.css">
+	<link rel="stylesheet" href="/extensions/owlcarousel/owl.theme.default.min.css">
 		
 </th:block>
 <!-- (end) private script -->
@@ -36,7 +36,7 @@
 				<div class="carousel-inner">
 					<div class="carousel-item active">
 						<div class="bg-no-repeat bg-cover bg-50 px-8"
-							style="background-image: url(images/kdb/BACKGROUND3.png); background-repeat: no-repeat; background-size: cover; position: relative; height: 50vh;">
+							style="background-image: url(images/kdb/BACKGROUND3.png); background-repeat: no-repeat; background-size: cover; position: relative; height: 40vh;">
 							<div class="container-md">
 								<div class="align-items-center ms-5">
 									<div class="col-lg-12 pe-xl-12">
@@ -93,7 +93,7 @@
 				</div>
 			</div>
 			<div class="d-flex justify-content-center">
-				<div class="row col-lg-10 col-md-12 d-flex justify-content-center">
+				<div class="row col-lg-8 col-md-12 d-flex justify-content-center">
 					<div class="row col-lg-10 col-md-12 col-sm-12">
 						<div class="col-lg-4" style="height: 5rem;">
 							<div data-aos="fade-up" data-aos-offset="100"
@@ -188,46 +188,46 @@
 					</h5>
 				</div>
 			</div>
-			
-			<div class="row col-lg-12 col-md-12 col-sm-12">
-				<div class="col-12">
-					<section class="section" th:each="board: ${boardList}">
-						<div data-aos="fade-up" class="aos-init aos-animate">
-							<div class="card">
-								<div class="shadow card-body">
-									<a class="card-title" th:href="@{|/${board.id}|}"><h6
-											th:text="${board.boardTitle}"></h6></a>
-									<p class="card-text" th:utext="${board.boardContents}"></p>
 
-									<div class="d-flex justify-content-around">
-										<div>
-											<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
+			<div class="d-flex justify-content-center">
+				<div class="row col-lg-8 col-md-12 d-flex justify-content-center">
+					<div class="row col-lg-10 col-md-12 col-sm-12">
+						<section class="section" th:each="board: ${boardList}">
+							<div data-aos="fade-up" class="aos-init aos-animate">
+								<div class="card">
+									<div class="shadow card-body">
+										<a class="card-title" th:href="@{|/${board.id}|}"><h6 th:text="${board.boardTitle}"></h6></a>
+										<p class="card-text" th:utext="${board.boardContents}"></p>
+
+										<div class="d-flex justify-content-around">
+											<div>
+												<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
 									  		<path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z" />
 											</svg>
-											<small class="text-body-secondary" th:text="${#temporals.format(board.boardCreatedTime, 'yyyy-MM-dd')}"></small>
-										</div>
+												<small class="text-body-secondary" th:text="${#temporals.format(board.boardCreatedTime, 'yyyy-MM-dd')}"></small>
+											</div>
 
-										<div>
-											<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark" viewBox="0 0 16 16">
+											<div>
+												<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark" viewBox="0 0 16 16">
 											  <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1z" />
 											</svg>
-											<small class="text-body-secondary" th:text="${board.boardHits}"></small>
-										</div>
+												<small class="text-body-secondary" th:text="${board.boardHits}"></small>
+											</div>
 
-										<div>
-											<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-building" viewBox="0 0 16 16">
+											<div>
+												<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-building" viewBox="0 0 16 16">
 											  <path d="M4 2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zM4 5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zM7.5 5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm2.5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zM4.5 8a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm2.5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5z" />
-											  <path d="M2 1a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1zm11 0H3v14h3v-2.5a.5.3z" />
+											  <path d='M2 1a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1zm11 0H3v14h3v-2.5a.5.3z' />
 											</svg>
-											<small class="text-body-secondary" th:text="${board.boardWriter}"></small>
+												<small class="text-body-secondary" th:text="${board.boardWriter}"></small>
+											</div>
 										</div>
-									</div>
 
+									</div>
 								</div>
 							</div>
-						</div>
-					</section>
-
+						</section>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -252,7 +252,7 @@
 
 				<div class="row">
 					<div class="col-12">
-						<div class="card">
+						<div class="shadow card">
 							<div class="card-header">
 								<h4 class="card-title">담당자가 궁금하신가요?</h4>
 							</div>
@@ -260,88 +260,63 @@
 								<div class="card-body">
 									<p>이름, 팀/부서, 업무명으로 검색하세요</p>
 									<div class="row">
-										<div class="col-md-6 mb-1">
+										<div class="col-12 mb-1">
 											<div class="input-group mb-3">
-												<span class="input-group-text" id="basic-addon1"><i
-													class="bi bi-search"></i></span> <input type="text"
-													class="form-control" placeholder="Recipient's username"
-													aria-label="Recipient's username"
-													aria-describedby="button-addon2">
-												<button class="btn btn-primary" type="button"
-													id="button-addon2">조회</button>
+												<span class="input-group-text" id="basic-addon1"><i class="bi bi-search"></i></span> <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2">
+												<button class="btn btn-primary" type="button" id="button-addon2">조회</button>
 											</div>
 										</div>
 									</div>
 								</div>
 							</div>
 
-							<!--                     <div class="card-header">
-                        <h4 class="card-title">조회결과</h4>
-                    </div> -->
-
 							<div class="divider">
 								<div class="divider-text" style="background-color: transparent;">
 									<h5 class="card-title">조회결과</h5>
 								</div>
 							</div>
-							<div class="row col-lg-12 col-md-12 col-sm-12">
-								<div class="col-12">
-									<section class="section" th:each="board: ${boardList}">
-										<div data-aos="fade-up" class="aos-init aos-animate">
-											<div class="card"
-												style="background-color: #F2F7FF; margin: 1rem;">
-												<div class="shadow card-body">
-													<a class="card-title" th:href="@{|/${board.id}|}"><h6
-															th:text="${board.boardTitle}"></h6></a>
-													<p class="card-text" th:utext="${board.boardContents}"></p>
+							<div class="d-flex justify-content-center">
+								<div class="row col-lg-12 col-md-12 col-sm-12">
+									<div class="col-12 justify-self-center">
+										<section class="section" th:each="board: ${boardList}">
+											<div data-aos="fade-up" class="aos-init aos-animate">
+												<div class="card" style="background-color: #F2F7FF; margin: 1rem;">
+													<div class="shadow card-body">
+														<a class="card-title" th:href="@{|/${board.id}|}"><h6 th:text="${board.boardTitle}"></h6></a>
+														<p class="card-text" th:utext="${board.boardContents}"></p>
 
-													<div class="d-flex justify-content-around">
-														<div>
-															<svg xmlns="http://www.w3.org/2000/svg" width="16"
-																height="16" fill="currentColor" class="bi bi-calendar"
-																viewBox="0 0 16 16">
-									  <path
-																	d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z" />
-									</svg>
-															<small class="text-body-secondary"
-																th:text="${#temporals.format(board.boardCreatedTime, 'yyyy-MM-dd')}"></small>
+														<div class="d-flex justify-content-around">
+															<div>
+																<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
+															  <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z" />
+															</svg>
+																<small class="text-body-secondary" th:text="${#temporals.format(board.boardCreatedTime, 'yyyy-MM-dd')}"></small>
+															</div>
+
+															<div>
+																<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark" viewBox="0 0 16 16">
+															  <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1z" />
+															</svg>
+																<small class="text-body-secondary" th:text="${board.boardHits}"></small>
+															</div>
+
+															<div>
+																<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-building" viewBox="0 0 16 16">
+															  <path d="M4 2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zM4 5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zM7.5 5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm2.5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zM4.5 8a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm2.5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5z" />
+															  <path d="M2 1a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1zm11 0H3v14h3v-2.5a.5.3z" />
+															</svg>
+																<small class="text-body-secondary" th:text="${board.boardWriter}"></small>
+															</div>
 														</div>
 
-														<div>
-															<svg xmlns="http://www.w3.org/2000/svg" width="16"
-																height="16" fill="currentColor" class="bi bi-bookmark"
-																viewBox="0 0 16 16">
-									  <path
-																	d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1z" />
-									</svg>
-															<small class="text-body-secondary"
-																th:text="${board.boardHits}"></small>
-														</div>
-
-														<div>
-															<svg xmlns="http://www.w3.org/2000/svg" width="16"
-																height="16" fill="currentColor" class="bi bi-building"
-																viewBox="0 0 16 16">
-									  <path
-																	d="M4 2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zM4 5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zM7.5 5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm2.5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zM4.5 8a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm2.5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5z" />
-									  <path
-																	d="M2 1a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1zm11 0H3v14h3v-2.5a.5.
-3z" />
-									</svg>
-															<small class="text-body-secondary"
-																th:text="${board.boardWriter}"></small>
-														</div>
 													</div>
-
 												</div>
 											</div>
-										</div>
-									</section>
-
+										</section>
+									</div>
 								</div>
 							</div>
 						</div>
-
 					</div>
 				</div>
 			</div>
@@ -365,9 +340,7 @@
 					<div class="col-lg-12">
 						<section class="section">
 							<div class="card">
-
 								<div class="shadow card-body" style="padding: 1.0rem;">
-
 									<div class="d-flex gap-1 justify-content-around">
 										<div class="owl-carousel">
 											<img

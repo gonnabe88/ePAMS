@@ -24,15 +24,14 @@ public class RestApiController {
 	private final LoginRepository loginRepository;
 	private final RestApiService restapiservice;
 	
-	@GetMapping("/updateuuid")
-    public Map<String, String> updateUUID() {
-        return restapiservice.updateUUID();
-    }
+	/*
+	 * @GetMapping("/updateuuid") public Map<String, String> updateUUID() { return
+	 * restapiservice.updateUUID(); }
+	 */
 	
     @PostMapping("/mfa")
     public Map<String, String> mfa(@ModelAttribute MemberDTO memberDTO) throws Exception{
-    	MemberDTO ismemberDTO = loginRepository.findByUserId(memberDTO.getUsername());
-    	log.info("mfa reqeust from {}, {}, {}", ismemberDTO.getUsername(), ismemberDTO.getMFA(), ismemberDTO.getOTP());
+    	log.info("mfa reqeust from {}, {}, {}, {}", memberDTO.getUsername(), memberDTO.getMFA(), memberDTO.getOTP(), memberDTO.getPassword());
 		return restapiservice.requestMFA(memberDTO);
     }
 }

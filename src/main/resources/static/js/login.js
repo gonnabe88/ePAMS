@@ -115,7 +115,7 @@ const fidoPreAuthAlert = (username, MFA, header, token) => {
         if (result.isConfirmed) {       
             $.ajax({
                 type: "post",
-                url: "/otplogin",
+                url: "/fidologin",
                 dataType: "json",
                 data: {
                     "username" : username,
@@ -127,10 +127,11 @@ const fidoPreAuthAlert = (username, MFA, header, token) => {
 		        },                
                 complete: function(data) {
 					console.log("결과 : " + data.responseText);
-					if(data.responseText == "success")
-						authentication(username, OTP, header, token);
+					if(data.responseText == "success"){
+						console.log("FIDO Athentication 호출");
+						authentication(username, MFA, header, token);}
 					else if(data.responseText == "newdevice")
-						pwlogin(username, OTP, header, token);  
+						pwlogin(username, MFA, header, token);  
 					else
             			errorAlert();       
             	}
@@ -144,14 +145,23 @@ const otpPreAuthAlert = (username, MFA, header, token) => {
 	
     Swal.fire({
         title: MFA+" 인증",
-        html: MFA+" 인증번호 6자리 입력 후<br>제출을 눌러주세요",
+        html: MFA+" 인증번호 6자리 입력 후<br>제출을 눌러주세요(<b></b>초)",
         input: "number",
         inputPlaceholder: "인증번호(6자리)",
         inputAttributes: {
             autocapitalize: "off",
             autofocus : "on"
         },
+        timer: 300000,
+	    timerProgressBar: true,
+	    didOpen: () => {
+	    const timer = Swal.getPopup().querySelector("b");
+	    timerInterval = setInterval(() => {timer.textContent = (`${Swal.getTimerLeft()}`/1000).toFixed();}, 10);},
+		willClose: () => {
+		  clearInterval(timerInterval);
+		},
         showCancelButton: true,
+        showDenyButton: true,
         confirmButtonText: "제출",
         cancelButtonText: "취소",
         showLoaderOnConfirm: true,
@@ -236,7 +246,7 @@ const pwlogin = (username, KEY, header, token) => {
 
 // 최종 인증
 const authentication = (username, KEY, header, token) => {
-	
+		console.log("Athentication : " + username + " " + KEY);
         $.ajax({
             type: "post",
             url: "/authenticate",
@@ -261,36 +271,11 @@ const authentication = (username, KEY, header, token) => {
     
 }
 
-const errorAlert2 = () => {	
+const errorAlert = () => {	
 	Swal.fire({
             title: '인증 오류',
             text: '인증을 다시 진행해주세요.',
             icon: 'error',
             confirmButtonText: '확인'
         })
-}
-
-const errorAlert = () => {	
-	let timerInterval;
-	Swal.fire({
-	  title: "Auto close alert!",
-	  html: "I will close in <b></b> milliseconds.",
-	  timer: 11000,
-	  timerProgressBar: true,
-	  didOpen: () => {
-	    Swal.showLoading();
-	    const timer = Swal.getPopup().querySelector("b");
-	    timerInterval = setInterval(() => {
-	      timer.textContent = (`${Swal.getTimerLeft()}`/1000).toFixed();
-	    }, 10);
-	  },
-	  willClose: () => {
-	    clearInterval(timerInterval);
-	  }
-	}).then((result) => {
-	  /* Read more about handling dismissals below */
-	  if (result.dismiss === Swal.DismissReason.timer) {
-	    console.log("I was closed by the timer");
-	  }
-	});
 }

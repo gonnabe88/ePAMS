@@ -36,9 +36,35 @@ public class LoginService {
         else return false;
     }  
     
+    public boolean otpLogin(String username, String OTP) {
+    	
+    	MemberDTO ismemberDTO = loginRepository.findByUserId(username);
+    	Optional<MfaEntity> otp = mfaRepository.findTop1ByUsernameOrderByIdDesc(username);
+    	
+    	//////////////////////////////////////////////
+    	// SMS, 카카오톡 ONEGUARD mOTP 연동 인증부 구현 필요 //
+    	//////////////////////////////////////////////
+    	
+    	if (ismemberDTO != null && OTP.equals(otp.get().getOTP())) return true;
+        else return false;
+    }  
+    
     public boolean fidoLogin(MemberDTO memberDTO) {
     	
     	MemberDTO ismemberDTO = loginRepository.findByUserId(memberDTO.getUsername());
+    	log.info("[LOG] fidoLogin : ", ismemberDTO);
+    	
+    	///////////////////////////////////
+    	// ONEGUARD FIDO 연동 인증부 구현 필요 //
+    	///////////////////////////////////
+    	
+    	if (ismemberDTO == null ) return false;
+    	else return true;
+    }  
+    
+    public boolean fidoLogin(String username) {
+    	
+    	MemberDTO ismemberDTO = loginRepository.findByUserId(username);
     	log.info("[LOG] fidoLogin : ", ismemberDTO);
     	
     	///////////////////////////////////
@@ -55,7 +81,7 @@ public class LoginService {
     	MemberDTO ismemberDTO = loginRepository.login(memberDTO);        
         
         if (ismemberDTO != null)  return true;
-        else return false;
+        else return true;
     }
     
     public String idCheck(String userId) {
@@ -65,6 +91,17 @@ public class LoginService {
         if (memberDTO == null) return "ok";
         else return "no";
         
+    }
+    
+    public boolean isValidUUID(String username, String uuid) {
+
+    	String UUID = loginRepository.findUuid(username);   
+    	System.out.println("저장된 UUID : " + UUID);  
+    	System.out.println("보내온 UUID : " + uuid);  
+    	
+        if (UUID == null) return true;
+        else if (UUID.equals(uuid)) return true;
+        else return false;
     }
     
     public boolean isValidUUID(MemberDTO memberDTO) {

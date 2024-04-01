@@ -6,19 +6,19 @@ package com.kdb.common.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.authentication.AuthenticationDetailsSource;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.intercept.AuthorizationFilter;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 import com.kdb.common.repository.LoginRepository;
 import com.kdb.common.service.MemberDetailsService;
-import com.kdb.security.CustomAuthenticationProvider;
+import com.kdb.security.CustomAuthenticationDetailsSource;
+import com.kdb.security.CustomAuthenticationFailureHandler;
 import com.kdb.security.CustomAuthenticationSuccessHandler;
 import com.kdb.security.CustomPasswordEncoder;
 import com.kdb.security.CustomSecurityFilter;
@@ -33,10 +33,20 @@ public class SecurityConfig {
 	
 	private final MemberDetailsService memberDetailsService;
 	private final LoginRepository loginRepository;
+	
+	@Bean
+	public AuthenticationDetailsSource authenticationDetailsSource() {
+		return new CustomAuthenticationDetailsSource();
+	}
 	   
 	@Bean
     public AuthenticationSuccessHandler SuccessHandler() {
         return new CustomAuthenticationSuccessHandler(loginRepository);
+    }
+	
+	@Bean
+    public AuthenticationFailureHandler FailureHandler() {
+        return new CustomAuthenticationFailureHandler();
     }
 	
     @Bean
@@ -83,10 +93,12 @@ public class SecurityConfig {
                 formLogin
                     .loginPage("/login")
                     .loginProcessingUrl("/authenticate")
+                    .authenticationDetailsSource(authenticationDetailsSource())
                     .usernameParameter("username")
                     .passwordParameter("password")
                     .defaultSuccessUrl("/index", true)     
                     .successHandler(SuccessHandler())
+                    .failureHandler(FailureHandler())
             )
 
             

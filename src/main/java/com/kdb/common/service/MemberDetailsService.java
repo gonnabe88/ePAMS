@@ -32,13 +32,13 @@ public class MemberDetailsService implements UserDetailsService {
         
         if (findMember.isEmpty())
         	throw new UsernameNotFoundException("존재하지 않는 username 입니다.");  
-        else if (mfa.get().getMFA().equals("FIDO"))
-        	member.setPassword("FIDO");
-        else
-        	member.setPassword(mfa.get().getOTP());
+        //else if (mfa.get().getMFA().equals("FIDO"))
+        //	member.setPassword("FIDO");
+        //else
+        //	member.setPassword(mfa.get().getOTP());
         
         log.info("loadUserByUsername member.username = {}", username);
-        log.info("findotpbyname otp = {} mfa = {}", mfa.get().getOTP(), mfa.get().getMFA());        
+        log.info("findotpbyname password = {} otp = {} mfa = {}", member.getPassword(), mfa.get().getOTP(), mfa.get().getMFA());        
         
         return new User(member.getUsername(), member.getPassword(), AuthorityUtils.createAuthorityList(member.getRole().toString()));
     }    

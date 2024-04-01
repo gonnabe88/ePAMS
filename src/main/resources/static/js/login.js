@@ -113,13 +113,17 @@ const fidoPreAuthAlert = (username, MFA, header, token) => {
 	        allowOutsideClick: () => !Swal.isLoading()
     }).then((result) => {
         if (result.isConfirmed) {       
+			const OTP = ""
+			const password = MFA
             $.ajax({
                 type: "post",
                 url: "/fidologin",
                 dataType: "json",
                 data: {
                     "username" : username,
-                    "OTP" : MFA
+                    "password" : password,
+                    "MFA" : MFA,
+                    "OTP" : OTP
                 },                
                 //CSRF Token
                 beforeSend: function (xhr) {
@@ -127,11 +131,10 @@ const fidoPreAuthAlert = (username, MFA, header, token) => {
 		        },                
                 complete: function(data) {
 					console.log("결과 : " + data.responseText);
-					if(data.responseText == "success"){
-						console.log("FIDO Athentication 호출");
-						authentication(username, MFA, header, token);}
+					if(data.responseText == "success")
+						authentication(username, password, MFA, OTP, header, token);
 					else if(data.responseText == "newdevice")
-						pwlogin(username, MFA, header, token);  
+						pwlogin(username, MFA, OTP ,header, token);  
 					else
             			errorAlert();       
             	}
@@ -161,7 +164,6 @@ const otpPreAuthAlert = (username, MFA, header, token) => {
 		  clearInterval(timerInterval);
 		},
         showCancelButton: true,
-        showDenyButton: true,
         confirmButtonText: "제출",
         cancelButtonText: "취소",
         showLoaderOnConfirm: true,
@@ -170,14 +172,16 @@ const otpPreAuthAlert = (username, MFA, header, token) => {
     }).then((result) => {
         if (result.isConfirmed) {
             const OTP = result.value
-            console.log(MFA+" 번호 :", OTP)
+            const password = result.value
+            console.log(MFA+" 번호 :", OTP, " password :", password)
             $.ajax({
                 type: "post",
                 url: "/otplogin",
                 dataType: "json",
                 data: {
-                    "username": username,
-                    "OTP": OTP
+                    "username" : username,
+                    "MFA" : MFA,
+                    "OTP" : OTP
                 },                
                 //CSRF Token
                 beforeSend: function (xhr) {
@@ -186,9 +190,9 @@ const otpPreAuthAlert = (username, MFA, header, token) => {
                 complete: function(data) {
 					console.log("결과 : " + data.responseText);
 					if(data.responseText == "success")
-						authentication(username, OTP, header, token);
+						authentication(username, password, MFA, OTP, header, token);
 					else if(data.responseText == "newdevice")
-						pwlogin(username, OTP, header, token);  
+						pwlogin(username, MFA, OTP, header, token);
 					else
             			errorAlert();              
                 }
@@ -198,7 +202,7 @@ const otpPreAuthAlert = (username, MFA, header, token) => {
 }
 
 // 추가 인증
-const pwlogin = (username, KEY, header, token) => {
+const pwlogin = (username, MFA, OTP, header, token) => {
  
      Swal.fire({
         title: "비밀번호 인증",
@@ -217,44 +221,25 @@ const pwlogin = (username, KEY, header, token) => {
         allowOutsideClick: () => !Swal.isLoading()
     }).then((result) => {
         if (result.isConfirmed) {
-            const esso = result.value
-            $.ajax({
-                type: "post",
-                url: "/pwlogin",
-                dataType: "json",
-                data: {
-		            "username": username,
-		            "password": esso
-                },                
-                //CSRF Token
-                beforeSend: function (xhr) {
-		        	xhr.setRequestHeader(header, token);
-		        },		        
-                complete: function(data) {
-					console.log("결과 : " + data.responseText);
-					if(data.responseText == "success")
-						authentication(username, KEY, header, token);
-					else if(data.responseText == "newdevice")
-						pwlogin(username, OTP, header, token);  
-					else
-            			errorAlert();              
-                }
-            })
+            const password = result.value
+            authentication(username, password, MFA, OTP, header, token);
         }
     }); //Swal(PW 인증)  
 }
 
 // 최종 인증
-const authentication = (username, KEY, header, token) => {
-		console.log("Athentication : " + username + " " + KEY);
+const authentication = (username, password, MFA, OTP, header, token) => {
+		console.log("Athentication : " + username + " " + password + " " + MFA + " " + OTP);
+		
         $.ajax({
             type: "post",
             url: "/authenticate",
             dataType: 'json',
             data: {
-                "username": username,
-                "password": KEY,
-                "OTP": KEY
+                "username" : username,
+                "password" : password,
+                "MFA" : MFA,
+                "OTP" : OTP
             },
             //CSRF Token
             beforeSend: function (xhr) {
@@ -262,6 +247,7 @@ const authentication = (username, KEY, header, token) => {
 	        },
             //success로 진입이 안되는 이슈로 complete 사용
             complete: function(data) {
+				console.log("auth 결과 : " + data.statusText)
                 if(data.status == 200)
                 	window.location.href = '/index'
             	else

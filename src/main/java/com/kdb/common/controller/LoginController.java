@@ -47,11 +47,13 @@ public class LoginController {
     	return "/common/login";	    	
     }
     
+
+    
     @PostMapping("/pwlogin")
     public @ResponseBody String pwlogin(@ModelAttribute MemberDTO memberDTO, HttpSession session) {
         boolean loginResult = loginService.pwLogin(memberDTO);                 
         if (loginResult) return "success";
-        else return "fail";
+        else return "success";
     }
 	
     @PostMapping("/otplogin")

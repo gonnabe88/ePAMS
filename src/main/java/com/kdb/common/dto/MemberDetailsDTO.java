@@ -14,6 +14,7 @@ public class MemberDetailsDTO implements UserDetails {
 
 	private MemberEntity member;
 	
+
 	public String getUUID() {
 		return member.getUuid();
 	}

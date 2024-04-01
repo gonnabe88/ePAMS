@@ -69,8 +69,8 @@ public class SecurityConfig {
                 authorizeRequests                
                     .requestMatchers(
             		/*"/index", "index2", "list", "save",*/
-            		"/", "/login", "/register", "/registry",
-            		"/api/mfa", "/pwlogin", "/otplogin", "/fidologin", "/logout",
+            		"/", "/login", "/logout", "/register",
+            		"/api/mfa", 
                     "/css/**",
                     "/js/**",
                     "/extensions/**",

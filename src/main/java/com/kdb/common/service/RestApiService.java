@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.CookieValue;
 
 import com.kdb.common.dto.MemberDTO;
 import com.kdb.common.entity.MfaEntity;
@@ -21,6 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 public class RestApiService {
 	
     private final MfaRepository mfaRepository;
+    private final LoginService loginService;
     
     private int generateOTP(int length) {
     	SecureRandom secureRandom = new SecureRandom();
@@ -30,21 +32,21 @@ public class RestApiService {
 	
 	public Map<String, String> requestMFA(MemberDTO memberDTO) throws NoSuchAlgorithmException{
 		
+		boolean isUUIDValid = loginService.isValidUUID(memberDTO);
 		String OTP = String.format("%06d",generateOTP(6));	
 		MfaEntity mfaEntity = MfaEntity.toSaveEntity(memberDTO);
-		Map<String, String> uuid = new HashMap<>();
+		Map<String, String> mfaInfo = new HashMap<>();
 
 		log.info("otp : {}", OTP);
 		
 		mfaEntity.setOTP(OTP);
-        mfaRepository.save(mfaEntity);		
+        mfaRepository.save(mfaEntity);
 		
-		uuid.put("username", "K140024");
-		uuid.put("mfa", memberDTO.getMFA());
-		uuid.put("otp", OTP);
+        mfaInfo.put("username", memberDTO.getUsername());
+        mfaInfo.put("MFA", memberDTO.getMFA());
+        mfaInfo.put("OTP", OTP);
+        mfaInfo.put("UUID", String.valueOf(isUUIDValid));
 		
-		return uuid;
+		return mfaInfo;
 	}
-	
-
 }

@@ -2,6 +2,7 @@ package com.kdb.common.controller;
 
 import java.util.Map;
 
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,17 +22,11 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/api/")
 public class RestApiController {
 	
-	private final LoginRepository loginRepository;
 	private final RestApiService restapiservice;
 	
-	/*
-	 * @GetMapping("/updateuuid") public Map<String, String> updateUUID() { return
-	 * restapiservice.updateUUID(); }
-	 */
-	
     @PostMapping("/mfa")
-    public Map<String, String> mfa(@ModelAttribute MemberDTO memberDTO) throws Exception{
-    	log.info("mfa reqeust from {}, {}, {}, {}", memberDTO.getUsername(), memberDTO.getMFA(), memberDTO.getOTP(), memberDTO.getPassword());
+    public Map<String, String> mfa(@ModelAttribute MemberDTO memberDTO, @CookieValue(value="UUIDChk", required=false) String UUID) throws Exception{
+    	memberDTO.setUUID(UUID);
 		return restapiservice.requestMFA(memberDTO);
     }
 }

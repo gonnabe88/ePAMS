@@ -1,6 +1,8 @@
-$(document).ready(function() {
+// jquery
+
+$(function(){
     let key = getCookie("MFAChk"); 
-    if (key != "") // 쿠키가 있는 경우 
+    if (key != "") 
 		$("input:radio[name=MFA]:radio[value='"+key+"']").prop("checked", true);
         
     $('input[name="MFA"]').change(function() {
@@ -8,7 +10,7 @@ $(document).ready(function() {
     });
 });
 
-$(document).ready(function() {
+$(function(){
     let key = getCookie("idChk"); 
     
     if (key != "") 
@@ -30,32 +32,29 @@ $(document).ready(function() {
     });
 });
 
-function setCookie(cookieName, value, exdays) {
+const setCookie=(cookieName, value, exdays) => {
     let exdate = new Date();
     exdate.setDate(exdate.getDate() + exdays);
     let cookieValue = escape(value) + ((exdays == null) ? "" : "; expires=" + exdate.toGMTString());
     document.cookie = cookieName + "=" + cookieValue;
 }
 
-function deleteCookie(cookieName) {
+const deleteCookie=(cookieName) => {
     let expireDate = new Date();
     expireDate.setDate(expireDate.getDate() - 1);
     document.cookie = cookieName + "= " + "; expires=" + expireDate.toGMTString();
 }
 
-function getCookie(cookieName) {
+const getCookie=(cookieName) => {
     cookieName = cookieName + '=';
     let cookieData = document.cookie;
-    console.log("cookieData : ", cookieData);
     let start = cookieData.indexOf(cookieName);
-    console.log("cookieData start : ", start);
     let cookieValue = '';
     if (start != -1) {
         start += cookieName.length;
         let end = cookieData.indexOf(';', start);
         if (end == -1) end = cookieData.length;
         cookieValue = cookieData.substring(start, end);
-        console.log("cookieValue : ", cookieValue);
     }
     return unescape(cookieValue);
 }
@@ -66,7 +65,6 @@ const login= () => {
     const MFA = $('input[name="MFA"]:checked').val();
     let header = $("meta[name='_csrf_header']").attr('content');
     let token = $("meta[name='_csrf']").attr('content');
-    console.log("MFA login")
     $.ajax({
         type: "post",
         url: "/api/mfa",
@@ -80,19 +78,20 @@ const login= () => {
         	xhr.setRequestHeader(header, token);
         },                
         complete: function(data) {         
-			console.log("MFA reply : " + data.responseText)
+			const UUID = JSON.parse(data.responseText).UUID;
+			console.log("MFA reply : " + JSON.parse(data.responseText).OTP)
 		    switch (MFA) {
 		        case 'OTP':            
-		            otpPreAuthAlert(username, MFA, header, token); //OTP 인증
+		            otpAuthAlert(username, MFA, UUID, header, token); //OTP 인증
 		            break; 
 		        case 'SMS':
-		            otpPreAuthAlert(username, MFA, header, token); //SMS 인증
+		            otpAuthAlert(username, MFA, UUID, header, token); //SMS 인증
 		            break; 
 		        case '카카오톡':
-		            otpPreAuthAlert(username, MFA, header, token); //카카오톡 인증
+		            otpAuthAlert(username, MFA, UUID, header, token); //카카오톡 인증
 		            break; 
 		        case 'FIDO':
-		            fidoPreAuthAlert(username, MFA, header, token); //FIDO 인증
+		            fidoAuthAlert(username, MFA, UUID, header, token); //FIDO 인증
 		            break; 
 		    } //switch(MFA)
 	    }
@@ -100,7 +99,7 @@ const login= () => {
 }
 
 // FIDO 인증화면
-const fidoPreAuthAlert = (username, MFA, header, token) => {
+const fidoAuthAlert = (username, MFA, UUID, header, token) => {
 
 	Swal.fire({
 	        title: MFA+ " 인증",
@@ -113,38 +112,18 @@ const fidoPreAuthAlert = (username, MFA, header, token) => {
 	        allowOutsideClick: () => !Swal.isLoading()
     }).then((result) => {
         if (result.isConfirmed) {       
-			const OTP = ""
+			const OTP = "N/A"
 			const password = MFA
-            $.ajax({
-                type: "post",
-                url: "/fidologin",
-                dataType: "json",
-                data: {
-                    "username" : username,
-                    "password" : password,
-                    "MFA" : MFA,
-                    "OTP" : OTP
-                },                
-                //CSRF Token
-                beforeSend: function (xhr) {
-		        	xhr.setRequestHeader(header, token);
-		        },                
-                complete: function(data) {
-					console.log("결과 : " + data.responseText);
-					if(data.responseText == "success")
-						authentication(username, password, MFA, OTP, header, token);
-					else if(data.responseText == "newdevice")
-						pwlogin(username, MFA, OTP ,header, token);  
-					else
-            			errorAlert();       
+			if(UUID == "false")
+				pwlogin(username, MFA, OTP ,header, token);  
+			else 
+				authentication(username, password, MFA, OTP, header, token);
             	}
         	})
         }
-     });
-}
 
 // OTP 유형(SMS, 카카오, mOTP) 인증화면
-const otpPreAuthAlert = (username, MFA, header, token) => {
+const otpAuthAlert = (username, MFA, UUID, header, token) => {
 	
     Swal.fire({
         title: MFA+" 인증",
@@ -174,39 +153,22 @@ const otpPreAuthAlert = (username, MFA, header, token) => {
             const OTP = result.value
             const password = result.value
             console.log(MFA+" 번호 :", OTP, " password :", password)
-            $.ajax({
-                type: "post",
-                url: "/otplogin",
-                dataType: "json",
-                data: {
-                    "username" : username,
-                    "MFA" : MFA,
-                    "OTP" : OTP
-                },                
-                //CSRF Token
-                beforeSend: function (xhr) {
-		        	xhr.setRequestHeader(header, token);
-		        },		        
-                complete: function(data) {
-					console.log("결과 : " + data.responseText);
-					if(data.responseText == "success")
-						authentication(username, password, MFA, OTP, header, token);
-					else if(data.responseText == "newdevice")
-						pwlogin(username, MFA, OTP, header, token);
-					else
-            			errorAlert();              
-                }
-            })
+			if(UUID == "false")
+				pwlogin(username, MFA, OTP ,header, token);  
+			else 
+				authentication(username, password, MFA, OTP, header, token);            
         }
-    }); //Swal(OTP 인증)
+    })
 }
+    //Swal(OTP 인증)
+
 
 // 추가 인증
 const pwlogin = (username, MFA, OTP, header, token) => {
  
      Swal.fire({
         title: "비밀번호 인증",
-        html: "접속환경 변경으로 추가인증이 필요합니다.<br> 내부망 <b><u>ESSO 패스워드</u></b>를 입력해주세요.",
+        html: "접속환경 변경으로 추가인증이 필요합니다.<br> <b><u>내부망 ESSO 패스워드</u></b>를 입력해주세요.",
         input: "password",
         inputPlaceholder: "ESSO 비밀번호",
         inputAttributes: {
@@ -228,33 +190,29 @@ const pwlogin = (username, MFA, OTP, header, token) => {
 }
 
 // 최종 인증
-const authentication = (username, password, MFA, OTP, header, token) => {
-		console.log("Athentication : " + username + " " + password + " " + MFA + " " + OTP);
-		
-        $.ajax({
-            type: "post",
-            url: "/authenticate",
-            dataType: 'json',
-            data: {
-                "username" : username,
-                "password" : password,
-                "MFA" : MFA,
-                "OTP" : OTP
-            },
-            //CSRF Token
-            beforeSend: function (xhr) {
-	        	xhr.setRequestHeader(header, token);
-	        },
-            //success로 진입이 안되는 이슈로 complete 사용
-            complete: function(data) {
-				console.log("auth 결과 : " + data.statusText)
-                if(data.status == 200)
-                	window.location.href = '/index'
-            	else
-            		errorAlert();
-            }
-        }); //ajax
-    
+const authentication = (username, password, MFA, OTP, header, token) => {		
+    $.ajax({
+        type: "post",
+        url: "/authenticate",
+        dataType: 'json',
+        data: {
+            "username" : username,
+            "password" : password,
+            "MFA" : MFA,
+            "OTP" : OTP
+        },
+        //CSRF Token
+        beforeSend: function (xhr) {
+        	xhr.setRequestHeader(header, token);
+        },
+        //success로 진입이 안되는 이슈로 complete 사용
+        complete: function(data) {
+            if(data.status == 200)
+            	window.location.href = '/index'
+        	else
+        		errorAlert();
+        }
+    }); //ajax    
 }
 
 const errorAlert = () => {	

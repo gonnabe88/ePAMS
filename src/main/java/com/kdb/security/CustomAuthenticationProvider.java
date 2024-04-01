@@ -27,17 +27,17 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 	@Autowired
 	private UserDetailsService userDetailsService;
 
-
+	@SuppressWarnings("serial")
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 
 		CustomWebAuthenticationDetails customWebAuthenticationDetails = (CustomWebAuthenticationDetails) authentication.getDetails();;
-
 		String username = authentication.getName();
 		String password = authentication.getCredentials().toString();
 		String UUID = customWebAuthenticationDetails.getUUID();
 		String OTP = customWebAuthenticationDetails.getOTP();
-		String MFA = customWebAuthenticationDetails.getMFA();
+		String MFA = customWebAuthenticationDetails.getMFA();		
+		UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
 		boolean uuidResult = loginService.isValidUUID(username, UUID); 
 		boolean loginResult = false;
@@ -57,32 +57,14 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 				break;
 		}
 		
+		if (userDetails == null) 
+			throw new UsernameNotFoundException("User not found");		
 
-		log.info("[LOG] CustomAuthenticationProvider UUID {}", customWebAuthenticationDetails.getUUID());
-		// Perform your custom authentication logic here
-		// Retrieve user details from userDetailsService and validate the credentials
-		// You can throw AuthenticationException if authentication fails
-		// Example: retrieving user details by username from UserDetailsService
-
-		UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-		if (userDetails == null) {
-			throw new UsernameNotFoundException("User not found");
-		}
-
-		if (!uuidResult) {
-			log.warn("[인증] UUID 다름 & 패스워드 인증 실패");
-			if (!(encshaService.encrypt(password)).equals(userDetails.getPassword())) {
-					log.warn("[최종인증] UUID 다름 & 패스워드 인증 실패");
-					throw new AuthenticationException("Invalid credentials") {}; 
-			}
-		}
+		if (!uuidResult && !(encshaService.encrypt(password)).equals(userDetails.getPassword())) 
+				throw new AuthenticationException("Invalid credentials") {};
 		
-		if (!loginResult) {
-				log.warn("[최종인증] MFA 인증 실패");
+		if (!loginResult) 
 				throw new AuthenticationException("Invalid MFA credentials") {}; 
-		}
-		
-		
 		
 		// Create a fully authenticated Authentication object
 		Authentication authenticated = new UsernamePasswordAuthenticationToken(

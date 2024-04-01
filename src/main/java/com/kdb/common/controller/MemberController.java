@@ -46,13 +46,13 @@ public class MemberController {
         return "/common/register";
     }
 
-    @GetMapping("/registry")
+    @GetMapping("/register")
     public String registryForm(Model model) {
         model.addAttribute("member", new MemberDTO());
         return "/common/register";
     }
 
-    @PostMapping("/registry")
+    @PostMapping("/register")
     public String registry(@ModelAttribute MemberDTO registryRequest) {
         MemberEntity member = MemberEntity.builder()
                 .username(registryRequest.getUsername())

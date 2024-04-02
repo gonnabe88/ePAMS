@@ -6,7 +6,10 @@
 <head>
 <!-- (start) private script -->
 <th:block layout:fragment="css">
-
+    <link rel="apple-touch-icon" href="/images/kdb/epams_r_192.png" />
+    <link rel="apple-touch-icon" href="/images/kdb/epams_r_512.png" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    
 	<link rel="stylesheet" href="/extensions/aos/aos.css">	
 	<link rel="stylesheet" href="/extensions/animate/animate.min.css" />
 	<link rel="stylesheet" href="/extensions/owlcarousel/owl.carousel.min.css">
@@ -429,6 +432,14 @@
 					});
 			}
 		</script>	
+		
+		<script>
+	      (function () {
+	        if ("serviceWorker" in navigator) {
+	          navigator.serviceWorker.register("/js/sw.js");
+	        }
+	      })();
+	    </script>
 	</th:block>
 	<!-- (end) private script -->
 </body>

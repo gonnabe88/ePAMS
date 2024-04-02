@@ -7,14 +7,9 @@ server:
       persistent: true
       tracking-modes: cookie
       cookie:
-<<<<<<< HEAD
         domain: epams.duckdns.org
         #domain: epams.iptime.org
         #domain: localhost
-=======
-        #domain: epams.iptime.org
-        domain: localhost
->>>>>>> 91410e5dd2d2c3e97e3184e2ec66e28bddf61a1f
         http-only: true
         path: /
         max-age: -1 # infinite

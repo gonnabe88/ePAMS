@@ -35,7 +35,7 @@ public class LoginController {
     public String logout(HttpServletRequest request) throws Exception{
     	HttpSession session = request.getSession(false);
     	session.invalidate();
-    	return "redirect:/common/login";     
+    	return "/common/login";     
     }   
     
     @GetMapping({"/", "/login"})

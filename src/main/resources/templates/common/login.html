@@ -5,6 +5,10 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, height=device-height,initial-scale=1.0">
 	
+    <link rel="apple-touch-icon" href="/images/kdb/epams_r_192.png" />
+    <link rel="apple-touch-icon" href="/images/kdb/epams_r_512.png" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    
 	<meta name="_csrf_header" th:content="${_csrf.headerName}">
 	<meta name="_csrf" th:content="${_csrf.token}">
 	
@@ -210,6 +214,13 @@
 	<script src="/extensions/sweetalert2/sweetalert2.min.js"></script>
 	<script src="/js/login.js"></script>
 
+		<script>
+	      (function () {
+	        if ("serviceWorker" in navigator) {
+	          navigator.serviceWorker.register("/js/sw.js");
+	        }
+	      })();
+	    </script>
 </body>
 
 </html> 

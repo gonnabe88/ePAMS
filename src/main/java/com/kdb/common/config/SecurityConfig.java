@@ -70,7 +70,8 @@ public class SecurityConfig {
                     .requestMatchers(
             		/*"/index", "index2", "list", "save",*/
             		"/.well-known/**",
-            		"/", "/login", "/logout", "/register",
+            		"/manifest.webmanifest", "/login", "/logout", "/register",
+            		"/api/mfa", 
             		"/api/mfa", 
                     "/css/**",
                     "/js/**",

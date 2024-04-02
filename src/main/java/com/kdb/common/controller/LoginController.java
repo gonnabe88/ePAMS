@@ -40,6 +40,7 @@ public class LoginController {
     
     @GetMapping({"/", "/login"})
     public String login(HttpServletResponse response)  throws Exception{    	
+    	log.warn("login page");
     	Authentication auth = Authentication();
     	if(auth != null && auth.isAuthenticated()) return "/common/index";
     	return "/common/login";	    	

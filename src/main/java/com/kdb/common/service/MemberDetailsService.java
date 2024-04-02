@@ -28,7 +28,6 @@ public class MemberDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<MemberEntity> findMember = memberRepository.findByUsername(username);
         Optional<MfaEntity> mfa = mfaRepository.findTop1ByUsernameOrderByIdDesc(username);
-        MemberEntity member = findMember.get();
         
         if (findMember.isEmpty())
         	throw new UsernameNotFoundException("존재하지 않는 username 입니다.");  
@@ -36,6 +35,7 @@ public class MemberDetailsService implements UserDetailsService {
         //	member.setPassword("FIDO");
         //else
         //	member.setPassword(mfa.get().getOTP());
+        MemberEntity member = findMember.get();
         
         log.info("loadUserByUsername member.username = {}", username);
         log.info("findotpbyname password = {} otp = {} mfa = {}", member.getPassword(), mfa.get().getOTP(), mfa.get().getMFA());        

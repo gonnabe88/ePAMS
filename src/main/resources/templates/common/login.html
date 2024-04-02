@@ -15,12 +15,11 @@
 	<link rel="stylesheet" href="css/app.css">
 	<link rel="stylesheet" href="css/app-dark.css">
 	<link rel="stylesheet" href="css/auth.css">
-	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </head>
 
+
 <body>
-	<script src="js/initTheme.js"></script>
+	<script src="/js/initTheme.js"></script>
 	<div id="auth">
 		<div class="row h-100">
 			<div class="col-lg-5 col-12 align-self-center">
@@ -35,12 +34,12 @@
 					</div>
 					<div class="justify-content-center">
 						<div class="container col-xl-12 col-lg-12 col-12">
-							<form action="pwlogin" method="post" name="loginform">
+							<form  onKeyPress="if (event.keyCode==13){login();}">
 								<div class="form-group position-relative has-icon-left mb-1">
 									<input type="text" name="username" id="username" class="form-control form-control-xl" placeholder="K행번" style="text-transform: uppercase;">
 									<p id="check-result"></p>
 									<div class="form-control-icon">
-										<i class="bi bi-person"></i>
+										<i class="bi bi-person"></i>									
 									</div>
 								</div>
 								<div class="form-check form-check-lg d-flex align-items-end">
@@ -206,9 +205,9 @@
 
 	</div>
 	
-	<script src="/js/app_v0.5.js"></script>	
-	<script src="/extensions/sweetalert2/sweetalert2.min.js"></script>
+	<script src="/js/app_v0.5.js"></script>		
 	<script src="/extensions/jquery/jquery.min.js"></script>
+	<script src="/extensions/sweetalert2/sweetalert2.min.js"></script>
 	<script src="/js/login.js"></script>
 
 </body>

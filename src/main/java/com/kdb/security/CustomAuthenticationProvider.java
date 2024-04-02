@@ -61,10 +61,10 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 			throw new UsernameNotFoundException("User not found");		
 
 		if (!uuidResult && !(encshaService.encrypt(password)).equals(userDetails.getPassword())) 
-				throw new AuthenticationException("Invalid credentials") {};
+			throw new AuthenticationException("Invalid credentials") {};
 		
 		if (!loginResult) 
-				throw new AuthenticationException("Invalid MFA credentials") {}; 
+			throw new AuthenticationException("Invalid MFA credentials") {}; 
 		
 		// Create a fully authenticated Authentication object
 		Authentication authenticated = new UsernamePasswordAuthenticationToken(

@@ -59,12 +59,18 @@ const getCookie=(cookieName) => {
     return unescape(cookieValue);
 }
 
+$("#loginForm").submit(function(){
+	login();	
+});
+
+
 // 로그인 처리
 const login= () => {
     const username = document.getElementById("username").value;
     const MFA = $('input[name="MFA"]:checked').val();
     let header = $("meta[name='_csrf_header']").attr('content');
     let token = $("meta[name='_csrf']").attr('content');
+    console.log("login "+username+MFA);
     $.ajax({
         type: "post",
         url: "/api/mfa",
@@ -81,7 +87,8 @@ const login= () => {
 			const UUID = JSON.parse(data.responseText).UUID;
 			console.log("MFA reply : " + JSON.parse(data.responseText).OTP)
 		    switch (MFA) {
-		        case 'OTP':            
+		        case 'OTP':     
+		            console.log(MFA+UUID)
 		            otpAuthAlert(username, MFA, UUID, header, token); //OTP 인증
 		            break; 
 		        case 'SMS':

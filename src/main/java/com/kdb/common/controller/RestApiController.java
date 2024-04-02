@@ -26,6 +26,7 @@ public class RestApiController {
 	
     @PostMapping("/mfa")
     public Map<String, String> mfa(@ModelAttribute MemberDTO memberDTO, @CookieValue(value="UUIDChk", required=false) String UUID) throws Exception{
+    	log.warn("rest login");
     	memberDTO.setUUID(UUID);
 		return restapiservice.requestMFA(memberDTO);
     }

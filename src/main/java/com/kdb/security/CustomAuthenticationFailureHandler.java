@@ -21,10 +21,6 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
 		
 		log.warn("AuthenticationException exception : {}", exception.getMessage());
 		// TODO Auto-generated method stub
-		response.setStatus(500);
-		
-	}
-
-	
-	
+		response.setStatus(500);		
+	}	
 }

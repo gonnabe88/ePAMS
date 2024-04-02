@@ -6995,7 +6995,7 @@ fieldset:disabled .btn {
 }
 
 @media (max-width: 575.98px) {
-    .carousel-inner-sm {
+    .carousel-inner {
         position: relative;
 	    width: 100%;
 	    max-height:300px;
@@ -7054,6 +7054,45 @@ fieldset:disabled .btn {
     backface-visibility: hidden;
     transition: transform .6s ease-in-out
 }
+
+.carousel-img-1{
+		background-image: url(/images/kdb/KDB_3.png);
+		background-color: #845EC2;
+	    background-repeat: no-repeat;
+	    background-size: cover;
+	    position: relative;
+	    height: 40vh;
+}
+	
+@media (max-width: 575.98px) {
+	.carousel-img-1{
+		background-image: url(/images/kdb/BACKGROUND3.png);
+	    background-repeat: no-repeat;
+	    background-size: cover;
+	    position: relative;
+	    height: 40vh;
+	}
+}
+
+.carousel-img-2{
+		background-image: url(/images/kdb/KDB_4.png);
+		background-color: #2C73D2;
+	    background-repeat: no-repeat;
+	    background-size: cover;
+	    position: relative;
+	    height: 40vh;
+}
+	
+@media (max-width: 575.98px) {
+	.carousel-img-2{
+		background-image: url(/images/kdb/BACKGROUND4.png);
+	    background-repeat: no-repeat;
+	    background-size: cover;
+	    position: relative;
+	    height: 40vh;
+	}
+}
+
 
 @media (prefers-reduced-motion: reduce) {
     .carousel-item {
@@ -7122,7 +7161,7 @@ fieldset:disabled .btn {
     border: 0;
     opacity: .5;
     transition: opacity .15s ease;
-    max-height: 250px
+    max-height: 40vh;
 }
 
 @media (prefers-reduced-motion: reduce) {

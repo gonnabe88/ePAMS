@@ -139,7 +139,8 @@ const otpAuthAlert = (username, MFA, UUID, header, token) => {
         inputPlaceholder: "인증번호(6자리)",
         inputAttributes: {
             autocapitalize: "off",
-            autofocus : "on"
+            autofocus : "on",
+            autocomplete: "one-time-code"
         },
         timer: 300000,
 	    timerProgressBar: true,

@@ -4,6 +4,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, height=device-height,initial-scale=1.0">
+	<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
 	
     <link rel="apple-touch-icon" href="/images/kdb/epams_r_192.png" />
     <link rel="apple-touch-icon" href="/images/kdb/epams_r_512.png" />
@@ -38,7 +39,7 @@
 					</div>
 					<div class="justify-content-center">
 						<div class="container col-xl-12 col-lg-12 col-12">
-							<form  onKeyPress="if (event.keyCode==13){login();}">
+							<form onKeyPress="if(event.keyCode==13){login();}">
 								<div class="form-group position-relative has-icon-left mb-1">
 									<input type="text" name="username" id="username" class="form-control form-control-xl" placeholder="K행번" style="text-transform: uppercase;">
 									<p id="check-result"></p>
@@ -96,6 +97,8 @@
                                             </button>
                                         </div>
                                         <div class="modal-body">
+                                        	<h6>테스트 계정</h6>
+                                        	<p>ID : K000000 / PW : kdb1234!<br>
                                         	<h6>FIDO</h6>
                                             <p>테스트 때문에 FIDO는 무조건 인증 설정 <br>
                                             <h6>SMS/카카오/OTP</h6>

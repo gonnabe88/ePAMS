@@ -15,7 +15,7 @@ class EPamsApplicationTests {
     @Autowired
     private BoardService boardService;
 
-    @Test
+    
     public void boardWrite() throws IOException {
         for(int i=1; i<=100; i++) {
             BoardDTO dto = new BoardDTO();

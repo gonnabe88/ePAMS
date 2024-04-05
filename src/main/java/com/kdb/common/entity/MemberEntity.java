@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import com.kdb.common.dto.MemberRole;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -25,16 +26,27 @@ import lombok.Setter;
 @Table(name = "member")
 public class MemberEntity implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     private String username;
+    
+    @Column
     private String password;
+    
+    @Column
     private String dept;
+    
+    @Column
     private String team;
+    
+    @Column
     private boolean enabled;
+    
     @Enumerated(EnumType.STRING)
     private MemberRole role;
+    
+    @Column
     private String uuid;
+    
+    @Column
     private String responsibility;
 
     @Builder

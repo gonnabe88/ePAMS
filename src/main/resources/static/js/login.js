@@ -66,7 +66,7 @@ $("#loginForm").submit(function(){
 
 // 로그인 처리
 const login= () => {
-    const username = document.getElementById("username").value;
+    const username = document.getElementById("username").value.toUpperCase();
     const MFA = $('input[name="MFA"]:checked').val();
     let header = $("meta[name='_csrf_header']").attr('content');
     let token = $("meta[name='_csrf']").attr('content');
@@ -88,7 +88,6 @@ const login= () => {
 			console.log("MFA reply : " + JSON.parse(data.responseText).OTP)
 		    switch (MFA) {
 		        case 'OTP':     
-		            console.log(MFA+UUID)
 		            otpAuthAlert(username, MFA, UUID, header, token); //OTP 인증
 		            break; 
 		        case 'SMS':
@@ -125,9 +124,9 @@ const fidoAuthAlert = (username, MFA, UUID, header, token) => {
 				pwlogin(username, MFA, OTP ,header, token);  
 			else 
 				authentication(username, password, MFA, OTP, header, token);
-            	}
-        	})
-        }
+    	}
+	})
+}
 
 // OTP 유형(SMS, 카카오, mOTP) 인증화면
 const otpAuthAlert = (username, MFA, UUID, header, token) => {

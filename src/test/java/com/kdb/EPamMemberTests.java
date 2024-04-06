@@ -19,7 +19,7 @@ class EPamMemberTests {
     @Autowired
     private CustomPasswordEncoder passwordEncoder; 
 
-    
+    @Test
     public void RegistOneMember() throws IOException {
     	
     	MemberEntity member = MemberEntity.builder()
@@ -28,6 +28,13 @@ class EPamMemberTests {
             .role(MemberRole.ROLE_KDB)
             .build();
         memberRepository.save(member);
+        
+    	MemberEntity member2 = MemberEntity.builder()
+                .username("K140024")
+                .password(passwordEncoder.encode("kdb1234!"))
+                .role(MemberRole.ROLE_KDB)
+                .build();
+        memberRepository.save(member2);
     }
 
 }

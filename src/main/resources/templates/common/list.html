@@ -30,7 +30,7 @@
 									<section class="section" th:each="board: ${boardList}">
 										<div class="card">
 											<div class="card-body">
-												<a th:href="@{|/${board.id}|}"><h4 th:text="${board.boardTitle}"></h4></a>
+												<a th:href="@{|/board/${board.id}|}"><h4 th:text="${board.boardTitle}"></h4></a>
 												<p th:utext="${board.boardContents}"></p>												
 												<div class="d-flex justify-content-around">												
 													<!-- 작성시간 -->
@@ -92,16 +92,6 @@
 
 		<!-- (start) private script -->
 		<th:block layout:fragment="script">
-	
-	
-			<!-- <script src="https://cdn.ckeditor.com/ckeditor5/41.2.0/classic/ckeditor.js"></script>
-			<script src="https://ckeditor.com/apps/ckfinder/3.5.0/ckfinder.js"></script> -->
-			<script src="/js/ckeditor.js"></script>
-			<!-- <script src="https://cdn.jsdelivr.net/npm/ckeditor5-full-free-plugin@23.1.2/build/ckeditor.min.js"></script> -->
-			<script src="/extensions/datatables.net/js/jquery.dataTables.min.js"></script>
-			<script src="/extensions/datatables.net-bs5/js/dataTables.bootstrap5.min.js"></script>
-			<script src="/js/pages/datatables.js"></script>
-	
 		</th:block>
 		<!-- (end) private script -->
 </body>

@@ -30,7 +30,7 @@ public class MemberDetailsService implements UserDetailsService {
         Optional<MfaEntity> mfa = mfaRepository.findTop1ByUsernameOrderByIdDesc(username);
         
         if (findMember.isEmpty())
-        	throw new UsernameNotFoundException("존재하지 않는 username 입니다.");  
+        	throw new UsernameNotFoundException("존재하지 않는 username 입니다."+username);  
         //else if (mfa.get().getMFA().equals("FIDO"))
         //	member.setPassword("FIDO");
         //else

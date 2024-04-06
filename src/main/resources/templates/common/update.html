@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+      xmlns:sec="http://www.thymeleaf.org"
+      layout:decorate="~{common/layout/layout}">
+
+<head>
+	<!-- (start) private script -->
+	<th:block layout:fragment="css">
+		<link rel="stylesheet" href="/extensions/tinymce/tinymce.css">
+	    <script src="/extensions/tinymce/tinymce.min.js"></script>
+	    <script src="/js/pages/tinymce.js"></script>
+	</th:block>
+	<!-- (end) private script -->	
+</head>
+
+<body>
+
+	<div layout:fragment="contents">
+		<div id="main-content">
+			<div class="page-heading">
+				<h2><i class="bi bi-bell-fill"></i> 공지사항</h2>
+				<br> <input class="form-control" type="text" placeholder="제목" aria-label="default input example" id="title" th:value="${board.boardTitle}"><br>
+				<textarea name="open" id="open" cols="30" rows="10" th:utext="${board.boardContents}"></textarea>
+					<div class="d-flex gap-2 flex-row-reverse">
+						<button class="btn btn-primary mt-3" type="submit" id="submit" onclick="update()">등록</button>
+						<a class="btn btn-secondary mt-3" type="submit" id="submit" th:href="@{/board/list}">목록</a>
+					</div>
+				<br>
+			</div>
+		</div>
+	</div>
+
+	<!-- (start) private script -->
+	<th:block layout:fragment="script">
+		<script th:inline="javascript">
+		    function update()
+		    {    
+		        const header = $("meta[name='_csrf_header']").attr('content');
+		        const token = $("meta[name='_csrf']").attr('content');
+		    	$.ajax({
+					type: "post",
+					url: "/board/update",
+					dataType: "json",
+					data: {
+						"id": /*[[${board.id}]]*/ "id",
+						"boardTitle": document.getElementById("title").value,
+						"boardContents": tinymce.get("open").getContent(),
+					},
+	                //CSRF Token
+	                beforeSend: function (xhr) {
+			        	xhr.setRequestHeader(header, token);
+			        },		
+					complete: function(data) {
+						window.location.href = '/board/list'
+					}
+		    	});
+			}
+	    </script>
+   	</th:block>
+	<!-- (end) private script -->
+		
+</body>
+
+</html>

@@ -1,5 +1,7 @@
 package com.kdb.common.dto;
 
+import com.kdb.common.entity.MemberEntity;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -17,5 +19,16 @@ public class MemberDTO {
     private String UUID;
     private String MFA;
     private String responsibility;
+    
+    
+    public static MemberDTO toSearchDTO(MemberEntity memberEntity) {
+    	MemberDTO memberDTO = new MemberDTO();
+    	memberDTO.setUsername(memberEntity.getUsername());
+    	memberDTO.setDept(memberEntity.getDept());
+    	memberDTO.setTeam(memberEntity.getTeam());
+    	memberDTO.setResponsibility(memberEntity.getResponsibility());
+    	
+    	return memberDTO;
+    }
     
 }

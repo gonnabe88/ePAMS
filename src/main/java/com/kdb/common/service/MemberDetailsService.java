@@ -1,5 +1,6 @@
 package com.kdb.common.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.kdb.common.entity.MemberEntity;
 import com.kdb.common.entity.MfaEntity;
+import com.kdb.common.entity.SearchMemberEntity;
 import com.kdb.common.repository.MemberRepository;
 import com.kdb.common.repository.MfaRepository;
 
@@ -42,4 +44,14 @@ public class MemberDetailsService implements UserDetailsService {
         
         return new User(member.getUsername(), member.getPassword(), AuthorityUtils.createAuthorityList(member.getRole().toString()));
     }    
+    
+    public List<SearchMemberEntity> findBySearchValue(String searchValue)
+    {
+    	return memberRepository.findBySearchValue(searchValue);
+    }
+    
+    public List<MemberEntity> findAll()
+    {
+    	return memberRepository.findAll();
+    }
 }

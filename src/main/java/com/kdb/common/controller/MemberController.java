@@ -39,12 +39,6 @@ public class MemberController {
         this.passwordEncoder = passwordEncoder;
         System.out.println("MemberController");
     }
-    
-    @GetMapping("/search")
-    public String search(Model model) {
-        model.addAttribute("member", new MemberDTO());
-        return "/common/register";
-    }
 
     @GetMapping("/register")
     public String registryForm(Model model) {

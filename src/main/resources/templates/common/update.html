@@ -10,6 +10,20 @@
 		<link rel="stylesheet" href="/extensions/tinymce/tinymce.css">
 	    <script src="/extensions/tinymce/tinymce.min.js"></script>
 	    <script src="/js/pages/tinymce.js"></script>
+   	    <script>
+			tinymce.init({
+		        selector: '#open',
+		        plugins: [
+		            "advlist", "accordion", "anchor", "autolink", "autoresize", "charmap", "code", "codesample", 
+		            "fullscreen", 
+		            "help", "image", "insertdatetime", "link", "lists", "media",
+		            "nonbreaking","pagebreak", "preview", "quickbars", "save", "searchreplace", "table", "template", 
+		            "visualblocks", "wordcount"
+		        ],
+		        branding: false,
+		        promotion: false
+		    });
+	    </script>
 	</th:block>
 	<!-- (end) private script -->	
 </head>

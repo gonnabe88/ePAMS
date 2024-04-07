@@ -50,11 +50,15 @@ public class MemberEntity implements Serializable {
     private String responsibility;
 
     @Builder
-    public MemberEntity(String username, String password, boolean enabled, MemberRole role, String uuid) {
+    public MemberEntity(String username, String password, String dept, String team, String responsibility, boolean enabled, MemberRole role, String uuid) {
         this.username = username;
         this.password = password;
+        this.dept = dept;
+        this.team = team;
+        this.responsibility = responsibility;
         this.enabled = enabled;
         this.role = role;
         this.uuid = uuid;
     }
+    
 }

@@ -61,6 +61,12 @@ public class SecurityConfig {
         http
         	.addFilterBefore(new CustomSecurityFilter(memberDetailsService, new CustomPasswordEncoder()), AuthorizationFilter.class)
         	
+        	.sessionManagement((auth) -> auth
+        			.sessionFixation().changeSessionId()
+        			.maximumSessions(1)
+                    .maxSessionsPreventsLogin(false)
+                    )
+        	
         	// CSRF 토큰 검증을 비활성화하는 코드 테스트 시 필요하다면 풀어도 됨
             // 단, 푸는 경우 html, javascript에 있는 토큰 검증 코드 모두 제외 필요
             //.csrf(CsrfConfigurer::disable)   
@@ -69,10 +75,8 @@ public class SecurityConfig {
                 authorizeRequests                
                     .requestMatchers(
             		/*"/index", "index2", "list", "save",*/
-            		"/.well-known/**",
             		"/manifest.webmanifest", "/login", "/logout", "/register",
-            		"/api/mfa", 
-            		"/api/mfa", 
+            		"/api/**", 
                     "/css/**",
                     "/js/**",
                     "/extensions/**",

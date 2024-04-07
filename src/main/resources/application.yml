@@ -3,17 +3,18 @@ server:
   port: 8080
   servlet: 
     session:
-      timeout: 30m
+      timeout: 15m
       persistent: true
       tracking-modes: cookie
       cookie:
         domain: epams.duckdns.org
         #domain: epams.iptime.org
         #domain: localhost
-        http-only: true
+        #http-only: true
         path: /
         max-age: -1 # infinite
-        #secure: true # https only allowed
+        secure: true # https only allowed
+        sameSite: strict
 
 # spring
 spring:

@@ -24,6 +24,21 @@ public class RestApiService {
     private final MfaRepository mfaRepository;
     private final LoginService loginService;
     
+	public Map<String, String> searchMember(String text) throws NoSuchAlgorithmException{
+		
+		
+		Map<String, String> memberInfo = new HashMap<>();
+		Map<String, String> membersInfo = new HashMap<>();
+		
+		memberInfo.put("username", "K140024");
+		memberInfo.put("contact", "02-787-0550");
+		memberInfo.put("dept", "디지털금융부");
+		memberInfo.put("team", "지식정보팀");
+		memberInfo.put("responsibility", "급여, 복리후생, 채용");
+		
+		return memberInfo;
+	}
+    
     private int generateOTP(int length) {
     	SecureRandom secureRandom = new SecureRandom();
 		int upperLimit = (int) Math.pow(10, length);

@@ -29,6 +29,16 @@ FilePond.create(document.querySelector(".multiple-files-filepond"), {
   storeAsFile: true,
 })
 
+FilePond.setOptions({
+    server: {
+        process: './process',
+        revert: './revert',
+        restore: './restore/',
+        load: './load/',
+        fetch: './fetch/',
+    },
+})
+
 // Filepond: With Validation
 FilePond.create(document.querySelector(".with-validation-filepond"), {
   credits: null,

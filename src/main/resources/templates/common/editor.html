@@ -10,6 +10,7 @@
 		<link rel="stylesheet" href="/extensions/tinymce/tinymce.css">
 	    <script src="/extensions/tinymce/tinymce.min.js"></script>
 	    <script src="/js/pages/tinymce.js"></script>
+	    <link rel="stylesheet" href="/extensions/filepond/filepond.css">
 	    <script>
 			tinymce.init({
 		        selector: '#open',
@@ -33,13 +34,37 @@
 	<div layout:fragment="contents">
 		<div id="main-content">
 			<div class="page-heading">
-				<h2><i class="bi bi-bell-fill"></i> 공지사항</h2>
+				<h2>
+					<i class="bi bi-bell-fill"></i> 공지사항
+				</h2>
 				<br> <input class="form-control" type="text" placeholder="제목" aria-label="default input example" id="title"> <br>
 				<textarea name="open" id="open" cols="30" rows="10"></textarea>
-					<div class="d-flex gap-2 flex-row-reverse">
-						<button class="btn btn-primary mt-3" type="submit" id="submit" onclick="save2()">등록</button>
-						<a class="btn btn-secondary mt-3" type="submit" id="submit" th:href="@{/board/list}">목록</a>
+				
+				<br>
+				<h6 class="card-title">첨부파일</h6>
+				<!-- File uploader with multiple files upload -->
+				<div class="filepond--root multiple-files-filepond filepond--hopper" data-style-button-remove-item-position="left" data-style-button-process-item-position="right" data-style-load-indicator-position="right" data-style-progress-indicator-position="right" data-style-button-remove-item-align="false" style="height: 76px;">
+					<input class="filepond--browser" type="file" id="filepond--browser-u38ffenqq" aria-controls="filepond--assistant-u38ffenqq" aria-labelledby="filepond--drop-label-u38ffenqq" accept="" multiple="" name="filepond">
+					<div class="filepond--drop-label" style="transform: translate3d(0px, 0px, 0px); opacity: 1;">
+						<label for="filepond--browser-u38ffenqq" id="filepond--drop-label-u38ffenqq" aria-hidden="true">파일을 끌어오거나 <span class="filepond--label-action" tabindex="0">Browse</span></label>
 					</div>
+					<div class="filepond--list-scroller" style="transform: translate3d(0px, 60px, 0px);">
+						<ul class="filepond--list" role="list"></ul>
+					</div>
+					<div class="filepond--panel filepond--panel-root" data-scalable="true">
+						<div class="filepond--panel-top filepond--panel-root"></div>
+						<div class="filepond--panel-center filepond--panel-root" style="transform: translate3d(0px, 8px, 0px) scale3d(1, 0.6, 1);"></div>
+						<div class="filepond--panel-bottom filepond--panel-root" style="transform: translate3d(0px, 68px, 0px);"></div>
+					</div>
+					<span class="filepond--assistant" id="filepond--assistant-u38ffenqq" role="status" aria-live="polite" aria-relevant="additions"></span>
+					<fieldset class="filepond--data"></fieldset>
+					<div class="filepond--drip"></div>
+				</div>
+
+				<div class="d-flex gap-2 flex-row-reverse">
+					<button class="btn btn-primary mt-3" type="submit" id="submit" onclick="save2()">등록</button>
+					<a class="btn btn-secondary mt-3" type="submit" id="submit" th:href="@{/board/list}">목록</a>
+				</div>
 				<br>
 			</div>
 		</div>
@@ -47,9 +72,17 @@
 
 	<!-- (start) private script -->
 	<th:block layout:fragment="script">
+	<script src="/extensions/filepond-plugin-file-validate-size/filepond-plugin-file-validate-size.min.js"></script>
+	<script src="/extensions/filepond-plugin-file-validate-type/filepond-plugin-file-validate-type.min.js"></script>	
+	<script src="/extensions/filepond-plugin-image-crop/filepond-plugin-image-crop.min.js"></script>	
+	<script src="/extensions/filepond-plugin-image-exif-orientation/filepond-plugin-image-exif-orientation.min.js"></script>	
+	<script src="/extensions/filepond-plugin-image-filter/filepond-plugin-image-filter.min.js"></script>	
+	<script src="/extensions/filepond-plugin-image-preview/filepond-plugin-image-preview.min.js"></script>	
+	<script src="/extensions/filepond-plugin-image-resize/filepond-plugin-image-resize.min.js"></script>	
+	<script src="/extensions/filepond/filepond.js"></script>
+	<script src="/js/pages/filepond.js"></script>
+
 		<script>
-		
-		    
 	    function save()
 	    {    
 	        var header = $("meta[name='_csrf_header']").attr('content');

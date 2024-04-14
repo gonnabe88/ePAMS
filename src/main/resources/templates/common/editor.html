@@ -10,7 +10,6 @@
 		<link rel="stylesheet" href="/extensions/tinymce/tinymce.css">
 	    <script src="/extensions/tinymce/tinymce.min.js"></script>
 	    <script src="/js/pages/tinymce.js"></script>
-	    <link rel="stylesheet" href="/extensions/filepond/filepond.css">
 	    <script>
 			tinymce.init({
 		        selector: '#open',
@@ -25,6 +24,8 @@
 		        promotion: false
 		    });
 	    </script>
+	    <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+		<link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
 	</th:block>
 	<!-- (end) private script -->	
 </head>
@@ -42,24 +43,10 @@
 				
 				<br>
 				<h6 class="card-title">첨부파일</h6>
-				<!-- File uploader with multiple files upload -->
-				<div class="filepond--root multiple-files-filepond filepond--hopper" data-style-button-remove-item-position="left" data-style-button-process-item-position="right" data-style-load-indicator-position="right" data-style-progress-indicator-position="right" data-style-button-remove-item-align="false" style="height: 76px;">
-					<input class="filepond--browser" type="file" id="filepond--browser-u38ffenqq" aria-controls="filepond--assistant-u38ffenqq" aria-labelledby="filepond--drop-label-u38ffenqq" accept="" multiple="" name="filepond">
-					<div class="filepond--drop-label" style="transform: translate3d(0px, 0px, 0px); opacity: 1;">
-						<label for="filepond--browser-u38ffenqq" id="filepond--drop-label-u38ffenqq" aria-hidden="true">파일을 끌어오거나 <span class="filepond--label-action" tabindex="0">Browse</span></label>
-					</div>
-					<div class="filepond--list-scroller" style="transform: translate3d(0px, 60px, 0px);">
-						<ul class="filepond--list" role="list"></ul>
-					</div>
-					<div class="filepond--panel filepond--panel-root" data-scalable="true">
-						<div class="filepond--panel-top filepond--panel-root"></div>
-						<div class="filepond--panel-center filepond--panel-root" style="transform: translate3d(0px, 8px, 0px) scale3d(1, 0.6, 1);"></div>
-						<div class="filepond--panel-bottom filepond--panel-root" style="transform: translate3d(0px, 68px, 0px);"></div>
-					</div>
-					<span class="filepond--assistant" id="filepond--assistant-u38ffenqq" role="status" aria-live="polite" aria-relevant="additions"></span>
-					<fieldset class="filepond--data"></fieldset>
-					<div class="filepond--drip"></div>
-				</div>
+				<form class="dropzone" id="uploads" enctype="multipart/form-data">
+			    </form>
+			    <button id="submitFiles">Upload</button>
+				
 
 				<div class="d-flex gap-2 flex-row-reverse">
 					<button class="btn btn-primary mt-3" type="submit" id="submit" onclick="save2()">등록</button>
@@ -72,16 +59,50 @@
 
 	<!-- (start) private script -->
 	<th:block layout:fragment="script">
-	<script src="/extensions/filepond-plugin-file-validate-size/filepond-plugin-file-validate-size.min.js"></script>
-	<script src="/extensions/filepond-plugin-file-validate-type/filepond-plugin-file-validate-type.min.js"></script>	
-	<script src="/extensions/filepond-plugin-image-crop/filepond-plugin-image-crop.min.js"></script>	
-	<script src="/extensions/filepond-plugin-image-exif-orientation/filepond-plugin-image-exif-orientation.min.js"></script>	
-	<script src="/extensions/filepond-plugin-image-filter/filepond-plugin-image-filter.min.js"></script>	
-	<script src="/extensions/filepond-plugin-image-preview/filepond-plugin-image-preview.min.js"></script>	
-	<script src="/extensions/filepond-plugin-image-resize/filepond-plugin-image-resize.min.js"></script>	
-	<script src="/extensions/filepond/filepond.js"></script>
-	<script src="/js/pages/filepond.js"></script>
-
+	<script>
+		var WafflepenDropzone = {
+		   set : function() {
+		        //dropzone 세팅
+		       var myDropzone = new Dropzone('#uploads', {
+		            url : "/upload/",
+		            autoProcessQueue: false,            //자동 업로드
+		            paramName: "file",                  //전송받는 파일 파라미터명
+		            addRemoveLinks: true,
+		            acceptedFiles: "application/pdf",   //파일 종류
+		            uploadMultiple: true,               //다중 파일 업로드
+		            parallelUploads: 10,                //동시 업로드 파일 개수
+		            maxFilesize: 10,                    //최대 파일 사이즈 (MB)
+		            maxFiles: 10,                       //첨부 개수
+		            params: {
+		                "EMAIL" : "yunsd@careercare.co.kr",//global.userInfo.EMAIL,
+		                "FILETYPE" : "pdf"
+		            },
+		            headers: {
+		    		    'X-CSRF-TOKEN': $("#csrf_token").val()
+		    		},
+		            init : function(){
+		                var myDropzone = this;		                
+		                /*파일 전송*/
+		                $("#submitFiles").on('click', function () {
+		                    myDropzone.processQueue();
+		                });
+		                /*최대 허용 파일 개수보다 많이 올린 경우 제어*/
+		                myDropzone.on("addedfile", function(event) {
+		                    while (this.files.length > this.options.maxFiles) {
+		                        this.removeFile(this.files[0]);
+		                    }
+		                });
+		                /*팡리 전송이 완료되면 목록에있는 파일 제거*/
+		                myDropzone.on("complete", function(file) {
+		                    myDropzone.removeFile(file);
+		                });
+		            }
+		        });
+		    }
+		}
+		Dropzone.autoDiscover = false;
+		WafflepenDropzone.set();
+	</script>
 		<script>
 	    function save()
 	    {    

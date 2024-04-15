@@ -40,9 +40,9 @@
 							<th>contents</th>
 							<td th:utext="${board.boardContents}"></td>
 						</tr>
-						<tr th:if="${board.fileAttached == 1}">
-							<th>image</th>
-							<td th:each="boardFile: ${boardFileList}"><img th:src="@{|/upload/${boardFile.storedFileName}|}" alt="" width="200" height="200"></td>
+						<tr th:if="${board.fileAttached == 1}" th:each="boardFile: ${boardFileList}">
+							<th> 첨부 [[${boardFileStat.count}]]</th>
+							<td><a href="@{|/board/${board.id}|}" th:utext="${boardFile.originalFileName}"></a></td>
 						</tr>
 					</table>
 					<div class="d-flex gap-2 flex-row-reverse">

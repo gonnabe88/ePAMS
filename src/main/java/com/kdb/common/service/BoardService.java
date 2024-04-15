@@ -1,11 +1,8 @@
 package com.kdb.common.service;
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -21,6 +18,8 @@ import com.kdb.common.entity.BoardEntity;
 import com.kdb.common.entity.BoardFileEntity;
 import com.kdb.common.repository.BoardFileRepository;
 import com.kdb.common.repository.BoardRepository;
+import com.kdb.common.repository.BoardRepository2;
+import com.kdb.example.board.BoardFileDTO;
 
 import lombok.RequiredArgsConstructor;
 
@@ -31,6 +30,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class BoardService {
     private final BoardRepository boardRepository;
+    private final BoardRepository2 boardRepository2;
+
     private final BoardFileRepository boardFileRepository;
     
 	
@@ -43,32 +44,24 @@ public class BoardService {
             //System.out.println("[service] boardEntity = " + boardEntity.getBoardWriter());
             boardRepository.save(boardEntity);
         } else {
-            // 첨부 파일 있음.
-            /*
-                1. DTO에 담긴 파일을 꺼냄
-                2. 파일의 이름 가져옴
-                3. 서버 저장용 이름을 만듦
-                // 내사진.jpg => 839798375892_내사진.jpg
-                4. 저장 경로 설정
-                5. 해당 경로에 파일 저장
-                6. board_table에 해당 데이터 save 처리
-                7. board_file_table에 해당 데이터 save 처리
-             */
-            MultipartFile boardFile = boardDTO.getBoardFile(); // 1.
-            String originalFilename = boardFile.getOriginalFilename(); // 2.
-            String storedFileName = System.currentTimeMillis() + "_" + originalFilename; // 3.
-            String savePath = "C:/springboot_img/" + storedFileName; // 4. C:/springboot_img/9802398403948_내사진.jpg
-//            String savePath = "/Users/사용자이름/springboot_img/" + storedFileName; // C:/springboot_img/9802398403948_내사진.jpg
-            boardFile.transferTo(new File(savePath)); // 5.
+        	
             BoardEntity boardEntity = BoardEntity.toSaveFileEntity(boardDTO);
             Long savedId = boardRepository.save(boardEntity).getId();
             BoardEntity board = boardRepository.findById(savedId).get();
-
-            BoardFileEntity boardFileEntity = BoardFileEntity.toBoardFileEntity(board, originalFilename, storedFileName);
-            boardFileRepository.save(boardFileEntity);
+        	
+        	for (MultipartFile boardFile: boardDTO.getBoardFile()) {        		
+	            String originalFilename = boardFile.getOriginalFilename(); // 2.
+	            String storedFileName = System.currentTimeMillis() + "_" + originalFilename; // 3.
+	            String savePath = "C:/epams/" + storedFileName; // 파일 저장경로 및 이름
+	            boardFile.transferTo(new File(savePath)); // 5.
+	
+	            BoardFileEntity boardFileEntity = BoardFileEntity.toBoardFileEntity(board, originalFilename, storedFileName);
+	            boardFileRepository.save(boardFileEntity);
+        	}
         }
 
     }
+    
 
     @Transactional
     public List<BoardDTO> findAll() {
@@ -137,6 +130,10 @@ public class BoardService {
 
         
         return boardDTOS;
+    }
+    
+    public List<BoardFileDTO> findFile(Long id) {
+        return boardRepository2.findFile(id);
     }
     
     

@@ -7,13 +7,6 @@ import org.springframework.data.repository.query.Param;
 
 import com.kdb.common.entity.BoardEntity;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-
 public interface BoardRepository extends JpaRepository<BoardEntity, Long> {
     // update board_table set board_hits=board_hits+1 where id=?
     @Modifying

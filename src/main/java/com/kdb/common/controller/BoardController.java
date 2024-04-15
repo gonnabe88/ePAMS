@@ -21,6 +21,7 @@ import com.kdb.common.dto.BoardDTO;
 import com.kdb.common.dto.CommentDTO;
 import com.kdb.common.service.BoardService;
 import com.kdb.common.service.CommentService;
+import com.kdb.example.board.BoardFileDTO;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -73,6 +74,7 @@ public class BoardController {
         boardService.save(boardDTO);
         return "redirect:/board/list"; 
     }
+    
 
     @GetMapping("/{id}")
     public String findById(@PathVariable("id") Long id, Model model,
@@ -85,11 +87,19 @@ public class BoardController {
     	System.out.println("ID :"+id+"model :"+model);
         boardService.updateHits(id);
         BoardDTO boardDTO = boardService.findById(id);
+        
         /* 댓글 목록 가져오기 */
         List<CommentDTO> commentDTOList = commentService.findAll(id);
         model.addAttribute("commentList", commentDTOList);
         model.addAttribute("board", boardDTO);
         model.addAttribute("page", pageable.getPageNumber());
+        
+        //첨부파일 가져오기
+        if (boardDTO.getFileAttached() == 1) {
+            List<BoardFileDTO> boardFileDTOList = boardService.findFile(id);
+            model.addAttribute("boardFileList", boardFileDTOList);
+        }
+        
         return "/common/detail";
     }
 

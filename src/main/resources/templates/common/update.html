@@ -24,6 +24,63 @@
 		        promotion: false
 		    });
 	    </script>
+	    
+	    
+	    <script src="/extensions/dropzone/dropzone.js"></script>
+		<link rel="stylesheet" href="/extensions/dropzone/dropzone.min.css" type="text/css" />
+		
+		
+		<style>
+        .dropzone {
+            border: dashed 4px #ddd !important ;
+            background-color: #f2f6fc;
+            border-radius: 15px;
+        }
+    
+        .dropzone .dropzone-container {
+            padding: 2rem 0;
+            width: 100%;
+            height: 100%;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #8c96a8;
+            z-index: 20;
+        }
+    
+        .dropzone .file-input {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            visibility: hidden;
+            cursor: pointer;
+        }
+
+        .file-icon{
+            font-size: 60px;
+        }
+        .hr-sect {
+            display: flex;
+            flex-basis: 100%;
+            align-items: center;
+            margin: 8px 0px;
+        }
+        .hr-sect:before,
+        .hr-sect:after {
+            content: "";
+            flex-grow: 1;
+            background: #ddd;
+            height: 1px;
+            font-size: 0px;
+            line-height: 0px;
+            margin: 0px 8px;
+        }
+    </style>
 	</th:block>
 	<!-- (end) private script -->	
 </head>

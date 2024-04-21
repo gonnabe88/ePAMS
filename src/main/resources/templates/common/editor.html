@@ -24,8 +24,61 @@
 		        promotion: false
 		    });
 	    </script>
-	    <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
-		<link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
+	    <script src="/extensions/dropzone/dropzone.js"></script>
+		<link rel="stylesheet" href="/extensions/dropzone/dropzone.min.css" type="text/css" />
+		
+		
+		<style>
+        .dropzone {
+            border: dashed 4px #ddd !important ;
+            background-color: #f2f6fc;
+            border-radius: 15px;
+        }
+    
+        .dropzone .dropzone-container {
+            padding: 2rem 0;
+            width: 100%;
+            height: 100%;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #8c96a8;
+            z-index: 20;
+        }
+    
+        .dropzone .file-input {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            visibility: hidden;
+            cursor: pointer;
+        }
+
+        .file-icon{
+            font-size: 60px;
+        }
+        .hr-sect {
+            display: flex;
+            flex-basis: 100%;
+            align-items: center;
+            margin: 8px 0px;
+        }
+        .hr-sect:before,
+        .hr-sect:after {
+            content: "";
+            flex-grow: 1;
+            background: #ddd;
+            height: 1px;
+            font-size: 0px;
+            line-height: 0px;
+            margin: 0px 8px;
+        }
+    </style>
 	</th:block>
 	<!-- (end) private script -->	
 </head>
@@ -43,12 +96,53 @@
 				<br> <input class="form-control" type="text" placeholder="제목" aria-label="default input example" id="title"> <br>
 				<textarea name="open" id="open" cols="30" rows="10"></textarea>
 				
-				<br>
+				<br><br>
 				<h6 class="card-title">첨부파일</h6>
+				<br>
+				<!-- 
 				<form id="form" method="post">
 					<input type="file" id="boardFile" name="boardFile" multiple><br>
 				</form>
-				
+				 -->
+				 <!--
+				<div class="dropzone" id="my-awesome-dropzone"></div>
+				-->
+
+
+				<div class="dropzone" id="my-awesome-dropzone">		
+					<div class="d-flex justify-content-center">		
+						<button class="btn btn-primary mb-2 fileinput-button">Browse Files</button>
+					</div>
+					<div class="hr-sect">or</div>
+					<!-- 파일첨부 영역 -->
+				<ul class="list-unstyled mb-0" id="dropzone-preview">
+					<li class="mt-2" id="dropzone-preview-list">
+						<!-- This is used as the file preview template -->
+						<div class="border rounded-3">
+							<div class="d-flex align-items-center p-2">
+							<!-- 
+								<div class="flex-shrink-0 me-3">
+									<div class="width-8 h-auto rounded-3">
+										<img data-dz-thumbnail="data-dz-thumbnail" class="w-full h-auto rounded-3 block" src="#" alt="Dropzone-Image" style="width: 120px;" />
+									</div>
+								</div>
+								 -->
+								<div class="flex-grow-1">
+									<div class="pt-1">
+										<h6 class="font-semibold mb-1" data-dz-name="data-dz-name">&nbsp;</h6>
+										<p class="text-sm text-muted fw-normal" data-dz-size="data-dz-size"></p>
+										<strong class="error text-danger" data-dz-errormessage="data-dz-errormessage"></strong>
+									</div>
+								</div>
+								<div class="shrink-0 ms-3">
+									<button data-dz-remove="data-dz-remove" class="btn btn-sm btn-danger">삭제</button>
+								</div>
+							</div>
+						</div>
+					</li>
+				</ul>
+				</div>				
+
 				<div class="d-flex gap-2 flex-row-reverse">
 					<button class="btn btn-primary mt-3" type="submit" id="submit" onclick="save2()">등록</button>
 					<a class="btn btn-secondary mt-3" type="submit" id="submit" th:href="@{/board/list}">목록</a>
@@ -60,62 +154,54 @@
 
 	<!-- (start) private script -->
 	<th:block layout:fragment="script">
-	<script>
-		var WafflepenDropzone = {
-		   set : function() {
-		        //dropzone 세팅
-		       var myDropzone = new Dropzone('#uploads', {
-		            url : "/upload/",
-		            autoProcessQueue: false,            //자동 업로드
-		            paramName: "file",                  //전송받는 파일 파라미터명
-		            addRemoveLinks: true,
-		            acceptedFiles: "application/pdf",   //파일 종류
-		            uploadMultiple: true,               //다중 파일 업로드
-		            parallelUploads: 10,                //동시 업로드 파일 개수
-		            maxFilesize: 10,                    //최대 파일 사이즈 (MB)
-		            maxFiles: 10,                       //첨부 개수
-		            params: {
-		                "EMAIL" : "yunsd@careercare.co.kr",//global.userInfo.EMAIL,
-		                "FILETYPE" : "pdf"
-		            },
-		            headers: {
-		    		    'X-CSRF-TOKEN': $("#csrf_token").val()
-		    		},
-		            init : function(){
-		                var myDropzone = this;		                
-		                /*파일 전송*/
-		                $("#submitFiles").on('click', function () {
-		                    myDropzone.processQueue();
-		                });
-		                /*최대 허용 파일 개수보다 많이 올린 경우 제어*/
-		                myDropzone.on("addedfile", function(event) {
-		                    while (this.files.length > this.options.maxFiles) {
-		                        this.removeFile(this.files[0]);
-		                    }
-		                });
-		                /*팡리 전송이 완료되면 목록에있는 파일 제거*/
-		                myDropzone.on("complete", function(file) {
-		                    myDropzone.removeFile(file);
-		                });
-		            }
-		        });
-		    }
-		}
-		Dropzone.autoDiscover = false;
-		WafflepenDropzone.set();
-	</script>
+	
 		<script>
+	    // Disable AutoDiscover
+	    Dropzone.autoDiscover = false;
+	    
+	    var dropzonePreviewNode = document.querySelector('#dropzone-preview-list'); // <li class="mt-2" id="dropzone-preview-list"> 부분을 가져와서
+	    dropzonePreviewNode.id = ''; // 중복 회피를 위해 id 없애고
+	    var previewTemplate = dropzonePreviewNode.parentNode.innerHTML; // 엘리먼트 전체를 저장 (템플릿)
+	    dropzonePreviewNode.parentNode.removeChild(dropzonePreviewNode); // 그리고 삭제
+	    
+	    // Set Dropzone Options
+	    Dropzone.options.myAwesomeDropzone = {
+	        autoProcessQueue: false,
+	        uploadMultiple: true,
+	        parallelUploads: 20,
+	        maxFiles: 20,
+	        //addRemoveLinks: true,
+	        acceptedFiles: "image/*,application/pdf",
+	        maxFilesize: 10,
+	        dictDefaultMessage: "파일을 끌어다 놓거나,<br>클릭해서 직접 업로드하세요.<br>(이미지 or PDF / 최대 10개)",
+	        
+	        previewTemplate: previewTemplate, // 만일 기본 테마를 사용하지않고 커스텀 업로드 테마를 사용하고 싶다면
+	        previewsContainer: '#dropzone-preview', // 드롭존 파일 나타나는 영역을 .dropzone이 아닌 다른 엘리먼트에서 하고싶을때
+	        
+	        //clickable: ".fileinput-button",
+	    }
+	    
+	    // Initialize Dropzone
+	    var myDropzone = new Dropzone("#my-awesome-dropzone", {url: "/store-item"});
+	    
 		const save2 = () => {
 	    let header = $("meta[name='_csrf_header']").attr('content');
 	    let token = $("meta[name='_csrf']").attr('content');	    
 		
 		let formData = new FormData();
-		let inputFile = $("input[name='boardFile']");
-		let files = inputFile[0].files;
+		//let inputFile = $("input[name='boardFile']");
+		//let files = inputFile[0].files;
+		//for(var i =0;i<files.length;i++){			
+		//	formData.append("boardFile", files[i]);
+		//	console.log(files[i]);
+		//}
 		
-		for(var i =0;i<files.length;i++){			
-			formData.append("boardFile", files[i]);
-			console.log(files[i]);
+		//let inputFile = myDropzone.getQueuedFiles();
+		let files = myDropzone.getQueuedFiles();
+		console.log(files.length);
+		for (const file of files) {
+			  formData.append('boardFile', file);
+			  console.log(file);
 		}
 		
 		formData.append("boardTitle", document.getElementById("title").value)

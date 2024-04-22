@@ -7,9 +7,9 @@ server:
       persistent: true
       tracking-modes: cookie
       cookie:
-        #domain: epams.duckdns.org
+        domain: epams.duckdns.org
         #domain: epams.iptime.org
-        domain: localhost
+        #domain: localhost
         #http-only: true
         path: /
         max-age: -1 # infinite
@@ -25,18 +25,18 @@ spring:
 
   devtools.livereload.enabled: true  
   
-  datasource:
-    driver-class-name: oracle.jdbc.OracleDriver
-    #url: jdbc:oracle:thin:@192.168.0.10:1521:ORCLCDB
-    url: jdbc:oracle:thin:@epams.duckdns.org:1521:ORCLCDB
-    username: ehr
-    password: kdb1234!
-  
 #  datasource:
-#    driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: jdbc:mysql://localhost:3306/ehr?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-#    username: root
-#    password: whdgns0910!
+#    driver-class-name: oracle.jdbc.OracleDriver
+    #url: jdbc:oracle:thin:@192.168.0.10:1521:ORCLCDB
+#    url: jdbc:oracle:thin:@epams.duckdns.org:1521:ORCLCDB
+#    username: ehr
+#    password: kdb1234!
+  
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/ehr?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: root
+    password: whdgns0910!
 
   thymeleaf:
     prefix: classpath:/templates/

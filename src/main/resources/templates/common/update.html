@@ -105,6 +105,96 @@
 	<!-- (start) private script -->
 	<th:block layout:fragment="script">
 		<script th:inline="javascript">
+	    // Disable AutoDiscover
+	    Dropzone.autoDiscover = false;
+	    
+	    var dropzonePreviewNode = document.querySelector('#dropzone-preview-list'); // <li class="mt-2" id="dropzone-preview-list"> 부분을 가져와서
+	    dropzonePreviewNode.id = ''; // 중복 회피를 위해 id 없애고
+	    var previewTemplate = dropzonePreviewNode.parentNode.innerHTML; // 엘리먼트 전체를 저장 (템플릿)
+	    dropzonePreviewNode.parentNode.removeChild(dropzonePreviewNode); // 그리고 삭제
+	    
+	    // Set Dropzone Options
+	    Dropzone.options.myAwesomeDropzone = {
+	        autoProcessQueue: false,
+	        uploadMultiple: true,
+	        parallelUploads: 20,
+	        maxFiles: 20,
+	        //addRemoveLinks: true,
+	        acceptedFiles: "image/*,application/pdf",
+	        maxFilesize: 10,
+	        dictDefaultMessage: "파일을 끌어다 놓거나,<br>클릭해서 직접 업로드하세요.<br>(이미지 or PDF / 최대 10개)",
+	        
+	        previewTemplate: previewTemplate, // 만일 기본 테마를 사용하지않고 커스텀 업로드 테마를 사용하고 싶다면
+	        previewsContainer: '#dropzone-preview', // 드롭존 파일 나타나는 영역을 .dropzone이 아닌 다른 엘리먼트에서 하고싶을때
+	        
+	        clickable: "#dropzone",
+	    }
+	    
+	    // Initialize Dropzone
+	    var myDropzone = new Dropzone("#my-awesome-dropzone", {url: "/store-item"});
+	    
+		const save2 = () => {
+	    let header = $("meta[name='_csrf_header']").attr('content');
+	    let token = $("meta[name='_csrf']").attr('content');	    
+		
+		let formData = new FormData();
+		//let inputFile = $("input[name='boardFile']");
+		//let files = inputFile[0].files;
+		//for(var i =0;i<files.length;i++){			
+		//	formData.append("boardFile", files[i]);
+		//	console.log(files[i]);
+		//}
+		
+		//let inputFile = myDropzone.getQueuedFiles();
+		let files = myDropzone.getQueuedFiles();
+		console.log(files.length);
+		for (const file of files) {
+			  formData.append('boardFile', file);
+			  console.log(file);
+		}
+		
+		formData.append("boardTitle", document.getElementById("title").value)
+		formData.append("boardContents", tinymce.get("open").getContent())
+		
+		Swal.fire({
+		        title: "등록",
+		        html: "등록 하시겠습니까?",
+		        icon: "info",
+		        showCancelButton: true,
+		        confirmButtonText: "등록",
+		        confirmButtonColor: "#3085d6",
+		        cancelButtonText: "취소",
+		        cancelButtonColor: "#d33",
+		        showLoaderOnConfirm: true,
+		        preConfirm: async () => {},
+		        allowOutsideClick: () => !Swal.isLoading()
+		    }).then((result) => {
+		        if (result.isConfirmed) {       
+		        	$.ajax({
+		        		type: "post",
+						url: "/board/save",
+						processData : false,
+						contentType : false,
+						data: formData,
+		                //CSRF Token
+		                beforeSend: function (xhr) {
+				        	xhr.setRequestHeader(header, token);
+				        },		
+						complete: function(data) {
+							//upload(document.getElementById("title").value, tinymce.get("open").getContent());
+							Swal.fire({
+						      title: "등록 완료",
+						      text: "게시글이 등록되었습니다.",
+						      icon: "success"
+						    }).then((result) => {
+					        	window.location.href = '/board/list'
+						    })
+						}	
+			    	});
+		    	}
+			})
+		}
+		
 		    function update()
 		    {    
 		        const header = $("meta[name='_csrf_header']").attr('content');

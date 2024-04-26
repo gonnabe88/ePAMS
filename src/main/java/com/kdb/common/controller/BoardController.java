@@ -1,11 +1,17 @@
 package com.kdb.common.controller;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,6 +22,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.util.UriUtils;
 
 import com.kdb.common.dto.BoardDTO;
 import com.kdb.common.dto.CommentDTO;
@@ -26,19 +34,61 @@ import com.kdb.example.board.BoardFileDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * @author K140024
+ * @since 2024-04-26
+ */
 @Slf4j
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/board")
 public class BoardController {
+
+    /**
+    *
+    *
+    */
     private final BoardService boardService;
-    private final CommentService commentService;
+    
+    /**
+    *
+    *
+    */
+    private final CommentService commentService; 
     
 	private Authentication authentication() {
-	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	    final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 	    if (authentication == null || authentication instanceof AnonymousAuthenticationToken) return null;
 	    return authentication;
 	}
+
+	
+    @GetMapping("/{boardid}/download/{fileid}")
+    public ResponseEntity<Resource> download(@PathVariable("boardid") Long boardid, @PathVariable("fileid") Long fileid) {
+        
+    	log.warn("download id : " + fileid);
+    	
+    	//파일정보 가져오기
+    	BoardFileDTO boardfile = boardService.findOneFile(fileid);
+    	UrlResource resource;
+        try{
+            resource = new UrlResource("file:C:/epams/"+ boardfile.getStoredFileName());
+        }catch (MalformedURLException e){
+            log.error("the given File path is not valid");
+            e.getStackTrace();
+            throw new RuntimeException("the given URL path is not valid");
+        }
+        //Header
+        String originalFileName = boardfile.getOriginalFileName();
+        String encodedOriginalFileName = UriUtils.encode(originalFileName, StandardCharsets.UTF_8);
+
+        String contentDisposition = "attachment; filename=\"" + encodedOriginalFileName + "\"";
+
+        return ResponseEntity
+                .ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, contentDisposition)
+                .body(resource);
+    }
 	
     @GetMapping("/")
     public String list(Model model) {
@@ -56,8 +106,9 @@ public class BoardController {
         return "list";
     }*/
     
+    
     @GetMapping("/editor")
-    public String editor() {
+    public String editor() {    	
         return "/common/editor";
     }
 
@@ -67,14 +118,25 @@ public class BoardController {
     }
 
     @PostMapping("/save")
-    public String save(@ModelAttribute BoardDTO boardDTO) throws IOException {
-                
+    public String save(@ModelAttribute BoardDTO boardDTO, Model model) throws IOException {
+    	log.warn(boardDTO.toString());        
         boardDTO.setBoardWriter(authentication().getName());
-        System.out.println("boardDTO = " + boardDTO);
         boardService.save(boardDTO);
-        return "redirect:/board/list"; 
+        //return "redirect:/board/list"; 
+        
+        return "redirect:/board/list";
+
     }
     
+    @PostMapping("/update")
+    public String update(@ModelAttribute BoardDTO boardDTO, Model model) throws IOException {
+    	log.warn(boardDTO.toString());
+    	boardDTO.setBoardWriter(authentication().getName());
+        BoardDTO board = boardService.update(boardDTO);
+        model.addAttribute("board", board);
+        return "/common/detail";
+//        return "redirect:/board/" + boardDTO.getId();
+    }
 
     @GetMapping("/{id}")
     public String findById(@PathVariable("id") Long id, Model model,
@@ -107,18 +169,16 @@ public class BoardController {
     public String updateForm(@PathVariable("id") Long id, Model model) {
         BoardDTO boardDTO = boardService.findById(id);
         model.addAttribute("board", boardDTO);
+        
+        //첨부파일 가져오기
+        if (boardDTO.getFileAttached() == 1) {
+            List<BoardFileDTO> boardFileDTOList = boardService.findFile(id);
+            model.addAttribute("boardFileList", boardFileDTOList);
+        }
+        
         return "/common/update";
     }
 
-    @PostMapping("/update")
-    public String update(@ModelAttribute BoardDTO boardDTO, Model model) {
-    	log.warn(boardDTO.toString());
-    	boardDTO.setBoardWriter(authentication().getName());
-        BoardDTO board = boardService.update(boardDTO);
-        model.addAttribute("board", board);
-        return "/common/detail";
-//        return "redirect:/board/" + boardDTO.getId();
-    }
 
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable("id") Long id) {

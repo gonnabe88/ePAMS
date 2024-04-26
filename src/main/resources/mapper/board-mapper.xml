@@ -15,10 +15,10 @@
     </update>
     <select id="findById" parameterType="Long" resultType="board">
         select id, boardTitle, boardWriter, boardPass, boardContents, boardHits,
-        date_format(createdAt, "%Y-%m-%d %H:%i:%s") as createdAt, fileAttached
+        date_format(createdTime, "%Y-%m-%d %H:%i:%s") as createdTime, fileAttached
         from board where id=#{id}
     </select>
-    <update id="update">
+    <update id="update" parameterType="board">
         update board set boardTitle=#{boardTitle}, boardContents=#{boardContents} where id=#{id}
     </update>
     <delete id="delete" parameterType="Long">
@@ -30,5 +30,11 @@
     </insert>
     <select id="findFile" parameterType="Long" resultType="boardFile">
         select * from board_file where board_Id = #{id}
+    </select>
+    <delete id="initFile" parameterType="Long">
+        delete from board_file where board_Id = #{id}
+    </delete>
+    <select id="findByFileId" parameterType="Long" resultType="boardFile">
+        select * from board_file where id = #{id}
     </select>
 </mapper>

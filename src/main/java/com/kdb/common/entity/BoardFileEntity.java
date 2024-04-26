@@ -16,6 +16,8 @@ import lombok.Setter;
 @Setter
 @Table(name = "board_file")
 public class BoardFileEntity extends BaseEntity {
+	
+	private String path = "C:/epams/";
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -37,4 +39,9 @@ public class BoardFileEntity extends BaseEntity {
         boardFileEntity.setBoardEntity(boardEntity);
         return boardFileEntity;
     }
+
+	public String getStoredFilePath() {
+		// TODO Auto-generated method stub
+		return path+storedFileName;
+	}
 }

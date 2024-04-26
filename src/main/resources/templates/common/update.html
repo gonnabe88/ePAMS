@@ -95,6 +95,21 @@
 				<textarea name="open" id="open" cols="30" rows="10" th:utext="${board.boardContents}"></textarea>
 				
 				<br>
+				<ul class="list-unstyled mb-3">
+				<li th:if="${board.fileAttached == 1}" th:each="boardFile: ${boardFileList}">
+					<div class="d-flex align-items-center p-2">
+						<div class="col-9">	
+							<span> 첨부 [[${boardFileStat.count}]]</span>
+							<a th:href="@{|/board/${board.id}/download/${boardFile.id}|}" th:utext="${boardFile.originalFileName}"></a>
+						</div>
+						<div class="col-3 d-flex justify-content-end">
+							<div class="shrink-0 ms-3">
+								<button class="btn btn-danger btn-sm" type="submit" id="del" th:onclick="del([[${boardFile.id}]], [[@{|/board/${board.id}/download/${boardFile.id}|}]], [[${boardFile.originalFileName}]])">삭제</button>
+							</div>
+						</div>
+					</div>
+				</li>
+				</ul>
 				<div id="dropzone">
 					<!-- 파일첨부 BOX 영역 -->
 					<div class="dropzone" id="my-awesome-dropzone">		
@@ -102,6 +117,7 @@
 						<ul class="list-unstyled mb-3" id="dropzone-preview">
 							<li class="mt-2 p-2" id="dropzone-preview-list">
 								<!-- This is used as the file preview template -->
+								
 								<div class="border rounded-3">
 									<div class="d-flex align-items-center p-2">
 									<!-- 
@@ -133,7 +149,7 @@
 				</div>	
 				
 					<div class="d-flex gap-2 flex-row-reverse">
-						<button class="btn btn-primary mt-3" type="submit" id="submit" onclick="update()">등록</button>
+						<button class="btn btn-primary mt-3" type="submit" id="submit" onclick="save2()">등록</button>
 						<a class="btn btn-secondary mt-3" type="submit" id="submit" th:href="@{/board/list}">목록</a>
 					</div>
 				<br>
@@ -150,7 +166,8 @@
 	    var dropzonePreviewNode = document.querySelector('#dropzone-preview-list'); // <li class="mt-2" id="dropzone-preview-list"> 부분을 가져와서
 	    dropzonePreviewNode.id = ''; // 중복 회피를 위해 id 없애고
 	    var previewTemplate = dropzonePreviewNode.parentNode.innerHTML; // 엘리먼트 전체를 저장 (템플릿)
-	    dropzonePreviewNode.parentNode.removeChild(dropzonePreviewNode); // 그리고 삭제
+	    dropzonePreviewNode.parentNode.removeChild(dropzonePreviewNode); // 그리고 삭제  
+	    
 	    
 	    // Set Dropzone Options
 	    Dropzone.options.myAwesomeDropzone = {
@@ -172,10 +189,36 @@
 	    // Initialize Dropzone
 	    var myDropzone = new Dropzone("#my-awesome-dropzone", {url: "/store-item"});
 	    
+	    const del = (id, url, name) => {
+	    	console.log("delete id : "+id);
+	    	console.log("delete url : "+url);
+	    	console.log("delete file : "+name);
+		    let header = $("meta[name='_csrf_header']").attr('content');
+		    let token = $("meta[name='_csrf']").attr('content');	
+		    
+			Swal.fire({
+		        title: "삭제하시겠습니까?",
+		        html: "<a href=\""+url+"\">"+name+"</a>",
+		        icon: "warning",
+		        showCancelButton: true,
+		        confirmButtonText: "삭제",
+		        confirmButtonColor: "#d33",
+		        cancelButtonText: "취소",
+		        cancelButtonColor: "#3085d6",
+		        showLoaderOnConfirm: true,
+		        preConfirm: async () => {},
+		        allowOutsideClick: () => !Swal.isLoading()
+		    }).then((result) => {
+		        
+			})
+		    
+		    
+	    }
+	    
 		const save2 = () => {
 	    let header = $("meta[name='_csrf_header']").attr('content');
 	    let token = $("meta[name='_csrf']").attr('content');	    
-		
+		let id = /*[[${board.id}]]*/ "id";
 		let formData = new FormData();
 		//let inputFile = $("input[name='boardFile']");
 		//let files = inputFile[0].files;
@@ -192,6 +235,7 @@
 			  console.log(file);
 		}
 		
+		formData.append("id", id)
 		formData.append("boardTitle", document.getElementById("title").value)
 		formData.append("boardContents", tinymce.get("open").getContent())
 		
@@ -211,7 +255,7 @@
 		        if (result.isConfirmed) {       
 		        	$.ajax({
 		        		type: "post",
-						url: "/board/save",
+						url: "/board/update",
 						processData : false,
 						contentType : false,
 						data: formData,
@@ -226,7 +270,7 @@
 						      text: "게시글이 등록되었습니다.",
 						      icon: "success"
 						    }).then((result) => {
-					        	window.location.href = '/board/list'
+					        	window.location.href = '/board/'+id;
 						    })
 						}	
 			    	});

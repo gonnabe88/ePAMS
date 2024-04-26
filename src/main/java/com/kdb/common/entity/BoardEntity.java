@@ -75,4 +75,16 @@ public class BoardEntity extends BaseEntity {
         boardEntity.setFileAttached(1); // 파일 있음.
         return boardEntity;
     }
+    
+    public static BoardEntity toUpdateFileEntity(BoardDTO boardDTO) {
+        BoardEntity boardEntity = new BoardEntity();
+        boardEntity.setId(boardDTO.getId());
+        boardEntity.setBoardWriter(boardDTO.getBoardWriter());
+        boardEntity.setBoardPass(boardDTO.getBoardPass());
+        boardEntity.setBoardTitle(boardDTO.getBoardTitle());
+        boardEntity.setBoardContents(boardDTO.getBoardContents());
+        boardEntity.setBoardHits(boardDTO.getBoardHits());
+        boardEntity.setFileAttached(1); // 파일 있음.
+        return boardEntity;
+    }
 }

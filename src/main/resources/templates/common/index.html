@@ -199,7 +199,7 @@
 							<div data-aos="fade-up" class="aos-init aos-animate">
 								<div class="shadow card">
 									<div class="card-body">
-										<a class="card-title" th:href="@{|/${board.id}|}"><h6 th:text="${board.boardTitle}"></h6></a>
+										<a class="card-title" th:href="@{|/board/${board.id}|}"><h6 th:text="${board.boardTitle}"></h6></a>
 										<p class="card-text" th:utext="${board.boardContents}"></p>
 
 										<div class="d-flex justify-content-around">
@@ -280,7 +280,7 @@
 							<div class="d-flex justify-content-center">
 								<div class="row col-lg-12 col-md-12 col-sm-12">
 									<div class="col-12 justify-self-center">
-									<div id="memberList"></div>										
+										<div id="memberList"></div>										
 									</div>
 								</div>
 							</div>

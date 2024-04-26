@@ -63,8 +63,9 @@ public class BoardDTO {
             // join
             // select * from board_table b, board_file_table bf where b.id=bf.board_id
             // and where b.id=?
-            boardDTO.setOriginalFileName(boardEntity.getBoardFileEntityList().get(0).getOriginalFileName());
-            boardDTO.setStoredFileName(boardEntity.getBoardFileEntityList().get(0).getStoredFileName());
+            //System.out.println(boardEntity.getBoardFileEntityList().size());
+            //boardDTO.setOriginalFileName(boardEntity.getBoardFileEntityList().get(0).getOriginalFileName());
+            //boardDTO.setStoredFileName(boardEntity.getBoardFileEntityList().get(0).getStoredFileName());
         }
 
         return boardDTO;

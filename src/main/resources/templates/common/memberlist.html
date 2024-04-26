@@ -7,30 +7,33 @@
 	<div id="memberList">
 		<section class="section" th:each="member: ${memberList}">
 			<div class="animate__animated animate__fadeIn animate__slow">
-				<div class="card" style="background-color: #F2F7FF; margin: 1rem;">
-					<div class="shadow card-body">
-
-						<p class="card-text" th:utext="${member.username}"></p>
-
-						<div class="d-flex justify-content-around">
-							<div>
-								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
-								  <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z" />
-								</svg>
-								<small class="text-body-secondary" th:text="${member.dept}"></small>
+				<div class="shadow card" style="background-color: #F2F7FF; margin: 1rem;">
+					<div class="card-body">
+						<p class="card-text" th:utext="${member.username}"></p>						
+							<div class="row">
+								<div class="col-2">
+									<i class="bi bi-building"></i>
+								</div>
+								<div class="col-10">
+									<small class="text-body-secondary" th:text="${member.dept}"></small>
+								</div>
 							</div>
-
-							<div>
-								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark" viewBox="0 0 16 16">
-								  <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1z" />
-								</svg>
-								<small class="text-body-secondary" th:text="${member.team}"></small>
+							<div class="row">
+								<div class="col-2">
+									<i class="bi bi-diagram-2"></i>
+								</div>
+								<div class="col-10">
+									<small class="text-body-secondary" th:text="${member.team}"></small>
+								</div>
 							</div>
-
-							<div>
-								<i class="bi bi-building"></i> <small class="text-body-secondary" th:text="${member.responsibility}"></small>
+							<div class="row">
+								<div class="col-2">
+									<i class="bi bi-briefcase-fill"></i>
+								</div>								
+								<div class="col-10">
+									<small class="text-body-secondary" th:text="${member.responsibility}"></small>
+								</div>
 							</div>
-						</div>
 
 					</div>
 				</div>

@@ -1,4 +1,5 @@
 package com.kdb.common.service;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,10 +23,12 @@ import com.kdb.common.repository.BoardRepository2;
 import com.kdb.example.board.BoardFileDTO;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 // DTO -> Entity (Entity Class)
 // Entity -> DTO (DTO Class)
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class BoardService {
@@ -34,11 +37,34 @@ public class BoardService {
 
     private final BoardFileRepository boardFileRepository;
     
-	
+
+    public BoardDTO update(BoardDTO boardDTO) throws IOException {
+        if (boardDTO.getBoardFile()==null) {
+            // 첨부 파일 없음.
+	        BoardEntity boardEntity = BoardEntity.toUpdateEntity(boardDTO);
+	        boardRepository2.update(boardEntity);
+        }
+        else {
+            BoardEntity boardEntity = BoardEntity.toUpdateFileEntity(boardDTO);
+            Long savedId = boardRepository.save(boardEntity).getId();
+            BoardEntity board = boardRepository.findById(savedId).get();
+            
+        	for (MultipartFile boardFile: boardDTO.getBoardFile()) {        		
+	            String originalFilename = boardFile.getOriginalFilename(); // 2.
+	            String storedFileName = System.currentTimeMillis() + "_" + originalFilename; // 3.
+	            String savePath = "C:/epams/" + storedFileName; // 파일 저장경로 및 이름
+	            boardFile.transferTo(new File(savePath)); // 5.
+	            BoardFileEntity boardFileEntity = BoardFileEntity.toBoardFileEntity(board, originalFilename, storedFileName);
+	            boardFileRepository.save(boardFileEntity);
+        	}
+        }
+        return findById(boardDTO.getId());
+    }
+
     public void save(BoardDTO boardDTO) throws IOException {
         // 파일 첨부 여부에 따라 로직 분리
         if (boardDTO.getBoardFile()==null) {
-            // 첨부 파일 없음.
+            // 첨부 파일 없음
             BoardEntity boardEntity = BoardEntity.toSaveEntity(boardDTO);
             //System.out.println("[service] boardDTO = " + boardDTO);
             //System.out.println("[service] boardEntity = " + boardEntity.getBoardWriter());
@@ -59,7 +85,26 @@ public class BoardService {
 	            boardFileRepository.save(boardFileEntity);
         	}
         }
-
+    }
+    
+    public void delete(Long id) {    	
+    	BoardDTO boardDTO = boardRepository2.findById(id);
+    	List<BoardFileDTO> boardFiles = boardRepository2.findFile(id);
+    	
+    	// 첨부파일이 없는 경우 DB만 삭제
+    	if (boardDTO.getFileAttached()==0) {
+    		log.warn("No files");
+    		boardRepository.deleteById(id);
+    	}
+    	// 첨부파일이 있는 경우 File도 삭제
+    	else {
+    		boardRepository.deleteById(id);
+    		for (BoardFileDTO boardFile: boardFiles) {        
+    			File file = new File("C:/epams/" + boardFile.getStoredFileName());
+    			boolean result = file.delete();
+    			log.warn(result + " Delete files : "+ boardFile.getStoredFileName());
+        	}
+    	}
     }
     
 
@@ -90,15 +135,7 @@ public class BoardService {
         }
     }
 
-    public BoardDTO update(BoardDTO boardDTO) {
-        BoardEntity boardEntity = BoardEntity.toUpdateEntity(boardDTO);
-        boardRepository.save(boardEntity);
-        return findById(boardDTO.getId());
-    }
 
-    public void delete(Long id) {
-        boardRepository.deleteById(id);
-    }
 
     public Page<BoardDTO> paging(Pageable pageable) {
         int page = pageable.getPageNumber() - 1;
@@ -132,6 +169,9 @@ public class BoardService {
         return boardDTOS;
     }
     
+    public BoardFileDTO findOneFile(Long id) {
+        return boardRepository2.findByFileId(id);
+    }
     public List<BoardFileDTO> findFile(Long id) {
         return boardRepository2.findFile(id);
     }

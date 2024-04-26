@@ -42,7 +42,7 @@
 						</tr>
 						<tr th:if="${board.fileAttached == 1}" th:each="boardFile: ${boardFileList}">
 							<th> 첨부 [[${boardFileStat.count}]]</th>
-							<td><a href="@{|/board/${board.id}|}" th:utext="${boardFile.originalFileName}"></a></td>
+							<td><a th:href="@{|/board/${board.id}/download/${boardFile.id}|}" th:utext="${boardFile.originalFileName}"></a></td>
 						</tr>
 					</table>
 					<div class="d-flex gap-2 flex-row-reverse">

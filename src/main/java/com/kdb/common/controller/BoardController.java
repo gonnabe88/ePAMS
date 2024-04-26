@@ -34,7 +34,7 @@ public class BoardController {
     private final BoardService boardService;
     private final CommentService commentService;
     
-	private Authentication Authentication() {
+	private Authentication authentication() {
 	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 	    if (authentication == null || authentication instanceof AnonymousAuthenticationToken) return null;
 	    return authentication;
@@ -69,7 +69,7 @@ public class BoardController {
     @PostMapping("/save")
     public String save(@ModelAttribute BoardDTO boardDTO) throws IOException {
                 
-        boardDTO.setBoardWriter(Authentication().getName());
+        boardDTO.setBoardWriter(authentication().getName());
         System.out.println("boardDTO = " + boardDTO);
         boardService.save(boardDTO);
         return "redirect:/board/list"; 
@@ -113,7 +113,7 @@ public class BoardController {
     @PostMapping("/update")
     public String update(@ModelAttribute BoardDTO boardDTO, Model model) {
     	log.warn(boardDTO.toString());
-    	boardDTO.setBoardWriter(Authentication().getName());
+    	boardDTO.setBoardWriter(authentication().getName());
         BoardDTO board = boardService.update(boardDTO);
         model.addAttribute("board", board);
         return "/common/detail";

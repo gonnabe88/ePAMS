@@ -64,8 +64,6 @@ class Sidebar {
       } 
     }
 
-    
-
 
     let sidebarItems = document.querySelectorAll(".sidebar-item.has-sub")
     for (var i = 0; i < sidebarItems.length; i++) {

@@ -75,6 +75,7 @@ public class SecurityConfig {
                 authorizeRequests                
                     .requestMatchers(
             		/*"/index", "index2", "list", "save",*/
+                    "/actuator/prometheus",
             		"/manifest.webmanifest", "/login", "/logout", "/register",
             		"/api/**", 
                     "/css/**",
@@ -117,9 +118,8 @@ public class SecurityConfig {
 		 * .invalidateHttpSession(true) .deleteCookies("JSESSIONID")
 		 * 
 		 * )
-		 */
-            
-        ;
+		 */  
+
         
         return http.build();
         

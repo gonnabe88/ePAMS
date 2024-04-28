@@ -1,5 +1,7 @@
 package com.kdb.security;
 
+import java.security.NoSuchAlgorithmException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -60,8 +62,13 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 		if (userDetails == null) 
 			throw new UsernameNotFoundException("User not found");		
 
-		if (!uuidResult && !(encshaService.encrypt(password)).equals(userDetails.getPassword())) 
-			throw new AuthenticationException("Invalid credentials") {};
+		try {
+			if (!uuidResult && !(encshaService.encrypt(password)).equals(userDetails.getPassword())) 
+				throw new AuthenticationException("Invalid credentials") {};
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		if (!loginResult) 
 			throw new AuthenticationException("Invalid MFA credentials") {}; 

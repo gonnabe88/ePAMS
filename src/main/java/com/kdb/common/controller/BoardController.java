@@ -29,7 +29,7 @@ import com.kdb.common.dto.BoardDTO;
 import com.kdb.common.dto.CommentDTO;
 import com.kdb.common.service.BoardService;
 import com.kdb.common.service.CommentService;
-import com.kdb.example.board.BoardFileDTO;
+import com.kdb.common.dto.BoardFileDTO;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -64,19 +64,17 @@ public class BoardController {
 
 	
     @GetMapping("/{boardid}/download/{fileid}")
-    public ResponseEntity<Resource> download(@PathVariable("boardid") Long boardid, @PathVariable("fileid") Long fileid) {
-        
-    	log.warn("download id : " + fileid);
+    public ResponseEntity<Resource> download(@PathVariable("boardid") Long boardid, @PathVariable("fileid") Long fileid) throws Exception {
     	
     	//파일정보 가져오기
     	BoardFileDTO boardfile = boardService.findOneFile(fileid);
     	UrlResource resource;
         try{
             resource = new UrlResource("file:C:/epams/"+ boardfile.getStoredFileName());
-        }catch (MalformedURLException e){
+        }catch (IOException e){
             log.error("the given File path is not valid");
-            e.getStackTrace();
-            throw new RuntimeException("the given URL path is not valid");
+            e.printStackTrace();
+            throw new IOException("the given URL path is not valid");
         }
         //Header
         String originalFileName = boardfile.getOriginalFileName();
@@ -119,7 +117,7 @@ public class BoardController {
 
     @PostMapping("/save")
     public String save(@ModelAttribute BoardDTO boardDTO, Model model) throws IOException {
-    	log.warn(boardDTO.toString());        
+    
         boardDTO.setBoardWriter(authentication().getName());
         boardService.save(boardDTO);
         //return "redirect:/board/list"; 
@@ -130,7 +128,6 @@ public class BoardController {
     
     @PostMapping("/update")
     public String update(@ModelAttribute BoardDTO boardDTO, Model model) throws IOException {
-    	log.warn(boardDTO.toString());
     	boardDTO.setBoardWriter(authentication().getName());
         BoardDTO board = boardService.update(boardDTO);
         model.addAttribute("board", board);
@@ -145,8 +142,6 @@ public class BoardController {
             해당 게시글의 조회수를 하나 올리고
             게시글 데이터를 가져와서 detail.html에 출력
          */
-    	System.out.println("ID");
-    	System.out.println("ID :"+id+"model :"+model);
         boardService.updateHits(id);
         BoardDTO boardDTO = boardService.findById(id);
         

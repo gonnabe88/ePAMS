@@ -45,7 +45,6 @@ public class CustomSecurityFilter extends OncePerRequestFilter {
             
             // 비밀번호 확인
             if(!passwordEncoder.matches(password, userDetails.getPassword())) {
-            	log.warn("CustomSecurityFilter : {} {}", password, userDetails.getPassword());
                 throw new IllegalAccessError("비밀번호가 일치하지 않습니다.");
             }
 

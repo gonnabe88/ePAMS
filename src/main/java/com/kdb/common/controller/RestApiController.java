@@ -38,7 +38,6 @@ public class RestApiController {
     
     @GetMapping("/search")
     public List<SearchMemberEntity> search(Model model, @RequestParam("text") String text) throws Exception{
-    	log.warn("search : "+text);
     	List<SearchMemberEntity> memberList = memberservice.findBySearchValue(text);
 		return memberList;
     }

@@ -3,7 +3,7 @@
 <configuration>
     <typeAliases>
         <typeAlias type="com.kdb.common.dto.BoardDTO" alias="board"></typeAlias>
-        <typeAlias type="com.kdb.example.board.BoardFileDTO" alias="boardFile"></typeAlias>
+        <typeAlias type="com.kdb.common.dto.BoardFileDTO" alias="boardFile"></typeAlias>
         <typeAlias type="com.kdb.common.dto.MemberDTO" alias="member"></typeAlias>        
     </typeAliases>
 </configuration>

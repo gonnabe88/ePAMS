@@ -4,24 +4,19 @@
 <head>
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, height=device-height,initial-scale=1.0" />
-	<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
-	
-    <link rel="apple-touch-icon" href="/images/kdb/epams_r_192.png" />
-    <link rel="apple-touch-icon" href="/images/kdb/epams_r_512.png" />
-    <link rel="manifest" href="manifest.webmanifest" />
-    
+	<!-- <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" /> -->
+
 	<meta name="_csrf_header" th:content="${_csrf.headerName}">
 	<meta name="_csrf" th:content="${_csrf.token}">
 	
 	<title>Login - ePAMS</title>
 
-	<link rel="shortcut icon" href="/images/kdb/epams_ct.ico" type="image/x-icon">
+	<link rel="shortcut icon" href="/images/kdb/epams_r.ico" type="image/x-icon">
 	<link rel="stylesheet" href="css/custom.css">
 	<link rel="stylesheet" href="css/app.css">
 	<link rel="stylesheet" href="css/app-dark.css">
 	<link rel="stylesheet" href="css/auth.css">
 </head>
-
 
 <body>
 	<script src="/js/initTheme.js"></script>
@@ -65,10 +60,17 @@
 							</div>
 							<fieldset style="border: 4; padding: 0;">
 								<div class="d-flex justify-content-center">
-									<label> <input class="form-check-input" type="radio" name="MFA" id="sms" value="SMS" checked /> <span style="font-size: 15px">SMS</span>
-									</label> <label> <input class="form-check-input ms-2" type="radio" name="MFA" id="kakao" value="카카오톡" /> <span style="font-size: 15px">카카오</span>
-									</label> <label> <input class="form-check-input ms-2" type="radio" name="MFA" id="otp" value="OTP" /> <span style="font-size: 15px">OTP</span>
-									</label> <label> <input class="form-check-input ms-2" type="radio" name="MFA" id="fido" value="FIDO" /> <span style="font-size: 15px">FIDO</span>
+									<label> 
+										<input class="form-check-input" type="radio" name="MFA" id="sms" value="SMS" checked /> <span style="font-size: 15px">SMS</span>
+									</label> 
+									<label> 
+										<input class="form-check-input ms-2" type="radio" name="MFA" id="kakao" value="카카오톡" /> <span style="font-size: 15px">카카오</span>
+									</label> 
+									<label> 
+										<input class="form-check-input ms-2" type="radio" name="MFA" id="otp" value="OTP" /> <span style="font-size: 15px">OTP</span>
+									</label> 
+									<label> 
+										<input class="form-check-input ms-2" type="radio" name="MFA" id="fido" value="FIDO" /> <span style="font-size: 15px">FIDO</span>
 									</label>
 								</div>
 							</fieldset>
@@ -85,124 +87,121 @@
 							</div>
 						</div>
 
-
-							<!--scrolling content Modal -->
-                            <div class="modal fade" id="exampleModalScrollable" tabindex="-1" aria-labelledby="exampleModalScrollableTitle" style="display: none;" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-scrollable" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalScrollableTitle"> 무엇을 도와드릴까요? </h5>
-                                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                        	<h6>테스트 계정</h6>
-                                        	<p>ID : K000000 / PW : kdb1234!<br>
-                                        	<h6>FIDO</h6>
-                                            <p>테스트 때문에 FIDO는 무조건 인증 설정 <br>
-                                            <h6>SMS/카카오/OTP</h6>
-                                            <p>개발자 모드(F12) - 콘솔에서 OTP 확인</p>
-                                            <p>
-                                                Tootsie roll oat cake I love bear claw I love caramels caramels halvah
-                                                chocolate bar. Cotton
-                                                candy
-                                                gummi bears pudding pie apple pie cookie. Cheesecake jujubes lemon drops
-                                                danish dessert I love
-                                                caramels powder
-                                            </p>
-                                            <p>
-                                                Chocolate cake icing tiramisu liquorice toffee donut sweet roll cake.
-                                                Cupcake dessert icing
-                                                dragée dessert. Liquorice jujubes cake tart pie donut. Cotton candy
-                                                candy canes lollipop liquorice
-                                                chocolate marzipan muffin pie liquorice.
-                                            </p>
-                                            <p>
-                                                Powder cookie jelly beans sugar plum ice cream. Candy canes I love
-                                                powder sugar plum tiramisu.
-                                                Liquorice pudding chocolate cake cupcake topping biscuit. Lemon drops
-                                                apple pie sesame snaps
-                                                tootsie roll carrot cake soufflé halvah. Biscuit powder jelly beans.
-                                                Lollipop candy canes
-                                                croissant icing chocolate cake. Cake fruitcake powder pudding pastry.
-                                            </p>
-                                            <p>
-                                                Tootsie roll oat cake I love bear claw I love caramels caramels halvah
-                                                chocolate bar. Cotton
-                                                candy gummi bears pudding pie apple pie cookie. Cheesecake jujubes lemon
-                                                drops danish dessert I
-                                                love caramels powder.
-                                            </p>
-                                            <p>
-                                                dragée dessert. Liquorice jujubes cake tart pie donut. Cotton candy
-                                                candy canes lollipop liquorice
-                                                chocolate marzipan muffin pie liquorice.
-                                            </p>
-                                            <p>
-                                                Powder cookie jelly beans sugar plum ice cream. Candy canes I love
-                                                powder sugar plum tiramisu.
-                                                Liquorice pudding chocolate cake cupcake topping biscuit. Lemon drops
-                                                apple pie sesame snaps
-                                                tootsie roll carrot cake soufflé halvah.Biscuit powder jelly beans.
-                                                Lollipop candy canes croissant
-                                                icing chocolate cake. Cake fruitcake powder pudding pastry.
-                                            </p>
-                                            <p>
-                                                Tootsie roll oat cake I love bear claw I love caramels caramels halvah
-                                                chocolate bar. Cotton
-                                                candy gummi bears pudding pie apple pie cookie. Cheesecake jujubes lemon
-                                                drops danish dessert I
-                                                love caramels powder.
-                                            </p>
-                                            <p>
-                                                Chocolate cake icing tiramisu liquorice toffee donut sweet roll cake.
-                                                Cupcake dessert icing
-                                                dragée dessert. Liquorice jujubes cake tart pie donut. Cotton candy
-                                                candy canes lollipop liquorice
-                                                chocolate marzipan muffin pie liquorice.
-                                            </p>
-                                            <p>
-                                                Powder cookie jelly beans sugar plum ice cream. Candy canes I love
-                                                powder sugar plum tiramisu.
-                                                Liquorice pudding chocolate cake cupcake topping biscuit. Lemon drops
-                                                apple pie sesame snaps
-                                                tootsie roll carrot cake soufflé halvah. Biscuit powder jelly beans.
-                                                Lollipop candy canes
-                                                croissant icing chocolate cake. Cake fruitcake powder pudding pastry.
-                                            </p>
-                                            <p>
-                                                Tootsie roll oat cake I love bear claw I love caramels caramels halvah
-                                                chocolate bar. Cotton
-                                                candy gummi bears pudding pie apple pie cookie. Cheesecake jujubes lemon
-                                                drops danish dessert I
-                                                love caramels powder.
-                                            </p>
-                                            <p>
-                                                Chocolate cake icing tiramisu liquorice toffee donut sweet roll cake.
-                                                Cupcake dessert icing
-                                                dragée dessert. Liquorice jujubes cake tart pie donut. Cotton candy
-                                                candy canes lollipop liquorice
-                                                chocolate marzipan muffin pie liquorice.
-                                            </p>
-                                            <p>
-                                                Powder cookie jelly beans sugar plum ice cream. Candy canes I love
-                                                powder sugar plum tiramisu.
-                                                Liquorice pudding chocolate cake cupcake topping biscuit. Lemon drops
-                                                apple pie sesame snaps
-                                                tootsie roll carrot cake soufflé halvah.
-                                            </p>
-                                        </div>
+						<!--scrolling content Modal -->
+                        <div class="modal fade" id="exampleModalScrollable" tabindex="-1" aria-labelledby="exampleModalScrollableTitle" style="display: none;" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-scrollable" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalScrollableTitle"> 무엇을 도와드릴까요? </h5>
+                                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                    	<h6>테스트 계정</h6>
+                                    	<p>ID : K000000 / PW : kdb1234!<br>
+                                    	<h6>FIDO</h6>
+                                        <p>테스트 때문에 FIDO는 무조건 인증 설정 <br>
+                                        <h6>SMS/카카오/OTP</h6>
+                                        <p>개발자 모드(F12) - 콘솔에서 OTP 확인</p>
+                                        <p>
+                                            Tootsie roll oat cake I love bear claw I love caramels caramels halvah
+                                            chocolate bar. Cotton
+                                            candy
+                                            gummi bears pudding pie apple pie cookie. Cheesecake jujubes lemon drops
+                                            danish dessert I love
+                                            caramels powder
+                                        </p>
+                                        <p>
+                                            Chocolate cake icing tiramisu liquorice toffee donut sweet roll cake.
+                                            Cupcake dessert icing
+                                            dragée dessert. Liquorice jujubes cake tart pie donut. Cotton candy
+                                            candy canes lollipop liquorice
+                                            chocolate marzipan muffin pie liquorice.
+                                        </p>
+                                        <p>
+                                            Powder cookie jelly beans sugar plum ice cream. Candy canes I love
+                                            powder sugar plum tiramisu.
+                                            Liquorice pudding chocolate cake cupcake topping biscuit. Lemon drops
+                                            apple pie sesame snaps
+                                            tootsie roll carrot cake soufflé halvah. Biscuit powder jelly beans.
+                                            Lollipop candy canes
+                                            croissant icing chocolate cake. Cake fruitcake powder pudding pastry.
+                                        </p>
+                                        <p>
+                                            Tootsie roll oat cake I love bear claw I love caramels caramels halvah
+                                            chocolate bar. Cotton
+                                            candy gummi bears pudding pie apple pie cookie. Cheesecake jujubes lemon
+                                            drops danish dessert I
+                                            love caramels powder.
+                                        </p>
+                                        <p>
+                                            dragée dessert. Liquorice jujubes cake tart pie donut. Cotton candy
+                                            candy canes lollipop liquorice
+                                            chocolate marzipan muffin pie liquorice.
+                                        </p>
+                                        <p>
+                                            Powder cookie jelly beans sugar plum ice cream. Candy canes I love
+                                            powder sugar plum tiramisu.
+                                            Liquorice pudding chocolate cake cupcake topping biscuit. Lemon drops
+                                            apple pie sesame snaps
+                                            tootsie roll carrot cake soufflé halvah.Biscuit powder jelly beans.
+                                            Lollipop candy canes croissant
+                                            icing chocolate cake. Cake fruitcake powder pudding pastry.
+                                        </p>
+                                        <p>
+                                            Tootsie roll oat cake I love bear claw I love caramels caramels halvah
+                                            chocolate bar. Cotton
+                                            candy gummi bears pudding pie apple pie cookie. Cheesecake jujubes lemon
+                                            drops danish dessert I
+                                            love caramels powder.
+                                        </p>
+                                        <p>
+                                            Chocolate cake icing tiramisu liquorice toffee donut sweet roll cake.
+                                            Cupcake dessert icing
+                                            dragée dessert. Liquorice jujubes cake tart pie donut. Cotton candy
+                                            candy canes lollipop liquorice
+                                            chocolate marzipan muffin pie liquorice.
+                                        </p>
+                                        <p>
+                                            Powder cookie jelly beans sugar plum ice cream. Candy canes I love
+                                            powder sugar plum tiramisu.
+                                            Liquorice pudding chocolate cake cupcake topping biscuit. Lemon drops
+                                            apple pie sesame snaps
+                                            tootsie roll carrot cake soufflé halvah. Biscuit powder jelly beans.
+                                            Lollipop candy canes
+                                            croissant icing chocolate cake. Cake fruitcake powder pudding pastry.
+                                        </p>
+                                        <p>
+                                            Tootsie roll oat cake I love bear claw I love caramels caramels halvah
+                                            chocolate bar. Cotton
+                                            candy gummi bears pudding pie apple pie cookie. Cheesecake jujubes lemon
+                                            drops danish dessert I
+                                            love caramels powder.
+                                        </p>
+                                        <p>
+                                            Chocolate cake icing tiramisu liquorice toffee donut sweet roll cake.
+                                            Cupcake dessert icing
+                                            dragée dessert. Liquorice jujubes cake tart pie donut. Cotton candy
+                                            candy canes lollipop liquorice
+                                            chocolate marzipan muffin pie liquorice.
+                                        </p>
+                                        <p>
+                                            Powder cookie jelly beans sugar plum ice cream. Candy canes I love
+                                            powder sugar plum tiramisu.
+                                            Liquorice pudding chocolate cake cupcake topping biscuit. Lemon drops
+                                            apple pie sesame snaps
+                                            tootsie roll carrot cake soufflé halvah.
+                                        </p>
                                     </div>
                                 </div>
                             </div>
-							<!-- modal end -->
-
+                        </div>
+						<!-- modal end -->
 					</div>
 					</div>
 				</div>
 			</div>
-
 
 			<!-- 지우면 오른쪽 구역 사라짐 -->
 			<div class="col-lg-7 d-none d-lg-block">
@@ -217,13 +216,6 @@
 	<script src="/extensions/sweetalert2/sweetalert2.min.js"></script>
 	<script src="/js/login.js"></script>
 
-		<script>
-	      (function () {
-	        if ("serviceWorker" in navigator) {
-	          navigator.serviceWorker.register("/js/sw.js");
-	        }
-	      })();
-	    </script>
 </body>
 
 </html> 

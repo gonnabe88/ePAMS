@@ -6,10 +6,12 @@ import java.security.MessageDigest;
 import java.util.Base64;
 import java.util.Base64.Encoder;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.core.codec.EncodingException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class CustomPasswordEncoder implements PasswordEncoder {
     @Override
     public String encode(CharSequence rawPassword) {
@@ -22,7 +24,7 @@ public class CustomPasswordEncoder implements PasswordEncoder {
                 return encoder.encodeToString(digest);
             } catch (Exception e) {
                 e.printStackTrace();
-                throw new RuntimeException();
+                throw new EncodingException("Fail to encode SHA-256 ");
             }
        //String hashed = BCrypt.hashpw(rawPassword.toString(), BCrypt.gensalt(12));  
        //return hashed;
@@ -30,7 +32,6 @@ public class CustomPasswordEncoder implements PasswordEncoder {
 
     @Override
     public boolean matches(CharSequence rawPassword, String encodedPassword) {
-        System.out.println("Custom match 입력 : "+ rawPassword + " 원본 : " + encodedPassword);
         //if(encode(rawPassword).equals(encodedPassword)) return true;
     	if(rawPassword.equals(encodedPassword)) return true;
         else return false;

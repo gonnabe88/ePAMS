@@ -23,12 +23,10 @@
 		        branding: false,
 		        promotion: false
 		    });
-	    </script>
-	    
+	    </script>	    
 	    
 	    <script src="/extensions/dropzone/dropzone.js"></script>
-		<link rel="stylesheet" href="/extensions/dropzone/dropzone.min.css" type="text/css" />
-		
+		<link rel="stylesheet" href="/extensions/dropzone/dropzone.min.css" type="text/css" />	
 		
 		<style>
         .dropzone {
@@ -60,31 +58,10 @@
             visibility: hidden;
             cursor: pointer;
         }
-
-        .file-icon{
-            font-size: 60px;
-        }
-        .hr-sect {
-            display: flex;
-            flex-basis: 100%;
-            align-items: center;
-            margin: 8px 0px;
-        }
-        .hr-sect:before,
-        .hr-sect:after {
-            content: "";
-            flex-grow: 1;
-            background: #ddd;
-            height: 1px;
-            font-size: 0px;
-            line-height: 0px;
-            margin: 0px 8px;
-        }
     </style>
 	</th:block>
 	<!-- (end) private script -->	
 </head>
-
 <body>
 
 	<div layout:fragment="contents">
@@ -93,40 +70,33 @@
 				<h2><i class="bi bi-bell-fill"></i> 공지사항</h2>
 				<br> <input class="form-control" type="text" placeholder="제목" aria-label="default input example" id="title" th:value="${board.boardTitle}"><br>
 				<textarea name="open" id="open" cols="30" rows="10" th:utext="${board.boardContents}"></textarea>
-				
 				<br>
+				<!-- 기존 첨부파일 목록 -->
 				<ul class="list-unstyled mb-3">
-				<li th:if="${board.fileAttached == 1}" th:each="boardFile: ${boardFileList}">
-					<div class="d-flex align-items-center p-2">
-						<div class="col-9">	
-							<span> 첨부 [[${boardFileStat.count}]]</span>
-							<a th:href="@{|/board/${board.id}/download/${boardFile.id}|}" th:utext="${boardFile.originalFileName}"></a>
-						</div>
-						<div class="col-3 d-flex justify-content-end">
-							<div class="shrink-0 ms-3">
-								<button class="btn btn-danger btn-sm" type="submit" id="del" th:onclick="del([[${boardFile.id}]], [[@{|/board/${board.id}/download/${boardFile.id}|}]], [[${boardFile.originalFileName}]])">삭제</button>
+					<li th:if="${board.fileAttached == 1}" th:each="boardFile: ${boardFileList}">
+						<div class="d-flex align-items-center p-2">
+							<div class="col-9">	
+								<span> 첨부 [[${boardFileStat.count}]]</span>
+								<a th:href="@{|/board/${board.id}/download/${boardFile.id}|}" th:utext="${boardFile.originalFileName}"></a>
+							</div>
+							<div class="col-3 d-flex justify-content-end">
+								<div class="shrink-0 ms-3">
+									<button class="btn btn-danger btn-sm" type="submit" id="del" th:onclick="del([[${boardFile.id}]], [[@{|/board/${board.id}/download/${boardFile.id}|}]], [[${boardFile.originalFileName}]])">삭제</button>
+								</div>
 							</div>
 						</div>
-					</div>
-				</li>
+					</li>
 				</ul>
+				<!-- 신규 파일 업로드 -->
 				<div id="dropzone">
 					<!-- 파일첨부 BOX 영역 -->
 					<div class="dropzone" id="my-awesome-dropzone">		
 						<!-- 파일첨부 리스트 영역 -->
 						<ul class="list-unstyled mb-3" id="dropzone-preview">
 							<li class="mt-2 p-2" id="dropzone-preview-list">
-								<!-- This is used as the file preview template -->
-								
+								<!-- This is used as the file preview template -->								
 								<div class="border rounded-3">
 									<div class="d-flex align-items-center p-2">
-									<!-- 
-										<div class="flex-shrink-0 me-3">
-											<div class="width-8 h-auto rounded-3">
-												<img data-dz-thumbnail="data-dz-thumbnail" class="w-full h-auto rounded-3 block" src="#" alt="Dropzone-Image" style="width: 120px;" />
-											</div>
-										</div>
-									 -->
 										<div class="col-9">
 											<div class="flex-grow-1">
 												<div class="pt-1">
@@ -146,12 +116,11 @@
 							</li>							
 						</ul>
 					</div>	
-				</div>	
-				
-					<div class="d-flex gap-2 flex-row-reverse">
-						<button class="btn btn-primary mt-3" type="submit" id="submit" onclick="save2()">등록</button>
-						<a class="btn btn-secondary mt-3" type="submit" id="submit" th:href="@{/board/list}">목록</a>
-					</div>
+				</div>					
+				<div class="d-flex gap-2 flex-row-reverse">
+					<button class="btn btn-primary mt-3" type="submit" id="submit" onclick="save2()">등록</button>
+					<a class="btn btn-secondary mt-3" type="submit" id="submit" th:href="@{/board/list}">목록</a>
+				</div>
 				<br>
 			</div>
 		</div>

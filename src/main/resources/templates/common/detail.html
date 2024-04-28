@@ -12,45 +12,52 @@
 	<div layout:fragment="contents">
 		<div id="main-content">
 			<div class="page-heading">
-
 				<br>
-				<div class="table-responsive">
-					<table class="table table-striped">
-						<tr>
-							<th>id</th>
-							<td th:text="${board.id}"></td>
-						</tr>
-						<tr>
-							<th>title</th>
-							<td th:text="${board.boardTitle}"></td>
-						</tr>
-						<tr>
-							<th>writer</th>
-							<td th:text="${board.boardWriter}"></td>
-						</tr>
-						<tr>
-							<th>date</th>
-							<td th:text="${board.boardCreatedTime}"></td>
-						</tr>
-						<tr>
-							<th>hits</th>
-							<td th:utext="${board.boardHits}"></td>
-						</tr>
-						<tr>
-							<th>contents</th>
-							<td th:utext="${board.boardContents}"></td>
-						</tr>
-						<tr th:if="${board.fileAttached == 1}" th:each="boardFile: ${boardFileList}">
-							<th> 첨부 [[${boardFileStat.count}]]</th>
-							<td><a th:href="@{|/board/${board.id}/download/${boardFile.id}|}" th:utext="${boardFile.originalFileName}"></a></td>
-						</tr>
-					</table>
-					<div class="d-flex gap-2 flex-row-reverse">
-						<a class="btn btn-primary mt-3" type="submit" id="submit" th:href="@{|/board/update/${board.id}|}">수정</a>
-						<button class="btn btn-danger mt-3" type="submit" id="submit" onclick="del()">삭제</button>
-						<a class="btn btn-secondary mt-3" type="submit" id="submit" th:href="@{/board/list}">목록</a>
+				
+				<div class="card">
+					<div class="card-body">
+						<h4 th:text="${board.boardTitle}"></h4>
+						<div class="d-flex flex-row mb-3 gap-3">
+							<div>
+								<i class="bi bi-building"></i>
+								<h7 th:text="${board.boardWriter}"></h7>
+							</div>
+							<div>
+								<i class="bi bi-calendar-check"></i>
+								<h7 th:text="${#temporals.format(board.boardCreatedTime, 'yyyy-MM-dd')}"></h7>
+							</div>
+							<div>
+								<i class="bi bi-eye"></i>
+								<h7 th:text="${board.boardHits}"></h7>
+							</div>
+						</div>
+						<span th:utext="${board.boardContents}"></span>
 					</div>
 				</div>
+				<!-- 기존 첨부파일 목록 -->
+				<ul class="list-unstyled mb-3">
+					<li th:if="${board.fileAttached == 1}" th:each="boardFile: ${boardFileList}">
+						<div class="d-flex align-items-center p-2">
+							<div class="col-11 d-flex align-items-center gap-2" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">	
+								<span class="badge text-bg-primary" style="font-weight:400;"> 첨부 [[${boardFileStat.count}]]</span>
+								<h6 class="mb-0"><a th:href="@{|/board/${board.id}/download/${boardFile.id}|}" th:utext="${boardFile.originalFileName}"></a></h6>
+							</div>
+							<div class="col-1 d-flex justify-content-end">
+								<div class="shrink-0 ms-3">
+									<a th:href="@{|/board/${board.id}/download/${boardFile.id}|}">
+										<i class="bi bi-cloud-download-fill" th:href="@{|/board/${board.id}/download/${boardFile.id}|}" ></i>
+									</a>
+								</div>
+							</div>
+						</div>
+					</li>
+				</ul>
+				<div class="d-flex gap-2 flex-row-reverse">
+					<a class="btn btn-primary mt-3" type="submit" id="submit" th:href="@{|/board/update/${board.id}|}">수정</a>
+					<button class="btn btn-danger mt-3" type="submit" id="submit" onclick="del()">삭제</button>
+					<a class="btn btn-secondary mt-3" type="submit" id="submit" th:href="@{/board/list}">목록</a>
+				</div>
+
 			</div>
 		</div>
 	</div>

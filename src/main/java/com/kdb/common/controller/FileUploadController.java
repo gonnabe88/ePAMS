@@ -32,9 +32,7 @@ public class FileUploadController {
 	}
 	
 	  @GetMapping("/") 
-	  public String listUploadedFiles(Model model) throws
-	  IOException {
-	  System.out.println("listUploadedFiles");
+	  public String listUploadedFiles(Model model) throws IOException {
 	  model.addAttribute("files", storageService.loadAll().map( path ->
 	  MvcUriComponentsBuilder.fromMethodName(FileUploadController.class,
 	  "serveFile", path.getFileName().toString()).build().toUri().toString())
@@ -68,12 +66,10 @@ public class FileUploadController {
 
 		return "redirect:/";
 	}
-	*/
-	
+	*/	
 	
     @PostMapping("/")
     public @ResponseBody String upload(MultipartHttpServletRequest request, @RequestParam HashMap<String, Object> parameter){
-    	System.out.println("dd");
         return "/common/list";
     }
 

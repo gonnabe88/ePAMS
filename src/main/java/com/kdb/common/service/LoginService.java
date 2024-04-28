@@ -75,7 +75,7 @@ public class LoginService {
     	else return true;
     }  
 	
-    public boolean pwLogin(MemberDTO memberDTO) {
+    public boolean pwLogin(MemberDTO memberDTO) throws Exception {
 
         memberDTO.setPassword(encshaService.encrypt(memberDTO.getPassword()));
     	MemberDTO ismemberDTO = loginRepository.login(memberDTO);        
@@ -96,9 +96,8 @@ public class LoginService {
     public boolean isValidUUID(String username, String uuid) {
 
     	String UUID = loginRepository.findUuid(username);   
-    	System.out.println("저장된 UUID : " + UUID);  
-    	System.out.println("보내온 UUID : " + uuid);  
-    	
+    	if(log.isWarnEnabled())
+	    	log.warn("저장된 UUID : " + UUID + "보내온 UUID : " + uuid);  
         if (UUID == null) return true;
         else if (UUID.equals(uuid)) return true;
         else return false;
@@ -107,8 +106,8 @@ public class LoginService {
     public boolean isValidUUID(MemberDTO memberDTO) {
 
     	String UUID = loginRepository.findUuid(memberDTO.getUsername());   
-    	System.out.println("저장된 UUID : " + UUID);
-    	System.out.println("보내온 UUID : " + memberDTO.getUUID());        
+    	if(log.isWarnEnabled())
+	    	log.warn("저장된 UUID : " + UUID + "보내온 UUID : " + memberDTO.getUUID());        
     	
         if (UUID == null) return true;
         else if (UUID.equals(memberDTO.getUUID())) return true;
@@ -120,8 +119,9 @@ public class LoginService {
     	uuid = UUID.randomUUID();
     	MemberDTO ismemberDTO = loginRepository.findByUserId(username);
     	ismemberDTO.setUUID(uuid.toString());
-    	loginRepository.updateUuid(ismemberDTO);        
-    	System.out.println("UUID 생성 : " + uuid); 
+    	loginRepository.updateUuid(ismemberDTO);       
+    	if(log.isWarnEnabled())
+    		log.warn("UUID 생성 : " + uuid); 
         return uuid.toString();
     }
 

@@ -7,14 +7,21 @@ server:
       persistent: true
       tracking-modes: cookie
       cookie:
-        #domain: epams.duckdns.org
+        domain: epams.duckdns.org
         #domain: epams.iptime.org
-        domain: localhost
-        #http-only: true
+        #domain: localhost
+        http-only: true
         path: /
         max-age: -1 # infinite
-        #secure: true # https only allowed
-        #sameSite: strict
+        secure: true # https only allowed
+        sameSite: strict
+
+# actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: prometheus
 
 # spring
 spring:
@@ -22,7 +29,7 @@ spring:
     multipart:
       maxFileSize: 512MB # 파일 하나의 최대 크기
       maxRequestSize: 512MB  # 한 번에 최대 업로드 가능 용량
-
+          
   devtools.livereload.enabled: true  
   
 #  datasource:

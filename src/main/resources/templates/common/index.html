@@ -1,20 +1,13 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	xmlns:sec="http://www.thymeleaf.org" layout:decorate="~{common/layout/layout}">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.thymeleaf.org" layout:decorate="~{common/layout/layout}">
 
 <head>
 <!-- (start) private script -->
 <th:block layout:fragment="css">
-    <link rel="apple-touch-icon" href="/images/kdb/epams_r_192.png" />
-    <link rel="apple-touch-icon" href="/images/kdb/epams_r_512.png" />
-    <link rel="manifest" href="manifest.webmanifest" />
-    
-	<link rel="stylesheet" href="/extensions/aos/aos.css">	
+	<link rel="stylesheet" href="/extensions/aos/aos.css">
 	<link rel="stylesheet" href="/extensions/animate/animate.min.css" />
 	<link rel="stylesheet" href="/extensions/owlcarousel/owl.carousel.min.css">
 	<link rel="stylesheet" href="/extensions/owlcarousel/owl.theme.default.min.css">
-		
 </th:block>
 <!-- (end) private script -->
 </head>
@@ -22,17 +15,10 @@
 <body>
 	<div layout:fragment="contents">
 		<div class="row">
-			<div id="carouselExampleIndicators" class="carousel slide"
-				data-bs-ride="carousel">
+			<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
 				<div class="carousel-indicators">
-					<button type="button"
-						style="border-radius: 50%; width: 10px; height: 10px;"
-						data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
-						class="active" aria-current="true" aria-label="Slide 1"></button>
-					<button type="button"
-						style="border-radius: 50%; width: 10px; height: 10px;"
-						data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
-						aria-label="Slide 2"></button>
+					<button type="button" style="border-radius: 50%; width: 10px; height: 10px;" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+					<button type="button" style="border-radius: 50%; width: 10px; height: 10px;" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
 					<!--	<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
 					<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3" aria-label="Slide 4"></button> -->
 				</div>
@@ -40,7 +26,7 @@
 					<div class="carousel-item active">
 						<!-- <div class="bg-no-repeat bg-cover bg-50 px-8"
 							style="background-image: url(images/kdb/BACKGROUND3.png); background-repeat: no-repeat; background-size: cover; position: relative; height: 40vh;"> -->
-							<div class="carousel-img-1">
+						<div class="carousel-img-1">
 							<div class="container-md">
 								<div class="align-items-center ms-5">
 									<div class="col-lg-12 pe-xl-12">
@@ -48,8 +34,8 @@
 											<p class="banner_text mt-5 mb-5">"모바일근태시스템"</p>
 										</div>
 										<h2 style="color: white;">ePAMS에 오신걸</h2>
-										<h2 style="color: white;">진심으로 환영합니다</h2>			
-										<h2 style="color: white;"></h2>								
+										<h2 style="color: white;">진심으로 환영합니다</h2>
+										<h2 style="color: white;"></h2>
 									</div>
 								</div>
 							</div>
@@ -58,7 +44,7 @@
 					<div class="carousel-item">
 						<!-- <div class="bg-no-repeat bg-cover bg-50 px-8"
 							style="background-image: url(images/kdb/BACKGROUND4.png); background-repeat: no-repeat; background-size: cover; position: relative; height: 50vh;"> -->
-							<div class="carousel-img-2">
+						<div class="carousel-img-2">
 							<div class="container-md">
 								<div class="align-items-center ms-5">
 									<div class="col-lg-12 pe-xl-12">
@@ -75,18 +61,15 @@
 					</div>
 				</div>
 				<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-					<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-					<span class="visually-hidden">Previous</span>
+					<span class="carousel-control-prev-icon" aria-hidden="true"></span> <span class="visually-hidden">Previous</span>
 				</button>
 				<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-					<span class="carousel-control-next-icon" aria-hidden="true"></span>
-					<span class="visually-hidden">Next</span>
+					<span class="carousel-control-next-icon" aria-hidden="true"></span> <span class="visually-hidden">Next</span>
 				</button>
 			</div>
 		</div>
 
 		<!-- end carousel (rolling image) -->
-
 		<div id="main-content">
 			<div class="container">
 				<div class="row d-flex justify-content-start mt-2 mb-1">
@@ -94,92 +77,89 @@
 						<i class="bi bi-stars"></i> 빠른 신청
 					</h5>
 				</div>
-			</div>
-			<div class="d-flex justify-content-center">
-				<div class="row col-lg-8 col-md-12 d-flex justify-content-center">
-					<div class="row col-lg-10 col-md-12 col-sm-12">
-						<div class="col-lg-4" style="height: 5rem;">
-							<div data-aos="fade-up" data-aos-offset="100"
-								data-aos-easing="ease-out-cubic" data-aos-duration="1000">
-								<section class="section">
-									<div class="shadow card">
-										<div class="card-body align-content-center"
-											style="height: 4rem; padding: 0.8rem;">
-											<div class="d-flex justify-content-center ">
-												<div class="col-8 mb-0 align-content-center">
-													<h6 style="margin-bottom: 0;">연차휴가 1일</h6>
-													<h7>[[${nowDate}]]</h7>
-												</div>
-												<div class="col-4 d-flex justify-content-end">
-													<div class="btn btn-primary btn-sm" style="height: 35px;"
-														onclick="ApplAlert()">신청</div>
+				<div class="d-flex justify-content-center">
+					<div class="row col-lg-12 col-md-12 d-flex justify-content-center">
+						<div class="row col-lg-12 col-md-12 col-sm-12">
+							<div class="col-lg-4" style="height: 5rem;">
+								<div data-aos="fade-up" data-aos-offset="100" data-aos-easing="ease-out-cubic" data-aos-duration="1000">
+									<section class="section">
+										<div class="shadow card">
+											<div class="card-body align-content-center" style="height: 4rem; padding: 0.8rem;">
+												<div class="d-flex justify-content-center">
+													<div class="col-8 mb-0 align-content-center">
+														<h6 style="margin-bottom: 0;">연차휴가 1일</h6>
+														<h7>[[${nowDate}]]</h7>
+													</div>
+													<div class="col-4 mb-0 align-content-center">
+														<div class="d-flex justify-content-end">
+															<div class="btn btn-primary btn-sm" style="height: 35px; --bs-btn-padding-y:0.35rem;" onclick="ApplAlert()">신청</div>
+														</div>
+													</div>
 												</div>
 											</div>
 										</div>
-									</div>
-								</section>
+									</section>
+								</div>
 							</div>
-						</div>
-						<div class="col-lg-4" style="height: 5rem;">
-							<div data-aos="fade-up" data-aos-offset="100"
-								data-aos-easing="ease-out-cubic" data-aos-duration="1000">
-								<section class="section">
-									<div class="shadow card">
-										<div class="card-body align-content-center"
-											style="height: 4rem; padding: 0.8rem;">
-											<div class="d-flex justify-content-center ">
-												<div class="col-8 mb-0 align-content-center">
-													<h6 style="margin-bottom: 0;">연차휴가 오전(반차)</h6>
-													<h7>[[${nowDate}]]</h7>
-												</div>
-												<div class="col-4 d-flex justify-content-end">
-													<div class="btn btn-primary btn-sm" style="height: 35px;"
-														onclick="ApplAlert()">신청</div>
+							<div class="col-lg-4" style="height: 5rem;">
+								<div data-aos="fade-up" data-aos-offset="100" data-aos-easing="ease-out-cubic" data-aos-duration="1000">
+									<section class="section">
+										<div class="shadow card">
+											<div class="card-body align-content-center" style="height: 4rem; padding: 0.8rem;">
+												<div class="d-flex justify-content-center ">
+													<div class="col-8 mb-0 align-content-center">
+														<h6 style="margin-bottom: 0;">연차휴가 오전(반차)</h6>
+														<h7>[[${nowDate}]]</h7>
+													</div>
+													<div class="col-4 mb-0 align-content-center">
+														<div class="d-flex justify-content-end">
+															<div class="btn btn-primary btn-sm" style="height: 35px; --bs-btn-padding-y:0.35rem;" onclick="ApplAlert()">신청</div>
+														</div>
+													</div>
 												</div>
 											</div>
 										</div>
-									</div>
-								</section>
+									</section>
+								</div>
 							</div>
-						</div>
-						<div class="col-lg-4" style="height: 5rem;">
-							<div data-aos="fade-up" data-aos-offset="100"
-								data-aos-easing="ease-out-cubic" data-aos-duration="1000">
-								<section class="section">
-									<div class="shadow card">
-										<div class="card-body align-content-center"
-											style="height: 4rem; padding: 0.8rem;">
-											<div class="d-flex justify-content-center ">
-												<div class="col-8 mb-0 align-content-center">
-													<h6 style="margin-bottom: 0;">연차휴가 오전(반반차)</h6>
-													<h7>[[${nowDate}]]</h7>
-												</div>
-												<div class="col-4 d-flex justify-content-end">
-													<div class="btn btn-primary btn-sm" style="height: 35px;"
-														onclick="ApplAlert()">신청</div>
+							<div class="col-lg-4" style="height: 5rem;">
+								<div data-aos="fade-up" data-aos-offset="100" data-aos-easing="ease-out-cubic" data-aos-duration="1000">
+									<section class="section">
+										<div class="shadow card">
+											<div class="card-body align-content-center" style="height: 4rem; padding: 0.8rem;">
+												<div class="d-flex justify-content-center ">
+													<div class="col-8 mb-0 align-content-center">
+														<h6 style="margin-bottom: 0;">연차휴가 오전(반반차)</h6>
+														<h7>[[${nowDate}]]</h7>
+													</div>
+													<div class="col-4 mb-0 align-content-center">
+														<div class="d-flex justify-content-end">
+															<div class="btn btn-primary btn-sm" style="height: 35px; --bs-btn-padding-y:0.35rem;" onclick="ApplAlert()">신청</div>
+														</div>
+													</div>
 												</div>
 											</div>
 										</div>
-									</div>
-								</section>
+									</section>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-			<div class="container">
-				<div class="row d-flex justify-content-end">
-					<h6 class="text-end">
-						직접 신청하러 가기 <i class="bi bi-arrow-right-circle-fill"></i>
-					</h6>
+				<div class="container">
+					<div class="row d-flex justify-content-end">
+						<h6 class="text-end">
+							직접 신청하러 가기 <i class="bi bi-arrow-right-circle-fill"></i>
+						</h6>
+					</div>
 				</div>
 			</div>
+
 		</div>
 
 		<div class="divider">
 			<div class="divider-text" style="background-color: transparent;">
-				<img class="divider-text" src="/images/kdb/epams_r_cw_action.gif"
-					style="width: 50px; height: 50px; border-radius: 50%; padding: 0;" />
+				<img class="divider-text" src="/images/kdb/epams_r_cw_action.gif" style="width: 50px; height: 50px; border-radius: 50%; padding: 0;" />
 			</div>
 		</div>
 
@@ -190,11 +170,8 @@
 						<i class="bi bi-bell-fill"></i> 최근 공지사항
 					</h5>
 				</div>
-			</div>
-
-			<div class="justify-content-center">
-				<div class="row col-lg-8 col-md-12 d-flex justify-content-center">
-					<div class="row col-lg-10">
+				<div class="row d-flex justify-content-center">
+					<div class="row col-lg-12">
 						<section class="section" th:each="board: ${boardList}">
 							<div data-aos="fade-up" class="aos-init aos-animate">
 								<div class="shadow card">
@@ -218,8 +195,7 @@
 											</div>
 
 											<div>
-												<i class="bi bi-building"></i>
-												<small class="text-body-secondary" th:text="${board.boardWriter}"></small>
+												<i class="bi bi-building"></i> <small class="text-body-secondary" th:text="${board.boardWriter}"></small>
 											</div>
 										</div>
 
@@ -230,17 +206,17 @@
 					</div>
 				</div>
 			</div>
+
+
 		</div>
 
 		<div class="divider">
 			<div class="divider-text" style="background-color: transparent;">
-				<img class="divider-text" src="/images/kdb/epams_r_cw_action.gif"
-					style="width: 50px; height: 50px; border-radius: 50%; padding: 0;" />
+				<img class="divider-text" src="/images/kdb/epams_r_cw_action.gif" style="width: 50px; height: 50px; border-radius: 50%; padding: 0;" />
 			</div>
 		</div>
 
 		<div id="main-content">
-
 			<div class="container">
 				<div class="row d-flex justify-content-start mb-2">
 					<h5 class="text-start">
@@ -262,8 +238,7 @@
 									<div class="row">
 										<div class="col-12 mb-1">
 											<div class="input-group mb-3">
-												<span class="input-group-text" id="basic-addon1"><i class="bi bi-search"></i></span> 
-												<input type="text" id="searchMember" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2">
+												<span class="input-group-text" id="basic-addon1"><i class="bi bi-search"></i></span> <input type="text" id="searchMember" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2">
 												<button class="btn btn-primary" type="button" id="button-addon2" onclick="search()">조회</button>
 											</div>
 										</div>
@@ -275,12 +250,12 @@
 								<div class="divider-text" style="background-color: transparent;">
 									<h5 class="card-title">조회결과</h5>
 								</div>
-								
+
 							</div>
 							<div class="d-flex justify-content-center">
 								<div class="row col-lg-12 col-md-12 col-sm-12">
 									<div class="col-12 justify-self-center">
-										<div id="memberList"></div>										
+										<div id="memberList"></div>
 									</div>
 								</div>
 							</div>
@@ -292,8 +267,7 @@
 
 		<div class="divider">
 			<div class="divider-text" style="background-color: transparent;">
-				<img class="divider-text" src="/images/kdb/epams_r_cw_action.gif"
-					style="width: 50px; height: 50px; border-radius: 50%; padding: 0;" />
+				<img class="divider-text" src="/images/kdb/epams_r_cw_action.gif" style="width: 50px; height: 50px; border-radius: 50%; padding: 0;" />
 			</div>
 		</div>
 
@@ -311,31 +285,9 @@
 								<div class="card-body" style="padding: 1.0rem;">
 									<div class="d-flex gap-1 justify-content-around">
 										<div class="owl-carousel">
-											<img
-												class="animate__animated animate__pulse animate__slow animate__infinite infinite"
-												src="png/1/calendar_empty.png"
-												style="width: 80px; height: 80px;" /> <img
-												class="animate__animated animate__pulse animate__slow animate__delay-1s animate__infinite infinite"
-												src="png/1/calendar_empty.png"
-												style="width: 80px; height: 80px;" /> <img
-												class="animate__animated animate__pulse animate__slow animate__infinite infinite"
-												src="png/1/calendar_empty.png"
-												style="width: 80px; height: 80px;" /> <img
-												class="animate__animated animate__pulse animate__slow animate__delay-1s animate__infinite infinite"
-												src="png/1/calendar_empty.png"
-												style="width: 80px; height: 80px;" /> <img
-												class="animate__animated animate__pulse animate__slow animate__infinite infinite"
-												src="png/1/calendar_empty.png"
-												style="width: 80px; height: 80px;" /> <img
-												class="animate__animated animate__pulse animate__slow animate__delay-1s animate__infinite infinite"
-												src="png/1/calendar_empty.png"
-												style="width: 80px; height: 80px;" /> <img
-												class="animate__animated animate__pulse animate__slow animate__infinite infinite"
-												src="png/1/calendar_empty.png"
-												style="width: 80px; height: 80px;" /> <img
-												class="animate__animated animate__pulse animate__slow animate__delay-1s animate__infinite infinite"
-												src="png/1/calendar_empty.png"
-												style="width: 80px; height: 80px;" />
+											<img class="animate__animated animate__pulse animate__slow animate__infinite infinite" src="png/1/calendar_empty.png" style="width: 80px; height: 80px;" /> <img class="animate__animated animate__pulse animate__slow animate__delay-1s animate__infinite infinite" src="png/1/calendar_empty.png" style="width: 80px; height: 80px;" /> <img class="animate__animated animate__pulse animate__slow animate__infinite infinite" src="png/1/calendar_empty.png" style="width: 80px; height: 80px;" /> <img class="animate__animated animate__pulse animate__slow animate__delay-1s animate__infinite infinite" src="png/1/calendar_empty.png" style="width: 80px; height: 80px;" /> <img class="animate__animated animate__pulse animate__slow animate__infinite infinite" src="png/1/calendar_empty.png" style="width: 80px; height: 80px;" /> <img class="animate__animated animate__pulse animate__slow animate__delay-1s animate__infinite infinite" src="png/1/calendar_empty.png"
+												style="width: 80px; height: 80px;"
+											/> <img class="animate__animated animate__pulse animate__slow animate__infinite infinite" src="png/1/calendar_empty.png" style="width: 80px; height: 80px;" /> <img class="animate__animated animate__pulse animate__slow animate__delay-1s animate__infinite infinite" src="png/1/calendar_empty.png" style="width: 80px; height: 80px;" />
 										</div>
 									</div>
 								</div>
@@ -345,11 +297,14 @@
 				</div>
 			</div>
 		</div>
+	
+	
 	</div>
 
 	<!-- (start) private script -->
 	<th:block layout:fragment="script">
-		<script>
+		<script>	
+		
 			const search = () => {
 				const text = $("#searchMember").val();
 			    let header = $("meta[name='_csrf_header']").attr('content');
@@ -373,13 +328,13 @@
 			    });
 			}
 		</script>
-		<script src="/extensions/aos/aos.js"></script>		
+		<script src="/extensions/aos/aos.js"></script>
 		<script src="/extensions/owlcarousel/owl.carousel.min.js"></script>
 		<script>
-		AOS.init({
-			easing: 'ease-out-back',
-			duration: 1000
-		});
+			AOS.init({
+				easing: 'ease-out-back',
+				duration: 1000
+			});
 		</script>
 		<script>
 			$(document).ready(function() {
@@ -398,7 +353,7 @@
 					owl.trigger('stop.owl.autoplay')
 				})
 			});
-		</script>		
+		</script>
 		<script>
 			const ApplAlert = () => {	
 				Swal.fire({
@@ -449,15 +404,7 @@
 					  }
 					});
 			}
-		</script>	
-		
-		<script>
-	      (function () {
-	        if ("serviceWorker" in navigator) {
-	          navigator.serviceWorker.register("/js/sw.js");
-	        }
-	      })();
-	    </script>
+		</script>
 	</th:block>
 	<!-- (end) private script -->
 </body>

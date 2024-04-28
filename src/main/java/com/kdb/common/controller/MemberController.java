@@ -37,7 +37,6 @@ public class MemberController {
                        @Lazy CustomPasswordEncoder passwordEncoder){
         this.memberRepository = memberRepository;
         this.passwordEncoder = passwordEncoder;
-        System.out.println("MemberController");
     }
 
     @GetMapping("/register")

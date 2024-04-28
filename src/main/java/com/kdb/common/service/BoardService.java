@@ -20,7 +20,7 @@ import com.kdb.common.entity.BoardFileEntity;
 import com.kdb.common.repository.BoardFileRepository;
 import com.kdb.common.repository.BoardRepository;
 import com.kdb.common.repository.BoardRepository2;
-import com.kdb.example.board.BoardFileDTO;
+import com.kdb.common.dto.BoardFileDTO;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -102,7 +102,8 @@ public class BoardService {
     		for (BoardFileDTO boardFile: boardFiles) {        
     			File file = new File("C:/epams/" + boardFile.getStoredFileName());
     			boolean result = file.delete();
-    			log.warn(result + " Delete files : "+ boardFile.getStoredFileName());
+    			if (log.isWarnEnabled()) 
+    				log.warn(result + " Delete files : "+ boardFile.getStoredFileName());
         	}
     	}
     }

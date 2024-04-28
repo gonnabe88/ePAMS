@@ -1,5 +1,6 @@
 package com.kdb.common.service;
 
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.util.Base64;
@@ -12,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class EncShaService {
-    public String encrypt(String planText) {
+    public String encrypt(String planText) throws Exception{
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
             Encoder encoder = Base64.getEncoder();
@@ -20,7 +21,7 @@ public class EncShaService {
             return encoder.encodeToString(digest);
         } catch (Exception e) {
             e.printStackTrace();
-            throw new RuntimeException();
+            throw new IOException("Fail to encrype SHA-256");
         }
     }
 }

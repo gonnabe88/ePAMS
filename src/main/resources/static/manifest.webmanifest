@@ -12,7 +12,7 @@
       "type": "image/png"
     }
   ], 
-  "display": "fullscreen", 
+  "display": "standalone", 
   "start_url": "/login", 
 
   "description": "KDB산업은행 모바일 근태신청시스템",

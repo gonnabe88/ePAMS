@@ -18,6 +18,5 @@ public class CodeService {
     public List<CodeEntity> getCode(String html) {
     	List<CodeEntity> codeEntityList = CodeRepository.findByHtml(html);
     	return codeEntityList;
-    	
     }
 }

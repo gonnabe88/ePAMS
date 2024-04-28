@@ -19,7 +19,6 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
 	public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException exception) throws IOException, ServletException {
 		
-		log.warn("AuthenticationException exception : {}", exception.getMessage());
 		// TODO Auto-generated method stub
 		response.setStatus(500);		
 	}	

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kdb.common.dto.BoardDTO;
 import com.kdb.common.entity.BoardEntity;
-import com.kdb.example.board.BoardFileDTO;
+import com.kdb.common.dto.BoardFileDTO;
 
 import lombok.RequiredArgsConstructor;
 

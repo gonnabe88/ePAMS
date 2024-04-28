@@ -29,7 +29,33 @@
 	<script src="/js/app_v0.5.js"></script>	
 	<script src="/extensions/sweetalert2/sweetalert2.min.js"></script>
 	<script src="/extensions/jquery/jquery.min.js"></script>
+	<script>
+	  //A2HS
+      (function () {
+        if ("serviceWorker" in navigator) {
+          navigator.serviceWorker.register("/js/sw.js");
+        }
+      })();
+      
+		let installPrompt = null;
+		const installButton = document.querySelector("#install");
 
+		window.addEventListener("beforeinstallprompt", (event) => {
+		  event.preventDefault();
+		  installPrompt = event;
+		  installButton.removeAttribute("hidden");
+		});
+		
+		installButton.addEventListener("click", async () => {
+			  if (!installPrompt) {
+			    return;
+			  }
+			  const result = await installPrompt.prompt();
+			  console.log(`Install prompt was: ${result.outcome}`);
+			  installPrompt = null;
+			  installButton.setAttribute("hidden", "");
+			});
+    </script>
 	
 	<th:block layout:fragment="script"></th:block>
 

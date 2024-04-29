@@ -43,7 +43,7 @@ public class MainController<S extends Session> {
     	  Map<String, String> map = new HashMap<String, String>();
     	  List<CodeEntity> codeList = codeService.getCode("/common/index");
     	  
-    	  System.out.println(codeList.get(0).getCD_NM());
+    	  //System.out.println(codeList.get(0).getCD_NM());
     	  model.addAttribute("codeList", codeList);	    
 
     	  // 메인화면 공지사항 출력

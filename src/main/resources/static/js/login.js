@@ -84,22 +84,26 @@ const login= () => {
         	xhr.setRequestHeader(header, token);
         },                
         complete: function(data) {         
-			const UUID = JSON.parse(data.responseText).UUID;
-			console.log("MFA reply : " + JSON.parse(data.responseText).OTP)
-		    switch (MFA) {
-		        case 'OTP':     
-		            otpAuthAlert(username, MFA, UUID, header, token); //OTP 인증
-		            break; 
-		        case 'SMS':
-		            otpAuthAlert(username, MFA, UUID, header, token); //SMS 인증
-		            break; 
-		        case '카카오톡':
-		            otpAuthAlert(username, MFA, UUID, header, token); //카카오톡 인증
-		            break; 
-		        case 'FIDO':
-		            fidoAuthAlert(username, MFA, UUID, header, token); //FIDO 인증
-		            break; 
-		    } //switch(MFA)
+			if(data.status == 200) {
+				const UUID = JSON.parse(data.responseText).UUID;
+				console.log("MFA reply : " + JSON.parse(data.responseText).OTP)
+			    switch (MFA) {
+			        case 'OTP':     
+			            otpAuthAlert(username, MFA, UUID, header, token); //OTP 인증
+			            break; 
+			        case 'SMS':
+			            otpAuthAlert(username, MFA, UUID, header, token); //SMS 인증
+			            break; 
+			        case '카카오톡':
+			            otpAuthAlert(username, MFA, UUID, header, token); //카카오톡 인증
+			            break; 
+			        case 'FIDO':
+			            fidoAuthAlert(username, MFA, UUID, header, token); //FIDO 인증
+			            break; 
+			    } //switch(MFA)
+		    }
+		    else
+		    	window.location.href = 'https://epams.duckdns.org/login';
 	    }
     });
 }

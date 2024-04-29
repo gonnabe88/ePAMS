@@ -107,6 +107,8 @@ public class SecurityConfig {
                     .successHandler(SuccessHandler())
                     .failureHandler(FailureHandler())
             )
+            
+            .logout((logout) -> logout.logoutSuccessUrl("/login"))
 
             
             .exceptionHandling((exceptionHandling) ->

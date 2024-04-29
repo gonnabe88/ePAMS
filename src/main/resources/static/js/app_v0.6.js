@@ -4310,7 +4310,27 @@
     }
     )(Wn);
     
-    
+    var Or = Wn.exports;
+    const Sr = Fn(Or)
+      , Ct = U=>U.innerWidth > 1200
+      , nn = (U,k=!1)=>{
+        const s = U.children;
+        let f = 0;
+        for (let r = 0; r < U.childElementCount; r++) {
+            const l = s[r];
+            if (f += l.querySelector(".submenu-link").clientHeight,
+            k && l.classList.contains("has-sub")) {
+                const a = l.querySelector(".submenu");
+                if (a.classList.contains("submenu-open")) {
+                    const u = ~~[...a.querySelectorAll(".submenu-link")].reduce((p,h)=>p + h.clientHeight, 0);
+                    f += u
+                }
+            }
+        }
+        return U.style.setProperty("--submenu-height", f + "px"),
+        f
+    }
+    ;
     class Mr {
         constructor(k, s={}) {
             this.sidebarEL = k instanceof HTMLElement ? k : document.querySelector(k),

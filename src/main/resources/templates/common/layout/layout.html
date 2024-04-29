@@ -26,10 +26,156 @@
 	
 	<script src="/js/components/dark.js"></script>
 	<script src="/extensions/perfect-scrollbar/perfect-scrollbar.js"></script>	
-	<script src="/js/app_v0.5.js"></script>
+	<!-- <script src="/js/app_v0.5.js"></script> -->
+	<script src="/js/bootstrap.js"></script>
 	<script src="/extensions/sweetalert2/sweetalert2.min.js"></script>
 	<script src="/extensions/jquery/jquery.min.js"></script>
 	<script>
+	// Sidebar
+	class Mr {
+        constructor(k, s={}) {
+            this.sidebarEL = k instanceof HTMLElement ? k : document.querySelector(k),
+            this.options = s,
+            this.init()
+        }
+        init() {
+			
+            document.querySelectorAll(".burger-btn").forEach(r=>r.addEventListener("click", this.toggle.bind(this))),
+            document.querySelectorAll(".sidebar-hide").forEach(r=>r.addEventListener("click", this.toggle.bind(this))),
+            window.addEventListener("resize", this.onResize.bind(this));
+            const k = r=>{
+                r.classList.contains("submenu-open") ? (r.classList.remove("submenu-open"),
+                r.classList.add("submenu-closed")) : (r.classList.remove("submenu-closed"),
+                r.classList.add("submenu-open"))
+            }
+            ;
+            let s = document.querySelectorAll(".sidebar-item.has-sub");
+            for (var f = 0; f < s.length; f++) {
+                let r = s[f];
+                s[f].querySelector(".sidebar-link").addEventListener("click", a=>{
+                    a.preventDefault();
+                    let u = r.querySelector(".submenu");
+                    k(u)
+                }
+                ),
+                r.querySelectorAll(".submenu-item.has-sub").forEach(a=>{
+                    a.addEventListener("click", ()=>{
+                        const u = a.querySelector(".submenu");
+                        k(u),
+                        nn(a.parentElement, !0)
+                    }
+                    )
+                }
+                )
+            }
+            if (typeof PerfectScrollbar == "function") {
+                const r = document.querySelector(".sidebar-wrapper");
+                new PerfectScrollbar(r,{
+                    wheelPropagation: !0
+                })
+            }
+            setTimeout(()=>{
+                const r = document.querySelector(".sidebar-item.active");
+                r && this.forceElementVisibility(r)
+            }
+            , 300),
+            this.options.recalculateHeight && Cr(Xe)
+        }
+        onResize() {
+            Ct(window) ? (this.sidebarEL.classList.add("inactive"),
+            this.sidebarEL.classList.remove("active")) : this.sidebarEL.classList.remove("inactive"),
+            this.deleteBackdrop(),
+            this.toggleOverflowBody(!0)
+        }
+        toggle() {
+            this.sidebarEL.classList.contains("active") ? this.hide() : this.show()
+        }
+        show() {
+			
+            this.sidebarEL.classList.add("active"),
+            this.sidebarEL.classList.remove("inactive"),
+            this.createBackdrop(),
+            this.toggleOverflowBody()
+        }
+        hide() {
+            this.sidebarEL.classList.remove("active"),
+            this.sidebarEL.classList.add("inactive"),
+            this.deleteBackdrop(),
+            this.toggleOverflowBody()
+        }
+        createBackdrop() {
+			
+            if (Ct(window))
+                return;
+            this.deleteBackdrop();
+            const k = document.createElement("div");
+            k.classList.add("sidebar-backdrop"),
+            k.addEventListener("click", this.hide.bind(this)),
+            document.body.appendChild(k)
+        }
+        deleteBackdrop() {
+            const k = document.querySelector(".sidebar-backdrop");
+            k && k.remove()
+        }
+        toggleOverflowBody(k) {
+            if (Ct(window))
+                return;
+            const s = this.sidebarEL.classList.contains("active")
+              , f = document.querySelector("body");
+            typeof k > "u" ? f.style.overflowY = s ? "hidden" : "auto" : f.style.overflowY = k ? "auto" : "hidden"
+        }
+        isElementInViewport(k) {
+            var s = k.getBoundingClientRect();
+            return s.top >= 0 && s.left >= 0 && s.bottom <= (window.innerHeight || document.documentElement.clientHeight) && s.right <= (window.innerWidth || document.documentElement.clientWidth)
+        }
+        forceElementVisibility(k) {
+            this.isElementInViewport(k) || k.scrollIntoView(!1)
+        }
+    }
+    let Xe = document.getElementById("sidebar");
+    const Bn = U=>{
+		
+        if (!Xe)
+            return;
+        Ct(window) && (U.classList.add("inactive"),
+        U.classList.add("sidebar-desktop"));
+        let k = document.querySelectorAll(".sidebar-item.has-sub .submenu");
+        for (var s = 0; s < k.length; s++) {
+            let f = k[s];
+            const r = f.parentElement;
+            f.clientHeight,
+            r.classList.contains("inactive") ? f.classList.add("submenu-open") : f.classList.add("submenu-closed"),
+            setTimeout(()=>{
+                nn(f, !0)
+            }
+            , 50)
+        }
+    }
+      , Cr = U=>{
+        if (!U)
+            return;
+        let k = document.querySelectorAll(".sidebar-item.has-sub .submenu");
+        for (var s = 0; s < k.length; s++) {
+            let f = k[s];
+            const r = f.parentElement;
+            f.clientHeight,
+            r.classList.contains("inactive") ? f.classList.add("submenu-open") : f.classList.add("submenu-closed"),
+            setTimeout(()=>{
+                nn(f, !0)
+            }
+            , 50)
+        }
+    }
+    ;
+    document.readyState !== "loading" ? Bn(Xe) : window.addEventListener("DOMContentLoaded", ()=>Bn(Xe)),
+    window.Sidebar = Mr,
+    Xe && new window.Sidebar(Xe),
+    window.bootstrap = Sr,
+    Tr.replace()
+    
+    
+		
+	
 	  //A2HS
       (function () {
         if ("serviceWorker" in navigator) {

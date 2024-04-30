@@ -27,7 +27,9 @@ import com.kdb.common.service.CodeService;
 import com.kdb.common.service.MemberDetailsService;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 public class MainController<S extends Session> {

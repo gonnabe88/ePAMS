@@ -87,7 +87,7 @@ public class SecurityConfig {
                     "/forbidden").permitAll() // 위 URI에 매칭되는 주소는 인증을 하지 않아도 허용
                     
                     .requestMatchers("/manager/**").hasAnyRole("KDB", "ADMIN") // ADMIN, KDB 복수 허용 예시
-                    .requestMatchers("/admin/**").hasRole("ADMIN") // ADMIN 단독 허용 예시
+                    .requestMatchers("/admin2/**").hasRole("ADMIN") // ADMIN 단독 허용 예시
                     .anyRequest().authenticated() // 그 외 전체 허용
                     
                     

@@ -26,6 +26,7 @@ import com.kdb.common.service.BoardService;
 import com.kdb.common.service.CodeService;
 import com.kdb.common.service.MemberDetailsService;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.thymeleaf.org" layout:decorate="~{/common/layout/layout}">
+
+<head>
+<!-- (start) private script -->
+<th:block layout:fragment="css">
+	<link rel="stylesheet" href="https://uicdn.toast.com/grid/latest/tui-grid.css" />
+</th:block>
+<!-- (end) private script -->
+</head>
+
+<body>
+	<div layout:fragment="contents">
+		<div id="main-content">
+			<div class="d-flex justify-content-center">
+				<div class="row col-lg-10 col-md-12 d-flex justify-content-center">
+					<div class="page-heading">		
+						
+						<div class="align-middle">		
+							<h2><i class="bi bi-bell-fill"></i> 코드관리</h2>
+							<br>
+							<div id="grid"></div>
+						</div>						
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+		<!-- (start) private script -->
+		<th:block layout:fragment="script">
+			<script src="https://uicdn.toast.com/grid/latest/tui-grid.js"></script>
+			<script>
+				const Grid = tui.Grid;
+				const instance = new Grid({
+					  el: document.getElementById('grid'), // Container element
+					  columns: [
+					    {
+					      header: 'Name',
+					      name: 'name'
+					    },
+					    {
+					      header: 'Artist',
+					      name: 'artist'
+					    },
+					    {
+					      header: 'Release',
+					      name: 'release'
+					    },
+					    {
+					      header: 'Genre',
+					      name: 'genre'
+					    }
+					  ],
+					  data: [
+					    {
+					      name: 'Beautiful Lies',
+					      artist: 'Birdy',
+					      release: '2016.03.26',
+					      genre: 'Pop'
+					    }
+					  ]
+					});
+	
+					instance.resetData(newData); // Call API of instance's public method
+					Grid.applyTheme('striped'); // Call API of static method
+			</script>
+		</th:block>
+		<!-- (end) private script -->
+</body>
+
+</html>

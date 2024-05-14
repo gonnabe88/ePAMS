@@ -53,8 +53,8 @@
 					</li>
 				</ul>
 				<div class="d-flex gap-2 flex-row-reverse">
-					<a class="btn btn-primary mt-3" type="submit" id="submit" th:href="@{|/board/update/${board.id}|}">수정</a>
-					<button class="btn btn-danger mt-3" type="submit" id="submit" onclick="del()">삭제</button>
+					<a class="btn btn-primary mt-3" sec:authorize="hasRole('ROLE_ADMIN')" type="submit" id="submit" th:href="@{|/board/update/${board.id}|}">수정</a>
+					<button class="btn btn-danger mt-3" sec:authorize="hasRole('ROLE_ADMIN')" type="submit" id="submit" onclick="del()">삭제</button>
 					<a class="btn btn-secondary mt-3" type="submit" id="submit" th:href="@{/board/list}">목록</a>
 					<a th:href="@{/board/list}"><button class="btn btn-danger mt-3">목록</button></a>
 				</div>

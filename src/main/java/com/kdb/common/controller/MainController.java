@@ -66,6 +66,11 @@ public class MainController<S extends Session> {
 	      LocalDate today = LocalDate.now();
 	      DayOfWeek dayOfWeek = today.getDayOfWeek();
 	      model.addAttribute("nowDate", today+"("+dayOfWeek.getDisplayName(TextStyle.NARROW, Locale.KOREAN)+")");
+	      
+	      LocalDate tomorrow = LocalDate.now().plusDays(1);
+	      DayOfWeek dayOfWeek2 = tomorrow.getDayOfWeek();
+	      model.addAttribute("tomorrowDate", tomorrow+"("+dayOfWeek2.getDisplayName(TextStyle.NARROW, Locale.KOREAN)+")");
+	      
 	        
     	return "/common/index";
     }      

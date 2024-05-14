@@ -70,7 +70,7 @@ class EPamMemberTests {
             .dept("디지털금융부")
             .team("지식정보팀")
             .responsibility("급여,복리후생,채용 등")
-            .role(MemberRole.ROLE_KDB)
+            .role(MemberRole.ROLE_ADMIN)
             .build();
         memberRepository.save(member2);
             

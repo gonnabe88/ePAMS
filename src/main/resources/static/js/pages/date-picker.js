@@ -7,10 +7,14 @@ flatpickr('.flatpickr-always-open', {
     inline: true
 })
 flatpickr('.flatpickr-range', {
-    dateFormat: "F j, Y", 
+	plugins: [
+		new rangePlugin({ input: "#secondRangeInput"})
+		],
+    dateFormat: "Y-m-d", 
     mode: 'range'
 })
 flatpickr('.flatpickr-range-preloaded', {
+	"plugins": [new rangePlugin({ input: "#secondRangeInput"})],
     dateFormat: "F j, Y", 
     mode: 'range',
     defaultDate: ["2016-10-10T00:00:00Z", "2016-10-20T00:00:00Z"]

@@ -9,7 +9,7 @@
 	<script src="/js/initTheme.js"></script>	
 	<div id="app">
 	<div id="sidebar" class="sidebar-desktop inactive" th:fragment="commonSidebar">
-			<div class="sidebar-wrapper">
+			<div class="sidebar-wrapper" style="height:auto">
 				<div class="sidebar-header position-relative">
 						<div class="logo mt-3">
 							<a href="/index"><img src="/images/kdb/H_KDB_CI.png" style="height:1.6rem;" alt="Logo" srcset=""></a>
@@ -18,8 +18,7 @@
 				
 				<div class="sidebar-menu">
 				
-				<div class="d-flex justify-content-end align-items-end me-3">
-						
+					<div class="d-flex justify-content-end align-items-end me-3">						
 						<div class="theme-toggle d-flex gap-2  align-items-center mt-3">
 							<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--system-uicons" width="20" height="20" preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21">
                    			<g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
@@ -58,7 +57,7 @@
 						<li class="sidebar-title">인사</li>	
 
 						<li class="sidebar-item">
-							<a href="#" class='sidebar-link'> 
+							<a href="/dtm/main" class='sidebar-link'> 
 								<i class="bi bi-stack"></i> 
 								<span>근태신청</span>
 							</a>
@@ -110,6 +109,7 @@
 	<th:block layout:fragment="script">
 		<script>			
 			console.log("ON");
+			
 		</script>
 	</th:block>
 </body>

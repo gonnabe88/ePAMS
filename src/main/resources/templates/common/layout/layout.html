@@ -29,11 +29,7 @@
 	<script src="/js/bootstrap.js"></script>
 	<script src="/extensions/sweetalert2/sweetalert2.min.js"></script>
 	<script src="/extensions/jquery/jquery.min.js"></script>
-	<script src="/extensions/perfect-scrollbar/perfect-scrollbar.js"></script>	
 	<script>
-	
-
-	
 	
 	// Sidebar
     const DesktopSize = 1200;
@@ -50,12 +46,12 @@
             
         	// PC 클릭 이벤트 (드래그)
         	app.addEventListener("mousedown", (e) => {
-        	  console.log("mousedown", e.pageX);
+        	  //console.log("mousedown", e.pageX);
         	  startPoint = e.pageX; // 마우스 드래그 시작 위치 저장
         	});
 
         	app.addEventListener("mouseup", (e) => {
-        	  console.log("mouseup", e.pageX);
+        	  //console.log("mouseup", e.pageX);
         	  endPoint = e.pageX; // 마우스 드래그 끝 위치 저장
         	  if (startPoint+100 < endPoint) {
         	    // 마우스가 오른쪽으로 드래그 된 경우
@@ -70,20 +66,20 @@
 
         	// 모바일 터치 이벤트 (스와이프)
         	app.addEventListener("touchstart", (e) => {
-        	  console.log("touchstart", e.touches[0].pageX);
+        	  //console.log("touchstart", e.touches[0].pageX);
         	  startPoint = e.touches[0].pageX; // 터치가 시작되는 위치 저장
         	});
         	
         	app.addEventListener("touchend", (e) => {
-        	  console.log("touchend", e.changedTouches[0].pageX);
+        	  //console.log("touchend", e.changedTouches[0].pageX);
         	  endPoint = e.changedTouches[0].pageX; // 터치가 끝나는 위치 저장
         	  if (startPoint+100 < endPoint) {
         	    // 오른쪽으로 스와이프 된 경우
-        	    console.log("prev move");
+        	    //console.log("prev move");
         	    this.show();
         	  } else if (startPoint > endPoint+100) {
         	    // 왼쪽으로 스와이프 된 경우
-        	    console.log("next move");
+        	    //console.log("next move");
         	    this.hide();
         	  }
         	});
@@ -101,7 +97,8 @@
             for (var f = 0; f < s.length; f++) {
                 let r = s[f];
                 s[f].querySelector(".sidebar-link").addEventListener("click", a=>{
-                    a.preventDefault();
+                    //a.preventDefault();
+                    if (a.cancelable) a.preventDefault();
                     let u = r.querySelector(".submenu");
                     k(u)
                 }
@@ -151,6 +148,7 @@
             this.toggleOverflowBody()
         }
         createBackdrop() {
+			console.log("createBackdrop()")
             if (window.innerWidth > DesktopSize)
                 return;
             this.deleteBackdrop();
@@ -160,21 +158,25 @@
             document.body.appendChild(k)
         }
         deleteBackdrop() {
+        	console.log("deleteBackdrop()")
             const k = document.querySelector(".sidebar-backdrop");
             k && k.remove()
         }
         toggleOverflowBody(k) {
+        	console.log("toggleOverflowBody(k)")
             if (window.innerWidth > DesktopSize)
                 return;
             const s = this.sidebarEL.classList.contains("active")
-              , f = document.querySelector("body");
+              , f = document.querySelector("html, body");
             typeof k > "u" ? f.style.overflowY = s ? "hidden" : "auto" : f.style.overflowY = k ? "auto" : "hidden"
         }
         isElementInViewport(k) {
+        	console.log("isElementInViewport(k)")
             var s = k.getBoundingClientRect();
             return s.top >= 0 && s.left >= 0 && s.bottom <= (window.innerHeight || document.documentElement.clientHeight) && s.right <= (window.innerWidth || document.documentElement.clientWidth)
         }
         forceElementVisibility(k) {
+        	console.log("forceElementVisibility(k)")
             this.isElementInViewport(k) || k.scrollIntoView(!1)
         }
     }
@@ -224,7 +226,8 @@
 		const installButton = document.querySelector("#install");
 
 		window.addEventListener("beforeinstallprompt", (event) => {
-		  event.preventDefault();
+		  //event.preventDefault();
+		  if (event.cancelable) event.preventDefault();
 		  installPrompt = event;
 		  installButton.removeAttribute("hidden");
 		});

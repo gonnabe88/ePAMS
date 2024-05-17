@@ -4,7 +4,18 @@
 <head>
 <!-- (start) private script -->
 <th:block layout:fragment="css">
-<link rel="stylesheet" href="/extensions/flatpickr/flatpickr.min.css">
+<link rel="stylesheet" href="/extensions/bootstrap-datepicker/css/bootstrap-datepicker3.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+<!-- Popperjs -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" crossorigin="anonymous"></script>
+<!-- Tempus Dominus JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/@eonasdan/tempus-dominus@6.9.4/dist/js/tempus-dominus.min.js" crossorigin="anonymous"></script>
+
+<!-- Tempus Dominus Styles -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@eonasdan/tempus-dominus@6.9.4/dist/css/tempus-dominus.min.css" crossorigin="anonymous">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" rel="stylesheet">
+
 </th:block>
 <!-- (end) private script -->
 </head>
@@ -14,12 +25,14 @@
 		<div id="main-content">
 			<div class="d-flex justify-content-center">
 				<div class="row col-lg-10 col-md-12 d-flex justify-content-center">
-					<div class="page-heading">		
-						
-						<div class="align-middle">		
-							<h2><i class="bi bi-bell-fill"></i> 공지사항</h2>
+					<div class="page-heading">
+
+						<div class="align-middle">
+							<h2>
+								<i class="bi bi-bell-fill"></i> 공지사항
+							</h2>
 							<br>
-							</div>	
+						</div>
 					</div>
 
 					<div class="row col-lg-12 col-md-12 col-sm-12">
@@ -27,81 +40,153 @@
 							<div class="card-header">
 								<h4 class="card-title">Date Range</h4>
 							</div>
-							<div class="card-body">
-								<div class="col-md-6 col-12 mb-4">
-									<label for="bs-rangepicker-basic" class="form-label">Basic</label> <input type="text" id="bs-rangepicker-basic" class="form-control">
-								</div>
-							</div>
-						</div>
-					</div>
-					
 
-					<div class="row col-lg-12 col-md-12 col-sm-12">
-							<div class="d-flex gap-2 flex-row-reverse">
-								<a class="btn btn-primary mb-3"  sec:authorize="hasRole('ROLE_ADMIN')" type="submit" id="submit" th:href="@{/board/editor}">글쓰기</a><br>
-							</div>
-							<div class="col-lg-12">
-								<div data-aos="fade-up" data-aos-offset="200" data-aos-easing="ease-out-cubic" data-aos-duration="2000">
-									<section class="section" th:each="board: ${boardList}">
-									<div class="card">
-										<div class="card-body">
-											<a th:href="@{|/board/${board.id}|}"><h4 th:text="${board.boardTitle}"></h4></a>
-											<div class="d-flex flex-row mb-3 gap-3">
-												<div>
-													<i class="bi bi-building"></i>
-													<h7 th:text="${board.boardWriter}"></h7>
-												</div>
-												<div>
-													<i class="bi bi-calendar-check"></i>
-													<h7 th:text="${#temporals.format(board.boardCreatedTime, 'yyyy-MM-dd')}"></h7>
-												</div>
-												<div>
-													<i class="bi bi-eye"></i>
-													<h7 th:text="${board.boardHits}"></h7>
-												</div>
-											</div>
-											<p th:utext="${board.boardContents}"></p>
-										</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label for="kt_td_picker_linked_1_input" class="form-label">From</label>
+									<div class="input-group log-event" id="kt_td_picker_linked_1" data-td-target-input="nearest" data-td-target-toggle="nearest">
+										<input id="kt_td_picker_linked_1_input" type="text" class="form-control" data-td-target="#kt_td_picker_linked_1" />
+										<span class="input-group-text" data-td-target="#kt_td_picker_linked_1" data-td-toggle="datetimepicker"> 
+											<span class='fa-solid fa-calendar'></span>
+										</span>
 									</div>
-								</section>
+								</div>
+								<div class="col-sm-6">
+									<label for="kt_td_picker_linked_2_input" class="form-label">From</label>
+									<div class="input-group log-event" id="kt_td_picker_linked_2" data-td-target-input="nearest" data-td-target-toggle="nearest">
+										<input id="kt_td_picker_linked_2_input" type="text" class="form-control" data-td-target="#kt_td_picker_linked_2" />
+										<span class="input-group-text" data-td-target="#kt_td_picker_linked_1" data-td-toggle="datetimepicker"> 
+											<span class='fa-solid fa-calendar'></span>
+										</span>
+									</div>
 								</div>
 							</div>
 						</div>
-
-						<!-- 페이징처리 시작 -->
-					    <div th:if="${!boardList.isEmpty()}">
-					        <ul class="pagination justify-content-center">
-					            <li class="page-item me-1" th:classappend="${!boardList.hasPrevious} ? 'disabled'">
-					                <a class="page-link me-1"
-					                    th:href="@{|?page=${boardList.number-2}|}" th:if="${boardList.number-2 > 0}">
-					                    <span><i class="bi bi-caret-left-fill"></i></span>
-					                </a>
-					            </li>
-					            <li th:each="page: ${#numbers.sequence(0, boardList.totalPages-1)}" 
-					                th:if="${page >= boardList.number-2 and page <= boardList.number+2}" th:classappend="${page == boardList.number} ? 'active'" class="page-item me-1">
-					                <a th:text="${page}+1" class="page-link" th:href="@{|?page=${page+1}|}"></a>
-					            </li>
-					            <li class="page-item me-1" th:classappend="${!boardList.hasNext} ? 'disabled'">
-					                <a class="page-link" th:href="@{|?page=${boardList.number+4}|}" th:if="${boardList.number+4 <= boardList.totalPages}">
-					                    <span><i class="bi bi-caret-right-fill"></i></span>
-					                </a>
-					            </li>
-					        </ul>
-					    </div>
-    					<!-- 페이징처리 끝 -->
-
 					</div>
+
 				</div>
 			</div>
 		</div>
+	</div>
 
-		<!-- (start) private script -->
+	<!-- (start) private script -->
 		<th:block layout:fragment="script">
 		
+		<script>
+		const linkedPicker1Element = document.getElementById("kt_td_picker_linked_1");
+		const linked1 = new tempusDominus.TempusDominus(linkedPicker1Element, {
+	    	  allowInputToggle: false,
+	    	  container: undefined,
+	    	  dateRange: true,
+	    	  debug: false,
+	    	  defaultDate: undefined,
+		    display: { 
+
+		        components: {
+		            calendar: true,
+		            date: true,
+		            month: true,
+		            year: true,
+		            decades: true,
+		            clock: false,
+		            hours: false,
+		            minutes: false,
+		            seconds: false,
+		            useTwentyfourHour: undefined
+		        },
+		        icons: {
+		            type: 'icons',
+		            time: 'fa fa-solid fa-clock',
+		            date: 'fa fa-solid fa-calendar',
+		            up: 'fa fa-solid fa-arrow-up',
+		            down: 'fa fa-solid fa-arrow-down',
+		            previous: 'fa fa-solid fa-chevron-left',
+		            next: 'fa fa-solid fa-chevron-right',
+		            today: 'fa fa-solid fa-calendar-check',
+		            clear: 'fa fa-solid fa-trash',
+		            close: 'fas fa-solid fa-xmark'
+		        },
+		        sideBySide: false,
+		        calendarWeeks: false,
+		        viewMode: 'calendar',
+		        toolbarPlacement: 'bottom',
+		        keepOpen: false,
+		        buttons: {
+		            today: true,
+		            clear: true,
+		            close: true
+		          },
+		    },
+		    stepping: 1,
+		    useCurrent: true
+		});
+		const linked2 = new tempusDominus.TempusDominus(document.getElementById('kt_td_picker_linked_2'), {
+		    display: { 
+		        components: {
+		            seconds: false,
+		            useTwentyfourHour: false,
+		        },
+		        icons: {
+		            type: 'icons',
+		            time: 'fa fa-solid fa-clock',
+		            date: 'fa fa-solid fa-calendar',
+		            up: 'fa fa-solid fa-arrow-up',
+		            down: 'fa fa-solid fa-arrow-down',
+		            previous: 'fa fa-solid fa-chevron-left',
+		            next: 'fa fa-solid fa-chevron-right',
+		            today: 'fa fa-solid fa-calendar-check',
+		            clear: 'fa fa-solid fa-trash',
+		            close: 'fas fa-solid fa-xmark'
+		        },
+		    },
+		});
+
+		//using event listeners
+		linkedPicker1Element.addEventListener(tempusDominus.Namespace.events.change, (e) => {
+		    linked2.updateOptions({
+		        restrictions: {
+		        minDate: e.detail.date,
+		        },
+		    });
+		});
+
+		//using subscribe method
+		const subscription = linked2.subscribe(tempusDominus.Namespace.events.change, (e) => {
+		    linked1.updateOptions({
+		        restrictions: {
+		        maxDate: e.date,
+		        },
+		    });
+		});
+		
+		</script>
+		
+		
+		<script src="/extensions/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+		<script src="/extensions/bootstrap-datepicker/locales/bootstrap-datepicker.ko.min.js"></script>
+		<script>
+			$('#datepicker .input-daterange').datepicker({
+			    format: "yyyy-mm-dd",
+			    todayBtn: "linked",
+			    clearBtn: true,
+			    language: "ko",
+			    daysOfWeekDisabled: "0,6",
+			    todayHighlight: true
+			    
+			});
+		</script>
+		
+		
+		<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+		<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+
 		<script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/plugins/rangePlugin.js"></script>
 		<script src="/extensions/flatpickr/flatpickr.min.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+		
 		<script src="/js/pages/date-picker.js"></script>
+		
+		
 		
 		</th:block>
 		<!-- (end) private script -->

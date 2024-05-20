@@ -250,29 +250,21 @@
 								<div class="shadow card">
 									<div class="card-body">
 										<a class="card-title" th:href="@{|/board/${board.id}|}"><h6 th:text="${board.boardTitle}"></h6></a>
-										<div class="d-flex justify-content-start gap-3">
-											<div>
-												<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
-									  		<path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z" />
-											</svg>
-												<small class="text-body-secondary" th:text="${#temporals.format(board.boardCreatedTime, 'yyyy-MM-dd')}"></small>
+											<div class="d-flex flex-row mb-3 gap-3">
+												<div>
+													<i class="bi bi-building"></i>
+													<h7 th:text="${board.boardWriter}"></h7>
+												</div>
+												<div>
+													<i class="bi bi-calendar-check"></i>
+													<h7 th:text="${#temporals.format(board.boardCreatedTime, 'yyyy-MM-dd')}"></h7>
+												</div>
+												<div>
+													<i class="bi bi-eye"></i>
+													<h7 th:text="${board.boardHits}"></h7>
+												</div>
 											</div>
-
-											<div>
-												<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark" viewBox="0 0 16 16">
-											  <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1z" />
-											</svg>
-												<small class="text-body-secondary" th:text="${board.boardHits}"></small>
-											</div>
-
-											<div>
-												<i class="bi bi-building"></i> <small class="text-body-secondary" th:text="${board.boardWriter}"></small>
-											</div>
-										</div>
 										<p class="card-text" th:utext="${board.boardContents}"></p>
-
-
-
 									</div>
 								</div>
 							</div>

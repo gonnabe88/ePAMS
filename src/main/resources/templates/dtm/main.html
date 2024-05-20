@@ -167,7 +167,7 @@
 		    let sdate;
 		    let edate;
 		    
-		    const linked1 = new tempusDominus.TempusDominus(document.getElementById("kt_td_picker_linked_1"), {
+		    const linked1 = new tempusDominus.TempusDominus(linkedPicker1Element, {
 		        allowInputToggle: false,
 		        container: undefined,
 		        dateRange: true,
@@ -234,6 +234,7 @@
 			        document.getElementById('end_date').value = edate.getFullYear()+"-"+(edate.getMonth()+1).toString().padStart(2, '0')+"-"+edate.getDate().toString().padStart(2, '0')
 		       	}
 		    });
+		    
 		</script>
 		
 		

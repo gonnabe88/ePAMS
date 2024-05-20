@@ -10,6 +10,7 @@
 
 <body>
 	<div layout:fragment="contents">
+	<div class="containter">
 		<div id="main-content">
 			<div class="d-flex justify-content-center">
 				<div class="row col-lg-10 col-md-12 d-flex justify-content-center">
@@ -40,9 +41,9 @@
 						<ul class="list-unstyled mb-3">
 							<li th:if="${board.fileAttached == 1}" th:each="boardFile: ${boardFileList}">
 								<div class="d-flex align-items-center p-2">
-									<div class="col-11 d-flex align-items-center gap-2" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+									<div class="col-11 d-flex align-items-center gap-2">
 										<span class="badge text-bg-primary" style="font-weight: 400;"> 첨부 [[${boardFileStat.count}]]</span>
-										<h6 class="mb-0">
+										<h6 class="mb-0"  style="width:auto; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
 											<a th:href="@{|/board/${board.id}/download/${boardFile.id}|}" th:utext="${boardFile.originalFileName}"></a>
 										</h6>
 									</div>
@@ -65,6 +66,7 @@
 				</div>
 			</div>
 		</div>
+	</div>
 	</div>
 
 	<!-- (start) private script -->

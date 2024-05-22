@@ -83,6 +83,8 @@ public class MainController<S extends Session> {
 	      model.addAttribute("memberList", memberList);	      
 	      
     	return "/common/memberlist";
-    }     
+    }    
+
+    
 
 }

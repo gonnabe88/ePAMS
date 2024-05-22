@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>WebAuthn Example</title>
+		<meta name="_csrf_header" th:content="${_csrf.headerName}">
+		<meta name="_csrf" th:content="${_csrf.token}">
+        <link href="/extensions/webauthn/css/tachyons.css" rel="stylesheet" />
+        
+    </head>
+    <body class="black-80">
+        <div class="measure center">
+            <h1 class="f2 f1-l fw2 mb0 lh-title">WebAuthn Example</h1>
+            <div class="mv2">
+                <h2 class="fw1 f3 mt3 mb4 mr2 dib">New User:</h2>
+                <a class="ba bw1 f6 no-underline br-pill ph3 pv2 mb2 dib white bg-hot-pink" href="/webauthn/register">Register</a>
+            </div>
+            <div class="mv2">
+                <h2 class="fw1 f3 mt3 mb4 mr2 dib">Existing Users:</h2>
+                <a class="ba bw1 f6 no-underline br-pill ph3 pv2 mb2 dib white bg-purple" href="/webauthn/login">Sign In</a>
+            </div>
+
+        </div>
+    </body>
+</html>

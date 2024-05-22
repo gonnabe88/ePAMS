@@ -75,6 +75,7 @@ public class SecurityConfig {
                 authorizeRequests                
                     .requestMatchers(
             		/*"/index", "index2", "list", "save",*/
+                    "/webauthn/**",
                     "/actuator/prometheus",
             		"/manifest.webmanifest", "/login", "/logout", "/register",
             		"/api/**", 

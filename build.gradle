@@ -25,10 +25,7 @@ repositories {
 dependencies {
 
 	// webauthn
-    implementation("com.webauthn4j:webauthn4j-util:0.24.0.RELEASE")
-    implementation("com.webauthn4j:webauthn4j-core:0.24.0.RELEASE")
-    implementation("com.webauthn4j:webauthn4j-metadata:0.24.0.RELEASE")
-    implementation("com.webauthn4j:webauthn4j-test:0.24.0.RELEASE")
+    implementation("com.yubico:webauthn-server-core:2.5.2")
 
 	// Session DBMS 관리
 	compileOnly "org.springframework.session:spring-session-jdbc"

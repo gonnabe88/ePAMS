@@ -36,13 +36,10 @@ import com.yubico.webauthn.exception.AssertionFailedException;
 import com.yubico.webauthn.exception.RegistrationFailedException;
 
 import jakarta.servlet.http.HttpSession;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
-@RequiredArgsConstructor
-@RequestMapping("/webauthn")
 public class AuthController {
 
     private RelyingParty relyingParty;
@@ -53,24 +50,25 @@ public class AuthController {
         this.service = service;
     }
 
-    @GetMapping("/")
+    @GetMapping("/w")
     public String welcome() {
         return "webauthn/index";
     }
 
-    @GetMapping("/register")
+    @GetMapping("/wregister")
     public String registerUser(Model model) {
         return "webauthn/register";
     }
     
 
-    @PostMapping("/register")
+    @PostMapping("/wregister")
     @ResponseBody
     public String newUserRegistration(
         @RequestParam String username,
         @RequestParam String display,
         HttpSession session
     ) {
+    	log.warn("!!");
         AppUser existingUser = service.getUserRepo().findByUsername(username);
         if (existingUser == null) {
             UserIdentity userIdentity = UserIdentity.builder()
@@ -93,6 +91,7 @@ public class AuthController {
         @RequestParam AppUser user,
         HttpSession session
     ) {
+    	log.warn("!!");
         AppUser existingUser = service.getUserRepo().findByHandle(user.getHandle());
         if (existingUser != null) {
             UserIdentity userIdentity = user.toUserIdentity();
@@ -143,12 +142,12 @@ public class AuthController {
             }
     }
 
-    @GetMapping("/login")
+    @GetMapping("/wlogin")
     public String loginPage() {
         return "webauthn/login";
     }
 
-    @PostMapping("/login")
+    @PostMapping("/wlogin")
     @ResponseBody
     public String startLogin(
         @RequestParam String username,

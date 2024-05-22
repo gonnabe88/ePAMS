@@ -1,15 +1,9 @@
-document.addEventListener("submit2", (e) => {
-    let header = $("meta[name='_csrf_header']").attr('content');
-    let token = $("meta[name='_csrf']").attr('content');
+document.addEventListener("submit", (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    fetch('/webauthn/register', {
+    fetch('/wregister', {
         method: 'POST',
-        body: formData,       
-        //CSRF Token
-        beforeSend: function (xhr) {
-        	xhr.setRequestHeader(header, token);
-        }, 
+        body: formData,
     })
     .then(response => initialCheckStatus(response))
     .then(credentialCreateJson => ({

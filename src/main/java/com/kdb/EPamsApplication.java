@@ -10,6 +10,17 @@ import com.kdb.common.service.StorageProperties;
 import com.kdb.common.service.StorageService;
 
 
+import com.kdb.webauthn.configuration.WebAuthProperties;
+import com.kdb.webauthn.RegistrationService;
+import com.yubico.webauthn.RelyingParty;
+import com.yubico.webauthn.data.RelyingPartyIdentity;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+
+
 @SpringBootApplication
 @EnableConfigurationProperties(StorageProperties.class)
 public class EPamsApplication {
@@ -24,5 +35,20 @@ public class EPamsApplication {
 			storageService.deleteAll();
 			storageService.init();
 		};
+	}
+	
+	@Bean
+	@Autowired
+	public RelyingParty relyingParty(RegistrationService regisrationRepository, WebAuthProperties properties) {
+		RelyingPartyIdentity rpIdentity = RelyingPartyIdentity.builder()
+			.id(properties.getHostName())
+			.name(properties.getDisplay())
+			.build();
+
+		return RelyingParty.builder()
+			.identity(rpIdentity)
+			.credentialRepository(regisrationRepository)
+			.origins(properties.getOrigin())
+			.build();
 	}
 }

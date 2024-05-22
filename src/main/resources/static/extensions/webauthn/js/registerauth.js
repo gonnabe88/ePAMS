@@ -37,13 +37,8 @@ document.addEventListener("submit", (e) => {
         const form = document.getElementById("form");
         const formData = new FormData(form);
         formData.append("credential", JSON.stringify(encodedResult));
-        return fetch("/webauthn/finishauth", {
+        return fetch("/finishauth", {
             method: 'POST',
-   		    headers: {
-                'header': document.querySelector('meta[name="_csrf"]').content,
-                'Content-Type': "application/json",
-                'X-CSRF-Token': document.querySelector('meta[name="_csrf_header"]').content
-            },  
             body: formData,
         })
     })

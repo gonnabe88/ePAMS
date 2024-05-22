@@ -64,8 +64,8 @@ public class AuthController {
     @PostMapping("/wregister")
     @ResponseBody
     public String newUserRegistration(
-        @RequestParam String username,
-        @RequestParam String display,
+        @RequestParam(value="username") String username,
+        @RequestParam(value="display")  String display,
         HttpSession session
     ) {
     	log.warn("!!");
@@ -91,15 +91,19 @@ public class AuthController {
         @RequestParam AppUser user,
         HttpSession session
     ) {
-    	log.warn("!!");
+    	
         AppUser existingUser = service.getUserRepo().findByHandle(user.getHandle());
         if (existingUser != null) {
             UserIdentity userIdentity = user.toUserIdentity();
+            
             StartRegistrationOptions registrationOptions = StartRegistrationOptions.builder()
             .user(userIdentity)
             .build();
+            
             PublicKeyCredentialCreationOptions registration = relyingParty.startRegistration(registrationOptions);
+            
             session.setAttribute(userIdentity.getDisplayName(), registration);
+            
             try {
                     return registration.toCredentialsCreateJson();
             } catch (JsonProcessingException e) {

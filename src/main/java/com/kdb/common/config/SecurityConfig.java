@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationDetailsSource;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.intercept.AuthorizationFilter;
@@ -69,7 +70,7 @@ public class SecurityConfig {
         	
         	// CSRF 토큰 검증을 비활성화하는 코드 테스트 시 필요하다면 풀어도 됨
             // 단, 푸는 경우 html, javascript에 있는 토큰 검증 코드 모두 제외 필요
-            //.csrf(CsrfConfigurer::disable)   
+            .csrf(CsrfConfigurer::disable)   
         
             .authorizeHttpRequests((authorizeRequests) ->
                 authorizeRequests                

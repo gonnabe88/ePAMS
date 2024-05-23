@@ -40,7 +40,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 		String OTP = customWebAuthenticationDetails.getOTP();
 		String MFA = customWebAuthenticationDetails.getMFA();		
 		UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-
+		log.info("[LOG] authenticate");
 		boolean uuidResult = loginService.isValidUUID(username, UUID); 
 		boolean loginResult = false;
 		

@@ -171,6 +171,7 @@ function normal(e) {
             // 로그인 성공 시 처리 로직
             // 예를 들어, 홈 페이지로 리디렉션
             login2()
+            //webauthn_reg(e) 
         } else {
             console.log("로그인 실패:", data);
             // 로그인 실패 시 처리 로직

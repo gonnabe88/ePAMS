@@ -373,17 +373,21 @@
 			});
 		</script>
 		 <script th:inline="javascript">
-			$(document).ready(function() {			    
-				console.log("WebAuthn : "+'[[${simpleauth}]]');
+			$(document).ready(function() {	
+				const simpleauth = [[${simpleauth}]]
+				const username = [[${username}]]
+				console.log("WebAuthn : "+simpleauth + username);
 
-				if('[[${simpleauth}]]'== "false")
-					webauthn_reg();
+				if(simpleauth == false)
+					webauthn_reg(username);
 			});
 			
-			function webauthn_reg() {
+			function webauthn_reg(username) {
+				console.log("In webauthn_reg");
 				const header = document.querySelector('meta[name="_csrf_header"]').content;
 			    const token = document.querySelector('meta[name="_csrf"]').content;
 			    const formData = new FormData();
+			    formData.append("username", username);
 			    fetch('/webauthn/register', {
 			        method: 'POST',
 			        headers: {
@@ -411,6 +415,7 @@
 			    .then(credentialCreateOptions =>
 			        navigator.credentials.create(credentialCreateOptions))
 			    .then(publicKeyCredential => ({
+			    	
 			        type: publicKeyCredential.type,
 			        id: publicKeyCredential.id,
 			        response: {
@@ -421,8 +426,9 @@
 			        clientExtensionResults: publicKeyCredential.getClientExtensionResults(),
 			    }))
 			    .then((encodedResult) => {
-			        const form = document.getElementById("form");
-			        const formData = new FormData(form);
+			        //const form = document.getElementById("form");
+			        //const formData = new FormData(form);
+			        console.log("encodedResult : ")
 			        formData.append("credential", JSON.stringify(encodedResult));
 			        return fetch("/webauthn/finishauth", {
 			            method: 'POST',

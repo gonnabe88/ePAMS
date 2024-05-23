@@ -92,10 +92,12 @@ public class AuthController {
     @PostMapping("/register")
     @ResponseBody
     public String newUserRegistration(
+		@RequestParam(value="username") String username,
         HttpSession session
     ) {
-    	Authentication auth = Authentication();
-    	String username = auth.getName();
+    	//Authentication auth = Authentication();
+    	//String username = auth.getName();
+    	log.warn("register : "+username);
         AppUser existingUser = service.getUserRepo().findByUsername(username);
         if (existingUser == null) {
             UserIdentity userIdentity = UserIdentity.builder()
@@ -108,7 +110,7 @@ public class AuthController {
             String response = newAuthRegistration(saveUser, session);
             return response;
         } else {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Username " + auth.getName() + " already exists. Choose a new name.");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Username " + username + " already exists. Choose a new name.");
         }
     }
 
@@ -160,7 +162,6 @@ public class AuthController {
     @ResponseBody
     public ModelAndView finishRegisration(
         @RequestParam(value="credential") String credential,
-        @RequestParam(value="credname") String credname,
         HttpSession session
     ) {
     	Authentication auth = Authentication();
@@ -177,7 +178,7 @@ public class AuthController {
                         .response(pkc)
                         .build();
                     RegistrationResult result = relyingParty.finishRegistration(options);
-                    Authenticator savedAuth = new Authenticator(result, pkc.getResponse(), user, credname);
+                    Authenticator savedAuth = new Authenticator(result, pkc.getResponse(), user, username);
                     service.getAuthRepository().save(savedAuth);
                     return new ModelAndView("redirect:/webauthn/login", HttpStatus.SEE_OTHER);
                 } else {
@@ -213,18 +214,16 @@ public class AuthController {
         }
     }
 
-	private void Authentication(MemberDTO memberDTO) {
-       
-    }	
     
     @PostMapping("/welcome")
     public String finishLogin(
         @RequestParam(value="credential") String credential,
+        @RequestParam(value="username") String username,
         Model model,
         HttpSession session
     ) {
-    	Authentication auth = Authentication();
-    	String username = auth.getName();
+    	//Authentication auth = Authentication();
+    	//String username = auth.getName();
     	log.warn("welcome : " + username);
     	MemberDTO ismemberDTO = loginRepository.findByUserId(username);
         try {

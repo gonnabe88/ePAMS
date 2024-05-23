@@ -25,7 +25,7 @@ public class CustomWebAuthenticationDetails extends WebAuthenticationDetails {
 		OTP = request.getParameter("OTP");
 		MFA = request.getParameter("MFA");
 		
-		//log.warn("{} {}",request.getParameter("MFA"), request.getParameter("OTP"));
+		log.warn("{} {}",request.getParameter("MFA"), request.getParameter("OTP"));
 		for(int i=0; i < cookies.length; i++)
 		{
 			//log.warn("UUID {} {}, bool check {} ",cookies[i].getName(), cookies[i].getValue(), cookies[i].getName().matches("UUIDChk"));

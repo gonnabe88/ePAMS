@@ -55,6 +55,7 @@ public class MainController<S extends Session> {
     	  
     	Authentication auth = Authentication();
     	AppUser existingUser = service.getUserRepo().findByUsername(auth.getName());
+    	model.addAttribute("username", auth.getName());
     	if(existingUser == null) {
     		model.addAttribute("simpleauth", false);
     		log.info("Not simple auth user");

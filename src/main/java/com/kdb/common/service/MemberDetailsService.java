@@ -39,8 +39,8 @@ public class MemberDetailsService implements UserDetailsService {
         //	member.setPassword(mfa.get().getOTP());
         MemberEntity member = findMember.get();
         
-        if(log.isInfoEnabled())
-        	log.info("findotpbyname password = {} otp = {} mfa = {}", member.getPassword(), mfa.get().getOTP(), mfa.get().getMFA());        
+ //       if(log.isInfoEnabled())
+ //       	log.info("findotpbyname password = {} otp = {} mfa = {}", member.getPassword(), mfa.get().getOTP(), mfa.get().getMFA());        
         
         return new User(member.getUsername(), member.getPassword(), AuthorityUtils.createAuthorityList(member.getRole().toString()));
     }    

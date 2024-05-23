@@ -3,6 +3,8 @@
     <head>
         <meta charset="UTF-8">
         <title>WebAuthn Example</title>
+   		<meta name="_csrf_header" th:content="${_csrf.headerName}">
+		<meta name="_csrf" th:content="${_csrf.token}">
         <link href="/extensions/webauthn/css/tachyons.css" rel="stylesheet" />
     </head>
     <body class="black-80">
@@ -22,6 +24,7 @@
                     <label class="db fw6 lh-copy" for="credentialname">Credential Name:</label>
                     <input class="pa2 input-reset ba bg-transparent hover-bg-hot-pink hover-white w-100" type="text" name="credname" id="credname" required>
                 </div>
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 <button class="ba bw1 mt2 no-underline br-pill ph3 pv2 mb2 dib white b--hot-pink bg-hot-pink" type="submit">Submit</button>
             </form>
         </div>

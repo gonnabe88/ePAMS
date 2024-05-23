@@ -70,7 +70,7 @@ public class SecurityConfig {
         	
         	// CSRF 토큰 검증을 비활성화하는 코드 테스트 시 필요하다면 풀어도 됨
             // 단, 푸는 경우 html, javascript에 있는 토큰 검증 코드 모두 제외 필요
-            .csrf(CsrfConfigurer::disable)   
+            //.csrf(CsrfConfigurer::disable)   
         
             .authorizeHttpRequests((authorizeRequests) ->
                 authorizeRequests                

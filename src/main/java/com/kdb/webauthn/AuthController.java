@@ -1,8 +1,17 @@
+
 package com.kdb.webauthn;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +23,8 @@ import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.kdb.common.dto.MemberDTO;
+import com.kdb.common.repository.LoginRepository;
 import com.kdb.webauthn.authenticator.Authenticator;
 import com.kdb.webauthn.user.AppUser;
 import com.kdb.webauthn.utility.Utility;
@@ -36,44 +47,60 @@ import com.yubico.webauthn.exception.AssertionFailedException;
 import com.yubico.webauthn.exception.RegistrationFailedException;
 
 import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
+@RequestMapping("/webauthn")
+@RequiredArgsConstructor
 @Controller
 public class AuthController {
 
-    private RelyingParty relyingParty;
-    private RegistrationService service;
+    private final RelyingParty relyingParty;
+    private final RegistrationService service;
+    private final LoginRepository loginRepository;
+    
+	private Authentication Authentication() {
+	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	    log.warn(authentication.getName());
+	    if (authentication == null || authentication instanceof AnonymousAuthenticationToken) return null;
+	    return authentication;
+	}
 
-    AuthController(RegistrationService service, RelyingParty relyingPary) {
-        this.relyingParty = relyingPary;
-        this.service = service;
-    }
+	/*
+	 * AuthController(RegistrationService service, RelyingParty relyingPary) {
+	 * this.relyingParty = relyingPary; this.service = service; }
+	 */
+	 
 
-    @GetMapping("/w")
-    public String welcome() {
+    @GetMapping("/")
+    public String index() {
         return "webauthn/index";
     }
+    
+    @GetMapping("/welcome")
+    public String welcome() {
+        return "webauthn/welcome";
+    }
 
-    @GetMapping("/wregister")
+    @GetMapping("/register")
     public String registerUser(Model model) {
         return "webauthn/register";
     }
     
 
-    @PostMapping("/wregister")
+    @PostMapping("/register")
     @ResponseBody
     public String newUserRegistration(
-        @RequestParam(value="username") String username,
-        @RequestParam(value="display")  String display,
         HttpSession session
     ) {
-    	log.warn("!!");
+    	Authentication auth = Authentication();
+    	String username = auth.getName();
         AppUser existingUser = service.getUserRepo().findByUsername(username);
         if (existingUser == null) {
             UserIdentity userIdentity = UserIdentity.builder()
                 .name(username)
-                .displayName(display)
+                .displayName(username)
                 .id(Utility.generateRandom(32))
                 .build();
             AppUser saveUser = new AppUser(userIdentity);
@@ -81,14 +108,14 @@ public class AuthController {
             String response = newAuthRegistration(saveUser, session);
             return response;
         } else {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Username " + username + " already exists. Choose a new name.");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Username " + auth.getName() + " already exists. Choose a new name.");
         }
     }
 
     @PostMapping("/registerauth")
     @ResponseBody
     public String newAuthRegistration(
-        @RequestParam AppUser user,
+        @RequestParam(value="user") AppUser user,
         HttpSession session
     ) {
     	
@@ -101,11 +128,26 @@ public class AuthController {
             .build();
             
             PublicKeyCredentialCreationOptions registration = relyingParty.startRegistration(registrationOptions);
-            
-            session.setAttribute(userIdentity.getDisplayName(), registration);
+            try {
+				session.setAttribute(userIdentity.getDisplayName(), registration.toJson());
+			} catch (JsonProcessingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+//            ObjectMapper objectMapper = new ObjectMapper();
+//            try {
+//                String json = objectMapper.writeValueAsString(registration);
+//                session.setAttribute(userIdentity.getDisplayName(), json);
+//            } catch (JsonProcessingException e) {
+//                throw new RuntimeException("Failed to convert PublicKeyCredentialCreationOptions to JSON", e);
+//            }
             
             try {
-                    return registration.toCredentialsCreateJson();
+            	    String retr = registration.toCredentialsCreateJson();
+            		log.warn("registration.toCredentialsCreateJson()");
+            		log.warn(retr);
+                    //return registration.toCredentialsCreateJson();
+            		return retr;
             } catch (JsonProcessingException e) {
                     throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error processing JSON.", e);
             }
@@ -117,14 +159,16 @@ public class AuthController {
     @PostMapping("/finishauth")
     @ResponseBody
     public ModelAndView finishRegisration(
-        @RequestParam String credential,
-        @RequestParam String username,
-        @RequestParam String credname,
+        @RequestParam(value="credential") String credential,
+        @RequestParam(value="credname") String credname,
         HttpSession session
     ) {
+    	Authentication auth = Authentication();
+    	String username = auth.getName();
             try {
                 AppUser user = service.getUserRepo().findByUsername(username);
-                PublicKeyCredentialCreationOptions requestOptions = (PublicKeyCredentialCreationOptions) session.getAttribute(user.getUsername());
+                log.warn(session.getAttribute(user.getUsername()).toString());
+                PublicKeyCredentialCreationOptions requestOptions = (PublicKeyCredentialCreationOptions.fromJson((String) session.getAttribute(user.getUsername())) );
                 if (requestOptions != null) {
                     PublicKeyCredential<AuthenticatorAttestationResponse, ClientRegistrationExtensionOutputs> pkc =
                     PublicKeyCredential.parseRegistrationResponseJson(credential);
@@ -135,7 +179,7 @@ public class AuthController {
                     RegistrationResult result = relyingParty.finishRegistration(options);
                     Authenticator savedAuth = new Authenticator(result, pkc.getResponse(), user, credname);
                     service.getAuthRepository().save(savedAuth);
-                    return new ModelAndView("redirect:/login", HttpStatus.SEE_OTHER);
+                    return new ModelAndView("redirect:/webauthn/login", HttpStatus.SEE_OTHER);
                 } else {
                     throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Cached request expired. Try to register again!");
                 }
@@ -146,48 +190,67 @@ public class AuthController {
             }
     }
 
-    @GetMapping("/wlogin")
+    @GetMapping("/login")
     public String loginPage() {
         return "webauthn/login";
     }
 
-    @PostMapping("/wlogin")
+    @PostMapping("/login")
     @ResponseBody
     public String startLogin(
-        @RequestParam String username,
+        @RequestParam(value="username") String username,
         HttpSession session
     ) {
+    	log.warn("POST login");
         AssertionRequest request = relyingParty.startAssertion(StartAssertionOptions.builder()
             .username(username)
             .build());
         try {
-            session.setAttribute(username, request);
+            session.setAttribute(username, request.toJson());
             return request.toCredentialsGetJson();
         } catch (JsonProcessingException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }
 
+	private void Authentication(MemberDTO memberDTO) {
+       
+    }	
+    
     @PostMapping("/welcome")
     public String finishLogin(
-        @RequestParam String credential,
-        @RequestParam String username,
+        @RequestParam(value="credential") String credential,
         Model model,
         HttpSession session
     ) {
+    	Authentication auth = Authentication();
+    	String username = auth.getName();
+    	log.warn("welcome : " + username);
+    	MemberDTO ismemberDTO = loginRepository.findByUserId(username);
         try {
+        	log.warn("POST welcome");
             PublicKeyCredential<AuthenticatorAssertionResponse, ClientAssertionExtensionOutputs> pkc;
             pkc = PublicKeyCredential.parseAssertionResponseJson(credential);
-            AssertionRequest request = (AssertionRequest)session.getAttribute(username);
+            log.warn(session.getAttribute(username).toString());
+            log.warn((String)session.getAttribute(username));
+            AssertionRequest request = (AssertionRequest.fromJson((String) session.getAttribute(username)));
             AssertionResult result = relyingParty.finishAssertion(FinishAssertionOptions.builder()
                 .request(request)
                 .response(pkc)
                 .build());
             if (result.isSuccess()) {
                 model.addAttribute("username", username);
-                return "webauthn/welcome";
+                SecurityContext context = SecurityContextHolder.createEmptyContext();
+                Authentication authentication = 
+                		new UsernamePasswordAuthenticationToken(ismemberDTO.getUsername(), null, List.of(new SimpleGrantedAuthority("ROLE_ADMIN")));
+                context.setAuthentication(authentication);
+                SecurityContextHolder.setContext(context);
+                session.setAttribute(HttpSessionSecurityContextRepository.
+                        SPRING_SECURITY_CONTEXT_KEY, context);
+                log.warn("isSuccess");
+                return "redirect:/index";
             } else {
-                return "webauthn/index";
+                return "redirect:/webauthn/index";
             }
         } catch (IOException e) {
             throw new RuntimeException("Authentication failed", e);
@@ -196,4 +259,5 @@ public class AuthController {
         }
 
     }
+    
 }

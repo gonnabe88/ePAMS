@@ -25,7 +25,7 @@ import lombok.NoArgsConstructor;
 public class Authenticator {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment
     private Long id;
 
     @Column

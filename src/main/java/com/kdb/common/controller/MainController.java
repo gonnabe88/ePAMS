@@ -11,6 +11,9 @@ import java.util.Map;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.session.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,8 +28,9 @@ import com.kdb.common.entity.SearchMemberEntity;
 import com.kdb.common.service.BoardService;
 import com.kdb.common.service.CodeService;
 import com.kdb.common.service.MemberDetailsService;
+import com.kdb.webauthn.RegistrationService;
+import com.kdb.webauthn.user.AppUser;
 
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -38,10 +42,28 @@ public class MainController<S extends Session> {
 	private final CodeService codeService;
 	private final BoardService boardService;
 	private final MemberDetailsService memberservice;
-
+	private final RegistrationService service;
+	
+	private Authentication Authentication() {
+	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	    if (authentication == null || authentication instanceof AnonymousAuthenticationToken) return null;
+	    return authentication;
+	}
+	
     @GetMapping("/index")
 	public String indexMain(@PageableDefault(page = 1) Pageable pageable, Model model) {
     	  
+    	Authentication auth = Authentication();
+    	AppUser existingUser = service.getUserRepo().findByUsername(auth.getName());
+    	if(existingUser == null) {
+    		model.addAttribute("simpleauth", false);
+    		log.info("Not simple auth user");
+    	}
+		else {
+			model.addAttribute("simpleauth", true);
+			log.info("simple auth user");
+		}			
+    	
     	  // 코드
     	  Map<String, String> map = new HashMap<String, String>();
     	  List<CodeEntity> codeList = codeService.getCode("/common/index");

@@ -1,8 +1,14 @@
 document.addEventListener("submit", (e) => {
+	const header = document.querySelector('meta[name="_csrf_header"]').content;
+    const token = document.querySelector('meta[name="_csrf"]').content;
     e.preventDefault();
     const formData = new FormData(e.target);
-    fetch('/wregister', {
+    fetch('/webauthn/register', {
         method: 'POST',
+        headers: {
+	        'header': header,
+	        'X-CSRF-Token': token,
+    	},
         body: formData,
     })
     .then(response => initialCheckStatus(response))
@@ -37,8 +43,12 @@ document.addEventListener("submit", (e) => {
         const form = document.getElementById("form");
         const formData = new FormData(form);
         formData.append("credential", JSON.stringify(encodedResult));
-        return fetch("/finishauth", {
+        return fetch("/webauthn/finishauth", {
             method: 'POST',
+        	headers: {
+	        'header': header,
+	        'X-CSRF-Token': token,
+    	},
             body: formData,
         })
     })

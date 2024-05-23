@@ -1,8 +1,15 @@
-async function checkCredentials() {
-    this.form = document.getElementById("form");
-    const formData = new FormData(form);
-    fetch('/login', {
+document.addEventListener("submit", (e) => {
+	const header = document.querySelector('meta[name="_csrf_header"]').content;
+    const token = document.querySelector('meta[name="_csrf"]').content;
+    e.preventDefault();
+    //this.form = document.getElementById("form");
+    const formData = new FormData(e.target);
+    fetch('/webauthn/login', {
         method: 'POST',
+        headers: {
+	        'header': header,
+	        'X-CSRF-Token': token,
+    	},
         body: formData
     })
     .then(response => initialCheckStatus(response))
@@ -33,7 +40,23 @@ async function checkCredentials() {
     }))
     .then((encodedResult) => {
         document.getElementById("credential").value = JSON.stringify(encodedResult);
-        this.form.submit();
+        //this.form.submit();
+        //const form = document.getElementById("form");
+        //const formData = new FormData(form);
+        //formData.append("credential", JSON.stringify(encodedResult));
+        const formData = new FormData(form);
+		console.log("formData : "+ JSON.stringify(formData));
+        return fetch("/webauthn/welcome", {
+            method: 'POST',
+        	headers: {
+	        'header': header,
+	        'X-CSRF-Token': token,
+    	},
+            body: formData,
+        })
+    })
+    .then((response) => {
+        followRedirect(response);
     })
     .catch(error => displayError(error))
-}
+})

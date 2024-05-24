@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.thymeleaf.org" layout:decorate="~{common/layout/layout}">
+<html xmlns:th="http://www.thymeleaf.org" 
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+xmlns:sec="http://www.thymeleaf.org" layout:decorate="~{common/layout/layout}">
 
 <head>
 <!-- (start) private script -->
@@ -7,12 +9,42 @@
 
 <!-- Popperjs -->
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" crossorigin="anonymous"></script>
-<!-- Tempus Dominus JavaScript -->
-<script src="/extensions/tempus-dominus/tempus-dominus.min.js" crossorigin="anonymous"></script>
+   <link rel="stylesheet" href="/extensions/bulma/bulma.min.css">
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-calendar@6.0.9/dist/css/bulma-calendar.min.css">
+<style>
 
-<!-- Tempus Dominus Styles -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@eonasdan/tempus-dominus@6.9.4/dist/css/tempus-dominus.min.css" crossorigin="anonymous">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" rel="stylesheet">
+.datetimepicker-dummy .datetimepicker-dummy-wrapper {
+    --bs-form-select-bg-img: url(data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e);
+    display: block;
+    width: 100%;
+    padding: .375rem 1.75rem .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #607080;
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: #fff;
+    background-image: var(--bs-form-select-bg-img), var(--bs-form-select-bg-icon, none);
+    background-repeat: no-repeat;
+    background-position: right .75rem center;
+    background-size: 16px 12px;
+    border: 1px solid #dce7f1;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+.datetimepicker-dummy .datetimepicker-dummy-wrapper .datetimepicker-dummy-input {
+    color: #4a4a4a;
+    font-size: 1rem;
+    text-align: left;
+    text-indent: 1rem;
+    flex: 1;
+    height: 100%;
+    max-width: 100%;
+}
+
+</style>
 
 </th:block>
 <!-- (end) private script -->
@@ -20,8 +52,9 @@
 
 <body>
 	<div layout:fragment="contents">
-		<div id="main-content">
-			<div class="container">
+		<div class="container">
+			<div id="main-content">
+			<div class="d-flex justify-content-center">
 				<div class="row col-lg-10 col-md-12 d-flex justify-content-center">
 					<div class="page-heading">
 						<div class="align-middle">
@@ -33,210 +66,147 @@
 					</div>
 
 					<div class="row mt-3" id="add_div">
-						<div class="d-flex justify-content-end">
+						<div class="d-flex justify-content-end gap-2">
 							<button type="button" class="btn btn-primary btn-sm" id="add">추가</button>
+							<button type="button" class="btn btn-warning btn-sm" id="add">신청</button>
 						</div>
 					</div>
 
-					<div class="row mt-3" id="new1">
+					<div class="row mt-3" id="new">
 						<div class="card">
 							<div class="col-2 mt-3 ms-3">
 								<span class="badge text-bg-primary">신규</span>
 							</div>
 							<div class="card-body p-3">
 								<h6>근태종류</h6>
+								<select class="form-select" aria-label="Default select example">
+								  <option selected>연차휴가</option>
+								  <option value="1">연차휴가</option>
+								  <option value="2">연차휴가 오전(반차)</option>
+								  <option value="3">연차휴가 오전(반반차)</option>
+								  <option value="4">연차휴가 오후(반차)</option>
+								  <option value="5">연차휴가 오후(반반차)</option>
+								  <option value="6">저축휴가</option>
+								  <option value="7">저축휴가 오전(반차)</option>
+								  <option value="8">저축휴가 오전(반반차)</option>
+								  <option value="9">저축휴가 오후(반차)</option>
+								  <option value="10">저축휴가 오후(반반차)</option>
+								</select>
 
-								<!-- Example single danger button -->
-								<div class="btn-group">
-									<button id="dropdownButton" type="button" class="btn btn-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">연차휴가</button>
-									<ul class="dropdown-menu" style="max-height: 300px; overflow-y: auto;">
-										<li><a class="dropdown-item" href="#" onclick="changeButtonText('연차휴가')">연차휴가</a></li>
-										<li><a class="dropdown-item" href="#" onclick="changeButtonText('연차휴가 오전(반차)')">연차휴가 오전(반차)</a></li>
-										<li><a class="dropdown-item" href="#" onclick="changeButtonText('연차휴가 오전(반반차)')">연차휴가 오전(반반차)</a></li>
-										<li><a class="dropdown-item" href="#" onclick="changeButtonText('연차휴가 오후(반차)')">연차휴가 오후(반차)</a></li>
-										<li><a class="dropdown-item" href="#" onclick="changeButtonText('연차휴가 오후(반반차)')">연차휴가 오후(반반차)</a></li>
-										<li><hr class="dropdown-divider"></li>
-										<li><a class="dropdown-item" href="#" onclick="changeButtonText('저축휴가')">저축휴가</a></li>
-										<li><a class="dropdown-item" href="#" onclick="changeButtonText('저축휴가 오전(반차)')">저축휴가 오전(반차)</a></li>
-										<li><a class="dropdown-item" href="#" onclick="changeButtonText('저축휴가 오전(반반차)')">저축휴가 오전(반반차)</a></li>
-										<li><a class="dropdown-item" href="#" onclick="changeButtonText('저축휴가 오후(반차)')">저축휴가 오후(반차)</a></li>
-										<li><a class="dropdown-item" href="#" onclick="changeButtonText('저축휴가 오후(반반차)')">저축휴가 오후(반반차)</a></li>
-										<li><hr class="dropdown-divider"></li>
-										<li><a class="dropdown-item" href="#" onclick="changeButtonText('저축휴가')">저축휴가</a></li>
-										<li><a class="dropdown-item" href="#" onclick="changeButtonText('저축휴가 오전(반차)')">저축휴가 오전(반차)</a></li>
-										<li><a class="dropdown-item" href="#" onclick="changeButtonText('저축휴가 오전(반반차)')">저축휴가 오전(반반차)</a></li>
-										<li><a class="dropdown-item" href="#" onclick="changeButtonText('저축휴가 오후(반차)')">저축휴가 오후(반차)</a></li>
-										<li><a class="dropdown-item" href="#" onclick="changeButtonText('저축휴가 오후(반반차)')">저축휴가 오후(반반차)</a></li>
-									</ul>
-								</div>
 							</div>
 							<div class="card-body p-3">
-								<h6>근태기간</h6>
-								<div class="d-flex justify-content-start gap-1">
-									<div class="input-group log-event" id="kt_td_picker_linked_1" data-td-target-input="nearest" data-td-target-toggle="nearest" style="width: 40px;">
-										<span class="input-group-text" data-td-target="#kt_td_picker_linked_1" data-td-toggle="datetimepicker"> <span class='fa-solid fa-calendar'></span>
-										</span>
-									</div>
-									<input id="start_date" type="text" class="form-control" style="padding: .375rem .2rem; font-size: 0.8rem; text-align: center;" />
-
-									<div class="align-self-center">
-										<h6 style="text-align: center;">~</h6>
-									</div>
-									<input id="end_date" type="text" class="form-control" style="padding: .375rem .2rem; font-size: 0.8rem; text-align: center;" />
-								</div>
+								<h6>시작일</h6>
+								<input type="date" class="input" id="myCalendar" name="start">
+							</div>
+							<div class="card-body p-3">
+								<h6>종료일</h6>
+								<input type="date" class="input" id="myCalendar" name="end">
 							</div>
 						</div>
 					</div>
 				</div>
-
+				</div>
+</div>
 			</div>
 		</div>
-	</div>
 
 	<!-- (start) private script -->
 		<th:block layout:fragment="script">
-		
-		
-		<script>
-		    // 아이템을 클릭하면 해당 아이템의 내용으로 버튼의 텍스트를 변경하는 함수
-		    function changeButtonText(text) {
-		        document.getElementById('dropdownButton').innerText = text;
-		    }
-		
-		    // 각 드롭다운 아이템에 클릭 이벤트 추가
-		    var dropdownItems = document.querySelectorAll('.dropdown-item');
-		    dropdownItems.forEach(function(item) {
-		        item.addEventListener('click', function() {
-		            changeButtonText(this.innerText);
-		        });
-		    });
-		</script>
-		
-		<script>
-		    var count = 1; // 초기 카운트 값 설정
-		
-		    document.getElementById('add').addEventListener('click', function() {
-		        count++; // 클릭할 때마다 카운트 증가
-		        var newRow = document.createElement('div');
-		        newRow.className = 'row mt-3';
-		        newRow.id = "new"+count
-		        newRow.innerHTML = `
-		            <div class="card">
-		        		<div class="d-flex justify-content-between">
-			                <div class="col-2 mt-3 ms-3">
-								<span class="badge text-bg-primary">신규</span>
-							</div>
-							<div class="col-3 mt-3">
-							<button class="btn btn-danger btn-sm delete-div" style="border: none; background: none; position: absolute; top: 5px; right: 5px;"><i class="bi bi-x-circle-fill" style="color: red; font-size: 1.5em;"></i></button>
-							</div>
-						</div>
-						
-		                <div class="card-body p-3">
-		                    <h6>근태기간</h6>
-		                    <div class="d-flex justify-content-start gap-1">
-		                        <div class="input-group log-event" id="kt_td_picker_linked_1" data-td-target-input="nearest" data-td-target-toggle="nearest" style="width:40px;">
-		                            <span class="input-group-text" data-td-target="#kt_td_picker_linked_1" data-td-toggle="datetimepicker"> <span class='fa-solid fa-calendar'></span>
-		                            </span>
-		                        </div>
-		                        <input id="start_date" type="text" class="form-control" style="padding: .375rem .2rem; font-size: 0.8rem; text-align: center;" />
-		
-		                        <div class="align-self-center">
-		                            <h6 style="text-align: center;">~</h6>
-		                        </div>
-		                        <input id="end_date" type="text" class="form-control" style="padding: .375rem .2rem; font-size: 0.8rem; text-align: center;" />		                        
-		                    </div>
-		                </div>
-		            </div>
-		        `;
-		        // 기존 div(id=new) 바로 아래에 추가
-		        var container = document.getElementById('add_div');
-		        container.parentNode.insertBefore(newRow, container.nextSibling);
-		    });
+	    <script src="https://cdn.jsdelivr.net/npm/bulma-calendar@6.0.9/dist/js/bulma-calendar.min.js"></script>
+	    <script>
+        // Initialize all input of date type.
+        function initializeCalendar(element) {
+            bulmaCalendar.attach(element, {
+                type: 'date',  // 'date', 'time', 'datetime'
+                color: 'info',
+                showHeader: false,
+                isRange: false,
+                dateFormat: 'YYYY-MM-DD',  // ISO Date format
+                lang: 'ko',  // Language (en, fr, de, etc.)
+                clearLabel: '초기화',
+                todayLabel: '오늘',
+                cancelLabel: '닫기',
+                closeOnOverlayClick: false,
+            });
+        }
 
-		    // 삭제 버튼 클릭 시 해당 div 삭제
-		    document.addEventListener('click', function(event) {
-		    	if (event.target.classList.contains('delete-div') || event.target.closest('.delete-div')) {
-		            event.target.closest('.row').remove();
-		            count--;
-		        }
-		    });
-		</script>
+        // Initialize calendar for the first element
+        initializeCalendar('#myCalendar');
 
-		<script>
-		    const linkedPicker1Element = document.getElementById("kt_td_picker_linked_1");
-		    let sdate;
-		    let edate;
-		    
-		    const linked1 = new tempusDominus.TempusDominus(linkedPicker1Element, {
-		        allowInputToggle: false,
-		        container: undefined,
-		        dateRange: true,
-		        debug: true,
-		        defaultDate: undefined,
-		        display: { 
-		            components: {
-		                calendar: true,
-		                date: true,
-		                month: true,
-		                year: true,
-		                decades: true,
-		                clock: false,
-		                hours: false,
-		                minutes: false,
-		                seconds: false,
-		                useTwentyfourHour: undefined
-		            },
-		            icons: {
-		                type: 'icons',
-		                time: 'fa fa-solid fa-clock',
-		                date: 'fa fa-solid fa-calendar',
-		                up: 'fa fa-solid fa-arrow-up',
-		                down: 'fa fa-solid fa-arrow-down',
-		                previous: 'fa fa-solid fa-chevron-left',
-		                next: 'fa fa-solid fa-chevron-right',
-		                today: 'fa fa-solid fa-calendar-check',
-		                clear: 'fa fa-solid fa-trash',
-		                close: 'fas fa-solid fa-xmark'
-		            },
-		            sideBySide: false,
-		            calendarWeeks: false,
-		            viewMode: 'calendar',
-		            toolbarPlacement: 'bottom',
-		            keepOpen: false,
-		            buttons: {
-		                today: true,
-		                clear: true,
-		                close: true
-		            },
-		        },
-		        stepping: 1,
-		        useCurrent: true
-		    });
-		
-		
-		    // Event listener for start date change
-		    linkedPicker1Element.addEventListener(tempusDominus.Namespace.events.change, (e) => {
-		        // Update the minDate of linked2 to the selected start date
-				
-		        console.log("index : "+linked1.dates.lastPickedIndex);
-		        if(linked1.dates.lastPickedIndex == 0)
-		        {
-			        sdate = new Date(linked1.dates.picked)
-			        console.log("Last : "+sdate.getFullYear());
-			        //console.log(e.detail.date);
-			        document.getElementById('start_date').value = sdate.getFullYear()+"-"+(sdate.getMonth()+1).toString().padStart(2, '0')+"-"+sdate.getDate().toString().padStart(2, '0')
-		        }
-		        else
-		       	{
-			        edate = new Date(linked1.dates.lastPicked)
-			        console.log("Last : "+edate.getFullYear());
-			        //console.log(e.detail.date);
-			        document.getElementById('end_date').value = edate.getFullYear()+"-"+(edate.getMonth()+1).toString().padStart(2, '0')+"-"+edate.getDate().toString().padStart(2, '0')
-		       	}
-		    });
-		    
-		</script>
-		
+        // To access to bulmaCalendar instance of an element
+        var element = document.querySelector('#myCalendar');
+
+        if (element) {
+            // bulmaCalendar instance is available as element.bulmaCalendar
+            element.bulmaCalendar.on('select', function(datepicker) {
+                console.log(datepicker.data.value());
+            });
+        }
+
+        var count = 1; // 초기 카운트 값 설정
+
+        document.getElementById('add').addEventListener('click', function() {
+            count++; // 클릭할 때마다 카운트 증가
+            var newRow = document.createElement('div');
+            newRow.className = 'row mt-3';
+            newRow.id = "new" + count;
+            newRow.innerHTML = `
+                <div class="card">
+                    <div class="d-flex justify-content-between">
+                        <div class="col-2 mt-3 ms-3">
+                            <span class="badge text-bg-primary">신규</span>
+                        </div>
+                        <div class="col-3 mt-3">
+                            <button class="btn btn-danger btn-sm delete-div" style="border: none; background: none; position: absolute; top: 5px; right: 5px;"><i class="bi bi-x-circle-fill" style="color: red; font-size: 1.5em;"></i></button>
+                        </div>
+                    </div>
+                    
+                    <div class="card-body p-3">
+                        <h6>근태종류</h6>
+                        <select class="form-select" aria-label="Default select example">
+                            <option selected>연차휴가</option>
+                            <option value="1">연차휴가</option>
+                            <option value="2">연차휴가 오전(반차)</option>
+                            <option value="3">연차휴가 오전(반반차)</option>
+                            <option value="4">연차휴가 오후(반차)</option>
+                            <option value="5">연차휴가 오후(반반차)</option>
+                            <option value="6">저축휴가</option>
+                            <option value="7">저축휴가 오전(반차)</option>
+                            <option value="8">저축휴가 오전(반반차)</option>
+                            <option value="9">저축휴가 오후(반차)</option>
+                            <option value="10">저축휴가 오후(반반차)</option>
+                        </select>
+                    </div>
+                    <div class="card-body p-3">
+                        <h6>시작일</h6>
+                        <input type="date" class="input calendar" name="start">
+                    </div>
+                    <div class="card-body p-3">
+                        <h6>종료일</h6>
+                        <input type="date" class="input calendar" name="end">
+                    </div>
+                </div>
+            `;
+            // 기존 div(id=add_div) 바로 아래에 추가
+            var container = document.getElementById('add_div');
+            container.parentNode.insertBefore(newRow, container.nextSibling);
+
+            // Initialize calendar for new elements
+            var newCalendars = newRow.querySelectorAll('.calendar');
+            newCalendars.forEach(function(calendar) {
+                initializeCalendar(calendar);
+            });
+        });
+
+        // 삭제 버튼 클릭 시 해당 div 삭제
+        document.addEventListener('click', function(event) {
+            if (event.target.classList.contains('delete-div') || event.target.closest('.delete-div')) {
+                event.target.closest('.row').remove();
+                count--;
+            }
+        });
+    </script>
+
 		
 		</th:block>
 		<!-- (end) private script -->

@@ -4,7 +4,7 @@
 <head>
 <!-- (start) private script -->
 <th:block layout:fragment="css">
-	<link rel="stylesheet" href="https://uicdn.toast.com/grid/latest/tui-grid.css" />
+	<link href="https://unpkg.com/tabulator-tables/dist/css/tabulator_modern.min.css" rel="stylesheet">
 </th:block>
 <!-- (end) private script -->
 </head>
@@ -19,7 +19,14 @@
 						<div class="align-middle">		
 							<h2><i class="bi bi-bell-fill"></i> 코드관리</h2>
 							<br>
-							<div id="grid"></div>
+							
+							<div class="d-flex justify-content-end gap-2 mb-2">
+							    <button class="btn btn-primary btn-sm" id="add-row">행추가</button>
+							    <button class="btn btn-primary btn-sm" id="del-row">삭제</button>
+							    <button class="btn btn-primary btn-sm" id="clear">초기화</button>
+							    <button class="btn btn-primary btn-sm" id="reset">되돌리기</button>
+							</div>
+							<div class="example-table tabulator" id="example-table" tabulator-layout="fitData" style="min-width: 300px; overflow: scroll;"></div>
 						</div>						
 
 					</div>
@@ -30,42 +37,45 @@
 
 		<!-- (start) private script -->
 		<th:block layout:fragment="script">
-			<script src="https://uicdn.toast.com/grid/latest/tui-grid.js"></script>
-			<script>
-				const Grid = tui.Grid;
-				const instance = new Grid({
-					  el: document.getElementById('grid'), // Container element
-					  columns: [
-					    {
-					      header: 'Name',
-					      name: 'name'
-					    },
-					    {
-					      header: 'Artist',
-					      name: 'artist'
-					    },
-					    {
-					      header: 'Release',
-					      name: 'release'
-					    },
-					    {
-					      header: 'Genre',
-					      name: 'genre'
-					    }
-					  ],
-					  data: [
-					    {
-					      name: 'Beautiful Lies',
-					      artist: 'Birdy',
-					      release: '2016.03.26',
-					      genre: 'Pop'
-					    }
-					  ]
-					});
-	
-					instance.resetData(newData); // Call API of instance's public method
-					Grid.applyTheme('striped'); // Call API of static method
-			</script>
+		<script type="text/javascript" src="https://unpkg.com/tabulator-tables/dist/js/tabulator.min.js"></script>
+		<script>
+		var table = new Tabulator("#example-table", {
+		    height:"311px",
+		    layout:"fitColumns",
+		    responsiveLayout:"hide",
+		    addRowPos:"bottom",
+		    columns:[
+		        {title:"Name", field:"name", width:200},
+		        {title:"Progress", field:"progress", hozAlign:"right", sorter:"number"},
+		        {title:"Gender", field:"gender", widthGrow:2},
+		        {title:"Rating", field:"rating", hozAlign:"center"},
+		        {title:"Favourite Color", field:"col", widthGrow:3},
+		        {title:"Date Of Birth", field:"dob", hozAlign:"center", sorter:"date", widthGrow:2},
+		        {title:"Driver", field:"car", hozAlign:"center"},
+		    ],
+		});
+
+		//Add row on "Add Row" button click
+		document.getElementById("add-row").addEventListener("click", function(){
+		    table.addRow({});
+		});
+
+		//Delete row on "Delete Row" button click
+		document.getElementById("del-row").addEventListener("click", function(){
+		    table.deleteRow(1);
+		});
+
+		//Clear table on "Empty the table" button click
+		document.getElementById("clear").addEventListener("click", function(){
+		    table.clearData()
+		});
+
+		//Reset table contents on "Reset the table" button click
+		document.getElementById("reset").addEventListener("click", function(){
+		    table.setData(tabledata);
+		});
+		</script>		
+
 		</th:block>
 		<!-- (end) private script -->
 </body>

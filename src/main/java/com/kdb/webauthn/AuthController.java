@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -20,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.server.ResponseStatusException;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.kdb.common.dto.MemberDTO;
@@ -160,7 +160,7 @@ public class AuthController {
 
     @PostMapping("/finishauth")
     @ResponseBody
-    public ModelAndView finishRegisration(
+    public ResponseEntity<String> finishRegisration(
         @RequestParam(value="credential") String credential,
         HttpSession session
     ) {
@@ -180,7 +180,8 @@ public class AuthController {
                     RegistrationResult result = relyingParty.finishRegistration(options);
                     Authenticator savedAuth = new Authenticator(result, pkc.getResponse(), user, username);
                     service.getAuthRepository().save(savedAuth);
-                    return new ModelAndView("redirect:/webauthn/login", HttpStatus.SEE_OTHER);
+                    //return new ModelAndView("redirect:/popup", HttpStatus.SEE_OTHER);
+                    return ResponseEntity.ok("Registration successful!");
                 } else {
                     throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Cached request expired. Try to register again!");
                 }

@@ -49,8 +49,11 @@ public class MainController<S extends Session> {
 	    if (authentication == null || authentication instanceof AnonymousAuthenticationToken) return null;
 	    return authentication;
 	}
-	
-    @GetMapping("/index")
+	@GetMapping("/popup")
+	public String popup() {
+		return "/common/popup";
+	}
+	@GetMapping("/index")
 	public String indexMain(@PageableDefault(page = 1) Pageable pageable, Model model) {
     	  
     	Authentication auth = Authentication();

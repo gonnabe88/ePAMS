@@ -7,8 +7,11 @@ xmlns:sec="http://www.thymeleaf.org" layout:decorate="~{common/layout/layout}">
 <!-- (start) private script -->
 <th:block layout:fragment="css">
 
+	<link rel="stylesheet" href="/extensions/aos/aos.css">
+	<link rel="stylesheet" href="/extensions/animate/animate.min.css" />
+
 <!-- Popperjs -->
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" crossorigin="anonymous"></script>
    <link rel="stylesheet" href="/extensions/bulma/bulma.min.css">
    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-calendar@6.0.9/dist/css/bulma-calendar.min.css">
 <style>
@@ -44,6 +47,11 @@ xmlns:sec="http://www.thymeleaf.org" layout:decorate="~{common/layout/layout}">
     max-width: 100%;
 }
 
+.fade-out {
+    opacity: 0;
+    transition: opacity 0.5s ease-out;
+}
+
 </style>
 
 </th:block>
@@ -73,7 +81,8 @@ xmlns:sec="http://www.thymeleaf.org" layout:decorate="~{common/layout/layout}">
 					</div>
 
 					<div class="row mt-3" id="new">
-						<div class="card">
+					<div class="animate__animated animate__fadeIn">
+						<div class="card shadow">
 							<div class="col-2 mt-3 ms-3">
 								<span class="badge text-bg-primary">신규</span>
 							</div>
@@ -104,6 +113,7 @@ xmlns:sec="http://www.thymeleaf.org" layout:decorate="~{common/layout/layout}">
 							</div>
 						</div>
 					</div>
+					</div>
 				</div>
 				</div>
 </div>
@@ -112,6 +122,13 @@ xmlns:sec="http://www.thymeleaf.org" layout:decorate="~{common/layout/layout}">
 
 	<!-- (start) private script -->
 		<th:block layout:fragment="script">
+		<script src="/extensions/aos/aos.js"></script>
+		<script>
+			AOS.init({
+				easing: 'ease-out-back',
+				duration: 1000
+			});
+		</script>
 	    <script src="https://cdn.jsdelivr.net/npm/bulma-calendar@6.0.9/dist/js/bulma-calendar.min.js"></script>
 	    <script>
         // Initialize all input of date type.
@@ -151,40 +168,42 @@ xmlns:sec="http://www.thymeleaf.org" layout:decorate="~{common/layout/layout}">
             newRow.className = 'row mt-3';
             newRow.id = "new" + count;
             newRow.innerHTML = `
-                <div class="card">
-                    <div class="d-flex justify-content-between">
-                        <div class="col-2 mt-3 ms-3">
-                            <span class="badge text-bg-primary">신규</span>
-                        </div>
-                        <div class="col-3 mt-3">
-                            <button class="btn btn-danger btn-sm delete-div" style="border: none; background: none; position: absolute; top: 5px; right: 5px;"><i class="bi bi-x-circle-fill" style="color: red; font-size: 1.5em;"></i></button>
-                        </div>
-                    </div>
-                    
-                    <div class="card-body p-3">
-                        <h6>근태종류</h6>
-                        <select class="form-select" aria-label="Default select example">
-                            <option selected>연차휴가</option>
-                            <option value="1">연차휴가</option>
-                            <option value="2">연차휴가 오전(반차)</option>
-                            <option value="3">연차휴가 오전(반반차)</option>
-                            <option value="4">연차휴가 오후(반차)</option>
-                            <option value="5">연차휴가 오후(반반차)</option>
-                            <option value="6">저축휴가</option>
-                            <option value="7">저축휴가 오전(반차)</option>
-                            <option value="8">저축휴가 오전(반반차)</option>
-                            <option value="9">저축휴가 오후(반차)</option>
-                            <option value="10">저축휴가 오후(반반차)</option>
-                        </select>
-                    </div>
-                    <div class="card-body p-3">
-                        <h6>시작일</h6>
-                        <input type="date" class="input calendar" name="start">
-                    </div>
-                    <div class="card-body p-3">
-                        <h6>종료일</h6>
-                        <input type="date" class="input calendar" name="end">
-                    </div>
+            	<div class="animate__animated animate__fadeIn">
+	                <div class="card shadow">
+	                    <div class="d-flex justify-content-between">
+	                        <div class="col-2 mt-3 ms-3">
+	                            <span class="badge text-bg-primary">신규</span>
+	                        </div>
+	                        <div class="col-3 mt-3">
+	                            <button class="btn btn-danger btn-sm delete-div" style="border: none; background: none; position: absolute; top: 5px; right: 5px;"><i class="bi bi-x-circle-fill" style="color: red; font-size: 1.5em;"></i></button>
+	                        </div>
+	                    </div>
+	                    
+	                    <div class="card-body p-3">
+	                        <h6>근태종류</h6>
+	                        <select class="form-select" aria-label="Default select example">
+	                            <option selected>연차휴가</option>
+	                            <option value="1">연차휴가</option>
+	                            <option value="2">연차휴가 오전(반차)</option>
+	                            <option value="3">연차휴가 오전(반반차)</option>
+	                            <option value="4">연차휴가 오후(반차)</option>
+	                            <option value="5">연차휴가 오후(반반차)</option>
+	                            <option value="6">저축휴가</option>
+	                            <option value="7">저축휴가 오전(반차)</option>
+	                            <option value="8">저축휴가 오전(반반차)</option>
+	                            <option value="9">저축휴가 오후(반차)</option>
+	                            <option value="10">저축휴가 오후(반반차)</option>
+	                        </select>
+	                    </div>
+	                    <div class="card-body p-3">
+	                        <h6>시작일</h6>
+	                        <input type="date" class="input calendar" name="start">
+	                    </div>
+	                    <div class="card-body p-3">
+	                        <h6>종료일</h6>
+	                        <input type="date" class="input calendar" name="end">
+	                    </div>
+	                </div>
                 </div>
             `;
             // 기존 div(id=add_div) 바로 아래에 추가
@@ -196,15 +215,21 @@ xmlns:sec="http://www.thymeleaf.org" layout:decorate="~{common/layout/layout}">
             newCalendars.forEach(function(calendar) {
                 initializeCalendar(calendar);
             });
+            
+            
         });
 
         // 삭제 버튼 클릭 시 해당 div 삭제
-        document.addEventListener('click', function(event) {
-            if (event.target.classList.contains('delete-div') || event.target.closest('.delete-div')) {
-                event.target.closest('.row').remove();
-                count--;
-            }
-        });
+		document.addEventListener('click', function(event) {
+		    if (event.target.classList.contains('delete-div') || event.target.closest('.delete-div')) {
+		        const row = event.target.closest('.row');
+		        row.classList.add('fade-out');
+		        setTimeout(() => {
+		            row.remove();
+		            count--;
+		        }, 500); // CSS의 transition 시간과 일치시킵니다.
+		    }
+		});
     </script>
 
 		

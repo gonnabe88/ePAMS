@@ -24,6 +24,9 @@ public class RestApiService {
     private final MfaRepository mfaRepository;
     private final LoginService loginService;
     
+    
+    
+    
 	//SecureRandom 함수를 통해 안전하게 6자리 인증번호 생성
     private int generateOTP(int length) {
     	SecureRandom secureRandom = new SecureRandom();

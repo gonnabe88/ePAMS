@@ -120,6 +120,8 @@ function webauthn(e) {
         clientExtensionResults: publicKeyCredential.getClientExtensionResults(),
     }))
     .then((encodedResult) => {
+	    const header = document.querySelector('meta[name="_csrf_header"]').content;
+    	const token = document.querySelector('meta[name="_csrf"]').content;
         document.getElementById("credential").value = JSON.stringify(encodedResult);
         //this.form.submit();
         //const form = document.getElementById("form");
@@ -137,9 +139,17 @@ function webauthn(e) {
         })
     })
     .then((response) => {
-        followRedirect(response);
+		console.log(response)
+        //followRedirect(response);
+        if(response.status == 200)
+            	window.location.href = '/index'
+        	else
+        		errorAlert();
     })
-    .catch(error => displayError(error))
+    .catch(error => 
+    	//displayError(error)
+    	errorAlert()
+    )
 }
 
 function normal(e) {

@@ -5,6 +5,29 @@
 <!-- (start) private script -->
 <th:block layout:fragment="css">
 	<link href="https://unpkg.com/tabulator-tables/dist/css/tabulator_modern.min.css" rel="stylesheet">
+    <style>
+        #example-table {
+            width: 100%;
+        }
+
+        @media screen and (max-width: 500px) {
+            #example-table {
+                width: 300px;
+            }
+        }
+
+        @media screen and (min-width: 500px) {
+            #example-table {
+                width: 500px;
+            }
+        }
+         @media screen and (min-width: 800px) {
+            #example-table {
+                width: 100%;
+            }
+        }
+
+    </style>
 </th:block>
 <!-- (end) private script -->
 </head>
@@ -15,18 +38,17 @@
 			<div class="d-flex justify-content-center">
 				<div class="row col-lg-10 col-md-12 d-flex justify-content-center">
 					<div class="page-heading">		
-						
 						<div class="align-middle">		
 							<h2><i class="bi bi-bell-fill"></i> 코드관리</h2>
 							<br>
 							
 							<div class="d-flex justify-content-end gap-2 mb-2">
+							    <button class="btn btn-primary btn-sm" id="reload">불러오기</button>
 							    <button class="btn btn-primary btn-sm" id="add-row">행추가</button>
 							    <button class="btn btn-primary btn-sm" id="del-row">삭제</button>
-							    <button class="btn btn-primary btn-sm" id="clear">초기화</button>
-							    <button class="btn btn-primary btn-sm" id="reset">되돌리기</button>
+							    <button class="btn btn-primary btn-sm" id="save">저장</button>
 							</div>
-							<div class="example-table tabulator" id="example-table" tabulator-layout="fitData" style="min-width: 300px; overflow: scroll;"></div>
+							<div id="example-table"></div>
 						</div>						
 
 					</div>
@@ -35,45 +57,80 @@
 		</div>
 	</div>
 
+
+
 		<!-- (start) private script -->
 		<th:block layout:fragment="script">
 		<script type="text/javascript" src="https://unpkg.com/tabulator-tables/dist/js/tabulator.min.js"></script>
 		<script>
+		
+
 		var table = new Tabulator("#example-table", {
-		    height:"311px",
+		    ajaxURL:"/api/member",
+		    height:"900px",
 		    layout:"fitColumns",
-		    responsiveLayout:"hide",
-		    addRowPos:"bottom",
+		    placeholder:"No Data Set",
+		    pagination:"local",
+		    paginationSize:30,
+		    paginationSizeSelector:[10, 20, 30, 50, 100],
+		    movableColumns:true,
+		    paginationCounter:"rows",
+		    
+		    //enable range selection
+		    selectableRange:1,
+		    selectableRangeColumns:true,
+		    selectableRangeRows:true,
+		    selectableRangeClearCells:true,
+		    
+		    //change edit trigger mode to make cell navigation smoother
+		    editTriggerEvent:"dblclick",
+
+		    //configure clipboard to allow copy and paste of range format data
+		    clipboard:true,
+		    clipboardCopyStyled:false,
+		    clipboardCopyConfig:{
+		        rowHeaders:true,
+		        columnHeaders:true,
+		    },
+		    clipboardCopyRowRange:"range",
+		    clipboardPasteParser:"range",
+		    clipboardPasteAction:"range",
+
+		    
+		    //autoColumns:true,
 		    columns:[
-		        {title:"Name", field:"name", width:200},
-		        {title:"Progress", field:"progress", hozAlign:"right", sorter:"number"},
-		        {title:"Gender", field:"gender", widthGrow:2},
-		        {title:"Rating", field:"rating", hozAlign:"center"},
-		        {title:"Favourite Color", field:"col", widthGrow:3},
-		        {title:"Date Of Birth", field:"dob", hozAlign:"center", sorter:"date", widthGrow:2},
-		        {title:"Driver", field:"car", hozAlign:"center"},
+		    	{width:"2px",headerSort:false, resizable: false, frozen:true, headerHozAlign:"center", hozAlign:"center", formatter:"rowSelection", titleFormatter:"rowSelection", 
+					cellClick:function(e, cell){ cell.getRow().toggleSelect(); }},
+		    	{formatter:"rownum", headerSort:false, hozAlign:"center", resizable:true, frozen:true, width:3},
+		        {title:"이름", field:"username", sorter:"string", editor:"input", minWidth:100},
+		        {title:"부서", field:"dept", sorter:"string", editor:"input",minWidth:100},
+		        {title:"담당업무", field:"responsibility", sorter:"string", editor:"input"},
+		        {title:"권한", field:"role", sorter:"string", editor:"list", editorParams:{values:{"관리자":"ROLE_ADMIN", "KDB":"ROLE_KDB", "ITO":"ROLE_ITO"}}},
+		        {title:"팀", field:"team", sorter:"string", editor:"input"},
 		    ],
 		});
 
-		//Add row on "Add Row" button click
+		//add row to bottom of table on button click
 		document.getElementById("add-row").addEventListener("click", function(){
-		    table.addRow({});
+			//table.push({name:"IM A NEW ROW", progress:100, gender:"male"});
+			table.addData({}, true);
 		});
 
-		//Delete row on "Delete Row" button click
+		//remove bottom row from table on button click
 		document.getElementById("del-row").addEventListener("click", function(){
-		    table.deleteRow(1);
+		    // Get all selected rows
+		    var selectedRows = table.getSelectedRows();
+		    // Delete each selected row
+		    selectedRows.forEach(function(row) {
+		        row.delete();
+		    });
+		});
+		
+		//trigger AJAX load on "Load Data via AJAX" button click
+		document.getElementById("reload").addEventListener("click", function(){
+		    table.setData("/api/member");
 		});
 
-		//Clear table on "Empty the table" button click
-		document.getElementById("clear").addEventListener("click", function(){
-		    table.clearData()
-		});
-
-		//Reset table contents on "Reset the table" button click
-		document.getElementById("reset").addEventListener("click", function(){
-		    table.setData(tabledata);
-		});
 		</script>		
 
 		</th:block>

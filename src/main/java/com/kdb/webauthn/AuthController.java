@@ -248,9 +248,9 @@ public class AuthController {
                 session.setAttribute(HttpSessionSecurityContextRepository.
                         SPRING_SECURITY_CONTEXT_KEY, context);
                 log.warn("isSuccess");
-                return "redirect:/index";
+                return "/common/index";
             } else {
-                return "redirect:/webauthn/index";
+                return "/common/login";
             }
         } catch (IOException e) {
             throw new RuntimeException("Authentication failed", e);

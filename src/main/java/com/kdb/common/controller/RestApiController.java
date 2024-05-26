@@ -1,8 +1,10 @@
 package com.kdb.common.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kdb.common.dto.MemberDTO;
+import com.kdb.common.entity.MemberEntity;
 import com.kdb.common.entity.SearchMemberEntity;
 import com.kdb.common.service.MemberDetailsService;
 import com.kdb.common.service.RestApiService;
@@ -40,5 +43,19 @@ public class RestApiController {
     public List<SearchMemberEntity> search(Model model, @RequestParam("text") String text) throws Exception{
     	List<SearchMemberEntity> memberList = memberservice.findBySearchValue(text);
 		return memberList;
+    }
+    
+    @GetMapping("/member")
+    public ResponseEntity<List<MemberEntity>> searchAll(Model model) throws Exception{
+    	List<MemberEntity> memberList = memberservice.findAll();
+    	Map<String, Object> data = new HashMap<>();
+    	data.put("data", memberList);
+    	
+    	// 마지막 페이지 및 데이터 설정
+        Map<String, Object> response = new HashMap<>();
+        //response.put("last_page", 10);
+        response.put("data", memberList);
+        
+        return ResponseEntity.ok(memberList);
     }
 }

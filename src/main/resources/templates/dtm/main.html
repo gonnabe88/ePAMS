@@ -86,10 +86,15 @@ xmlns:sec="http://www.thymeleaf.org" layout:decorate="~{common/layout/layout}">
 							<div class="col-2 mt-3 ms-3">
 								<span class="badge text-bg-primary">신규</span>
 							</div>
+
+							<div class="card-body p-3">
+								<h6>근태기간</h6>
+								<input type="date" data-display-mode="inline" data-is-range="true" id="myCalendar" name="start">
+							</div>
 							<div class="card-body p-3">
 								<h6>근태종류</h6>
 								<select class="form-select" aria-label="Default select example">
-								  <option selected>연차휴가</option>
+								  <option selected>선택</option>
 								  <option value="1">연차휴가</option>
 								  <option value="2">연차휴가 오전(반차)</option>
 								  <option value="3">연차휴가 오전(반반차)</option>
@@ -102,14 +107,6 @@ xmlns:sec="http://www.thymeleaf.org" layout:decorate="~{common/layout/layout}">
 								  <option value="10">저축휴가 오후(반반차)</option>
 								</select>
 
-							</div>
-							<div class="card-body p-3">
-								<h6>시작일</h6>
-								<input type="date" class="input" id="myCalendar" name="start">
-							</div>
-							<div class="card-body p-3">
-								<h6>종료일</h6>
-								<input type="date" class="input" id="myCalendar" name="end">
 							</div>
 						</div>
 					</div>
@@ -137,7 +134,7 @@ xmlns:sec="http://www.thymeleaf.org" layout:decorate="~{common/layout/layout}">
                 type: 'date',  // 'date', 'time', 'datetime'
                 color: 'info',
                 showHeader: false,
-                isRange: false,
+                isRange: true,
                 dateFormat: 'YYYY-MM-DD',  // ISO Date format
                 lang: 'ko',  // Language (en, fr, de, etc.)
                 clearLabel: '초기화',

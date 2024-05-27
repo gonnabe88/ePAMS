@@ -48,6 +48,7 @@
 							    <button class="btn btn-primary btn-sm" id="del-row">삭제</button>
 							    <button class="btn btn-primary btn-sm" id="save">저장</button>
 							</div>
+							<button type="button" class="btn" data-bs-toggle="button" id="toggle-selection-mode">Toggle button</button>
 							<div id="example-table"></div>
 						</div>						
 
@@ -61,79 +62,170 @@
 
 		<!-- (start) private script -->
 		<th:block layout:fragment="script">
-		<script type="text/javascript" src="https://unpkg.com/tabulator-tables/dist/js/tabulator.min.js"></script>
-		<script>
-		
+    <script type="text/javascript" src="https://unpkg.com/tabulator-tables/dist/js/tabulator.min.js"></script>
+    <script>
+    var editedData = [];
+    var addedData = [];
+    var deletedData = [];
 
-		var table = new Tabulator("#example-table", {
-		    ajaxURL:"/api/member",
-		    height:"900px",
-		    layout:"fitColumns",
-		    placeholder:"No Data Set",
-		    pagination:"local",
-		    paginationSize:30,
-		    paginationSizeSelector:[10, 20, 30, 50, 100],
-		    movableColumns:true,
-		    paginationCounter:"rows",
-		    
-		    //enable range selection
-		    selectableRange:1,
-		    selectableRangeColumns:true,
-		    selectableRangeRows:true,
-		    selectableRangeClearCells:true,
-		    
-		    //change edit trigger mode to make cell navigation smoother
-		    editTriggerEvent:"dblclick",
+    const header = document.querySelector('meta[name="_csrf_header"]').content;
+    const token = document.querySelector('meta[name="_csrf"]').content;
 
-		    //configure clipboard to allow copy and paste of range format data
-		    clipboard:true,
-		    clipboardCopyStyled:false,
-		    clipboardCopyConfig:{
-		        rowHeaders:true,
-		        columnHeaders:true,
-		    },
-		    clipboardCopyRowRange:"range",
-		    clipboardPasteParser:"range",
-		    clipboardPasteAction:"range",
+    var selectableRows = true; // 초기 상태는 selectableRows 모드
 
-		    
-		    //autoColumns:true,
-		    columns:[
-		    	{width:"2px",headerSort:false, resizable: false, frozen:true, headerHozAlign:"center", hozAlign:"center", formatter:"rowSelection", titleFormatter:"rowSelection", 
-					cellClick:function(e, cell){ cell.getRow().toggleSelect(); }},
-		    	{formatter:"rownum", headerSort:false, hozAlign:"center", resizable:true, frozen:true, width:3},
-		        {title:"이름", field:"username", sorter:"string", editor:"input", minWidth:100},
-		        {title:"부서", field:"dept", sorter:"string", editor:"input",minWidth:100},
-		        {title:"담당업무", field:"responsibility", sorter:"string", editor:"input"},
-		        {title:"권한", field:"role", sorter:"string", editor:"list", editorParams:{values:{"관리자":"ROLE_ADMIN", "KDB":"ROLE_KDB", "ITO":"ROLE_ITO"}}},
-		        {title:"팀", field:"team", sorter:"string", editor:"input"},
-		    ],
-		});
+    var table = new Tabulator("#example-table", {
+        ajaxURL: "/api/member",
+        height: "900px",
+        layout: "fitColumns",
+        placeholder: "No Data Set",
+        pagination: "local",
+        paginationSize: 30,
+        paginationSizeSelector: [10, 20, 30, 50, 100],
+        movableColumns: true,
+        paginationCounter: "rows",
+        
+        //enable range selection
+        selectableRange:1,
+        selectableRangeColumns:true,
+        selectableRangeRows:true,
+        selectableRangeClearCells:true,
 
-		//add row to bottom of table on button click
-		document.getElementById("add-row").addEventListener("click", function(){
-			//table.push({name:"IM A NEW ROW", progress:100, gender:"male"});
-			table.addData({}, true);
-		});
+        clipboard: true,
+        clipboardCopyStyled: false,
+        clipboardCopyConfig: {
+            rowHeaders: true,
+            columnHeaders: true,
+        },
+        clipboardCopyRowRange: "range",
+        clipboardPasteParser: "range",
+        clipboardPasteAction: "range",
+        
+        headerSortClickElement: 'icon',
+        
+        editTriggerEvent: "dblclick",
+        
+        columns: [
+            { 
+                formatter: "rowSelection", 
+                titleFormatter: "rowSelection", 
+                headerSort: false, 
+                hozAlign: "center", 
+                width: 30, 
+                cellClick: function(e, cell) {
+                    cell.getRow().toggleSelect();
+                }
+            },
+            { formatter: "rownum", headerSort: false, hozAlign: "center", resizable: true, frozen: false, width: 3 },
+            { title: "이름", field: "username", sorter: "string", editor: "input", minWidth: 100 },
+            { title: "부서", field: "dept", sorter: "string", editor: "input", minWidth: 100 },
+            { title: "담당업무", field: "responsibility", sorter: "string", editor: "input" },
+            { title: "권한", field: "role", sorter: "string", editor: "list", editorParams: { values: { "ROLE_ADMIN": "ROLE_ADMIN", "ROLE_KDB": "ROLE_KDB", "ROLE_ITO": "ROLE_ITO" } } },
+            { title: "팀", field: "team", sorter: "string", editor: "input" },
+        ],
+        
+        cellEdited: function(cell) {
+            var row = cell.getRow().getData();
+            console.log("Edited row:", row);
+            editedData.push(row);
+        },
+        
+        rowAdded: function(row) {
+            var rowData = row.getData();
+            console.log("Added row:", rowData);
+            addedData.push(rowData);
+        },
+        
+        rowDeleted: function(row) {
+            var rowData = row.getData();
+            console.log("Deleted row:", rowData);
+            addedData = addedData.filter(item => item.id !== rowData.id);
+            deletedData.push(rowData);
+        },
+    });
 
-		//remove bottom row from table on button click
-		document.getElementById("del-row").addEventListener("click", function(){
-		    // Get all selected rows
-		    var selectedRows = table.getSelectedRows();
-		    // Delete each selected row
-		    selectedRows.forEach(function(row) {
-		        row.delete();
-		    });
-		});
-		
-		//trigger AJAX load on "Load Data via AJAX" button click
-		document.getElementById("reload").addEventListener("click", function(){
-		    table.setData("/api/member");
-		});
+    document.getElementById("toggle-selection-mode").addEventListener("click", function() {
+        selectableRows = !selectableRows;
+        
+        if (selectableRows) {
+            table.setOptions({
+                selectable: true,
+                selectableRangeMode: false,
+                selectableRange: false,
+            });
+            alert("Switched to Row Selection Mode");
+        } else {
+            table.setOptions({
+                selectable: false,
+                selectableRangeMode: "click",
+                selectableRange: function(range) {
+                    range.forEach(cell => {
+                        var row = cell.getRow();
+                        row.select();
+                    });
+                }
+            });
+            alert("Switched to Range Selection Mode");
+        }
 
-		</script>		
+        // Reload the table to apply the changes
+        table.redraw(true);
+    });
 
-		</th:block>
+    document.getElementById("add-row").addEventListener("click", function() {
+        table.addData({}, true);
+    });
+
+    document.getElementById("del-row").addEventListener("click", function() {
+        var selectedRows = table.getSelectedRows();
+        selectedRows.forEach(function(row) {
+            row.delete();
+        });
+    });
+
+    document.getElementById("reload").addEventListener("click", function() {
+        table.setData("/api/member");
+    });
+
+    document.getElementById("save").addEventListener("click", function() {
+        console.log('editedData:', editedData);
+        console.log('addedData:', addedData);
+        console.log('deletedData:', deletedData);
+        
+        var payload = {
+            changed: editedData,
+            added: addedData,
+            deleted: deletedData
+        };
+
+        fetch('/api/member/save', {
+            method: 'POST',
+            headers: {
+                'header': header,
+                'X-CSRF-Token': token,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(payload),
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Success:', data.message);
+            alert(data.message);
+            editedData = [];
+            addedData = [];
+            deletedData = [];
+        })
+        .catch((error) => {
+            console.error('Error:', error.message);
+            alert(error.message);
+            editedData = [];
+            addedData = [];
+            deletedData = [];
+        });
+    });
+
+    </script>
+</th:block>
+
 		<!-- (end) private script -->
 </body>
 

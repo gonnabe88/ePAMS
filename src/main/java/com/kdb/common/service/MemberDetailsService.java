@@ -26,6 +26,36 @@ public class MemberDetailsService implements UserDetailsService {
     private final MemberRepository memberRepository;
     private final MfaRepository mfaRepository;
 
+    public void saveMembers(List<MemberEntity> added, List<MemberEntity> changed, List<MemberEntity> deleted) {
+
+        // Handle added members
+        for (MemberEntity newMember : added) {
+        	log.warn("add : "+newMember.getUsername());
+            memberRepository.save(newMember);
+        }
+
+        // Handle changed members
+        for (MemberEntity changedMember : changed) {
+        	log.warn("edit : "+changedMember.getUsername());
+            Optional<MemberEntity> memberOpt = memberRepository.findByUsername(changedMember.getUsername());
+            memberOpt.ifPresent(member -> {
+                member.setUsername(changedMember.getUsername());
+                member.setDept(changedMember.getDept());
+                member.setResponsibility(changedMember.getResponsibility());
+                member.setRole(changedMember.getRole());
+                member.setTeam(changedMember.getTeam());
+                memberRepository.save(member);
+            });
+        }
+
+        // Handle deleted members
+        for (MemberEntity deletedMember : deleted) {
+        	log.warn("del : "+deletedMember.getUsername());
+            Optional<MemberEntity> memberOpt = memberRepository.findByUsername(deletedMember.getUsername());
+            memberOpt.ifPresent(memberRepository::delete);
+        }
+    }
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<MemberEntity> findMember = memberRepository.findByUsername(username);

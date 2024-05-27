@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -58,4 +59,22 @@ public class RestApiController {
         
         return ResponseEntity.ok(memberList);
     }
+    
+    
+    @PostMapping("/member/save")
+    public ResponseEntity<Map<String, String>> saveMembers(@RequestBody Map<String, List<MemberEntity>> payload) {
+    	
+        List<MemberEntity> added = payload.get("added");
+        List<MemberEntity> changed = payload.get("changed");
+        List<MemberEntity> deleted = payload.get("deleted");
+
+        log.warn("added : "+ added.toString());
+        log.warn("changed : "+ changed.toString());
+        log.warn("deleted : "+ deleted.toString());
+        
+        memberservice.saveMembers(added, changed, deleted);
+
+        return ResponseEntity.ok(Map.of("message", "Data saved successfully!"));
+    }
+    
 }

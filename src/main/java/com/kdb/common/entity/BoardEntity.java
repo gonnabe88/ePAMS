@@ -1,11 +1,21 @@
 package com.kdb.common.entity;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.kdb.common.dto.BoardDTO;
 
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,9 +33,10 @@ public class BoardEntity extends BaseEntity {
     private String boardTitle;
     
     @Column(length = 500, nullable = false)
-    private String boardContents;
+    private byte[] boardContents;
 
-    @Column(length = 20, nullable = false) // 크기 20, not null
+    @Lob
+    @Column(nullable = false) // blob, not null
     private String boardWriter;
 
     @Column // 크기 255, null 가능
@@ -48,7 +59,7 @@ public class BoardEntity extends BaseEntity {
         boardEntity.setBoardWriter(boardDTO.getBoardWriter());
         boardEntity.setBoardPass(boardDTO.getBoardPass());
         boardEntity.setBoardTitle(boardDTO.getBoardTitle());
-        boardEntity.setBoardContents(boardDTO.getBoardContents());
+        boardEntity.setBoardContents(boardDTO.getBoardContents().getBytes(StandardCharsets.UTF_8));
         boardEntity.setBoardHits(0);
         boardEntity.setFileAttached(0); // 파일 없음.
         return boardEntity;
@@ -60,7 +71,7 @@ public class BoardEntity extends BaseEntity {
         boardEntity.setBoardWriter(boardDTO.getBoardWriter());
         boardEntity.setBoardPass(boardDTO.getBoardPass());
         boardEntity.setBoardTitle(boardDTO.getBoardTitle());
-        boardEntity.setBoardContents(boardDTO.getBoardContents());
+        boardEntity.setBoardContents(boardDTO.getBoardContents().getBytes(StandardCharsets.UTF_8));
         boardEntity.setBoardHits(boardDTO.getBoardHits());
         return boardEntity;
     }
@@ -70,7 +81,7 @@ public class BoardEntity extends BaseEntity {
         boardEntity.setBoardWriter(boardDTO.getBoardWriter());
         boardEntity.setBoardPass(boardDTO.getBoardPass());
         boardEntity.setBoardTitle(boardDTO.getBoardTitle());
-        boardEntity.setBoardContents(boardDTO.getBoardContents());
+        boardEntity.setBoardContents(boardDTO.getBoardContents().getBytes(StandardCharsets.UTF_8));
         boardEntity.setBoardHits(0);
         boardEntity.setFileAttached(1); // 파일 있음.
         return boardEntity;
@@ -82,7 +93,7 @@ public class BoardEntity extends BaseEntity {
         boardEntity.setBoardWriter(boardDTO.getBoardWriter());
         boardEntity.setBoardPass(boardDTO.getBoardPass());
         boardEntity.setBoardTitle(boardDTO.getBoardTitle());
-        boardEntity.setBoardContents(boardDTO.getBoardContents());
+        boardEntity.setBoardContents(boardDTO.getBoardContents().getBytes(StandardCharsets.UTF_8));
         boardEntity.setBoardHits(boardDTO.getBoardHits());
         boardEntity.setFileAttached(1); // 파일 있음.
         return boardEntity;

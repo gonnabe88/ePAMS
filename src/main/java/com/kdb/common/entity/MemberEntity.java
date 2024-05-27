@@ -22,7 +22,6 @@ import lombok.Setter;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Setter
-
 @Table(name = "member")
 public class MemberEntity implements Serializable {
     @Id

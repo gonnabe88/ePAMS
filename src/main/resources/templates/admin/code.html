@@ -48,7 +48,6 @@
 							    <button class="btn btn-primary btn-sm" id="del-row">삭제</button>
 							    <button class="btn btn-primary btn-sm" id="save">저장</button>
 							</div>
-							<button type="button" class="btn" data-bs-toggle="button" id="toggle-selection-mode">Toggle button</button>
 							<div id="example-table"></div>
 						</div>						
 
@@ -142,35 +141,7 @@
             deletedData.push(rowData);
         },
     });
-
-    document.getElementById("toggle-selection-mode").addEventListener("click", function() {
-        selectableRows = !selectableRows;
-        
-        if (selectableRows) {
-            table.setOptions({
-                selectable: true,
-                selectableRangeMode: false,
-                selectableRange: false,
-            });
-            alert("Switched to Row Selection Mode");
-        } else {
-            table.setOptions({
-                selectable: false,
-                selectableRangeMode: "click",
-                selectableRange: function(range) {
-                    range.forEach(cell => {
-                        var row = cell.getRow();
-                        row.select();
-                    });
-                }
-            });
-            alert("Switched to Range Selection Mode");
-        }
-
-        // Reload the table to apply the changes
-        table.redraw(true);
-    });
-
+    
     document.getElementById("add-row").addEventListener("click", function() {
         table.addData({}, true);
     });

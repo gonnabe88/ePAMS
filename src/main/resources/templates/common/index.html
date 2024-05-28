@@ -339,9 +339,7 @@ xmlns:sec="http://www.thymeleaf.org" layout:decorate="~{common/layout/layout}">
 	<th:block layout:fragment="script">
 	    <script src="/extensions/webauthn/js/base64js.min.js"></script>
     	<script src="/extensions/webauthn/js/custom.js"></script>
-		<script>	
-		
-			
+		<script>			
 	    
 			const search = () => {
 				const text = $("#searchMember").val();
@@ -374,14 +372,35 @@ xmlns:sec="http://www.thymeleaf.org" layout:decorate="~{common/layout/layout}">
 				duration: 1000
 			});
 		</script>
+		
 		 <script th:inline="javascript">
 			$(document).ready(function() {	
 				const simpleauth = [[${simpleauth}]]
 				const username = [[${username}]]
 				console.log("WebAuthn : "+simpleauth + username);
 
-				if(simpleauth == false)
-					webauthn_reg(username);
+				if(simpleauth == false) {
+				     Swal.fire({
+				         title: "간편인증",
+				         html: "편리한 로그인을 위해 휴대폰 간편인증을 등록합니다.",
+				         inputAttributes: {
+				 			autocomplete: 'new-password',
+				            autocapitalize: "off",
+				            autofocus : "on"
+				         },
+				         showCancelButton: true,
+				         confirmButtonText: "등록",
+				         cancelButtonText: "나중에 할게요",
+				         showLoaderOnConfirm: true,
+				         preConfirm: async () => {},
+				         allowOutsideClick: () => !Swal.isLoading()
+				     }).then((result) => {
+				         if (result.isConfirmed) {
+				        	 webauthn_reg(username);
+				         }
+				     }); //Swal(PW 인증)  
+				}
+					
 			});
 			
 			function webauthn_reg(username) {

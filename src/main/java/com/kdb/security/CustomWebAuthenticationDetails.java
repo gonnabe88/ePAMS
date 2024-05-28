@@ -9,6 +9,10 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class CustomWebAuthenticationDetails extends WebAuthenticationDetails {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8476298563946165595L;
 	private String UUID;
 	private String OTP;
 	private String MFA;
@@ -21,20 +25,9 @@ public class CustomWebAuthenticationDetails extends WebAuthenticationDetails {
 	 */
 	public CustomWebAuthenticationDetails(HttpServletRequest request) {
 		super(request);
-		Cookie[] cookies = request.getCookies();
 		OTP = request.getParameter("OTP");
-		MFA = request.getParameter("MFA");
-		
+		MFA = request.getParameter("MFA");		
 		log.warn("{} {}",request.getParameter("MFA"), request.getParameter("OTP"));
-		for(int i=0; i < cookies.length; i++)
-		{
-			//log.warn("UUID {} {}, bool check {} ",cookies[i].getName(), cookies[i].getValue(), cookies[i].getName().matches("UUIDChk"));
-			if (cookies[i].getName().matches("UUIDChk"))
-			{
-				log.warn(UUID);
-				UUID = cookies[i].getValue();
-			}
-		}
 	}
 	
 	public String getUUID() {

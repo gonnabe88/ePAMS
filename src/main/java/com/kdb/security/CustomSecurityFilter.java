@@ -36,8 +36,8 @@ public class CustomSecurityFilter extends OncePerRequestFilter {
         //System.out.println("password = " + password);
         //System.out.println("request.getRequestURI() = " + request.getRequestURI());
         //log.info("CustomSecurityFilter : {} {} {}", username, password, request.getRequestURI());
-
-
+        
+        // 나중에 지워도 될 것 같음
         if(username != null && password  != null && (request.getRequestURI().equals("/authenticate"))){
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
             

@@ -49,35 +49,24 @@ public class LoginService {
         else return false;
     }  
     
-    public boolean fidoLogin(MemberDTO memberDTO) {
-    	
-    	MemberDTO ismemberDTO = loginRepository.findByUserId(memberDTO.getUsername());
-    	log.info("[LOG] fidoLogin : ", ismemberDTO);
-    	
-    	///////////////////////////////////
-    	// ONEGUARD FIDO 연동 인증부 구현 필요 //
-    	///////////////////////////////////
-    	
-    	if (ismemberDTO == null ) return false;
-    	else return true;
-    }  
-    
     public boolean fidoLogin(String username) {
     	
     	MemberDTO ismemberDTO = loginRepository.findByUserId(username);
-    	log.info("[LOG] fidoLogin : ", ismemberDTO);
+    	boolean fidoresult = true;
     	
     	///////////////////////////////////
     	// ONEGUARD FIDO 연동 인증부 구현 필요 //
     	///////////////////////////////////
     	
-    	if (ismemberDTO == null ) return false;
-    	else return true;
+    	if (ismemberDTO != null && fidoresult) return true;
+    	else return false;
     }  
 	
     public boolean pwLogin(MemberDTO memberDTO) throws Exception {
 
+    	// 사용자가 입력한 패스워드 HASH
         memberDTO.setPassword(encshaService.encrypt(memberDTO.getPassword()));
+        // username & password(hash)와 일치하는 사용자를 찾음
     	MemberDTO ismemberDTO = loginRepository.login(memberDTO);        
         
         if (ismemberDTO != null)  return true;
@@ -106,9 +95,6 @@ public class LoginService {
     public boolean isValidUUID(MemberDTO memberDTO) {
 
     	String UUID = loginRepository.findUuid(memberDTO.getUsername());   
-    	if(log.isWarnEnabled())
-	    	log.warn("저장된 UUID : " + UUID + "보내온 UUID : " + memberDTO.getUUID());        
-    	
         if (UUID == null) return true;
         else if (UUID.equals(memberDTO.getUUID())) return true;
         else return false;
@@ -120,8 +106,6 @@ public class LoginService {
     	MemberDTO ismemberDTO = loginRepository.findByUserId(username);
     	ismemberDTO.setUUID(uuid.toString());
     	loginRepository.updateUuid(ismemberDTO);       
-    	if(log.isWarnEnabled())
-    		log.warn("UUID 생성 : " + uuid); 
         return uuid.toString();
     }
 

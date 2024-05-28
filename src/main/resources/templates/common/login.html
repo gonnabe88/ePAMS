@@ -169,11 +169,11 @@
     <script>
         const checkbox = document.getElementById('flexSwitchCheckChecked');
         const label = document.getElementById('switchLabel');
-
+        
+        // 체크박스(토글) 간편인증 <> 2단계 인증 전환
         function updateLabel() {
             label.textContent = checkbox.checked ? '간편인증' : '2단계인증';
         }
-
         checkbox.addEventListener('change', updateLabel);
 
         // 초기 상태 설정

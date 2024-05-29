@@ -6,16 +6,20 @@
         insert into member(memberEmail, memberPassword, memberName, memberAge, memberMobile)
         values (#{memberEmail}, #{memberPassword}, #{memberName}, #{memberAge}, #{memberMobile})
     </insert>
+    
     <insert id="regist" parameterType="member">
         insert into member(userId, memberPassword, memberName)
         values (#{userId}, #{memberPassword}, #{memberName})
     </insert>
+    
     <select id="login" parameterType="member" resultType="member">
         select * from member where username=#{username} and password=#{password}
     </select>
+    
     <select id="findAll" resultType="member">
         select * from member
     </select>
+    
     <select id="findById" parameterType="Long" resultType="member">
         select * from member where id=#{id}
     </select>

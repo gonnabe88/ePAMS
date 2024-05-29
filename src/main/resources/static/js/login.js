@@ -1,6 +1,19 @@
 
+//화면 로그 시 호출
 document.addEventListener("DOMContentLoaded", function () {
+	
+	// 간편인증 or 2단계인증 checkbox 선택값
     const checkbox = document.getElementById('flexSwitchCheckChecked');
+    // 간편인증 or 2단계인증 checkbox 텍스트
+    const label = document.getElementById('switchLabel');
+ 	// 패스워드 입력폼
+ 	const passwordInput = document.getElementById('password');
+ 	// SMS, KAKAO, OTP, FIDO 라디오버튼
+    const smsInput = document.getElementById('sms');
+    const kakaoInput = document.getElementById('kakao');
+    const otpInput = document.getElementById('otp');
+    const fidoInput = document.getElementById('fido');
+    
     //submit 버튼 클릭 시
     form.addEventListener("submit", function (e) {
         e.preventDefault();  // 폼의 기본 제출 동작을 방지
@@ -13,7 +26,25 @@ document.addEventListener("DOMContentLoaded", function () {
         passwordField.value = encodedPassword;
         if (checkbox.checked) webauthn(e); // 간편인증
         else normal(e); // 일반인증(2단계)
-    });
+    });        
+        
+    // 체크박스(토글) 세팅값에 따라 간편인증 <> 2단계인증 문구 변경
+    function updateLabel() {
+        label.textContent = checkbox.checked ? '간편인증' : '2단계인증';
+    }
+    checkbox.addEventListener('change', updateLabel);
+    updateLabel(); // 초기 상태 설정
+    
+    // 체크박스(토글) 세팅값에 따라 2단계 인증 관련 elements disable 
+    function toggleChange() {
+        passwordInput.disabled = checkbox.checked;
+        smsInput.disabled = checkbox.checked;
+        kakaoInput.disabled = checkbox.checked;
+        otpInput.disabled = checkbox.checked;
+        fidoInput.disabled = checkbox.checked;
+    }
+    checkbox.addEventListener('change', toggleChange);  
+    toggleChange(); // 초기 상태 설정
 });
 
 // 간편인증 WebAuthn 인증 로직
@@ -121,18 +152,13 @@ function normal(e) {
         } else {
             console.log("패스워드 로그인 실패:", data);
             // 패스워드 인증 실패 시
-            alert(data.message);
+            popupMsg(data.message);
         }
     })
     .catch(error => {
         console.error('로그인 중 오류 발생:', error);
         popupMsg(error); // 오류 처리 함수 호출
     });
-}
-
-function displayError(error) {
-    // 오류를 사용자에게 표시하는 로직을 여기에 추가합니다.
-    alert('로그인 중 오류가 발생했습니다. 다시 시도해 주세요.');
 }
 
 // 로그인 처리
@@ -159,7 +185,6 @@ const login2 = () => {
 	        break; 
     }
 }
-
 
 // FIDO 인증화면
 const fidoAuthAlert = (username, MFA, password, header, token) => {

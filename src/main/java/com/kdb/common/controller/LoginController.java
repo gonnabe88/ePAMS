@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kdb.common.dto.MemberDTO;
 import com.kdb.common.service.LoginService;
+import com.kdb.common.service.RestApiService;
 import com.kdb.webauthn.RegistrationService;
 import com.kdb.webauthn.user.AppUser;
 
@@ -33,6 +34,7 @@ public class LoginController {
 	
 	private final LoginService loginService;
 	private final RegistrationService service;
+	private final RestApiService restapiservice;
 
 	private Authentication Authentication() {
 	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -70,6 +72,8 @@ public class LoginController {
     	AppUser existingUser = service.getUserRepo().findByUsername(memberDTO.getUsername());
     	Map<String, Object> res = new HashMap<>();
     	if(loginService.pwLogin(memberDTO)) {
+    		// 로그인 성공 시 인증번호 생성
+    		restapiservice.requestMFA(memberDTO);
             // 로그인 성공 시 추가 인증 단계로 넘어가기 위해 성공 여부를 반환
     		res.put("result", true);
     		if(existingUser == null)

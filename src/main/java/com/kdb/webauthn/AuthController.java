@@ -37,12 +37,16 @@ import com.yubico.webauthn.RelyingParty;
 import com.yubico.webauthn.StartAssertionOptions;
 import com.yubico.webauthn.StartRegistrationOptions;
 import com.yubico.webauthn.data.AuthenticatorAssertionResponse;
+import com.yubico.webauthn.data.AuthenticatorAttachment;
 import com.yubico.webauthn.data.AuthenticatorAttestationResponse;
+import com.yubico.webauthn.data.AuthenticatorSelectionCriteria;
 import com.yubico.webauthn.data.ClientAssertionExtensionOutputs;
 import com.yubico.webauthn.data.ClientRegistrationExtensionOutputs;
 import com.yubico.webauthn.data.PublicKeyCredential;
 import com.yubico.webauthn.data.PublicKeyCredentialCreationOptions;
+import com.yubico.webauthn.data.ResidentKeyRequirement;
 import com.yubico.webauthn.data.UserIdentity;
+import com.yubico.webauthn.data.UserVerificationRequirement;
 import com.yubico.webauthn.exception.AssertionFailedException;
 import com.yubico.webauthn.exception.RegistrationFailedException;
 
@@ -120,14 +124,23 @@ public class AuthController {
         @RequestParam(value="user") AppUser user,
         HttpSession session
     ) {
-    	
         AppUser existingUser = service.getUserRepo().findByHandle(user.getHandle());
         if (existingUser != null) {
-            UserIdentity userIdentity = user.toUserIdentity();
+            UserIdentity userIdentity = user.toUserIdentity();           
+
+            
+            // AuthenticatorSelectionCriteria 설정 추가
+            AuthenticatorSelectionCriteria authenticatorSelection = AuthenticatorSelectionCriteria.builder()
+                .authenticatorAttachment(AuthenticatorAttachment.PLATFORM) // 플랫폼 인증기를 사용 (설정 시 기기의 플랫폼 인증기 우선)
+                .residentKey(ResidentKeyRequirement.PREFERRED) // 레지던트 키를 선호
+                .userVerification(UserVerificationRequirement.REQUIRED) // 사용자 검증을 필수로 설정
+                .build();
             
             StartRegistrationOptions registrationOptions = StartRegistrationOptions.builder()
-            .user(userIdentity)
+            .user(userIdentity)      
+            .authenticatorSelection(authenticatorSelection) // authenticatorSelection 설정 적용     
             .build();
+            
             
             PublicKeyCredentialCreationOptions registration = relyingParty.startRegistration(registrationOptions);
             try {

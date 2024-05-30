@@ -1,6 +1,7 @@
 package com.kdb.common.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.kdb.common.dto.MemberDTO;
 import com.kdb.common.service.LoginService;
 import com.kdb.webauthn.RegistrationService;
+import com.kdb.webauthn.authenticator.Authenticator;
 import com.kdb.webauthn.user.AppUser;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -51,7 +53,8 @@ public class LoginController {
     public String login(HttpServletResponse response, @CookieValue(value="idChk", required=false) String username, @RequestParam(value = "isChecked", defaultValue = "false") boolean isChecked, Model model)  throws Exception{    	
     	Authentication auth = Authentication();
     	AppUser existingUser = service.getUserRepo().findByUsername(username);
-    	if(existingUser == null) {
+    	List<Authenticator> existingAuthUser = service.getAuthRepository().findAllByUser(existingUser);
+    	if(existingAuthUser.isEmpty()) {
     		model.addAttribute("isChecked", "false");
     		log.info("Not simple auth user");
     	}

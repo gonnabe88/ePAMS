@@ -29,6 +29,7 @@ import com.kdb.common.service.BoardService;
 import com.kdb.common.service.CodeService;
 import com.kdb.common.service.MemberDetailsService;
 import com.kdb.webauthn.RegistrationService;
+import com.kdb.webauthn.authenticator.Authenticator;
 import com.kdb.webauthn.user.AppUser;
 
 import lombok.RequiredArgsConstructor;
@@ -58,8 +59,9 @@ public class MainController<S extends Session> {
     	  
     	Authentication auth = Authentication();
     	AppUser existingUser = service.getUserRepo().findByUsername(auth.getName());
+    	List<Authenticator> existingAuthUser = service.getAuthRepository().findAllByUser(existingUser);
     	model.addAttribute("username", auth.getName());
-    	if(existingUser == null) {
+    	if(existingAuthUser.isEmpty()) {
     		model.addAttribute("simpleauth", false);
     		log.info("Not simple auth user");
     	}

@@ -462,13 +462,41 @@ xmlns:sec="http://www.thymeleaf.org" layout:decorate="~{common/layout/layout}">
 			    })
 			    .then((response) => {
 			        //followRedirect(response);
-			    	alert(response);
+			    	if(response.status == 200)
+			    		popupMsg("등록 성공", "간편인증 등록을 성공하였습니다.", "success");
+			    	else {
+			    		popupMsg("등록 오류", error, "error", "");
+					}
 			    })
 			    .catch((error) => {
-			        displayError(error);
+			    	popupRedirectMsg("오류", error, "error", "/login");
 			    });
 			}
+			
+			const popupMsg = (title, text, icon) => {	
+				Swal.fire({
+			            title: title,
+			            text: text,
+			            icon: icon,
+			            confirmButtonText: '확인'
+			        });
+			}
+			
+			const popupRedirectMsg = (title, text, icon, url) => {	
+				Swal.fire({
+			            title: title,
+			            text: text,
+			            icon: icon,
+			            confirmButtonText: '확인'
+			        }).then(() => {
+						window.location.href = url
+					});
+			}
 		</script>
+		
+
+		
+		
 		<script>
 			$(document).ready(function() {
 				$(".owl-carousel").owlCarousel({

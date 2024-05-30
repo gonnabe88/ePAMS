@@ -73,6 +73,7 @@ public class LoginController {
     	Map<String, Object> res = new HashMap<>();
     	if(loginService.pwLogin(memberDTO)) {
     		// 로그인 성공 시 인증번호 생성
+    		
     		restapiservice.requestMFA(memberDTO);
             // 로그인 성공 시 추가 인증 단계로 넘어가기 위해 성공 여부를 반환
     		res.put("result", true);

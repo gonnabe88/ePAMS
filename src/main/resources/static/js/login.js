@@ -1,54 +1,51 @@
-
-//화면 로그 시 호출
-document.addEventListener("DOMContentLoaded", function () {
-	
-	// 간편인증 or 2단계인증 checkbox 선택값
+document.addEventListener("DOMContentLoaded", () => {
     const checkbox = document.getElementById('flexSwitchCheckChecked');
-    // 간편인증 or 2단계인증 checkbox 텍스트
     const label = document.getElementById('switchLabel');
- 	// 패스워드 입력폼
- 	const passwordInput = document.getElementById('password');
- 	// SMS, KAKAO, OTP, FIDO 라디오버튼
+    const passwordInput = document.getElementById('password');
     const smsInput = document.getElementById('sms');
     const kakaoInput = document.getElementById('kakao');
     const otpInput = document.getElementById('otp');
     const fidoInput = document.getElementById('fido');
-    
-    //submit 버튼 클릭 시
-    form.addEventListener("submit", function (e) {
-        e.preventDefault();  // 폼의 기본 제출 동작을 방지
-         // password 값을 가져오기
-        const passwordField = document.getElementById('password');
-        const password = passwordField.value;
-        // Base64 인코딩
-        const encodedPassword = btoa(encodeURIComponent(password));
-        // 인코딩된 값을 다시 설정
-        passwordField.value = encodedPassword;
-        if (checkbox.checked) webauthn(e); // 간편인증
-        else normal(e); // 일반인증(2단계)
-    });        
-        
-    // 체크박스(토글) 세팅값에 따라 간편인증 <> 2단계인증 문구 변경
-    function updateLabel() {
+    const form = document.querySelector('form'); // Assuming the form element
+
+    const updateLabel = () => {
         label.textContent = checkbox.checked ? '간편인증' : '2단계인증';
-    }
-    checkbox.addEventListener('change', updateLabel);
-    updateLabel(); // 초기 상태 설정
-    
-    // 체크박스(토글) 세팅값에 따라 2단계 인증 관련 elements disable 
-    function toggleChange() {
-        passwordInput.disabled = checkbox.checked;
-        smsInput.disabled = checkbox.checked;
-        kakaoInput.disabled = checkbox.checked;
-        otpInput.disabled = checkbox.checked;
-        fidoInput.disabled = checkbox.checked;
-    }
-    checkbox.addEventListener('change', toggleChange);  
-    toggleChange(); // 초기 상태 설정
+    };
+
+    const toggleChange = () => {
+        const isChecked = checkbox.checked;
+        passwordInput.disabled = isChecked;
+        smsInput.disabled = isChecked;
+        kakaoInput.disabled = isChecked;
+        otpInput.disabled = isChecked;
+        fidoInput.disabled = isChecked;
+    };
+
+    form.addEventListener("submit", (e) => {
+        e.preventDefault(); // Prevent form's default submission
+        const password = passwordInput.value;
+        const encodedPassword = btoa(encodeURIComponent(password));
+        passwordInput.value = encodedPassword;
+
+        if (checkbox.checked) {
+            webauthn(e); // Call webauthn function
+        } else {
+            normal(e); // Call normal function
+        }
+    });
+
+    checkbox.addEventListener('change', () => {
+        updateLabel();
+        toggleChange();
+    });
+
+    updateLabel(); // Initialize label
+    toggleChange(); // Initialize form elements state
 });
 
+
 // 간편인증 WebAuthn 인증 로직
-function webauthn(e) {
+const webauthn = (e) => {
     const header = document.querySelector('meta[name="_csrf_header"]').content;
     const token = document.querySelector('meta[name="_csrf"]').content;
     e.preventDefault();
@@ -124,7 +121,7 @@ function webauthn(e) {
 }
 
 // 일반인증 호출(2단계)
-function normal(e) {
+const normal = (e) => {
     
     const header = document.querySelector('meta[name="_csrf_header"]').content;
     const token = document.querySelector('meta[name="_csrf"]').content;
@@ -148,7 +145,7 @@ function normal(e) {
         if (data.result) {
             console.log("패스워드 로그인 성공:", data);
             // 패스워드 인증 성공 시
-            login2()
+            login()
         } else {
             console.log("패스워드 로그인 실패:", data);
             // 패스워드 인증 실패 시
@@ -162,14 +159,13 @@ function normal(e) {
 }
 
 // 로그인 처리
-const login2 = () => {
+const login = () => {
     const username = document.getElementById("username").value.toUpperCase();
     //const password = btoa(encodeURIComponent(document.getElementById("password").value));
     const password = document.getElementById("password").value;
     const MFA = $('input[name="MFA"]:checked').val();
-    let header = $("meta[name='_csrf_header']").attr('content');
-    let token = $("meta[name='_csrf']").attr('content');    
-	console.log(password)
+    const header = $("meta[name='_csrf_header']").attr('content');
+    const token = $("meta[name='_csrf']").attr('content');    
 	switch (MFA) {
 	    case 'OTP':     
 	        otpAuthAlert(username, MFA, password, header, token); //OTP 인증
@@ -188,7 +184,6 @@ const login2 = () => {
 
 // FIDO 인증화면
 const fidoAuthAlert = (username, MFA, password, header, token) => {
-	console.log(password);
 	Swal.fire({
 	        title: MFA+ " 인증",
 	        html: "휴대폰 원가드 앱에서 "+MFA+" 인증 후 <br>제출을 눌러해주세요",

@@ -10,10 +10,7 @@ xmlns:sec="http://www.thymeleaf.org" layout:decorate="~{common/layout/layout}">
 	<link rel="stylesheet" href="/extensions/aos/aos.css">
 	<link rel="stylesheet" href="/extensions/animate/animate.min.css" />
 
-<!-- Popperjs -->
-	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" crossorigin="anonymous"></script>
-   <link rel="stylesheet" href="/extensions/bulma/bulma.min.css">
-   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-calendar@6.0.9/dist/css/bulma-calendar.min.css">
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/litepicker/dist/css/litepicker.css"/>
 <style>
 
 .datetimepicker-dummy .datetimepicker-dummy-wrapper {
@@ -89,7 +86,8 @@ xmlns:sec="http://www.thymeleaf.org" layout:decorate="~{common/layout/layout}">
 
 							<div class="card-body p-3">
 								<h6>근태기간</h6>
-								<input type="date" data-display-mode="inline" data-is-range="true" id="myCalendar" name="start">
+   									<input type="text" id="start-date" />
+   									<input type="text" id="end-date" />
 							</div>
 							<div class="card-body p-3">
 								<h6>근태종류</h6>
@@ -119,6 +117,27 @@ xmlns:sec="http://www.thymeleaf.org" layout:decorate="~{common/layout/layout}">
 
 	<!-- (start) private script -->
 		<th:block layout:fragment="script">
+		<script src="https://cdn.jsdelivr.net/npm/litepicker/dist/bundle.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/litepicker/dist/plugins/mobilefriendly.js"></script>
+		
+		  <script>
+		    const picker = new Litepicker({
+	    	  element: document.getElementById('start-date'),
+	    	  elementEnd: document.getElementById('end-date'),
+	    	  singleMode: false,
+	    	  allowRepick: true,
+	    	  autoApply: true,
+	    	  autoRefresh: true,
+	    	  inlineMode: true,
+	    	  resetButton: true,
+	    	  lang: 'ko-KR',
+	    	  buttonText: {"apply":"적용","cancel":"취소"},
+	    	  dropdowns: {"minYear":1990,"maxYear":null,"months":false,"years":false},
+		      format: 'YYYY-MM-DD',
+		      plugins: ['mobilefriendly']
+		    });
+		  </script>
+		
 		<script src="/extensions/aos/aos.js"></script>
 		<script>
 			AOS.init({

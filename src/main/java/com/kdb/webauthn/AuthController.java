@@ -102,7 +102,8 @@ public class AuthController {
     	//String username = auth.getName();
     	log.warn("register : "+username);
         AppUser existingUser = service.getUserRepo().findByUsername(username);
-        if (existingUser == null) {
+        List<Authenticator> existingAuthUser = service.getAuthRepository().findAllByUser(existingUser);
+        if (existingAuthUser.isEmpty()) {
             UserIdentity userIdentity = UserIdentity.builder()
                 .name(username)
                 .displayName(username)

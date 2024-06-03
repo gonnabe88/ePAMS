@@ -7,13 +7,13 @@ server:
       persistent: true
       tracking-modes: cookie
       cookie:
-        domain: localhost
-        #domain: epams.duckdns.org
-        #http-only: true
-        #path: /
-        #max-age: -1 # infinite
-        #secure: true # https only allowed
-        #sameSite: strict
+        #domain: localhost
+        domain: epams.duckdns.org
+        http-only: true
+        path: /
+        max-age: -1 # infinite
+        secure: true # https only allowed
+        sameSite: strict
 
 # actuator
 management:

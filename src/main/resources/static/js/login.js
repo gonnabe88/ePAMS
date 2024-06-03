@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
         fidoInput.disabled = isChecked;
     };
     
-     function togglePasswordVisibility() {
+     const togglePasswordVisibility = () => {
         if (checkbox.checked) {
             twostepDiv.style.display = 'none';
             twostepDiv2.style.display = 'none';

@@ -85,9 +85,15 @@ xmlns:sec="http://www.thymeleaf.org" layout:decorate="~{common/layout/layout}">
 							</div>
 
 							<div class="card-body p-3">
-								<h6>근태기간</h6>
-   									<input type="text" id="start-date" />
-   									<input type="text" id="end-date" />
+			                <h6 class="mb-0">근태기간</h6>
+        <div class="row">
+            <div class="col-auto">
+                <input type="text" class="form-control" placeholder="시작일" id="start-date" readonly />
+            </div>
+            <div class="col-auto">
+                <input type="text" class="form-control" placeholder="종료일" id="end-date" readonly />
+            </div>
+        </div>
 							</div>
 							<div class="card-body p-3">
 								<h6>근태종류</h6>
@@ -137,6 +143,8 @@ xmlns:sec="http://www.thymeleaf.org" layout:decorate="~{common/layout/layout}">
 		      plugins: ['mobilefriendly']
 		    });
 		  </script>
+		  
+		  
 		
 		<script src="/extensions/aos/aos.js"></script>
 		<script>

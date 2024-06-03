@@ -56,6 +56,7 @@ public class LoginController {
     	Authentication auth = Authentication();
     	AppUser existingUser = service.getUserRepo().findByUsername(username);
     	List<Authenticator> existingAuthUser = service.getAuthRepository().findAllByUser(existingUser);
+    	log.info("size" + existingAuthUser.size());
     	if(existingAuthUser.isEmpty()) {
     		model.addAttribute("isChecked", "false");
     		log.info("Not simple auth user");

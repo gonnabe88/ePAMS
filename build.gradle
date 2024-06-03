@@ -36,6 +36,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
 	
+	// org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3에 포함된 logback 취약점 조치
+	// CVE-2023-6378, CVE-2023-6481 
     implementation 'ch.qos.logback:logback-classic:1.4.14'
     implementation 'ch.qos.logback:logback-core:1.4.14'
 

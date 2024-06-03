@@ -7,6 +7,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 
@@ -39,15 +40,17 @@ public class Authenticator {
     @Column(nullable = false)
     private ByteArray publicKey;
 
-@Column(nullable = false)
-private Long count;
+	@Column(nullable = false)
+	private Long count;
+	
+	@Lob
+	@Column(nullable = true)
+	private ByteArray aaguid;
 
-@Lob
-@Column(nullable = true)
-private ByteArray aaguid;
-
-    @ManyToOne
+    @ManyToOne(targetEntity = AppUser.class)
+    @JoinColumn(name="username", nullable = false)
     private AppUser user;
+	
 
 public Authenticator(RegistrationResult result, AuthenticatorAttestationResponse response, AppUser user, String name) {
     Optional<AttestedCredentialData> attestationData = response.getAttestation().getAuthenticatorData().getAttestedCredentialData();

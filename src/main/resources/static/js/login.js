@@ -7,6 +7,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const otpInput = document.getElementById('otp');
     const fidoInput = document.getElementById('fido');
     const form = document.querySelector('form'); // Assuming the form element
+	const twostepDiv = document.getElementById('twostepDiv');
+	const twostepDiv2 = document.getElementById('twostepDiv2');
+	const twostepDiv3 = document.getElementById('twostepDiv3');
 
     const updateLabel = () => {
         label.textContent = checkbox.checked ? '간편인증' : '2단계인증';
@@ -20,6 +23,18 @@ document.addEventListener("DOMContentLoaded", () => {
         otpInput.disabled = isChecked;
         fidoInput.disabled = isChecked;
     };
+    
+     function togglePasswordVisibility() {
+        if (checkbox.checked) {
+            twostepDiv.style.display = 'none';
+            twostepDiv2.style.display = 'none';
+            twostepDiv3.style.display = 'block';
+        } else {
+            twostepDiv.style.display = 'block';
+            twostepDiv2.style.display = 'block';
+            twostepDiv3.style.display = 'none';
+        }
+    }
 
     form.addEventListener("submit", (e) => {
         e.preventDefault(); // Prevent form's default submission
@@ -37,10 +52,13 @@ document.addEventListener("DOMContentLoaded", () => {
     checkbox.addEventListener('change', () => {
         updateLabel();
         toggleChange();
+        togglePasswordVisibility();
     });
 
-    updateLabel(); // Initialize label
-    toggleChange(); // Initialize form elements state
+	// Initialize label
+    updateLabel(); 
+    toggleChange();
+    togglePasswordVisibility();
 });
 
 

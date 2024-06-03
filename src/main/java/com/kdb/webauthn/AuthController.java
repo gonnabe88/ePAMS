@@ -74,8 +74,7 @@ public class AuthController {
 	/*
 	 * AuthController(RegistrationService service, RelyingParty relyingPary) {
 	 * this.relyingParty = relyingPary; this.service = service; }
-	 */
-	 
+	 */	 
 
     @GetMapping("/")
     public String index() {
@@ -265,12 +264,12 @@ public class AuthController {
             } else {
                 return "/common/login";
             }
-        } catch (IOException e) {
-            throw new RuntimeException("Authentication failed", e);
+        } catch (JsonProcessingException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error processing JSON.", e);
         } catch (AssertionFailedException e) {
-            throw new RuntimeException("Authentication failed", e);
-        }
-
-    }
-    
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Authentication failed", e);
+        } catch (IOException e) {
+        	throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Failed to save credenital, please try again!", e);
+		}
+    }    
 }

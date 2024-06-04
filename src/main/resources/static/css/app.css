@@ -7013,7 +7013,7 @@ fieldset:disabled .btn {
 .carousel-inner {
     position: relative;
     width: 100%;
-    max-height:40vh;
+    max-height:35vh;
     overflow: hidden;
 }
 
@@ -7084,7 +7084,7 @@ fieldset:disabled .btn {
 	    background-repeat: no-repeat;
 	    background-size: cover;
 	    position: relative;
-	    height: 40vh;
+	    height: 350vh;
 }
 	
 @media (max-width: 575.98px) {
@@ -7093,7 +7093,7 @@ fieldset:disabled .btn {
 	    background-repeat: no-repeat;
 	    background-size: cover;
 	    position: relative;
-	    height: 40vh;
+	    height: 35vh;
 	}
 }
 
@@ -7103,7 +7103,7 @@ fieldset:disabled .btn {
 	    background-repeat: no-repeat;
 	    background-size: cover;
 	    position: relative;
-	    height: 40vh;
+	    height: 35vh;
 }
 	
 @media (max-width: 575.98px) {
@@ -7112,7 +7112,7 @@ fieldset:disabled .btn {
 	    background-repeat: no-repeat;
 	    background-size: cover;
 	    position: relative;
-	    height: 40vh;
+	    height: 35vh;
 	}
 }
 

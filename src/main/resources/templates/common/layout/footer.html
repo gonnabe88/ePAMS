@@ -3,16 +3,38 @@
     xmlns:th="http://www.thymeleaf.org"
     xmlns:sec="http://www.thymeleaf.org"
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+        
 <head>
+	<th:block layout:fragment="css">
+
+    </th:block>
+</head>
 
 <body>
 	<footer th:fragment="commonFooter">
 
-	<div class="footer position-relative" style="background-color:#4477C5;">
+	<div class="footer" style="background-color:#4477C5;">
+       <div class="row text-center mx-4">
+            <div class="col">
+                <i class="bi bi-house-fill" style="color: white; font-size: 1.5rem;"></i>
+            </div>
+            <div class="col">
+                <i class="bi bi-stack" style="color: white; font-size: 1.5rem;"></i>
+            </div>
+            <div class="col">
+                <i class="bi bi-search" style="color: white; font-size: 1.5rem;"></i>
+            </div>
+            <div class="col">
+                <i class="bi bi-box-arrow-right" style="color: white; font-size: 1.5rem;"></i>
+            </div>
+        </div>
+    </div> 
+
+<!-- 	<div class="footer position-relative" style="background-color:#4477C5;">
          <div class="row ">
 			<span class="text-center" style="color:white; font-family:Nunito; font-size:15px; line-height:80px;"> &copy; Copyright 2024 KDB산업은행</span>        
          </div>
-    </div>       
+    </div>  -->
 	</footer>
 </body>
 </html>

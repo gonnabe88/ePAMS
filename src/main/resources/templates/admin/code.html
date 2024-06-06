@@ -5,29 +5,29 @@
 <!-- (start) private script -->
 <th:block layout:fragment="css">
 	<link href="https://unpkg.com/tabulator-tables/dist/css/tabulator_modern.min.css" rel="stylesheet">
-    <style>
-        #example-table {
-            width: 100%;
-        }
+	<style>
+#example-table {
+	width: 100%;
+}
 
-        @media screen and (max-width: 500px) {
-            #example-table {
-                width: 300px;
-            }
-        }
+@media screen and (max-width: 500px) {
+	#example-table {
+		width: 300px;
+	}
+}
 
-        @media screen and (min-width: 500px) {
-            #example-table {
-                width: 500px;
-            }
-        }
-         @media screen and (min-width: 800px) {
-            #example-table {
-                width: 100%;
-            }
-        }
+@media screen and (min-width: 500px) {
+	#example-table {
+		width: 500px;
+	}
+}
 
-    </style>
+@media screen and (min-width: 800px) {
+	#example-table {
+		width: 100%;
+	}
+}
+</style>
 </th:block>
 <!-- (end) private script -->
 </head>
@@ -37,19 +37,32 @@
 		<div id="main-content">
 			<div class="d-flex justify-content-center">
 				<div class="row col-lg-10 col-md-12 d-flex justify-content-center">
-					<div class="page-heading">		
-						<div class="align-middle">		
-							<h2><i class="bi bi-bell-fill"></i> 코드관리</h2>
+					<div class="page-heading">
+						<div class="align-middle">
+							<h2>
+								<i class="bi bi-bell-fill"></i> 코드관리
+							</h2>
 							<br>
-							
-							<div class="d-flex justify-content-end gap-2 mb-2">
-							    <button class="btn btn-primary btn-sm" id="reload">불러오기</button>
-							    <button class="btn btn-primary btn-sm" id="add-row">행추가</button>
-							    <button class="btn btn-primary btn-sm" id="del-row">삭제</button>
-							    <button class="btn btn-primary btn-sm" id="save">저장</button>
+							<div class="d-flex flex-wrap gap-2 justify-content-start align-items-center mb-3">
+								<div class="col-auto">
+									<input class="form-control form-control-sm" type="text" id="search-input" placeholder="검색">
+								</div>
+								<button class="btn btn-primary btn-sm" id="search-button">조회</button>
+								<button class="btn btn-primary btn-sm" id="reset-button">초기화</button>
+								<div class="form-check form-switch">
+									<input class="form-check-input" type="checkbox" role="switch" id="toggle-selectable"> <label class="form-check-label" for="flexSwitchCheckDefault">범위선택</label>
+								</div>
 							</div>
-							<div id="example-table"></div>
-						</div>						
+							<div class="d-flex flex-wrap justify-content-end gap-2 mb-3">
+								<button class="btn btn-primary btn-sm" id="reload">새로고침</button>
+								<button class="btn btn-primary btn-sm" id="add-row">행추가</button>
+								<button class="btn btn-primary btn-sm" id="del-row">삭제</button>
+								<button class="btn btn-primary btn-sm" id="save">저장</button>
+							</div>
+							<div class="d-flex justify-content-center">
+								<div class="no-drag" id="example-table"></div>
+							</div>
+						</div>
 
 					</div>
 				</div>
@@ -59,145 +72,193 @@
 
 
 
-		<!-- (start) private script -->
-		<th:block layout:fragment="script">
-    <script type="text/javascript" src="https://unpkg.com/tabulator-tables/dist/js/tabulator.min.js"></script>
-    <script>
-    var editedData = [];
-    var addedData = [];
-    var deletedData = [];
+	<!-- (start) private script -->
+	<th:block layout:fragment="script">
+		<script type="text/javascript" src="https://unpkg.com/tabulator-tables/dist/js/tabulator.min.js"></script>
+		<script>
+	var editedData = [];
+	var addedData = [];
+	var deletedData = [];
+	
+	const header = document.querySelector('meta[name="_csrf_header"]').content;
+	const token = document.querySelector('meta[name="_csrf"]').content;
+	
+	var table;
+	
+	function createTable(selectableRange) {
+	    table = new Tabulator("#example-table", {
+	        ajaxURL: "/api/member",
+	        height: "900px",
+	        layout: "fitColumns",
+	        placeholder: "No Data Set",
+	        pagination: "local",
+	        paginationSize: 30,
+	        paginationSizeSelector: [10, 20, 30, 50, 100],
+	        movableColumns: true,
+	        paginationCounter: "rows",
+	        
+	        //enable range selection
+	        selectableRange: selectableRange,
+	        selectableRangeColumns: true,
+	        selectableRangeRows: true,
+	        selectableRangeClearCells: true,
+	
+	        clipboard: true,
+	        clipboardCopyStyled: false,
+	        clipboardCopyConfig: {
+	            rowHeaders: true,
+	            columnHeaders: true,
+	        },
+	        clipboardCopyRowRange: "range",
+	        clipboardPasteParser: "range",
+	        clipboardPasteAction: "range",
+	        
+	        headerSortClickElement: 'icon',
+	        
+	        editTriggerEvent: "click", //dblclick or click
+	        
+	        columns: [
+	            { 
+	                formatter: "rowSelection", 
+	                titleFormatter: "rowSelection", 
+	                headerSort: false, 
+	                hozAlign: "center", 
+	                width: 30, 
+	                cellClick: function(e, cell) {
+	                    e.preventDefault(); // 기본 동작 막기
+	                    e.stopPropagation(); // 이벤트 전파 막기
+	                    cell.getRow().toggleSelect();
+	                }
+	            },
+	            { formatter: "rownum", headerSort: false, hozAlign: "center", resizable: true, frozen: false, width: 3 },
+	            { title: "이름", field: "username", sorter: "string", editor: "input", minWidth: 100 },
+	            { title: "부서", field: "dept", sorter: "string", editor: "input", minWidth: 100 },
+	            { title: "담당업무", field: "responsibility", sorter: "string", editor: "input" },
+	            { title: "권한", field: "role", sorter: "string", editor: "list", editorParams: { values: { "ROLE_ADMIN": "ROLE_ADMIN", "ROLE_KDB": "ROLE_KDB", "ROLE_ITO": "ROLE_ITO" } } },
+	            { title: "팀", field: "team", sorter: "string", editor: "input" },
+	        ]
+	    });
+	
+	    table.on("cellEdited", function(cell){
+	        var row = cell.getRow().getData();
+	        console.log("Edited row:", row);
+	        editedData.push(row);
+	    });
+	
+	    table.on("rowAdded", function(row){
+	        var rowData = row.getData();
+	        console.log("Added row:", rowData);
+	        addedData.push(rowData);
+	    });
+	
+	    table.on("rowDeleted", function(row){
+	        var rowData = row.getData();
+	        console.log("Deleted row:", rowData);
+	        addedData = addedData.filter(item => item.id !== rowData.id);
+	        deletedData.push(rowData);
+	    });
+	
+	    document.getElementById("add-row").addEventListener("click", function() {
+	        table.addData({}, true);
+	    });
+	
+	    document.getElementById("del-row").addEventListener("click", function() {
+	        var selectedRows = table.getSelectedRows();
+	        selectedRows.forEach(function(row) {
+	            row.delete();
+	        });
+	    });
+	
+	    document.getElementById("reload").addEventListener("click", function() {
+	        table.setData("/api/member");
+	    });
+	
+	    document.getElementById("save").addEventListener("click", function() {
+	        console.log('editedData:', editedData);
+	        console.log('addedData:', addedData);
+	        console.log('deletedData:', deletedData);
+	        
+	        var payload = {
+	            changed: editedData,
+	            added: addedData,
+	            deleted: deletedData
+	        };
+	
+	        fetch('/api/member/save', {
+	            method: 'POST',
+	            headers: {
+	                'header': header,
+	                'X-CSRF-Token': token,
+	                'Content-Type': 'application/json',
+	            },
+	            body: JSON.stringify(payload),
+	        })
+	        .then(response => response.json())
+	        .then(data => {
+	            console.log('Success:', data.message);
+	            alert(data.message);
+	            editedData = [];
+	            addedData = [];
+	            deletedData = [];
+	        })
+	        .catch((error) => {
+	            console.error('Error:', error.message);
+	            alert(error.message);
+	            editedData = [];
+	            addedData = [];
+	            deletedData = [];
+	        });
+	    });
+	
+	    // 조회버튼 클릭 또는 엔터 시    
+	    document.getElementById("search-button").addEventListener("click", performSearch);
+	    document.getElementById("search-input").addEventListener("keyup", function(event) {
+	        if (event.key === "Enter") {
+	            performSearch();
+	        }
+	    });
+	
+	    function performSearch() {
+	        var searchValue = document.getElementById("search-input").value;
+	        
+	        if (searchValue) {
+	            console.log("조회 : ", searchValue);
+	            table.setFilter([
+	                [
+	                    {field: "username", type: "like", value: searchValue},
+	                    {field: "dept", type: "like", value: searchValue},
+	                    {field: "responsibility", type: "like", value: searchValue},
+	                    {field: "role", type: "like", value: searchValue},
+	                    {field: "team", type: "like", value: searchValue}
+	                ]
+	            ]);
+	        } else {
+	            table.clearFilter(); // Clear filter if search input is empty
+	        }
+	    }
+	
+	    // 초기화버튼 엔터 또는 클릭 시
+	    document.getElementById("reset-button").addEventListener("click", function() {
+	        document.getElementById("search-input").value = "";
+	        table.clearFilter(); // Clear all filters
+	    });
+	}
+	
+	// 테이블 초기 생성
+	createTable(false);
+	
+	// 토글 버튼 이벤트 리스너 추가
+	document.getElementById("toggle-selectable").addEventListener("click", function() {
+	    var currentSetting = table.options.selectableRange;
+	    table.destroy();
+	    createTable(!currentSetting);
+	    console.log("selectableRange is now: " + !currentSetting);
+	});
+	
+	</script>
+	</th:block>
 
-    const header = document.querySelector('meta[name="_csrf_header"]').content;
-    const token = document.querySelector('meta[name="_csrf"]').content;
-
-    var selectableRows = true; // 초기 상태는 selectableRows 모드
-
-    var table = new Tabulator("#example-table", {
-        ajaxURL: "/api/member",
-        height: "900px",
-        layout: "fitColumns",
-        placeholder: "No Data Set",
-        pagination: "local",
-        paginationSize: 30,
-        paginationSizeSelector: [10, 20, 30, 50, 100],
-        movableColumns: true,
-        paginationCounter: "rows",
-        
-        //enable range selection
-        selectableRange:1,
-        selectableRangeColumns:true,
-        selectableRangeRows:true,
-        selectableRangeClearCells:true,
-
-        clipboard: true,
-        clipboardCopyStyled: false,
-        clipboardCopyConfig: {
-            rowHeaders: true,
-            columnHeaders: true,
-        },
-        clipboardCopyRowRange: "range",
-        clipboardPasteParser: "range",
-        clipboardPasteAction: "range",
-        
-        headerSortClickElement: 'icon',
-        
-        editTriggerEvent: "dblclick",
-        
-        columns: [
-            { 
-                formatter: "rowSelection", 
-                titleFormatter: "rowSelection", 
-                headerSort: false, 
-                hozAlign: "center", 
-                width: 30, 
-                cellClick: function(e, cell) {
-                    cell.getRow().toggleSelect();
-                }
-            },
-            { formatter: "rownum", headerSort: false, hozAlign: "center", resizable: true, frozen: false, width: 3 },
-            { title: "이름", field: "username", sorter: "string", editor: "input", minWidth: 100 },
-            { title: "부서", field: "dept", sorter: "string", editor: "input", minWidth: 100 },
-            { title: "담당업무", field: "responsibility", sorter: "string", editor: "input" },
-            { title: "권한", field: "role", sorter: "string", editor: "list", editorParams: { values: { "ROLE_ADMIN": "ROLE_ADMIN", "ROLE_KDB": "ROLE_KDB", "ROLE_ITO": "ROLE_ITO" } } },
-            { title: "팀", field: "team", sorter: "string", editor: "input" },
-        ],
-        
-        cellEdited: function(cell) {
-            var row = cell.getRow().getData();
-            console.log("Edited row:", row);
-            editedData.push(row);
-        },
-        
-        rowAdded: function(row) {
-            var rowData = row.getData();
-            console.log("Added row:", rowData);
-            addedData.push(rowData);
-        },
-        
-        rowDeleted: function(row) {
-            var rowData = row.getData();
-            console.log("Deleted row:", rowData);
-            addedData = addedData.filter(item => item.id !== rowData.id);
-            deletedData.push(rowData);
-        },
-    });
-    
-    document.getElementById("add-row").addEventListener("click", function() {
-        table.addData({}, true);
-    });
-
-    document.getElementById("del-row").addEventListener("click", function() {
-        var selectedRows = table.getSelectedRows();
-        selectedRows.forEach(function(row) {
-            row.delete();
-        });
-    });
-
-    document.getElementById("reload").addEventListener("click", function() {
-        table.setData("/api/member");
-    });
-
-    document.getElementById("save").addEventListener("click", function() {
-        console.log('editedData:', editedData);
-        console.log('addedData:', addedData);
-        console.log('deletedData:', deletedData);
-        
-        var payload = {
-            changed: editedData,
-            added: addedData,
-            deleted: deletedData
-        };
-
-        fetch('/api/member/save', {
-            method: 'POST',
-            headers: {
-                'header': header,
-                'X-CSRF-Token': token,
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(payload),
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Success:', data.message);
-            alert(data.message);
-            editedData = [];
-            addedData = [];
-            deletedData = [];
-        })
-        .catch((error) => {
-            console.error('Error:', error.message);
-            alert(error.message);
-            editedData = [];
-            addedData = [];
-            deletedData = [];
-        });
-    });
-
-    </script>
-</th:block>
-
-		<!-- (end) private script -->
+	<!-- (end) private script -->
 </body>
 
 </html>

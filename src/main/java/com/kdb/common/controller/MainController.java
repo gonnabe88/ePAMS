@@ -56,8 +56,11 @@ public class MainController<S extends Session> {
 	}
 	@GetMapping("/index")
 	public String indexMain(@PageableDefault(page = 1) Pageable pageable, Model model) {
-    	  
+    	
+		// 현재 로그인한 사용자 정보
     	Authentication auth = Authentication();
+    	
+    	// 간편인증 등록 여부 확인
     	AppUser existingUser = service.getUserRepo().findByUsername(auth.getName());
     	List<Authenticator> existingAuthUser = service.getAuthRepository().findAllByUser(existingUser);
     	model.addAttribute("username", auth.getName());
@@ -77,7 +80,7 @@ public class MainController<S extends Session> {
     	  //System.out.println(codeList.get(0).getCD_NM());
     	  model.addAttribute("codeList", codeList);	    
 
-    	  // 메인화면 공지사항 출력
+    	  // 메인화면 공지사항 출력	    
 	      Page<BoardDTO> boardList = boardService.paging(pageable);
 	      int blockLimit = 3;
 	      int startPage = (((int)(Math.ceil((double)pageable.getPageNumber() / blockLimit))) - 1) * blockLimit + 1; // 1 4 7 10 ~~
@@ -91,7 +94,7 @@ public class MainController<S extends Session> {
 	      model.addAttribute("memberList", memberList);	      
 	      
 	      // 메인화면 빠른근태신청 출력
-	      LocalDate today = LocalDate.now();
+	      LocalDate today = LocalDate.now();    	
 	      DayOfWeek dayOfWeek = today.getDayOfWeek();
 	      model.addAttribute("nowDate", today+"("+dayOfWeek.getDisplayName(TextStyle.NARROW, Locale.KOREAN)+")");
 	      

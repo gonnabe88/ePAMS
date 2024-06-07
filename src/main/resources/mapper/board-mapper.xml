@@ -37,4 +37,10 @@
     <select id="findByFileId" parameterType="Long" resultType="boardFile">
         select * from board_file where id = #{id}
     </select>
+    
+    
+    <insert id="insertBoardImage" parameterType="boardImage" useGeneratedKeys="true" keyProperty="id">
+        insert into board_image(originalFileName, storedFileName)
+            values(#{originalFileName}, #{storedFileName})
+    </insert>
 </mapper>

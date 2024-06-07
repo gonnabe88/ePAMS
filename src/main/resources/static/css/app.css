@@ -7079,38 +7079,104 @@ fieldset:disabled .btn {
 }
 
 .carousel-img-1{
-		background-image: url(/images/kdb/KDB_3.png);
-		background-color: #845EC2;
+		background-image: url(/images/kdb/banner/office_1920x420.png);
+		/* background-color: #845EC2; */
 	    background-repeat: no-repeat;
 	    background-size: cover;
+	    background-position: center; /* 이미지가 정 중앙에 오도록 설정 */
 	    position: relative;
-	    height: 350vh;
+	    height: 35vh;
+}
+
+
+
+@media (max-width: 1100px) {
+	.carousel-img-1{
+		background-image: url(/images/kdb/banner/office_1400x360.png);
+	    background-repeat: no-repeat;
+	    background-size: cover;
+	    background-position: center; /* 이미지가 정 중앙에 오도록 설정 */
+	    position: relative;
+	    height: 35vh;
+	}
 }
 	
-@media (max-width: 575.98px) {
+@media (max-width: 550px) {
 	.carousel-img-1{
-		background-image: url(/images/kdb/BACKGROUND3.png);
+		background-image: url(/images/kdb/banner/office_400x260.png);
 	    background-repeat: no-repeat;
 	    background-size: cover;
+	    background-position: center; /* 이미지가 정 중앙에 오도록 설정 */
 	    position: relative;
 	    height: 35vh;
 	}
 }
 
+
 .carousel-img-2{
-		background-image: url(/images/kdb/KDB_4.png);
-		background-color: #2C73D2;
+		background-image: url(/images/kdb/banner/right_shifted_1920x420_from_user.png);
+		/* background-color: #2C73D2; */
 	    background-repeat: no-repeat;
 	    background-size: cover;
+	    background-position: center; /* 이미지가 정 중앙에 오도록 설정 */
 	    position: relative;
 	    height: 35vh;
 }
-	
-@media (max-width: 575.98px) {
+
+
+@media (max-width: 1100px) {
 	.carousel-img-2{
-		background-image: url(/images/kdb/BACKGROUND4.png);
+		background-image: url(/images/kdb/banner/right_shifted_1400x340_from_user.png);
 	    background-repeat: no-repeat;
 	    background-size: cover;
+	    background-position: center; /* 이미지가 정 중앙에 오도록 설정 */
+	    position: relative;
+	    height: 35vh;
+	}
+}
+
+	
+@media (max-width: 550px) {
+	.carousel-img-2{
+		background-image: url(/images/kdb/banner/right_shifted_400x260_from_user.png);
+	    background-repeat: no-repeat;
+	    background-size: cover;
+	    background-position: center; /* 이미지가 정 중앙에 오도록 설정 */
+	    position: relative;
+	    height: 35vh;
+	}
+}
+
+
+.carousel-img-3{
+		background-image: url(/images/kdb/banner/latest_image_1920x420.png);
+		/* background-color: #2C73D2; */
+	    background-repeat: no-repeat;
+	    background-size: cover;
+	    background-position: center; /* 이미지가 정 중앙에 오도록 설정 */
+	    position: relative;
+	    height: 35vh;
+}
+
+
+@media (max-width: 1100px) {
+	.carousel-img-3{
+		background-image: url(/images/kdb/banner/latest_image_1400x360.png);
+	    background-repeat: no-repeat;
+	    background-size: cover;
+	    background-position: center; /* 이미지가 정 중앙에 오도록 설정 */
+	    position: relative;
+	    height: 35vh;
+	}
+}
+
+	
+@media (max-width: 550px) {
+	.carousel-img-3{
+		background-image: url(/images/kdb/banner/latest_image_400x260.png);
+	    background-repeat: no-repeat;
+	    background-size: cover;
+	    background-position: center; /* 이미지가 정 중앙에 오도록 설정 */
 	    position: relative;
 	    height: 35vh;
 	}

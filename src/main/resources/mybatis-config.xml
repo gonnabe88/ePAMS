@@ -5,5 +5,6 @@
         <typeAlias type="com.kdb.common.dto.BoardDTO" alias="board"></typeAlias>
         <typeAlias type="com.kdb.common.dto.BoardFileDTO" alias="boardFile"></typeAlias>
         <typeAlias type="com.kdb.common.dto.MemberDTO" alias="member"></typeAlias>        
+        <typeAlias type="com.kdb.common.dto.BoardImageDTO" alias="boardImage"></typeAlias>
     </typeAliases>
 </configuration>

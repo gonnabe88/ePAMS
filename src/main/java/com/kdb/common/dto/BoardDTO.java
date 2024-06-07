@@ -2,6 +2,7 @@ package com.kdb.common.dto;
 
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -14,7 +15,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-// DTO(Data Transfer Object), VO, Bean,         Entity
+// DTO(Data Transfer Object), VO, Bean, Entity
 @Getter
 @Setter
 @ToString
@@ -34,17 +35,21 @@ public class BoardDTO {
     private String originalFileName; // 원본 파일 이름
     private String storedFileName; // 서버 저장용 파일 이름
     private int fileAttached; // 파일 첨부 여부(첨부 1, 미첨부 0)
+    
+    private boolean isNew;
+    private String category;
 
-    public BoardDTO(Long id, String boardWriter, byte[] boardContents, String boardTitle, int boardHits, LocalDateTime boardCreatedTime) {
+    public BoardDTO(Long id, String boardWriter, byte[] boardContents, String boardTitle, String category, int boardHits, LocalDateTime boardCreatedTime) {
         this.id = id;
         this.boardWriter = boardWriter;
         this.boardContents = new String(boardContents, StandardCharsets.UTF_8);
         this.boardTitle = boardTitle;
         this.boardHits = boardHits;
         this.boardCreatedTime = boardCreatedTime;
-    }
-   
-    
+        this.isNew = isNewBoard(boardCreatedTime);
+        this.category = category;
+    }   
+
     public static BoardDTO toBoardDTO(BoardEntity boardEntity) {
         BoardDTO boardDTO = new BoardDTO();
         boardDTO.setId(boardEntity.getId());
@@ -52,9 +57,11 @@ public class BoardDTO {
         boardDTO.setBoardPass(boardEntity.getBoardPass());
         boardDTO.setBoardTitle(boardEntity.getBoardTitle());
         boardDTO.setBoardContents(new String(boardEntity.getBoardContents(), StandardCharsets.UTF_8));
+        boardDTO.setCategory(boardEntity.getCategory());
         boardDTO.setBoardHits(boardEntity.getBoardHits());
         boardDTO.setBoardCreatedTime(boardEntity.getCreatedTime());
         boardDTO.setBoardUpdatedTime(boardEntity.getUpdatedTime());
+        boardDTO.setNew(isNewBoard(boardEntity.getCreatedTime()));
         if (boardEntity.getFileAttached() == 0) {
             boardDTO.setFileAttached(boardEntity.getFileAttached()); // 0
         } else {
@@ -70,5 +77,10 @@ public class BoardDTO {
         }
 
         return boardDTO;
+    }
+    
+    // 최근 7일 이내에 등록된 게시글이면 New
+    private static boolean isNewBoard(LocalDateTime boardCreatedTime) {
+        return boardCreatedTime != null && ChronoUnit.DAYS.between(boardCreatedTime, LocalDateTime.now()) <= 7;
     }
 }

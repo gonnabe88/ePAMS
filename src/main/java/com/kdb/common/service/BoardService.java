@@ -21,6 +21,7 @@ import com.kdb.common.repository.BoardFileRepository;
 import com.kdb.common.repository.BoardRepository;
 import com.kdb.common.repository.BoardRepository2;
 import com.kdb.common.dto.BoardFileDTO;
+import com.kdb.common.dto.BoardImageDTO;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -36,6 +37,12 @@ public class BoardService {
     private final BoardRepository2 boardRepository2;
 
     private final BoardFileRepository boardFileRepository;
+    
+    // 게시물 내 이미지 저장
+    public void saveBoardImage(BoardImageDTO boardImageDTO) {
+    	boardRepository2.insertBoardImage(boardImageDTO);
+    }
+    
     
 
     public BoardDTO update(BoardDTO boardDTO) throws IOException {
@@ -161,7 +168,8 @@ public class BoardService {
         				board.getId(), 
         				board.getBoardWriter(), 
         				board.getBoardContents() , 
-        				board.getBoardTitle(),         				
+        				board.getBoardTitle(),      
+        				board.getCategory(),
         				board.getBoardHits(), 
         				board.getCreatedTime()));
         

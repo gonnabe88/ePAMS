@@ -6,8 +6,9 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kdb.common.dto.BoardDTO;
-import com.kdb.common.entity.BoardEntity;
 import com.kdb.common.dto.BoardFileDTO;
+import com.kdb.common.dto.BoardImageDTO;
+import com.kdb.common.entity.BoardEntity;
 
 import lombok.RequiredArgsConstructor;
 
@@ -32,6 +33,11 @@ public class BoardRepository2 {
     public void update(BoardEntity boardEntity) {
         sql.update("Board.update", boardEntity);
     }
+    
+    public void insertBoardImage(BoardImageDTO boardImageDTO) {
+    	sql.insert("Board.insertBoardImage", boardImageDTO);
+    }
+    
     
     
 }

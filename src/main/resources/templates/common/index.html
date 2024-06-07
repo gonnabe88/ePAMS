@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" 
-xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
-xmlns:sec="http://www.thymeleaf.org" layout:decorate="~{common/layout/layout}">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.thymeleaf.org" layout:decorate="~{common/layout/layout}">
 
 <head>
 <!-- (start) private script -->
@@ -19,7 +17,8 @@ xmlns:sec="http://www.thymeleaf.org" layout:decorate="~{common/layout/layout}">
 		<div class="row no-drag">
 			<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
 				<div class="carousel-indicators">
-					<button type="button" style="border-radius: 50%; width: 10px; height: 10px;" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+					<button type="button" style="border-radius: 50%; width: 10px; height: 10px;" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true"
+						aria-label="Slide 1"></button>
 					<button type="button" style="border-radius: 50%; width: 10px; height: 10px;" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
 					<button type="button" style="border-radius: 50%; width: 10px; height: 10px;" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
 					<!--	<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
@@ -34,33 +33,13 @@ xmlns:sec="http://www.thymeleaf.org" layout:decorate="~{common/layout/layout}">
 								<div class="align-items-center ms-5">
 									<div class="col-lg-12 pe-xl-12">
 										<div class="row">
-											<p class="banner_text mt-5 mb-5">"외부망근태시스템"</p>
+											<p class="banner_text mt-5 mb-5">
+												<span style="background-color: rgba(255, 255, 255, 0.5); color: #25396f;"></span>
+											</p>
 										</div>
-										<h2 style="color: white;">ePAMS에 오신걸</h2>
-										<h2 style="color: white;">진심으로 환영합니다</h2>
-										<h2 style="color: white;"></h2>
+										<span class="h2 mt-5 mb-5" style="background-color: rgba(255, 255, 255, 0.5); color: #25396f;"></span><br> <span class="h2 mt-5 mb-5"
+											style="background-color: rgba(255, 255, 255, 0.5); color: #25396f;"></span>
 									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="carousel-item">
-						<!-- <div class="bg-no-repeat bg-cover bg-50 px-8"
-							style="background-image: url(images/kdb/BACKGROUND4.png); background-repeat: no-repeat; background-size: cover; position: relative; height: 50vh;"> -->
-						<div class="carousel-img-1">
-							<div class="container-md">
-								<div class="align-items-center ms-5">
-									<div class="col-lg-12 pe-xl-12">
-										<div class="row">
-											<p class="banner_text mt-5 mb-5">"연차 및 저축휴가"</p>
-										</div>
-										<h2 style="color: white;">언제 어디서든</h2>
-										<h2 style="color: white;">편리하게 신청하세요</h2>
-										<h2 style="color: white;"></h2>
-									</div>
-								</div>
-								<div class="d-grid gap-2 d-flex justify-content-end me-4 mt-4">
-									<button class="btn btn-primary btn-sm" type="button" style="border-color: white;">바로가기</button>
 								</div>
 							</div>
 						</div>
@@ -72,16 +51,34 @@ xmlns:sec="http://www.thymeleaf.org" layout:decorate="~{common/layout/layout}">
 							<div class="container-md">
 								<div class="align-items-center ms-5">
 									<div class="col-lg-12 pe-xl-12">
+
 										<div class="row">
-											<p class="banner_text mt-5 mb-5">"직원조회"</p>
+											<p class="banner_text mt-5 mb-4" style="color: #25396f;">"연차 및 저축휴가"</p>
 										</div>
-										<h2 style="color: white;">언제 어디서든</h2>
-										<h2 style="color: white;">간편하게 검색하세요</h2>
-										<h2 style="color: white;"></h2>
+										<h2 style="color: #25396f;">언제 어디서든</h2>
+										<h2 style="color: #25396f;">편리하게 신청하세요</h2>
 									</div>
+									<a href="/dtm/main"> <span class="badge text-bg-primary">바로가기</span>
+									</a>
 								</div>
-								<div class="d-grid gap-2 d-flex justify-content-end me-4 mt-4">
-									<button class="btn btn-info btn-sm" type="button" style="border-color: white;" onclick="scrollToDiv()">바로가기</button>
+							</div>
+						</div>
+					</div>
+					<div class="carousel-item">
+						<!-- <div class="bg-no-repeat bg-cover bg-50 px-8"
+							style="background-image: url(images/kdb/BACKGROUND4.png); background-repeat: no-repeat; background-size: cover; position: relative; height: 50vh;"> -->
+						<div class="carousel-img-3">
+							<div class="container-md">
+								<div class="align-items-center ms-5">
+									<div class="col-lg-12 pe-xl-12">
+										<div class="row">
+											<p class="banner_text mt-5 mb-4" style="color: #25396f;">"직원조회"</p>
+										</div>
+										<h2 style="color: #25396f;">언제 어디서든</h2>
+										<h2 style="color: #25396f;">간편하게 검색하세요</h2>
+										<h2 style="color: #25396f;"></h2>
+									</div>
+									<span class="badge text-bg-primary" onclick="scrollToDiv()">바로가기</span>
 								</div>
 							</div>
 						</div>
@@ -103,19 +100,18 @@ xmlns:sec="http://www.thymeleaf.org" layout:decorate="~{common/layout/layout}">
 					<h5 class="text-start">
 						<i class="bi bi-stars"></i> 빠른 신청
 					</h5>
-				<div class="container">
-					<div class="row d-flex justify-content-end">
-						
-						<h6 class="text-end">
-							<a href="/dtm/main" style="text-decoration: none; color: inherit;">
-								직접 신청하러 가기 <i class="bi bi-arrow-right-circle-fill"></i>
-							</a>
-						</h6>
-						
+					<div class="container">
+						<div class="row d-flex justify-content-end">
+
+							<h6 class="text-end">
+								<a href="/dtm/main" style="text-decoration: none; color: inherit;"> 직접 신청하러 가기 <i class="bi bi-arrow-right-circle-fill"></i>
+								</a>
+							</h6>
+
+						</div>
 					</div>
 				</div>
-				</div>
-				
+
 				<div class="d-flex justify-content-center">
 					<div class="row col-lg-12 col-md-12 d-flex justify-content-center">
 						<div class="row col-lg-12 col-md-12 col-sm-12">
@@ -126,12 +122,14 @@ xmlns:sec="http://www.thymeleaf.org" layout:decorate="~{common/layout/layout}">
 											<div class="card-body align-content-center" style="padding: 0.8rem;">
 												<div class="d-flex justify-content-center">
 													<div class="col-10 mb-0 align-content-center">
-														<h6 style="margin-bottom: 0;"><span class="badge rounded-pill bg-primary me-1">오늘</span>연차휴가 1일</h6>
+														<h6 style="margin-bottom: 0;">
+															<span class="badge rounded-pill bg-primary me-1">오늘</span>연차휴가 1일
+														</h6>
 														<h7>[[${nowDate}]]</h7>
 													</div>
 													<div class="col-2 mb-0 align-content-center">
 														<div class="d-flex justify-content-end">
-															<div class="btn btn-primary btn-sm" style="--bs-btn-padding-y:0.35rem;" th:date="${nowDate}" th:onclick="ApplAlert(this.getAttribute('date'))">신청</div>
+															<div class="btn btn-primary btn-sm" style="--bs-btn-padding-y: 0.35rem;" th:date="${nowDate}" th:onclick="ApplAlert(this.getAttribute('date'))">신청</div>
 														</div>
 													</div>
 												</div>
@@ -147,12 +145,14 @@ xmlns:sec="http://www.thymeleaf.org" layout:decorate="~{common/layout/layout}">
 											<div class="card-body align-content-center" style="padding: 0.8rem;">
 												<div class="d-flex justify-content-center ">
 													<div class="col-10 mb-0 align-content-center">
-														<h6 style="margin-bottom: 0;"><span class="badge rounded-pill bg-primary me-1">오늘</span>연차휴가 오전 반차</h6>
+														<h6 style="margin-bottom: 0;">
+															<span class="badge rounded-pill bg-primary me-1">오늘</span>연차휴가 오전 반차
+														</h6>
 														<h7>[[${nowDate}]]</h7>
 													</div>
 													<div class="col-2 mb-0 align-content-center">
 														<div class="d-flex justify-content-end">
-															<div class="btn btn-primary btn-sm" style="--bs-btn-padding-y:0.35rem;" th:date="${nowDate}" th:onclick="ApplAlert(this.getAttribute('date'))">신청</div>
+															<div class="btn btn-primary btn-sm" style="--bs-btn-padding-y: 0.35rem;" th:date="${nowDate}" th:onclick="ApplAlert(this.getAttribute('date'))">신청</div>
 														</div>
 													</div>
 												</div>
@@ -168,12 +168,14 @@ xmlns:sec="http://www.thymeleaf.org" layout:decorate="~{common/layout/layout}">
 											<div class="card-body align-content-center" style="padding: 0.8rem;">
 												<div class="d-flex justify-content-center ">
 													<div class="col-10 mb-0 align-content-center">
-														<h6 style="margin-bottom: 0;"><span class="badge rounded-pill bg-primary me-1">오늘</span>연차휴가 오전 반반차</h6>
+														<h6 style="margin-bottom: 0;">
+															<span class="badge rounded-pill bg-primary me-1">오늘</span>연차휴가 오전 반반차
+														</h6>
 														<h7>[[${nowDate}]]</h7>
 													</div>
 													<div class="col-2 mb-0 align-content-center">
 														<div class="d-flex justify-content-end">
-															<div class="btn btn-primary btn-sm" style="--bs-btn-padding-y:0.35rem;" th:date="${nowDate}" th:onclick="ApplAlert(this.getAttribute('date'))">신청</div>
+															<div class="btn btn-primary btn-sm" style="--bs-btn-padding-y: 0.35rem;" th:date="${nowDate}" th:onclick="ApplAlert(this.getAttribute('date'))">신청</div>
 														</div>
 													</div>
 												</div>
@@ -189,19 +191,21 @@ xmlns:sec="http://www.thymeleaf.org" layout:decorate="~{common/layout/layout}">
 				<div class="d-flex justify-content-center mt-4">
 					<div class="row col-lg-12 col-md-12 d-flex justify-content-center">
 						<div class="row col-lg-12 col-md-12 col-sm-12">
-							<div class="col-lg-4" style="height: 5rem;">
-								<div data-aos="fade-up" data-aos-offset="100" data-aos-easing="ease-out-cubic" data-aos-duration="1000">
+							<div class="col-lg-4">
+								<div data-aos="fade-up" data-aos-offset="50" data-aos-easing="ease-out-cubic" data-aos-duration="1000">
 									<section class="section">
-										<div class="shadow card">
+										<div class="shadow card" style="margin-bottom: 1.0rem;">
 											<div class="card-body align-content-center" style="padding: 0.8rem;">
 												<div class="d-flex justify-content-center">
 													<div class="col-10 mb-0 align-content-center">
-														<h6 style="margin-bottom: 0;"><span class="badge rounded-pill bg-info me-1">내일</span>연차휴가 1일</h6>
+														<h6 style="margin-bottom: 0;">
+															<span class="badge rounded-pill bg-info me-1">내일</span>연차휴가 1일
+														</h6>
 														<h7>[[${tomorrowDate}]]</h7>
 													</div>
 													<div class="col-2 mb-0 align-content-center">
 														<div class="d-flex justify-content-end">
-															<div class="btn btn-info btn-sm" style="--bs-btn-padding-y:0.35rem;" th:date="${tomorrowDate}" th:onclick="ApplAlert(this.getAttribute('date'))">신청</div>
+															<div class="btn btn-info btn-sm" style="--bs-btn-padding-y: 0.35rem;" th:date="${tomorrowDate}" th:onclick="ApplAlert(this.getAttribute('date'))">신청</div>
 														</div>
 													</div>
 												</div>
@@ -210,19 +214,21 @@ xmlns:sec="http://www.thymeleaf.org" layout:decorate="~{common/layout/layout}">
 									</section>
 								</div>
 							</div>
-							<div class="col-lg-4" style="height: 5rem;">
-								<div data-aos="fade-up" data-aos-offset="100" data-aos-easing="ease-out-cubic" data-aos-duration="1000">
+							<div class="col-lg-4">
+								<div data-aos="fade-up" data-aos-offset="50" data-aos-easing="ease-out-cubic" data-aos-duration="1000">
 									<section class="section">
-										<div class="shadow card">
+										<div class="shadow card" style="margin-bottom: 1.0rem;">
 											<div class="card-body align-content-center" style="padding: 0.8rem;">
 												<div class="d-flex justify-content-center ">
 													<div class="col-10 mb-0 align-content-center">
-														<h6 style="margin-bottom: 0;"><span class="badge rounded-pill bg-info me-1">내일</span>연차휴가 오전(반차)</h6>
+														<h6 style="margin-bottom: 0;">
+															<span class="badge rounded-pill bg-info me-1">내일</span>연차휴가 오전 반차
+														</h6>
 														<h7>[[${tomorrowDate}]]</h7>
 													</div>
 													<div class="col-2 mb-0 align-content-center">
 														<div class="d-flex justify-content-end">
-															<div class="btn btn-info btn-sm" style="--bs-btn-padding-y:0.35rem;" th:date="${tomorrowDate}" th:onclick="ApplAlert(this.getAttribute('date'))">신청</div>
+															<div class="btn btn-info btn-sm" style="--bs-btn-padding-y: 0.35rem;" th:date="${tomorrowDate}" th:onclick="ApplAlert(this.getAttribute('date'))">신청</div>
 														</div>
 													</div>
 												</div>
@@ -231,19 +237,21 @@ xmlns:sec="http://www.thymeleaf.org" layout:decorate="~{common/layout/layout}">
 									</section>
 								</div>
 							</div>
-							<div class="col-lg-4" style="height: 5rem;">
-								<div data-aos="fade-up" data-aos-offset="100" data-aos-easing="ease-out-cubic" data-aos-duration="1000">
+							<div class="col-lg-4">
+								<div data-aos="fade-up" data-aos-offset="50" data-aos-easing="ease-out-cubic" data-aos-duration="1000">
 									<section class="section">
-										<div class="shadow card">
+										<div class="shadow card" style="margin-bottom: 1.0rem;">
 											<div class="card-body align-content-center" style="padding: 0.8rem;">
 												<div class="d-flex justify-content-center ">
 													<div class="col-10 mb-0 align-content-center">
-														<h6 style="margin-bottom: 0;"><span class="badge rounded-pill bg-info me-1">내일</span>연차휴가 오전(반반차)</h6>
+														<h6 style="margin-bottom: 0;">
+															<span class="badge rounded-pill bg-info me-1">내일</span>연차휴가 오전 반반차
+														</h6>
 														<h7>[[${tomorrowDate}]]</h7>
 													</div>
 													<div class="col-2 mb-0 align-content-center">
 														<div class="d-flex justify-content-end">
-															<div class="btn btn-info btn-sm" style="--bs-btn-padding-y:0.35rem;" th:date="${tomorrowDate}" th:onclick="ApplAlert(this.getAttribute('date'))">신청</div>
+															<div class="btn btn-info btn-sm" style="--bs-btn-padding-y: 0.35rem;" th:date="${tomorrowDate}" th:onclick="ApplAlert(this.getAttribute('date'))">신청</div>
 														</div>
 													</div>
 												</div>
@@ -255,7 +263,8 @@ xmlns:sec="http://www.thymeleaf.org" layout:decorate="~{common/layout/layout}">
 						</div>
 					</div>
 				</div>
-				
+
+
 			</div>
 
 		</div>
@@ -279,21 +288,28 @@ xmlns:sec="http://www.thymeleaf.org" layout:decorate="~{common/layout/layout}">
 							<div data-aos="fade-up" class="aos-init aos-animate">
 								<div class="shadow card">
 									<div class="card-body">
-										<a class="card-title" th:href="@{|/board/${board.id}|}"><h6 th:text="${board.boardTitle}"></h6></a>
-											<div class="d-flex flex-row mb-3 gap-3">
-												<div>
-													<i class="bi bi-building"></i>
-													<h7 th:text="${board.boardWriter}"></h7>
-												</div>
-												<div>
-													<i class="bi bi-calendar-check"></i>
-													<h7 th:text="${#temporals.format(board.boardCreatedTime, 'yyyy-MM-dd')}"></h7>
-												</div>
-												<div>
-													<i class="bi bi-eye"></i>
-													<h7 th:text="${board.boardHits}"></h7>
-												</div>
+									<span th:if="${board.category}" th:classappend="|badge badge-sm mb-2 ${(board.category == 'IT') ? 'bg-primary' : (board.category == '인사') ? 'bg-info' : ''}|" style="--bs-badge-padding-x: .35rem" th:text="${board.category}"></span>
+										<a class="card-title" th:href="@{|/board/${board.id}|}">
+											<h6 style="display: flex; align-items: center;">
+												<span th:text="${board.boardTitle}" style="margin-right: 0.5rem;"></span> 
+												<span th:if="${board.isNew}" class="badge rounded-pill bg-warning text-dark" style="--bs-badge-font-size: .80em;">new</span>
+											</h6>
+
+										</a>
+										<div class="d-flex flex-row mb-3 gap-3">
+											<div>
+												<i class="bi bi-building"></i>
+												<h7 th:text="${board.boardWriter}"></h7>
 											</div>
+											<div>
+												<i class="bi bi-calendar-check"></i>
+												<h7 th:text="${#temporals.format(board.boardCreatedTime, 'yyyy-MM-dd')}"></h7>
+											</div>
+											<div>
+												<i class="bi bi-eye"></i>
+												<h7 th:text="${board.boardHits}"></h7>
+											</div>
+										</div>
 										<p class="card-text" th:utext="${board.boardContents}"></p>
 									</div>
 								</div>
@@ -302,8 +318,6 @@ xmlns:sec="http://www.thymeleaf.org" layout:decorate="~{common/layout/layout}">
 					</div>
 				</div>
 			</div>
-
-
 		</div>
 
 		<div class="divider">
@@ -312,46 +326,48 @@ xmlns:sec="http://www.thymeleaf.org" layout:decorate="~{common/layout/layout}">
 			</div>
 		</div>
 
-		<div id="searchDiv">
-			<div class="container">
-				<div class="row d-flex justify-content-start mb-2">
-					<h5 class="text-start">
-						<i class="bi bi-search"></i> 직원검색
-					</h5>
+		<div id="main-content">
+			<div id="searchDiv">
+				<div class="container">
+					<div class="row d-flex justify-content-start mb-2">
+						<h5 class="text-start">
+							<i class="bi bi-search"></i> 직원검색
+						</h5>
+					</div>
 				</div>
-			</div>
-			<div class="d-flex justify-content-center">
-
-				<div class="row">
-					<div class="col-12">
-						<div class="shadow card">
-							<div class="card-header">
-								<h4 class="card-title">담당자가 궁금하신가요?</h4>
-							</div>
-							<div class="card-content">
-								<div class="card-body">
-									<p>이름, 팀/부서, 업무명으로 검색하세요</p>
-									<div class="row">
-										<div class="col-12 mb-1">
-											<div class="input-group mb-3">
-												<span class="input-group-text" id="basic-addon1"><i class="bi bi-search"></i></span> <input type="text" id="searchMember" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2">
-												<button class="btn btn-primary" type="button" id="button-addon2" onclick="search()">조회</button>
+				<div class="d-flex justify-content-center">
+					<div class="row">
+						<div class="col-12">
+							<div class="shadow card">
+								<div class="card-header">
+									<h4 class="card-title">담당자가 궁금하신가요?</h4>
+								</div>
+								<div class="card-content">
+									<div class="card-body">
+										<p>이름, 팀/부서, 업무명으로 검색하세요</p>
+										<div class="row">
+											<div class="col-12 mb-1">
+												<div class="input-group mb-3">
+													<span class="input-group-text" id="basic-addon1"><i class="bi bi-search"></i></span> <input type="text" id="searchMember" class="form-control" placeholder="Recipient's username"
+														aria-label="Recipient's username" aria-describedby="button-addon2">
+													<button class="btn btn-primary" type="button" id="button-addon2" onclick="search()">조회</button>
+												</div>
 											</div>
 										</div>
 									</div>
 								</div>
-							</div>
 
-							<div class="divider">
-								<div class="divider-text" style="background-color: transparent;">
-									<h5 class="card-title">조회결과</h5>
+								<div class="divider">
+									<div class="divider-text" style="background-color: transparent;">
+										<h5 class="card-title">조회결과</h5>
+									</div>
+
 								</div>
-
-							</div>
-							<div class="d-flex justify-content-center">
-								<div class="row col-lg-12 col-md-12 col-sm-12">
-									<div class="col-12 justify-self-center">
-										<div id="memberList"></div>
+								<div class="d-flex justify-content-center">
+									<div class="row col-lg-12 col-md-12 col-sm-12">
+										<div class="col-12 justify-self-center">
+											<div id="memberList"></div>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -360,13 +376,13 @@ xmlns:sec="http://www.thymeleaf.org" layout:decorate="~{common/layout/layout}">
 				</div>
 			</div>
 		</div>
-	
+
 	</div>
 
 	<!-- (start) private script -->
 	<th:block layout:fragment="script">
-	    <script src="/extensions/webauthn/js/base64js.min.js"></script>
-    	<script src="/extensions/webauthn/js/custom.js"></script>
+		<script src="/extensions/webauthn/js/base64js.min.js"></script>
+		<script src="/extensions/webauthn/js/custom.js"></script>
 		<script>		
 		
         function scrollToDiv() {
@@ -405,8 +421,8 @@ xmlns:sec="http://www.thymeleaf.org" layout:decorate="~{common/layout/layout}">
 				duration: 1000
 			});
 		</script>
-		
-		 <script th:inline="javascript">
+
+		<script th:inline="javascript">
 			$(document).ready(function() {	
 				const simpleauth = /*[[${simpleauth}]]*/ simpleauth
 				const username = /*[[${username}]]*/ username
@@ -526,10 +542,10 @@ xmlns:sec="http://www.thymeleaf.org" layout:decorate="~{common/layout/layout}">
 					});
 			}
 		</script>
-		
 
-		
-		
+
+
+
 		<script>
 			$(document).ready(function() {
 				$(".owl-carousel").owlCarousel({

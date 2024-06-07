@@ -42,6 +42,9 @@ public class BoardEntity extends BaseEntity {
     @Column // 크기 255, null 가능
     private String boardPass;
 
+    @Column(length = 16, nullable = false)
+    private String category;
+
     @Column
     private int boardHits;
 
@@ -60,6 +63,7 @@ public class BoardEntity extends BaseEntity {
         boardEntity.setBoardPass(boardDTO.getBoardPass());
         boardEntity.setBoardTitle(boardDTO.getBoardTitle());
         boardEntity.setBoardContents(boardDTO.getBoardContents().getBytes(StandardCharsets.UTF_8));
+        boardEntity.setCategory(boardDTO.getCategory());
         boardEntity.setBoardHits(0);
         boardEntity.setFileAttached(0); // 파일 없음.
         return boardEntity;
@@ -72,6 +76,7 @@ public class BoardEntity extends BaseEntity {
         boardEntity.setBoardPass(boardDTO.getBoardPass());
         boardEntity.setBoardTitle(boardDTO.getBoardTitle());
         boardEntity.setBoardContents(boardDTO.getBoardContents().getBytes(StandardCharsets.UTF_8));
+        boardEntity.setCategory(boardDTO.getCategory());
         boardEntity.setBoardHits(boardDTO.getBoardHits());
         return boardEntity;
     }
@@ -82,6 +87,7 @@ public class BoardEntity extends BaseEntity {
         boardEntity.setBoardPass(boardDTO.getBoardPass());
         boardEntity.setBoardTitle(boardDTO.getBoardTitle());
         boardEntity.setBoardContents(boardDTO.getBoardContents().getBytes(StandardCharsets.UTF_8));
+        boardEntity.setCategory(boardDTO.getCategory());
         boardEntity.setBoardHits(0);
         boardEntity.setFileAttached(1); // 파일 있음.
         return boardEntity;
@@ -94,6 +100,7 @@ public class BoardEntity extends BaseEntity {
         boardEntity.setBoardPass(boardDTO.getBoardPass());
         boardEntity.setBoardTitle(boardDTO.getBoardTitle());
         boardEntity.setBoardContents(boardDTO.getBoardContents().getBytes(StandardCharsets.UTF_8));
+        boardEntity.setCategory(boardDTO.getCategory());
         boardEntity.setBoardHits(boardDTO.getBoardHits());
         boardEntity.setFileAttached(1); // 파일 있음.
         return boardEntity;

@@ -1,9 +1,13 @@
 package com.kdb.common.controller;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -23,13 +27,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriUtils;
 
 import com.kdb.common.dto.BoardDTO;
+import com.kdb.common.dto.BoardFileDTO;
+import com.kdb.common.dto.BoardImageDTO;
 import com.kdb.common.dto.CommentDTO;
 import com.kdb.common.service.BoardService;
 import com.kdb.common.service.CommentService;
-import com.kdb.common.dto.BoardFileDTO;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -61,6 +67,8 @@ public class BoardController {
 	    if (authentication == null || authentication instanceof AnonymousAuthenticationToken) return null;
 	    return authentication;
 	}
+	
+	
 
 	
     @GetMapping("/{boardid}/download/{fileid}")
@@ -203,5 +211,33 @@ public class BoardController {
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
         return "/common/list";
+    }
+    
+    // 이미지 업로드 엔드포인트 추가
+    @PostMapping("/upload/image")
+    public ResponseEntity<?> uploadImage(@RequestParam("file") MultipartFile file) {
+        String uploadDir = "C:/epams/"; // 이미지 저장 경로 설정
+        try {
+            // 파일 저장
+            String originalFilename = file.getOriginalFilename();
+            String storedFilename = UUID.randomUUID().toString() + "_" + originalFilename;
+            Path path = Paths.get(uploadDir + storedFilename);
+            Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+
+            // 파일 정보 데이터베이스에 저장
+            BoardImageDTO boardImageDTO = new BoardImageDTO();
+            boardImageDTO.setOriginalFileName(originalFilename);
+            boardImageDTO.setStoredFileName(storedFilename);
+            // 필요시 boardId를 설정할 수 있음
+            boardService.saveBoardImage(boardImageDTO);
+
+            // URL 생성
+            String fileUrl = "/board/upload/image/" + storedFilename;
+
+            return ResponseEntity.ok().body("{\"location\":\"" + fileUrl + "\"}");
+        } catch (IOException e) {
+            log.error("Error uploading file", e);
+            return ResponseEntity.status(500).body("Error uploading file");
+        }
     }
 }

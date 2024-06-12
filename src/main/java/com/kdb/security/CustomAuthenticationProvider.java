@@ -12,6 +12,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
+import com.kdb.common.dto.LogLoginDTO;
+import com.kdb.common.repository.LogRepository;
 import com.kdb.common.service.EncShaService;
 import com.kdb.common.service.LoginService;
 
@@ -25,6 +27,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
 	private final EncShaService encshaService;
 	private final LoginService loginService;
+	private final LogRepository logRepository;
 
 	@Autowired
 	private UserDetailsService userDetailsService;
@@ -69,14 +72,18 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 		}
 		
 		// 사용자가 없는 경우
-		if (userDetails == null) 
-			throw new UsernameNotFoundException("User not found");		
+		if (userDetails == null) {
+			logRepository.saveLoginLog(LogLoginDTO.getLogLoginDTO(username, "Unknown User", false));
+			throw new UsernameNotFoundException("User not found");
+		}
+					
 
 		//패스워드가 일지하지 않는 경우
 		log.warn("입력 패스워드(hash) : "+ password);
 		log.warn("저장된 패스워드 : "+ userDetails.getPassword());
 		if (!password.equals(userDetails.getPassword())) {
 			log.warn("패스워드 불일치");
+			logRepository.saveLoginLog(LogLoginDTO.getLogLoginDTO(username, "패스워드", false));
 			//임시로 테스트를 위해 패스워드 인증 예외처리
 			//throw new AuthenticationException("Invalid credentials") {};
 		}			
@@ -84,6 +91,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 		// 2차 인증(SMS,카카오,OTP,FIDO) 실패
 		if (!loginResult) {
 			log.warn("2차 인증 실패");
+			logRepository.saveLoginLog(LogLoginDTO.getLogLoginDTO(username, MFA, false));
 			throw new AuthenticationException("Invalid MFA credentials") {};
 		}			 
 		
@@ -91,6 +99,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 		Authentication authenticated = new UsernamePasswordAuthenticationToken(
 				userDetails, password, userDetails.getAuthorities());
 		
+		logRepository.saveLoginLog(LogLoginDTO.getLogLoginDTO(username, MFA, true));
 		return authenticated;
 	}
 

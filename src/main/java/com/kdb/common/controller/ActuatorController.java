@@ -1,4 +1,6 @@
-package com.kdb.admin;
+package com.kdb.common.controller;
+
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.actuate.health.HealthEndpoint;
@@ -8,25 +10,23 @@ import org.springframework.boot.actuate.metrics.MetricsEndpoint;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 /***
  * @author 140024
- * @implNote 관리자용 화면 controller
+ * @implNote Ac
  * @since 2024-06-09
  */
 @Slf4j
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/admin")
-public class AdminController {
-	
+public class ActuatorController {
+
     @Autowired
     private HealthEndpoint healthEndpoint;    
     
@@ -40,45 +40,9 @@ public class AdminController {
     private ObjectMapper objectMapper;
 
     private final LoggersEndpoint loggersEndpoint;
-
-	/***
-	 * @author 140024
-	 * @implNote 코드관리 (admin/code.html)
-	 * @since 2024-06-09
-	 */
-    @GetMapping("/code")
-    public String code(HttpServletRequest request) {
-        return "/admin/code";
-    }
     
-	/***
-	 * @author 140024
-	 * @implNote 사용자관리 (admin/user.html)
-	 * @since 2024-06-09
-	 */
-    @GetMapping("/user")
-    public String user(HttpServletRequest request) {
-        return "/admin/code";
-    }
- 
-	/***
-	 * @author 140024
-	 * @implNote 로그인 이력 (admin/login.html)
-	 * @since 2024-06-09
-	 */
-    @GetMapping("/login")
-    public String login(HttpServletRequest request) {
-        return "/admin/login";
-    }
- 
-	/***
-	 * @author 140024
-	 * @implNote spring acurator 제공 기본 상태체크 (admin/health.html)
-	 * @since 2024-06-09
-	 */
-    @GetMapping("/health")
-    public String health(Model model) {
-    	
+    @GetMapping("/actuator-data")
+    public String getActuatorData(Model model) throws JsonProcessingException {
         // Health data
         model.addAttribute("health", healthEndpoint.health());
         
@@ -88,8 +52,7 @@ public class AdminController {
         // Loggers data
         LoggersEndpoint.LoggersDescriptor loggersDescriptor = loggersEndpoint.loggers();
         model.addAttribute("loggers", loggersDescriptor.getLoggers());
-    	
-        return "/admin/actuator";
+        
+        return "/common/actuator";
     }
-    
 }

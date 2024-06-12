@@ -22,24 +22,62 @@
 	<link rel="stylesheet" href="/css/app.css">
 	<link rel="stylesheet" href="/css/app-dark.css">
 	<link rel="stylesheet" href="/extensions/sweetalert2/sweetalert2.min.css">
-	
-	    <style>
-    body {
-            margin: 0;
-            padding-bottom: 30px; /* Footer height */
-        }
-        .footer {
-            position: fixed;
-            left: 0;
-            bottom: 0;
-            width: 100%;
-            background-color: #f1f1f1;
-            text-align: center;
-            padding: 10px 0;
-            border-top: 1px solid #e7e7e7;
-        }    
-    </style>
 			
+    <style>
+
+		/* 리스트나 미리보기 화면에서 큰 컨텐츠가 오버플로되는 것을 방지 */
+		.card-body, .list-unstyled {
+		            max-width: 300px;
+		        }
+		        
+		@media (min-width: 370px) {
+			 .card-body, .list-unstyled {
+		            max-width: 340px;
+		        }
+		}
+		        
+		@media (min-width: 420px) {
+			 .card-body, .list-unstyled {
+		            max-width: 390px;
+		        }
+		}
+		
+		@media (min-width: 470px) {
+			 .card-body, .list-unstyled {
+		            max-width: 440px;
+		        }
+		}
+		
+		@media (min-width: 520px) {
+			 .card-body, .list-unstyled {
+		            max-width: 490px;
+		        }
+		}
+		
+		@media (min-width: 576px) {
+			 .card-body, .list-unstyled {
+		            max-width: 540px;
+		        }
+		}
+		
+		@media (min-width: 768px) {		
+			 .card-body, .list-unstyled {
+		            max-width: 100%;
+		        }
+		}
+       
+       /* 리스트나 미리보기 화면에서 큰 컨텐츠가 오버플로되는 것을 방지 */
+        .truncate-multiline {
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 3; /* 원하는 줄 수 */
+            overflow: hidden; /* 오버플로되면 표시하지 않음 */
+            text-overflow: ellipsis; /* 텍스트는 오버플로되면 ...줄임말 표시 */
+            max-width: 100%; /* 너비는 card-body에서 제한 */
+            max-height: 500px; /* 최대 높이 제한 */
+        }
+        
+    </style>
 	<th:block layout:fragment="css"></th:block>
 </head>
 

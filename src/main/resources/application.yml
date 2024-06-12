@@ -1,3 +1,10 @@
+# 사용자 정의 설정
+kdb:
+  filepath: C:/epams/ # 첨부파일, 이미지 등 저장할 filesystem 경로
+  indexBrdCnt: 3 # index 페이지에서 노출할 게시물 수
+  listBrdCnt: 3 # list 페이지에서 한 화면에 노출할 게시물 수
+  maxPageBtn: 5 # 모든 페이지네이션에서 최대로 노출할 버튼 수  
+
 # server port
 server:
   port: 8080
@@ -7,28 +14,41 @@ server:
       persistent: true
       tracking-modes: cookie
       cookie:
-        domain: localhost
-        #domain: epams.duckdns.org
-        #http-only: true
-        #path: /
-        #max-age: -1 # infinite
-        #secure: true # https only allowed
-        #sameSite: strict
+        #domain: localhost
+        domain: epams.duckdns.org
+        http-only: true
+        path: /
+        max-age: -1 # infinite
+        secure: true # https only allowed
+        sameSite: strict
+
+# webauthn & passkey
+authn:
+  display: ePAMS
+  hostname: ${server.servlet.session.cookie.domain} 
+  origin: https://${server.servlet.session.cookie.domain}
+  #origin: http://${server.servlet.session.cookie.domain}${server.port}
 
 # actuator
 management:
   endpoints:  
     web:
       exposure:
-        include: prometheus
+        include: "*"
+        #include: health,info,metrics
+        #include: prometheus
+  endpoint:
+    health:
+      show-details: always
 
 # spring
 spring:
+  application:
+    name: ePAMS
   servlet:
     multipart:
       maxFileSize: 512MB # 파일 하나의 최대 크기
       maxRequestSize: 512MB  # 한 번에 최대 업로드 가능 용량
-          
   devtools.livereload.enabled: true  
   
 #  datasource:

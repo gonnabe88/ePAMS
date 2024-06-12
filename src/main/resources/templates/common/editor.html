@@ -8,30 +8,39 @@
 	<script src="/extensions/tinymce/tinymce.min.js"></script>
 	<script src="/js/pages/tinymce.js"></script>
       <script>
+      
         tinymce.init({
             selector: '#open',
             plugins: [
                 "advlist", "accordion", "anchor", "autolink", "autoresize", "charmap", "code", "codesample",
                 "fullscreen",
                 "help", "image", "insertdatetime", "link", "lists", "media",
-                "nonbreaking", "pagebreak", "preview", "quickbars", "save", "searchreplace", "table", "template",
-                "visualblocks", "wordcount"
+                "nonbreaking", "pagebreak", "preview", "quickbars", "save", "searchreplace", "table", "visualblocks", "wordcount"
             ],
             branding: false,
-            promotion: false,
-            images_upload_url: '/board/upload/image', // 이미지 업로드 서버 엔드포인트
+            promotion: false,   
+            images_upload_url: 'image',
+            images_upload_base_path: '/board/upload/',
             automatic_uploads: true,
-            images_upload_handler: function (blobInfo, success, failure) {
+            images_reuse_filename: true,
+            relative_urls: false,
+            remove_script_host: false,
+            document_base_url: window.location.origin,
+            images_upload_handler : (blobInfo, progress) => new Promise((resolve, reject) => {
                 var xhr, formData;
-                xhr = new XMLHttpRequest();
-                xhr.withCredentials = false;
-                xhr.open('POST', '/board/upload/image'); // 서버 업로드 엔드포인트
-                
                 // CSRF 토큰 설정
                 var csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
                 var csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
+                
+                xhr = new XMLHttpRequest();
+                xhr.withCredentials = false;
+                xhr.open('POST', '/board/upload/image'); // 서버 업로드 엔드포인트    
                 xhr.setRequestHeader(csrfHeader, csrfToken);
 
+                xhr.upload.onprogress = (e) => {
+                    progress(e.loaded / e.total * 100);
+                  };
+                  
                 xhr.onload = function() {
                     var json;
                     try {
@@ -47,23 +56,38 @@
                             return;
                         }
                         console.log('Image uploaded successfully:', json.location); // 업로드된 이미지 URL을 로그로 출력
-                        success(json.location);
+                        resolve(json.location);
                     } catch (e) {
                         console.error('Error parsing JSON: ', e);
                         failure('Error parsing JSON: ' + e.message);
                     }
                 };
 
-                xhr.onerror = function() {
+                xhr.onerror = () => {
                     console.error('Error during the request.');
-                    failure('Error during the request.');
+                    reject('Image upload failed due to a XHR Transport error. Code: ' + xhr.status);
                 };
 
                 formData = new FormData();
+                console.log('blobInfo.filename():', blobInfo.filename()); // 업로드된 이미지 URL을 로그로 출력
                 formData.append('file', blobInfo.blob(), blobInfo.filename());
                 xhr.send(formData);
+            }),
+            setup: function(editor) {
+                editor.on('init', function() {
+                	console.log("init");
+                    editor.getBody().style.width = '100%';
+                });
+
+                editor.on('NodeChange', function(e) {
+					console.log("NodeChange");
+                    if (e && e.element.nodeName.toLowerCase() == 'img') {
+                        e.element.style.width = '300px';
+                    }
+                });
             }
         });
+        
     </script>
 	<script src="/extensions/dropzone/dropzone.js"></script>
 	<link rel="stylesheet" href="/extensions/dropzone/dropzone.min.css" type="text/css" />
@@ -215,8 +239,8 @@
 
 	<!-- (start) private script -->
 	<th:block layout:fragment="script">
-
-		<script>
+		<script th:inline="javascript">
+		
 	    // Disable AutoDiscover
 	    Dropzone.autoDiscover = false;
 	    
@@ -247,66 +271,63 @@
 	    
 		const save2 = () => {
 	    let header = $("meta[name='_csrf_header']").attr('content');
-	    let token = $("meta[name='_csrf']").attr('content');	    
-		
+	    let token = $("meta[name='_csrf']").attr('content');
+	    let seqId = /*[[${board.seqId}]]*/ "seqId";
 		let formData = new FormData();
-		//let inputFile = $("input[name='boardFile']");
-		//let files = inputFile[0].files;
-		//for(var i =0;i<files.length;i++){			
-		//	formData.append("boardFile", files[i]);
-		//	console.log(files[i]);
-		//}
-		
-		//let inputFile = myDropzone.getQueuedFiles();
 		let files = myDropzone.getQueuedFiles();
 		console.log(files.length);
 		for (const file of files) {
 			  formData.append('boardFile', file);
 			  console.log(file);
 		}
-		
 		formData.append("boardTitle", document.getElementById("title").value)
 		formData.append("boardContents", tinymce.get("open").getContent())
 		formData.append("category", document.querySelector('input[name="flexRadioDefault"]:checked').value)
 		
 		
 		Swal.fire({
-		        title: "등록",
-		        html: "등록 하시겠습니까?",
-		        icon: "info",
-		        showCancelButton: true,
-		        confirmButtonText: "등록",
-		        confirmButtonColor: "#3085d6",
-		        cancelButtonText: "취소",
-		        cancelButtonColor: "#d33",
-		        showLoaderOnConfirm: true,
-		        preConfirm: async () => {},
-		        allowOutsideClick: () => !Swal.isLoading()
-		    }).then((result) => {
-		        if (result.isConfirmed) {       
-		        	$.ajax({
-		        		type: "post",
-						url: "/board/save",
-						processData : false,
-						contentType : false,
-						data: formData,
-		                //CSRF Token
-		                beforeSend: function (xhr) {
-				        	xhr.setRequestHeader(header, token);
-				        },		
-						complete: function(data) {
-							//upload(document.getElementById("title").value, tinymce.get("open").getContent());
-							Swal.fire({
-						      title: "등록 완료",
-						      text: "게시글이 등록되었습니다.",
-						      icon: "success"
-						    }).then((result) => {
-					        	window.location.href = '/board/list'
-						    })
-						}	
-			    	});
-		    	}
-			})
+		    title: "등록",
+		    html: "등록 하시겠습니까?",
+		    icon: "info",
+		    showCancelButton: true,
+		    confirmButtonText: "등록",
+		    confirmButtonColor: "#3085d6",
+		    cancelButtonText: "취소",
+		    cancelButtonColor: "#d33",
+		    showLoaderOnConfirm: true,
+		    preConfirm: async () => {},
+		    allowOutsideClick: () => !Swal.isLoading()
+		}).then((result) => {
+		    if (result.isConfirmed) {       
+		        $.ajax({
+		            type: "post",
+		            url: "/board/save",
+		            processData: false,
+		            contentType: false,
+		            data: formData,
+		            // CSRF Token
+		            beforeSend: function (xhr) {
+		                xhr.setRequestHeader(header, token);
+		            },      
+		            success: function(data) {
+		                Swal.fire({
+		                    title: "등록 완료",
+		                    text: "게시글이 등록되었습니다.",
+		                    icon: "success"
+		                }).then(() => {
+		                    window.location.href = data;
+		                });
+		            },
+		            error: function(xhr, status, error) {
+		                Swal.fire({
+		                    title: "등록 실패",
+		                    text: "게시글 등록에 실패했습니다.",
+		                    icon: "error"
+		                });
+		            }
+		        });
+		    }
+		});
 		}
 		
 	    </script>

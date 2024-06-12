@@ -1,5 +1,6 @@
 package com.kdb;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -8,17 +9,12 @@ import org.springframework.context.annotation.Bean;
 
 import com.kdb.common.service.StorageProperties;
 import com.kdb.common.service.StorageService;
-
-
-import com.kdb.webauthn.configuration.WebAuthProperties;
 import com.kdb.webauthn.RegistrationService;
+import com.kdb.webauthn.configuration.WebAuthProperties;
 import com.yubico.webauthn.RelyingParty;
 import com.yubico.webauthn.data.RelyingPartyIdentity;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
+import de.codecentric.boot.admin.server.config.EnableAdminServer;
 
 
 @SpringBootApplication
@@ -32,14 +28,14 @@ public class EPamsApplication {
 	@Bean
 	CommandLineRunner init(StorageService storageService) {
 		return (args) -> {
-			storageService.deleteAll();
+			//storageService.deleteAll(); 
 			storageService.init();
 		};
 	}
 	
 	@Bean
 	@Autowired
-	public RelyingParty relyingParty(RegistrationService regisrationRepository, WebAuthProperties properties) {
+	RelyingParty relyingParty(RegistrationService regisrationRepository, WebAuthProperties properties) {
 		RelyingPartyIdentity rpIdentity = RelyingPartyIdentity.builder()
 			.id(properties.getHostName())
 			.name(properties.getDisplay())

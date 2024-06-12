@@ -31,7 +31,7 @@
 										</div>
 										<div>
 											<i class="bi bi-calendar-check"></i>
-											<h7 th:text="${#temporals.format(board.boardCreatedTime, 'yyyy-MM-dd')}"></h7>
+											<h7 th:text="${#temporals.format(board.createdTime, 'yyyy-MM-dd')}"></h7>
 										</div>
 										<div>
 											<i class="bi bi-eye"></i>
@@ -44,16 +44,16 @@
 							<!-- 기존 첨부파일 목록 -->
 							<ul class="list-unstyled mb-3">
 								<li th:if="${board.fileAttached == 1}" th:each="boardFile: ${boardFileList}">
-									<div class="d-flex align-items-center p-2">
+									<div class="d-flex align-items-center p-2 truncate-multiline">
 										<div class="col-11 d-flex align-items-center gap-2">
 											<span class="badge text-bg-primary" style="font-weight: 400;"> 첨부 [[${boardFileStat.count}]]</span>
 											<h6 class="mb-0" style="width: auto; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-												<a th:href="@{|/board/${board.id}/download/${boardFile.id}|}" th:utext="${boardFile.originalFileName}"></a>
+												<a th:href="@{|/board/${board.seqId}/download/${boardFile.seqId}|}" th:utext="${boardFile.originalFileName}"></a>
 											</h6>
 										</div>
 										<div class="col-1 d-flex justify-content-end">
 											<div class="shrink-0 ms-3">
-												<a th:href="@{|/board/${board.id}/download/${boardFile.id}|}"> <i class="bi bi-cloud-download-fill" th:href="@{|/board/${board.id}/download/${boardFile.id}|}"></i>
+												<a th:href="@{|/board/${board.seqId}/download/${boardFile.seqId}|}"> <i class="bi bi-cloud-download-fill" th:href="@{|/board/${board.seqId}/download/${boardFile.seqId}|}"></i>
 												</a>
 											</div>
 										</div>
@@ -61,7 +61,7 @@
 								</li>
 							</ul>
 							<div class="d-flex gap-2 flex-row-reverse">
-								<a class="btn btn-primary mt-3" sec:authorize="hasRole('ROLE_ADMIN')" type="submit" id="submit" th:href="@{|/board/update/${board.id}|}">수정</a>
+								<a class="btn btn-primary mt-3" sec:authorize="hasRole('ROLE_ADMIN')" type="submit" id="submit" th:href="@{|/board/update/${board.seqId}|}">수정</a>
 								<button class="btn btn-danger mt-3" sec:authorize="hasRole('ROLE_ADMIN')" type="submit" id="submit" onclick="del()">삭제</button>
 								<a class="btn btn-secondary mt-3" type="submit" id="submit" th:href="@{/board/list}">목록</a>
 							</div>
@@ -96,7 +96,7 @@
 		        if (result.isConfirmed) {       
 		        	$.ajax({
 						type: "get",
-						url: "/board/delete/[[${board.id}]]",
+						url: "/board/delete/[[${board.seqId}]]",
 						dataType: "json",
 						data: {},
 		                //CSRF Token

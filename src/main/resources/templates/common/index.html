@@ -17,8 +17,7 @@
 		<div class="row no-drag">
 			<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
 				<div class="carousel-indicators">
-					<button type="button" style="border-radius: 50%; width: 10px; height: 10px;" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true"
-						aria-label="Slide 1"></button>
+					<button type="button" style="border-radius: 50%; width: 10px; height: 10px;" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
 					<button type="button" style="border-radius: 50%; width: 10px; height: 10px;" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
 					<button type="button" style="border-radius: 50%; width: 10px; height: 10px;" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
 					<!--	<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
@@ -37,8 +36,7 @@
 												<span style="background-color: rgba(255, 255, 255, 0.5); color: #25396f;"></span>
 											</p>
 										</div>
-										<span class="h2 mt-5 mb-5" style="background-color: rgba(255, 255, 255, 0.5); color: #25396f;"></span><br> <span class="h2 mt-5 mb-5"
-											style="background-color: rgba(255, 255, 255, 0.5); color: #25396f;"></span>
+										<span class="h2 mt-5 mb-5" style="background-color: rgba(255, 255, 255, 0.5); color: #25396f;"></span><br> <span class="h2 mt-5 mb-5" style="background-color: rgba(255, 255, 255, 0.5); color: #25396f;"></span>
 									</div>
 								</div>
 							</div>
@@ -285,14 +283,12 @@
 				<div class="row d-flex justify-content-center">
 					<div class="row col-lg-12">
 						<section class="section" th:each="board: ${boardList}">
-							<div data-aos="fade-up" class="aos-init aos-animate">
+							<div data-aos="fade-up" data-aos-offset="50" data-aos-easing="ease-out-cubic" data-aos-duration="1000">
 								<div class="shadow card">
 									<div class="card-body">
-									<span th:if="${board.category}" th:classappend="|badge badge-sm mb-2 ${(board.category == 'IT') ? 'bg-primary' : (board.category == '인사') ? 'bg-info' : ''}|" style="--bs-badge-padding-x: .35rem" th:text="${board.category}"></span>
-										<a class="card-title" th:href="@{|/board/${board.id}|}">
+										<span th:if="${board.category}" th:classappend="|badge badge-sm mb-2 ${(board.category == 'IT') ? 'bg-primary' : (board.category == '인사') ? 'bg-info' : ''}|" style="--bs-badge-padding-x: .35rem" th:text="${board.category}"></span> <a class="card-title" th:href="@{|/board/${board.seqId}|}">
 											<h6 style="display: flex; align-items: center;">
-												<span th:text="${board.boardTitle}" style="margin-right: 0.5rem;"></span> 
-												<span th:if="${board.isNew}" class="badge rounded-pill bg-warning text-dark" style="--bs-badge-font-size: .80em;">new</span>
+												<span th:text="${board.boardTitle}" style="margin-right: 0.5rem;"></span> <span th:if="${board.isNew}" class="badge rounded-pill bg-warning text-dark" style="--bs-badge-font-size: .80em;">new</span>
 											</h6>
 
 										</a>
@@ -303,14 +299,16 @@
 											</div>
 											<div>
 												<i class="bi bi-calendar-check"></i>
-												<h7 th:text="${#temporals.format(board.boardCreatedTime, 'yyyy-MM-dd')}"></h7>
+												<h7 th:text="${#temporals.format(board.createdTime, 'yyyy-MM-dd')}"></h7>
 											</div>
 											<div>
 												<i class="bi bi-eye"></i>
 												<h7 th:text="${board.boardHits}"></h7>
 											</div>
 										</div>
-										<p class="card-text" th:utext="${board.boardContents}"></p>
+										<div class="truncate-multiline">
+											<p th:utext="${board.boardContents}"></p>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -334,49 +332,54 @@
 							<i class="bi bi-search"></i> 직원검색
 						</h5>
 					</div>
-				</div>
-				<div class="d-flex justify-content-center">
-					<div class="row">
-						<div class="col-12">
-							<div class="shadow card">
-								<div class="card-header">
-									<h4 class="card-title">담당자가 궁금하신가요?</h4>
-								</div>
-								<div class="card-content">
-									<div class="card-body">
-										<p>이름, 팀/부서, 업무명으로 검색하세요</p>
-										<div class="row">
-											<div class="col-12 mb-1">
-												<div class="input-group mb-3">
-													<span class="input-group-text" id="basic-addon1"><i class="bi bi-search"></i></span> <input type="text" id="searchMember" class="form-control" placeholder="Recipient's username"
-														aria-label="Recipient's username" aria-describedby="button-addon2">
-													<button class="btn btn-primary" type="button" id="button-addon2" onclick="search()">조회</button>
+
+					<div class="row d-flex justify-content-center">
+						<div class="row col-lg-12">
+							<section class="section">
+								<div class="shadow card">
+									<div class="card-header">
+										<h4 class="card-title">담당자가 궁금하신가요?</h4>
+									</div>
+									<div class="card-content">
+										<div class="card-body">
+											<p>이름, 팀/부서, 업무명으로 검색하세요</p>
+											<div class="row">
+												<div class="col-12 mb-1">
+													<div class="input-group mb-3">
+														<span class="input-group-text" id="basic-addon1"><i class="bi bi-search"></i></span> <input type="text" id="searchMember" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2">
+														<button class="btn btn-primary" type="button" id="button-addon2" onclick="search()">조회</button>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="divider">
+										<div class="divider-text" style="background-color: transparent;">
+											<h5 class="card-title">조회결과</h5>
+										</div>
+									</div>
+									<div class="d-flex justify-content-center">
+										<div class="row col-lg-12 col-md-12 col-sm-12">
+											<div class="col-12 justify-self-center">
+												<div id="memberList">
+													<div class="animate__animated animate__fadeIn animate__slow">
+														<div class="shadow card" style="background-color: #F2F7FF; margin: 3rem;">
+															<div class="card-body d-flex justify-content-center align-items-center" style="height: 100px;">
+																<h5>No Result</h5>
+															</div>
+														</div>
+													</div>
 												</div>
 											</div>
 										</div>
 									</div>
 								</div>
-
-								<div class="divider">
-									<div class="divider-text" style="background-color: transparent;">
-										<h5 class="card-title">조회결과</h5>
-									</div>
-
-								</div>
-								<div class="d-flex justify-content-center">
-									<div class="row col-lg-12 col-md-12 col-sm-12">
-										<div class="col-12 justify-self-center">
-											<div id="memberList"></div>
-										</div>
-									</div>
-								</div>
-							</div>
+							</section>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-
 	</div>
 
 	<!-- (start) private script -->

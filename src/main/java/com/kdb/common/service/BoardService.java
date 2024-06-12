@@ -2,188 +2,204 @@ package com.kdb.common.service;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kdb.common.dto.BoardDTO;
-import com.kdb.common.entity.BoardEntity;
-import com.kdb.common.entity.BoardFileEntity;
-import com.kdb.common.repository.BoardFileRepository;
-import com.kdb.common.repository.BoardRepository;
-import com.kdb.common.repository.BoardRepository2;
 import com.kdb.common.dto.BoardFileDTO;
 import com.kdb.common.dto.BoardImageDTO;
+import com.kdb.common.repository.BoardFileRepository2;
+import com.kdb.common.repository.BoardRepository2;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-// DTO -> Entity (Entity Class)
-// Entity -> DTO (DTO Class)
-
+/**
+ * @author K140024
+ * @implNote 게시판 service
+ * @since 2024-04-26
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class BoardService {
-    private final BoardRepository boardRepository;
+    
+    /**
+     * @author K140024
+     * @implNote file 시스템에 저장할 실제 경로 설정값 (application.yml)
+     * @since 2024-06-11
+     */
+    @Value("${kdb.filepath}")
+    private String filepath;
+    
+    /**
+     * @author K140024
+     * @implNote BoardRepository2 주입
+     * @since 2024-04-26
+     */
     private final BoardRepository2 boardRepository2;
-
-    private final BoardFileRepository boardFileRepository;
     
-    // 게시물 내 이미지 저장
-    public void saveBoardImage(BoardImageDTO boardImageDTO) {
-    	boardRepository2.insertBoardImage(boardImageDTO);
+    /**
+     * @author K140024
+     * @implNote BoardFileRepository2 주입
+     * @since 2024-04-26
+     */
+    private final BoardFileRepository2 boardFileRepository2;
+    
+    /**
+     * @author K140024
+     * @implNote 게시물 내 이미지 저장
+     * @since 2024-06-11
+     */
+    public void saveBoardImage(final BoardImageDTO boardImageDTO) {
+        boardRepository2.insertBoardImage(boardImageDTO); // 게시물 내 이미지 저장
     }
     
-    
+    /**
+     * @author K140024
+     * @implNote 저장 파일명을 통한 이미지 객체 반환
+     * @since 2024-06-11
+     */
+    public BoardImageDTO getBoardImageBystoredFilename(final String storedFileName) {
+        return boardRepository2.findBoardstoredFilename(storedFileName); // 이미지 객체 반환
+    }
 
-    public BoardDTO update(BoardDTO boardDTO) throws IOException {
-        if (boardDTO.getBoardFile()==null) {
-            // 첨부 파일 없음.
-	        BoardEntity boardEntity = BoardEntity.toUpdateEntity(boardDTO);
-	        boardRepository2.update(boardEntity);
-        }
-        else {
-            BoardEntity boardEntity = BoardEntity.toUpdateFileEntity(boardDTO);
-            Long savedId = boardRepository.save(boardEntity).getId();
-            BoardEntity board = boardRepository.findById(savedId).get();
+    /**
+     * @author K140024
+     * @implNote 게시물 업데이트
+     * @since 2024-04-26
+     */
+    public BoardDTO update(final BoardDTO boardDTO) throws IOException {
+        if (boardDTO.getBoardFile() == null) { // 첨부 파일 없는 경우
+            boardRepository2.update(boardDTO); // 게시물 업데이트
+        } else { // 첨부 파일 있는 경우
+            boardDTO.setFileAttached(1); // 첨부파일 여부 1 세팅
+            boardRepository2.save(boardDTO); // 게시물 업데이트
             
-        	for (MultipartFile boardFile: boardDTO.getBoardFile()) {        		
-	            String originalFilename = boardFile.getOriginalFilename(); // 2.
-	            String storedFileName = System.currentTimeMillis() + "_" + originalFilename; // 3.
-	            String savePath = "C:/epams/" + storedFileName; // 파일 저장경로 및 이름
-	            boardFile.transferTo(new File(savePath)); // 5.
-	            BoardFileEntity boardFileEntity = BoardFileEntity.toBoardFileEntity(board, originalFilename, storedFileName);
-	            boardFileRepository.save(boardFileEntity);
-        	}
+            for (final MultipartFile boardFile : boardDTO.getBoardFile()) {
+                final String originalFilename = boardFile.getOriginalFilename(); // 파일명 세팅
+                final String storedFileName = System.currentTimeMillis() + "_" + originalFilename; // 저장 파일명 세팅
+                final String savePath = filepath + storedFileName; // 파일 저장경로 세팅
+                boardFile.transferTo(new File(savePath)); // 스토리지에 파일 저장
+                final BoardFileDTO boardFileDTO = BoardFileDTO.toBoardFileDTO(boardDTO, originalFilename, storedFileName, filepath); // DBMS에 저장할 파일정보 객체 세팅
+                boardFileRepository2.saveFile(boardFileDTO); // DBMS에 파일 정보 저장
+            }
         }
-        return findById(boardDTO.getId());
+        return findById(boardDTO.getSeqId()); // 업데이트한 게시물 ID 리턴
     }
 
-    public void save(BoardDTO boardDTO) throws IOException {
+    /**
+     * @author K140024
+     * @implNote 게시물 저장
+     * @since 2024-04-26
+     */
+    public BoardDTO save(final BoardDTO boardDTO) throws IOException {
         // 파일 첨부 여부에 따라 로직 분리
-        if (boardDTO.getBoardFile()==null) {
-            // 첨부 파일 없음
-            BoardEntity boardEntity = BoardEntity.toSaveEntity(boardDTO);
-            //System.out.println("[service] boardDTO = " + boardDTO);
-            //System.out.println("[service] boardEntity = " + boardEntity.getBoardWriter());
-            boardRepository.save(boardEntity);
-        } else {
-        	
-            BoardEntity boardEntity = BoardEntity.toSaveFileEntity(boardDTO);
-            Long savedId = boardRepository.save(boardEntity).getId();
-            BoardEntity board = boardRepository.findById(savedId).get();
-        	
-        	for (MultipartFile boardFile: boardDTO.getBoardFile()) {        		
-	            String originalFilename = boardFile.getOriginalFilename(); // 2.
-	            String storedFileName = System.currentTimeMillis() + "_" + originalFilename; // 3.
-	            String savePath = "C:/epams/" + storedFileName; // 파일 저장경로 및 이름
-	            boardFile.transferTo(new File(savePath)); // 5.
-	
-	            BoardFileEntity boardFileEntity = BoardFileEntity.toBoardFileEntity(board, originalFilename, storedFileName);
-	            boardFileRepository.save(boardFileEntity);
-        	}
+        if (boardDTO.getBoardFile() == null) {  // 첨부 파일 없는 경우
+            boardRepository2.save(boardDTO);  // 게시물 신규 저장
+        } else { // 첨부 파일 있는 경우
+            boardDTO.setFileAttached(1); // 첨부파일 여부 1 세팅
+            boardRepository2.save(boardDTO); // 게시물 업데이트
+            
+            for (final MultipartFile boardFile : boardDTO.getBoardFile()) {
+            	final String originalFilename = boardFile.getOriginalFilename();  // 파일명 세팅
+            	final String storedFileName = System.currentTimeMillis() + "_" + originalFilename; // 저장 파일명 세팅
+            	final String savePath = filepath + storedFileName; // 파일 저장경로 세팅
+                boardFile.transferTo(new File(savePath)); // 스토리지에 파일 저장
+                final BoardFileDTO boardFileDTO = BoardFileDTO.toBoardFileDTO(boardDTO, originalFilename, storedFileName, filepath); // DBMS에 저장할 파일정보 객체 세팅
+                boardFileRepository2.saveFile(boardFileDTO); // DBMS에 파일 정보 저장
+            }
         }
-    }
-    
-    public void delete(Long id) {    	
-    	BoardDTO boardDTO = boardRepository2.findById(id);
-    	List<BoardFileDTO> boardFiles = boardRepository2.findFile(id);
-    	
-    	// 첨부파일이 없는 경우 DB만 삭제
-    	if (boardDTO.getFileAttached()==0) {
-    		log.warn("No files");
-    		boardRepository.deleteById(id);
-    	}
-    	// 첨부파일이 있는 경우 File도 삭제
-    	else {
-    		boardRepository.deleteById(id);
-    		for (BoardFileDTO boardFile: boardFiles) {        
-    			File file = new File("C:/epams/" + boardFile.getStoredFileName());
-    			boolean result = file.delete();
-    			if (log.isWarnEnabled()) 
-    				log.warn(result + " Delete files : "+ boardFile.getStoredFileName());
-        	}
-    	}
-    }
-    
-
-    @Transactional
-    public List<BoardDTO> findAll() {
-        List<BoardEntity> boardEntityList = boardRepository.findAll();
-        List<BoardDTO> boardDTOList = new ArrayList<>();
-        for (BoardEntity boardEntity: boardEntityList) {
-            boardDTOList.add(BoardDTO.toBoardDTO(boardEntity));
-        }
-        return boardDTOList;
+        return findById(boardDTO.getSeqId()); // 저장한 게시물 ID 리턴
     }
 
-    @Transactional
-    public void updateHits(Long id) {
-        boardRepository.updateHits(id);
-    }
-
-    @Transactional
-    public BoardDTO findById(Long id) {
-        Optional<BoardEntity> optionalBoardEntity = boardRepository.findById(id);
-        if (optionalBoardEntity.isPresent()) {
-            BoardEntity boardEntity = optionalBoardEntity.get();
-            BoardDTO boardDTO = BoardDTO.toBoardDTO(boardEntity);
-            return boardDTO;
-        } else {
-            return null;
-        }
-    }
-
-
-
-    public Page<BoardDTO> paging(Pageable pageable) {
-        int page = pageable.getPageNumber() - 1;
-        int pageLimit = 3; // 한 페이지에 보여줄 글 갯수
-        // 한페이지당 3개씩 글을 보여주고 정렬 기준은 id 기준으로 내림차순 정렬
-        // page 위치에 있는 값은 0부터 시작
-        Page<BoardEntity> boardEntities =
-                boardRepository.findAll(PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id")));
-
-       // System.out.println("boardEntities.getContent() = " + boardEntities.getContent()); // 요청 페이지에 해당하는 글
-       // System.out.println("boardEntities.getTotalElements() = " + boardEntities.getTotalElements()); // 전체 글갯수
-      //  System.out.println("boardEntities.getNumber() = " + boardEntities.getNumber()); // DB로 요청한 페이지 번호
-       // System.out.println("boardEntities.getTotalPages() = " + boardEntities.getTotalPages()); // 전체 페이지 갯수
-      //  System.out.println("boardEntities.getSize() = " + boardEntities.getSize()); // 한 페이지에 보여지는 글 갯수
-//        System.out.println("boardEntities.hasPrevious() = " + boardEntities.hasPrevious()); // 이전 페이지 존재 여부
-//        System.out.println("boardEntities.isFirst() = " + boardEntities.isFirst()); // 첫 페이지 여부
-//        System.out.println("boardEntities.isLast() = " + boardEntities.isLast()); // 마지막 페이지 여부
-
-        // 목록: id, writer, title, hits, createdTime
-        Page<BoardDTO> boardDTOS = boardEntities.map(
-        		board -> new BoardDTO(
-        				board.getId(), 
-        				board.getBoardWriter(), 
-        				board.getBoardContents() , 
-        				board.getBoardTitle(),      
-        				board.getCategory(),
-        				board.getBoardHits(), 
-        				board.getCreatedTime()));
+    /**
+     * @author K140024
+     * @implNote 게시물 삭제
+     * @since 2024-04-26
+     */
+    public void delete(final Long seqId) {
+    	final BoardDTO boardDTO = boardRepository2.findById(seqId); // 게시글 삭제
+    	final List<BoardFileDTO> boardFiles = boardFileRepository2.findFile(seqId); // 첨부파일 정보 반환
         
+        // 첨부파일이 없는 경우 DB만 삭제
+        if (boardDTO.getFileAttached() == 0) {
+            log.warn("No files");
+            boardFileRepository2.deleteFile(seqId);
+        }
+        // 첨부파일이 있는 경우 File도 삭제
+        else {
+            boardFileRepository2.deleteFile(seqId);
+            for (final BoardFileDTO boardFile : boardFiles) {
+            	final File file = new File(boardFile.getStoredPath() + boardFile.getStoredFileName());
+            	final boolean result = file.delete();
+                if (log.isWarnEnabled()) {
+                    log.warn(result + " Delete files : " + boardFile.getStoredFileName());
+                }
+            }
+        }
+    }
 
-        
-        return boardDTOS;
+    /**
+     * @author K140024
+     * @implNote 게시물 조회수 업데이트
+     * @since 2024-04-26
+     */
+    @Transactional
+    public void updateHits(final Long seqId) {
+        boardRepository2.updateHits(seqId);
     }
-    
-    public BoardFileDTO findOneFile(Long id) {
-        return boardRepository2.findByFileId(id);
+
+    /**
+     * @author K140024
+     * @implNote 게시물 ID로 게시물 조회
+     * @since 2024-04-26
+     */
+    @Transactional
+    public BoardDTO findById(final Long seqId) {
+        return boardRepository2.findById(seqId);
     }
-    public List<BoardFileDTO> findFile(Long id) {
-        return boardRepository2.findFile(id);
+
+    /**
+     * @author K140024
+     * @implNote 페이지네이션으로 게시물 목록 조회
+     * @since 2024-04-26
+     */
+    public Page<BoardDTO> paging(final Pageable pageable) {
+    	final int page = pageable.getPageNumber() - 1; // 페이지 번호
+    	final int pageSize = pageable.getPageSize(); // 페이지 크기
+    	final int offset = page * pageSize; // 오프셋 계산
+        // 한 페이지당 3개씩 글을 보여주고 정렬 기준은 id 기준으로 내림차순 정렬
+    	final List<BoardDTO> boardDTOs = boardRepository2.findAll(offset, pageSize, "SEQ_ID", "DESC");
+
+        // 전체 데이터 개수 조회
+    	final long totalElements = boardRepository2.count(); // 전체 데이터 개수를 조회하는 메소드 필요
+        return new PageImpl<>(boardDTOs, PageRequest.of(page, pageSize), totalElements);
     }
-    
-    
+
+    /**
+     * @author K140024
+     * @implNote 파일 ID로 파일 정보 조회
+     * @since 2024-04-26
+     */
+    public BoardFileDTO findOneFile(final Long seqId) {
+        return boardFileRepository2.findByFileId(seqId);
+    }
+
+    /**
+     * @author K140024
+     * @implNote 게시물 ID로 파일 목록 조회
+     * @since 2024-04-26
+     */
+    public List<BoardFileDTO> findFile(final Long seqId) {
+        return boardFileRepository2.findFile(seqId);
+    }
 }

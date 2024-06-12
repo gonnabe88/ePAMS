@@ -20,7 +20,7 @@
 			<div data-aos="fade-up" class="aos-init aos-animate">
 				<div class="card" style="background-color: #F2F7FF; margin: 1rem;">
 					<div class="shadow card-body">
-						<a class="card-title" th:href="@{|/${board.id}|}"><h6 th:text="${board.boardTitle}"></h6></a>
+						<a class="card-title" th:href="@{|/${board.seqId}|}"><h6 th:text="${board.boardTitle}"></h6></a>
 						<p class="card-text" th:utext="${board.boardContents}"></p>
 
 						<div class="d-flex justify-content-around">

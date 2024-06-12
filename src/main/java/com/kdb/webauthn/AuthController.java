@@ -23,7 +23,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.kdb.common.dto.LogLoginDTO;
 import com.kdb.common.dto.MemberDTO;
+import com.kdb.common.repository.LogRepository;
 import com.kdb.common.repository.LoginRepository;
 import com.kdb.webauthn.authenticator.Authenticator;
 import com.kdb.webauthn.user.AppUser;
@@ -63,6 +65,7 @@ public class AuthController {
     private final RelyingParty relyingParty;
     private final RegistrationService service;
     private final LoginRepository loginRepository;
+    private final LogRepository logRepository;
     
 	private Authentication Authentication() {
 	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -261,15 +264,20 @@ public class AuthController {
                 session.setAttribute(HttpSessionSecurityContextRepository.
                         SPRING_SECURITY_CONTEXT_KEY, context);
                 log.warn("isSuccess");
+                logRepository.saveLoginLog(LogLoginDTO.getLogLoginDTO(username, "간편인증", true));
                 return "/common/index";
             } else {
+            	logRepository.saveLoginLog(LogLoginDTO.getLogLoginDTO(username, "간편인증", false));
                 return "/common/login";
             }
         } catch (JsonProcessingException e) {
+        	logRepository.saveLoginLog(LogLoginDTO.getLogLoginDTO(username, "간편인증", false));
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error processing JSON.", e);
         } catch (AssertionFailedException e) {
+        	logRepository.saveLoginLog(LogLoginDTO.getLogLoginDTO(username, "간편인증", false));
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Authentication failed", e);
         } catch (IOException e) {
+        	logRepository.saveLoginLog(LogLoginDTO.getLogLoginDTO(username, "간편인증", false));
         	throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Failed to save credenital, please try again!", e);
 		}
     }    

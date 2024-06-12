@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pmd>
     <useProjectRuleSet>false</useProjectRuleSet>
-    <excludePatterns/>
+    <excludePatterns>
+        <excludePattern>.xml</excludePattern>
+    </excludePatterns>
     <includePatterns/>
     <rules>
         <rule>
@@ -714,7 +716,7 @@
         </rule>
         <rule>
             <name>AssignmentInOperand</name>
-            <ruleset>Code Style</ruleset>
+            <ruleset>Error Prone</ruleset>
         </rule>
         <rule>
             <name>DoNotHardCodeSDCard</name>

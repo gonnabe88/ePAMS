@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kdb.common.dto.MemberDTO;
+import com.kdb.common.entity.LogLoginEntity;
 import com.kdb.common.entity.MemberEntity;
 import com.kdb.common.entity.SearchMemberEntity;
+import com.kdb.common.service.LogService;
 import com.kdb.common.service.MemberDetailsService;
 import com.kdb.common.service.RestApiService;
 
@@ -32,6 +34,20 @@ public class RestApiController {
 	
 	private final RestApiService restapiservice;
 	private final MemberDetailsService memberservice;
+	private final LogService logservice;
+	
+    @GetMapping("/login")
+    public ResponseEntity<List<LogLoginEntity>> searchLogLoginLAll(Model model) throws Exception{
+    	List<LogLoginEntity> logLoginList = logservice.searchLogLoginAll();
+    	Map<String, Object> data = new HashMap<>();
+    	data.put("data", logLoginList);
+    	// 마지막 페이지 및 데이터 설정
+        Map<String, Object> response = new HashMap<>();
+        //response.put("last_page", 10);
+        response.put("data", logLoginList);
+        
+        return ResponseEntity.ok(logLoginList);
+    }
 	
     @PostMapping("/mfa")
     public Map<String, String> mfa(@ModelAttribute MemberDTO memberDTO, @CookieValue(value="UUIDChk", required=false) String UUID) throws Exception{
@@ -59,7 +75,6 @@ public class RestApiController {
         
         return ResponseEntity.ok(memberList);
     }
-    
     
     @PostMapping("/member/save")
     public ResponseEntity<Map<String, String>> saveMembers(@RequestBody Map<String, List<MemberEntity>> payload) {

@@ -8,7 +8,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -39,6 +41,13 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @RequiredArgsConstructor
 public class MainController<S extends Session> {
+	
+	/**
+    *
+    *
+    */
+	@Value("${kdb.indexBrdCnt}")
+	private int indexBrdCnt;
 	
 	private final CodeService codeService;
 	private final BoardService boardService;
@@ -80,14 +89,11 @@ public class MainController<S extends Session> {
     	  //System.out.println(codeList.get(0).getCD_NM());
     	  model.addAttribute("codeList", codeList);	    
 
-    	  // 메인화면 공지사항 출력	    
-	      Page<BoardDTO> boardList = boardService.paging(pageable);
-	      int blockLimit = 3;
-	      int startPage = (((int)(Math.ceil((double)pageable.getPageNumber() / blockLimit))) - 1) * blockLimit + 1; // 1 4 7 10 ~~
-	      int endPage = ((startPage + blockLimit - 1) < boardList.getTotalPages()) ? startPage + blockLimit - 1 : boardList.getTotalPages();
+    	  // 메인화면 공지사항 출력	   
+          int currentPage = pageable.getPageNumber(); // 현재 페이지 (1-based index)
+	      pageable = PageRequest.of(currentPage, indexBrdCnt); // pageable 객체 설정 
+	      Page<BoardDTO> boardList = boardService.paging(pageable); // 가장 최근 게시물의 indexBrdCnt 수만큼 가져옴
 	      model.addAttribute("boardList", boardList);
-	      model.addAttribute("startPage", startPage);
-	      model.addAttribute("endPage", endPage);
 	      
 	      // 메인화면 직원조회 출력
 	      List<MemberEntity> memberList = memberservice.findAll();

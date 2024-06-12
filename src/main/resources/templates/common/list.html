@@ -4,6 +4,17 @@
 <head>
 <!-- (start) private script -->
 <th:block layout:fragment="css">
+
+<style>
+.pagination .page-item {
+    margin: 0 2px; /* 좌우 마진을 동일하게 설정 */
+}
+
+.pagination .page-item .page-link {
+    padding: 7px 10px; /* 버튼 크기를 조정 */
+}
+</style>
+
 </th:block>
 <!-- (end) private script -->
 </head>
@@ -28,21 +39,19 @@
 							<div class="d-flex gap-2 flex-row-reverse">
 								<a class="btn btn-primary mb-3" sec:authorize="hasRole('ROLE_ADMIN')" type="submit" id="submit" th:href="@{/board/editor}">글쓰기</a><br>
 							</div>
-							<div class="col-lg-12">
+							<div class="col-12">
 								<div data-aos="fade-up" data-aos-offset="200" data-aos-easing="ease-out-cubic" data-aos-duration="2000">
 									<section class="section" th:each="board: ${boardList}">
 										<div class="card">
 											<div class="card-body">
 												<span th:if="${board.category}" th:classappend="|badge badge-sm mb-2 ${(board.category == 'IT') ? 'bg-primary' : (board.category == '인사') ? 'bg-info' : ''}|" style="--bs-badge-padding-x: .35rem" th:text="${board.category}"></span>
 												<div class="d-flex flex-row align-items-center mb-3 gap-3">
-												    <a th:href="@{|/board/${board.id}|}">
+												    <a th:href="@{|/board/${board.seqId}|}">
 												        <h4 style="display: flex; align-items: center;">
 												        	<span th:text="${board.boardTitle}" style="margin-right: 0.5rem;"></span>
 												        	<span th:if="${board.isNew}" class="badge rounded-pill bg-warning text-dark" style="--bs-badge-font-size: .50em;">new</span>
-												        </h4>
-												        
-												    </a>
-												    
+												        </h4>												        
+												    </a>												    
 												</div>
 												<div class="d-flex flex-row mb-3 gap-3">
 													<div>
@@ -51,14 +60,16 @@
 													</div>
 													<div>
 														<i class="bi bi-calendar-check"></i>
-														<h7 th:text="${#temporals.format(board.boardCreatedTime, 'yyyy-MM-dd')}"></h7>
+														<h7 th:text="${#temporals.format(board.createdTime, 'yyyy-MM-dd')}"></h7>
 													</div>
 													<div>
 														<i class="bi bi-eye"></i>
 														<h7 th:text="${board.boardHits}"></h7>
 													</div>
 												</div>
-												<p th:utext="${board.boardContents}"></p>
+												<div class="truncate-multiline">
+												 <p th:utext="${board.boardContents}"></p>
+												 </div>
 											</div>
 										</div>
 									</section>
@@ -66,17 +77,29 @@
 							</div>
 						</div>
 
-						<!-- 페이징처리 시작 -->
-						<div th:if="${!boardList.isEmpty()}">
-							<ul class="pagination justify-content-center">
-								<li class="page-item me-1" th:classappend="${!boardList.hasPrevious} ? 'disabled'"><a class="page-link me-1" th:href="@{|?page=${boardList.number-2}|}" th:if="${boardList.number-2 > 0}"> <span><i class="bi bi-caret-left-fill"></i></span>
-								</a></li>
-								<li th:each="page: ${#numbers.sequence(0, boardList.totalPages-1)}" th:if="${page >= boardList.number-2 and page <= boardList.number+2}" th:classappend="${page == boardList.number} ? 'active'" class="page-item me-1"><a th:text="${page}+1" class="page-link" th:href="@{|?page=${page+1}|}"></a></li>
-								<li class="page-item me-1" th:classappend="${!boardList.hasNext} ? 'disabled'"><a class="page-link" th:href="@{|?page=${boardList.number+4}|}" th:if="${boardList.number+4 <= boardList.totalPages}"> <span><i class="bi bi-caret-right-fill"></i></span>
-								</a></li>
-							</ul>
-						</div>
-						<!-- 페이징처리 끝 -->
+<!-- 페이징처리 시작 -->
+<div th:if="${!boardList.isEmpty()}">
+    <ul class="pagination justify-content-center align-items-center">
+        <!-- Previous button -->
+        <li class="page-item" th:classappend="${startPage == 1} ? 'disabled'">
+            <a class="page-link" th:href="@{|?page=${startPage - 1}|}" th:if="${startPage > 1}">
+                <span><i class="bi bi-caret-left-fill"></i></span>
+            </a>
+        </li>
+        <!-- Page numbers -->
+        <li th:each="page : ${#numbers.sequence(startPage, endPage)}"
+            th:classappend="${page == boardList.number + 1} ? 'active'" class="page-item mx-1">
+            <a th:text="${page}" class="page-link" th:href="@{|?page=${page}|}"></a>
+        </li>
+        <!-- Next button -->
+        <li class="page-item" th:classappend="${endPage == boardList.totalPages} ? 'disabled'" th:if="${endPage < boardList.totalPages}">
+            <a class="page-link" th:href="@{|?page=${endPage + 1}|}">
+                <span><i class="bi bi-caret-right-fill"></i></span>
+            </a>
+        </li>
+    </ul>
+</div>
+<!-- 페이징처리 끝 -->
 
 					</div>
 				</div>

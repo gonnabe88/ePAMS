@@ -1,0 +1,37 @@
+{"properties": [
+  {
+    "name": "authn.display",
+    "type": "java.lang.String",
+    "description": "A description for 'authn.display'"
+  },
+  {
+    "name": "authn.origin",
+    "type": "java.lang.String",
+    "description": "A description for 'authn.origin'"
+  },
+  {
+    "name": "authn.hostname",
+    "type": "java.lang.String",
+    "description": "A description for 'authn.hostname'"
+  },
+  {
+    "name": "kdb.filepath",
+    "type": "java.lang.String",
+    "description": "A description for 'kdb.filepath'"
+  },
+  {
+    "name": "kdb.indexBrdCnt",
+    "type": "java.lang.String",
+    "description": "A description for 'kdb.indexBrdCnt'"
+  },
+  {
+    "name": "kdb.listBrdCnt",
+    "type": "java.lang.String",
+    "description": "A description for 'kdb.listBrdCnt'"
+  },
+  {
+    "name": "kdb.maxPageBtn",
+    "type": "java.lang.String",
+    "description": "A description for 'kdb.maxPageBtn'"
+  }
+]}

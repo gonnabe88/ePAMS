@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.thymeleaf.org" layout:decorate="~{common/layout/layout}">
+
+<head>
+<!-- (start) private script -->
+<th:block layout:fragment="css">
+</th:block>
+<!-- (end) private script -->
+</head>
+
+<body>
+	<div layout:fragment="contents">
+		<div class="container">
+			<div id="main-content">
+				<div class="d-flex justify-content-center">
+					<div class="row col-lg-10 col-md-12 d-flex justify-content-center">
+						<div class="page-heading">
+
+							<div class="align-middle">
+								<h2>
+									<i class="bi bi-bell-fill"></i> Actuator Data
+								</h2>
+								<br>
+							</div>
+						</div>
+
+						<div class="row col-lg-12 col-md-12 col-sm-12">
+							<h2>Health</h2>
+							<div class="card">
+								<div class="card-body">
+									<table class="table table-bordered">
+										<thead>
+											<tr>
+												<th>Component</th>
+												<th>Key</th>
+												<th>Value</th>
+											</tr>
+										</thead>
+										<tbody>
+											<!-- Overall Status -->
+											<tr>
+												<td>Overall</td>
+												<td>Status</td>
+												<td><span th:classappend="${#strings.trim(health.status) == 'UP'} ? 'badge text-bg-success' : 'badge text-bg-danger'" th:text="${health.status}"></span></td>
+											</tr>
+
+											<!-- DB Component -->
+											<tr>
+												<td rowspan="3">Database</td>
+												<td>Status</td>
+												<td><span th:classappend="${#strings.trim(health.components.db.status) == 'UP'} ? 'badge text-bg-success' : 'badge text-bg-danger'" th:text="${health.components.db.status}"></span></td>
+											</tr>
+											<tr>
+												<td>Database</td>
+												<td th:text="${health.components.db.details.database}"></td>
+											</tr>
+											<tr>
+												<td>Validation Query</td>
+												<td th:text="${health.components.db.details.validationQuery}"></td>
+											</tr>
+
+											<!-- Disk Space Component -->
+											<tr>
+												<td rowspan="6">Disk Space</td>
+												<td>Status</td>
+												<td><span th:classappend="${#strings.trim(health.components.diskSpace.status) == 'UP'} ? 'badge text-bg-success' : 'badge text-bg-danger'" th:text="${health.components.diskSpace.status}"></span></td>
+											</tr>
+											<tr>
+												<td>Total Space</td>
+												<td th:text="${health.components.diskSpace.details.total}/1024/1024/1024 + 'GB'"></td>
+											</tr>
+											<tr>
+												<td>Free Space</td>
+												<td th:text="${health.components.diskSpace.details.free}/1024/1024/1024 + 'GB'"></td>
+											</tr>
+											<tr>
+												<td>Threshold</td>
+												<td th:text="${health.components.diskSpace.details.threshold}/1024/1024/1024 + 'GB'"></td>
+											</tr>
+											<tr>
+												<td>Path</td>
+												<td th:text="${health.components.diskSpace.details.path}"></td>
+											</tr>
+											<tr>
+												<td>Exists</td>
+												<td><span th:classappend="${health.components.diskSpace.details.exists} ? 'badge text-bg-success' : 'badge text-bg-danger'" th:text="${#strings.toUpperCase(health.components.diskSpace.details.exists)}"></span></td>
+											</tr>
+
+											<!-- Ping Component -->
+											<tr>
+												<td>Ping</td>
+												<td>Status</td>
+												<td><span th:classappend="${#strings.trim(health.components.ping.status) == 'UP'} ? 'badge text-bg-success' : 'badge text-bg-danger'" th:text="${health.components.ping.status}"></span></td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+
+						<div class="row col-lg-12 col-md-12 col-sm-12">
+							<h2>Metrics</h2>
+							<div class="card">
+								<div class="card-body">
+									<table class="table table-bordered">
+										<thead>
+											<tr>
+												<th>Metric Name</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr th:each="metricName : ${metrics.names}">
+												<td th:text="${metricName}"></td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+
+
+						<div class="row col-lg-12 col-md-12 col-sm-12">
+							<!-- Loggers Section -->
+            <h2>Loggers</h2>
+            <div class="card mb-4">
+                <div class="card-body">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th style="width: 60%;">Logger Name</th>
+                                <th style="width: 20%;">Configured Level</th>
+                                <th style="width: 20%;">Effective Level</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="loggerEntry : ${loggers.entrySet()}">
+                                <td th:text="${loggerEntry.key}"  style="max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"></td>
+                                <td th:text="${loggerEntry.value.configuredLevel}"></td>
+                                <td th:text="${loggerEntry.value.effectiveLevel}"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- (start) private script -->
+		<th:block layout:fragment="script">
+
+		</th:block>
+		<!-- (end) private script -->
+</body>
+</html>

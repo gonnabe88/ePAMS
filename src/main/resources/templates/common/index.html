@@ -282,33 +282,30 @@
 				</div>
 				<div class="row d-flex justify-content-center">
 					<div class="row col-lg-12">
-						<section class="section" th:each="board: ${boardList}">
-							<div data-aos="fade-up" data-aos-offset="50" data-aos-easing="ease-out-cubic" data-aos-duration="1000">
-								<div class="shadow card">
-									<div class="card-body">
-										<span th:if="${board.category}" th:classappend="|badge badge-sm mb-2 ${(board.category == 'IT') ? 'bg-primary' : (board.category == '인사') ? 'bg-info' : ''}|" style="--bs-badge-padding-x: .35rem" th:text="${board.category}"></span> <a class="card-title" th:href="@{|/board/${board.seqId}|}">
-											<h6 style="display: flex; align-items: center;">
-												<span th:text="${board.boardTitle}" style="margin-right: 0.5rem;"></span> <span th:if="${board.isNew}" class="badge rounded-pill bg-warning text-dark" style="--bs-badge-font-size: .80em;">new</span>
-											</h6>
-
-										</a>
-										<div class="d-flex flex-row mb-3 gap-3">
-											<div>
-												<i class="bi bi-building"></i>
-												<h7 th:text="${board.boardWriter}"></h7>
-											</div>
-											<div>
-												<i class="bi bi-calendar-check"></i>
-												<h7 th:text="${#temporals.format(board.createdTime, 'yyyy-MM-dd')}"></h7>
-											</div>
-											<div>
-												<i class="bi bi-eye"></i>
-												<h7 th:text="${board.boardHits}"></h7>
-											</div>
+						<section>
+							<div class="shadow card" th:each="board : ${boardList}">
+								<div class="card-body">
+									<span th:if="${board.category}" th:classappend="|badge badge-sm mb-2 ${(board.category == 'IT') ? 'bg-primary' : (board.category == '인사') ? 'bg-info' : ''}|" style="--bs-badge-padding-x: .35rem" th:text="${board.category}"></span> <a class="card-title" th:href="@{|/board/${board.seqId}|}">
+										<h6 style="display: flex; align-items: center;">
+											<span th:text="${board.boardTitle}" style="margin-right: 0.5rem;"> </span> <span th:if="${T(java.time.LocalDateTime).now().minusDays(7).isBefore(board.createdTime)}" class="badge rounded-pill bg-warning text-dark" style="--bs-badge-font-size: .80em;"> new </span>
+										</h6>
+									</a>
+									<div class="d-flex flex-row mb-3 gap-3">
+										<div>
+											<i class="bi bi-building"></i>
+											<h7 th:text="${board.boardWriter}"></h7>
 										</div>
-										<div class="truncate-multiline">
-											<p th:utext="${board.boardContents}"></p>
+										<div>
+											<i class="bi bi-calendar-check"></i>
+											<h7 th:text="${#temporals.format(board.createdTime, 'yyyy-MM-dd')}"></h7>
 										</div>
+										<div>
+											<i class="bi bi-eye"></i>
+											<h7 th:text="${board.boardHits}"></h7>
+										</div>
+									</div>
+									<div class="truncate-multiline">
+										<p th:utext="${board.boardContents}"></p>
 									</div>
 								</div>
 							</div>

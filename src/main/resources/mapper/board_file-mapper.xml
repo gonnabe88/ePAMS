@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper SYSTEM "mybatis-3-mapper.dtd">
+
+
+<mapper namespace="BoardFile">
+
+    <!-- BoardFile TABLE Result Map 정의
+    <resultMap id="BoardFileDTO" type="boardFile">
+        <id property="seqId" column="SEQ_ID"/>
+        <result property="originalFileName" column="ORIGINAL_FILE_NAME"/>
+        <result property="storedFileName" column="STORED_FILE_NAME"/>
+        <result property="createdTime" column="CREATED_TIME"/>
+        <result property="updatedTime" column="UPDATED_TIME"/>
+        <result property="storedPath" column="STORED_PATH"/>
+        <association property="boardDTO" column="BOARD_ID" javaType="board" 
+                     select="selectBoardById"/>
+    </resultMap>
+     -->
+    <!-- BoardEntity를 조회하는 메소드 정의 (for association) -->
+    <select id="selectBoardById" parameterType="Long" resultType="board">
+        SELECT * FROM board WHERE seqId = #{boardId}
+    </select>
+    
+    <!-- 첨부파일 저장 -->
+    <insert id="saveFile" parameterType="boardFile">
+        insert into board_file(originalFileName, storedFileName, boardId, createdTime, storedPath)
+        values (#{originalFileName}, #{storedFileName}, #{boardId}, NOW(), #{storedPath})
+    </insert>
+    
+    <select id="findFile" parameterType="Long" resultType="boardFile">
+        SELECT * FROM board_file WHERE boardId = #{boardId}
+    </select>
+ 
+    <delete id="deleteFile" parameterType="Long">
+        DELETE FROM board_file WHERE seqId = #{seqId}
+    </delete>
+    
+    <select id="findByFileId" parameterType="Long" resultType="boardFile">
+        SELECT * FROM board_file WHERE seqId = #{seqId}
+    </select>
+        
+</mapper>

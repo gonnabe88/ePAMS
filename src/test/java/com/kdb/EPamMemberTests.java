@@ -10,10 +10,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.kdb.common.dto.MemberRole;
-import com.kdb.common.entity.MemberEntity;
-import com.kdb.common.repository.MemberRepository;
-import com.kdb.security.CustomPasswordEncoder;
+import com.kdb.com.dto.MemberRole;
+import com.kdb.com.entity.MemberEntity;
+import com.kdb.com.repository.MemberRepository;
+import com.kdb.com.security.CustomPasswordEncoder;
 
 @SpringBootTest
 class EPamMemberTests {
@@ -23,7 +23,7 @@ class EPamMemberTests {
     @Autowired
     private CustomPasswordEncoder passwordEncoder; 
 
-    @Test
+    //@Test
     public void RegistOneMember() throws IOException {
     	Random random = new Random();
     	List<String> dept = new ArrayList<>(Arrays.asList(

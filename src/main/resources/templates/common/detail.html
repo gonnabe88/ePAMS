@@ -19,8 +19,8 @@
 							<!-- 게시글 내용 -->
 							<div class="card" style="min-height: 400px">
 								<div class="card-body">
-									<span th:if="${board.category}"
-								      th:classappend="|badge badge-sm mb-2 ${(board.category == 'IT') ? 'bg-primary' : (board.category == '인사') ? 'bg-info' : ''}|"
+									<span th:if="${board.category}" 
+									  th:classappend="|badge badge-sm mb-2 ${(board.category == 'IT') ? 'bg-primary' : (board.category == '인사') ? 'bg-info' : ''}|"
 								      style="--bs-badge-padding-x:.35rem"
 								      th:text="${board.category}"></span>
 									<h4 th:text="${board.boardTitle}"></h4>
@@ -46,7 +46,7 @@
 								<li th:if="${board.fileAttached == 1}" th:each="boardFile: ${boardFileList}">
 									<div class="d-flex align-items-center p-2 truncate-multiline">
 										<div class="col-11 d-flex align-items-center gap-2">
-											<span class="badge text-bg-primary" style="font-weight: 400;"> 첨부 [[${boardFileStat.count}]]</span>
+											<span class="badge text-bg-primary" style="font-weight: 400;"> 첨부 </span>
 											<h6 class="mb-0" style="width: auto; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
 												<a th:href="@{|/board/${board.seqId}/download/${boardFile.seqId}|}" th:utext="${boardFile.originalFileName}"></a>
 											</h6>

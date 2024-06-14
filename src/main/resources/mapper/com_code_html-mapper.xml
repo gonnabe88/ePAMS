@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper SYSTEM "mybatis-3-mapper.dtd">
+
+
+<mapper namespace="CodeHtmlMap">
+     
+    <!-- 모든 데이터 조회 -->
+    <select id="findAll" resultType="codeHtmlMap">
+        SELECT * FROM com_code_html
+    </select>    
+    
+    <!-- 기본키 데이터 중복여부 조회 -->
+    <select id="countById" parameterType="Long" resultType="codeHtmlMap">
+        SELECT COUNT(*)
+        FROM com_code_html WHERE HTML=#{HTML} AND CD=#{CD}
+    </select>
+    
+    <!-- 신규 데이터 추가 --> 
+    <insert id="insert" parameterType="codeHtmlMap">
+        INSERT INTO com_code_html(HTML, CD, createdTime)
+            VALUES(#{HTML}, #{CD}, NOW())
+    </insert>   
+    
+    <!-- 기존 데이터 삭제 --> 
+    <delete id="delete" parameterType="codeHtmlMap">
+        DELETE FROM com_code_html WHERE HTML=#{HTML} AND CD=#{CD}
+    </delete>
+    
+    <!-- 모든 데이터 조회 -->
+    <select id="findAllByHtml" resultType="codeHtmlMap">
+        SELECT * FROM com_code_html WHERE HTML=#{HTML}
+    </select>  
+        
+</mapper>

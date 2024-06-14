@@ -2,10 +2,14 @@
 <!DOCTYPE configuration SYSTEM "mybatis-3-config.dtd">
 <configuration>
     <typeAliases>
-        <typeAlias type="com.kdb.common.dto.BoardDTO" alias="board"></typeAlias>
-        <typeAlias type="com.kdb.common.dto.BoardFileDTO" alias="boardFile"></typeAlias>
-        <typeAlias type="com.kdb.common.dto.MemberDTO" alias="member"></typeAlias>        
-        <typeAlias type="com.kdb.common.dto.BoardImageDTO" alias="boardImage"></typeAlias>
-        <typeAlias type="com.kdb.common.dto.LogLoginDTO" alias="logLogin"></typeAlias>
+        <typeAlias type="com.kdb.com.dto.BoardDTO" alias="board"></typeAlias>
+        <typeAlias type="com.kdb.com.dto.BoardFileDTO" alias="boardFile"></typeAlias>
+        <typeAlias type="com.kdb.com.dto.MemberDTO" alias="member"></typeAlias>        
+        <typeAlias type="com.kdb.com.dto.BoardImageDTO" alias="boardImage"></typeAlias>
+        <typeAlias type="com.kdb.com.dto.LogLoginDTO" alias="logLogin"></typeAlias>
+        <typeAlias type="com.kdb.com.entity.CodeEntity" alias="code"></typeAlias>
+        <typeAlias type="com.kdb.com.entity.HtmlEntity" alias="html"></typeAlias>
+        <typeAlias type="com.kdb.com.entity.CodeHtmlMapEntity" alias="codeHtmlMap"></typeAlias>
+        <typeAlias type="com.kdb.com.dto.CodeHtmlDetailDTO" alias="JoinCodeHtmlDetail"></typeAlias>
     </typeAliases>
 </configuration>

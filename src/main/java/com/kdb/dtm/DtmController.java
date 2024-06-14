@@ -3,7 +3,6 @@ package com.kdb.dtm;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.TextStyle;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -15,19 +14,16 @@ import org.springframework.session.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import com.kdb.common.dto.BoardDTO;
-import com.kdb.common.entity.CodeEntity;
-import com.kdb.common.entity.MemberEntity;
-import com.kdb.common.entity.SearchMemberEntity;
-import com.kdb.common.service.BoardService;
-import com.kdb.common.service.CodeService;
-import com.kdb.common.service.MemberDetailsService;
+import com.kdb.com.dto.BoardDTO;
+import com.kdb.com.dto.CodeDTO;
+import com.kdb.com.entity.MemberEntity;
+import com.kdb.com.service.BoardService;
+import com.kdb.com.service.CodeHtmlDetailService;
+import com.kdb.com.service.CodeService;
+import com.kdb.com.service.MemberDetailsService;
 
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -40,13 +36,15 @@ public class DtmController<S extends Session> {
 	private final CodeService codeService;
 	private final BoardService boardService;
 	private final MemberDetailsService memberservice;
+	private final CodeHtmlDetailService codeHtmlDetailService;
 
     @GetMapping("/main")
 	public String dtmMain(@PageableDefault(page = 1) Pageable pageable, Model model) {
-    	  
+    	  final String DTMMAIN = "/dtm/main";
     	  // 코드
-    	  Map<String, String> map = new HashMap<String, String>();
-    	  List<CodeEntity> codeList = codeService.getCode("/common/index");
+    	  Map<String, String> codeList = codeHtmlDetailService.getCodeHtmlMap(DTMMAIN);
+          // 리스트의 내용을 출력
+          System.out.println(codeList.toString());
     	  
     	  //System.out.println(codeList.get(0).getCD_NM());
     	  model.addAttribute("codeList", codeList);	    
@@ -74,6 +72,6 @@ public class DtmController<S extends Session> {
 	      model.addAttribute("tomorrowDate", tomorrow+"("+dayOfWeek2.getDisplayName(TextStyle.NARROW, Locale.KOREAN)+")");
 	      
 	        
-    	return "/dtm/main";
+    	return DTMMAIN;
     }      
 }

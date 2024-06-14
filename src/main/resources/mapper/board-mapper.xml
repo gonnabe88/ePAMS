@@ -4,7 +4,7 @@
 
 <mapper namespace="Board">
 
-    <!-- BOARD TABLE Result Map 정의 -->
+    <!-- BOARD TABLE Result Map 정의 
     <resultMap id="BoardDTO" type="board">
         <id property="seqId" column="SEQ_ID"/>
         <result property="boardTitle" column="BOARD_TITLE"/>
@@ -16,15 +16,26 @@
         <result property="createdTime" column="CREATED_TIME"/>
         <result property="updatedTime" column="UPDATED_TIME"/>
     </resultMap>
-
+	-->
 	<!-- 게시물 저장 후 ID 반환 -->
     <insert id="save" parameterType="board"  useGeneratedKeys="true" keyProperty="seqId">
-        INSERT INTO board(BOARD_TITLE, BOARD_WRITER, BOARD_CONTENTS, FILE_ATTACHED, CATEGORY, BOARD_HITS, CREATED_TIME)
+        INSERT INTO board(boardTitle, boardWriter, boardContents, fileAttached, category, boardHits, createdTime)
             VALUES(#{boardTitle}, #{boardWriter}, #{boardContents}, #{fileAttached}, #{category}, 0, NOW())
     </insert>
     
+	<!-- 특정 게시물 업데이트 -->
+    <update id="update" parameterType="board">
+        UPDATE board 
+        SET boardTitle=#{boardTitle}, 
+        	boardContents=#{boardContents}, 
+	        fileAttached=#{fileAttached},
+	        category=#{category},
+	        updatedTime=#{updatedTime}
+       	WHERE seqId=#{seqId}
+    </update>
+    
     <!-- Paging 규칙에 따라 전체 게시물 조회 -->
-    <select id="findAll" resultMap="BoardDTO">
+    <select id="findAll" resultType="board">
         SELECT *
         FROM board
         ORDER BY ${sortColumn} ${sortDirection}
@@ -37,24 +48,27 @@
     </select>
     
     <!-- 특정 게시물 조회 -->
-    <select id="findById" parameterType="Long" resultMap="BoardDTO">
-        SELECT SEQ_ID, BOARD_TITLE, BOARD_WRITER, BOARD_CONTENTS, BOARD_HITS,
-        date_format(CREATED_TIME, "%Y-%m-%d %H:%i:%s") AS CREATED_TIME, FILE_ATTACHED
-        FROM board WHERE SEQ_ID=#{seqId}
+    <select id="findById" parameterType="Long" resultType="board">
+        SELECT 
+        	seqId, 
+       		boardTitle, 
+       		boardWriter, 
+       		boardContents, 
+       		boardHits,
+        	date_format(createdTime, "%Y-%m-%d %H:%i:%s") AS createdTime, 
+        	fileAttached,
+        	category
+        FROM board WHERE seqId=#{seqId}
     </select>
     
     <!-- 특정 게시물 조회 시 HIT+1 -->
     <update id="updateHits" parameterType="Long">
-        UPDATE board SET BOARD_HITS=BOARD_HITS+1 WHERE SEQ_ID=#{seqId}
+        UPDATE board SET boardHits=boardHits+1 WHERE seqId=#{seqId}
     </update>
 
-	<!-- 특정 게시물 업데이트 -->
-    <update id="update" parameterType="board">
-        UPDATE board SET BOARD_TITLE=#{boardTitle}, BOARD_CONTENTS=#{boardContents} WHERE SEQ_ID=#{seqId}
-    </update>
     
     <delete id="delete" parameterType="Long">
-        DELETE from BOARD WHERE SEQ_ID=#{seqId}
+        DELETE FROM board WHERE seqId=#{seqId}
     </delete>
     
     
@@ -62,7 +76,7 @@
     
         
     
-    <insert id="insertBoardImage" parameterType="boardImage" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insertBoardImage" parameterType="boardImage" useGeneratedKeys="true" keyProperty="seqId">
         insert into board_image(originalFileName, storedFileName)
             values(#{originalFileName}, #{storedFileName})
     </insert>

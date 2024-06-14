@@ -44,13 +44,17 @@
 									<section class="section" th:each="board: ${boardList}">
 										<div class="card">
 											<div class="card-body">
-												<span th:if="${board.category}" th:classappend="|badge badge-sm mb-2 ${(board.category == 'IT') ? 'bg-primary' : (board.category == '인사') ? 'bg-info' : ''}|" style="--bs-badge-padding-x: .35rem" th:text="${board.category}"></span>
+												<span th:if="${board.category}" th:classappend="|badge badge-sm mb-2 ${(board.category == 'IT') ? 'bg-primary' : (board.category == '인사') ? 'bg-info' : ''}|" th:text="${board.category}"></span>
 												<div class="d-flex flex-row align-items-center mb-3 gap-3">
 												    <a th:href="@{|/board/${board.seqId}|}">
-												        <h4 style="display: flex; align-items: center;">
-												        	<span th:text="${board.boardTitle}" style="margin-right: 0.5rem;"></span>
-												        	<span th:if="${board.isNew}" class="badge rounded-pill bg-warning text-dark" style="--bs-badge-font-size: .50em;">new</span>
-												        </h4>												        
+												    	<div class="d-flex align-items-center gap-2">
+													        <h4>
+													        	<span th:text="${board.boardTitle}"> </span> 
+													        </h4>
+													        <h6>
+													        	<span th:if="${T(java.time.LocalDateTime).now().minusDays(7).isBefore(board.createdTime)}" class="badge rounded-pill bg-warning text-dark">  new </span>
+													        </h6>
+												        </div>
 												    </a>												    
 												</div>
 												<div class="d-flex flex-row mb-3 gap-3">

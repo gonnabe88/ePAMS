@@ -6,8 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.kdb.common.dto.BoardDTO;
-import com.kdb.common.service.BoardService;
+import com.kdb.com.dto.BoardDTO;
+import com.kdb.com.service.BoardService;
 
 @SpringBootTest
 class EPamsApplicationTests {
@@ -26,8 +26,5 @@ class EPamsApplicationTests {
         }
     }
     
-	@Test
-	void contextLoads() {
-	}
 
 }

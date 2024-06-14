@@ -7,14 +7,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 
-import com.kdb.common.service.StorageProperties;
-import com.kdb.common.service.StorageService;
-import com.kdb.webauthn.RegistrationService;
-import com.kdb.webauthn.configuration.WebAuthProperties;
+import com.kdb.com.login.util.webauthn.RegistrationService;
+import com.kdb.com.login.util.webauthn.configuration.WebAuthProperties;
+import com.kdb.com.service.StorageProperties;
+import com.kdb.com.service.StorageService;
 import com.yubico.webauthn.RelyingParty;
 import com.yubico.webauthn.data.RelyingPartyIdentity;
-
-import de.codecentric.boot.admin.server.config.EnableAdminServer;
 
 
 @SpringBootApplication

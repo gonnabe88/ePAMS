@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper SYSTEM "mybatis-3-mapper.dtd">
+
+
+<mapper namespace="BoardImage">
+
+    <insert id="insertBoardImage" parameterType="boardImage" useGeneratedKeys="true" keyProperty="seqId">
+        insert into board_image(originalFileName, storedFileName)
+            values(#{originalFileName}, #{storedFileName})
+    </insert>
+    
+     <select id="selectBoardImage" parameterType="String" resultType="boardImage">
+        select * from board_image where storedFileName = #{storedFileName}
+    </select>
+</mapper>

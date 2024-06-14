@@ -163,6 +163,7 @@
 				</h2>
 				<br> <input class="form-control" type="text" placeholder="제목" aria-label="default input example" id="title" th:value="${board.boardTitle}"><br>
 				
+				<!-- 카테고리 라디오 버튼 -->
 		        <div style="display: flex; align-items: center; gap: 1rem;">
 		            <h6 style="margin: 0;">카테고리</h6>
 		            <div class="form-check" style="margin: 0;">
@@ -178,20 +179,7 @@
 				<textarea name="open" id="open" cols="30" rows="10" th:utext="${board.boardContents}"></textarea>
 				<br>
 				<!-- 기존 첨부파일 목록 -->
-				<ul class="list-unstyled mb-3">
-					<li th:if="${board.fileAttached == 1}" th:each="boardFile: ${boardFileList}">
-						<div class="d-flex align-items-center p-2">
-							<div class="col-9">
-								<span> 첨부 [[${boardFileStat.count}]]</span> <a th:href="@{|/board/${board.seqId}/download/${boardFile.seqId}|}" th:utext="${boardFile.originalFileName}"></a>
-							</div>
-							<div class="col-3 d-flex justify-content-end">
-								<div class="shrink-0 ms-3">
-									<button class="btn btn-danger btn-sm" type="submit" id="del" th:onclick="del([[${boardFile.seqId}]], [[@{|/board/${board.seqId}/download/${boardFile.seqId}|}]], [[${boardFile.originalFileName}]])">삭제</button>
-								</div>
-							</div>
-						</div>
-					</li>
-				</ul>
+				<ul class="list-unstyled mb-3" id="file-list"></ul>
 				<!-- 신규 파일 업로드 -->
 				<div id="dropzone">
 					<!-- 파일첨부 BOX 영역 -->
@@ -233,140 +221,177 @@
 
 	<!-- (start) private script -->
 	<th:block layout:fragment="script">
-		<script th:inline="javascript">	
-		
-	    // Disable AutoDiscover
-	    Dropzone.autoDiscover = false;
-	    
-	    var dropzonePreviewNode = document.querySelector('#dropzone-preview-list'); // <li class="mt-2" id="dropzone-preview-list"> 부분을 가져와서
-	    dropzonePreviewNode.id = ''; // 중복 회피를 위해 id 없애고
-	    var previewTemplate = dropzonePreviewNode.parentNode.innerHTML; // 엘리먼트 전체를 저장 (템플릿)
-	    dropzonePreviewNode.parentNode.removeChild(dropzonePreviewNode); // 그리고 삭제  
-	    
-	    
-	    // Set Dropzone Options
-	    Dropzone.options.myAwesomeDropzone = {
-	        autoProcessQueue: false,
-	        uploadMultiple: true,
-	        parallelUploads: 20,
-	        maxFiles: 20,
-	        //addRemoveLinks: true,
-	        acceptedFiles: "image/*,application/pdf",
-	        maxFilesize: 10,
-	        dictDefaultMessage: "파일을 끌어다 놓거나,<br>클릭해서 직접 업로드하세요.<br>(이미지 or PDF / 최대 10개)",
-	        
-	        previewTemplate: previewTemplate, // 만일 기본 테마를 사용하지않고 커스텀 업로드 테마를 사용하고 싶다면
-	        previewsContainer: '#dropzone-preview', // 드롭존 파일 나타나는 영역을 .dropzone이 아닌 다른 엘리먼트에서 하고싶을때
-	        
-	        clickable: "#dropzone",
-	    }
-	    
-	    // Initialize Dropzone
-	    var myDropzone = new Dropzone("#my-awesome-dropzone", {url: "/store-item"});
-	    
-		const save2 = () => {
-	    let header = $("meta[name='_csrf_header']").attr('content');
-	    let token = $("meta[name='_csrf']").attr('content');	    
-		let seqId = /*[[${board.seqId}]]*/ "seqId";
-		let formData = new FormData();		
-		let files = myDropzone.getQueuedFiles();
-		console.log(files.length);
-		for (const file of files) {
-			  formData.append('boardFile', file);
-			  console.log(file);
-		}
-		
-		formData.append("seqId", seqId)
-		formData.append("boardTitle", document.getElementById("title").value)
-		formData.append("boardContents", tinymce.get("open").getContent())
-		formData.append("category", document.querySelector('input[name="flexRadioDefault"]:checked').value)
+    <script th:inline="javascript">
+        $(document).ready(function() {
+            const boardId = /*[[${board.seqId}]]*/ "seqId";
+            const header = $("meta[name='_csrf_header']").attr('content');
+            const token = $("meta[name='_csrf']").attr('content');
 
-		Swal.fire({
-		        title: "등록",
-		        html: "등록 하시겠습니까?",
-		        icon: "info",
-		        showCancelButton: true,
-		        confirmButtonText: "등록",
-		        confirmButtonColor: "#3085d6",
-		        cancelButtonText: "취소",
-		        cancelButtonColor: "#d33",
-		        showLoaderOnConfirm: true,
-		        preConfirm: async () => {},
-		        allowOutsideClick: () => !Swal.isLoading()
-		    }).then((result) => {
-		        if (result.isConfirmed) {       
-		        	$.ajax({
-		        		type: "post",
-						url: "/board/update",
-						processData : false,
-						contentType : false,
-						data: formData,
-		                //CSRF Token
-		                beforeSend: function (xhr) {
-				        	xhr.setRequestHeader(header, token);
-				        },		
-						complete: function(data) {
-							//upload(document.getElementById("title").value, tinymce.get("open").getContent());
-							Swal.fire({
-						      title: "등록 완료",
-						      text: "게시글이 등록되었습니다.",
-						      icon: "success"
-						    }).then((result) => {
-					        	window.location.href = '/board/'+seqId;
-						    })
-						}	
-			    	});
-		    	}
-			})
-		}
-		
-	    function update()
-	    {    
-	        const header = $("meta[name='_csrf_header']").attr('content');
-	        const token = $("meta[name='_csrf']").attr('content');
-	    	$.ajax({
-				type: "post",
-				url: "/board/update",
-				dataType: "json",
-				data: {
-					"seqId": /*[[${board.seqId}]]*/ "seqId",
-					"boardTitle": document.getElementById("title").value,
-					"boardContents": tinymce.get("open").getContent(),
-				},
-                //CSRF Token
-                beforeSend: function (xhr) {
-		        	xhr.setRequestHeader(header, token);
-		        },		
-				complete: function(data) {
-					window.location.href = '/board/list'
-				}
-	    	});
-		}
-	    
-		// 삭제
-	    const del = (id, url, name) => {
-	    	console.log("delete id : "+id);
-	    	console.log("delete url : "+url);
-	    	console.log("delete file : "+name);
-		    let header = $("meta[name='_csrf_header']").attr('content');
-		    let token = $("meta[name='_csrf']").attr('content');	
-		    
-			Swal.fire({
-		        title: "삭제하시겠습니까?",
-		        html: "<a href=\""+url+"\">"+name+"</a>",
-		        icon: "warning",
-		        showCancelButton: true,
-		        confirmButtonText: "삭제",
-		        confirmButtonColor: "#d33",
-		        cancelButtonText: "취소",
-		        cancelButtonColor: "#3085d6",
-		        showLoaderOnConfirm: true,
-		        preConfirm: async () => {},
-		        allowOutsideClick: () => !Swal.isLoading()
-		    }).then((result) => {	        
-			})	    
-	    }
-	    </script>
+            window.del = function(boardId, fileId, url, fileName) {
+                console.log("delete id : " + fileId);
+                console.log("delete url : " + url);
+                console.log("delete file : " + fileName);
+                
+                Swal.fire({
+                    title: "삭제하시겠습니까?",
+                    html: `<a href="${url}">${fileName}</a>`,
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonText: "삭제",
+                    confirmButtonColor: "#d33",
+                    cancelButtonText: "취소",
+                    cancelButtonColor: "#3085d6",
+                    showLoaderOnConfirm: true,
+                    preConfirm: async () => {},
+                    allowOutsideClick: () => !Swal.isLoading()
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: "DELETE",
+                            url: `/board/${boardId}/deleteFile/${fileId}`,
+                            processData: false,
+                            contentType: false,
+                            beforeSend: function(xhr) {
+                                xhr.setRequestHeader(header, token);
+                            },
+                            complete: function(data) {
+                                Swal.fire({
+                                    title: "삭제 완료",
+                                    text: data.responseText,
+                                    icon: "success"
+                                }).then((result) => {
+                                    reloadFileList(boardId);
+                                })
+                            },
+                            error: function(xhr, status, error) {
+                                console.error('AJAX error:', status, error);
+                            }
+                        });
+                    }
+                });
+            }
+
+            function reloadFileList(boardId) {
+                $.ajax({
+                    url: `/board/${boardId}/fileList`,
+                    type: 'GET',
+                    beforeSend: function(xhr) {
+                        xhr.setRequestHeader(header, token);
+                    },
+                    success: function(data) {
+                        const fileListElement = $('#file-list');
+                        fileListElement.empty();
+
+                        data.forEach(function(file) {
+                            const listItem = $(`
+                                <li>
+                            		<div class="d-flex align-items-center p-2 truncate-multiline">
+                                        <div class="col-9 d-flex align-items-center gap-2">
+                                        <span class="badge text-bg-primary" style="font-weight: 400;"> 첨부 </span>
+                                        <h6 class="mb-0" style="width: auto; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                            <a href="/board/${boardId}/download/${file.seqId}">${file.originalFileName}</a>
+                                        </h6>
+                                        </div>
+                                        <div class="col-3 d-flex justify-content-end">
+                                            <div class="shrink-0 ms-3">
+                                                <button class="btn btn-danger btn-sm" type="button" onclick="del(${boardId}, ${file.seqId}, '/board/${boardId}/download/${file.seqId}', '${file.originalFileName}')">삭제</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            `);
+                            fileListElement.append(listItem);
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('AJAX error:', status, error);
+                    }
+                });
+            }
+
+            // 기존 첨부파일 목록 로드
+            reloadFileList(boardId);
+        });
+
+        // Disable AutoDiscover
+        Dropzone.autoDiscover = false;
+        
+        var dropzonePreviewNode = document.querySelector('#dropzone-preview-list');
+        dropzonePreviewNode.id = '';
+        var previewTemplate = dropzonePreviewNode.parentNode.innerHTML;
+        dropzonePreviewNode.parentNode.removeChild(dropzonePreviewNode);
+        
+        // Set Dropzone Options
+        Dropzone.options.myAwesomeDropzone = {
+            autoProcessQueue: false,
+            uploadMultiple: true,
+            parallelUploads: 20,
+            maxFiles: 20,
+            acceptedFiles: "image/*,application/pdf",
+            maxFilesize: 10,
+            dictDefaultMessage: "파일을 끌어다 놓거나,<br>클릭해서 직접 업로드하세요.<br>(이미지 or PDF / 최대 10개)",
+            previewTemplate: previewTemplate,
+            previewsContainer: '#dropzone-preview',
+            clickable: "#dropzone",
+        }
+        
+        // Initialize Dropzone
+        var myDropzone = new Dropzone("#my-awesome-dropzone", {url: "/store-item"});
+        
+        const save2 = () => {
+            let header = $("meta[name='_csrf_header']").attr('content');
+            let token = $("meta[name='_csrf']").attr('content');	    
+            let seqId = /*[[${board.seqId}]]*/ "seqId";
+            let formData = new FormData();		
+            let files = myDropzone.getQueuedFiles();
+            console.log(files.length);
+            for (const file of files) {
+                formData.append('boardFile', file);
+                console.log(file);
+            }
+            
+            formData.append("seqId", seqId)
+            formData.append("boardTitle", document.getElementById("title").value)
+            formData.append("boardContents", tinymce.get("open").getContent())
+            formData.append("category", document.querySelector('input[name="flexRadioDefault"]:checked').value)
+
+            Swal.fire({
+                title: "등록",
+                html: "등록 하시겠습니까?",
+                icon: "info",
+                showCancelButton: true,
+                confirmButtonText: "등록",
+                confirmButtonColor: "#3085d6",
+                cancelButtonText: "취소",
+                cancelButtonColor: "#d33",
+                showLoaderOnConfirm: true,
+                preConfirm: async () => {},
+                allowOutsideClick: () => !Swal.isLoading()
+            }).then((result) => {
+                if (result.isConfirmed) {       
+                    $.ajax({
+                        type: "post",
+                        url: "/board/update",
+                        processData: false,
+                        contentType: false,
+                        data: formData,
+                        beforeSend: function(xhr) {
+                            xhr.setRequestHeader(header, token);
+                        },		
+                        complete: function(data) {
+                            Swal.fire({
+                                title: "등록 완료",
+                                text: "게시글이 등록되었습니다.",
+                                icon: "success"
+                            }).then((result) => {
+                                window.location.href = '/board/' + seqId;
+                            })
+                        }
+                    });
+                }
+            })
+        }
+    </script>
 	</th:block>
 	<!-- (end) private script -->
 

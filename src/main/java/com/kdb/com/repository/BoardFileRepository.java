@@ -7,6 +7,8 @@ import org.springframework.stereotype.Repository;
 
 import com.kdb.com.dto.BoardFileDTO;
 import com.kdb.com.dto.BoardImageDTO;
+import com.kdb.com.entity.BoardFileEntity;
+import com.kdb.com.entity.BoardImageEntity;
 
 import lombok.RequiredArgsConstructor;
 
@@ -33,8 +35,9 @@ public class BoardFileRepository {
 	 * @since 2024-06-09
 	 */
     public Long saveFile(final BoardFileDTO boardFileDTO) {
-    	sql.insert("BoardFile.saveFile", boardFileDTO);
-    	return boardFileDTO.getSeqId();
+    	BoardFileEntity boardFileEntity = boardFileDTO.toEntity();
+    	sql.insert("BoardFile.saveFile", boardFileEntity);
+    	return boardFileEntity.getSEQ_ID();
     }    
 
 	/***
@@ -43,7 +46,8 @@ public class BoardFileRepository {
 	 * @since 2024-06-09
 	 */
     public List<BoardFileDTO> findFile(final Long boardId) {
-        return sql.selectList("BoardFile.findFile", boardId);
+    	List<BoardFileEntity> boardFileEntities = sql.selectList("BoardFile.findFile", boardId);
+        return BoardFileDTO.toDTOList(boardFileEntities);
     }
     
 	/***
@@ -52,7 +56,7 @@ public class BoardFileRepository {
 	 * @since 2024-06-09
 	 */
     public BoardFileDTO findByFileId(final Long seqId) {
-        return sql.selectOne("BoardFile.findByFileId", seqId);
+        return BoardFileDTO.toDTO(sql.selectOne("BoardFile.findByFileId", seqId));
     }
 
 	/***
@@ -79,7 +83,8 @@ public class BoardFileRepository {
 	 * @since 2024-06-09
 	 */
     public BoardImageDTO findBoardstoredFilename(final String storedFileName) {
-    	return sql.selectOne("BoardImage.selectBoardImage", storedFileName);
+    	BoardImageEntity boardImageEntity = sql.selectOne("BoardImage.selectBoardImage", storedFileName);
+    	return BoardImageDTO.toDTO(boardImageEntity);
     }
     
     

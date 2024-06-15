@@ -264,20 +264,20 @@ public class AuthController {
                 session.setAttribute(HttpSessionSecurityContextRepository.
                         SPRING_SECURITY_CONTEXT_KEY, context);
                 log.warn("isSuccess");
-                logRepository.saveLoginLog(LogLoginDTO.getLogLoginDTO(username, "간편인증", true));
+                logRepository.insert(LogLoginDTO.getDTO(username, "간편인증", true));
                 return "/common/index";
             } else {
-            	logRepository.saveLoginLog(LogLoginDTO.getLogLoginDTO(username, "간편인증", false));
+            	logRepository.insert(LogLoginDTO.getDTO(username, "간편인증", false));
                 return "/common/login";
             }
         } catch (JsonProcessingException e) {
-        	logRepository.saveLoginLog(LogLoginDTO.getLogLoginDTO(username, "간편인증", false));
+        	logRepository.insert(LogLoginDTO.getDTO(username, "간편인증", false));
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error processing JSON.", e);
         } catch (AssertionFailedException e) {
-        	logRepository.saveLoginLog(LogLoginDTO.getLogLoginDTO(username, "간편인증", false));
+        	logRepository.insert(LogLoginDTO.getDTO(username, "간편인증", false));
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Authentication failed", e);
         } catch (IOException e) {
-        	logRepository.saveLoginLog(LogLoginDTO.getLogLoginDTO(username, "간편인증", false));
+        	logRepository.insert(LogLoginDTO.getDTO(username, "간편인증", false));
         	throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Failed to save credenital, please try again!", e);
 		}
     }    

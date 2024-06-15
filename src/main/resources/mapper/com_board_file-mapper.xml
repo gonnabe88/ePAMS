@@ -18,25 +18,25 @@
      -->
     <!-- BoardEntity를 조회하는 메소드 정의 (for association) -->
     <select id="selectBoardById" parameterType="Long" resultType="board">
-        SELECT * FROM board WHERE seqId = #{boardId}
+        SELECT * FROM com_board WHERE SEQ_ID = #{BOARD_ID}
     </select>
     
     <!-- 첨부파일 저장 -->
     <insert id="saveFile" parameterType="boardFile">
-        insert into board_file(originalFileName, storedFileName, boardId, createdTime, storedPath)
-        values (#{originalFileName}, #{storedFileName}, #{boardId}, NOW(), #{storedPath})
+        INSERT INTO com_board_file(ORIGINAL_FILENAME, STORED_FILENAME, BOARD_ID, CREATED_TIME, STORED_PATH)
+        values (#{ORIGINAL_FILENAME}, #{STORED_FILENAME}, #{BOARD_ID}, NOW(), #{STORED_PATH})
     </insert>
     
     <select id="findFile" parameterType="Long" resultType="boardFile">
-        SELECT * FROM board_file WHERE boardId = #{boardId}
+        SELECT * FROM com_board_file WHERE BOARD_ID = #{BOARD_ID}
     </select>
  
     <delete id="deleteFile" parameterType="Long">
-        DELETE FROM board_file WHERE seqId = #{seqId}
+        DELETE FROM com_board_file WHERE SEQ_ID = #{SEQ_ID}
     </delete>
     
     <select id="findByFileId" parameterType="Long" resultType="boardFile">
-        SELECT * FROM board_file WHERE seqId = #{seqId}
+        SELECT * FROM com_board_file WHERE SEQ_ID = #{SEQ_ID}
     </select>
         
 </mapper>

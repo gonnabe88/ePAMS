@@ -60,12 +60,12 @@ public class HtmlDTO {
      * @since 2024-06-09
      */
     public static HtmlDTO toDTO(HtmlEntity htmlEntity) {
-        HtmlDTO htmlDTO = new HtmlDTO();
-        htmlDTO.setHtml(htmlEntity.getHTML());
-        htmlDTO.setHtmlName(htmlEntity.getHTML_NM());
-        htmlDTO.setCreatedTime(htmlEntity.getCreatedTime());
-        htmlDTO.setUpdatedTime(htmlEntity.getUpdatedTime());
-        return htmlDTO;
+        HtmlDTO HtmlDTO = new HtmlDTO();
+        HtmlDTO.setHtml(htmlEntity.getHTML());
+        HtmlDTO.setHtmlName(htmlEntity.getHTML_NM());
+        HtmlDTO.setCreatedTime(htmlEntity.getCREATED_TIME());
+        HtmlDTO.setUpdatedTime(htmlEntity.getUPDATED_TIME());
+        return HtmlDTO;
     }
 
     /***
@@ -77,8 +77,8 @@ public class HtmlDTO {
     	HtmlEntity htmlEntity = new HtmlEntity();
     	htmlEntity.setHTML(this.html);
     	htmlEntity.setHTML_NM(this.htmlName);
-    	htmlEntity.setUpdatedTime(this.updatedTime);
-    	htmlEntity.setCreatedTime(this.createdTime);
+    	htmlEntity.setUPDATED_TIME(this.updatedTime);
+    	htmlEntity.setCREATED_TIME(this.createdTime);
         return htmlEntity;
     }
     
@@ -95,11 +95,11 @@ public class HtmlDTO {
 
     /***
      * @author 140024
-     * @implNote List<CodeDTO> > List<CodeEntity> 변경 메소드
+     * @implNote List<DTO> > List<Entity> 변경 메소드
      * @since 2024-06-09
      */
-    public static List<HtmlEntity> toEntityList(List<HtmlDTO> htmlDTOs) {
-        return htmlDTOs.stream()
+    public static List<HtmlEntity> toEntityList(List<HtmlDTO> HtmlDTOs) {
+        return HtmlDTOs.stream()
                 .map(HtmlDTO::toEntity)
                 .collect(Collectors.toList());
     }

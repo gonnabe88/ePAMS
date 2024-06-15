@@ -6,6 +6,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kdb.com.dto.CodeDTO;
+import com.kdb.com.dto.CodeDTO;
+import com.kdb.com.entity.CodeEntity;
 import com.kdb.com.entity.CodeEntity;
 
 import lombok.RequiredArgsConstructor;
@@ -32,9 +34,45 @@ public class CodeRepository2 {
 	 * @implNote paging 조건에 따라 모든 게시물을 조회하여 반환
 	 * @since 2024-06-09
 	 */
-    public List<CodeDTO> findByHtml(final CodeEntity codeEntity) {
-    	final List<CodeEntity> codeEntityList = sql.selectList("Code.findByHtml", codeEntity);
-        return CodeDTO.toDTOList(codeEntityList);
-    }   
+    public List<CodeDTO> findAll() {
+    	final List<CodeEntity> codeEntities = sql.selectList("Code.findAll");
+        return CodeDTO.toDTOList(codeEntities);
+    }
+    
+	/***
+	 * @author 140024
+	 * @implNote 기본키 검색
+	 * @since 2024-06-09
+	 */
+    public Long countById(CodeDTO CodeDTO) {
+        return sql.selectOne("Code.countById", CodeDTO.toEntity());
+    }
+    
+	/***
+	 * @author 140024
+	 * @implNote 신규 데이터 입력
+	 * @since 2024-06-09
+	 */
+    public void insert(CodeDTO CodeDTO) {
+        sql.insert("Code.insert", CodeDTO.toEntity());
+    }
+    
+	/***
+	 * @author 140024
+	 * @implNote 기존 데이터 삭제
+	 * @since 2024-06-09
+	 */
+    public void delete(CodeDTO CodeDTO) {
+        sql.delete("Code.delete", CodeDTO.toEntity());
+    }
+    
+	/***
+	 * @author 140024
+	 * @implNote 데이터 업데이트(기본키 제외)
+	 * @since 2024-06-09
+	 */
+    public void update(CodeDTO CodeDTO) {
+        sql.update("Code.update", CodeDTO.toEntity());
+    }
     
 }

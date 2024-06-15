@@ -8,7 +8,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,10 +20,12 @@ import lombok.Setter;
  * @since 2024-06-09
  */
 @Entity
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
-@Table(name = "log_login")
+@Builder
+@Table(name = "com_log_login")
 public class LogLoginEntity {
 
     /***
@@ -32,39 +35,39 @@ public class LogLoginEntity {
      */
     @Id // 기본키
     @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment
-    @Column(name = "seqId")
-    private Long seqId; 
+    @Column(name = "SEQ_ID")
+    private Long SEQ_ID; 
     
     /***
      * @author 140024
      * @implNote 행번 
      * @since 2024-06-09
      */
-    @Column(name = "empNo", nullable = false)
-    private String empNo; 
+    @Column(name = "EMP_NO", nullable = false)
+    private String EMP_NO; 
     
     /***
      * @author 140024
      * @implNote 인증방식
      * @since 2024-06-09
      */
-    @Column(name = "type", nullable = false)
-    private String type; 
+    @Column(name = "LOGIN_TYPE", nullable = false)
+    private String LOGIN_TYPE; 
     
     /***
      * @author 140024
      * @implNote 성공여부
      * @since 2024-06-09
      */
-    @Column(name = "result", nullable = false)
-    private boolean result;
+    @Column(name = "LOGIN_RESULT", nullable = false)
+    private boolean LOGIN_RESULT;
     
     /***
      * @author 140024
      * @implNote 생성시간(인증시간)
      * @since 2024-06-09
      */
-    @Column(name = "createdTime", updatable = false)
-    private LocalDateTime createdTime;  
+    @Column(name = "CREATED_TIME", updatable = false)
+    private LocalDateTime CREATED_TIME;  
 
 }

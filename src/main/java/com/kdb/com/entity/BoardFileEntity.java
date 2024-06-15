@@ -20,7 +20,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@Table(name = "board_file")
+@Table(name = "com_board_file")
 @NoArgsConstructor // 기본생성자
 public class BoardFileEntity extends BaseEntity {
 	
@@ -32,7 +32,7 @@ public class BoardFileEntity extends BaseEntity {
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long seqId;
+    private Long SEQ_ID;
 
     /***
      * @author 140024
@@ -40,7 +40,7 @@ public class BoardFileEntity extends BaseEntity {
      * @since 2024-06-10
      */
     @Column
-    private String originalFileName;
+    private String ORIGINAL_FILENAME;
 
     /***
      * @author 140024
@@ -48,7 +48,7 @@ public class BoardFileEntity extends BaseEntity {
      * @since 2024-06-10
      */
     @Column
-    private String storedFileName;
+    private String STORED_FILENAME;
     
     /***
      * @author 140024
@@ -56,7 +56,7 @@ public class BoardFileEntity extends BaseEntity {
      * @since 2024-06-10
      */
     @Column
-    private String storedPath;
+    private String STORED_PATH;
 
     /***
      * @author 140024
@@ -64,7 +64,19 @@ public class BoardFileEntity extends BaseEntity {
      * @since 2024-06-10
      */
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "boardId")
+    @JoinColumn(name = "BOARD_ID")
     private BoardEntity boardEntity;
+    
+    // 추가된 getter 메서드
+    public Long getBOARD_ID() {
+        return boardEntity != null ? boardEntity.getSEQ_ID() : null;
+    }
+    // 추가된 setter 메서드
+    public void setBOARD_ID(Long boardId) {
+        if (this.boardEntity == null) {
+            this.boardEntity = new BoardEntity();
+        }
+        this.boardEntity.setSEQ_ID(boardId);
+    }
 
 }

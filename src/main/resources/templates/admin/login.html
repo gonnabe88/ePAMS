@@ -87,7 +87,7 @@
 	
 	function createTable(selectableRange) {
 	    table = new Tabulator("#example-table", {
-	        ajaxURL: "/api/login",
+	        ajaxURL: "/api/admin/login",
 	        height: "900px",
 	        layout: "fitColumns",
 	        placeholder: "No Data Set",
@@ -132,8 +132,8 @@
 	            },
 	            { formatter: "rownum", headerSort: false, hozAlign: "center", resizable: true, frozen: false, width: 3 },
 	            { title: "행번", field: "empNo", sorter: "string", minWidth: 100 },
-	            { title: "인증방식", field: "type", sorter: "string", minWidth: 100 },
-	            { title: "인증결과", field: "result", sorter: "boolean" },
+	            { title: "인증방식", field: "loginType", sorter: "string", minWidth: 100 },
+	            { title: "인증결과", field: "loginResult", sorter: "boolean" },
 	            { title: "인증시간", field: "createdTime", sorter: "string"},
 	        ]
 	    });
@@ -169,7 +169,7 @@
 	    });
 	
 	    document.getElementById("reload").addEventListener("click", function() {
-	        table.setData("/api/login");
+	        table.setData("/api/admin/login");
 	    });
 	
 	    document.getElementById("save").addEventListener("click", function() {
@@ -183,7 +183,7 @@
 	            deleted: deletedData
 	        };
 	
-	        fetch('/api/member/save', {
+	        fetch('/api/admin/login/save', {
 	            method: 'POST',
 	            headers: {
 	                'header': header,
@@ -225,8 +225,8 @@
 	            table.setFilter([
 	                [
 	                    {field: "empNo", type: "like", value: searchValue},
-	                    {field: "type", type: "like", value: searchValue},
-	                    {field: "result", type: "like", value: searchValue},
+	                    {field: "loginType", type: "like", value: searchValue},
+	                    {field: "loginResult", type: "like", value: searchValue},
 	                    {field: "createdTime", type: "like", value: searchValue}
 	                ]
 	            ]);

@@ -1,5 +1,12 @@
 package com.kdb.com.dto;
 
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import com.kdb.com.entity.BoardEntity;
+import com.kdb.com.entity.BoardImageEntity;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -45,4 +52,65 @@ public class BoardImageDTO {
      * @since 2024-06-09
      */
     private Long boardId;
+    
+    /***
+     * @author 140024
+     * @implNote 생성시간
+     * @since 2024-06-09
+     */
+    private LocalDateTime createdTime;
+    
+    /***
+     * @author 140024
+     * @implNote 수정시간
+     * @since 2024-06-09
+     */
+    private LocalDateTime updatedTime;
+  
+    /***
+     * @author 140024
+     * @implNote Entity > DTO 변경 메소드
+     * @since 2024-06-09
+     */
+    public static BoardImageDTO toDTO(BoardImageEntity boardImageEntity) {
+        final BoardImageDTO boardImageDTO = new BoardImageDTO();
+        boardImageDTO.setSeqId(boardImageEntity.getSEQ_ID());
+        boardImageDTO.setOriginalFileName(boardImageEntity.getORIGINAL_FILENAME());
+        boardImageDTO.setStoredFileName(boardImageEntity.getSTORED_FILENAME());
+        boardImageDTO.setBoardId(boardImageEntity.getBoardEntity().getSEQ_ID());
+        return boardImageDTO;
+    }
+
+    /***
+     * @author 140024
+     * @implNote DTO > Entity 변경 메소드
+     * @since 2024-06-09
+     */
+    public BoardImageEntity toEntity() {
+        BoardImageEntity boardImageEntity = new BoardImageEntity();
+        boardImageEntity.setSEQ_ID(this.seqId);
+        boardImageEntity.setORIGINAL_FILENAME(this.originalFileName);
+        boardImageEntity.setSTORED_FILENAME(this.storedFileName);
+        boardImageEntity.setCREATED_TIME(this.createdTime);
+        boardImageEntity.setUPDATED_TIME(this.updatedTime);
+        return boardImageEntity;
+    }
+
+    /***
+     * @author 140024
+     * @implNote List<Entity> > List<DTO> 변경 메소드
+     * @since 2024-06-09
+     */
+    public static List<BoardImageDTO> toDTOList(List<BoardImageEntity> boardImageEntities) {
+        return boardImageEntities.stream().map(BoardImageDTO::toDTO).collect(Collectors.toList());
+    }
+
+    /***
+     * @author 140024
+     * @implNote List<HtmlDTO> > List<CodeEntity> 변경 메소드
+     * @since 2024-06-09
+     */
+    public static List<BoardImageEntity> toEntityList(List<BoardImageDTO> boardImageDTOs) {
+        return boardImageDTOs.stream().map(BoardImageDTO::toEntity).collect(Collectors.toList());
+    }
 }

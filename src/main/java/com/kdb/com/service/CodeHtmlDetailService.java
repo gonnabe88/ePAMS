@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
-import com.kdb.com.dto.CodeDTO;
+import com.kdb.com.dto.HtmlDTO;
 import com.kdb.com.dto.CodeHtmlDetailDTO;
 import com.kdb.com.repository.CodeHtmlDetailRepository;
 
@@ -38,10 +38,10 @@ public class CodeHtmlDetailService {
     public Map<String, String> getCodeHtmlMap(final String html) {
     	
     	final List<CodeHtmlDetailDTO> codeHtmlDetailDTOs = codeHtmlDetailRepository.findAllByHtml(html);
-//    	log.warn("html : "+html);
-    	//    	for(CodeHtmlDetailDTO dto : codeHtmlDetailDTOs) {
-//    		log.warn("CodeList : "+ dto.toString());
-//    	}
+    	log.warn("html : "+html);
+    	    	for(CodeHtmlDetailDTO dto : codeHtmlDetailDTOs) {
+    		log.warn("CodeList : "+ dto.toString());
+    	}
     	
     	return codeHtmlDetailDTOs.stream()
                 .collect(Collectors.toMap(CodeHtmlDetailDTO::getCode, CodeHtmlDetailDTO::getCodeName));

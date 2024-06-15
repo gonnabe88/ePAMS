@@ -26,9 +26,5 @@
         DELETE FROM com_code_html WHERE HTML=#{HTML} AND CD=#{CD}
     </delete>
     
-    <!-- 모든 데이터 조회 -->
-    <select id="findAllByHtml" resultType="codeHtmlMap">
-        SELECT * FROM com_code_html WHERE HTML=#{HTML}
-    </select>  
         
 </mapper>

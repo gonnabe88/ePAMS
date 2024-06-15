@@ -5,7 +5,7 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.kdb.com.dto.CodeDTO;
+import com.kdb.com.dto.HtmlDTO;
 import com.kdb.com.dto.CodeHtmlDetailDTO;
 import com.kdb.com.entity.CodeEntity;
 
@@ -34,7 +34,7 @@ public class CodeHtmlDetailRepository {
 	 * @since 2024-06-09
 	 */
     public List<CodeHtmlDetailDTO> findAllByHtml(final String html) {
-    	final List<CodeHtmlDetailDTO> codeHtmlDetails = sql.selectList("JoinCodeHtmlDetail.findAllByHtml", html);
+    	final List<CodeHtmlDetailDTO> codeHtmlDetails = sql.selectList("CodeHtmlDetail.findAllByHtml", html);
         return codeHtmlDetails;
     }   
     

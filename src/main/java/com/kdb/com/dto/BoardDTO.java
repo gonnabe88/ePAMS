@@ -3,10 +3,12 @@ package com.kdb.com.dto;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kdb.com.entity.BoardEntity;
+import com.kdb.com.entity.CodeEntity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -136,41 +138,63 @@ public class BoardDTO {
     
     /***
      * @author 140024
-     * @implNote 엔티티를 DTO로 변환하는 정적 메소드
+     * @implNote Entity > DTO 변경 메소드
      * @since 2024-06-09
      */
-    public static BoardDTO toBoardDTO(final BoardEntity boardEntity) {
+    public static BoardDTO toDTO(final BoardEntity boardEntity) {
     	final BoardDTO boardDTO = new BoardDTO();
-        boardDTO.setSeqId(boardEntity.getSeqId());
-        boardDTO.setBoardWriter(boardEntity.getBoardWriter());
-        boardDTO.setBoardTitle(boardEntity.getBoardTitle());
-        boardDTO.setBoardContents(new String(boardEntity.getBoardContents(), StandardCharsets.UTF_8));
-        boardDTO.setCategory(boardEntity.getCategory());
-        boardDTO.setBoardHits(boardEntity.getBoardHits());
-        boardDTO.setCreatedTime(boardEntity.getCreatedTime());
-        boardDTO.setUpdatedTime(boardEntity.getUpdatedTime());
-        if (boardEntity.getFileAttached() == 0) {
-            boardDTO.setFileAttached(boardEntity.getFileAttached()); // 0
+        boardDTO.setSeqId(boardEntity.getSEQ_ID());
+        boardDTO.setBoardWriter(boardEntity.getBOARD_WRITER());
+        boardDTO.setBoardTitle(boardEntity.getBOARD_TITLE());
+        boardDTO.setBoardContents(new String(boardEntity.getBOARD_CONTENTS(), StandardCharsets.UTF_8));
+        boardDTO.setCategory(boardEntity.getCATEGORY());
+        boardDTO.setBoardHits(boardEntity.getBOARD_HITS());
+        boardDTO.setCreatedTime(boardEntity.getCREATED_TIME());
+        boardDTO.setUpdatedTime(boardEntity.getUPDATED_TIME());
+        if (boardEntity.getFILE_ATTACHED() == 0) {
+            boardDTO.setFileAttached(boardEntity.getFILE_ATTACHED()); // 0
         } else {
-            boardDTO.setFileAttached(boardEntity.getFileAttached()); // 1
+            boardDTO.setFileAttached(boardEntity.getFILE_ATTACHED()); // 1
         }
         return boardDTO;
     }
     
     /***
      * @author 140024
-     * @implNote DTO를 Entity로 변환하는 정적 메소드
+     * @implNote DTO > Entity 변경 메소드
      * @since 2024-06-09
      */
     public BoardEntity toEntity() {
         final BoardEntity boardEntity = new BoardEntity();
-        boardEntity.setSeqId(this.seqId);
-        boardEntity.setBoardWriter(this.boardWriter);
-        boardEntity.setBoardTitle(this.boardTitle);
-        boardEntity.setBoardContents(this.boardContents.getBytes(StandardCharsets.UTF_8));
-        boardEntity.setCategory(this.category);
-        boardEntity.setBoardHits(this.boardHits);
+        boardEntity.setSEQ_ID(this.seqId);
+        boardEntity.setBOARD_WRITER(this.boardWriter);
+        boardEntity.setBOARD_TITLE(this.boardTitle);
+        boardEntity.setBOARD_CONTENTS(this.boardContents.getBytes(StandardCharsets.UTF_8));
+        boardEntity.setCATEGORY(this.category);
+        boardEntity.setBOARD_HITS(this.boardHits);
         return boardEntity;
+    }
+    
+    /***
+     * @author 140024
+     * @implNote List<Entity> > List<DTO> 변경 메소드
+     * @since 2024-06-09
+     */
+    public static List<BoardDTO> toDTOList(List<BoardEntity> boardEntities) {
+        return boardEntities.stream()
+                .map(BoardDTO::toDTO)
+                .collect(Collectors.toList());
+    }
+
+    /***
+     * @author 140024
+     * @implNote List<HtmlDTO> > List<CodeEntity> 변경 메소드
+     * @since 2024-06-09
+     */
+    public static List<BoardEntity> toEntityList(List<BoardDTO> boardDTOs) {
+        return boardDTOs.stream()
+                .map(BoardDTO::toEntity)
+                .collect(Collectors.toList());
     }
     
 }

@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.kdb.com.dto.BoardDTO;
 import com.kdb.com.dto.BoardFileDTO;
 import com.kdb.com.dto.BoardImageDTO;
+import com.kdb.com.entity.BoardEntity;
 import com.kdb.com.repository.BoardFileRepository;
 import com.kdb.com.repository.BoardRepository;
 
@@ -77,28 +78,34 @@ public class BoardService {
      * @implNote 게시물 업데이트
      * @since 2024-04-26
      */
-    public BoardDTO update(final BoardDTO boardDTO) throws IOException {
-    	final BoardDTO beforeBoardDTO = boardRepository2.findById(boardDTO.getSeqId());
-    	final int FILE_ATTACHED = 1; // 상수로 리터럴 값을 추출
-        if (boardDTO.getBoardFile() != null) {
-        	// 새로운 첨부파일이 있는 경우
-            boardDTO.setFileAttached(FILE_ATTACHED); // 첨부파일 여부 1 세팅
-            for (final MultipartFile boardFile : boardDTO.getBoardFile()) {
+    public BoardDTO update(final BoardDTO newBoardDTO) throws IOException {
+    	final BoardDTO oldBoardDTO = boardRepository2.findById(newBoardDTO.getSeqId()); // 이전 게시물 세팅
+    	final int FILE_ATTACHED = 1; // 상수로 리터럴 값을 추출 (취약점 조치건)
+    	BoardEntity boardEntity = newBoardDTO.toEntity(); // DTO > Entity 변경
+    	
+        if ((newBoardDTO.getBoardFile() != null)) { 
+        	// 새로운 첨부파일이 있는 경우        	
+        	boardEntity.setFILE_ATTACHED(FILE_ATTACHED); // 첨부파일 여부 1 세팅   
+        	boardRepository2.update(boardEntity); // 게시물 업데이트
+        	
+            for (final MultipartFile boardFile : newBoardDTO.getBoardFile()) {
                 final String originalFilename = boardFile.getOriginalFilename(); // 파일명 세팅
                 final String storedFileName = System.currentTimeMillis() + "_" + originalFilename; // 저장 파일명 세팅
                 final String savePath = filepath + storedFileName; // 파일 저장경로 세팅
                 boardFile.transferTo(new File(savePath)); // 스토리지에 파일 저장
-                final BoardFileDTO boardFileDTO = BoardFileDTO.toBoardFileDTO(boardDTO, originalFilename, storedFileName, filepath); // DBMS에 저장할 파일정보 객체 세팅
+                final BoardFileDTO boardFileDTO = BoardFileDTO.toBoardFileDTO(newBoardDTO, originalFilename, storedFileName, filepath); // DBMS에 저장할 파일정보 객체 세팅
                 boardFileRepository2.saveFile(boardFileDTO); // DBMS에 파일 정보 저장
             }
-        } else if (beforeBoardDTO.getFileAttached() == FILE_ATTACHED) { 
-        	// 새로운 첨부파일은 없지만 기존 첨부파일이 있는 경우
-        	boardDTO.setFileAttached(FILE_ATTACHED);
-        }
-        // 모든 객체 업데이트 
-        boardRepository2.update(boardDTO); // 게시물 업데이트
+        } else if ((oldBoardDTO.getFileAttached() == FILE_ATTACHED)) {
+        	// 기존 첨부파일이 있는 경우
+        	boardEntity.setFILE_ATTACHED(FILE_ATTACHED); // 첨부파일 여부 1 세팅   
+        	boardRepository2.update(boardEntity); // 게시물 업데이트
+        } else {
+        	// 첨부파일이 없는 경우
+        	boardRepository2.update(boardEntity); // 게시물 업데이트
+        }        
 
-        return findById(boardDTO.getSeqId()); // 업데이트한 게시물 ID 리턴
+        return findById(boardEntity.getSEQ_ID()); // 업데이트한 게시물 객체 리턴
     }
 
     /**
@@ -106,25 +113,31 @@ public class BoardService {
      * @implNote 게시물 저장
      * @since 2024-04-26
      */
-    public BoardDTO save(final BoardDTO boardDTO) throws IOException {
-        // 파일 첨부 여부에 따라 로직 분리
-        if (boardDTO.getBoardFile() == null) {  // 첨부 파일 없는 경우
-            boardRepository2.save(boardDTO);  // 게시물 신규 저장
-        } else { // 첨부 파일 있는 경우
-            boardDTO.setFileAttached(1); // 첨부파일 여부 1 세팅
-            boardRepository2.save(boardDTO); // 게시물 업데이트
-            
-            for (final MultipartFile boardFile : boardDTO.getBoardFile()) {
-            	final String originalFilename = boardFile.getOriginalFilename();  // 파일명 세팅
-            	final String storedFileName = System.currentTimeMillis() + "_" + originalFilename; // 저장 파일명 세팅
-            	final String savePath = filepath + storedFileName; // 파일 저장경로 세팅
-                boardFile.transferTo(new File(savePath)); // 스토리지에 파일 저장
-                final BoardFileDTO boardFileDTO = BoardFileDTO.toBoardFileDTO(boardDTO, originalFilename, storedFileName, filepath); // DBMS에 저장할 파일정보 객체 세팅
-                boardFileRepository2.saveFile(boardFileDTO); // DBMS에 파일 정보 저장
-            }
-        }
-        return findById(boardDTO.getSeqId()); // 저장한 게시물 ID 리턴
-    }
+	public BoardDTO save(BoardDTO newBoardDTO) throws IOException {
+		final int FILE_ATTACHED = 1; // 상수로 리터럴 값을 추출 (취약점 조치건)
+		BoardEntity boardEntity = newBoardDTO.toEntity();
+		
+		if (newBoardDTO.getBoardFile() != null) { // 새로운 첨부파일이 있는 경우			
+			
+			boardEntity.setFILE_ATTACHED(FILE_ATTACHED); // 첨부파일 여부 1 세팅
+			boardRepository2.save(boardEntity); // 게시글 저장
+			newBoardDTO.setSeqId(boardEntity.getSEQ_ID()); // 채번된 게시글 ID 세팅
+			
+			for (final MultipartFile boardFile : newBoardDTO.getBoardFile()) {
+				final String originalFilename = boardFile.getOriginalFilename(); // 파일명 세팅
+				final String storedFileName = System.currentTimeMillis() + "_" + originalFilename; // 저장 파일명 세팅
+				final String savePath = filepath + storedFileName; // 파일 저장경로 세팅
+				boardFile.transferTo(new File(savePath)); // 스토리지에 파일 저장
+				final BoardFileDTO boardFileDTO = BoardFileDTO.toBoardFileDTO(newBoardDTO, originalFilename, storedFileName, filepath); // DBMS에 저장할 파일정보 객체 세팅
+				boardFileRepository2.saveFile(boardFileDTO); // DBMS에 파일 정보 저장
+			}
+		}
+		else {
+			boardRepository2.save(boardEntity); // 첨부파일이 없는 경우
+		}		
+		
+		return findById(boardEntity.getSEQ_ID()); // 저장한 게시물 객체 리턴
+	}
 
     /**
      * @author K140024
@@ -162,7 +175,7 @@ public class BoardService {
     	final List<BoardFileDTO> boardFiles = boardFileRepository2.findFile(boardId); // 첨부파일 정보 반환
     	if(boardFiles.isEmpty()) { // 삭제 대상 첨부파일 삭제 후 남은 첨부파일이 없으면
     		boardDTO.setFileAttached(0); // 첨부파일 없는 게시물로 객체 세팅 후 
-    		boardRepository2.update(boardDTO); // 업데이트 FileAttached = 0(첨부없음)
+    		boardRepository2.update(boardDTO.toEntity()); // 업데이트 FileAttached = 0(첨부없음)
     	}
     	
     	// 삭제한 파일명 리턴
@@ -200,7 +213,7 @@ public class BoardService {
     	final int pageSize = pageable.getPageSize(); // 페이지 크기
     	final int offset = page * pageSize; // 오프셋 계산
         // 한 페이지당 3개씩 글을 보여주고 정렬 기준은 id 기준으로 내림차순 정렬
-    	final List<BoardDTO> boardDTOs = boardRepository2.findAll(offset, pageSize, "seqId", "DESC");
+    	final List<BoardDTO> boardDTOs = boardRepository2.findAll(offset, pageSize, "SEQ_ID", "DESC");
         // 전체 데이터 개수 조회
     	final long totalElements = boardRepository2.count(); // 전체 데이터 개수를 조회하는 메소드 필요
         return new PageImpl<>(boardDTOs, PageRequest.of(page, pageSize), totalElements);

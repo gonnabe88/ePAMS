@@ -12,9 +12,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kdb.com.dto.CodeDTO;
 import com.kdb.com.dto.HtmlDTO;
+import com.kdb.com.dto.LogLoginDTO;
+import com.kdb.com.entity.LogLoginEntity;
 import com.kdb.com.entity.MemberEntity;
+import com.kdb.com.service.CodeService;
 import com.kdb.com.service.HtmlService;
+import com.kdb.com.service.LogService;
 import com.kdb.com.service.MemberDetailsService;
 
 import lombok.RequiredArgsConstructor;
@@ -28,6 +33,8 @@ public class AdminRestController {
 	
 	private final MemberDetailsService memberservice;
 	private final HtmlService htmlservice;
+	private final CodeService codeservice;
+	private final LogService logService;
 	
     @GetMapping("/html")
     public ResponseEntity<List<HtmlDTO>> searchAllHtml(Model model) throws Exception{
@@ -41,16 +48,33 @@ public class AdminRestController {
         List<HtmlDTO> added = payload.get("added");
         List<HtmlDTO> changed = payload.get("changed");
         List<HtmlDTO> deleted = payload.get("deleted");
-
-        log.warn("added : "+ added.toString());
-        log.warn("changed : "+ changed.toString());
-        log.warn("deleted : "+ deleted.toString());
-        
         htmlservice.save(added, changed, deleted);
 
         return ResponseEntity.ok(Map.of("message", "Data saved successfully!"));
     }
     
+    @GetMapping("/code")
+    public ResponseEntity<List<CodeDTO>> searchAllCode(Model model) throws Exception{
+    	List<CodeDTO> codeDTOs = codeservice.findAll();
+        return ResponseEntity.ok(codeDTOs);
+    }
+    
+    @PostMapping("/code/save")
+    public ResponseEntity<Map<String, String>> saveCodes(@RequestBody Map<String, List<CodeDTO>> payload) {
+    	
+        List<CodeDTO> added = payload.get("added");
+        List<CodeDTO> changed = payload.get("changed");
+        List<CodeDTO> deleted = payload.get("deleted");
+        codeservice.save(added, changed, deleted);
+
+        return ResponseEntity.ok(Map.of("message", "Data saved successfully!"));
+    }
+    
+    @GetMapping("/login")
+    public ResponseEntity<List<LogLoginDTO>> searchLogLoginLAll(Model model) throws Exception{
+    	List<LogLoginDTO> logloginDTOs = logService.findAll();
+        return ResponseEntity.ok(logloginDTOs);
+    }
     
     @GetMapping("/member")
     public ResponseEntity<List<MemberEntity>> searchAll1(Model model) throws Exception{

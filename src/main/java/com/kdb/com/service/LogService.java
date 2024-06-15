@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.kdb.com.entity.LogLoginEntity;
+import com.kdb.com.dto.LogLoginDTO;
 import com.kdb.com.repository.LogRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -32,9 +32,7 @@ public class LogService {
 	 * @implNote logRepository 객체의 findLoginLogAll 호출하여 LogLoginEntity 리스트 반환
 	 * @since 2024-06-09
 	 */
-    public List<LogLoginEntity> searchLogLoginAll() {    	
-    	return logRepository.findLoginLogAll();
+    public List<LogLoginDTO> findAll() {    	
+    	return logRepository.findAll();
     }  
-
-
 }

@@ -1,6 +1,11 @@
 package com.kdb.com.dto;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import com.kdb.com.entity.BoardEntity;
+import com.kdb.com.entity.BoardFileEntity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -89,4 +94,61 @@ public class BoardFileDTO {
         boardFileDTO.setBoardDTO(boardDTO);
         return boardFileDTO;
     }
+    
+    /***
+     * @author 140024
+     * @implNote Entity > DTO 변경 메소드
+     * @since 2024-06-09
+     */
+    public static BoardFileDTO toDTO(BoardFileEntity boardFileEntity) {
+        BoardFileDTO boardFileDTO = new BoardFileDTO();
+        boardFileDTO.setSeqId(boardFileEntity.getSEQ_ID());
+        boardFileDTO.setOriginalFileName(boardFileEntity.getORIGINAL_FILENAME());
+        boardFileDTO.setStoredFileName(boardFileEntity.getSTORED_FILENAME());
+        boardFileDTO.setStoredPath(boardFileEntity.getSTORED_PATH());
+        boardFileDTO.setBoardId(boardFileEntity.getBoardEntity().getSEQ_ID());
+        boardFileDTO.setCreatedTime(boardFileEntity.getCREATED_TIME());
+        boardFileDTO.setUpdatedTime(boardFileEntity.getUPDATED_TIME());
+        return boardFileDTO;
+    }
+
+    /***
+     * @author 140024
+     * @implNote DTO > Entity 변경 메소드
+     * @since 2024-06-09
+     */
+    public BoardFileEntity toEntity() {
+        BoardFileEntity boardFileEntity = new BoardFileEntity();
+        boardFileEntity.setSEQ_ID(this.seqId);
+        boardFileEntity.setORIGINAL_FILENAME(this.originalFileName);
+        boardFileEntity.setSTORED_FILENAME(this.storedFileName);
+        boardFileEntity.setSTORED_PATH(this.storedPath);
+        if (this.boardId != null) {
+            BoardEntity boardEntity = new BoardEntity();
+            boardEntity.setSEQ_ID(this.boardId);
+            boardFileEntity.setBoardEntity(boardEntity);
+        }
+        boardFileEntity.setCREATED_TIME(this.createdTime);
+        boardFileEntity.setUPDATED_TIME(this.updatedTime);
+        return boardFileEntity;
+    }
+
+    /***
+     * @author 140024
+     * @implNote List<Entity> > List<DTO> 변경 메소드
+     * @since 2024-06-09
+     */
+    public static List<BoardFileDTO> toDTOList(List<BoardFileEntity> boardFileEntities) {
+        return boardFileEntities.stream().map(BoardFileDTO::toDTO).collect(Collectors.toList());
+    }
+
+    /***
+     * @author 140024
+     * @implNote List<HtmlDTO> > List<CodeEntity> 변경 메소드
+     * @since 2024-06-09
+     */
+    public static List<BoardFileEntity> toEntityList(List<BoardFileDTO> boardFileDTOs) {
+        return boardFileDTOs.stream().map(BoardFileDTO::toEntity).collect(Collectors.toList());
+    }
+    
 }

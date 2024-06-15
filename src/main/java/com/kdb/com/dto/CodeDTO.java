@@ -47,13 +47,6 @@ public class CodeDTO {
     
     /***
      * @author 140024
-     * @implNote 관련 HTML
-     * @since 2024-06-09
-     */
-    private String codeHtml;   
-    
-    /***
-     * @author 140024
      * @implNote 생성시간
      * @since 2024-06-09
      */
@@ -68,22 +61,22 @@ public class CodeDTO {
     
     /***
      * @author 140024
-     * @implNote CodeEntity > CodeDTO 변경 메소드
+     * @implNote Entity > DTO 변경 메소드
      * @since 2024-06-09
      */
     public static CodeDTO toDTO(CodeEntity codeEntity) {
-        CodeDTO codeDTO = new CodeDTO();
+    	CodeDTO codeDTO = new CodeDTO();
         codeDTO.setCode(codeEntity.getCD());
         codeDTO.setCodeName(codeEntity.getCD_NM());
         codeDTO.setCodeType(codeEntity.getCD_TYPE());
-        codeDTO.setCreatedTime(codeEntity.getCreatedTime());
-        codeDTO.setUpdatedTime(codeEntity.getUpdatedTime());
+        codeDTO.setCreatedTime(codeEntity.getCREATED_TIME());
+        codeDTO.setUpdatedTime(codeEntity.getUPDATED_TIME());
         return codeDTO;
     }
 
     /***
      * @author 140024
-     * @implNote CodeDTO > CodeEntity 변경 메소드
+     * @implNote DTO > Entity 변경 메소드
      * @since 2024-06-09
      */
     public CodeEntity toEntity() {
@@ -91,14 +84,14 @@ public class CodeDTO {
         codeEntity.setCD(this.code);
         codeEntity.setCD_NM(this.codeName);
         codeEntity.setCD_TYPE(this.codeType);
-        codeEntity.setUpdatedTime(this.updatedTime);
-        codeEntity.setCreatedTime(this.createdTime);
+        codeEntity.setUPDATED_TIME(this.updatedTime);
+        codeEntity.setCREATED_TIME(this.createdTime);
         return codeEntity;
     }
     
     /***
      * @author 140024
-     * @implNote List<CodeEntity> > List<CodeDTO> 변경 메소드
+     * @implNote List<Entity> > List<DTO> 변경 메소드
      * @since 2024-06-09
      */
     public static List<CodeDTO> toDTOList(List<CodeEntity> codeEntities) {
@@ -109,7 +102,7 @@ public class CodeDTO {
 
     /***
      * @author 140024
-     * @implNote List<CodeDTO> > List<CodeEntity> 변경 메소드
+     * @implNote List<HtmlDTO> > List<CodeEntity> 변경 메소드
      * @since 2024-06-09
      */
     public static List<CodeEntity> toEntityList(List<CodeDTO> codeDTOs) {

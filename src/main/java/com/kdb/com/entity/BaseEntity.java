@@ -33,7 +33,7 @@ public class BaseEntity {
 	 */
     @CreationTimestamp
     @Column(updatable = false)
-    private LocalDateTime createdTime;
+    private LocalDateTime CREATED_TIME;
 
 	/***
 	 * @author 140024
@@ -42,5 +42,5 @@ public class BaseEntity {
 	 */
     @UpdateTimestamp
     @Column(insertable = false)
-    private LocalDateTime updatedTime;
+    private LocalDateTime UPDATED_TIME;
 }

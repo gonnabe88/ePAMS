@@ -2,8 +2,20 @@
 <!DOCTYPE mapper SYSTEM "mybatis-3-mapper.dtd">
 
 <mapper namespace="Member">
+
+    <!-- 모든 데이터 조회 -->
+    <select id="findAll" resultType="member">
+        SELECT * FROM OHR.member
+    </select>
+    
+    <!-- 기본키 데이터 중복여부 조회 -->
+    <select id="countById" parameterType="Long" resultType="code">
+        SELECT COUNT(*)
+        FROM OHR.member WHERE username=#{CD}
+    </select>
+    
     <insert id="save" parameterType="member">
-        insert into member(memberEmail, memberPassword, memberName, memberAge, memberMobile)
+        insert into OHR.member(memberEmail, memberPassword, memberName, memberAge, memberMobile)
         values (#{memberEmail}, #{memberPassword}, #{memberName}, #{memberAge}, #{memberMobile})
     </insert>
     
@@ -14,10 +26,6 @@
     
     <select id="login" parameterType="member" resultType="member">
         select * from member where username=#{username} and password=#{password}
-    </select>
-    
-    <select id="findAll" resultType="member">
-        select * from member
     </select>
     
     <select id="findById" parameterType="Long" resultType="member">

@@ -71,7 +71,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 		
 		// 사용자가 없는 경우
 		if (userDetails == null) {
-			logRepository.saveLoginLog(LogLoginDTO.getLogLoginDTO(username, "Unknown User", false));
+			logRepository.insert(LogLoginDTO.getDTO(username, "Unknown User", false));
 			throw new UsernameNotFoundException("User not found");
 		}
 					
@@ -81,7 +81,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 		log.warn("저장된 패스워드 : "+ userDetails.getPassword());
 		if (!password.equals(userDetails.getPassword())) {
 			log.warn("패스워드 불일치");
-			logRepository.saveLoginLog(LogLoginDTO.getLogLoginDTO(username, "패스워드", false));
+			logRepository.insert(LogLoginDTO.getDTO(username, "패스워드", false));
 			//임시로 테스트를 위해 패스워드 인증 예외처리
 			//throw new AuthenticationException("Invalid credentials") {};
 		}			
@@ -89,15 +89,15 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 		// 2차 인증(SMS,카카오,OTP,FIDO) 실패
 		if (!loginResult) {
 			log.warn("2차 인증 실패");
-			logRepository.saveLoginLog(LogLoginDTO.getLogLoginDTO(username, MFA, false));
+			logRepository.insert(LogLoginDTO.getDTO(username, MFA, false));
 			throw new AuthenticationException("Invalid MFA credentials") {};
 		}			 
 		
 		// Create a fully authenticated Authentication object
 		Authentication authenticated = new UsernamePasswordAuthenticationToken(
 				userDetails, password, userDetails.getAuthorities());
-		
-		logRepository.saveLoginLog(LogLoginDTO.getLogLoginDTO(username, MFA, true));
+		// 로그인 성공 로깅
+		logRepository.insert(LogLoginDTO.getDTO(username, MFA, true));
 		return authenticated;
 	}
 

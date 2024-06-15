@@ -29,7 +29,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-@Table(name = "board")
+@Table(name = "com_board")
 public class BoardEntity extends BaseEntity {
     /***
      * @author 140024
@@ -39,7 +39,7 @@ public class BoardEntity extends BaseEntity {
     @Id 
     @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment
     @Column
-    private Long seqId;
+    private Long SEQ_ID;
     
     /***
      * @author 140024
@@ -47,7 +47,7 @@ public class BoardEntity extends BaseEntity {
      * @since 2024-06-09
      */
     @Column(nullable = false)
-    private String boardTitle;
+    private String BOARD_TITLE;
     
     /***
      * @author 140024
@@ -57,7 +57,7 @@ public class BoardEntity extends BaseEntity {
      */
     @Lob
     @Column(nullable = false)
-    private byte[] boardContents;
+    private byte[] BOARD_CONTENTS;
 
     /***
      * @author 140024
@@ -65,7 +65,7 @@ public class BoardEntity extends BaseEntity {
      * @since 2024-06-09
      */
     @Column(length = 255, nullable = false) 
-    private String boardWriter;
+    private String BOARD_WRITER;
 
     /***
      * @author 140024
@@ -73,7 +73,7 @@ public class BoardEntity extends BaseEntity {
      * @since 2024-06-09
      */
     @Column(length = 16, nullable = false)
-    private String category;
+    private String CATEGORY;
 
     /***
      * @author 140024
@@ -81,7 +81,7 @@ public class BoardEntity extends BaseEntity {
      * @since 2024-06-09
      */
     @Column
-    private int boardHits;
+    private int BOARD_HITS;
 
     /***
      * @author 140024
@@ -89,7 +89,7 @@ public class BoardEntity extends BaseEntity {
      * @since 2024-06-09
      */
     @Column
-    private int fileAttached; // 1 or 0
+    private int FILE_ATTACHED; // 1 or 0
 
     /***
      * @author 140024
@@ -99,76 +99,76 @@ public class BoardEntity extends BaseEntity {
     @OneToMany(mappedBy = "boardEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<BoardFileEntity> boardFileEntityL = new ArrayList<>();
 
-    /***
-     * @author 140024
-     * @implNote (static factory method) 게시글 저장을 위한 엔티티 생성  
-     * @param boardDTO 게시글 정보를 담고 있는 DTO
-     * @return BoardEntity 생성된 게시글 엔티티
-     * @since 2024-06-09
-     */
-    public static BoardEntity toSaveEntity(final BoardDTO boardDTO) {
-        final BoardEntity boardEntity = new BoardEntity();
-        boardEntity.setBoardWriter(boardDTO.getBoardWriter());
-        boardEntity.setBoardTitle(boardDTO.getBoardTitle());
-        boardEntity.setBoardContents(boardDTO.getBoardContents().getBytes(StandardCharsets.UTF_8));
-        boardEntity.setCategory(boardDTO.getCategory());
-        boardEntity.setBoardHits(0);
-        boardEntity.setFileAttached(0); // 파일 없음.
-        return boardEntity;
-    }
+//    /***
+//     * @author 140024
+//     * @implNote (static factory method) 게시글 저장을 위한 엔티티 생성  
+//     * @param boardDTO 게시글 정보를 담고 있는 DTO
+//     * @return BoardEntity 생성된 게시글 엔티티
+//     * @since 2024-06-09
+//     */
+//    public static BoardEntity toSaveEntity(final BoardDTO boardDTO) {
+//        final BoardEntity boardEntity = new BoardEntity();
+//        boardEntity.setBoardWriter(boardDTO.getBoardWriter());
+//        boardEntity.setBoardTitle(boardDTO.getBoardTitle());
+//        boardEntity.setBoardContents(boardDTO.getBoardContents().getBytes(StandardCharsets.UTF_8));
+//        boardEntity.setCategory(boardDTO.getCategory());
+//        boardEntity.setBoardHits(0);
+//        boardEntity.setFileAttached(0); // 파일 없음.
+//        return boardEntity;
+//    }
 
-    /***
-     * @author 140024
-     * @implNote (static factory method) 게시글 수정을 위한 엔티티 생성
-     * @param boardDTO 게시글 정보를 담고 있는 DTO
-     * @return BoardEntity 수정된 게시글 엔티티
-     * @since 2024-06-09
-     */
-    public static BoardEntity toUpdateEntity(final BoardDTO boardDTO) {
-        final BoardEntity boardEntity = new BoardEntity();
-        boardEntity.setSeqId(boardDTO.getSeqId());
-        boardEntity.setBoardWriter(boardDTO.getBoardWriter());
-        boardEntity.setBoardTitle(boardDTO.getBoardTitle());
-        boardEntity.setBoardContents(boardDTO.getBoardContents().getBytes(StandardCharsets.UTF_8));
-        boardEntity.setCategory(boardDTO.getCategory());
-        boardEntity.setBoardHits(boardDTO.getBoardHits());
-        return boardEntity;
-    }
-
-    /***
-     * @author 140024
-     * @implNote (static factory method) 파일이 있는 게시글 저장을 위한 엔티티 생성
-     * @param boardDTO 게시글 정보를 담고 있는 DTO
-     * @return BoardEntity 생성된 게시글 엔티티
-     * @since 2024-06-09
-     */
-    public static BoardEntity toSaveFileEntity(final BoardDTO boardDTO) {
-        final BoardEntity boardEntity = new BoardEntity();
-        boardEntity.setBoardWriter(boardDTO.getBoardWriter());
-        boardEntity.setBoardTitle(boardDTO.getBoardTitle());
-        boardEntity.setBoardContents(boardDTO.getBoardContents().getBytes(StandardCharsets.UTF_8));
-        boardEntity.setCategory(boardDTO.getCategory());
-        boardEntity.setBoardHits(0);
-        boardEntity.setFileAttached(1); // 파일 있음.
-        return boardEntity;
-    }
-    
-    /***
-     * @author 140024
-     * @implNote (static factory method) 파일이 있는 게시글 수정을 위한 엔티티 생성
-     * @param boardDTO 게시글 정보를 담고 있는 DTO
-     * @return BoardEntity 수정된 게시글 엔티티
-     * @since 2024-06-09
-     */
-    public static BoardEntity toUpdateFileEntity(final BoardDTO boardDTO) {
-        final BoardEntity boardEntity = new BoardEntity();
-        boardEntity.setSeqId(boardDTO.getSeqId());
-        boardEntity.setBoardWriter(boardDTO.getBoardWriter());
-        boardEntity.setBoardTitle(boardDTO.getBoardTitle());
-        boardEntity.setBoardContents(boardDTO.getBoardContents().getBytes(StandardCharsets.UTF_8));
-        boardEntity.setCategory(boardDTO.getCategory());
-        boardEntity.setBoardHits(boardDTO.getBoardHits());
-        boardEntity.setFileAttached(1); // 파일 있음.
-        return boardEntity;
-    }
+//    /***
+//     * @author 140024
+//     * @implNote (static factory method) 게시글 수정을 위한 엔티티 생성
+//     * @param boardDTO 게시글 정보를 담고 있는 DTO
+//     * @return BoardEntity 수정된 게시글 엔티티
+//     * @since 2024-06-09
+//     */
+//    public static BoardEntity toUpdateEntity(final BoardDTO boardDTO) {
+//        final BoardEntity boardEntity = new BoardEntity();
+//        boardEntity.setSeqId(boardDTO.getSeqId());
+//        boardEntity.setBoardWriter(boardDTO.getBoardWriter());
+//        boardEntity.setBoardTitle(boardDTO.getBoardTitle());
+//        boardEntity.setBoardContents(boardDTO.getBoardContents().getBytes(StandardCharsets.UTF_8));
+//        boardEntity.setCategory(boardDTO.getCategory());
+//        boardEntity.setBoardHits(boardDTO.getBoardHits());
+//        return boardEntity;
+//    }
+//
+//    /***
+//     * @author 140024
+//     * @implNote (static factory method) 파일이 있는 게시글 저장을 위한 엔티티 생성
+//     * @param boardDTO 게시글 정보를 담고 있는 DTO
+//     * @return BoardEntity 생성된 게시글 엔티티
+//     * @since 2024-06-09
+//     */
+//    public static BoardEntity toSaveFileEntity(final BoardDTO boardDTO) {
+//        final BoardEntity boardEntity = new BoardEntity();
+//        boardEntity.setBoardWriter(boardDTO.getBoardWriter());
+//        boardEntity.setBoardTitle(boardDTO.getBoardTitle());
+//        boardEntity.setBoardContents(boardDTO.getBoardContents().getBytes(StandardCharsets.UTF_8));
+//        boardEntity.setCategory(boardDTO.getCategory());
+//        boardEntity.setBoardHits(0);
+//        boardEntity.setFileAttached(1); // 파일 있음.
+//        return boardEntity;
+//    }
+//    
+//    /***
+//     * @author 140024
+//     * @implNote (static factory method) 파일이 있는 게시글 수정을 위한 엔티티 생성
+//     * @param boardDTO 게시글 정보를 담고 있는 DTO
+//     * @return BoardEntity 수정된 게시글 엔티티
+//     * @since 2024-06-09
+//     */
+//    public static BoardEntity toUpdateFileEntity(final BoardDTO boardDTO) {
+//        final BoardEntity boardEntity = new BoardEntity();
+//        boardEntity.setSeqId(boardDTO.getSeqId());
+//        boardEntity.setBoardWriter(boardDTO.getBoardWriter());
+//        boardEntity.setBoardTitle(boardDTO.getBoardTitle());
+//        boardEntity.setBoardContents(boardDTO.getBoardContents().getBytes(StandardCharsets.UTF_8));
+//        boardEntity.setCategory(boardDTO.getCategory());
+//        boardEntity.setBoardHits(boardDTO.getBoardHits());
+//        boardEntity.setFileAttached(1); // 파일 있음.
+//        return boardEntity;
+//    }
 }

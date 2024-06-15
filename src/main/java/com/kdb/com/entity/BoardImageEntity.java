@@ -19,10 +19,10 @@ import lombok.Setter;
  * @since 2024-06-09
  */
 @Entity
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 @Getter
 @Setter
-@Table(name = "board_image")
+@Table(name = "com_board_image")
 public class BoardImageEntity extends BaseEntity {
 	
     /***
@@ -32,8 +32,8 @@ public class BoardImageEntity extends BaseEntity {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "seqId")
-    private Long seqId;
+    @Column
+    private Long SEQ_ID;
 
     /***
      * @author 140024
@@ -41,7 +41,7 @@ public class BoardImageEntity extends BaseEntity {
      * @since 2024-06-09
      */
     @Column
-    private String originalFileName;
+    private String ORIGINAL_FILENAME;
     
     /***
      * @author 140024
@@ -49,8 +49,7 @@ public class BoardImageEntity extends BaseEntity {
      * @since 2024-06-10
      */
     @Column
-    private String storedFileName;
-
+    private String STORED_FILENAME;
     
     /***
      * @author 140024
@@ -58,19 +57,19 @@ public class BoardImageEntity extends BaseEntity {
      * @since 2024-06-10
      */
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "boardId")
+    @JoinColumn(name = "BOARD_ID")
     private BoardEntity boardEntity;
 
-    /***
-     * @author 140024
-     * @implNote 파일 정보를 BoardImageEntity로 변환
-     * @since 2024-06-10
-     */
-    public static BoardImageEntity toBoardFileEntity(final String originalFileName, final String storedFileName) {
-        final BoardImageEntity boardFileEntity = new BoardImageEntity();
-        boardFileEntity.setOriginalFileName(originalFileName);
-        boardFileEntity.setStoredFileName(storedFileName);
-        return boardFileEntity;
-    }
+//    /***
+//     * @author 140024
+//     * @implNote 파일 정보를 BoardImageEntity로 변환
+//     * @since 2024-06-10
+//     */
+//    public static BoardImageEntity toBoardFileEntity(final String originalFileName, final String storedFileName) {
+//        final BoardImageEntity boardFileEntity = new BoardImageEntity();
+//        boardFileEntity.setOriginalFileName(originalFileName);
+//        boardFileEntity.setStoredFileName(storedFileName);
+//        return boardFileEntity;
+//    }
 
 }

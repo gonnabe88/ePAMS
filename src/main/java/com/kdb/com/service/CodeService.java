@@ -30,9 +30,34 @@ public class CodeService {
      */
 	private final CodeRepository2 codeRepository;
 	
-    public Map<String, String> getCode(CodeDTO codeDTO) {
-    	List<CodeDTO> codeDTOList = codeRepository.findByHtml(codeDTO.toEntity());
-    	return codeDTOList.stream()
-                .collect(Collectors.toMap(CodeDTO::getCode, CodeDTO::getCodeName));
+	/**
+     * @author K140024
+     * @implNote 전제 목록 조회
+     * @since 2024-04-26
+     */
+    public List<CodeDTO> findAll() {    	
+    	return codeRepository.findAll();
+    }
+    
+    /**
+     * @author K140024
+     * @implNote 데이터 저장
+     * @since 2024-04-26
+     */
+    public void save(List<CodeDTO> added, List<CodeDTO> changed, List<CodeDTO> deleted) {    	
+        // Handle added members
+        for (CodeDTO dto : added) {
+        	codeRepository.insert(dto);
+        }
+
+        // Handle changed members
+        for (CodeDTO dto : changed) {
+        	codeRepository.update(dto);
+        }
+
+        // Handle deleted members
+        for (CodeDTO dto : deleted) {
+        	codeRepository.delete(dto);
+        }
     }
 }

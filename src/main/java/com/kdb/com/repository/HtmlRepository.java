@@ -5,7 +5,7 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.kdb.com.dto.CodeDTO;
+import com.kdb.com.dto.HtmlDTO;
 import com.kdb.com.dto.HtmlDTO;
 import com.kdb.com.entity.HtmlEntity;
 
@@ -43,8 +43,8 @@ public class HtmlRepository {
 	 * @implNote 기본키 검색
 	 * @since 2024-06-09
 	 */
-    public Long countById(HtmlDTO htmlDTO) {
-        return sql.selectOne("Html.countById", htmlDTO.toEntity());
+    public Long countById(HtmlDTO HtmlDTO) {
+        return sql.selectOne("Html.countById", HtmlDTO.toEntity());
     }
     
 	/***
@@ -52,8 +52,8 @@ public class HtmlRepository {
 	 * @implNote 신규 데이터 입력
 	 * @since 2024-06-09
 	 */
-    public void insert(HtmlDTO htmlDTO) {
-        sql.insert("Html.insert", htmlDTO.toEntity());
+    public void insert(HtmlDTO HtmlDTO) {
+        sql.insert("Html.insert", HtmlDTO.toEntity());
     }
     
 	/***
@@ -61,8 +61,8 @@ public class HtmlRepository {
 	 * @implNote 기존 데이터 삭제
 	 * @since 2024-06-09
 	 */
-    public void delete(HtmlDTO htmlDTO) {
-        sql.delete("Html.delete", htmlDTO.toEntity());
+    public void delete(HtmlDTO HtmlDTO) {
+        sql.delete("Html.delete", HtmlDTO.toEntity());
     }
     
 	/***
@@ -70,8 +70,8 @@ public class HtmlRepository {
 	 * @implNote 데이터 업데이트(기본키 제외)
 	 * @since 2024-06-09
 	 */
-    public void update(HtmlDTO htmlDTO) {
-        sql.update("Html.update", htmlDTO.toEntity());
+    public void update(HtmlDTO HtmlDTO) {
+        sql.update("Html.update", HtmlDTO.toEntity());
     }
     
 }

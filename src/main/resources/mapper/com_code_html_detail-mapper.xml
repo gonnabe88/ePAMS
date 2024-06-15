@@ -2,10 +2,10 @@
 <!DOCTYPE mapper SYSTEM "mybatis-3-mapper.dtd">
 
 
-<mapper namespace="JoinCodeHtmlDetail">
+<mapper namespace="CodeHtmlDetail">
      
     <!-- html에 해당하는 Code 목록 조회 -->
-    <select id="findAllByHtml" parameterType="String" resultType="JoinCodeHtmlDetail">
+    <select id="findAllByHtml" parameterType="String" resultType="CodeHtmlDetail">
         SELECT 
         	CH.HTML   AS html, 
         	H.HTML_NM AS htmlName, 

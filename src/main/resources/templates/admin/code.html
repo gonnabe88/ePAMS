@@ -87,7 +87,7 @@
 	
 	function createTable(selectableRange) {
 	    table = new Tabulator("#example-table", {
-	        ajaxURL: "/api/member",
+	        ajaxURL: "/api/admin/code",
 	        height: "900px",
 	        layout: "fitColumns",
 	        placeholder: "No Data Set",
@@ -131,11 +131,11 @@
 	                }
 	            },
 	            { formatter: "rownum", headerSort: false, hozAlign: "center", resizable: true, frozen: false, width: 3 },
-	            { title: "이름", field: "username", sorter: "string", editor: "input", minWidth: 100 },
-	            { title: "부서", field: "dept", sorter: "string", editor: "input", minWidth: 100 },
-	            { title: "담당업무", field: "responsibility", sorter: "string", editor: "input" },
-	            { title: "권한", field: "role", sorter: "string", editor: "list", editorParams: { values: { "ROLE_ADMIN": "ROLE_ADMIN", "ROLE_KDB": "ROLE_KDB", "ROLE_ITO": "ROLE_ITO" } } },
-	            { title: "팀", field: "team", sorter: "string", editor: "input" },
+	            { title: "코드", field: "code", sorter: "string", minWidth: 100 },
+	            { title: "코드명", field: "codeName", sorter: "string", editor: "input", minWidth: 100 },
+	            { title: "코드타입", field: "codeType", sorter: "string", editor: "input" },
+	            { title: "변경일자", field: "createdTime", sorter: "string" },
+	            { title: "등록일자", field: "updatedTime", sorter: "string" },
 	        ]
 	    });
 	
@@ -170,7 +170,7 @@
 	    });
 	
 	    document.getElementById("reload").addEventListener("click", function() {
-	        table.setData("/api/member");
+	        table.setData("/api/admin/code");
 	    });
 	
 	    document.getElementById("save").addEventListener("click", function() {
@@ -184,7 +184,7 @@
 	            deleted: deletedData
 	        };
 	
-	        fetch('/api/member/save', {
+	        fetch('/api/admin/code/save', {
 	            method: 'POST',
 	            headers: {
 	                'header': header,
@@ -225,11 +225,9 @@
 	            console.log("조회 : ", searchValue);
 	            table.setFilter([
 	                [
-	                    {field: "username", type: "like", value: searchValue},
-	                    {field: "dept", type: "like", value: searchValue},
-	                    {field: "responsibility", type: "like", value: searchValue},
-	                    {field: "role", type: "like", value: searchValue},
-	                    {field: "team", type: "like", value: searchValue}
+	                    {field: "code", type: "like", value: searchValue},
+	                    {field: "codeName", type: "like", value: searchValue},
+	                    {field: "codeType", type: "like", value: searchValue}
 	                ]
 	            ]);
 	        } else {

@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
-import com.kdb.com.dto.CodeDTO;
+import com.kdb.com.dto.HtmlDTO;
 import com.kdb.com.dto.HtmlDTO;
 import com.kdb.com.entity.MemberEntity;
 import com.kdb.com.repository.HtmlRepository;

@@ -17,58 +17,59 @@
         <result property="updatedTime" column="UPDATED_TIME"/>
     </resultMap>
 	-->
+	
 	<!-- 게시물 저장 후 ID 반환 -->
-    <insert id="save" parameterType="board"  useGeneratedKeys="true" keyProperty="seqId">
-        INSERT INTO board(boardTitle, boardWriter, boardContents, fileAttached, category, boardHits, createdTime)
-            VALUES(#{boardTitle}, #{boardWriter}, #{boardContents}, #{fileAttached}, #{category}, 0, NOW())
+    <insert id="save" parameterType="board" useGeneratedKeys="true" keyProperty="SEQ_ID">
+        INSERT INTO com_board(BOARD_TITLE, BOARD_WRITER, BOARD_CONTENTS, FILE_ATTACHED, CATEGORY, BOARD_HITS, CREATED_TIME)
+            VALUES(#{BOARD_TITLE}, #{BOARD_WRITER}, #{BOARD_CONTENTS}, #{FILE_ATTACHED}, #{CATEGORY}, 0, NOW())
     </insert>
     
 	<!-- 특정 게시물 업데이트 -->
-    <update id="update" parameterType="board">
-        UPDATE board 
-        SET boardTitle=#{boardTitle}, 
-        	boardContents=#{boardContents}, 
-	        fileAttached=#{fileAttached},
-	        category=#{category},
-	        updatedTime=#{updatedTime}
-       	WHERE seqId=#{seqId}
+    <update id="update" parameterType="board" useGeneratedKeys="true" keyProperty="SEQ_ID">
+        UPDATE com_board 
+        SET BOARD_TITLE=#{BOARD_TITLE}, 
+        	BOARD_CONTENTS=#{BOARD_CONTENTS}, 
+	        FILE_ATTACHED=#{FILE_ATTACHED},
+	        CATEGORY=#{CATEGORY},
+	        UPDATED_TIME=#{UPDATED_TIME}
+       	WHERE SEQ_ID=#{SEQ_ID}
     </update>
     
     <!-- Paging 규칙에 따라 전체 게시물 조회 -->
     <select id="findAll" resultType="board">
         SELECT *
-        FROM board
+        FROM com_board
         ORDER BY ${sortColumn} ${sortDirection}
         LIMIT #{limit} OFFSET #{offset}
     </select>
     
     <!-- 전체 데이터 개수 조회 -->
     <select id="count" resultType="long">
-        SELECT COUNT(*) FROM board
+        SELECT COUNT(*) FROM com_board
     </select>
     
     <!-- 특정 게시물 조회 -->
     <select id="findById" parameterType="Long" resultType="board">
         SELECT 
-        	seqId, 
-       		boardTitle, 
-       		boardWriter, 
-       		boardContents, 
-       		boardHits,
-        	date_format(createdTime, "%Y-%m-%d %H:%i:%s") AS createdTime, 
-        	fileAttached,
-        	category
-        FROM board WHERE seqId=#{seqId}
+        	SEQ_ID, 
+       		BOARD_TITLE, 
+       		BOARD_WRITER, 
+       		BOARD_CONTENTS, 
+       		BOARD_HITS,
+        	date_format(CREATED_TIME, "%Y-%m-%d %H:%i:%s") AS CREATED_TIME, 
+        	FILE_ATTACHED,
+        	CATEGORY
+        FROM com_board WHERE SEQ_ID=#{SEQ_ID}
     </select>
     
     <!-- 특정 게시물 조회 시 HIT+1 -->
     <update id="updateHits" parameterType="Long">
-        UPDATE board SET boardHits=boardHits+1 WHERE seqId=#{seqId}
+        UPDATE com_board SET BOARD_HITS=BOARD_HITS+1 WHERE SEQ_ID=#{SEQ_ID}
     </update>
 
     
     <delete id="delete" parameterType="Long">
-        DELETE FROM board WHERE seqId=#{seqId}
+        DELETE FROM com_board WHERE SEQ_ID=#{SEQ_ID}
     </delete>
     
     
@@ -77,11 +78,11 @@
         
     
     <insert id="insertBoardImage" parameterType="boardImage" useGeneratedKeys="true" keyProperty="seqId">
-        insert into board_image(originalFileName, storedFileName)
-            values(#{originalFileName}, #{storedFileName})
+        insert into com_board_image(ORIGINAL_FILENAME, STORED_FILENAME)
+            values(#{ORIGINAL_FILENAME}, #{STORED_FILENAME})
     </insert>
     
      <select id="selectBoardImage" parameterType="String" resultType="boardImage">
-        select * from board_file where storedFileName = #{storedFileName}
+        select * from com_board_image where STORED_FILENAME = #{STORED_FILENAME}
     </select>
 </mapper>

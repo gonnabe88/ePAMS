@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kdb.com.dto.LogLoginDTO;
+import com.kdb.com.entity.CodeEntity;
 import com.kdb.com.entity.LogLoginEntity;
 
 import lombok.RequiredArgsConstructor;
@@ -27,20 +28,22 @@ public class LogRepository {
 
     /***
      * @author 140024
-     * @implNote Login Log 저장 
+     * @implNote Login Log 조회(전체 로그)
      * @since 2024-06-09
-     * @since 2024-06-09 PMD MethodArgumentCouldBeFinal 취약점 조치 (140024) 
      */
-    public void saveLoginLog(final LogLoginDTO logLoginDTO) {
-    	sql.update("LogLogin.saveLoginLog", logLoginDTO);
+    public List<LogLoginDTO> findAll() {
+    	final List<LogLoginEntity> logLoginEntities = sql.selectList("LogLogin.findAll");
+    	return LogLoginDTO.toDTOList(logLoginEntities);
     }
     
     /***
      * @author 140024
-     * @implNote Login Log 조회(전체 로그)
+     * @implNote Login Log 저장 
      * @since 2024-06-09
+     * @since 2024-06-09 PMD MethodArgumentCouldBeFinal 취약점 조치 (140024) 
      */
-    public List<LogLoginEntity> findLoginLogAll() {
-    	return sql.selectList("LogLogin.findLoginLogAll");
+    public void insert(final LogLoginDTO logLoginDTO) {
+    	sql.update("LogLogin.insert", logLoginDTO.toEntity());
     }
+    
 }

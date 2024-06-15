@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.kdb.com.dto.BoardDTO;
-import com.kdb.com.dto.CodeDTO;
+import com.kdb.com.dto.HtmlDTO;
 import com.kdb.com.entity.MemberEntity;
 import com.kdb.com.service.BoardService;
 import com.kdb.com.service.CodeHtmlDetailService;

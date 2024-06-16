@@ -12,23 +12,33 @@
     <!-- 기본키 데이터 중복여부 조회 -->
     <select id="countById" parameterType="Long" resultType="code">
         SELECT COUNT(*)
-        FROM com_code WHERE CD=#{CD}
+        FROM com_code WHERE CD_ID=#{CD_ID}
     </select>
     
     <!-- 신규 데이터 추가 --> 
     <insert id="insert" parameterType="code">
-        INSERT INTO com_code(CD, CD_NM, CD_TYPE, createdTime)
-            VALUES(#{CD}, #{CD_NM}, #{CD_TYPE}, NOW())
+        INSERT INTO com_code(CD_ID, CD_NM, CD_TYPE, CREATED_TIME)
+            VALUES(#{CD_ID}, #{CD_NM}, #{CD_TYPE}, NOW())
     </insert>   
     
     <!-- 기존 데이터 삭제 --> 
     <delete id="delete" parameterType="code">
-        DELETE FROM com_code WHERE CD=#{CD}
+        DELETE FROM com_code WHERE CD_ID=#{CD_ID}
     </delete>
     
     <!-- 기존 데이터 업데이트 --> 
     <update id="update" parameterType="code">
-        UPDATE com_code SET CD=#{CD}, CD_NM=#{CD_NM}, CD_TYPE=#{CD_TYPE}, updatedTime=NOW() WHERE CD=#{CD}
+        UPDATE com_code SET CD_ID=#{CD_ID}, CD_NM=#{CD_NM}, CD_TYPE=#{CD_TYPE}, UPDATED_TIME=NOW() WHERE CD_ID=#{CD_ID}
     </update>
+    
+    <!-- 신규 데이터 추가 또는 기존 데이터 업데이트 -->
+	<insert id="insertUpdate" parameterType="code">
+	    INSERT INTO com_code (CD_ID, CD_NM, CD_TYPE, CREATED_TIME)
+	    VALUES (#{CD_ID}, #{CD_NM}, #{CD_TYPE}, NOW())
+	    ON DUPLICATE KEY UPDATE
+	    CD_NM = VALUES(CD_NM),
+	    CD_TYPE = VALUES(CD_TYPE),
+	    UPDATED_TIME = NOW();
+	</insert>
         
 </mapper>

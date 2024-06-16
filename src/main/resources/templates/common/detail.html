@@ -38,7 +38,9 @@
 											<h7 th:text="${board.boardHits}"></h7>
 										</div>
 									</div>
-									<span th:utext="${board.boardContents}"></span>
+									<div class="scroll-multiline">
+									 <p th:utext="${board.boardContents}"></p>
+									 </div>
 								</div>
 							</div>
 							<!-- 기존 첨부파일 목록 -->

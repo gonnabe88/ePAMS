@@ -6,357 +6,367 @@ xmlns:sec="http://www.thymeleaf.org" layout:decorate="~{common/layout/layout}">
 <head>
 <!-- (start) private script -->
 <th:block layout:fragment="css">
-
-	<link rel="stylesheet" href="/extensions/aos/aos.css">
-	<link rel="stylesheet" href="/extensions/animate/animate.min.css" />
-
-   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/litepicker/dist/css/litepicker.css"/>
-<style>
-
-.datetimepicker-dummy .datetimepicker-dummy-wrapper {
-    --bs-form-select-bg-img: url(data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e);
-    display: block;
-    width: 100%;
-    padding: .375rem 1.75rem .375rem .75rem;
-    font-size: 1rem;
-    font-weight: 400;
-    line-height: 1.5;
-    color: #607080;
-    -webkit-appearance: none;
-    appearance: none;
-    background-color: #fff;
-    background-image: var(--bs-form-select-bg-img), var(--bs-form-select-bg-icon, none);
-    background-repeat: no-repeat;
-    background-position: right .75rem center;
-    background-size: 16px 12px;
-    border: 1px solid #dce7f1;
-    border-radius: .25rem;
-    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
-}
-
-.datetimepicker-dummy .datetimepicker-dummy-wrapper .datetimepicker-dummy-input {
-    color: #4a4a4a;
-    font-size: 1rem;
-    text-align: left;
-    text-indent: 1rem;
-    flex: 1;
-    height: 100%;
-    max-width: 100%;
-}
-
-.fade-out {
-    opacity: 0;
-    transition: opacity 0.5s ease-out;
-}
-
-</style>
-
+   <link rel="stylesheet" href="/extensions/aos/aos.css">
+   <link rel="stylesheet" href="/extensions/animate/animate.min.css" />
+   <link rel="stylesheet" href="/extensions/litepicker/litepicker.css"/>
+	
 </th:block>
 <!-- (end) private script -->
 </head>
 
 <body>
 	<div layout:fragment="contents">
-		<div class="container">
-			<div id="main-content">
-				<div class="d-flex justify-content-center">
-					<div class="row col-lg-10 col-md-12 d-flex justify-content-center">
-						<div class="page-heading">
-							<div class="align-middle">
-								<h2>
-									<i class="bi bi-bell-fill"></i> [[${codeList['DTM_INDEX_CD']}]]
-								</h2>
-								<br>
-							</div>
-						</div>
-
-						<div class="row mt-3" id="add_div">
-							<div class="d-flex justify-content-end gap-2">
-								<button type="button" class="btn btn-primary btn-sm" id="add">추가</button>
-								<button type="button" class="btn btn-warning btn-sm" id="add">신청</button>
-							</div>
-						</div>
-
-						<div class="row mt-3" id="new">
-							<div class="animate__animated animate__fadeIn">
-								<div class="card shadow">
-									<div class="col-2 mt-3 ms-3">
-										<span class="badge text-bg-primary">신규</span>
-									</div>
-
-									<div class="card-body p-3">
-										<div class="d-flex align-items-center justify-content-between mb-2">
-										<h6>근태종류</h6>
-										<div class="btn-group btn-group-sm" role="group" aria-label="Basic radio toggle button group">
-										  <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
-										  <label class="btn btn-outline-primary" for="btnradio1">연차</label>
-										
-										  <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
-										  <label class="btn btn-outline-primary" for="btnradio2">저축</label>
-										
-										  <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
-										  <label class="btn btn-outline-primary" for="btnradio3">보상</label>
-										</div>
-										</div>
-										<select class="form-select"
-											aria-label="Default select example">
-											<option selected>선택</option>
-											<option value="1">연차휴가</option>
-											<option value="2">연차휴가 오전(반차)</option>
-											<option value="3">연차휴가 오전(반반차)</option>
-											<option value="4">연차휴가 오후(반차)</option>
-											<option value="5">연차휴가 오후(반반차)</option>
-											<option value="6">저축휴가</option>
-											<option value="7">저축휴가 오전(반차)</option>
-											<option value="8">저축휴가 오전(반반차)</option>
-											<option value="9">저축휴가 오후(반차)</option>
-											<option value="10">저축휴가 오후(반반차)</option>
-										</select>
-									</div>									
-									
-									<div class="card-body p-3">
-										<h6>근태기간</h6>
-										<div class="d-flex align-items-center justify-content-between mb-2">
-											<input type="text" class="form-control me-1" id="start-input" placeholder="YYYY-MM-DD">
-											<span>~</span>
-											<input type="text" class="form-control ms-1" id="end-input" placeholder="YYYY-MM-DD">
-										</div>
-										<div class="d-flex justify-content-center">
-											<input type="text" class="form-control" id="start-date" style="display: none;"> 
-											<input type="text" class="form-control" id="end-date" style="display: none;">
-										</div>
-									</div>
-									
-								</div>
-							</div>
+	<div class="container">
+		<div id="main-content">
+			<div class="d-flex justify-content-center">
+				<div class="row col-lg-10 col-md-12 d-flex justify-content-center">
+					<div class="page-heading">
+						<div class="align-middle">
+							<h2>
+								<i class="bi bi-bell-fill"></i> 근태 목록
+							</h2>
+							<br>
 						</div>
 					</div>
+
+					<div class="row mt-3" id="add_div">
+						<div class="d-flex justify-content-end gap-2">
+							<button type="button" class="btn btn-primary btn-sm" id="add">추가</button>
+							<button type="button" class="btn btn-warning btn-sm" id="submit">신청</button>
+							<button type="button" class="btn btn-danger btn-sm" id="cancel" data-bs-toggle="modal" data-bs-target="#cancelModal">취소</button>
+						</div>
+					</div>
+
+					<!-- The initial div will be added through JavaScript -->
+
 				</div>
 			</div>
 		</div>
 	</div>
 
+<!-- Modal -->
+<div class="modal fade" id="cancelModal" tabindex="-1" aria-labelledby="cancelModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="cancelModalLabel">근태 목록</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<ul class="list-group" id="modalItemList">
+					<li class="list-group-item list-group-item-action" data-dtmtype="연차" data-dtmdetail="연차휴가" data-startdate="2023-06-01" data-enddate="2023-06-02">연차휴가 (2023-06-01 ~ 2023-06-02)</li>
+					<li class="list-group-item list-group-item-action" data-dtmtype="저축" data-dtmdetail="저축휴가" data-startdate="2023-07-01" data-enddate="2023-07-02">저축휴가 (2023-07-01 ~ 2023-07-02)</li>
+					<li class="list-group-item list-group-item-action" data-dtmtype="보상" data-dtmdetail="보상휴가" data-startdate="2023-08-01" data-enddate="2023-08-02">보상휴가 (2023-08-01 ~ 2023-08-02)</li>
+				</ul>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+				<button type="button" class="btn btn-primary" id="applySelection">적용</button>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+
 	<!-- (start) private script -->
 		<th:block layout:fragment="script">
-		<script src="https://cdn.jsdelivr.net/npm/litepicker/dist/bundle.js"></script>
-		<script src="https://cdn.jsdelivr.net/npm/litepicker/dist/plugins/mobilefriendly.js"></script>
+		<script src="/extensions/litepicker/bundle.js"></script>
+		<script src="/extensions/litepicker/mobilefriendly.js"></script>
 		
-		  <script>
-		  
-			// Function to validate and format date input
-			  function isValidDate(dateString) {
-			      const regex = /^\d{4}-\d{2}-\d{2}$/;
-			      if (!dateString.match(regex)) {
-			          return false;
-			      }
-	
-			      const date = new Date(dateString);
-			      const timestamp = date.getTime();
-	
-			      if (typeof timestamp !== 'number' || Number.isNaN(timestamp)) return false;
-			      return dateString === date.toISOString().split('T')[0];
-			  }
-	
-			  function handleDateInput(event) {
-			      const input = event.target;
-			      const value = input.value;
-			      const validChars = /^[0-9-]*$/;
-	
-			      // Check for invalid characters
-			      if (!validChars.test(value)) {
-			          // Remove invalid characters
-			          input.value = value.replace(/[^0-9-]/g, '');
-			      }
-	
-			      if (value && !isValidDate(input.value)) {
-			          input.setCustomValidity('Please enter a valid date in YYYY-MM-DD format');
-			      } else {
-			          input.setCustomValidity('');
-			      }
-			  }
-	
-			  document.getElementById('start-input').addEventListener('input', handleDateInput);
-			  document.getElementById('end-input').addEventListener('input', handleDateInput);
-		  
-	        // Set initial values to today
-	        const today = new Date().toISOString().split('T')[0];
-	        document.getElementById('start-input').value = today;
-	        document.getElementById('end-input').value = today;
-	        
-		    const picker = new Litepicker({
-	    	  element: document.getElementById('start-date'),
-	    	  elementEnd: document.getElementById('end-date'),
-	    	  switchingMonths : true,
-	    	  singleMode: false,
-	    	  allowRepick: true,
-	    	  autoApply: true,
-	    	  autoRefresh: true,
-	    	  inlineMode: true,
-	    	  resetButton: true,
-	    	  lang: 'ko-KR',
-	    	  buttonText: {"apply":"적용","cancel":"취소"},
-	    	  dropdowns: {"minYear":1990,"maxYear":null,"months":false,"years":false},
-		      format: 'YYYY-MM-DD',
-		      plugins: ['mobilefriendly'],
-              setup: (picker) => {
-                picker.on('selected', (date1, date2) => {
-                    document.getElementById('start-input').value = date1.format('YYYY-MM-DD');
-                    document.getElementById('end-input').value = date2.format('YYYY-MM-DD');
-                });
-              }
-		    });
-		    
-	        function updatePicker() {
-	            const startDate = document.getElementById('start-input').value;
-	            const endDate = document.getElementById('end-input').value;
-	            if (startDate && endDate) {
-	                picker.setDateRange(startDate, endDate);
-	            }
-	        }
+		 <script>
+	// Function to validate and format date input
+	function isValidDate(dateString) {
+		const regex = /^\d{4}-\d{2}-\d{2}$/;
+		if (!dateString.match(regex)) {
+			return false;
+		}
 
-	        document.getElementById('start-input').addEventListener('change', updatePicker);
-	        document.getElementById('end-input').addEventListener('change', updatePicker);
-	        
-	        // Initialize picker with today's date
-	        picker.setDateRange(today, today);
-	        
-		  </script>
-		  
-		  
-		
-		<script src="/extensions/aos/aos.js"></script>
-		<script>
-			AOS.init({
-				easing: 'ease-out-back',
-				duration: 1000
-			});
-		</script>
-	    <script src="https://cdn.jsdelivr.net/npm/bulma-calendar@6.0.9/dist/js/bulma-calendar.min.js"></script>
-	    <script>
-        // Initialize all input of date type.
-        function initializeCalendar(element) {
-            bulmaCalendar.attach(element, {
-                type: 'date',  // 'date', 'time', 'datetime'
-                color: 'info',
-                showHeader: false,
-                isRange: true,
-                dateFormat: 'YYYY-MM-DD',  // ISO Date format
-                lang: 'ko',  // Language (en, fr, de, etc.)
-                clearLabel: '초기화',
-                todayLabel: '오늘',
-                cancelLabel: '닫기',
-                closeOnOverlayClick: false,
-            });
-        }
+		const date = new Date(dateString);
+		const timestamp = date.getTime();
 
-        // Initialize calendar for the first element
-        initializeCalendar('#myCalendar');
+		if (typeof timestamp !== 'number' || Number.isNaN(timestamp)) return false;
+		return dateString === date.toISOString().split('T')[0];
+	}
 
-        // To access to bulmaCalendar instance of an element
-        var element = document.querySelector('#myCalendar');
+	function handleDateInput(event) {
+		const input = event.target;
+		const value = input.value;
+		const validChars = /^[0-9-]*$/;
 
-        if (element) {
-            // bulmaCalendar instance is available as element.bulmaCalendar
-            element.bulmaCalendar.on('select', function(datepicker) {
-                console.log(datepicker.data.value());
-            });
-        }
+		// Check for invalid characters
+		if (!validChars.test(value)) {
+			// Remove invalid characters
+			input.value = value.replace(/[^0-9-]/g, '');
+		}
 
-        var count = 1; // 초기 카운트 값 설정
-        
+		if (value && !isValidDate(input.value)) {
+			input.setCustomValidity('Please enter a valid date in YYYY-MM-DD format');
+		} else {
+			input.setCustomValidity('');
+		}
+	}
 
+	document.addEventListener('input', function(event) {
+		if (event.target.classList.contains('start-input')) {
+			handleDateInput(event);
+		} else if (event.target.classList.contains('end-input')) {
+			handleDateInput(event);
+		}
+	});
 
-        document.getElementById('add').addEventListener('click', function() {
-            count++; // 클릭할 때마다 카운트 증가
-            var newRow = document.createElement('div');
-            newRow.className = 'row mt-3';
-            newRow.id = "new" + count;
-            newRow.innerHTML = `
-            	<div class="animate__animated animate__fadeIn">
-	            	<div class="card shadow">
-						<div class="col-2 mt-3 ms-3">
-							<span class="badge text-bg-primary">신규</span>
-						</div>
-				        <div class="col-3 mt-3">
-					        <button class="btn btn-danger btn-sm delete-div" style="border: none; background: none; position: absolute; top: 5px; right: 5px;">
-					        	<i class="bi bi-x-circle-fill" style="color: red; font-size: 1.5em;"></i>
-				        	</button>
-				   		</div>
-						<div class="card-body p-3">
-							<div class="d-flex align-items-center justify-content-between mb-2">
-							<h6>근태종류</h6>
-							<div class="btn-group btn-group-sm" role="group" aria-label="Basic radio toggle button group">
-							  <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
-							  <label class="btn btn-outline-primary" for="btnradio1">연차</label>
-							
-							  <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
-							  <label class="btn btn-outline-primary" for="btnradio2">저축</label>
-							
-							  <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
-							  <label class="btn btn-outline-primary" for="btnradio3">보상</label>
-							</div>
-							</div>
-							<select class="form-select"
-								aria-label="Default select example">
-								<option selected>선택</option>
-								<option value="1">연차휴가</option>
-								<option value="2">연차휴가 오전(반차)</option>
-								<option value="3">연차휴가 오전(반반차)</option>
-								<option value="4">연차휴가 오후(반차)</option>
-								<option value="5">연차휴가 오후(반반차)</option>
-								<option value="6">저축휴가</option>
-								<option value="7">저축휴가 오전(반차)</option>
-								<option value="8">저축휴가 오전(반반차)</option>
-								<option value="9">저축휴가 오후(반차)</option>
-								<option value="10">저축휴가 오후(반반차)</option>
-							</select>
-						</div>									
+	function createNewDiv(count) {
+		var newRow = document.createElement('div');
+		newRow.className = 'row mt-3 animate__animated animate__fadeIn';
+		newRow.id = "new" + count;
+		newRow.innerHTML = `
+			<div class="card shadow">
+				<div class="col-2 mt-3 ms-3">
+					<span class="badge text-bg-primary">신규</span>
+				</div>
+				${count > 1 ? `
+				<div class="col-3 mt-3">
+					<button class="btn btn-danger btn-sm delete-div" style="border: none; background: none; position: absolute; top: 5px; right: 5px;">
+						<i class="bi bi-x-circle-fill" style="color: red; font-size: 1.5em;"></i>
+					</button>
+				</div>` : ''}
+				<div class="card-body p-3">
+					<div class="d-flex align-items-center justify-content-between mb-2">
+						<h6>근태종류</h6>
+						<div class="btn-group btn-group-sm" role="group" aria-label="Basic radio toggle button group">
+							<input type="radio" class="btn-check" name="btnradio${count}" id="dtmType${count}" autocomplete="off" checked>
+							<label class="btn btn-outline-primary" for="btnradio1${count}">연차</label>
 						
-						<div class="card-body p-3">
-							<h6>근태기간</h6>
-							<div class="d-flex align-items-center justify-content-between mb-2">
-								<input type="text" class="form-control me-1" id="start-input" placeholder="YYYY-MM-DD">
-								<span>~</span>
-								<input type="text" class="form-control ms-1" id="end-input" placeholder="YYYY-MM-DD">
-							</div>
-							<div class="d-flex justify-content-center">
-								<input type="text" class="form-control" id="start-date" style="display: none;"> 
-								<input type="text" class="form-control" id="end-date" style="display: none;">
-							</div>
-						</div>
+							<input type="radio" class="btn-check" name="btnradio${count}" id="dtmType${count}" autocomplete="off">
+							<label class="btn btn-outline-primary" for="btnradio2${count}">저축</label>
 						
+							<input type="radio" class="btn-check" name="btnradio${count}" id="dtmType${count}" autocomplete="off">
+							<label class="btn btn-outline-primary" for="btnradio3${count}">보상</label>
+						</div>
 					</div>
-                </div>
-            `;
-            // 기존 div(id=add_div) 바로 아래에 추가
-            var container = document.getElementById('add_div');
-            container.parentNode.insertBefore(newRow, container.nextSibling);
+					<select class="form-select"
+						aria-label="Default select example" id="dtmDetail${count}">
+						<option selected>선택</option>
+						<option value="1">연차휴가</option>
+						<option value="2">연차휴가 오전(반차)</option>
+						<option value="3">연차휴가 오전(반반차)</option>
+						<option value="4">연차휴가 오후(반차)</option>
+						<option value="5">연차휴가 오후(반반차)</option>
+						<option value="6">저축휴가</option>
+						<option value="7">저축휴가 오전(반차)</option>
+						<option value="8">저축휴가 오전(반반차)</option>
+						<option value="9">저축휴가 오후(반차)</option>
+						<option value="10">저축휴가 오후(반반차)</option>
+					</select>
+				</div>
+				
+				<div class="card-body p-3">
+					<h6>근태기간</h6>
+					<div class="d-flex align-items-center justify-content-between mb-2">
+						<input type="text" class="form-control me-1 start-input" id="start-input-${count}" placeholder="YYYY-MM-DD">
+						<span>~</span>
+						<input type="text" class="form-control ms-1 end-input" id="end-input-${count}" placeholder="YYYY-MM-DD">
+					</div>
+					<div class="d-flex justify-content-center">
+						<input type="text" class="form-control start-date" id="start-date-${count}" style="display: none;"> 
+						<input type="text" class="form-control end-date" id="end-date-${count}" style="display: none;">
+					</div>
+				</div>
+				
+			</div>
+		`;
+		return newRow;
+	}
 
-            // Initialize calendar for new elements
-            var newCalendars = newRow.querySelectorAll('.calendar');
-            newCalendars.forEach(function(calendar) {
-                initializeCalendar(calendar);
-            });
-            
-            
-        });
-
-        // 삭제 버튼 클릭 시 해당 div 삭제
-		document.addEventListener('click', function(event) {
-		    if (event.target.classList.contains('delete-div') || event.target.closest('.delete-div')) {
-		        const row = event.target.closest('.row');
-		        row.classList.add('fade-out');
-		        setTimeout(() => {
-		            row.remove();
-		            count--;
-		        }, 500); // CSS의 transition 시간과 일치시킵니다.
-		    }
+	// litepicker 달력 생성 함수
+	function initializePicker(startInput, endInput, startDate, endDate) {
+		const picker = new Litepicker({
+			element: startDate,
+			elementEnd: endDate,
+			switchingMonths: true,
+			singleMode: false,
+			allowRepick: true,
+			autoApply: true,
+			autoRefresh: true,
+			inlineMode: true,
+			resetButton: true,
+			lang: 'ko-KR',
+			buttonText: {"apply": "적용", "cancel": "취소"},
+			dropdowns: {"minYear": 1990, "maxYear": null, "months": false, "years": false},
+			format: 'YYYY-MM-DD',
+			plugins: ['mobilefriendly'],
+			setup: (picker) => {
+				picker.on('selected', (date1, date2) => {
+					startInput.value = date1.format('YYYY-MM-DD');
+					endInput.value = date2.format('YYYY-MM-DD');
+				});
+			}
 		});
-    </script>
 
-		
+		// 날짜 지정 시 Form에 값 설정
+		function updatePicker() {
+			const startDateValue = startInput.value;
+			const endDateValue = endInput.value;
+			if (startDateValue && endDateValue) {
+				picker.setDateRange(startDateValue, endDateValue);
+			}
+		}
+
+		startInput.addEventListener('change', updatePicker);
+		endInput.addEventListener('change', updatePicker);
+
+		// Set initial values to today
+		const today = new Date().toISOString().split('T')[0];
+		startInput.value = today;
+		endInput.value = today;
+		picker.setDateRange(today, today);
+	}
+
+	var count = 0; // 초기 카운트 값 설정
+
+	// 추가버튼 클릭 시 새로운 근태신청 카드 생성 함수 
+	function addNewRow() {
+		count++; // 클릭할 때마다 카운트 증가
+		var newRow = createNewDiv(count);
+
+		// 기존 div(id=add_div) 바로 아래에 추가
+		var container = document.getElementById('add_div');
+		container.parentNode.insertBefore(newRow, container.nextSibling);
+
+		// Initialize calendar for new elements
+		var startInput = document.getElementById(`start-input-${count}`);
+		var endInput = document.getElementById(`end-input-${count}`);
+		var startDate = document.getElementById(`start-date-${count}`);
+		var endDate = document.getElementById(`end-date-${count}`);
+
+		initializePicker(startInput, endInput, startDate, endDate);
+
+		startInput.addEventListener('input', handleDateInput);
+		endInput.addEventListener('input', handleDateInput);
+	}
+
+	// 처음 페이지 로드 시 한 개의 div를 추가
+document.addEventListener('DOMContentLoaded', function() {
+	addNewRow();
+
+	let selectedItem = null;
+	let addedItem = null; // 추가된 항목을 추적할 변수
+
+	// Modal item click event listener
+	document.querySelectorAll('.list-group-item').forEach(item => {
+		item.addEventListener('click', function() {
+			document.querySelectorAll('.list-group-item').forEach(i => i.classList.remove('active'));
+			this.classList.add('active');
+			selectedItem = this;
+		});
+	});
+
+	document.getElementById('applySelection').addEventListener('click', function() {
+		if (selectedItem) {
+			const dtmType = selectedItem.dataset.dtmtype;
+			const dtmDetail = selectedItem.dataset.dtmdetail;
+			const startDate = selectedItem.dataset.startdate;
+			const endDate = selectedItem.dataset.enddate;
+
+			if (addedItem) {
+				// 기존에 추가된 항목이 있으면 삭제
+				addedItem.remove();
+				addedItem = null;
+			}
+
+			const newRow = createCancelledDiv(dtmType, dtmDetail, startDate, endDate);
+			document.getElementById('add_div').parentNode.insertBefore(newRow, document.getElementById('add_div').nextSibling);
+
+			addedItem = newRow; // 추가된 항목을 추적
+			selectedItem = null;
+			document.querySelectorAll('.list-group-item').forEach(i => i.classList.remove('active'));
+			var modal = bootstrap.Modal.getInstance(document.getElementById('cancelModal')); // Bootstrap 5 method to get modal instance
+			modal.hide();
+		} else {
+			alert('목록에서 항목을 선택해주세요.');
+		}
+	});
+});
+
+function createCancelledDiv(dtmType, dtmDetail, startDate, endDate) {
+	var newRow = document.createElement('div');
+	newRow.className = 'row mt-3 animate__animated animate__fadeIn';
+	newRow.id = "cancelled" + count;
+	newRow.innerHTML = `
+		<div class="card shadow">
+			<div class="col-3 mt-3">
+				<button class="btn btn-danger btn-sm delete-div" style="border: none; background: none; position: absolute; top: 5px; right: 5px;">
+					<i class="bi bi-x-circle-fill" style="color: red; font-size: 1.5em;"></i>
+				</button>
+			</div>
+			<div class="col-2 mt-3 ms-3">
+				<span class="badge text-bg-danger">취소</span>
+			</div>
+			<div class="card-body p-3">
+				<div class="d-flex align-items-center justify-content-start mb-2">
+					<h7>${dtmDetail} ${startDate} ~ ${endDate}<h7>
+				</div>
+			</div>
+		</div>
+	`;
+	return newRow;
+}
+
+	document.getElementById('add').addEventListener('click', function() {
+		addNewRow();
+	});
+
+	// 삭제 버튼 클릭 시 해당 div 삭제
+	document.addEventListener('click', function(event) {
+		if (event.target.classList.contains('delete-div') || event.target.closest('.delete-div')) {
+			const row = event.target.closest('.row');
+			row.classList.add('animate__fadeOut');
+			setTimeout(() => {
+				row.remove();
+			}, 500); // CSS의 transition 시간과 일치시킵니다.
+		}
+	});
+	
+	// 모든 시작일과 종료일을 서버로 전송
+	document.getElementById('submit').addEventListener('click', function() {
+	const dateRanges = [];
+	
+	const startInputs = document.querySelectorAll('.start-input');
+	const endInputs = document.querySelectorAll('.end-input');
+	
+	startInputs.forEach((startInput, index) => {
+		const endInput = endInputs[index];
+		const dtmType = document.querySelector(`input[name="btnradio${index + 1}"]:checked`).nextElementSibling.textContent;
+		const dtmDetail = document.getElementById(`dtmDetail${index + 1}`).value;
+
+		dateRanges.push({ 
+			startDate: startInput.value, 
+			endDate: endInput.value,
+			dtmType: dtmType,
+			dtmDetail: dtmDetail
+		});
+	});
+
+	// 콘솔에 데이터 출력
+	console.log('Date Ranges:', dateRanges);
+
+	// Ajax 요청
+	$.ajax({
+		url: '/your-server-endpoint', // 서버 엔드포인트로 수정
+		method: 'POST',
+		contentType: 'application/json',
+		data: JSON.stringify({ dateRanges }),
+		success: function(response) {
+			alert('Data sent successfully!');
+		},
+		error: function(error) {
+			console.error('Error sending data:', error);
+		}
+	});
+});
+</script>
+
+
 		</th:block>
 		<!-- (end) private script -->
 </body>
-
 </html>

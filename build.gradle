@@ -5,7 +5,7 @@ plugins {
 	id 'org.cyclonedx.bom' version '1.7.2'
 }
 
-group = 'com.kdb'
+group = 'epams' //com.kdb
 version = '0.0.1-SNAPSHOT'
 
 java {

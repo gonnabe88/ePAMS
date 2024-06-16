@@ -14,34 +14,7 @@
 	--bs-btn-font-family: "Nanum Gothic"
  }
  
- /* 반응형 웹 우측 여백 제거*/
- html, body {
-  margin: 0px;
-  overflow-x: hidden;
-}
- 
- /* 데스크탑 화면 스크롤바 커스텀 */
-@media screen and (min-width: 800px){
-	  body {
-	  	padding-right:0 !important;
-	  	width: auto !important;
-	  	overflow-x: hidden !important;
-	    overflow-y: auto !important;
-	  }	     
-	  body::-webkit-scrollbar {
-	    width: 5px;
-	  }
-	  body::-webkit-scrollbar-thumb {
-	    background-color: #435ebe;
-	    border-radius: 10px;
-	  }
-	  body::-webkit-scrollbar-track {
-	    background-color: #E4F0FF;
-	    border-radius: 10px;
-	    box-shadow: inset 0px 0px 5px white;
-	  }
- }	
- 
+
 .ps {
     overflow: hidden !important;
     overflow-anchor: none;
@@ -22304,6 +22277,7 @@ body .bi:before,
   font-weight: 300;
   font-style: light;
   src: url(./fonts/DongleLight.woff2) format("woff2"), url(./fonts/DongleLight.woff) format("woff");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD
 }
 
 @font-face {
@@ -22311,6 +22285,7 @@ body .bi:before,
   font-weight: 400;
   font-style: normal;
   src: url(./fonts/DongleRegular.woff2) format("woff2"), url(./fonts/DongleRegular.woff) format("woff");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD
 }
 
 @font-face {
@@ -22318,6 +22293,7 @@ body .bi:before,
   font-weight: 600;
   font-style: semi bold;
   src: url(./fonts/DongleBold.woff2) format("woff2"), url(./fonts/DongleBold.woff) format("woff");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD
 }
 
 @font-face {
@@ -22325,6 +22301,7 @@ body .bi:before,
   font-weight: 700;
   font-style: bold;
   src: url(./fonts/DongleBold.woff2) format("woff2"), url(./fonts/DongleBold.woff) format("woff");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD
 }
 
 @font-face {
@@ -22332,6 +22309,7 @@ body .bi:before,
   font-weight: 800;
   font-style: bold;
   src: url(./fonts/DongleBold.woff2) format("woff2"), url(./fonts/DongleBold.woff) format("woff");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD
 }
 
 
@@ -22340,6 +22318,7 @@ body .bi:before,
   font-weight: 300;
   font-style: light;
   src: url(./fonts/NanumGothicLight.woff2) format("woff2"),url(./fonts/NanumGothicLight.woff) format("woff");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD
 }
 
 @font-face {
@@ -22347,6 +22326,7 @@ body .bi:before,
   font-weight: 400;
   font-style: normal;
   src: url(./fonts/NanumGothic.woff2) format("woff2"),url(./fonts/NanumGothic.woff) format("woff");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD
 }
 
 @font-face {
@@ -22354,6 +22334,7 @@ body .bi:before,
   font-weight: 600;
   font-style: Semi Bold;
   src: url(./fonts/NanumGothicBold.woff2) format("woff2"),url(./fonts/NanumGothicBold.woff) format("woff");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD
 }
 
 @font-face {
@@ -22361,6 +22342,7 @@ body .bi:before,
   font-weight: 700;
   font-style: Bold;
   src: url(./fonts/NanumGothicExtraBold.woff2) format("woff2"),url(./fonts/NanumGothicExtraBold.woff) format("woff");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD
 }
 
 @font-face {
@@ -22368,6 +22350,7 @@ body .bi:before,
   font-weight: 800;
   font-style: Bold;
   src: url(./fonts/NanumGothicExtraBold.woff2) format("woff2"),url(./fonts/NanumGothicExtraBold.woff) format("woff");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD
 }
 
 @font-face {

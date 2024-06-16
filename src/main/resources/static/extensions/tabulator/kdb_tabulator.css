@@ -1,0 +1,34 @@
+ /* tabulator custom */
+ /* 그리드가 반응형으로 동작하면서 발생하는 오류(컬럼 너비가 계속 늘어남) 조치 */
+#example-table {
+	width: 100%;
+}
+
+@media screen and (max-width: 500px) {
+	#example-table {
+		width: 300px;
+	}
+}
+
+@media screen and (min-width: 500px) {
+	#example-table {
+		width: 500px;
+	}
+}
+
+@media screen and (min-width: 800px) {
+	#example-table {
+		width: 100%;
+	}
+}
+.tabulator {
+    font-size: 15px; /* 원하는 폰트 크기로 조정 */
+}
+
+.tabulator .tabulator-header {
+    font-size: 1.0rem; /* 원하는 폰트 크기로 조정 */
+}
+
+.highlight-cell {
+	background-color: yellow !important; /* 수정/추가된 행의 배경색 */
+}

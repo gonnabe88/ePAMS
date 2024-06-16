@@ -2,16 +2,16 @@
 <!DOCTYPE configuration SYSTEM "mybatis-3-config.dtd">
 <configuration>
     <typeAliases>
-        <typeAlias type="com.kdb.com.entity.BoardImageEntity" alias="boardImage"></typeAlias>
-        <typeAlias type="com.kdb.com.entity.BoardEntity" alias="board"></typeAlias>
-        <typeAlias type="com.kdb.com.entity.BoardFileEntity" alias="boardFile"></typeAlias>
+        <typeAlias type="epams.com.board.entity.BoardImageEntity" alias="boardImage"></typeAlias>
+        <typeAlias type="epams.com.board.entity.BoardEntity" alias="board"></typeAlias>
+        <typeAlias type="epams.com.board.entity.BoardFileEntity" alias="boardFile"></typeAlias>
         
-        <typeAlias type="com.kdb.com.dto.MemberDTO" alias="member"></typeAlias>        
+        <typeAlias type="epams.com.admin.entity.LogLoginEntity" alias="logLogin"></typeAlias>
+        <typeAlias type="epams.com.admin.entity.CodeEntity" alias="code"></typeAlias>
+        <typeAlias type="epams.com.admin.entity.HtmlEntity" alias="html"></typeAlias>
+        <typeAlias type="epams.com.admin.entity.CodeHtmlMapEntity" alias="codeHtmlMap"></typeAlias>
+        <typeAlias type="epams.com.admin.dto.CodeHtmlDetailDTO" alias="codeHtmlDetail"></typeAlias>
         
-        <typeAlias type="com.kdb.com.entity.LogLoginEntity" alias="logLogin"></typeAlias>
-        <typeAlias type="com.kdb.com.entity.CodeEntity" alias="code"></typeAlias>
-        <typeAlias type="com.kdb.com.entity.HtmlEntity" alias="html"></typeAlias>
-        <typeAlias type="com.kdb.com.entity.CodeHtmlMapEntity" alias="codeHtmlMap"></typeAlias>
-        <typeAlias type="com.kdb.com.dto.CodeHtmlDetailDTO" alias="CodeHtmlDetail"></typeAlias>
+        <typeAlias type="epams.com.member.dto.MemberDTO" alias="member"></typeAlias>       
     </typeAliases>
 </configuration>

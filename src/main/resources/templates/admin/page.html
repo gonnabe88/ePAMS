@@ -4,30 +4,8 @@
 <head>
 <!-- (start) private script -->
 <th:block layout:fragment="css">
-	<link href="https://unpkg.com/tabulator-tables/dist/css/tabulator_modern.min.css" rel="stylesheet">
-	<style>
-#example-table {
-	width: 100%;
-}
-
-@media screen and (max-width: 500px) {
-	#example-table {
-		width: 300px;
-	}
-}
-
-@media screen and (min-width: 500px) {
-	#example-table {
-		width: 500px;
-	}
-}
-
-@media screen and (min-width: 800px) {
-	#example-table {
-		width: 100%;
-	}
-}
-</style>
+	<link rel="stylesheet" href="/extensions/tabulator/tabulator_modern.min.css">
+	<link rel="stylesheet" href="/extensions/tabulator/kdb_tabulator.css">
 </th:block>
 <!-- (end) private script -->
 </head>
@@ -53,6 +31,15 @@
 									<input class="form-check-input" type="checkbox" role="switch" id="toggle-selectable"> <label class="form-check-label" for="flexSwitchCheckDefault">범위선택</label>
 								</div>
 							</div>
+
+							<div class="d-flex flex-wrap justify-content-end gap-2 mb-3">
+								<div class="custom-file-input-wrapper">
+									<input class="form-control form-control-sm" id="formFileSm" type="file">
+								</div>
+								<button class="btn btn-primary btn-sm" id="upload-csv">업로드</button>
+								<button class="btn btn-primary btn-sm" id="download-csv">다운로드</button>
+							</div>
+
 							<div class="d-flex flex-wrap justify-content-end gap-2 mb-3">
 								<button class="btn btn-primary btn-sm" id="reload">새로고침</button>
 								<button class="btn btn-primary btn-sm" id="add-row">행추가</button>
@@ -75,185 +62,36 @@
 	<!-- (start) private script -->
 	<th:block layout:fragment="script">
 		<script type="text/javascript" src="https://unpkg.com/tabulator-tables/dist/js/tabulator.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+		<script src="/extensions/tabulator/kdb_tabulator.js"></script>
 		<script>
-	var editedData = [];
-	var addedData = [];
-	var deletedData = [];
-	
-	const header = document.querySelector('meta[name="_csrf_header"]').content;
-	const token = document.querySelector('meta[name="_csrf"]').content;
-	
-	var table;
-	
-	function createTable(selectableRange) {
-	    table = new Tabulator("#example-table", {
-	        ajaxURL: "/api/admin/html",
-	        height: "900px",
-	        layout: "fitColumns",
-	        placeholder: "No Data Set",
-	        pagination: "local",
-	        paginationSize: 30,
-	        paginationSizeSelector: [10, 20, 30, 50, 100],
-	        movableColumns: true,
-	        paginationCounter: "rows",
-	        
-	        //enable range selection
-	        selectableRange: selectableRange,
-	        selectableRangeColumns: true,
-	        selectableRangeRows: true,
-	        selectableRangeClearCells: true,
-	
-	        clipboard: true,
-	        clipboardCopyStyled: false,
-	        clipboardCopyConfig: {
-	            rowHeaders: true,
-	            columnHeaders: true,
-	        },
-	        clipboardCopyRowRange: "range",
-	        clipboardPasteParser: "range",
-	        clipboardPasteAction: "range",
-	        
-	        headerSortClickElement: 'icon',
-	        
-	        editTriggerEvent: "click", //dblclick or click
-	        
-	        columns: [
-	            { 
-	                formatter: "rowSelection", 
-	                titleFormatter: "rowSelection", 
-	                headerSort: false, 
-	                hozAlign: "center", 
-	                width: 30, 
-	                cellClick: function(e, cell) {
-	                    e.preventDefault(); // 기본 동작 막기
-	                    e.stopPropagation(); // 이벤트 전파 막기
-	                    cell.getRow().toggleSelect();
-	                }
-	            },
-	            { formatter: "rownum", headerSort: false, hozAlign: "center", resizable: true, frozen: false, width: 3 },
-	            { title: "화면경로", field: "html", sorter: "string", editor: "input", minWidth: 100 },
-	            { title: "화면이름", field: "htmlName", sorter: "string", editor: "input", minWidth: 100 },
-	            { title: "갱신일자", field: "updatedTime", sorter: "date" },
-	            { title: "등록일자", field: "createdTime", sorter: "date" }
-	        ]
-	    });
-	
-	    table.on("cellEdited", function(cell){
-	        var row = cell.getRow().getData();
-	        console.log("Edited row:", row);
-	        editedData.push(row);
-	    });
-	
-	    table.on("rowAdded", function(row){
-	        var rowData = row.getData();
-	        console.log("Added row:", rowData);
-	        addedData.push(rowData);
-	    });
-	
-	    table.on("rowDeleted", function(row){
-	        var rowData = row.getData();
-	        console.log("Deleted row:", rowData);
-	        addedData = addedData.filter(item => item.id !== rowData.id);
-	        deletedData.push(rowData);
-	    });
-	
-	    document.getElementById("add-row").addEventListener("click", function() {
-	        table.addData({}, true);
-	    });
-	
-	    document.getElementById("del-row").addEventListener("click", function() {
-	        var selectedRows = table.getSelectedRows();
-	        selectedRows.forEach(function(row) {
-	            row.delete();
-	        });
-	    });
-	
-	    document.getElementById("reload").addEventListener("click", function() {
-	        table.setData("/api/admin/html");
-	    });
-	
-	    document.getElementById("save").addEventListener("click", function() {
-	        console.log('editedData:', editedData);
-	        console.log('addedData:', addedData);
-	        console.log('deletedData:', deletedData);
-	        
-	        var payload = {
-	            changed: editedData,
-	            added: addedData,
-	            deleted: deletedData
-	        };
-	
-	        fetch('/api/admin/html/save', {
-	            method: 'POST',
-	            headers: {
-	                'header': header,
-	                'X-CSRF-Token': token,
-	                'Content-Type': 'application/json',
-	            },
-	            body: JSON.stringify(payload),
-	        })
-	        .then(response => response.json())
-	        .then(data => {
-	            console.log('Success:', data.message);
-	            alert(data.message);
-	            editedData = [];
-	            addedData = [];
-	            deletedData = [];
-	        })
-	        .catch((error) => {
-	            console.error('Error:', error.message);
-	            alert(error.message);
-	            editedData = [];
-	            addedData = [];
-	            deletedData = [];
-	        });
-	    });
-	
-	    // 조회버튼 클릭 또는 엔터 시    
-	    document.getElementById("search-button").addEventListener("click", performSearch);
-	    document.getElementById("search-input").addEventListener("keyup", function(event) {
-	        if (event.key === "Enter") {
-	            performSearch();
-	        }
-	    });
-	
-	    function performSearch() {
-	        var searchValue = document.getElementById("search-input").value;
-	        
-	        if (searchValue) {
-	            console.log("조회 : ", searchValue);
-	            table.setFilter([
-	                [
-	                    {field: "html", type: "like", value: searchValue},
-	                    {field: "htmlName", type: "like", value: searchValue},
-	                    {field: "updatedTime", type: "like", value: searchValue},
-	                    {field: "createdTime", type: "like", value: searchValue},
-	                ]
-	            ]);
-	        } else {
-	            table.clearFilter(); // Clear filter if search input is empty
-	        }
-	    }
-	
-	    // 초기화버튼 엔터 또는 클릭 시
-	    document.getElementById("reset-button").addEventListener("click", function() {
-	        document.getElementById("search-input").value = "";
-	        table.clearFilter(); // Clear all filters
-	    });
-	}
-	
-	// 테이블 초기 생성
-	createTable(false);
-	
-	// 토글 버튼 이벤트 리스너 추가
-	document.getElementById("toggle-selectable").addEventListener("click", function() {
-	    var currentSetting = table.options.selectableRange;
-	    table.destroy();
-	    createTable(!currentSetting);
-	    console.log("selectableRange is now: " + !currentSetting);
-	});
-	
-	</script>
+			window.url = "/api/admin/html"
+			window.columns = [ {
+				title : "화면경로",
+				field : "html",
+				sorter : "string",
+				editor : "input",
+				minWidth : 100
+			}, {
+				title : "화면이름",
+				field : "htmlName",
+				sorter : "string",
+				editor : "input",
+				minWidth : 100
+			}, {
+				title : "갱신일자",
+				field : "updatedTime",
+				sorter : "date"
+			}, {
+				title : "등록일자",
+				field : "createdTime",
+				sorter : "date"
+			} ];
+
+			document.addEventListener("DOMContentLoaded", function() {
+				createTable(false, window.columns, window.url);
+			});
+		</script>
 	</th:block>
 
 	<!-- (end) private script -->

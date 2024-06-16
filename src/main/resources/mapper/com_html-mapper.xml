@@ -17,7 +17,7 @@
     
     <!-- 신규 데이터 추가 --> 
     <insert id="insert" parameterType="html">
-        INSERT INTO com_html(HTML, HTML_NM, createdTime)
+        INSERT INTO com_html(HTML, HTML_NM, CREATED_TIME)
             VALUES(#{HTML}, #{HTML_NM}, NOW())
     </insert>   
     
@@ -28,7 +28,16 @@
     
     <!-- 기존 데이터 업데이트(기본키 제외) --> 
     <update id="update" parameterType="html">
-        UPDATE com_html SET HTML_NM=#{HTML_NM}, updatedTime=NOW() WHERE HTML=#{HTML}
+        UPDATE com_html SET HTML_NM=#{HTML_NM}, UPDATED_TIME=NOW() WHERE HTML=#{HTML}
     </update>
+    
+    <!-- 신규 데이터 추가 또는 기존 데이터 업데이트 -->
+	<insert id="insertUpdate" parameterType="html">
+	    INSERT INTO com_html (HTML, HTML_NM, CREATED_TIME)
+	    VALUES (#{HTML}, #{HTML_NM}, NOW())
+	    ON DUPLICATE KEY UPDATE
+	    HTML_NM = VALUES(HTML_NM),
+	    UPDATED_TIME = NOW();
+	</insert>
         
 </mapper>

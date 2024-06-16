@@ -12,18 +12,18 @@
     <!-- 기본키 데이터 중복여부 조회 -->
     <select id="countById" parameterType="Long" resultType="codeHtmlMap">
         SELECT COUNT(*)
-        FROM com_code_html WHERE HTML=#{HTML} AND CD=#{CD}
+        FROM com_code_html WHERE HTML=#{HTML} AND CD_ID=#{CD_ID}
     </select>
     
     <!-- 신규 데이터 추가 --> 
     <insert id="insert" parameterType="codeHtmlMap">
-        INSERT INTO com_code_html(HTML, CD, createdTime)
-            VALUES(#{HTML}, #{CD}, NOW())
+        INSERT INTO com_code_html(HTML, CD_ID, CREATED_TIME)
+            VALUES(#{HTML}, #{CD_ID}, NOW())
     </insert>   
     
     <!-- 기존 데이터 삭제 --> 
     <delete id="delete" parameterType="codeHtmlMap">
-        DELETE FROM com_code_html WHERE HTML=#{HTML} AND CD=#{CD}
+        DELETE FROM com_code_html WHERE HTML=#{HTML} AND CD_ID=#{CD_ID}
     </delete>
     
         

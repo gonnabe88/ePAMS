@@ -9,11 +9,11 @@
         SELECT 
         	CH.HTML   AS html, 
         	H.HTML_NM AS htmlName, 
-        	CH.CD     AS code, 
+        	CH.CD_ID     AS code, 
         	C.CD_NM   AS codeName 
         FROM com_code_html CH, com_code C, com_html H
         WHERE CH.HTML = H.HTML AND
-        	  CH.CD   = C.CD AND
+        	  CH.CD_ID   = C.CD_ID AND
         	  CH.HTML = #{html}
     </select>    
         

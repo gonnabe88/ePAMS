@@ -67,9 +67,9 @@
 	<script>
 		window.url = "/api/admin/login"
 		window.columns = [
-			{ title: "행번", field: "empNo", headerHozAlign: "center", sorter: "string", minWidth: 100 },
+			{ title: "행번", field: "empNo", headerHozAlign: "center", sorter: "string", minWidth: 100},
 	        { title: "인증방식", field: "loginType", sorter: "string", minWidth: 100 },
-	        { title: "인증결과", field: "loginResult", sorter: "boolean" },
+	        { title: "인증결과", field: "loginResult", sorter: "boolean" , formatter:"tickCross"},
 	        { title: "인증시간", field: "createdTime", sorter: "string"}
 		];
 		

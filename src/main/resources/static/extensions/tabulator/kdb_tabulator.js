@@ -24,7 +24,8 @@ const defaultColumns = [
         hozAlign: "center", 
         resizable: true, 
         frozen: false, 
-        width: 3 
+        width: 3 ,
+		headerFilter:"input"
     }
 ];
 
@@ -190,8 +191,7 @@ function createTable(selectableRange, columns, url) {
 	document.getElementById("toggle-selectable").addEventListener("click", function() {
 	    var currentSetting = table.options.selectableRange;
 	    table.destroy();
-	    createTable(!currentSetting, window.columns);
-	    console.log("selectableRange is now: " + !currentSetting);
+	    createTable(!currentSetting, window.columns, window.url);
 	});
 }
 

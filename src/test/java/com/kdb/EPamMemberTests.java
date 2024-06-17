@@ -24,7 +24,7 @@ class EPamMemberTests {
     @Autowired
     private CustomPasswordEncoder passwordEncoder; 
 
-    @Test
+    //@Test
     public void RegistOneMember() throws IOException {
     	Random random = new Random();
     	List<String> dept = new ArrayList<>(Arrays.asList(

@@ -6,8 +6,6 @@
 <th:block layout:fragment="css">
 	<link rel="stylesheet" href="/extensions/aos/aos.css">
 	<link rel="stylesheet" href="/extensions/animate/animate.min.css" />
-	<link rel="stylesheet" href="/extensions/owlcarousel/owl.carousel.min.css">
-	<link rel="stylesheet" href="/extensions/owlcarousel/owl.theme.default.min.css">
 </th:block>
 <!-- (end) private script -->
 </head>
@@ -43,51 +41,38 @@
 						</div>
 					</div>
 					<div class="carousel-item">
-						<!-- <div class="bg-no-repeat bg-cover bg-50 px-8"
-							style="background-image: url(images/kdb/BACKGROUND4.png); background-repeat: no-repeat; background-size: cover; position: relative; height: 50vh;"> -->
 						<div class="carousel-img-2">
-							<div class="container-md">
-								<div class="align-items-center ms-5">
-									<div class="col-lg-12 pe-xl-12">
-
-										<div class="row">
-											<p class="mt-5 mb-4" style="color: #25396f;">"연차 및 저축휴가"</p>
-										</div>
-										<h2 style="color: #25396f;">언제 어디서든</h2>
-										<h2 style="color: #25396f;">편리하게 신청하세요</h2>
-									</div>
-									<a href="/dtm/main"> <span class="badge text-bg-primary">바로가기</span>
-									</a>
+							<div class="container-md d-flex justify-content-start align-items-center" style="height: 100%;">
+								<div class="col-lg-1 col-2"></div>
+								<div class="text-start">
+									<h5>연차 및 저축휴가</h5>
+									<h2>언제 어디서든</h2>
+									<h2>편리하게 신청하세요</h2>
+									<a href="/dtm/main"><span class="badge text-bg-primary">바로가기</span></a>
 								</div>
 							</div>
 						</div>
 					</div>
 					<div class="carousel-item">
-						<!-- <div class="bg-no-repeat bg-cover bg-50 px-8"
-							style="background-image: url(images/kdb/BACKGROUND4.png); background-repeat: no-repeat; background-size: cover; position: relative; height: 50vh;"> -->
 						<div class="carousel-img-3">
-							<div class="container-md">
-								<div class="align-items-center ms-5">
-									<div class="col-lg-12 pe-xl-12">
-										<div class="row">
-											<p class="mt-5 mb-4" style="color: #25396f;">"직원조회"</p>
-										</div>
-										<h2 style="color: #25396f;">언제 어디서든</h2>
-										<h2 style="color: #25396f;">간편하게 검색하세요</h2>
-										<h2 style="color: #25396f;"></h2>
-									</div>
+							<div class="container-md d-flex justify-content-start align-items-center" style="height: 100%;">
+								<div class="col-lg-1 col-2"></div>
+								<div class="text-start">
+									<h5>직원조회</h5>
+									<h2>언제 어디서든</h2>
+									<h2>간편하게 검색하세요</h2>
 									<span class="badge text-bg-primary" onclick="scrollToDiv()">바로가기</span>
 								</div>
 							</div>
 						</div>
 					</div>
+					<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+						<span class="carousel-control-prev-icon" aria-hidden="true"></span> <span class="visually-hidden">Previous</span>
+					</button>
+					<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+						<span class="carousel-control-next-icon" aria-hidden="true"></span> <span class="visually-hidden">Next</span>
+					</button>
 				</div>
-				<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-					<span class="carousel-control-prev-icon" aria-hidden="true"></span> <span class="visually-hidden">Previous</span>
-				</button>
-				<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-					<span class="carousel-control-next-icon" aria-hidden="true"></span> <span class="visually-hidden">Next</span>
-				</button>
 			</div>
 		</div>
 
@@ -96,7 +81,7 @@
 			<div class="container">
 				<div class="row d-flex justify-content-start mb-1">
 					<h5 class="text-start">
-						<i class="bi bi-stars"></i> [[${codeList['COM_INDEX_CD']}]]
+						<i class="bi bi-stars"></i> <span th:text="${codeList['COM_BANNER1_CD']}"></span>
 					</h5>
 					<div class="container">
 						<div class="row d-flex justify-content-end">
@@ -261,10 +246,7 @@
 						</div>
 					</div>
 				</div>
-
-
 			</div>
-
 		</div>
 
 		<div class="divider">
@@ -383,8 +365,10 @@
 	<th:block layout:fragment="script">
 		<script src="/extensions/webauthn/js/base64js.min.js"></script>
 		<script src="/extensions/webauthn/js/custom.js"></script>
-		<script>		
+		<script src="/extensions/aos/aos.js"></script>
 		
+		<script>		
+		// 직원 검색
         function scrollToDiv() {
             const target = document.getElementById('searchDiv');
             target.scrollIntoView({ behavior: 'smooth' });
@@ -413,8 +397,7 @@
 			    });
 			}
 		</script>
-		<script src="/extensions/aos/aos.js"></script>
-		<script src="/extensions/owlcarousel/owl.carousel.min.js"></script>
+
 		<script>
 			AOS.init({
 				easing: 'ease-out-back',
@@ -543,27 +526,6 @@
 			}
 		</script>
 
-
-
-
-		<script>
-			$(document).ready(function() {
-				$(".owl-carousel").owlCarousel({
-					items : 4,
-					loop : true,
-					margin : 10,
-					autoplay : true,
-					autoplayTimeout : 1000,
-					autoplayHoverPause : true
-				});
-				$('.play').on('click', function() {
-					owl.trigger('play.owl.autoplay', [ 1000 ])
-				})
-				$('.stop').on('click', function() {
-					owl.trigger('stop.owl.autoplay')
-				})
-			});
-		</script>
 		<script>
 			const ApplAlert = (date) => {	
 				Swal.fire({

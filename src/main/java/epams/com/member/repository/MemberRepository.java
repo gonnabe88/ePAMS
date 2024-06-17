@@ -12,6 +12,7 @@ import epams.com.member.entity.SearchMemberEntity;
 import jakarta.transaction.Transactional;
 
 public interface MemberRepository extends JpaRepository<MemberEntity, String> {
+	
     Optional<MemberEntity> findByUsername(String username);
     
     @Transactional

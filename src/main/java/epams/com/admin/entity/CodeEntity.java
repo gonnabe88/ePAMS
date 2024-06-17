@@ -63,6 +63,8 @@ public class CodeEntity extends BaseEntity {
         joinColumns = @JoinColumn(name = "CD_ID", foreignKey = @ForeignKey(name = "fk_com_code_html_cd")),
         inverseJoinColumns = @JoinColumn(name = "HTML", foreignKey = @ForeignKey(name = "fk_com_code_html_html"))
     )
+    
+    @Builder.Default
     private Set<HtmlEntity> htmlEntities = new HashSet<>();
     
 }

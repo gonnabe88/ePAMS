@@ -67,27 +67,25 @@ const webauthn = (e) => {
     const header = document.querySelector('meta[name="_csrf_header"]').content;
     const token = document.querySelector('meta[name="_csrf"]').content;
     e.preventDefault();
-    //this.form = document.getElementById("form");
     const formData = new FormData(e.target);
     fetch('/webauthn/login', {
         method: 'POST',
         headers: {
-	        'header': header,
-	        'X-CSRF-Token': token,
-    	},
+            'X-CSRF-Token': token
+        },
         body: formData
     })
     .then(response => initialCheckStatus(response))
     .then(credentialGetJson => ({
         publicKey: {
-        ...credentialGetJson.publicKey,
-        allowCredentials: credentialGetJson.publicKey.allowCredentials
-            && credentialGetJson.publicKey.allowCredentials.map(credential => ({
-            ...credential,
-            id: base64urlToUint8array(credential.id),
-            })),
-        challenge: base64urlToUint8array(credentialGetJson.publicKey.challenge),
-        extensions: credentialGetJson.publicKey.extensions,
+            ...credentialGetJson.publicKey,
+            allowCredentials: credentialGetJson.publicKey.allowCredentials
+                && credentialGetJson.publicKey.allowCredentials.map(credential => ({
+                ...credential,
+                id: base64urlToUint8array(credential.id),
+                })),
+            challenge: base64urlToUint8array(credentialGetJson.publicKey.challenge),
+            extensions: credentialGetJson.publicKey.extensions,
         },
     }))
     .then(credentialGetOptions =>
@@ -96,46 +94,36 @@ const webauthn = (e) => {
         type: publicKeyCredential.type,
         id: publicKeyCredential.id,
         response: {
-        authenticatorData: uint8arrayToBase64url(publicKeyCredential.response.authenticatorData),
-        clientDataJSON: uint8arrayToBase64url(publicKeyCredential.response.clientDataJSON),
-        signature: uint8arrayToBase64url(publicKeyCredential.response.signature),
-        userHandle: publicKeyCredential.response.userHandle && uint8arrayToBase64url(publicKeyCredential.response.userHandle),
+            authenticatorData: uint8arrayToBase64url(publicKeyCredential.response.authenticatorData),
+            clientDataJSON: uint8arrayToBase64url(publicKeyCredential.response.clientDataJSON),
+            signature: uint8arrayToBase64url(publicKeyCredential.response.signature),
+            userHandle: publicKeyCredential.response.userHandle && uint8arrayToBase64url(publicKeyCredential.response.userHandle),
         },
         clientExtensionResults: publicKeyCredential.getClientExtensionResults(),
     }))
     .then((encodedResult) => {
-	    const header = document.querySelector('meta[name="_csrf_header"]').content;
-    	const token = document.querySelector('meta[name="_csrf"]').content;
-        document.getElementById("credential").value = JSON.stringify(encodedResult);
-        //this.form.submit();
-        //const form = document.getElementById("form");
-        //const formData = new FormData(form);
-        //formData.append("credential", JSON.stringify(encodedResult));
-        const formData = new FormData(form);
-		console.log("formData : "+ JSON.stringify(formData));
+        const formData = new FormData();
+        formData.append("credential", JSON.stringify(encodedResult));
+        formData.append("username", document.querySelector('input[name="username"]').value);
         return fetch("/webauthn/welcome", {
             method: 'POST',
-        	headers: {
-	        'header': header,
-	        'X-CSRF-Token': token,
-    	},
+            headers: {
+                'X-CSRF-Token': token
+            },
             body: formData,
         })
     })
-    .then((response) => {
-		console.log(response)
-        //followRedirect(response);
-        if(response.status == 200)
-            	window.location.href = '/index'
-    	else {
-    		errorAlert();
-		}
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === "success") {
+            window.location.href = data.redirectUrl;
+        } else {
+            errorAlert();
+        }
     })
-    .catch(error => 
-    	//displayError(error)
-    	//errorAlert()
-    	popupMsg(error)    	
-    )
+    .catch(error => {
+        popupMsg(error);
+    });
 }
 
 // 일반인증 호출(2단계)

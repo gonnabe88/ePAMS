@@ -8,7 +8,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -59,17 +58,26 @@ public class BoardImageEntity extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "BOARD_ID")
     private BoardEntity boardEntity;
-
-//    /***
-//     * @author 140024
-//     * @implNote 파일 정보를 BoardImageEntity로 변환
-//     * @since 2024-06-10
-//     */
-//    public static BoardImageEntity toBoardFileEntity(final String originalFileName, final String storedFileName) {
-//        final BoardImageEntity boardFileEntity = new BoardImageEntity();
-//        boardFileEntity.setOriginalFileName(originalFileName);
-//        boardFileEntity.setStoredFileName(storedFileName);
-//        return boardFileEntity;
-//    }
+    
+    /***
+     * @author 140024
+     * @implNote lombok getter에서 자동으로 인식하지 못하는 문제로 별도 추가
+     * @since 2024-06-10
+     */
+    public Long getBOARD_ID() {
+        return boardEntity != null ? boardEntity.getSEQ_ID() : null;
+    }
+    
+    /***
+     * @author 140024
+     * @implNote lombok setter에서 자동으로 인식하지 못하는 문제로 별도 추가
+     * @since 2024-06-10
+     */
+    public void setBOARD_ID(final Long boardId) {
+        if (this.boardEntity == null) {
+            this.boardEntity = new BoardEntity();
+        }
+        this.boardEntity.setSEQ_ID(boardId);
+    }
 
 }

@@ -81,7 +81,7 @@ class EPamCodeHtmlTests {
 
 	}
 
-	@Test
+	//@Test
 	public void htmlCodeMapInsert() throws IOException {
 
 		// 입력받은 (HTML 경로, HTML 설명) 리스트

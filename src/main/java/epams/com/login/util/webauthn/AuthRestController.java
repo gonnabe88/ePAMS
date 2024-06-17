@@ -2,9 +2,7 @@
 package epams.com.login.util.webauthn;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,13 +13,13 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -59,10 +57,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@RequestMapping("/webauthn")
+@RequestMapping("/api/webauthn")
 @RequiredArgsConstructor
-@Controller
-public class AuthController {
+@RestController
+public class AuthRestController {
 
     private final RelyingParty relyingParty;
     private final RegistrationService service;
@@ -235,70 +233,52 @@ public class AuthController {
 
     
     @PostMapping("/welcome")
-    public ResponseEntity<Map<String, String>> finishLogin(
+    public String finishLogin(
         @RequestParam(value="credential") String credential,
         @RequestParam(value="username") String username,
         Model model,
         HttpSession session
     ) {
-        Map<String, String> response = new HashMap<>();
-        log.warn("Received username: " + username);
-        MemberDTO ismemberDTO = loginRepository.findByUserId(username);
+    	//Authentication auth = Authentication();
+    	//String username = auth.getName();
+    	log.warn("welcome : " + username);
+    	MemberDTO ismemberDTO = loginRepository.findByUserId(username);
         try {
-            log.warn("Processing /welcome request");
+        	log.warn("POST welcome");
             PublicKeyCredential<AuthenticatorAssertionResponse, ClientAssertionExtensionOutputs> pkc;
             pkc = PublicKeyCredential.parseAssertionResponseJson(credential);
-
-            String sessionAttribute = (String) session.getAttribute(username);
-            if (sessionAttribute == null) {
-                throw new AssertionFailedException("Session attribute is null");
-            }
-
-            log.warn("Session attribute: " + sessionAttribute);
-            AssertionRequest request = AssertionRequest.fromJson(sessionAttribute);
+            log.warn(session.getAttribute(username).toString());
+            log.warn((String)session.getAttribute(username));
+            AssertionRequest request = (AssertionRequest.fromJson((String) session.getAttribute(username)));
             AssertionResult result = relyingParty.finishAssertion(FinishAssertionOptions.builder()
                 .request(request)
                 .response(pkc)
                 .build());
-
             if (result.isSuccess()) {
                 model.addAttribute("username", username);
                 SecurityContext context = SecurityContextHolder.createEmptyContext();
-                Authentication authentication = new UsernamePasswordAuthenticationToken(
-                    ismemberDTO.getUsername(), null, List.of(new SimpleGrantedAuthority("ROLE_ADMIN")));
+                Authentication authentication = 
+                		new UsernamePasswordAuthenticationToken(ismemberDTO.getUsername(), null, List.of(new SimpleGrantedAuthority("ROLE_ADMIN")));
                 context.setAuthentication(authentication);
                 SecurityContextHolder.setContext(context);
-                session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, context);
-
-                log.warn("Authentication successful for user: " + username);
+                session.setAttribute(HttpSessionSecurityContextRepository.
+                        SPRING_SECURITY_CONTEXT_KEY, context);
+                log.warn("isSuccess");
                 logRepository.insert(LogLoginDTO.getDTO(username, "간편인증", true));
-                response.put("status", "success");
-                response.put("redirectUrl", "/index");
-                return ResponseEntity.ok(response);
+                return "redirect:/index"; // 리다이렉트 사용
             } else {
-                log.warn("Authentication failed for user: " + username);
-                logRepository.insert(LogLoginDTO.getDTO(username, "간편인증", false));
-                response.put("status", "failure");
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+            	logRepository.insert(LogLoginDTO.getDTO(username, "간편인증", false));
+                return "/common/login";
             }
         } catch (JsonProcessingException e) {
-            log.error("Error processing JSON for user: " + username, e);
-            logRepository.insert(LogLoginDTO.getDTO(username, "간편인증", false));
-            response.put("status", "error");
-            response.put("message", "Error processing JSON.");
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        	logRepository.insert(LogLoginDTO.getDTO(username, "간편인증", false));
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error processing JSON.", e);
         } catch (AssertionFailedException e) {
-            log.warn("Assertion failed for user: " + username, e);
-            logRepository.insert(LogLoginDTO.getDTO(username, "간편인증", false));
-            response.put("status", "error");
-            response.put("message", "Authentication failed.");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        	logRepository.insert(LogLoginDTO.getDTO(username, "간편인증", false));
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Authentication failed", e);
         } catch (IOException e) {
-            log.error("Failed to save credential for user: " + username, e);
-            logRepository.insert(LogLoginDTO.getDTO(username, "간편인증", false));
-            response.put("status", "error");
-            response.put("message", "Failed to save credential, please try again!");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-        }
-    }
+        	logRepository.insert(LogLoginDTO.getDTO(username, "간편인증", false));
+        	throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Failed to save credenital, please try again!", e);
+		}
+    }    
 }

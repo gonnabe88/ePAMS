@@ -67,12 +67,21 @@ public class BoardFileEntity extends BaseEntity {
     @JoinColumn(name = "BOARD_ID")
     private BoardEntity boardEntity;
     
-    // 추가된 getter 메서드
+    /***
+     * @author 140024
+     * @implNote lombok getter에서 자동으로 인식하지 못하는 문제로 별도 추가
+     * @since 2024-06-10
+     */
     public Long getBOARD_ID() {
         return boardEntity != null ? boardEntity.getSEQ_ID() : null;
     }
-    // 추가된 setter 메서드
-    public void setBOARD_ID(Long boardId) {
+    
+    /***
+     * @author 140024
+     * @implNote lombok setter에서 자동으로 인식하지 못하는 문제로 별도 추가
+     * @since 2024-06-10
+     */
+    public void setBOARD_ID(final Long boardId) {
         if (this.boardEntity == null) {
             this.boardEntity = new BoardEntity();
         }

@@ -93,3 +93,7 @@ tasks.cyclonedxBom {
     // Override component version. Defaults to the project version
     componentVersion = "2.0.0"
 }
+
+tasks.withType(JavaCompile) {
+    options.compilerArgs << "-Xlint:unchecked"
+}

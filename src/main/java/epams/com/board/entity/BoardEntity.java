@@ -1,10 +1,8 @@
 package epams.com.board.entity;
 
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
-import epams.com.board.dto.BoardDTO;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -12,7 +10,6 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Lob;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
@@ -54,8 +51,7 @@ public class BoardEntity extends BaseEntity {
      * @implSpec Blob 타입으로 선언
      * @since 2024-06-09
      */
-    @Lob
-    @Column(nullable = false)
+    @Column(columnDefinition = "BLOB", nullable = false)
     private byte[] BOARD_CONTENTS;
 
     /***
@@ -98,76 +94,4 @@ public class BoardEntity extends BaseEntity {
     @OneToMany(mappedBy = "boardEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<BoardFileEntity> boardFileEntityL = new ArrayList<>();
 
-//    /***
-//     * @author 140024
-//     * @implNote (static factory method) 게시글 저장을 위한 엔티티 생성  
-//     * @param boardDTO 게시글 정보를 담고 있는 DTO
-//     * @return BoardEntity 생성된 게시글 엔티티
-//     * @since 2024-06-09
-//     */
-//    public static BoardEntity toSaveEntity(final BoardDTO boardDTO) {
-//        final BoardEntity boardEntity = new BoardEntity();
-//        boardEntity.setBoardWriter(boardDTO.getBoardWriter());
-//        boardEntity.setBoardTitle(boardDTO.getBoardTitle());
-//        boardEntity.setBoardContents(boardDTO.getBoardContents().getBytes(StandardCharsets.UTF_8));
-//        boardEntity.setCategory(boardDTO.getCategory());
-//        boardEntity.setBoardHits(0);
-//        boardEntity.setFileAttached(0); // 파일 없음.
-//        return boardEntity;
-//    }
-
-//    /***
-//     * @author 140024
-//     * @implNote (static factory method) 게시글 수정을 위한 엔티티 생성
-//     * @param boardDTO 게시글 정보를 담고 있는 DTO
-//     * @return BoardEntity 수정된 게시글 엔티티
-//     * @since 2024-06-09
-//     */
-//    public static BoardEntity toUpdateEntity(final BoardDTO boardDTO) {
-//        final BoardEntity boardEntity = new BoardEntity();
-//        boardEntity.setSeqId(boardDTO.getSeqId());
-//        boardEntity.setBoardWriter(boardDTO.getBoardWriter());
-//        boardEntity.setBoardTitle(boardDTO.getBoardTitle());
-//        boardEntity.setBoardContents(boardDTO.getBoardContents().getBytes(StandardCharsets.UTF_8));
-//        boardEntity.setCategory(boardDTO.getCategory());
-//        boardEntity.setBoardHits(boardDTO.getBoardHits());
-//        return boardEntity;
-//    }
-//
-//    /***
-//     * @author 140024
-//     * @implNote (static factory method) 파일이 있는 게시글 저장을 위한 엔티티 생성
-//     * @param boardDTO 게시글 정보를 담고 있는 DTO
-//     * @return BoardEntity 생성된 게시글 엔티티
-//     * @since 2024-06-09
-//     */
-//    public static BoardEntity toSaveFileEntity(final BoardDTO boardDTO) {
-//        final BoardEntity boardEntity = new BoardEntity();
-//        boardEntity.setBoardWriter(boardDTO.getBoardWriter());
-//        boardEntity.setBoardTitle(boardDTO.getBoardTitle());
-//        boardEntity.setBoardContents(boardDTO.getBoardContents().getBytes(StandardCharsets.UTF_8));
-//        boardEntity.setCategory(boardDTO.getCategory());
-//        boardEntity.setBoardHits(0);
-//        boardEntity.setFileAttached(1); // 파일 있음.
-//        return boardEntity;
-//    }
-//    
-//    /***
-//     * @author 140024
-//     * @implNote (static factory method) 파일이 있는 게시글 수정을 위한 엔티티 생성
-//     * @param boardDTO 게시글 정보를 담고 있는 DTO
-//     * @return BoardEntity 수정된 게시글 엔티티
-//     * @since 2024-06-09
-//     */
-//    public static BoardEntity toUpdateFileEntity(final BoardDTO boardDTO) {
-//        final BoardEntity boardEntity = new BoardEntity();
-//        boardEntity.setSeqId(boardDTO.getSeqId());
-//        boardEntity.setBoardWriter(boardDTO.getBoardWriter());
-//        boardEntity.setBoardTitle(boardDTO.getBoardTitle());
-//        boardEntity.setBoardContents(boardDTO.getBoardContents().getBytes(StandardCharsets.UTF_8));
-//        boardEntity.setCategory(boardDTO.getCategory());
-//        boardEntity.setBoardHits(boardDTO.getBoardHits());
-//        boardEntity.setFileAttached(1); // 파일 있음.
-//        return boardEntity;
-//    }
 }

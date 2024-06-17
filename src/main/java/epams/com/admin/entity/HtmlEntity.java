@@ -47,5 +47,6 @@ public class HtmlEntity extends BaseEntity {
     private String HTML_NM;
 
     @ManyToMany(mappedBy = "htmlEntities")
+    @Builder.Default
     private Set<CodeEntity> codeEntities = new HashSet<>();
 }

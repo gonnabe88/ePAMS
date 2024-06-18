@@ -26,7 +26,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-@Table(name = "com_code_html")
+@Table(name = "COM_CODE_HTML")
 public class CodeHtmlMapEntity extends BaseEntity implements Serializable {
 
     /***

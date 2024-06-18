@@ -29,7 +29,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-@Table(name = "com_code")
+@Table(name = "COM_CODE")
 public class CodeEntity extends BaseEntity {
 	
     /***

@@ -1,12 +1,12 @@
 package epams.com.login.service;
 
-import java.util.Optional;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
-import epams.com.login.entity.LoginMFAEntity;
-import epams.com.login.repository.LoginMFARepository;
+import epams.com.login.dto.LoginOTPDTO;
+import epams.com.login.repository.LoginOTPRepository;
 import epams.com.login.repository.LoginRepository;
 import epams.com.member.dto.MemberDTO;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class LoginService {
     private final LoginRepository loginRepository;
-    private final LoginMFARepository mfaRepository;
+    private final LoginOTPRepository loginOTPRepository;
     private final ShaEncryptService encshaService;
     private UUID uuid = UUID.randomUUID();
 
@@ -25,14 +25,21 @@ public class LoginService {
     public boolean otpLogin(String username, String OTP) {
     	
     	MemberDTO ismemberDTO = loginRepository.findByUserId(username);
-    	Optional<LoginMFAEntity> otp = mfaRepository.findTop1ByUsernameOrderByIdDesc(username);
+    	LoginOTPDTO loginOTPDTO = new LoginOTPDTO();
+    	loginOTPDTO.setUsername(username);
+    	loginOTPDTO = loginOTPRepository.findValidOneByUsername(loginOTPDTO);
     	
     	//////////////////////////////////////////////
-    	// SMS, 카카오톡 ONEGUARD mOTP 연동 인증부 구현 필요 //
+    	//      ONEGUARD mOTP 연동 인증부 구현 필요      //
     	//////////////////////////////////////////////
+    	log.warn("ONEGUAER OTP 검증 요청 및 응답");
     	
-    	if (ismemberDTO != null && OTP.equals(otp.get().getOTP())) return true;
-        else return false;
+    	if (ismemberDTO != null && OTP.equals(loginOTPDTO.getOTP())) {
+    		return true;
+    	}
+        else {
+        	return false;
+        }
     }  
     
     public boolean fidoLogin(String username) {

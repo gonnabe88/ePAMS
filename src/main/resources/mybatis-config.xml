@@ -12,6 +12,8 @@
         <typeAlias type="epams.com.admin.entity.CodeHtmlMapEntity" alias="codeHtmlMap"></typeAlias>
         <typeAlias type="epams.com.admin.dto.CodeHtmlDetailDTO" alias="codeHtmlDetail"></typeAlias>
         
+        <typeAlias type="epams.com.login.entity.LoginOTPEntity" alias="loginOTP"></typeAlias>
+        
         <typeAlias type="epams.com.member.dto.MemberDTO" alias="member"></typeAlias>       
     </typeAliases>
 </configuration>

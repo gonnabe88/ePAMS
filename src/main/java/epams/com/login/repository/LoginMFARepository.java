@@ -7,11 +7,11 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import epams.com.login.entity.LoginMFAEntity;
+import epams.com.login.entity.LoginOTPEntity;
 import epams.com.member.entity.MemberEntity;
 
-public interface LoginMFARepository extends JpaRepository<LoginMFAEntity, Long>{
+public interface LoginMFARepository {
 	
-	Optional<LoginMFAEntity> findTop1ByUsernameOrderByIdDesc(String username);
+	Optional<LoginOTPEntity> findTop1ByUsernameOrderByIdDesc(String username);
 
 }

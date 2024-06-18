@@ -26,7 +26,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-@Table(name = "com_html")
+@Table(name = "COM_HTML")
 public class HtmlEntity extends BaseEntity {
 
     /***

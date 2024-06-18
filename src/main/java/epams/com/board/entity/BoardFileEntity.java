@@ -20,7 +20,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@Table(name = "com_board_file")
+@Table(name = "COM_BOARD_FILE")
 @NoArgsConstructor // 기본생성자
 public class BoardFileEntity extends BaseEntity {
 	

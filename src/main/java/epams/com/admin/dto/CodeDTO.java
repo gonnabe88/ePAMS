@@ -101,7 +101,7 @@ public class CodeDTO {
 
     /***
      * @author 140024
-     * @implNote List<HtmlDTO> > List<CodeEntity> 변경 메소드
+     * @implNote List<DTO> > List<Entity> 변경 메소드
      * @since 2024-06-09
      */
     public static List<CodeEntity> toEntityList(final List<CodeDTO> codeDTOs) {

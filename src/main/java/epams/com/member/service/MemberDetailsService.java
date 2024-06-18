@@ -10,8 +10,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import epams.com.login.entity.LoginMFAEntity;
+import epams.com.login.dto.LoginOTPDTO;
+import epams.com.login.entity.LoginOTPEntity;
 import epams.com.login.repository.LoginMFARepository;
+import epams.com.login.repository.LoginOTPRepository;
 import epams.com.member.entity.MemberEntity;
 import epams.com.member.entity.SearchMemberEntity;
 import epams.com.member.repository.MemberRepository;
@@ -23,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class MemberDetailsService implements UserDetailsService {
     private final MemberRepository memberRepository;
-    private final LoginMFARepository mfaRepository;
+    private final LoginOTPRepository loginOTPRepository;
 
     public void saveMembers(List<MemberEntity> added, List<MemberEntity> changed, List<MemberEntity> deleted) {
 
@@ -58,7 +60,6 @@ public class MemberDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<MemberEntity> findMember = memberRepository.findByUsername(username);
-        Optional<LoginMFAEntity> mfa = mfaRepository.findTop1ByUsernameOrderByIdDesc(username);
         
         if (findMember.isEmpty())
         	throw new UsernameNotFoundException("존재하지 않는 username 입니다."+username);  

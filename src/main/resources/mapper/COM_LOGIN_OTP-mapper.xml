@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper SYSTEM "mybatis-3-mapper.dtd">
+
+
+<mapper namespace="LoginOTP">
+     
+    <!-- 모든 데이터 조회 -->
+    <select id="findAll" resultType="loginOTP">
+        SELECT * FROM COM_LOGIN_OTP
+    </select>    
+    
+    <!-- 기본키 데이터 중복여부 조회 -->
+    <select id="countById" parameterType="Long" resultType="loginOTP">
+        SELECT COUNT(*)
+        FROM COM_LOGIN_OTP WHERE SEQ_ID=#{SEQ_ID}
+    </select>
+    
+    <!-- 신규 데이터 추가 --> 
+    <insert id="insert" parameterType="loginOTP">
+        INSERT INTO COM_LOGIN_OTP(EMP_NO, OTP, MFA, CREATED_TIME)
+            VALUES(#{EMP_NO}, #{OTP}, #{MFA}, NOW())
+    </insert>   
+    
+    <!-- 기존 데이터 삭제 --> 
+    <delete id="delete" parameterType="loginOTP">
+        DELETE FROM COM_LOGIN_OTP WHERE SEQ_ID=#{SEQ_ID}
+    </delete>
+    
+    <!-- 기존 데이터 업데이트 --> 
+    <update id="update" parameterType="loginOTP">
+        UPDATE COM_LOGIN_OTP SET EMP_NO=#{EMP_NO}, OTP=#{OTP}, MFA=#{MFA}, UPDATED_TIME=NOW() WHERE SEQ_ID=#{SEQ_ID}
+    </update>
+    
+    <!-- 신규 데이터 추가 또는 기존 데이터 업데이트 -->
+	<insert id="insertUpdate" parameterType="loginOTP">
+	    INSERT INTO COM_LOGIN_OTP (EMP_NO, OTP, MFA, CREATED_TIME)
+	    VALUES(#{EMP_NO}, #{OTP}, #{MFA}, NOW())
+	    ON DUPLICATE KEY UPDATE
+	    OTP = VALUES(OTP),
+	    MFA = VALUES(MFA),
+	    UPDATED_TIME = NOW();
+	</insert>
+	
+	    <!-- 모든 데이터 조회 -->
+    <select id="findValidOneByUsername" parameterType="loginOTP" resultType="loginOTP">
+        SELECT *
+		FROM COM_LOGIN_OTP
+		WHERE EMP_NO = #{EMP_NO}
+		  AND CREATED_TIME > NOW() - INTERVAL 3 MINUTE
+		ORDER BY CREATED_TIME DESC
+		LIMIT 1
+    </select> 
+        
+</mapper>

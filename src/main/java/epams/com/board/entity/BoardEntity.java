@@ -25,7 +25,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-@Table(name = "com_board")
+@Table(name = "COM_BOARD")
 public class BoardEntity extends BaseEntity {
     /***
      * @author 140024

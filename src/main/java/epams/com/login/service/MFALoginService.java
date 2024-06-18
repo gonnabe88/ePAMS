@@ -2,15 +2,14 @@ package epams.com.login.service;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.CookieValue;
 
-import epams.com.login.entity.LoginMFAEntity;
-import epams.com.login.repository.LoginMFARepository;
+import epams.com.login.dto.LoginOTPDTO;
+import epams.com.login.repository.LoginOTPRepository;
 import epams.com.member.dto.MemberDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,8 +19,8 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class MFALoginService {
 	
-    private final LoginMFARepository mfaRepository;
-    private final LoginService loginService;      
+    private final LoginService loginService;
+    private final LoginOTPRepository loginOTPRepository; 
     
 	//SecureRandom 함수를 통해 안전하게 6자리 인증번호 생성
     private int generateOTP(int length) {
@@ -31,17 +30,26 @@ public class MFALoginService {
     }
 	
 	public Map<String, String> requestMFA(MemberDTO memberDTO) throws NoSuchAlgorithmException{		
+
+		LoginOTPDTO loginOTPDTO = new LoginOTPDTO();
 		
 		//사용자가 보내온 UUID가 DB에 저장된 UUID(최근 접속 시 사용된)와 동일한지 확인(동일 시 TRUE)  
 		boolean isUUIDValid = loginService.isValidUUID(memberDTO);
 
-		//SMS, 카카오톡 인증 시 필요한 인증번호 Random 숫자 6자리를 생성
-		String OTP = String.format("%06d",generateOTP(6));
+		if(memberDTO.getMFA().equals("SMS") || memberDTO.getMFA().equals("카카오톡")) {
+			//SMS, 카카오톡 인증 시 필요한 인증번호 Random 숫자 6자리 발급
+			String OTP = String.format("%06d",generateOTP(6));
+			loginOTPDTO.setOTP(OTP);
+	    	//////////////////////////////////////////////
+	    	// SMS, 카카오톡 ONEGUARD mOTP 연동 인증부 구현 필요 //
+	    	//////////////////////////////////////////////
+			log.warn("SMS & 카카오톡 인증문자 발송 : "+OTP);
+		}
 		
-		//로그인 사용자 정보에 해당하는 Entity 생성하여 DB에 저장(이 데이터는 최근 사용자가 시도한 MFA 정보를 의미)
-		LoginMFAEntity mfaEntity = LoginMFAEntity.toSaveEntity(memberDTO);
-		mfaEntity.setOTP(OTP);
-        mfaRepository.save(mfaEntity);
+		//로그인 사용자 정보에 해당하는 Entity 생성하여 DB에 저장(이 데이터는 최근 사용자가 시도한 MFA 정보를 의미)		
+		loginOTPDTO.setUsername(memberDTO.getUsername());
+		loginOTPDTO.setMFA(memberDTO.getMFA());		
+		loginOTPRepository.insert(loginOTPDTO);
 		
         //Key-Value 형태로 리턴하고 있지만 실제로 중요한 정보는 UUID가 일치하는지임
         //그냥 mfaEntity 자체 또는 UUID 문자열을 리턴해도 될 것 같은데 왜 이렇게 했는지 모르겠음(나중에 수정해야지)
@@ -50,10 +58,7 @@ public class MFALoginService {
         Map<String, String> mfaInfo = new HashMap<>();
         mfaInfo.put("username", memberDTO.getUsername());
         mfaInfo.put("MFA", memberDTO.getMFA());
-        mfaInfo.put("OTP", OTP);
-        mfaInfo.put("UUID", String.valueOf(isUUIDValid));
-		
-        log.info("otp : {}", OTP);
+        
 		return mfaInfo;
 	}
 }

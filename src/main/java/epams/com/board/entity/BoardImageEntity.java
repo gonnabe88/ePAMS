@@ -21,7 +21,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-@Table(name = "com_board_image")
+@Table(name = "COM_BOARD_IMAGE")
 public class BoardImageEntity extends BaseEntity {
 	
     /***

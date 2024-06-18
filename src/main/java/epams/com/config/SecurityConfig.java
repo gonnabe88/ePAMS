@@ -127,18 +127,14 @@ public class SecurityConfig {
             )
 
             // 예외 처리 설정
-            .exceptionHandling((exceptionHandling) -> exceptionHandling.accessDeniedPage("/error/403")  // 접근 거부 시 리디렉션 경로
-                    .authenticationEntryPoint(
-                            (request, response, authException) -> response.sendRedirect("/login"))  // 인증 필요 시 리디렉션 경로
-                    .defaultAuthenticationEntryPointFor(
-                            (request, response, authException) -> response.sendRedirect("/error/404"),
-                            new AntPathRequestMatcher("/**"))  // 기본 인증 엔트리 포인트 설정
-                    .defaultAuthenticationEntryPointFor(
-                            (request, response, authException) -> response.sendRedirect("/error/400"),
-                            new AntPathRequestMatcher("/**"))
-                    .defaultAuthenticationEntryPointFor(
-                            (request, response, authException) -> response.sendRedirect("/error/500"),
-                            new AntPathRequestMatcher("/**")));
+            .exceptionHandling((exceptionHandling) -> exceptionHandling
+                .accessDeniedPage("/error/403")  // 접근 거부 시 리디렉션 경로
+                .authenticationEntryPoint(
+                    (request, response, authException) -> response.sendRedirect("/login"))  // 인증 필요 시 리디렉션 경로
+                .defaultAuthenticationEntryPointFor(
+                    (request, response, authException) -> response.sendRedirect("/error/404"),
+                    new AntPathRequestMatcher("/**"))  // 기본 인증 엔트리 포인트 설정
+            );
 
         return http.build();
     }

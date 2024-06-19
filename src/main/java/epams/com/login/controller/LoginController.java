@@ -53,10 +53,9 @@ public class LoginController {
     @GetMapping({"/", "/login"})
     public String login(HttpServletResponse response, @CookieValue(value="idChk", required=false) String username, @RequestParam(value = "isChecked", defaultValue = "false") boolean isChecked, Model model)  throws Exception{    	
     	Authentication auth = Authentication();
-    	WebauthUserDTO existingUser = service.getWebauthUserRepository().findByUsername(username);
-    	List<WebauthDetailDTO> existingAuthUser = service.getWebauthDetailRepository().findAllByUser(existingUser.getUsername());
-    	log.info("size" + existingAuthUser.size());
-    	if(existingAuthUser.isEmpty()) {
+    	int existingUser = service.getWebauthUserRepository().countByUsername(username);
+    	int existingAuthUser = service.getWebauthDetailRepository().countByUser(username);
+    	if(existingAuthUser == 0) {
     		model.addAttribute("isChecked", "false");
     		log.info("Not simple auth user");
     	}
@@ -72,7 +71,7 @@ public class LoginController {
     @PostMapping("/login")
     @ResponseBody
     public Map<String, Object> pwlogin(HttpServletResponse response, @ModelAttribute MemberDTO memberDTO, Model model)  throws Exception{    	
-    	WebauthUserDTO existingUser = service.getWebauthUserRepository().findByUsername(memberDTO.getUsername());
+    	int existingUser = service.getWebauthUserRepository().countByUsername(memberDTO.getUsername());
     	Map<String, Object> res = new HashMap<>();
     	if(loginService.pwLogin(memberDTO)) {
     		// 로그인 성공 시 인증번호 생성
@@ -80,7 +79,7 @@ public class LoginController {
     		restapiservice.requestMFA(memberDTO);
             // 로그인 성공 시 추가 인증 단계로 넘어가기 위해 성공 여부를 반환
     		res.put("result", true);
-    		if(existingUser == null)
+    		if(existingUser == 0)
     			res.put("simpleauth", false);
     		else
     			res.put("simpleauth", true);

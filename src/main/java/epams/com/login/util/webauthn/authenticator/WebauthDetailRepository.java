@@ -1,6 +1,5 @@
 package epams.com.login.util.webauthn.authenticator;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -9,7 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.yubico.webauthn.data.ByteArray;
 
-import epams.com.login.util.webauthn.user.WebauthUserDTO;
+import epams.com.login.util.webauthn.user.WebauthUserEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -78,10 +77,19 @@ public class WebauthDetailRepository {
 	 * @since 2024-06-09
 	 */
     public Optional<WebauthDetailDTO> findByCredentialId(ByteArray credentialId) {
-    	WebauthDetailEntity webauthDetailEntity = sql.selectOne("WebauthDetail.findByCredentialId", credentialId);
-    	log.warn("DTO 변환 전 : " + webauthDetailEntity.toString());
-    	WebauthDetailDTO webauthDetailDTO = WebauthDetailDTO.toDTO(webauthDetailEntity);
-    	log.warn("DTO 변환 후 : " + webauthDetailDTO.toString());
+        WebauthDetailEntity webauthDetailEntity = sql.selectOne("WebauthDetail.findByCredentialId", credentialId);
+        log.warn("DTO 변환 전 : " + webauthDetailEntity.toString());
+        WebauthUserEntity userEntity = webauthDetailEntity.getUser();
+        if (userEntity != null) {
+            log.warn("User Entity 조회 성공(getDISP_NM) : " + userEntity.getDISP_NM());
+            log.warn("User Entity 조회 성공(getEMP_NO) : " + userEntity.getEMP_NO());
+            log.warn("User Entity Handle : " + userEntity.getHANDLE().toString()); // handle 값 확인
+        } else {
+            log.warn("User Entity 조회 실패");
+        }
+        WebauthDetailDTO webauthDetailDTO = WebauthDetailDTO.toDTO(webauthDetailEntity);
+        log.warn("DTO 변환 후 : " + webauthDetailDTO.toString());
+        log.warn("User DTO 변환 후 : " + webauthDetailDTO.getUser().toString());
         if (webauthDetailDTO != null) {
             return Optional.of(webauthDetailDTO);
         } else {
@@ -122,6 +130,10 @@ public class WebauthDetailRepository {
         List<WebauthDetailEntity> webauthDetailEntityList = sql.selectList("WebauthDetail.findAllByUser", username);
         final List<WebauthDetailDTO> webauthDetailDTOList= WebauthDetailDTO.toDTOList(webauthDetailEntityList);
         return webauthDetailDTOList;
+    }
+    
+    public int countByUser(String username) {
+       return sql.selectOne("WebauthDetail.countByUser", username);
     }
     
     

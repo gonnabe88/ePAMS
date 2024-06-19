@@ -56,14 +56,7 @@ public class WebauthDetailDTO {
         dto.setPublicKey(entity.getPBLK_KEY());
         dto.setCount(entity.getCNT());
         dto.setAaguid(entity.getAAGUID());
-        dto.setUser(WebauthUserDTO.toDTO(entityget()));
-        if (entity.getUser() != null) {
-            WebauthUserDTO userDTO = new WebauthUserDTO();
-            userDTO.setUsername(entity.getEMP_NO());
-            userDTO.setDisplayName(entity.getUser().getDISP_NM());
-            userDTO.setHandle(entity.getUser().getHANDLE());
-            dto.setUser(null);
-        }
+        dto.setUser(WebauthUserDTO.toDTO(entity.getUser())); // WebauthUserDTO로 변환
         return dto;
     }
 
@@ -74,9 +67,10 @@ public class WebauthDetailDTO {
         entity.setPBLK_KEY(this.getPublicKey());
         entity.setCNT(this.getCount());
         entity.setAAGUID(this.getAaguid());
-        entity.setUser(this.getUser().toEntity());
+        entity.setUser(this.getUser().toEntity()); // WebauthUserEntity로 변환
         return entity;
     }
+    
     public static List<WebauthDetailDTO> toDTOList(List<WebauthDetailEntity> entityList) {
         return entityList.stream()
             .map(WebauthDetailDTO::toDTO)

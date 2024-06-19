@@ -46,6 +46,12 @@
         FROM COM_WEBAUTH_USR WHERE EMP_NO=#{username}
     </select>
     
+    	<!-- 기본키 데이터 중복여부 조회 -->
+    <select id="countByUsername" parameterType="String" resultType="Int">
+        SELECT COUNT(*)
+        FROM COM_WEBAUTH_USR WHERE EMP_NO=#{username}
+    </select>
+    
 	 <!-- 기본키 데이터 중복여부 조회 -->
     <select id="findByHandle" parameterType="ByteArray" resultType="webauthUser">
         SELECT *

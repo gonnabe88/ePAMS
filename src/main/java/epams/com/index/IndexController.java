@@ -72,10 +72,10 @@ public class IndexController<S extends Session> {
     	Authentication auth = Authentication();
     	
     	// 간편인증 등록 여부 확인
-    	WebauthUserDTO existingUser = service.getWebauthUserRepository().findByUsername(auth.getName());
-    	List<WebauthDetailDTO> existingAuthUser = service.getWebauthDetailRepository().findAllByUser(existingUser.getUsername());
+    	int existingUser = service.getWebauthUserRepository().countByUsername(auth.getName());
+    	int existingAuthUser = service.getWebauthDetailRepository().countByUser(auth.getName());
     	model.addAttribute("username", auth.getName());
-    	if(existingAuthUser.isEmpty()) {
+    	if(existingAuthUser == 0) {
     		model.addAttribute("simpleauth", false);
     		log.info("Not simple auth user");
     	}

@@ -58,17 +58,23 @@ public class RegistrationService implements CredentialRepository  {
     @Override
     public Optional<RegisteredCredential> lookup(ByteArray credentialId, ByteArray userHandle) {
         Optional<WebauthDetailDTO> auth = webauthDetailRepository.findByCredentialId(credentialId);
-        log.warn(auth.toString());
+        auth.ifPresent(credential -> {
+            log.warn("Credential ID: " + credential.getCredentialId());
+            log.warn("User Handle: " + credential.getUser().getHandle());
+            log.warn("Public Key: " + credential.getPublicKey());
+            log.warn("Signature Count: " + credential.getCount());
+        });
+
         return auth.map(
-            credential ->
-                RegisteredCredential.builder()
-                    .credentialId(credential.getCredentialId())
-                    .userHandle(credential.getUser().getHandle())
-                    .publicKeyCose(credential.getPublicKey())
-                    .signatureCount(credential.getCount())
-                    .build()
+            credential -> RegisteredCredential.builder()
+                .credentialId(credential.getCredentialId())
+                .userHandle(credential.getUser().getHandle())
+                .publicKeyCose(credential.getPublicKey())
+                .signatureCount(credential.getCount())
+                .build()
         );
     }
+
 
     @Override
     public Set<RegisteredCredential> lookupAll(ByteArray credentialId) {

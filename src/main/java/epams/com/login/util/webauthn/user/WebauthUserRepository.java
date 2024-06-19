@@ -8,7 +8,9 @@ import org.springframework.stereotype.Repository;
 import com.yubico.webauthn.data.ByteArray;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Repository
 @RequiredArgsConstructor
 public class WebauthUserRepository {
@@ -82,13 +84,23 @@ public class WebauthUserRepository {
 	 * @since 2024-06-09
 	 */
     public WebauthUserDTO findByUsername(String username) {
+    	log.warn("findByUsername : "+username);
         WebauthUserEntity entity = sql.selectOne("WebauthUser.findByUsername", username);
         if (entity == null) {
             // Null인 경우에 대한 적절한 처리를 추가
             return null; // 또는 적절한 기본값 반환
-        }
+        }        
         WebauthUserDTO webauthUserDTO = WebauthUserDTO.toDTO(entity);
         return webauthUserDTO;
+    }
+    
+	/***
+	 * @author 140024
+	 * @implNote 기존 데이터 삭제
+	 * @since 2024-06-09
+	 */
+    public int countByUsername(String username) {
+        return sql.selectOne("WebauthUser.countByUsername", username);
     }
     
 	/***

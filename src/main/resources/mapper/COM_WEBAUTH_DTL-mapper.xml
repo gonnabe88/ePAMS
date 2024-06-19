@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper SYSTEM "mybatis-3-mapper.dtd">
 
 <mapper namespace="WebauthDetail">
      
@@ -54,10 +54,25 @@
 	</insert>
 	
     <!-- 기본키 데이터 조회 -->
-    <select id="findByCredentialId" parameterType="ByteArray" resultType="webauthDetail">
-        SELECT SEQ_ID, CRDT_ID, PBLK_KEY, CNT, AAGUID, EMP_NO
-        FROM COM_WEBAUTH_DTL WHERE CRDT_ID=#{CRDT_ID, typeHandler=epams.com.login.util.webauthn.utility.ByteArrayTypeHandler}
-    </select>
+	<select id="findByCredentialId" parameterType="ByteArray" resultMap="WebauthDetailMap">
+	    SELECT d.*, u.EMP_NO as EMP_NO, u.DISP_NM as DISP_NM, u.HANDLE as HANDLE
+	    FROM COM_WEBAUTH_DTL d
+	    LEFT JOIN COM_WEBAUTH_USR u ON d.EMP_NO = u.EMP_NO
+	    WHERE d.CRDT_ID = #{CRDT_ID, typeHandler=epams.com.login.util.webauthn.utility.ByteArrayTypeHandler}
+	</select>
+	
+	<resultMap id="WebauthDetailMap" type="epams.com.login.util.webauthn.authenticator.WebauthDetailEntity">
+    <id property="SEQ_ID" column="SEQ_ID"/>
+    <result property="CRDT_ID" column="CRDT_ID" typeHandler="epams.com.login.util.webauthn.utility.ByteArrayTypeHandler"/>
+    <result property="PBLK_KEY" column="PBLK_KEY" typeHandler="epams.com.login.util.webauthn.utility.ByteArrayTypeHandler"/>
+    <result property="CNT" column="CNT"/>
+    <result property="AAGUID" column="AAGUID" typeHandler="epams.com.login.util.webauthn.utility.ByteArrayTypeHandler"/>
+    <association property="user" javaType="epams.com.login.util.webauthn.user.WebauthUserEntity">
+        <id property="EMP_NO" column="EMP_NO"/>
+        <result property="DISP_NM" column="DISP_NM"/>
+        <result property="HANDLE" column="HANDLE" typeHandler="epams.com.login.util.webauthn.utility.ByteArrayTypeHandler"/>
+    </association>
+	</resultMap>
     
     <!-- 기본키 데이터 조회 -->
     <select id="findAllByCredentialId" parameterType="ByteArray" resultType="webauthDetail">
@@ -74,6 +89,11 @@
     <!-- 사용자 데이터 조회 -->
     <select id="findByUser" parameterType="String" resultType="webauthDetail">
         SELECT *
+        FROM COM_WEBAUTH_DTL WHERE EMP_NO=#{username}
+    </select>
+    
+    <select id="countByUser" parameterType="String" resultType="Int">
+        SELECT COUNT(*)
         FROM COM_WEBAUTH_DTL WHERE EMP_NO=#{username}
     </select>
         

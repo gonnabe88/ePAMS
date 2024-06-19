@@ -20,14 +20,14 @@ import lombok.Setter;
 public class WebauthUserEntity {
     
     @Id
-    @Column(nullable = false, unique = true)
+    @Column(name = "EMP_NO", nullable = false, unique = true)
     private String EMP_NO;
 
-    @Column(nullable = false)
+    @Column(name = "DISP_NM",nullable = false)
     private String DISP_NM;
 
     @Lob
-    @Column(nullable = false, length = 64)
+    @Column(name = "HANDLE", nullable = false)
     private ByteArray HANDLE;
 
 }

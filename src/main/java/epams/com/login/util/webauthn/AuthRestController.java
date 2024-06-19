@@ -106,8 +106,8 @@ public class AuthRestController {
     	//Authentication auth = Authentication();
     	//String username = auth.getName();
     	log.warn("register : "+username);
-        WebauthUserDTO existingUser = service.getWebauthUserRepository().findByUsername(username);
-        List<WebauthDetailDTO> existingAuthUser = service.getWebauthDetailRepository().findAllByUser(existingUser.getUsername());
+        WebauthUserDTO existingUser = service.getWebauthUserRepository().findByUsername(username);        	
+        List<WebauthDetailDTO> existingAuthUser = service.getWebauthDetailRepository().findAllByUser(username);
         if (existingAuthUser.isEmpty()) {
             UserIdentity userIdentity = UserIdentity.builder()
                 .name(username)

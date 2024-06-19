@@ -2,6 +2,7 @@ package epams.com.login.util.webauthn.authenticator;
 
 import com.yubico.webauthn.data.ByteArray;
 
+import epams.com.board.entity.BoardEntity;
 import epams.com.login.util.webauthn.user.WebauthUserEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -43,16 +44,17 @@ public class WebauthDetailEntity {
 	@Column(nullable = true)
 	private ByteArray AAGUID;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="EMP_NO", insertable = false, updatable = false)
+	@ManyToOne(fetch = FetchType.EAGER) // 즉시 로딩으로 설정
+	@JoinColumn(name="EMP_NO", referencedColumnName = "EMP_NO", insertable = false, updatable = false)
     private WebauthUserEntity user;
-    
+
+
     /***
      * @author 140024
      * @implNote lombok getter에서 자동으로 인식하지 못하는 문제로 별도 추가
      * @since 2024-06-10
      */
-    public String getUser() {
+    public String getEMP_NO() {
         return user != null ? user.getEMP_NO() : null;
     }
     
@@ -61,11 +63,11 @@ public class WebauthDetailEntity {
      * @implNote lombok setter에서 자동으로 인식하지 못하는 문제로 별도 추가
      * @since 2024-06-10
      */
-    public void setUser(final String empNo) {
+    public void setEMP_NO(final String username) {
         if (this.user == null) {
             this.user = new WebauthUserEntity();
         }
-        this.user.setEMP_NO(empNo);
+        this.user.setEMP_NO(username);
     }
-
+    
 }

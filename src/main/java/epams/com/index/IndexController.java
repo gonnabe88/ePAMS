@@ -27,8 +27,8 @@ import epams.com.admin.service.CodeService;
 import epams.com.board.dto.BoardDTO;
 import epams.com.board.service.BoardService;
 import epams.com.login.util.webauthn.RegistrationService;
-import epams.com.login.util.webauthn.authenticator.Authenticator;
-import epams.com.login.util.webauthn.user.AppUser;
+import epams.com.login.util.webauthn.authenticator.WebauthDetailDTO;
+import epams.com.login.util.webauthn.user.WebauthUserDTO;
 import epams.com.member.entity.MemberEntity;
 import epams.com.member.entity.SearchMemberEntity;
 import epams.com.member.service.MemberDetailsService;
@@ -62,6 +62,7 @@ public class IndexController<S extends Session> {
 	public String popup() {
 		return "/common/popup";
 	}
+	
 	@GetMapping("/index")
 	public String indexMain(@PageableDefault(page = 1) Pageable pageable, Model model) {
     	
@@ -71,8 +72,8 @@ public class IndexController<S extends Session> {
     	Authentication auth = Authentication();
     	
     	// 간편인증 등록 여부 확인
-    	AppUser existingUser = service.getUserRepo().findByUsername(auth.getName());
-    	List<Authenticator> existingAuthUser = service.getAuthRepository().findAllByUser(existingUser);
+    	WebauthUserDTO existingUser = service.getWebauthUserRepository().findByUsername(auth.getName());
+    	List<WebauthDetailDTO> existingAuthUser = service.getWebauthDetailRepository().findAllByUser(existingUser.getUsername());
     	model.addAttribute("username", auth.getName());
     	if(existingAuthUser.isEmpty()) {
     		model.addAttribute("simpleauth", false);

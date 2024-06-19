@@ -68,7 +68,7 @@ const webauthn = (e) => {
     const token = document.querySelector('meta[name="_csrf"]').content;
     e.preventDefault();
     const formData = new FormData(e.target);
-    fetch('/webauthn/login', {
+    fetch('/api/webauthn/login', {
         method: 'POST',
         headers: {
             'X-CSRF-Token': token
@@ -105,7 +105,7 @@ const webauthn = (e) => {
         const formData = new FormData();
         formData.append("credential", JSON.stringify(encodedResult));
         formData.append("username", document.querySelector('input[name="username"]').value);
-        return fetch("/webauthn/welcome", {
+        return fetch("/api/webauthn/welcome", {
             method: 'POST',
             headers: {
                 'X-CSRF-Token': token

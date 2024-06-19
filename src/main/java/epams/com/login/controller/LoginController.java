@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import epams.com.login.service.LoginService;
 import epams.com.login.service.MFALoginService;
 import epams.com.login.util.webauthn.RegistrationService;
-import epams.com.login.util.webauthn.authenticator.Authenticator;
-import epams.com.login.util.webauthn.user.AppUser;
+import epams.com.login.util.webauthn.authenticator.WebauthDetailDTO;
+import epams.com.login.util.webauthn.user.WebauthUserDTO;
 import epams.com.member.dto.MemberDTO;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -53,8 +53,8 @@ public class LoginController {
     @GetMapping({"/", "/login"})
     public String login(HttpServletResponse response, @CookieValue(value="idChk", required=false) String username, @RequestParam(value = "isChecked", defaultValue = "false") boolean isChecked, Model model)  throws Exception{    	
     	Authentication auth = Authentication();
-    	AppUser existingUser = service.getUserRepo().findByUsername(username);
-    	List<Authenticator> existingAuthUser = service.getAuthRepository().findAllByUser(existingUser);
+    	WebauthUserDTO existingUser = service.getWebauthUserRepository().findByUsername(username);
+    	List<WebauthDetailDTO> existingAuthUser = service.getWebauthDetailRepository().findAllByUser(existingUser.getUsername());
     	log.info("size" + existingAuthUser.size());
     	if(existingAuthUser.isEmpty()) {
     		model.addAttribute("isChecked", "false");
@@ -72,7 +72,7 @@ public class LoginController {
     @PostMapping("/login")
     @ResponseBody
     public Map<String, Object> pwlogin(HttpServletResponse response, @ModelAttribute MemberDTO memberDTO, Model model)  throws Exception{    	
-    	AppUser existingUser = service.getUserRepo().findByUsername(memberDTO.getUsername());
+    	WebauthUserDTO existingUser = service.getWebauthUserRepository().findByUsername(memberDTO.getUsername());
     	Map<String, Object> res = new HashMap<>();
     	if(loginService.pwLogin(memberDTO)) {
     		// 로그인 성공 시 인증번호 생성

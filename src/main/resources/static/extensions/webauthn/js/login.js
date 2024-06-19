@@ -4,7 +4,7 @@ document.addEventListener("submit", (e) => {
     e.preventDefault();
     //this.form = document.getElementById("form");
     const formData = new FormData(e.target);
-    fetch('/webauthn/login', {
+    fetch('/api/webauthn/login', {
         method: 'POST',
         headers: {
 	        'header': header,
@@ -46,7 +46,7 @@ document.addEventListener("submit", (e) => {
         //formData.append("credential", JSON.stringify(encodedResult));
         const formData = new FormData(form);
 		console.log("formData : "+ JSON.stringify(formData));
-        return fetch("/webauthn/welcome", {
+        return fetch("/api/webauthn/welcome", {
             method: 'POST',
         	headers: {
 	        'header': header,

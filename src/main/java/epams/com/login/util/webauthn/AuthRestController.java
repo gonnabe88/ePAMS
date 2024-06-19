@@ -48,8 +48,8 @@ import com.yubico.webauthn.exception.RegistrationFailedException;
 import epams.com.admin.dto.LogLoginDTO;
 import epams.com.admin.repository.LogRepository;
 import epams.com.login.repository.LoginRepository;
-import epams.com.login.util.webauthn.authenticator.Authenticator;
-import epams.com.login.util.webauthn.user.AppUser;
+import epams.com.login.util.webauthn.authenticator.WebauthDetailDTO;
+import epams.com.login.util.webauthn.user.WebauthUserDTO;
 import epams.com.login.util.webauthn.utility.Utility;
 import epams.com.member.dto.MemberDTO;
 import jakarta.servlet.http.HttpSession;
@@ -66,6 +66,8 @@ public class AuthRestController {
     private final RegistrationService service;
     private final LoginRepository loginRepository;
     private final LogRepository logRepository;
+    
+    
     
 	private Authentication Authentication() {
 	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -104,16 +106,16 @@ public class AuthRestController {
     	//Authentication auth = Authentication();
     	//String username = auth.getName();
     	log.warn("register : "+username);
-        AppUser existingUser = service.getUserRepo().findByUsername(username);
-        List<Authenticator> existingAuthUser = service.getAuthRepository().findAllByUser(existingUser);
+        WebauthUserDTO existingUser = service.getWebauthUserRepository().findByUsername(username);
+        List<WebauthDetailDTO> existingAuthUser = service.getWebauthDetailRepository().findAllByUser(existingUser.getUsername());
         if (existingAuthUser.isEmpty()) {
             UserIdentity userIdentity = UserIdentity.builder()
                 .name(username)
                 .displayName(username)
                 .id(Utility.generateRandom(32))
                 .build();
-            AppUser saveUser = new AppUser(userIdentity);
-            service.getUserRepo().save(saveUser);
+            WebauthUserDTO saveUser = new WebauthUserDTO(userIdentity);
+            service.getWebauthUserRepository().insertUpdate(saveUser);
             String response = newAuthRegistration(saveUser, session);
             return response;
         } else {
@@ -124,10 +126,10 @@ public class AuthRestController {
     @PostMapping("/registerauth")
     @ResponseBody
     public String newAuthRegistration(
-        @RequestParam(value="user") AppUser user,
+        @RequestParam(value="user") WebauthUserDTO user,
         HttpSession session
     ) {
-        AppUser existingUser = service.getUserRepo().findByHandle(user.getHandle());
+    	WebauthUserDTO existingUser = service.getWebauthUserRepository().findByHandle(user.getHandle());
         if (existingUser != null) {
             UserIdentity userIdentity = user.toUserIdentity();           
 
@@ -183,7 +185,7 @@ public class AuthRestController {
     	Authentication auth = Authentication();
     	String username = auth.getName();
             try {
-                AppUser user = service.getUserRepo().findByUsername(username);
+            	WebauthUserDTO user = service.getWebauthUserRepository().findByUsername(username);
                 log.warn(session.getAttribute(user.getUsername()).toString());
                 PublicKeyCredentialCreationOptions requestOptions = (PublicKeyCredentialCreationOptions.fromJson((String) session.getAttribute(user.getUsername())) );
                 if (requestOptions != null) {
@@ -194,8 +196,8 @@ public class AuthRestController {
                         .response(pkc)
                         .build();
                     RegistrationResult result = relyingParty.finishRegistration(options);
-                    Authenticator savedAuth = new Authenticator(result, pkc.getResponse(), user, username);
-                    service.getAuthRepository().save(savedAuth);
+                    WebauthDetailDTO savedAuth = new WebauthDetailDTO(result, pkc.getResponse(), user, username);
+                    service.getWebauthDetailRepository().insert(savedAuth);
                     //return new ModelAndView("redirect:/popup", HttpStatus.SEE_OTHER);
                     return ResponseEntity.ok("Registration successful!");
                 } else {

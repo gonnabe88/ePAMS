@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="WebauthDetail">
+     
+    <!-- 모든 데이터 조회 -->
+    <select id="findAll" resultType="webauthDetail">
+        SELECT * FROM COM_WEBAUTH_DTL
+    </select>    
+    
+    <!-- 기본키 데이터 중복여부 조회 -->
+    <select id="countById" parameterType="Long" resultType="int">
+        SELECT COUNT(*)
+        FROM COM_WEBAUTH_DTL WHERE SEQ_ID=#{SEQ_ID}
+    </select>
+    
+    <!-- 신규 데이터 추가 --> 
+    <insert id="insert" parameterType="webauthDetail">
+        INSERT INTO COM_WEBAUTH_DTL(EMP_NO, CRDT_ID, PBLK_KEY, CNT, AAGUID)
+            VALUES(#{EMP_NO}, 
+            	   #{CRDT_ID, typeHandler=epams.com.login.util.webauthn.utility.ByteArrayTypeHandler}, 
+            	   #{PBLK_KEY, typeHandler=epams.com.login.util.webauthn.utility.ByteArrayTypeHandler}, 
+            	   #{CNT}, 
+            	   #{AAGUID, typeHandler=epams.com.login.util.webauthn.utility.ByteArrayTypeHandler})
+    </insert>   
+    
+    <!-- 기존 데이터 삭제 --> 
+    <delete id="delete" parameterType="Long">
+        DELETE FROM COM_WEBAUTH_DTL WHERE SEQ_ID=#{SEQ_ID}
+    </delete>
+    
+    <!-- 기존 데이터 업데이트 --> 
+    <update id="update" parameterType="webauthDetail">
+        UPDATE COM_WEBAUTH_DTL 
+        SET 
+        	EMP_NO=#{EMP_NO}, 
+        	CRDT_ID=#{CRDT_ID, typeHandler=epams.com.login.util.webauthn.utility.ByteArrayTypeHandler},
+        	PBLK_KEY=#{PBLK_KEY, typeHandler=epams.com.login.util.webauthn.utility.ByteArrayTypeHandler},
+        	CNT=#{CNT},
+        	AAGUID=#{AAGUID, typeHandler=epams.com.login.util.webauthn.utility.ByteArrayTypeHandler}
+       	WHERE SEQ_ID=#{SEQ_ID}
+    </update>
+    
+    <!-- 신규 데이터 추가 또는 기존 데이터 업데이트 -->
+	<insert id="insertUpdate" parameterType="webauthDetail">
+	    INSERT INTO COM_WEBAUTH_DTL (EMP_NO, CRDT_ID, PBLK_KEY, CNT, AAGUID)
+	    VALUES(#{EMP_NO}, #{CRDT_ID, typeHandler=epams.com.login.util.webauthn.utility.ByteArrayTypeHandler}, #{PBLK_KEY, typeHandler=epams.com.login.util.webauthn.utility.ByteArrayTypeHandler}, #{CNT}, #{AAGUID, typeHandler=epams.com.login.util.webauthn.utility.ByteArrayTypeHandler})
+	    ON DUPLICATE KEY 
+	    UPDATE
+	    	CRDT_ID = VALUES(CRDT_ID),
+	    	PBLK_KEY = VALUES(PBLK_KEY),
+	    	CNT = VALUES(CNT),
+	    	AAGUID = VALUES(AAGUID);
+	</insert>
+	
+    <!-- 기본키 데이터 조회 -->
+    <select id="findByCredentialId" parameterType="ByteArray" resultType="webauthDetail">
+        SELECT SEQ_ID, CRDT_ID, PBLK_KEY, CNT, AAGUID, EMP_NO
+        FROM COM_WEBAUTH_DTL WHERE CRDT_ID=#{CRDT_ID, typeHandler=epams.com.login.util.webauthn.utility.ByteArrayTypeHandler}
+    </select>
+    
+    <!-- 기본키 데이터 조회 -->
+    <select id="findAllByCredentialId" parameterType="ByteArray" resultType="webauthDetail">
+        SELECT SEQ_ID, CRDT_ID, PBLK_KEY, CNT, AAGUID, EMP_NO
+        FROM COM_WEBAUTH_DTL WHERE CRDT_ID=#{CRDT_ID, typeHandler=epams.com.login.util.webauthn.utility.ByteArrayTypeHandler}
+    </select>
+    
+    <!-- 사용자 데이터 조회 -->
+    <select id="findAllByUser" parameterType="String" resultType="webauthDetail">
+        SELECT *
+        FROM COM_WEBAUTH_DTL WHERE EMP_NO=#{username}
+    </select>
+    
+    <!-- 사용자 데이터 조회 -->
+    <select id="findByUser" parameterType="String" resultType="webauthDetail">
+        SELECT *
+        FROM COM_WEBAUTH_DTL WHERE EMP_NO=#{username}
+    </select>
+        
+</mapper>

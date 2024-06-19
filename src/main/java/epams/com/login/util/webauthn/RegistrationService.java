@@ -5,33 +5,35 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
 import com.yubico.webauthn.CredentialRepository;
 import com.yubico.webauthn.RegisteredCredential;
 import com.yubico.webauthn.data.ByteArray;
 import com.yubico.webauthn.data.PublicKeyCredentialDescriptor;
 
-import epams.com.login.util.webauthn.authenticator.Authenticator;
-import epams.com.login.util.webauthn.authenticator.AuthenticatorRepository;
-import epams.com.login.util.webauthn.user.AppUser;
-import epams.com.login.util.webauthn.user.UserRepository;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
-
+import epams.com.login.util.webauthn.authenticator.WebauthDetailDTO;
+import epams.com.login.util.webauthn.authenticator.WebauthDetailRepository;
+import epams.com.login.util.webauthn.user.WebauthUserDTO;
+import epams.com.login.util.webauthn.user.WebauthUserRepository;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Repository
 @Getter
 public class RegistrationService implements CredentialRepository  {
+    
     @Autowired
-    private UserRepository userRepo;
+    private WebauthUserRepository webauthUserRepository;
     @Autowired
-    private AuthenticatorRepository authRepository;
+    private WebauthDetailRepository webauthDetailRepository;
 
     @Override
     public Set<PublicKeyCredentialDescriptor> getCredentialIdsForUsername(String username) {
-        AppUser user = userRepo.findByUsername(username);
-        List<Authenticator> auth = authRepository.findAllByUser(user);
+        WebauthUserDTO user = webauthUserRepository.findByUsername(username);
+        List<WebauthDetailDTO> auth = webauthDetailRepository.findAllByUser(user.getUsername());
         return auth.stream()
         .map(
             credential ->
@@ -43,19 +45,20 @@ public class RegistrationService implements CredentialRepository  {
 
     @Override
     public Optional<ByteArray> getUserHandleForUsername(String username) {
-        AppUser user = userRepo.findByUsername(username);
+        WebauthUserDTO user = webauthUserRepository.findByUsername(username);
         return Optional.of(user.getHandle());
     }
 
     @Override
     public Optional<String> getUsernameForUserHandle(ByteArray userHandle) {
-        AppUser user = userRepo.findByHandle(userHandle);
+    	WebauthUserDTO user = webauthUserRepository.findByHandle(userHandle);
         return Optional.of(user.getUsername());
     }
 
     @Override
     public Optional<RegisteredCredential> lookup(ByteArray credentialId, ByteArray userHandle) {
-        Optional<Authenticator> auth = authRepository.findByCredentialId(credentialId);
+        Optional<WebauthDetailDTO> auth = webauthDetailRepository.findByCredentialId(credentialId);
+        log.warn(auth.toString());
         return auth.map(
             credential ->
                 RegisteredCredential.builder()
@@ -69,7 +72,7 @@ public class RegistrationService implements CredentialRepository  {
 
     @Override
     public Set<RegisteredCredential> lookupAll(ByteArray credentialId) {
-        List<Authenticator> auth = authRepository.findAllByCredentialId(credentialId);
+        List<WebauthDetailDTO> auth = webauthDetailRepository.findAllByCredentialId(credentialId);
         return auth.stream()
         .map(
             credential ->

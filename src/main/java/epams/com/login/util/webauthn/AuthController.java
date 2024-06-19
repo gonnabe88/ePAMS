@@ -50,8 +50,8 @@ import com.yubico.webauthn.exception.RegistrationFailedException;
 import epams.com.admin.dto.LogLoginDTO;
 import epams.com.admin.repository.LogRepository;
 import epams.com.login.repository.LoginRepository;
-import epams.com.login.util.webauthn.authenticator.Authenticator;
-import epams.com.login.util.webauthn.user.AppUser;
+import epams.com.login.util.webauthn.authenticator.WebauthDetailDTO;
+import epams.com.login.util.webauthn.user.WebauthUserDTO;
 import epams.com.login.util.webauthn.utility.Utility;
 import epams.com.member.dto.MemberDTO;
 import jakarta.servlet.http.HttpSession;
@@ -97,141 +97,12 @@ public class AuthController {
     }
     
 
-    @PostMapping("/register")
-    @ResponseBody
-    public String newUserRegistration(
-		@RequestParam(value="username") String username,
-        HttpSession session
-    ) {
-    	//Authentication auth = Authentication();
-    	//String username = auth.getName();
-    	log.warn("register : "+username);
-        AppUser existingUser = service.getUserRepo().findByUsername(username);
-        List<Authenticator> existingAuthUser = service.getAuthRepository().findAllByUser(existingUser);
-        if (existingAuthUser.isEmpty()) {
-            UserIdentity userIdentity = UserIdentity.builder()
-                .name(username)
-                .displayName(username)
-                .id(Utility.generateRandom(32))
-                .build();
-            AppUser saveUser = new AppUser(userIdentity);
-            service.getUserRepo().save(saveUser);
-            String response = newAuthRegistration(saveUser, session);
-            return response;
-        } else {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Username " + username + " already exists. Choose a new name.");
-        }
-    }
-
-    @PostMapping("/registerauth")
-    @ResponseBody
-    public String newAuthRegistration(
-        @RequestParam(value="user") AppUser user,
-        HttpSession session
-    ) {
-        AppUser existingUser = service.getUserRepo().findByHandle(user.getHandle());
-        if (existingUser != null) {
-            UserIdentity userIdentity = user.toUserIdentity();           
-
-            
-            // AuthenticatorSelectionCriteria 설정 추가
-            AuthenticatorSelectionCriteria authenticatorSelection = AuthenticatorSelectionCriteria.builder()
-                .authenticatorAttachment(AuthenticatorAttachment.PLATFORM) // 플랫폼 인증기를 사용 (설정 시 기기의 플랫폼 인증기 우선)
-                .residentKey(ResidentKeyRequirement.PREFERRED) // 레지던트 키를 선호
-                .userVerification(UserVerificationRequirement.REQUIRED) // 사용자 검증을 필수로 설정
-                .build();
-            
-            StartRegistrationOptions registrationOptions = StartRegistrationOptions.builder()
-            .user(userIdentity)      
-            .authenticatorSelection(authenticatorSelection) // authenticatorSelection 설정 적용     
-            .build();
-            
-            
-            PublicKeyCredentialCreationOptions registration = relyingParty.startRegistration(registrationOptions);
-            try {
-				session.setAttribute(userIdentity.getDisplayName(), registration.toJson());
-			} catch (JsonProcessingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-//            ObjectMapper objectMapper = new ObjectMapper();
-//            try {
-//                String json = objectMapper.writeValueAsString(registration);
-//                session.setAttribute(userIdentity.getDisplayName(), json);
-//            } catch (JsonProcessingException e) {
-//                throw new RuntimeException("Failed to convert PublicKeyCredentialCreationOptions to JSON", e);
-//            }
-            
-            try {
-            	    String retr = registration.toCredentialsCreateJson();
-            		log.warn("registration.toCredentialsCreateJson()");
-            		log.warn(retr);
-                    //return registration.toCredentialsCreateJson();
-            		return retr;
-            } catch (JsonProcessingException e) {
-                    throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error processing JSON.", e);
-            }
-        } else {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "User " + user.getUsername() + " does not exist. Please register.");
-        }
-    }
-
-    @PostMapping("/finishauth")
-    @ResponseBody
-    public ResponseEntity<String> finishRegisration(
-        @RequestParam(value="credential") String credential,
-        HttpSession session
-    ) {
-    	Authentication auth = Authentication();
-    	String username = auth.getName();
-            try {
-                AppUser user = service.getUserRepo().findByUsername(username);
-                log.warn(session.getAttribute(user.getUsername()).toString());
-                PublicKeyCredentialCreationOptions requestOptions = (PublicKeyCredentialCreationOptions.fromJson((String) session.getAttribute(user.getUsername())) );
-                if (requestOptions != null) {
-                    PublicKeyCredential<AuthenticatorAttestationResponse, ClientRegistrationExtensionOutputs> pkc =
-                    PublicKeyCredential.parseRegistrationResponseJson(credential);
-                    FinishRegistrationOptions options = FinishRegistrationOptions.builder()
-                        .request(requestOptions)
-                        .response(pkc)
-                        .build();
-                    RegistrationResult result = relyingParty.finishRegistration(options);
-                    Authenticator savedAuth = new Authenticator(result, pkc.getResponse(), user, username);
-                    service.getAuthRepository().save(savedAuth);
-                    //return new ModelAndView("redirect:/popup", HttpStatus.SEE_OTHER);
-                    return ResponseEntity.ok("Registration successful!");
-                } else {
-                    throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Cached request expired. Try to register again!");
-                }
-            } catch (RegistrationFailedException e) {
-                throw new ResponseStatusException(HttpStatus.BAD_GATEWAY, "Registration failed.", e);
-            } catch (IOException e) {
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Failed to save credenital, please try again!", e);
-            }
-    }
 
     @GetMapping("/login")
     public String loginPage() {
         return "webauthn/login";
     }
 
-    @PostMapping("/login")
-    @ResponseBody
-    public String startLogin(
-        @RequestParam(value="username") String username,
-        HttpSession session
-    ) {
-    	log.warn("POST login");
-        AssertionRequest request = relyingParty.startAssertion(StartAssertionOptions.builder()
-            .username(username)
-            .build());
-        try {
-            session.setAttribute(username, request.toJson());
-            return request.toCredentialsGetJson();
-        } catch (JsonProcessingException e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
-        }
-    }
 
     
     @PostMapping("/welcome")

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper SYSTEM "mybatis-3-mapper.dtd">
+
+
+<mapper namespace="WebauthUser">
+     
+    <!-- 모든 데이터 조회 -->
+    <select id="findAll" resultType="webauthUser">
+        SELECT * FROM COM_WEBAUTH_USR
+    </select>    
+    
+    <!-- 기본키 데이터 중복여부 조회 -->
+    <select id="countById" parameterType="String" resultType="webauthUser">
+        SELECT COUNT(*)
+        FROM COM_WEBAUTH_USR WHERE EMP_NO=#{EMP_NO}
+    </select>
+    
+    <!-- 신규 데이터 추가 --> 
+    <insert id="insert" parameterType="webauthUser">
+        INSERT INTO COM_WEBAUTH_USR(EMP_NO, DISP_NM, HANDLE)
+            VALUES(#{EMP_NO}, #{DISP_NM}, #{HANDLE, typeHandler=epams.com.login.util.webauthn.utility.ByteArrayTypeHandler})
+    </insert>   
+    
+    <!-- 기존 데이터 삭제 --> 
+    <delete id="delete" parameterType="webauthUser">
+        DELETE FROM COM_WEBAUTH_USR WHERE EMP_NO=#{EMP_NO}
+    </delete>
+    
+    <!-- 기존 데이터 업데이트 --> 
+    <update id="update" parameterType="webauthUser">
+        UPDATE COM_WEBAUTH_USR SET DISP_NM=#{DISP_NM}, HANDLE=#{HANDLE, typeHandler=epams.com.login.util.webauthn.utility.ByteArrayTypeHandler} WHERE EMP_NO=#{EMP_NO}
+    </update>
+    
+    <!-- 신규 데이터 추가 또는 기존 데이터 업데이트 -->
+	<insert id="insertUpdate" parameterType="webauthUser">
+	    INSERT INTO COM_WEBAUTH_USR (EMP_NO, DISP_NM, HANDLE)
+	    VALUES(#{EMP_NO}, #{DISP_NM}, #{HANDLE, typeHandler=epams.com.login.util.webauthn.utility.ByteArrayTypeHandler})
+	    ON DUPLICATE KEY UPDATE
+	    DISP_NM = VALUES(DISP_NM),
+	    HANDLE = VALUES(HANDLE);
+	</insert>
+	
+	<!-- 기본키 데이터 중복여부 조회 -->
+    <select id="findByUsername" parameterType="String" resultType="webauthUser">
+        SELECT *
+        FROM COM_WEBAUTH_USR WHERE EMP_NO=#{username}
+    </select>
+    
+	 <!-- 기본키 데이터 중복여부 조회 -->
+    <select id="findByHandle" parameterType="ByteArray" resultType="webauthUser">
+        SELECT *
+        FROM COM_WEBAUTH_USR WHERE HANDLE=#{HANDLE, typeHandler=epams.com.login.util.webauthn.utility.ByteArrayTypeHandler}
+    </select>
+        
+</mapper>

@@ -6,6 +6,7 @@ import epams.com.board.entity.BaseEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ForeignKey;
 import jakarta.persistence.Id;
+import jakarta.persistence.IdClass;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
@@ -29,7 +30,12 @@ import lombok.Setter;
 @Table(name = "COM_CODE_HTML")
 public class CodeHtmlMapEntity extends BaseEntity implements Serializable {
 
-    /***
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6855998655976669255L;
+
+	/***
      * @author 140024
      * @implNote 공통코드 (복합키)
      * @since 2024-06-09

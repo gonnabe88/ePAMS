@@ -23,12 +23,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import epams.com.admin.service.CodeHtmlDetailService;
-import epams.com.admin.service.CodeService;
 import epams.com.board.dto.BoardDTO;
 import epams.com.board.service.BoardService;
 import epams.com.login.util.webauthn.RegistrationService;
-import epams.com.login.util.webauthn.authenticator.WebauthDetailDTO;
-import epams.com.login.util.webauthn.user.WebauthUserDTO;
 import epams.com.member.entity.MemberEntity;
 import epams.com.member.entity.SearchMemberEntity;
 import epams.com.member.service.MemberDetailsService;
@@ -39,15 +36,14 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @RequiredArgsConstructor
 public class IndexController<S extends Session> {
-	
 	/**
-    *
-    *
+    *@author 140024
+    *@implNote 메인화면(index) Controller
+	*@since 2024-06-20
     */
 	@Value("${kdb.indexBrdCnt}")
 	private int indexBrdCnt;
-	
-	private final CodeService codeService;
+
 	private final BoardService boardService;
 	private final MemberDetailsService memberservice;
 	private final RegistrationService service;

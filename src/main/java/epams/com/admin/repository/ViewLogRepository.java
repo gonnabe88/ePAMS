@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import epams.com.admin.dto.LogViewDTO;
 import epams.com.admin.entity.LogViewEntity;
+import epams.com.login.dto.LoginOTPDTO;
 import lombok.RequiredArgsConstructor;
 
 /***
@@ -40,8 +41,26 @@ public class ViewLogRepository {
      * @since 2024-06-09
      * @since 2024-06-09 PMD MethodArgumentCouldBeFinal 취약점 조치 (140024) 
      */
-    public void insert(final LogViewDTO controllerLogDTO) {
-    	sql.update("ViewLog.insert", LogViewDTO.toEntity(controllerLogDTO));
+    public void insert(final LogViewDTO dto) {
+    	sql.update("ViewLog.insert", LogViewDTO.toEntity(dto));
+    }
+
+    	/***
+	 * @author 140024
+	 * @implNote 기존 데이터 삭제
+	 * @since 2024-06-09
+	 */
+    public void delete(final LogViewDTO dto) {
+        sql.delete("ViewLog.delete", LogViewDTO.toEntity(dto));
+    }
+    
+	/***
+	 * @author 140024
+	 * @implNote 데이터 업데이트(기본키 제외)
+	 * @since 2024-06-09
+	 */
+    public void update(final LogViewDTO dto) {
+        sql.update("ViewLog.update", LogViewDTO.toEntity(dto));
     }
     
 }

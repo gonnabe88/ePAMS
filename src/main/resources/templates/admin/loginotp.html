@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.thymeleaf.org" layout:decorate="~{/common/layout/layout}">
+
+<head>
+<!-- (start) private script -->
+<th:block layout:fragment="css">
+	<link rel="stylesheet" href="/extensions/tabulator/tabulator_modern.min.css">
+	<link rel="stylesheet" href="/extensions/tabulator/kdb_tabulator.css">
+</style>
+</th:block>
+<!-- (end) private script -->
+</head>
+
+<body>
+	<div layout:fragment="contents">
+		<div id="main-content">
+			<div class="d-flex justify-content-center">
+				<div class="row col-lg-10 col-md-12 d-flex justify-content-center">
+					<div class="page-heading">
+						<div class="align-middle">
+							<h2>
+								<i class="bi bi-bell-fill"></i> OTP 발급내역
+							</h2>
+							<br>
+							<div class="d-flex flex-wrap gap-2 justify-content-start align-items-center mb-3">
+								<div class="col-auto">
+									<input class="form-control form-control-sm" type="text" id="search-input" placeholder="검색">
+								</div>
+								<button class="btn btn-primary btn-sm" id="search-button">조회</button>
+								<button class="btn btn-primary btn-sm" id="reset-button">초기화</button>
+								<div class="form-check form-switch">
+									<input class="form-check-input" type="checkbox" role="switch" id="toggle-selectable"> <label class="form-check-label" for="flexSwitchCheckDefault">범위선택</label>
+								</div>
+							</div>
+							
+							<div class="d-flex flex-wrap justify-content-end gap-2 mb-3">
+								<div class="custom-file-input-wrapper">
+									<input class="form-control form-control-sm" id="formFileSm" type="file">
+								</div>
+								<button class="btn btn-primary btn-sm" id="upload-csv">업로드</button>
+								<button class="btn btn-primary btn-sm" id="download-csv">다운로드</button>
+							</div>
+							
+							<div class="d-flex flex-wrap justify-content-end gap-2 mb-3">
+								<button class="btn btn-primary btn-sm" id="reload">새로고침</button>
+								<button class="btn btn-primary btn-sm" id="add-row">행추가</button>
+								<button class="btn btn-primary btn-sm" id="del-row">삭제</button>
+								<button class="btn btn-primary btn-sm" id="save">저장</button>
+							</div>
+							<div class="d-flex justify-content-center">
+								<div class="no-drag" id="example-table"></div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<!-- (start) private script -->
+	<th:block layout:fragment="script">
+	<script type="text/javascript" src="https://unpkg.com/tabulator-tables/dist/js/tabulator.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+	<script src="/extensions/tabulator/kdb_tabulator.js"></script>
+	<script>
+		window.url = "/api/admin/loginotp"
+		window.columns = [
+			{ title: "생성시간", field: "createTime", sorter: "string", minWidth: 100 },
+	        { title: "사용자ID", field: "username", sorter: "string", minWidth: 100 },
+	        { title: "OTP번호", field: "otp", sorter: "string", editor: "input" },
+	        { title: "인증방식", field: "mfa", sorter: "string" }
+		]
+			
+	    document.addEventListener("DOMContentLoaded", function() {
+	        createTable(false, window.columns, window.url);
+	    });
+	</script>
+	</th:block>
+
+	<!-- (end) private script -->
+</body>
+
+</html>

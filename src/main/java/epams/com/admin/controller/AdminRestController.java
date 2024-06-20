@@ -16,9 +16,13 @@ import org.springframework.web.bind.annotation.RestController;
 import epams.com.admin.dto.CodeDTO;
 import epams.com.admin.dto.HtmlDTO;
 import epams.com.admin.dto.LogLoginDTO;
+import epams.com.admin.dto.LogViewDTO;
 import epams.com.admin.service.CodeService;
 import epams.com.admin.service.HtmlService;
 import epams.com.admin.service.LogService;
+import epams.com.admin.service.LoginOtpService;
+import epams.com.admin.service.ViewLogService;
+import epams.com.login.dto.LoginOTPDTO;
 import epams.com.member.entity.MemberEntity;
 import epams.com.member.service.MemberDetailsService;
 import lombok.RequiredArgsConstructor;
@@ -62,6 +66,20 @@ public class AdminRestController {
      * @since 2024-06-09
      */
     private final LogService logService;
+
+    /***
+     * @author 140024
+     * @implNote 로그인 OTP서비스
+     * @since 2024-06-09
+     */
+    private final LoginOtpService loginOtpService;
+
+        /***
+     * @author 140024
+     * @implNote 로그인 OTP서비스
+     * @since 2024-06-09
+     */
+    private final ViewLogService viewLogService;
 
     /***
      * @author 140024
@@ -146,7 +164,6 @@ public class AdminRestController {
         return ResponseEntity.ok(memberList);
     }
 
-
     /***
      * @author 140024
      * @implNote 멤버 데이터를 저장
@@ -159,6 +176,58 @@ public class AdminRestController {
         final List<MemberEntity> deleted = payload.get("deleted");
 
         memberService.saveMembers(added, changed, deleted);
+
+        return ResponseEntity.ok(Map.of("message", "Data saved successfully!"));
+    }
+
+    /***
+     * @author 140024
+     * @implNote 모든 데이터를 검색
+     * @since 2024-06-09
+     */
+    @GetMapping("/loginotp")
+    public ResponseEntity<List<LoginOTPDTO>> searchAllLoginOtp(final Model model) throws IOException {
+        final List<LoginOTPDTO> dtos = loginOtpService.findAll();
+        return ResponseEntity.ok(dtos);
+    }
+
+    /***
+     * @author 140024
+     * @implNote 변경된 테이터를 저장
+     * @since 2024-06-09
+     */
+    @PostMapping("/loginotp/save")
+    public ResponseEntity<Map<String, String>> saveLoginOtp(@RequestBody final Map<String, List<LoginOTPDTO>> payload) {
+        final List<LoginOTPDTO> added = payload.get("added");
+        final List<LoginOTPDTO> changed = payload.get("changed");
+        final List<LoginOTPDTO> deleted = payload.get("deleted");
+        loginOtpService.save(added, changed, deleted);
+
+        return ResponseEntity.ok(Map.of("message", "Data saved successfully!"));
+    }
+
+        /***
+     * @author 140024
+     * @implNote 모든 데이터를 검색
+     * @since 2024-06-09
+     */
+    @GetMapping("/viewlog")
+    public ResponseEntity<List<LogViewDTO>> searchAllViewLog(final Model model) throws IOException {
+        final List<LogViewDTO> dtos = viewLogService.findAll();
+        return ResponseEntity.ok(dtos);
+    }
+
+    /***
+     * @author 140024
+     * @implNote 변경된 테이터를 저장
+     * @since 2024-06-09
+     */
+    @PostMapping("/viewlog/save")
+    public ResponseEntity<Map<String, String>> saveViewLog(@RequestBody final Map<String, List<LogViewDTO>> payload) {
+        final List<LogViewDTO> added = payload.get("added");
+        final List<LogViewDTO> changed = payload.get("changed");
+        final List<LogViewDTO> deleted = payload.get("deleted");
+        viewLogService.save(added, changed, deleted);
 
         return ResponseEntity.ok(Map.of("message", "Data saved successfully!"));
     }

@@ -2,7 +2,6 @@ package epams.com.login.service;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,7 +18,6 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class MFALoginService {
 	
-    private final LoginService loginService;
     private final LoginOTPRepository loginOTPRepository; 
     
 	//SecureRandom 함수를 통해 안전하게 6자리 인증번호 생성
@@ -32,9 +30,6 @@ public class MFALoginService {
 	public Map<String, String> requestMFA(MemberDTO memberDTO) throws NoSuchAlgorithmException{		
 
 		LoginOTPDTO loginOTPDTO = new LoginOTPDTO();
-		
-		//사용자가 보내온 UUID가 DB에 저장된 UUID(최근 접속 시 사용된)와 동일한지 확인(동일 시 TRUE)  
-		boolean isUUIDValid = loginService.isValidUUID(memberDTO);
 
 		if(memberDTO.getMFA().equals("SMS") || memberDTO.getMFA().equals("카카오톡")) {
 			//SMS, 카카오톡 인증 시 필요한 인증번호 Random 숫자 6자리 발급

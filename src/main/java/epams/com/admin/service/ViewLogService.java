@@ -1,14 +1,11 @@
 package epams.com.admin.service;
 
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
-import epams.com.admin.dto.CodeDTO;
-import epams.com.admin.entity.CodeEntity;
-import epams.com.admin.repository.CodeRepository;
+import epams.com.admin.dto.LogViewDTO;
+import epams.com.admin.repository.ViewLogRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -20,22 +17,22 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class CodeService {
+public class ViewLogService {
 	
     /**
      * @author K140024
      * @implNote CodeRepository 주입
      * @since 2024-04-26
      */
-	private final CodeRepository codeRepository;
+	private final ViewLogRepository viewLogRepository;
 	
 	/**
      * @author K140024
      * @implNote 전제 목록 조회
      * @since 2024-04-26
      */
-    public List<CodeDTO> findAll() {    	
-    	return codeRepository.findAll();
+    public List<LogViewDTO> findAll() {    	
+    	return viewLogRepository.findAll();
     }
     
     /**
@@ -43,20 +40,20 @@ public class CodeService {
      * @implNote 데이터 저장
      * @since 2024-04-26
      */
-    public void save(List<CodeDTO> added, List<CodeDTO> changed, List<CodeDTO> deleted) {    	
+    public void save(List<LogViewDTO> added, List<LogViewDTO> changed, List<LogViewDTO> deleted) {    	
         // Handle added members
-        for (CodeDTO dto : added) {
-        	codeRepository.insert(dto);
+        for (LogViewDTO dto : added) {
+        	viewLogRepository.insert(dto);
         }
 
         // Handle changed members
-        for (CodeDTO dto : changed) {
-        	codeRepository.update(dto);
+        for (LogViewDTO dto : changed) {
+        	viewLogRepository.update(dto);
         }
 
         // Handle deleted members
-        for (CodeDTO dto : deleted) {
-        	codeRepository.delete(dto);
+        for (LogViewDTO dto : deleted) {
+        	viewLogRepository.delete(dto);
         }
     }
 }

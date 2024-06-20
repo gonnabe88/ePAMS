@@ -5,8 +5,8 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
-import epams.com.admin.dto.CodeDTO;
-import epams.com.admin.entity.CodeEntity;
+import epams.com.login.dto.LoginOTPDTO;
+import epams.com.login.entity.LoginOTPEntity;
 import lombok.RequiredArgsConstructor;
 
 /***
@@ -16,7 +16,7 @@ import lombok.RequiredArgsConstructor;
  */
 @Repository
 @RequiredArgsConstructor
-public class CodeRepository2 {
+public class LoginOtpRepository {
 
 	/***
 	 * @author 140024
@@ -31,9 +31,9 @@ public class CodeRepository2 {
 	 * @implNote paging 조건에 따라 모든 게시물을 조회하여 반환
 	 * @since 2024-06-09
 	 */
-    public List<CodeDTO> findAll() {
-    	final List<CodeEntity> codeEntities = sql.selectList("Code.findAll");
-        return CodeDTO.toDTOList(codeEntities);
+    public List<LoginOTPDTO> findAll() {
+    	final List<LoginOTPEntity> entities = sql.selectList("LoginOTP.findAll");
+        return LoginOTPDTO.toDTOList(entities);
     }
     
 	/***
@@ -41,8 +41,8 @@ public class CodeRepository2 {
 	 * @implNote 기본키 검색
 	 * @since 2024-06-09
 	 */
-    public Long countById(CodeDTO CodeDTO) {
-        return sql.selectOne("Code.countById", CodeDTO.toEntity());
+    public Long countById(LoginOTPDTO dto) {
+        return sql.selectOne("LoginOTP.countById", LoginOTPDTO.toEntity(dto));
     }
     
 	/***
@@ -50,8 +50,8 @@ public class CodeRepository2 {
 	 * @implNote 신규 데이터 입력
 	 * @since 2024-06-09
 	 */
-    public void insert(CodeDTO CodeDTO) {
-        sql.insert("Code.insert", CodeDTO.toEntity());
+    public void insert(LoginOTPDTO dto) {
+        sql.insert("LoginOTP.insert", LoginOTPDTO.toEntity(dto));
     }
     
 	/***
@@ -59,8 +59,8 @@ public class CodeRepository2 {
 	 * @implNote 기존 데이터 삭제
 	 * @since 2024-06-09
 	 */
-    public void delete(CodeDTO CodeDTO) {
-        sql.delete("Code.delete", CodeDTO.toEntity());
+    public void delete(LoginOTPDTO dto) {
+        sql.delete("LoginOTP.delete", LoginOTPDTO.toEntity(dto));
     }
     
 	/***
@@ -68,8 +68,8 @@ public class CodeRepository2 {
 	 * @implNote 데이터 업데이트(기본키 제외)
 	 * @since 2024-06-09
 	 */
-    public void update(CodeDTO CodeDTO) {
-        sql.update("Code.update", CodeDTO.toEntity());
+    public void update(LoginOTPDTO dto) {
+        sql.update("LoginOTP.update", LoginOTPDTO.toEntity(dto));
     }
     
 }

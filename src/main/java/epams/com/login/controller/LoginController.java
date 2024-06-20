@@ -1,9 +1,12 @@
 package epams.com.login.controller;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -19,9 +22,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import epams.com.login.service.LoginService;
 import epams.com.login.service.MFALoginService;
 import epams.com.login.util.webauthn.RegistrationService;
-import epams.com.login.util.webauthn.authenticator.WebauthDetailDTO;
-import epams.com.login.util.webauthn.user.WebauthUserDTO;
 import epams.com.member.dto.MemberDTO;
+import epams.com.member.entity.MemberEntity;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -88,8 +90,7 @@ public class LoginController {
     		// 로그인 실패 시 실패 여부를 반환
     		res.put("result", false);	    	
     	}
-        return res;
-    	
+        return res;    	
     }
     
 }

@@ -44,5 +44,7 @@ public class LogRepository {
     public void insert(final LogLoginDTO logLoginDTO) {
     	sql.update("LogLogin.insert", logLoginDTO.toEntity());
     }
+
+    
     
 }

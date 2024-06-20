@@ -26,15 +26,15 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @RequestMapping("/admin")
 public class AdminController {
-	
+
     /***
      * @author 140024
      * @implNote 헬스 엔드포인트 자동 주입
      * @since 2024-06-09
      */
     @Autowired
-    private HealthEndpoint healthEndpoint;    
-    
+    private HealthEndpoint healthEndpoint;
+
     /***
      * @author 140024
      * @implNote 정보 엔드포인트 자동 주입
@@ -66,65 +66,85 @@ public class AdminController {
      */
     private final LoggersEndpoint loggersEndpoint;
 
-	/***
-	 * @author 140024
-	 * @implNote 코드관리 (admin/code.html)
-	 * @since 2024-06-09
-	 */
+    /***
+     * @author 140024
+     * @implNote 코드관리 (admin/code.html)
+     * @since 2024-06-09
+     */
     @GetMapping("/code")
     public String code(HttpServletRequest request) {
         return "/admin/code";
     }
-    
-	/***
-	 * @author 140024
-	 * @implNote 화면관리 (admin/page.html)
-	 * @since 2024-06-09
-	 */
+
+    /***
+     * @author 140024
+     * @implNote 화면관리 (admin/page.html)
+     * @since 2024-06-09
+     */
     @GetMapping("/page")
     public String html(HttpServletRequest request) {
         return "/admin/page";
     }
-    
-	/***
-	 * @author 140024
-	 * @implNote 사용자관리 (admin/user.html)
-	 * @since 2024-06-09
-	 */
+
+    /***
+     * @author 140024
+     * @implNote 사용자관리 (admin/user.html)
+     * @since 2024-06-09
+     */
     @GetMapping("/user")
     public String user(HttpServletRequest request) {
         return "/admin/member";
     }
- 
-	/***
-	 * @author 140024
-	 * @implNote 로그인 이력 (admin/login.html)
-	 * @since 2024-06-09
-	 */
+
+    /***
+     * @author 140024
+     * @implNote 로그인 이력 (admin/login.html)
+     * @since 2024-06-09
+     */
     @GetMapping("/login")
     public String login(HttpServletRequest request) {
         return "/admin/login";
     }
- 
-	/***
-	 * @author 140024
-	 * @implNote spring acurator 제공 기본 상태체크 (admin/health.html)
-	 * @since 2024-06-09
-	 */
+
+    /***
+     * @author 140024
+     * @implNote spring acurator 제공 기본 상태체크 (admin/health.html)
+     * @since 2024-06-09
+     */
     @GetMapping("/health")
     public String health(final Model model) {
-    	
+
         // Health data
         model.addAttribute("health", healthEndpoint.health());
-        
+
         // Metrics data
         model.addAttribute("metrics", metricsEndpoint.listNames());
-        
+
         // Loggers data
         final LoggersEndpoint.LoggersDescriptor loggersDescriptor = loggersEndpoint.loggers();
         model.addAttribute("loggers", loggersDescriptor.getLoggers());
-    	
+
         return "/admin/actuator";
     }
-    
+
+    /***
+     * @author 140024
+     * @implNote 로그인 이력 (admin/loginotp.html)
+     * @since 2024-06-09
+     */
+    @GetMapping("/loginotp")
+    public String loginotp(HttpServletRequest request) {
+        return "/admin/loginotp";
+    }
+
+        /***
+     * @author 140024
+     * @implNote 뷰 이력 (admin/login.html)
+     * @since 2024-06-09
+     */
+    @GetMapping("/viewlog")
+    public String viewLogPage(HttpServletRequest request) {
+        return "/admin/viewlog";
+    }
+
 }

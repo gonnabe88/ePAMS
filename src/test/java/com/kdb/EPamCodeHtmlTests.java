@@ -17,14 +17,14 @@ import epams.com.admin.dto.CodeHtmlMapDTO;
 import epams.com.admin.dto.HtmlDTO;
 import epams.com.admin.entity.CodeEntity;
 import epams.com.admin.repository.CodeHtmlMapRepository;
-import epams.com.admin.repository.CodeRepository2;
+import epams.com.admin.repository.CodeRepository;
 import epams.com.admin.repository.HtmlRepository;
 
 @SpringBootTest(classes = EPamsApplication.class)
 class EPamCodeHtmlTests {
 
 	@Autowired
-	private CodeRepository2 codeRepository;
+	private CodeRepository codeRepository;
 	@Autowired
 	private HtmlRepository htmlRepository;
 	@Autowired

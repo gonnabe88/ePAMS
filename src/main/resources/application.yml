@@ -14,13 +14,13 @@ server:
       persistent: true
       tracking-modes: cookie
       cookie:
-        #domain: localhost
-        domain: epams.duckdns.org
-        http-only: true
-        path: /
-        max-age: -1 # infinite
-        secure: true # https only allowed
-        sameSite: strict
+        domain: localhost
+        #domain: epams.duckdns.org
+        #http-only: true
+        #path: /
+        #max-age: -1 # infinite
+        #secure: true # https only allowed
+        #sameSite: strict
   error:
     whitelabel:
       enabled: false # Spring Boot 기본 에러 경로를 비활성화하고 사용자 정의 컨트롤러를 사용할 수 있도록 설정
@@ -29,8 +29,8 @@ server:
 authn:
   display: ePAMS
   hostname: ${server.servlet.session.cookie.domain} 
-  origin: https://${server.servlet.session.cookie.domain}
-  #origin: http://localhost:8080
+  #origin: https://${server.servlet.session.cookie.domain}
+  origin: http://localhost:8080
 
 # actuator
 management:

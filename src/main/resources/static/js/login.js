@@ -1,3 +1,4 @@
+
 document.addEventListener("DOMContentLoaded", () => {
     const checkbox = document.getElementById('flexSwitchCheckChecked');
     const label = document.getElementById('switchLabel');
@@ -38,10 +39,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     form.addEventListener("submit", (e) => {
         e.preventDefault(); // Prevent form's default submission
+
         const password = passwordInput.value;
         const encodedPassword = btoa(encodeURIComponent(password));
         passwordInput.value = encodedPassword;
 
+		
         if (checkbox.checked) {
             webauthn(e); // Call webauthn function
         } else {
@@ -63,11 +66,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 // 간편인증 WebAuthn 인증 로직
+const updateSpinnerText = (text) => {
+    document.getElementById('spinner-text').innerText = text;
+}
+
 const webauthn = (e) => {
     const header = document.querySelector('meta[name="_csrf_header"]').content;
     const token = document.querySelector('meta[name="_csrf"]').content;
     e.preventDefault();
-    const formData = new FormData(e.target);
+    const formData = new FormData(e.target);    
+
+	document.getElementById('spinner').style.display = 'flex'; // 스피너 표시
+	updateSpinnerText('간편인증 요청...'); // 초기 요청 중
+
+    console.time("total");
+    console.time("fetch /api/webauthn/login");
     fetch('/api/webauthn/login', {
         method: 'POST',
         headers: {
@@ -75,33 +88,55 @@ const webauthn = (e) => {
         },
         body: formData
     })
-    .then(response => initialCheckStatus(response))
-    .then(credentialGetJson => ({
-        publicKey: {
-            ...credentialGetJson.publicKey,
-            allowCredentials: credentialGetJson.publicKey.allowCredentials
-                && credentialGetJson.publicKey.allowCredentials.map(credential => ({
-                ...credential,
-                id: base64urlToUint8array(credential.id),
-                })),
-            challenge: base64urlToUint8array(credentialGetJson.publicKey.challenge),
-            extensions: credentialGetJson.publicKey.extensions,
-        },
-    }))
-    .then(credentialGetOptions =>
-        navigator.credentials.get(credentialGetOptions))
-    .then(publicKeyCredential => ({
-        type: publicKeyCredential.type,
-        id: publicKeyCredential.id,
-        response: {
-            authenticatorData: uint8arrayToBase64url(publicKeyCredential.response.authenticatorData),
-            clientDataJSON: uint8arrayToBase64url(publicKeyCredential.response.clientDataJSON),
-            signature: uint8arrayToBase64url(publicKeyCredential.response.signature),
-            userHandle: publicKeyCredential.response.userHandle && uint8arrayToBase64url(publicKeyCredential.response.userHandle),
-        },
-        clientExtensionResults: publicKeyCredential.getClientExtensionResults(),
-    }))
+    .then(response => {
+        console.timeEnd("fetch /api/webauthn/login");
+        updateSpinnerText('간편인증 응답 대기...'); // 초기 응답 처리 중
+        return initialCheckStatus(response);
+    })
+    .then(credentialGetJson => {
+        console.time("parse credentialGetJson");
+        updateSpinnerText('간편인증 자격증명 수신...'); // 자격 증명 파싱 중
+        const result = {
+            publicKey: {
+                ...credentialGetJson.publicKey,
+                allowCredentials: credentialGetJson.publicKey.allowCredentials
+                    && credentialGetJson.publicKey.allowCredentials.map(credential => ({
+                    ...credential,
+                    id: base64urlToUint8array(credential.id),
+                    })),
+                challenge: base64urlToUint8array(credentialGetJson.publicKey.challenge),
+                extensions: credentialGetJson.publicKey.extensions,
+            },
+        };
+        console.timeEnd("parse credentialGetJson");
+        return result;
+    })
+    .then(credentialGetOptions => {
+        console.time("navigator.credentials.get");
+        updateSpinnerText('간편인증 실행중'); // 인증 장치에서 자격 증명 요청 중
+        return navigator.credentials.get(credentialGetOptions);
+    })
+    .then(publicKeyCredential => {
+        console.timeEnd("navigator.credentials.get");
+        console.time("process publicKeyCredential");
+        updateSpinnerText('간편인증 인증기기 처리 중...'); // 인증 장치 응답 처리 중
+        const result = {
+            type: publicKeyCredential.type,
+            id: publicKeyCredential.id,
+            response: {
+                authenticatorData: uint8arrayToBase64url(publicKeyCredential.response.authenticatorData),
+                clientDataJSON: uint8arrayToBase64url(publicKeyCredential.response.clientDataJSON),
+                signature: uint8arrayToBase64url(publicKeyCredential.response.signature),
+                userHandle: publicKeyCredential.response.userHandle && uint8arrayToBase64url(publicKeyCredential.response.userHandle),
+            },
+            clientExtensionResults: publicKeyCredential.getClientExtensionResults(),
+        };
+        console.timeEnd("process publicKeyCredential");
+        return result;
+    })
     .then((encodedResult) => {
+        console.time("fetch /api/webauthn/welcome");
+        updateSpinnerText('간편인증 인증 요청...'); // 최종 요청 중
         const formData = new FormData();
         formData.append("credential", JSON.stringify(encodedResult));
         formData.append("username", document.querySelector('input[name="username"]').value);
@@ -111,20 +146,36 @@ const webauthn = (e) => {
                 'X-CSRF-Token': token
             },
             body: formData,
-        })
+        });
     })
-    .then(response => response.json())
+    .then(response => {
+        console.timeEnd("fetch /api/webauthn/welcome");
+        updateSpinnerText('간편인증 인증 응답...'); // 최종 응답 처리 중
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        console.time("response.json");
+        return response.json();
+    })
     .then(data => {
-        if (data.status === "success") {
+        console.timeEnd("response.json");
+        document.getElementById('spinner').style.display = 'none'; // 스피너 숨김
+        if (data.status === 'OK') {
+            console.timeEnd("total");
             window.location.href = data.redirectUrl;
         } else {
             errorAlert();
         }
     })
     .catch(error => {
+        console.timeEnd("total");
+        document.getElementById('spinner').style.display = 'none'; // 스피너 숨김
+        console.error('Error:', error);
         popupMsg(error);
     });
 }
+
+
 
 // 일반인증 호출(2단계)
 const normal = (e) => {
@@ -271,7 +322,7 @@ const authentication = (username, password, MFA, OTP, header, token) => {
     }); //ajax    
 }
 
-// jquery
+// 최근 선택한 2단계 인증방식 체크
 $(function(){
     let key = getCookie("MFAChk"); 
     if (key != "") 
@@ -282,6 +333,7 @@ $(function(){
     });
 });
 
+// ID 기억하기
 $(function(){
     let key = getCookie("idChk"); 
     

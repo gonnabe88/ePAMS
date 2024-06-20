@@ -34,88 +34,86 @@
                         <div class="d-flex justify-content-center">
                             <h1 class="auth-title mb-5" style="font-family: Nunito">ePAMS</h1>
                         </div>
-                        <form action="/webauthn/welcome" method="POST" id="form">
-                            <div class="d-flex align-items-center justify-content-end me-2 mb-2">
-                                <div class="form-check form-switch d-flex align-items-center">
-                                    <input class="form-check-input me-2" type="checkbox" role="switch" id="flexSwitchCheckChecked"
-                                           th:checked="${isChecked}">
-                                    <label class="form-check-label" id="switchLabel" for="flexSwitchCheckChecked">
-                                        <h6 class="m-0">간편인증</h6>
-                                    </label>
-                                </div>
-                            </div>
+						<form action="/webauthn/welcome" method="POST" id="form">
+							<div class="d-flex align-items-center justify-content-end me-2 mb-2">
+								<div class="form-check form-switch d-flex align-items-center">
+									<input class="form-check-input me-2" type="checkbox" role="switch" id="flexSwitchCheckChecked" th:checked="${isChecked}"> <label class="form-check-label" id="switchLabel" for="flexSwitchCheckChecked">
+										<h6 class="m-0">간편인증</h6>
+									</label>
+								</div>
+							</div>
 
-                            <div class="justify-content-center">
-                                <div class="container col-xl-12 col-lg-12 col-12">
-                                    <div class="form-group position-relative has-icon-left mb-1">
-                                        <input type="text" name="username" id="username" class="form-control form-control-xl" placeholder="K행번" style="text-transform: uppercase;">
-                                        <p id="check-result"></p>
-                                        <div class="form-control-icon">
-                                            <i class="bi bi-person"></i>
-                                        </div>
-                                    </div>
-                                    <div class="form-group position-relative has-icon-left mb-1" id="twostepDiv">
-                                        <input type="password" name="password" id="password" class="form-control form-control-xl" placeholder="ESSO 패스워드" autocomplete="new-password">
-                                        <p id="check-result"></p>
-                                        <div class="form-control-icon">
-                                            <i class="bi bi-key"></i>
-                                        </div>
-                                    </div>
-                                    <div class="form-check form-check-lg d-flex align-items-end">
-                                        <input class="form-check-input me-2 mt-1" type="checkbox" value="checked" id="flexCheckDefault" name="remember">
-                                        <label class="form-check-label text-gray-600" for="flexCheckDefault"> ID 기억하기 </label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="justify-content-center">
-                                <div class="container col-xl-12 col-lg-12 col-12">
-                                    <div class="divider">
-                                        <div class="divider-text" style="background-color: transparent;">
-                                            <h6>
-                                                <i class="bi bi-phone-vibrate"></i> 인증방법 <i class="bi bi-fingerprint"></i>
-                                            </h6>
-                                        </div>
-                                    </div>
-                                    <fieldset style="border: 4; padding: 0;" id="twostepDiv2">
-                                        <div class="d-flex justify-content-center">
-                                            <label>
-                                                <input class="form-check-input" type="radio" name="MFA" id="sms" value="SMS" checked />
-                                                <span style="font-size: 15px">SMS</span>
-                                            </label>
-                                            <label>
-                                                <input class="form-check-input ms-2" type="radio" name="MFA" id="kakao" value="카카오톡" />
-                                                <span style="font-size: 15px">카카오</span>
-                                            </label>
-                                            <label>
-                                                <input class="form-check-input ms-2" type="radio" name="MFA" id="otp" value="OTP" />
-                                                <span style="font-size: 15px">OTP</span>
-                                            </label>
-                                            <label>
-                                                <input class="form-check-input ms-2" type="radio" name="MFA" id="fido" value="FIDO" />
-                                                <span style="font-size: 15px">FIDO</span>
-                                            </label>
-                                        </div>                                        
-                                    </fieldset>
-                                    <fieldset style="border: 4; padding: 0;" id="twostepDiv3">
-                                    <div class="d-flex justify-content-center">                                    
-                                         <label>
-                                             <input class="form-check-input" type="radio" name="MFA2" id="simple" value="SIMPLE" checked />
-                                             <span class="badge rounded-pill text-bg-primary" style="--bs-badge-padding-x:0.85rem;">간편인증</span>
-                                         </label>                                    	
-                                    </div>
-                                    </fieldset>
-                                    <br>
-                                </div>
-                            </div>
-                            <div class="justify-content-center">
-                                <div class="container col-xl-12 col-lg-12 col-12">
-                                    <input type="hidden" id="credential" name="credential">
-               						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                                    <button id="login" class="btn btn-primary btn-block btn-lg shadow-lg mt-2" type="submit">로그인</button>
-                                </div>
-                            </div>
-                        </form>
-                        <div class="text-center mt-5 text-lg fs-8">
+							<div class="justify-content-center">
+								<div class="container col-xl-12 col-lg-12 col-12">
+									<div class="form-group position-relative has-icon-left mb-1">
+										<input type="text" name="username" id="username" class="form-control form-control-xl" placeholder="K행번" style="text-transform: uppercase;">
+										<p id="check-result"></p>
+										<div class="form-control-icon">
+											<i class="bi bi-person"></i>
+										</div>
+									</div>
+									<div class="form-group position-relative has-icon-left mb-1" id="twostepDiv">
+										<input type="password" name="password" id="password" class="form-control form-control-xl" placeholder="ESSO 패스워드" autocomplete="new-password">
+										<p id="check-result"></p>
+										<div class="form-control-icon">
+											<i class="bi bi-key"></i>
+										</div>
+									</div>
+									<div class="form-check form-check-lg d-flex align-items-end">
+										<input class="form-check-input me-2 mt-1" type="checkbox" value="checked" id="flexCheckDefault" name="remember"> <label class="form-check-label text-gray-600" for="flexCheckDefault"> ID 기억하기 </label>
+									</div>
+								</div>
+							</div>
+							<div class="justify-content-center">
+								<div class="container col-xl-12 col-lg-12 col-12">
+									<div class="divider">
+										<div class="divider-text" style="background-color: transparent;">
+											<h6>
+												<i class="bi bi-phone-vibrate"></i> 인증방법 <i class="bi bi-fingerprint"></i>
+											</h6>
+										</div>
+									</div>
+									<fieldset style="border: 4; padding: 0;" id="twostepDiv2">
+										<div class="d-flex justify-content-center">
+											<label> <input class="form-check-input" type="radio" name="MFA" id="sms" value="SMS" checked /> <span style="font-size: 15px">SMS</span>
+											</label> <label> <input class="form-check-input ms-2" type="radio" name="MFA" id="kakao" value="카카오톡" /> <span style="font-size: 15px">카카오</span>
+											</label> <label> <input class="form-check-input ms-2" type="radio" name="MFA" id="otp" value="OTP" /> <span style="font-size: 15px">OTP</span>
+											</label> <label> <input class="form-check-input ms-2" type="radio" name="MFA" id="fido" value="FIDO" /> <span style="font-size: 15px">FIDO</span>
+											</label>
+										</div>
+									</fieldset>
+									<fieldset style="border: 4; padding: 0;" id="twostepDiv3">
+										<div class="d-flex justify-content-center">
+											<label> <input class="form-check-input" type="radio" name="MFA2" id="simple" value="SIMPLE" checked /> <span class="badge rounded-pill text-bg-primary" style="--bs-badge-padding-x: 0.85rem;">간편인증</span>
+											</label>
+										</div>
+									</fieldset>
+									<br>
+								</div>
+							</div>
+							<div class="justify-content-center">
+								<div class="container col-xl-12 col-lg-12 col-12">
+									<input type="hidden" id="credential" name="credential"> <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+									<button id="login" class="btn btn-primary btn-block btn-lg shadow-lg mt-2" type="submit">로그인</button>
+
+<div class="d-flex align-items-center justify-content-center" style="height: 100vh;">
+    <div id="spinner" class="flex-column align-items-center justify-content-center bg-primary bg-opacity-75 text-white p-3 rounded" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1000;">
+        <div class="spinner-border text-light mb-4" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+        <p id="spinner-text" class="fs-6 fw-bold text-light text-center "></p>
+    </div>
+</div>
+
+
+
+
+
+
+								</div>
+							</div>
+						</form>
+						<div class="text-center mt-5 text-lg fs-8">
                             <p>
                                 <a class="font-bold" data-bs-toggle="modal" data-bs-target="#exampleModalScrollable">도움이 필요하신가요?</a>
                             </p>

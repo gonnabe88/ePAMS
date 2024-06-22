@@ -43,7 +43,6 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		String UUID = customWebAuthenticationDetails.getUUID();
 		String OTP = customWebAuthenticationDetails.getOTP();
 		String MFA = customWebAuthenticationDetails.getMFA();		
 		

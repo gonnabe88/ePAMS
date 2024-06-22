@@ -44,7 +44,7 @@ import com.yubico.webauthn.exception.RegistrationFailedException;
 
 import epams.com.admin.dto.LogLoginDTO;
 import epams.com.admin.repository.LogRepository;
-import epams.com.config.security.CustomAuthenticationException;
+import epams.com.config.security.CustomGeneralRuntimeException;
 import epams.com.login.repository.LoginRepository;
 import epams.com.login.util.webauthn.authenticator.WebauthDetailDTO;
 import epams.com.login.util.webauthn.user.WebauthUserDTO;
@@ -103,7 +103,7 @@ public class AuthService {
     public Authentication getAuthentication() {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
-            throw new CustomAuthenticationException("Authentication is null or anonymous");
+            throw new CustomGeneralRuntimeException("Authentication is null or anonymous");
         }
         return authentication;
     }

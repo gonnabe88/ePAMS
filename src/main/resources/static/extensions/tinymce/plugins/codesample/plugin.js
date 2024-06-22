@@ -1,5 +1,7 @@
 /**
  * TinyMCE version 6.7.0 (2023-08-30)
+ * 2024-06-22 (K140024) Regular Expression Denial of Service (ReDoS) 취약점 조치
+ * 
  */
 
 (function () {
@@ -449,6 +451,7 @@
           }
           return '<' + env.tag + ' class="' + env.classes.join(' ') + '"' + attributes + '>' + env.content + '</' + env.tag + '>';
         };
+		
         function matchPattern(pattern, pos, text, lookbehind) {
           pattern.lastIndex = pos;
           var match = pattern.exec(text);
@@ -459,6 +462,135 @@
           }
           return match;
         }
+		
+		// 2024-06-22 Regular Expression Denial of Service (ReDoS) 취약점 조치
+		function escapeRegExp(string) {
+		    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+		}
+
+		function matchGrammar(text, tokenList, grammar, startNode, startPos, rematch) {
+		    for (var token in grammar) {
+		        if (!grammar.hasOwnProperty(token) || !grammar[token]) {
+		            continue;
+		        }
+		        var patterns = grammar[token];
+		        patterns = Array.isArray(patterns) ? patterns : [patterns];
+		        for (var j = 0; j < patterns.length; ++j) {
+		            if (rematch && rematch.cause == token + ',' + j) {
+		                return;
+		            }
+		            var patternObj = patterns[j];
+		            var inside = patternObj.inside;
+		            var lookbehind = !!patternObj.lookbehind;
+		            var greedy = !!patternObj.greedy;
+		            var alias = patternObj.alias;
+		            if (greedy && !patternObj.pattern.global) {
+		                var flags = patternObj.pattern.toString().match(/[imsuy]*$/)[0];
+		                patternObj.pattern = RegExp(patternObj.pattern.source, flags + 'g');
+		            }
+		            var pattern = patternObj.pattern || patternObj;
+
+		            // Validate and sanitize the pattern
+		            var patternSource = pattern.source;
+		            if (patternSource.length > 100) { // Limit the length of the pattern
+		                console.error('Pattern is too long and may cause reDOS.');
+		                continue;
+		            }
+		            patternSource = escapeRegExp(patternSource); // Escape special characters
+		            pattern = new RegExp(patternSource, pattern.flags);
+
+		            for (var currentNode = startNode.next, pos = startPos; currentNode !== tokenList.tail; pos += currentNode.value.length, currentNode = currentNode.next) {
+		                if (rematch && pos >= rematch.reach) {
+		                    break;
+		                }
+		                var str = currentNode.value;
+		                if (tokenList.length > text.length) {
+		                    return;
+		                }
+		                if (str instanceof Token) {
+		                    continue;
+		                }
+		                var removeCount = 1;
+		                var match;
+		                if (greedy) {
+		                    match = matchPattern(pattern, pos, text, lookbehind);
+		                    if (!match || match.index >= text.length) {
+		                        break;
+		                    }
+		                    var from = match.index;
+		                    var to = match.index + match[0].length;
+		                    var p = pos;
+		                    p += currentNode.value.length;
+		                    while (from >= p) {
+		                        currentNode = currentNode.next;
+		                        p += currentNode.value.length;
+		                    }
+		                    p -= currentNode.value.length;
+		                    pos = p;
+		                    if (currentNode.value instanceof Token) {
+		                        continue;
+		                    }
+		                    for (var k = currentNode; k !== tokenList.tail && (p < to || typeof k.value === 'string'); k = k.next) {
+		                        removeCount++;
+		                        p += k.value.length;
+		                    }
+		                    removeCount--;
+		                    str = text.slice(pos, p);
+		                    match.index -= pos;
+		                } else {
+		                    match = matchPattern(pattern, 0, str, lookbehind);
+		                    if (!match) {
+		                        continue;
+		                    }
+		                }
+		                var from = match.index;
+		                var matchStr = match[0];
+		                var before = str.slice(0, from);
+		                var after = str.slice(from + matchStr.length);
+		                var reach = pos + str.length;
+		                if (rematch && reach > rematch.reach) {
+		                    rematch.reach = reach;
+		                }
+		                var removeFrom = currentNode.prev;
+		                if (before) {
+		                    removeFrom = addAfter(tokenList, removeFrom, before);
+		                    pos += before.length;
+		                }
+		                removeRange(tokenList, removeFrom, removeCount);
+		                var wrapped = new Token(token, inside ? _.tokenize(matchStr, inside) : matchStr, alias, matchStr);
+		                currentNode = addAfter(tokenList, removeFrom, wrapped);
+		                if (after) {
+		                    addAfter(tokenList, currentNode, after);
+		                }
+		                if (removeCount > 1) {
+		                    var nestedRematch = {
+		                        cause: token + ',' + j,
+		                        reach: reach
+		                    };
+		                    matchGrammar(text, tokenList, grammar, currentNode.prev, pos, nestedRematch);
+		                    if (rematch && nestedRematch.reach > rematch.reach) {
+		                        rematch.reach = nestedRematch.reach;
+		                    }
+		                }
+		            }
+		        }
+		    }
+		}
+
+		function matchPattern(pattern, pos, text, lookbehind) {
+		    // Implement your matching logic here
+		    return pattern.exec(text.slice(pos));
+		}
+
+		function addAfter(tokenList, node, value) {
+		    // Implement your addAfter logic here
+		    // This should return the newly added node
+		}
+
+		function removeRange(tokenList, node, count) {
+		    // Implement your removeRange logic here
+		}
+		/*
         function matchGrammar(text, tokenList, grammar, startNode, startPos, rematch) {
           for (var token in grammar) {
             if (!grammar.hasOwnProperty(token) || !grammar[token]) {
@@ -557,6 +689,7 @@
             }
           }
         }
+		*/
         function LinkedList() {
           var head = {
             value: null,

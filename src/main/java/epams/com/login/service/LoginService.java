@@ -1,9 +1,9 @@
 package epams.com.login.service;
 
-import java.util.UUID;
-
 import org.springframework.stereotype.Service;
 
+import epams.com.config.security.CustomGeneralEncryptionException;
+import epams.com.config.security.CustomGeneralRuntimeException;
 import epams.com.login.dto.LoginOTPDTO;
 import epams.com.login.repository.LoginOTPRepository;
 import epams.com.login.repository.LoginRepository;
@@ -35,11 +35,6 @@ public class LoginService {
      * ShaEncryptService 인스턴스
      */
     private final ShaEncryptService encshaService;
-
-    /**
-     * UUID 인스턴스
-     */
-    private UUID uuid = UUID.randomUUID();
 
     /**
      * OTP 로그인 처리
@@ -84,10 +79,14 @@ public class LoginService {
      * @return 로그인 성공 여부
      * @throws Exception 암호화 예외 발생 시
      */
-    public boolean pwLogin(final MemberDTO memberDTO) throws Exception {
+    public boolean pwLogin(final MemberDTO memberDTO)  {
         // 사용자가 입력한 패스워드 HASH
-        memberDTO.setPassword(encshaService.encrypt(memberDTO.getPassword()));
-        log.warn(memberDTO.toString());
+        try {
+            // 사용자가 입력한 패스워드 HASH
+            memberDTO.setPassword(encshaService.encrypt(memberDTO.getPassword()));
+        } catch (CustomGeneralEncryptionException e) {
+            throw new CustomGeneralRuntimeException("Password encryption failed", e);
+        }  
         // username & password(hash)와 일치하는 사용자를 찾음
         final MemberDTO ismemberDTO = loginRepository.login(memberDTO);
 

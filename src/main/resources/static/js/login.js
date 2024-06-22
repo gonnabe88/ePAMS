@@ -173,7 +173,8 @@ const webauthn = (e) => {
         
                 // URL이 허용된 목록에 있는지 확인
                 if (allowedUrls.includes(url.pathname)) {
-                    window.location.href = url.href; // 전체 URL을 사용하여 리디렉션
+                    const sanitizedPath = encodeURI(url.pathname);
+                    window.location.href = sanitizedPath; // 전체 URL을 사용하여 리디렉션
                 } else {
                     console.error('Redirect URL is not allowed:', redirectUrl);
                     errorAlert('Invalid redirect URL.');

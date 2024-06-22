@@ -288,9 +288,16 @@ public class BoardController {
         final String uploadDir = filepath; // 이미지 저장 경로 설정
         ResponseEntity<?> responseEntity = ResponseEntity.status(500).body("Error uploading file");
         try {
-            final String originalFilename = file.getOriginalFilename();
+            // 파일명 검증 취약점 조치 CWE-23 "문자/숫자/,/-/_" 외 모든 단어는 _로 대체
+            final String originalFilename = file.getOriginalFilename().replaceAll("[^a-zA-Z0-9\\.\\-_]", "_");
             final String storedFilename = UUID.randomUUID().toString() + "_" + originalFilename;
-            final Path path = Paths.get(uploadDir + storedFilename);
+            final Path path = Paths.get(uploadDir).resolve(storedFilename).normalize();
+            
+            // 업로드 디렉토리 경로와 업로드된 파일 경로가 동일한 디렉토리에 있는지 확인
+            if (!path.startsWith(uploadDir)) {
+                throw new IOException("Invalid file path");
+            }
+
             Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
 
             final BoardImageDTO boardImageDTO = new BoardImageDTO();

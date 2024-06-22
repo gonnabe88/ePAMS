@@ -300,6 +300,10 @@
                                     </div>
                                 </li>
                             `);
+                            // 안전하게 파일 이름 삽입 (2024-06-22 CWE-79 취약점 조치)
+                            listItem.find('a').attr('href', `/board/${boardId}/download/${file.seqId}`).text(file.originalFileName);
+                            // 안전하게 삭제 버튼 설정 (2024-06-22 CWE-79 취약점 조치)
+                            listItem.find('button').attr('onclick', `del(${boardId}, ${file.seqId}, '/board/${boardId}/download/${file.seqId}', '${file.originalFileName}')`);
                             fileListElement.append(listItem);
                         });
                     },

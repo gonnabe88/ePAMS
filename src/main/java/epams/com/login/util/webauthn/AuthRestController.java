@@ -84,8 +84,8 @@ public class AuthRestController {
         @RequestParam(USERNAME_PARAM) final String username,
         final HttpSession session
     ) {
-        // 사용자 입력 검증 및 인코딩
-        if (username == null || username.isEmpty() || !username.matches("^[a-zA-Z0-9._-]{3,}$")) {
+        // 사용자 입력 검증 및 인코딩 (2024-06-22 CWE-79 취약점 조치 - 문자&숫자 최소 7자리로 한정)
+        if (username == null || username.isEmpty() || !username.matches("^[a-zA-Z0-9]{7,}$")) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid username");
         }
         final String sanitizedUsername = Encode.forHtml(username);

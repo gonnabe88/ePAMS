@@ -162,20 +162,30 @@ const webauthn = (e) => {
         document.getElementById('spinner').style.display = 'none'; // 스피너 숨김
         if (data.status === 'OK') {
             console.timeEnd("total");
+            
             // URL 검증 로직 추가 (2024-06-22 CWE-601)
             const allowedUrls = ['/index', '/login'];
             const redirectUrl = data.redirectUrl;
         
-            // URL이 허용된 목록에 있는지 확인
-            if (allowedUrls.includes(new URL(redirectUrl, window.location.origin).pathname)) {
-                window.location.href = redirectUrl;
-            } else {
-                console.error('Redirect URL is not allowed:', redirectUrl);
-                errorAlert('Invalid redirect URL.');
+            try {
+                // URL 객체를 생성하여 유효성을 검증
+                const url = new URL(redirectUrl, window.location.origin);
+        
+                // URL이 허용된 목록에 있는지 확인
+                if (allowedUrls.includes(url.pathname)) {
+                    window.location.href = url.href; // 전체 URL을 사용하여 리디렉션
+                } else {
+                    console.error('Redirect URL is not allowed:', redirectUrl);
+                    errorAlert('Invalid redirect URL.');
+                }
+            } catch (e) {
+                console.error('Invalid URL:', redirectUrl);
+                errorAlert('Invalid URL format.');
             }
         } else {
             errorAlert();
         }
+        
         
     })
     .catch(error => {

@@ -7,12 +7,16 @@ import java.util.Base64;
 import java.util.Base64.Encoder;
 
 import org.springframework.core.codec.EncodingException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class CustomPasswordEncoder implements PasswordEncoder {
+
+    private final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+
     @Override
     public String encode(CharSequence rawPassword) {
 
@@ -32,8 +36,6 @@ public class CustomPasswordEncoder implements PasswordEncoder {
 
     @Override
     public boolean matches(CharSequence rawPassword, String encodedPassword) {
-        //if(encode(rawPassword).equals(encodedPassword)) return true;
-    	if(rawPassword.equals(encodedPassword)) return true;
-        else return false;
+        return bCryptPasswordEncoder.matches(rawPassword, encodedPassword);
     }
 }

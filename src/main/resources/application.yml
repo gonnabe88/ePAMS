@@ -66,7 +66,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/ehr?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
     username: root
-    password: whdgns0910!
+    password: ${DATABASE_PASSWORD} # 시스템 환경변수로 설정
 
   thymeleaf:
     prefix: classpath:/templates/

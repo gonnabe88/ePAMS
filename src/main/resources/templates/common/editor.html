@@ -322,7 +322,9 @@
 							try {
 								const url = new URL(redirectUrl, window.location.origin);
 								if (allowedPattern.test(url.pathname)) {
-									window.location.href = redirectUrl;
+									// Sanitize the URL by encoding potential unsafe characters
+									const sanitizedPath = encodeURI(url.pathname);
+									window.location.href = sanitizedPath;
 								} else {
 									console.error('Redirect URL is not allowed:', redirectUrl);
 									Swal.fire({

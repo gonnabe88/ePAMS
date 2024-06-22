@@ -285,25 +285,41 @@
                         data.forEach(function(file) {
                             const listItem = $(`
                                 <li>
-                            		<div class="d-flex align-items-center p-2 truncate-multiline">
+                                    <div class="d-flex align-items-center p-2 truncate-multiline">
                                         <div class="col-9 d-flex align-items-center gap-2">
-                                        <span class="badge text-bg-primary" style="font-weight: 400;"> 첨부 </span>
-                                        <h6 class="mb-0" style="width: auto; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                                            <a href="/board/${boardId}/download/${file.seqId}">${file.originalFileName}</a>
-                                        </h6>
+                                            <span class="badge text-bg-primary" style="font-weight: 400;"> 첨부 </span>
+                                            <h6 class="mb-0" style="width: auto; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                                <a></a>
+                                            </h6>
                                         </div>
                                         <div class="col-3 d-flex justify-content-end">
                                             <div class="shrink-0 ms-3">
-                                                <button class="btn btn-danger btn-sm" type="button" onclick="del(${boardId}, ${file.seqId}, '/board/${boardId}/download/${file.seqId}', '${file.originalFileName}')">삭제</button>
+                                                <button class="btn btn-danger btn-sm" type="button">삭제</button>
                                             </div>
                                         </div>
                                     </div>
                                 </li>
                             `);
-                            // 안전하게 파일 이름 삽입 (2024-06-22 CWE-79 취약점 조치)
-                            listItem.find('a').attr('href', `/board/${boardId}/download/${file.seqId}`).text(file.originalFileName);
-                            // 안전하게 삭제 버튼 설정 (2024-06-22 CWE-79 취약점 조치)
-                            listItem.find('button').attr('onclick', `del(${boardId}, ${file.seqId}, '/board/${boardId}/download/${file.seqId}', '${file.originalFileName}')`);
+                            // 안전하게 파일 이름 삽입
+                            listItem.find('a')
+                                .attr('href', `/board/${boardId}/download/${file.seqId}`)
+                                .text(file.originalFileName);
+
+                            // 삭제 버튼에 안전하게 데이터 속성 설정
+                            const deleteButton = listItem.find('button');
+                            deleteButton.data('boardId', boardId)
+                                .data('fileId', file.seqId)
+                                .data('url', `/board/${boardId}/download/${file.seqId}`)
+                                .data('fileName', file.originalFileName);
+
+                            // 삭제 버튼 클릭 이벤트 핸들러 설정
+                            deleteButton.on('click', function() {
+                                const boardId = $(this).data('boardId');
+                                const fileId = $(this).data('fileId');
+                                const url = $(this).data('url');
+                                const fileName = $(this).data('fileName');
+                                del(boardId, fileId, url, fileName);
+                            });
                             fileListElement.append(listItem);
                         });
                     },
@@ -312,6 +328,7 @@
                     }
                 });
             }
+
 
             // 기존 첨부파일 목록 로드
             reloadFileList(boardId);

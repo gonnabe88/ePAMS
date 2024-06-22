@@ -33,8 +33,7 @@ public class CodeHtmlMapRepository {
 	 * @since 2024-06-09
 	 */
     public List<CodeHtmlDetailDTO> findAllByHtml(final String html) {
-    	final List<CodeHtmlDetailDTO> codeCodeHtmlDetails = sql.selectList("CodeHtmlDetail.findAllByHtml", html);
-        return codeCodeHtmlDetails;
+        return sql.selectList("CodeHtmlDetail.findAllByHtml", html);
     }   
     
     /***
@@ -52,7 +51,7 @@ public class CodeHtmlMapRepository {
 	 * @implNote 기본키 검색
 	 * @since 2024-06-09
 	 */
-    public Long countById(CodeHtmlMapDTO codeHtmlMapDTO) {
+    public Long countById(final CodeHtmlMapDTO codeHtmlMapDTO) {
         return sql.selectOne("CodeHtmlMap.countById", codeHtmlMapDTO.toEntity());
     }
     
@@ -61,7 +60,7 @@ public class CodeHtmlMapRepository {
 	 * @implNote 신규 데이터 입력
 	 * @since 2024-06-09
 	 */
-    public void insert(CodeHtmlMapDTO codeHtmlMapDTO) {
+    public void insert(final CodeHtmlMapDTO codeHtmlMapDTO) {
         sql.insert("CodeHtmlMap.insert", codeHtmlMapDTO.toEntity());
     }
     
@@ -70,7 +69,7 @@ public class CodeHtmlMapRepository {
 	 * @implNote 기존 데이터 삭제
 	 * @since 2024-06-09
 	 */
-    public void delete(CodeHtmlMapDTO codeHtmlMapDTO) {
+    public void delete(final CodeHtmlMapDTO codeHtmlMapDTO) {
         sql.delete("CodeHtmlMap.delete", codeHtmlMapDTO.toEntity());
     }
     
@@ -79,7 +78,7 @@ public class CodeHtmlMapRepository {
 	 * @implNote 데이터 업데이트(기본키 제외)
 	 * @since 2024-06-09
 	 */
-    public void update(CodeHtmlMapDTO codeHtmlMapDTO) {
+    public void update(final CodeHtmlMapDTO codeHtmlMapDTO) {
         sql.update("CodeHtmlMap.update", codeHtmlMapDTO.toEntity());
     }
     

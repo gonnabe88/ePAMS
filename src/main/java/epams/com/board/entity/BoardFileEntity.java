@@ -2,6 +2,7 @@ package epams.com.board.entity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -64,7 +65,7 @@ public class BoardFileEntity extends BaseEntity {
      * @since 2024-06-10
      */
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "BOARD_ID")
+    @JoinColumn(name = "BOARD_ID", foreignKey = @ForeignKey(name = "FK_COM_BOARD_FILE_BOARD_ID", foreignKeyDefinition = "FOREIGN KEY (BOARD_ID) REFERENCES COM_BOARD (SEQ_ID) ON DELETE CASCADE ON UPDATE CASCADE"))
     private BoardEntity boardEntity;
     
     /***

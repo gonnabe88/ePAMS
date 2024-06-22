@@ -42,28 +42,22 @@ public class HtmlService {
      * @since 2024-04-26
      */
     @Transactional
-    public void save(List<HtmlDTO> added, List<HtmlDTO> changed, List<HtmlDTO> deleted) {    	
+    public void save(final List<HtmlDTO> added, final List<HtmlDTO> changed, final List<HtmlDTO> deleted) {    	
         // Handle added members
-        for (HtmlDTO dto : added) {
+        for (final HtmlDTO dto : added) {
         	htmlRepository.insertUpdate(dto);
         }
 
         // Handle changed members
-        for (HtmlDTO dto : changed) {
+        for (final HtmlDTO dto : changed) {
         	htmlRepository.update(dto);
         }
 
         // Handle deleted members
-        for (HtmlDTO dto : deleted) {
-        	log.warn(dto.toString());
+        for (final HtmlDTO dto : deleted) {
         	htmlRepository.delete(dto);
         }
         
-        // Handle deleted members
-        //for (HtmlDTO dto : uploaded) {
-        //	log.warn(dto.toString());
-        //	htmlRepository.insertUpdate(dto);
-        //}
     }
     
 }

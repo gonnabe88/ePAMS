@@ -59,10 +59,10 @@ public class CodeHtmlMapDTO {
      * @since 2024-06-09
      */
     public CodeHtmlMapEntity toEntity() {
-        CodeHtmlMapEntity entity = new CodeHtmlMapEntity();
-        CodeEntity codeEntity = new CodeEntity();
+        final CodeHtmlMapEntity entity = new CodeHtmlMapEntity();
+        final CodeEntity codeEntity = new CodeEntity();
         codeEntity.setCD_ID(this.code);
-        HtmlEntity htmlEntity = new HtmlEntity();
+        final HtmlEntity htmlEntity = new HtmlEntity();
         htmlEntity.setHTML(this.html);
         entity.setCodeEntity(codeEntity);
         entity.setHtmlEntity(htmlEntity);
@@ -76,8 +76,8 @@ public class CodeHtmlMapDTO {
      * @implNote Entity를 DTO로 변환하는 메서드
      * @since 2024-06-09
      */
-    public static CodeHtmlMapDTO toDTO(CodeHtmlMapEntity entity) {
-        CodeHtmlMapDTO dto = new CodeHtmlMapDTO();
+    public static CodeHtmlMapDTO toDTO(final CodeHtmlMapEntity entity) {
+        final CodeHtmlMapDTO dto = new CodeHtmlMapDTO();
         dto.setHtml(entity.getHtmlEntity().getHTML());
         dto.setCode(entity.getCodeEntity().getCD_ID());
         dto.setCreatedTime(entity.getCREATED_TIME());
@@ -90,7 +90,7 @@ public class CodeHtmlMapDTO {
      * @implNote Entity 리스트를 DTO 리스트로 변환하는 메서드
      * @since 2024-06-09
      */
-    public static List<CodeHtmlMapDTO> toDTOList(List<CodeHtmlMapEntity> entities) {
+    public static List<CodeHtmlMapDTO> toDTOList(final List<CodeHtmlMapEntity> entities) {
         return entities.stream().map(CodeHtmlMapDTO::toDTO).collect(Collectors.toList());
     }
 
@@ -99,7 +99,7 @@ public class CodeHtmlMapDTO {
      * @implNote DTO 리스트를 Entity 리스트로 변환하는 메서드
      * @since 2024-06-09
      */
-    public static List<CodeHtmlMapEntity> toEntityList(List<CodeHtmlMapDTO> dtos) {
+    public static List<CodeHtmlMapEntity> toEntityList(final List<CodeHtmlMapDTO> dtos) {
         return dtos.stream().map(CodeHtmlMapDTO::toEntity).collect(Collectors.toList());
     }
     

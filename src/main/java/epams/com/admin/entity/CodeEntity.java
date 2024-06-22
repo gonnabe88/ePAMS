@@ -1,5 +1,6 @@
 package epams.com.admin.entity;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -30,9 +31,14 @@ import lombok.Setter;
 @Setter
 @Builder
 @Table(name = "COM_CODE")
-public class CodeEntity extends BaseEntity {
+public class CodeEntity extends BaseEntity implements Serializable {
 	
-    /***
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1909895141704463760L;
+
+	/***
      * @author 140024
      * @implNote 공통코드
      * @since 2024-06-09
@@ -57,6 +63,11 @@ public class CodeEntity extends BaseEntity {
     @Column(length = 20, nullable = false) // 크기 20, not null
     private String CD_TYPE;
     
+    /***
+     * @author 140024
+     * @implNote 테이블 조인
+     * @since 2024-06-09
+     */
     @ManyToMany
     @JoinTable(
         name = "com_code_html",
@@ -64,7 +75,12 @@ public class CodeEntity extends BaseEntity {
         inverseJoinColumns = @JoinColumn(name = "HTML", foreignKey = @ForeignKey(name = "fk_com_code_html_html"))
     )
     
+    /***
+     * @author 140024
+     * @implNote htmlEntities 빌더
+     * @since 2024-06-09
+     */
     @Builder.Default
-    private Set<HtmlEntity> htmlEntities = new HashSet<>();
+    private final Set<HtmlEntity> htmlEntities = new HashSet<>();
     
 }

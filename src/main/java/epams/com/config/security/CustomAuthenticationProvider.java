@@ -50,7 +50,6 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 		// DB에 저장된 사용자 정보(패스워드 등) 가져옴
 		UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 		
-		boolean uuidResult = loginService.isValidUUID(username, UUID); 
 		boolean loginResult = false;
 		
 		switch(MFA) {

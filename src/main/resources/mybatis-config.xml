@@ -3,19 +3,26 @@
 <configuration>
     <typeAliases>
         <typeAlias type="com.yubico.webauthn.data.ByteArray" alias="ByteArray"/>
+
         <!-- 다른 타입 알리아스들 -->
         <typeAlias type="epams.com.board.entity.BoardImageEntity" alias="boardImage"></typeAlias>
         <typeAlias type="epams.com.board.entity.BoardEntity" alias="board"></typeAlias>
         <typeAlias type="epams.com.board.entity.BoardFileEntity" alias="boardFile"></typeAlias>
+
         <typeAlias type="epams.com.admin.entity.LogLoginEntity" alias="logLogin"></typeAlias>
         <typeAlias type="epams.com.admin.entity.CodeEntity" alias="code"></typeAlias>
         <typeAlias type="epams.com.admin.entity.HtmlEntity" alias="html"></typeAlias>
         <typeAlias type="epams.com.admin.entity.CodeHtmlMapEntity" alias="codeHtmlMap"></typeAlias>
         <typeAlias type="epams.com.admin.dto.CodeHtmlDetailDTO" alias="codeHtmlDetail"></typeAlias>
         <typeAlias type="epams.com.admin.entity.LogViewEntity" alias="viewLog"></typeAlias>
+
         <typeAlias type="epams.com.login.entity.LoginOTPEntity" alias="loginOTP"></typeAlias>
         <typeAlias type="epams.com.login.util.webauthn.user.WebauthUserEntity" alias="webauthUser"></typeAlias>
         <typeAlias type="epams.com.login.util.webauthn.authenticator.WebauthDetailEntity" alias="webauthDetail"></typeAlias>
+
+        <typeAlias type="epams.dtm.dto.BasePeriodDTO" alias="basePeriod"></typeAlias>
+        <typeAlias type="epams.dtm.dto.DtmApplDTO" alias="dtmAppl"></typeAlias>
+
         <typeAlias type="epams.com.member.dto.MemberDTO" alias="member"></typeAlias>
     </typeAliases>
     <typeHandlers>

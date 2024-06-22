@@ -24,7 +24,7 @@ public class LoginOtpService {
      * @implNote CodeRepository 주입
      * @since 2024-04-26
      */
-	private final LoginOtpRepository loginOtpRepository;
+	private final LoginOtpRepository loginOtpRepo;
 	
 	/**
      * @author K140024
@@ -32,7 +32,7 @@ public class LoginOtpService {
      * @since 2024-04-26
      */
     public List<LoginOTPDTO> findAll() {    	
-    	return loginOtpRepository.findAll();
+    	return loginOtpRepo.findAll();
     }
     
     /**
@@ -40,20 +40,20 @@ public class LoginOtpService {
      * @implNote 데이터 저장
      * @since 2024-04-26
      */
-    public void save(List<LoginOTPDTO> added, List<LoginOTPDTO> changed, List<LoginOTPDTO> deleted) {    	
+    public void save(final List<LoginOTPDTO> added, final List<LoginOTPDTO> changed, final List<LoginOTPDTO> deleted) {    	
         // Handle added members
-        for (LoginOTPDTO dto : added) {
-        	loginOtpRepository.insert(dto);
+        for (final LoginOTPDTO dto : added) {
+        	loginOtpRepo.insert(dto);
         }
 
         // Handle changed members
-        for (LoginOTPDTO dto : changed) {
-        	loginOtpRepository.update(dto);
+        for (final LoginOTPDTO dto : changed) {
+        	loginOtpRepo.update(dto);
         }
 
         // Handle deleted members
-        for (LoginOTPDTO dto : deleted) {
-        	loginOtpRepository.delete(dto);
+        for (final LoginOTPDTO dto : deleted) {
+        	loginOtpRepo.delete(dto);
         }
     }
 }

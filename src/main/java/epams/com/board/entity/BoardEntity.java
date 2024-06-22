@@ -91,7 +91,7 @@ public class BoardEntity extends BaseEntity {
      * @implNote (JPA) 하나의 게시글과 다수의 파일을 매핑
      * @since 2024-06-09
      */
-    @OneToMany(mappedBy = "boardEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "boardEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<BoardFileEntity> boardFileEntityL = new ArrayList<>();
 
 }

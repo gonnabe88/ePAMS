@@ -33,5 +33,10 @@
     "name": "kdb.maxPageBtn",
     "type": "java.lang.String",
     "description": "A description for 'kdb.maxPageBtn'"
+  },
+  {
+    "name": "kdb.simpleAuthStr",
+    "type": "java.lang.String",
+    "description": "A description for 'kdb.simpleAuthStr'"
   }
 ]}

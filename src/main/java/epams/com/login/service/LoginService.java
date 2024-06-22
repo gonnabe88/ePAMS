@@ -1,6 +1,5 @@
 package epams.com.login.service;
 
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
@@ -12,96 +11,87 @@ import epams.com.member.dto.MemberDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * @author K140024
+ * @implNote 간편인증 요청 처리를 위한 서비스
+ * @since 2024-06-22
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class LoginService {
+
+    /**
+     * LoginRepository 인스턴스
+     */
     private final LoginRepository loginRepository;
-    private final LoginOTPRepository loginOTPRepository;
+
+    /**
+     * LoginOTPRepository 인스턴스
+     */
+    private final LoginOTPRepository loginOTPRepo;
+
+    /**
+     * ShaEncryptService 인스턴스
+     */
     private final ShaEncryptService encshaService;
+
+    /**
+     * UUID 인스턴스
+     */
     private UUID uuid = UUID.randomUUID();
 
-    
-    public boolean otpLogin(String username, String OTP) {
-    	
-    	MemberDTO ismemberDTO = loginRepository.findByUserId(username);
-    	LoginOTPDTO loginOTPDTO = new LoginOTPDTO();
-    	loginOTPDTO.setUsername(username);
-    	loginOTPDTO = loginOTPRepository.findValidOneByUsername(loginOTPDTO);
-    	
-    	//////////////////////////////////////////////
-    	//      ONEGUARD mOTP 연동 인증부 구현 필요      //
-    	//////////////////////////////////////////////
-    	log.warn("ONEGUAER OTP 검증 요청 및 응답");
-    	
-    	if (ismemberDTO != null && OTP.equals(loginOTPDTO.getOTP())) {
-    		return true;
-    	}
-        else {
-        	return false;
-        }
-    }  
-    
-    public boolean fidoLogin(String username) {
-    	
-    	MemberDTO ismemberDTO = loginRepository.findByUserId(username);
-    	boolean fidoresult = true;
-    	
-    	///////////////////////////////////
-    	// ONEGUARD FIDO 연동 인증부 구현 필요 //
-    	///////////////////////////////////
-    	
-    	if (ismemberDTO != null && fidoresult) return true;
-    	else return false;
-    }  
-	
-    public boolean pwLogin(MemberDTO memberDTO) throws Exception {
+    /**
+     * OTP 로그인 처리
+     * 
+     * @param username 사용자 이름
+     * @param OTP OTP 코드
+     * @return 로그인 성공 여부
+     */
+    public boolean otpLogin(final String username, final String OTP) {
+        final MemberDTO ismemberDTO = loginRepository.findByUserId(username);
+        LoginOTPDTO loginOTPDTO = new LoginOTPDTO();
+        loginOTPDTO.setUsername(username);
+        loginOTPDTO = loginOTPRepo.findValidOneByUsername(loginOTPDTO);
 
-    	// 사용자가 입력한 패스워드 HASH
+        // ONEGUARD mOTP 연동 인증부 구현 필요
+        log.warn("ONEGUAER OTP 검증 요청 및 응답");
+
+        return ismemberDTO != null && OTP.equals(loginOTPDTO.getOTP());
+
+    }
+
+    /**
+     * FIDO 로그인 처리
+     * 
+     * @param username 사용자 이름
+     * @return 로그인 성공 여부
+     */
+    public boolean fidoLogin(final String username) {
+        final MemberDTO ismemberDTO = loginRepository.findByUserId(username);
+        final boolean fidoresult = true;
+
+        // ONEGUARD FIDO 연동 인증부 구현 필요
+
+        return ismemberDTO != null && fidoresult;
+
+    }
+
+    /**
+     * 패스워드 로그인 처리
+     * 
+     * @param memberDTO 사용자 정보
+     * @return 로그인 성공 여부
+     * @throws Exception 암호화 예외 발생 시
+     */
+    public boolean pwLogin(final MemberDTO memberDTO) throws Exception {
+        // 사용자가 입력한 패스워드 HASH
         memberDTO.setPassword(encshaService.encrypt(memberDTO.getPassword()));
+        log.warn(memberDTO.toString());
         // username & password(hash)와 일치하는 사용자를 찾음
-    	MemberDTO ismemberDTO = loginRepository.login(memberDTO);        
-        
-        if (ismemberDTO != null)  return true;
-        else return true;
-    }
-    
-    public String idCheck(String username) {
-    	
-        MemberDTO memberDTO = loginRepository.findByUserId(username);
-        
-        if (memberDTO == null) return "ok";
-        else return "no";
-        
-    }
-    
-    public boolean isValidUUID(String username, String uuid) {
+        final MemberDTO ismemberDTO = loginRepository.login(memberDTO);
 
-    	String UUID = loginRepository.findUuid(username);   
-    	if(log.isWarnEnabled())
-	    	log.warn("저장된 UUID : " + UUID + "보내온 UUID : " + uuid);  
-        if (UUID == null) return true;
-        else if (UUID.equals(uuid)) return true;
-        else return false;
+        return ismemberDTO != null;
     }
-    
-    public boolean isValidUUID(MemberDTO memberDTO) {
-
-    	String UUID = loginRepository.findUuid(memberDTO.getUsername());   
-        if (UUID == null) return true;
-        else if (UUID.equals(memberDTO.getUUID())) return true;
-        else return false;
-    }
-    
-    public String updateUUID(String username) {
-
-    	uuid = UUID.randomUUID();
-    	MemberDTO ismemberDTO = loginRepository.findByUserId(username);
-    	ismemberDTO.setUUID(uuid.toString());
-    	loginRepository.updateUuid(ismemberDTO);       
-        return uuid.toString();
-    }
-
-
 
 }

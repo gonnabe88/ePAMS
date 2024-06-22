@@ -40,19 +40,19 @@ public class ViewLogService {
      * @implNote 데이터 저장
      * @since 2024-04-26
      */
-    public void save(List<LogViewDTO> added, List<LogViewDTO> changed, List<LogViewDTO> deleted) {    	
+    public void save(final List<LogViewDTO> added, final List<LogViewDTO> changed, final List<LogViewDTO> deleted) {    	
         // Handle added members
-        for (LogViewDTO dto : added) {
+        for (final LogViewDTO dto : added) {
         	viewLogRepository.insert(dto);
         }
 
         // Handle changed members
-        for (LogViewDTO dto : changed) {
+        for (final LogViewDTO dto : changed) {
         	viewLogRepository.update(dto);
         }
 
         // Handle deleted members
-        for (LogViewDTO dto : deleted) {
+        for (final LogViewDTO dto : deleted) {
         	viewLogRepository.delete(dto);
         }
     }

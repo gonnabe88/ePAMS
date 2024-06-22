@@ -41,7 +41,7 @@ public class LoginOtpRepository {
 	 * @implNote 기본키 검색
 	 * @since 2024-06-09
 	 */
-    public Long countById(LoginOTPDTO dto) {
+    public Long countById(final LoginOTPDTO dto) {
         return sql.selectOne("LoginOTP.countById", LoginOTPDTO.toEntity(dto));
     }
     
@@ -50,7 +50,7 @@ public class LoginOtpRepository {
 	 * @implNote 신규 데이터 입력
 	 * @since 2024-06-09
 	 */
-    public void insert(LoginOTPDTO dto) {
+    public void insert(final LoginOTPDTO dto) {
         sql.insert("LoginOTP.insert", LoginOTPDTO.toEntity(dto));
     }
     
@@ -59,7 +59,7 @@ public class LoginOtpRepository {
 	 * @implNote 기존 데이터 삭제
 	 * @since 2024-06-09
 	 */
-    public void delete(LoginOTPDTO dto) {
+    public void delete(final LoginOTPDTO dto) {
         sql.delete("LoginOTP.delete", LoginOTPDTO.toEntity(dto));
     }
     
@@ -68,7 +68,7 @@ public class LoginOtpRepository {
 	 * @implNote 데이터 업데이트(기본키 제외)
 	 * @since 2024-06-09
 	 */
-    public void update(LoginOTPDTO dto) {
+    public void update(final LoginOTPDTO dto) {
         sql.update("LoginOTP.update", LoginOTPDTO.toEntity(dto));
     }
     

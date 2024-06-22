@@ -1,22 +1,25 @@
-package epams.com.admin.repository;
+package epams.dtm.repository;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import epams.com.admin.dto.LogLoginDTO;
 import epams.com.admin.entity.LogLoginEntity;
+import epams.dtm.dto.BasePeriodDTO;
+import epams.dtm.dto.DtmApplDTO;
 import lombok.RequiredArgsConstructor;
 
 /***
  * @author 140024
- * @implNote 각종 로그 데이터 관리를 위한 repository
+ * @implNote repository
  * @since 2024-06-09
  */
 @Repository
 @RequiredArgsConstructor
-public class LogRepository {
+public class DtmRepository {
 	/***
 	 * @author 140024
 	 * @implNote SQL 쿼리 실행은 위한 SqlSessionTemplate
@@ -26,12 +29,20 @@ public class LogRepository {
 
     /***
      * @author 140024
-     * @implNote Login Log 조회(전체 로그)
+     * @implNote 기간 조회
      * @since 2024-06-09
      */
-    public List<LogLoginDTO> findAll() {
-    	final List<LogLoginEntity> logLoginEntities = sql.selectList("LogLogin.findAll");
-    	return LogLoginDTO.toDTOList(logLoginEntities);
+    public List<DtmApplDTO> findAllByPeriod(final BasePeriodDTO period) {    
+    	return sql.selectList("DtmAppl.findAllByPeriod",  period);
+    }
+
+        /***
+     * @author 140024
+     * @implNote 총 갯수
+     * @since 2024-06-09
+     */
+    public long countAllByPeriod(final BasePeriodDTO period) {    
+    	return sql.selectOne("DtmAppl.countAllByPeriod", period);
     }
     
     /***
@@ -42,8 +53,6 @@ public class LogRepository {
      */
     public void insert(final LogLoginDTO logLoginDTO) {
     	sql.update("LogLogin.insert", logLoginDTO.toEntity());
-    }
-
-    
+    }    
     
 }

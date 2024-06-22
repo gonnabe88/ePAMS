@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 
 import epams.com.admin.dto.LogViewDTO;
 import epams.com.admin.entity.LogViewEntity;
-import epams.com.login.dto.LoginOTPDTO;
 import lombok.RequiredArgsConstructor;
 
 /***
@@ -31,8 +30,8 @@ public class ViewLogRepository {
      * @since 2024-06-09
      */
     public List<LogViewDTO> findAll() {
-    	final List<LogViewEntity> controllerLogEntity = sql.selectList("ViewLog.findAll");
-    	return LogViewDTO.toDTOList(controllerLogEntity);
+    	final List<LogViewEntity> entities = sql.selectList("ViewLog.findAll");
+    	return LogViewDTO.toDTOList(entities);
     }
     
     /***

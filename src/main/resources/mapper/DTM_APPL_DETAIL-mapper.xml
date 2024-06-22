@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper SYSTEM "mybatis-3-mapper.dtd">
+
+
+<mapper namespace="DtmAppl">
+
+    <!-- TABLE Result Map 정의
+    <resultMap id="DtmApplDTO" type="dtmAppl">
+        <id property="applID" column="DTM_APPL_ID"/>
+        <result property="empId" column="EMP_ID"/>
+        <result property="dtmCode" column=""/>
+        <result property="dtmName" column="DTM_TYPE_CD"/>
+        <result property="startDate" column="STD_DATE"/>
+        <result property="endDate" column="END_DATE"/>
+        <result property="applDate" column="TZ_DATE"/>
+    </resultMap>-->
+     
+    <select id="findAllByPeriod" resultType="dtmAppl">
+        SELECT  A.DTM_APPL_ID AS applID,
+                A.EMP_ID      AS empId,
+                A.DTM_TYPE_CD AS dtmCode,
+                C.DTM_NM      AS dtmName,
+                A.STD_DATE    AS startDate,
+                A.END_DATE    AS endDate,
+                A.TZ_DATE     AS applDate
+        FROM OHR.DTM_APPL A, OHR.DTM_CD C
+        WHERE A.DTM_TYPE_CD = C.DTM_CD
+          AND A.TZ_DATE BETWEEN #{startDate} AND #{endDate}
+        ORDER BY A.TZ_DATE DESC
+        LIMIT #{limit} OFFSET #{offset}
+    </select>
+
+    <select id="countAllByPeriod" parameterType="basePeriod" resultType="long">
+        SELECT COUNT(*)
+        FROM OHR.DTM_APPL A
+        WHERE A.TZ_DATE BETWEEN #{startDate} AND #{endDate}
+    </select>
+        
+</mapper>

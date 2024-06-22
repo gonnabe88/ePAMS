@@ -41,7 +41,7 @@ public class CodeRepository {
 	 * @implNote 기본키 검색
 	 * @since 2024-06-09
 	 */
-    public Long countById(CodeDTO CodeDTO) {
+    public Long countById(final CodeDTO CodeDTO) {
         return sql.selectOne("Code.countById", CodeDTO.toEntity());
     }
     
@@ -50,7 +50,7 @@ public class CodeRepository {
 	 * @implNote 신규 데이터 입력
 	 * @since 2024-06-09
 	 */
-    public void insert(CodeDTO CodeDTO) {
+    public void insert(final CodeDTO CodeDTO) {
         sql.insert("Code.insert", CodeDTO.toEntity());
     }
     
@@ -59,7 +59,7 @@ public class CodeRepository {
 	 * @implNote 기존 데이터 삭제
 	 * @since 2024-06-09
 	 */
-    public void delete(CodeDTO CodeDTO) {
+    public void delete(final CodeDTO CodeDTO) {
         sql.delete("Code.delete", CodeDTO.toEntity());
     }
     
@@ -68,7 +68,7 @@ public class CodeRepository {
 	 * @implNote 데이터 업데이트(기본키 제외)
 	 * @since 2024-06-09
 	 */
-    public void update(CodeDTO CodeDTO) {
+    public void update(final CodeDTO CodeDTO) {
         sql.update("Code.update", CodeDTO.toEntity());
     }
     

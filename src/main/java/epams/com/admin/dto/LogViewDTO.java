@@ -78,7 +78,7 @@ public class LogViewDTO {
      * @implNote Entity > DTO 변경 메소드
      * @since 2024-06-09
      */
-    public static LogViewDTO toDTO(LogViewEntity entity) {
+    public static LogViewDTO toDTO(final LogViewEntity entity) {
         return new LogViewDTO(
             entity.getSEQ_ID(),
             entity.getCTRL_NM(),
@@ -95,7 +95,7 @@ public class LogViewDTO {
      * @implNote DTO > Entity 변경 메소드
      * @since 2024-06-09
      */
-    public static LogViewEntity toEntity(LogViewDTO dto) {
+    public static LogViewEntity toEntity(final LogViewDTO dto) {
         return LogViewEntity.builder()
             .SEQ_ID(dto.getSeqId())
             .CTRL_NM(dto.getControllerName())
@@ -112,7 +112,7 @@ public class LogViewDTO {
      * @implNote List<Entity> > List<DTO> 변경 메소드
      * @since 2024-06-09
      */
-    public static List<LogViewDTO> toDTOList(List<LogViewEntity> entityList) {
+    public static List<LogViewDTO> toDTOList(final List<LogViewEntity> entityList) {
         return entityList.stream()
                          .map(LogViewDTO::toDTO)
                          .collect(Collectors.toList());
@@ -123,7 +123,7 @@ public class LogViewDTO {
      * @implNote List<DTO> > List<Entity> 변경 메소드
      * @since 2024-06-09
      */
-    public static List<LogViewEntity> toEntityList(List<LogViewDTO> dtoList) {
+    public static List<LogViewEntity> toEntityList(final List<LogViewDTO> dtoList) {
         return dtoList.stream()
                       .map(LogViewDTO::toEntity)
                       .collect(Collectors.toList());

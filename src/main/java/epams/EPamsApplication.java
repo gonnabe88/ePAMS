@@ -39,6 +39,7 @@ public class EPamsApplication {
 	 * @author 140024
 	 * @since 2024-04-02
 	 * @implNote StorageService 초기화 빈. 애플리케이션 시작 시 스토리지 서비스를 초기화
+	 * @param StorageService
 	 */
 	@Bean
 	CommandLineRunner init(final StorageService storageService) {

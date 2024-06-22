@@ -29,7 +29,7 @@ public class HtmlRepository {
 	/***
 	 * @author 140024
 	 * @implNote paging 조건에 따라 모든 게시물을 조회하여 반환
-	 * @since 2024-06-09
+	 * @since 2024-06-09final 
 	 */
     public List<HtmlDTO> findAll() {
     	final List<HtmlEntity> htmlEntitys = sql.selectList("Html.findAll");
@@ -41,7 +41,7 @@ public class HtmlRepository {
 	 * @implNote 기본키 검색
 	 * @since 2024-06-09
 	 */
-    public Long countById(HtmlDTO htmlDTO) {
+    public Long countById(final HtmlDTO htmlDTO) {
         return sql.selectOne("Html.countById", htmlDTO.toEntity());
     }
     
@@ -50,7 +50,7 @@ public class HtmlRepository {
 	 * @implNote 신규 데이터 입력
 	 * @since 2024-06-09
 	 */
-    public void insert(HtmlDTO htmlDTO) {
+    public void insert(final HtmlDTO htmlDTO) {
         sql.insert("Html.insert", htmlDTO.toEntity());
     }
     
@@ -59,7 +59,7 @@ public class HtmlRepository {
 	 * @implNote 기존 데이터 삭제
 	 * @since 2024-06-09
 	 */
-    public void delete(HtmlDTO htmlDTO) {
+    public void delete(final HtmlDTO htmlDTO) {
         sql.delete("Html.delete", htmlDTO.toEntity());
     }
     
@@ -68,7 +68,7 @@ public class HtmlRepository {
 	 * @implNote 데이터 업데이트(기본키 제외)
 	 * @since 2024-06-09
 	 */
-    public void update(HtmlDTO htmlDTO) {
+    public void update(final HtmlDTO htmlDTO) {
         sql.update("Html.update", htmlDTO.toEntity());
     }
     
@@ -77,7 +77,7 @@ public class HtmlRepository {
 	 * @implNote 데이터 입력 및 업데이트
 	 * @since 2024-06-09
 	 */
-    public void insertUpdate(HtmlDTO htmlDTO) {
+    public void insertUpdate(final HtmlDTO htmlDTO) {
         sql.insert("Html.insertUpdate", htmlDTO.toEntity());
     }
     

@@ -6,7 +6,6 @@ import epams.com.board.entity.BaseEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ForeignKey;
 import jakarta.persistence.Id;
-import jakarta.persistence.IdClass;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
@@ -44,7 +43,7 @@ public class CodeHtmlMapEntity extends BaseEntity implements Serializable {
     @ManyToOne
     @JoinColumn(
             name = "CD_ID",
-            foreignKey = @ForeignKey(name = "fk_com_code_html_cd", foreignKeyDefinition = "FOREIGN KEY (CD_ID) REFERENCES com_code (CD_ID) ON DELETE CASCADE ON UPDATE CASCADE")
+            foreignKey = @ForeignKey(name = "FK_COM_CODE_HTML_CD_ID", foreignKeyDefinition = "FOREIGN KEY (CD_ID) REFERENCES COM_CODE (CD_ID) ON DELETE CASCADE ON UPDATE CASCADE")
         )
     private CodeEntity codeEntity;
 
@@ -57,7 +56,7 @@ public class CodeHtmlMapEntity extends BaseEntity implements Serializable {
     @ManyToOne
     @JoinColumn(
             name = "HTML",
-            foreignKey = @ForeignKey(name = "fk_com_code_html_html", foreignKeyDefinition = "FOREIGN KEY (HTML) REFERENCES com_html (HTML) ON DELETE CASCADE ON UPDATE CASCADE")
+            foreignKey = @ForeignKey(name = "FK_COM_CODE_HTML_HTML", foreignKeyDefinition = "FOREIGN KEY (HTML) REFERENCES COM_HTML (HTML) ON DELETE CASCADE ON UPDATE CASCADE")
         )
     private HtmlEntity htmlEntity;
     

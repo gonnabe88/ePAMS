@@ -72,6 +72,9 @@ dependencies {
     // 객체를 JSON 형식으로 변환
     implementation 'com.fasterxml.jackson.core:jackson-databind'
 
+	// OWASP Encoder 라이브러리 (2024-06-22 추가)
+	implementation 'org.owasp.encoder:encoder:1.2.3'
+
 }
 
 tasks.named('test') {

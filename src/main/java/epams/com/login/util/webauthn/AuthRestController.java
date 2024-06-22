@@ -1,5 +1,7 @@
 package epams.com.login.util.webauthn;
 
+import org.owasp.encoder.Encode;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -81,7 +84,12 @@ public class AuthRestController {
         @RequestParam(USERNAME_PARAM) final String username,
         final HttpSession session
     ) {
-        return authService.startLogin(username, session);
+        // 사용자 입력 검증 및 인코딩
+        if (username == null || username.isEmpty() || !username.matches("^[a-zA-Z0-9._-]{3,}$")) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid username");
+        }
+        final String sanitizedUsername = Encode.forHtml(username);
+        return authService.startLogin(sanitizedUsername, session);
     }
 
     /**

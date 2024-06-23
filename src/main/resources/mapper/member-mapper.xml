@@ -5,17 +5,17 @@
 
     <!-- 모든 데이터 조회 -->
     <select id="findAll" resultType="member">
-        SELECT * FROM OHR.member
+        SELECT * FROM member
     </select>
     
     <!-- 기본키 데이터 중복여부 조회 -->
     <select id="countById" parameterType="Long" resultType="code">
         SELECT COUNT(*)
-        FROM OHR.member WHERE username=#{CD}
+        FROM member WHERE username=#{CD}
     </select>
     
     <insert id="save" parameterType="member">
-        insert into OHR.member(memberEmail, memberPassword, memberName, memberAge, memberMobile)
+        insert into member(memberEmail, memberPassword, memberName, memberAge, memberMobile)
         values (#{memberEmail}, #{memberPassword}, #{memberName}, #{memberAge}, #{memberMobile})
     </insert>
     

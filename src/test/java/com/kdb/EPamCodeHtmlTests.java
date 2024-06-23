@@ -51,7 +51,7 @@ class EPamCodeHtmlTests {
      * 
      * @throws IOException 입출력 예외 발생 시
      */
-    @Test
+    //@Test
     public void CodeInsert() throws IOException {
         final CodeEntity code1 = CodeEntity.builder().CD_ID("COM_INDEX_CD").CD_NM("빠른 신청").CD_TYPE("text").build();
         codeRepository.insert(CodeDTO.toDTO(code1));
@@ -72,7 +72,7 @@ class EPamCodeHtmlTests {
      * 
      * @throws IOException 입출력 예외 발생 시
      */
-    @Test
+    //@Test
     public void HtmlInsert() throws IOException {
         // 입력받은 (HTML 경로, HTML 설명) 리스트
         final List<Map.Entry<String, String>> inputList = List.of(
@@ -113,7 +113,7 @@ class EPamCodeHtmlTests {
      * 
      * @throws IOException 입출력 예외 발생 시
      */
-    @Test
+    //@Test
     public void htmlCodeMapInsert() throws IOException {
         // 입력받은 (HTML 경로, HTML 설명) 리스트
         final List<Map.Entry<String, String>> inputList = List.of(

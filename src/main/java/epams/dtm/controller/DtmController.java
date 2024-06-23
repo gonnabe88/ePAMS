@@ -30,103 +30,131 @@ import epams.dtm.service.DtmService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * @author K140024
+ * @implNote 근태관리 컨트롤러
+ * @since 2024-06-11
+ */
 @Slf4j
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/dtm")
 public class DtmController<S extends Session> {
 
-	/**
-	 * @author K140024
-	 * @implNote list 화면에 노출할 게시물 수 설정값 (application.yml)
-	 * @since 2024-06-11
-	 */
-	@Value("${kdb.listBrdCnt}")
-	private int listBrdCnt;
+    /**
+     * @author K140024
+     * @implNote list 화면에 노출할 게시물 수 설정값 (application.yml)
+     * @since 2024-06-11
+     */
+    @Value("${kdb.listBrdCnt}")
+    private int listBrdCnt;
 
-	/**
-	 * @author K140024
-	 * @implNote 모든 페이지네이션 시 노출할 최대 버튼 수 설정값 (application.yml)
-	 * @since 2024-06-11
-	 */
-	@Value("${kdb.maxPageBtn}")
-	private int maxPageBtn;
+    /**
+     * @author K140024
+     * @implNote 모든 페이지네이션 시 노출할 최대 버튼 수 설정값 (application.yml)
+     * @since 2024-06-11
+     */
+    @Value("${kdb.maxPageBtn}")
+    private int maxPageBtn;
 
-	private final BoardService boardService;
-	private final MemberDetailsService memberservice;
-	private final CodeHtmlDetailService codeHtmlDetailService;
-	private final DtmService dtmService;
+    /**
+     * @author K140024
+     * @implNote 게시판 서비스 주입
+     * @since 2024-06-11
+     */
+    private final BoardService boardService;
 
-	@GetMapping("/main")
-	public String dtmMain(@PageableDefault(page = 1) Pageable pageable, Model model) {
-		final String VIEW = "/dtm/main";
-		// 코드
-		Map<String, String> codeList = codeHtmlDetailService.getCodeHtmlDetail(VIEW);
-		// 리스트의 내용을 출력
-		System.out.println(codeList.toString());
+    /**
+     * @author K140024
+     * @implNote 회원 서비스 주입
+     * @since 2024-06-11
+     */
+    private final MemberDetailsService memberservice;
 
-		// System.out.println(codeList.get(0).getCD_NM());
-		model.addAttribute("codeList", codeList);
+    /**
+     * @author K140024
+     * @implNote 코드 상세 서비스 주입
+     * @since 2024-06-11
+     */
+    private final CodeHtmlDetailService codeHtmlDetailService;
 
-		// 메인화면 공지사항 출력
-		Page<BoardDTO> boardList = boardService.paging(pageable);
-		int blockLimit = 3;
-		int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / blockLimit))) - 1) * blockLimit + 1; // 1
-																													// 4
-																													// 7
-																													// 10
-																													// ~~
-		int endPage = ((startPage + blockLimit - 1) < boardList.getTotalPages()) ? startPage + blockLimit - 1
-				: boardList.getTotalPages();
-		model.addAttribute("boardList", boardList);
-		model.addAttribute("startPage", startPage);
-		model.addAttribute("endPage", endPage);
+    /**
+     * @author K140024
+     * @implNote DTM 서비스 주입
+     * @since 2024-06-11
+     */
+    private final DtmService dtmService;
 
-		// 메인화면 직원조회 출력
-		List<MemberEntity> memberList = memberservice.findAll();
-		model.addAttribute("memberList", memberList);
+    /**
+     * @author K140024
+     * @implNote DTM 메인 화면을 반환하는 메서드
+     * @since 2024-06-11
+     */
+    @GetMapping("/main")
+    public String dtmMain(@PageableDefault(page = 1) Pageable pageable, Model model) {
+        final String VIEW = "/dtm/main";
 
-		// 메인화면 빠른근태신청 출력
-		LocalDate today = LocalDate.now();
-		DayOfWeek dayOfWeek = today.getDayOfWeek();
-		model.addAttribute("nowDate", today + "(" + dayOfWeek.getDisplayName(TextStyle.NARROW, Locale.KOREAN) + ")");
+        // 코드
+        final Map<String, String> codeList = codeHtmlDetailService.getCodeHtmlDetail(VIEW);
+        System.out.println(codeList.toString());
+        model.addAttribute("codeList", codeList);
 
-		LocalDate tomorrow = LocalDate.now().plusDays(1);
-		DayOfWeek dayOfWeek2 = tomorrow.getDayOfWeek();
-		model.addAttribute("tomorrowDate",
-				tomorrow + "(" + dayOfWeek2.getDisplayName(TextStyle.NARROW, Locale.KOREAN) + ")");
+        // 메인화면 공지사항 출력
+        final Page<BoardDTO> boardList = boardService.paging(pageable);
+        final int blockLimit = 3;
+        final int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / blockLimit))) - 1) * blockLimit + 1;
+        final int endPage = ((startPage + blockLimit - 1) < boardList.getTotalPages()) ? startPage + blockLimit - 1 : boardList.getTotalPages();
+        model.addAttribute("boardList", boardList);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
 
-		return VIEW;
-	}
+        // 메인화면 직원조회 출력
+        final List<MemberEntity> memberList = memberservice.findAll();
+        model.addAttribute("memberList", memberList);
 
-	@GetMapping("/list")
-	public String dtmList(@PageableDefault(page = 1) Pageable pageable, @ModelAttribute final BasePeriodDTO period, Model model) {
-		final String DTMMAIN = "/dtm/list";
-		// 코드
-		Map<String, String> codeList = codeHtmlDetailService.getCodeHtmlDetail(DTMMAIN);
-		// 리스트의 내용을 출력
-		System.out.println(codeList.toString());
+        // 메인화면 빠른근태신청 출력
+        final LocalDate today = LocalDate.now();
+        final DayOfWeek dayOfWeek = today.getDayOfWeek();
+        model.addAttribute("nowDate", today + "(" + dayOfWeek.getDisplayName(TextStyle.NARROW, Locale.KOREAN) + ")");
 
-		// System.out.println(codeList.get(0).getCD_NM());
-		model.addAttribute("codeList", codeList);
+        final LocalDate tomorrow = LocalDate.now().plusDays(1);
+        final DayOfWeek dayOfWeek2 = tomorrow.getDayOfWeek();
+        model.addAttribute("tomorrowDate", tomorrow + "(" + dayOfWeek2.getDisplayName(TextStyle.NARROW, Locale.KOREAN) + ")");
 
-		// 메인화면 근태내용 출력
-		final int currentPage = pageable.getPageNumber(); // 현재 페이지 (1-based index)
-		final Pageable updatedPageable = PageRequest.of(currentPage, listBrdCnt);
-		final Page<DtmApplDTO> dtmApplList = dtmService.findAllByPeriod(updatedPageable, period);
-		final int totalPages = dtmApplList.getTotalPages();
-		int startPage = Math.max(1, currentPage - (maxPageBtn / 2));
-		final int endPage = Math.min(totalPages, startPage + maxPageBtn - 1);
+        return VIEW;
+    }
 
-		if (endPage - startPage < maxPageBtn - 1) {
-			startPage = Math.max(1, endPage - maxPageBtn + 1);
-		}
+    /**
+     * @author K140024
+     * @implNote DTM 리스트 화면을 반환하는 메서드
+     * @since 2024-06-11
+     */
+    @GetMapping("/list")
+    public String dtmList(@PageableDefault(page = 1) Pageable pageable, @ModelAttribute final BasePeriodDTO period, Model model) {
+        final String DTMMAIN = "/dtm/list";
 
-		model.addAttribute("dtmApplList", dtmApplList);
-		model.addAttribute("startPage", startPage);
-		model.addAttribute("endPage", endPage);
+        // 코드
+        final Map<String, String> codeList = codeHtmlDetailService.getCodeHtmlDetail(DTMMAIN);
+        System.out.println(codeList.toString());
+        model.addAttribute("codeList", codeList);
 
-		return DTMMAIN;
-	}
+        // 메인화면 근태내용 출력
+        final int currentPage = pageable.getPageNumber();
+        final Pageable updatedPageable = PageRequest.of(currentPage, listBrdCnt);
+        final Page<DtmApplDTO> dtmApplList = dtmService.findAllByPeriod(updatedPageable, period);
+        final int totalPages = dtmApplList.getTotalPages();
+        int startPage = Math.max(1, currentPage - (maxPageBtn / 2));
+        final int endPage = Math.min(totalPages, startPage + maxPageBtn - 1);
+
+        if (endPage - startPage < maxPageBtn - 1) {
+            startPage = Math.max(1, endPage - maxPageBtn + 1);
+        }
+
+        model.addAttribute("dtmApplList", dtmApplList);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+
+        return DTMMAIN;
+    }
 
 }

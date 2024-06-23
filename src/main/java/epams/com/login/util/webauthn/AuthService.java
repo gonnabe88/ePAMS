@@ -213,7 +213,7 @@ public class AuthService {
                     .response(pkc)
                     .build();
                 final RegistrationResult result = relyingParty.finishRegistration(options);
-                final WebauthDetailDTO savedAuth = new WebauthDetailDTO(result, pkc.getResponse(), user, username);
+                final WebauthDetailDTO savedAuth = new WebauthDetailDTO(result, pkc.getResponse(), user);
                 service.getWebauthDetailRepository().insert(savedAuth);
                 return ResponseEntity.ok("Registration successful!");
             } else {

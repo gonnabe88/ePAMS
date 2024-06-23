@@ -1,0 +1,37 @@
+# 운영 서버용 설정 (java -jar epams.jar --spring.profiles.active=prod)
+
+kdb:
+  filepath: /epams/ # 첨부파일, 이미지 등 저장할 filesystem 경로
+
+# server port
+server:
+  port: 8080
+  servlet: 
+    session:
+      timeout: 15m
+      persistent: true
+      tracking-modes: cookie
+      cookie:
+        domain: epams.duckdns.org
+        http-only: true
+        path: /
+        max-age: -1 # infinite
+        secure: true # https only allowed
+        sameSite: strict
+  error:
+    whitelabel:
+      enabled: false # Spring Boot 기본 에러 경로를 비활성화하고 사용자 정의 컨트롤러를 사용할 수 있도록 설정
+
+# webauthn & passkey
+authn:
+  display: ePAMS
+  hostname: ${server.servlet.session.cookie.domain} 
+  origin: https://${server.servlet.session.cookie.domain}
+
+# spring
+spring:  
+  datasource:
+    driver-class-name: oracle.jdbc.OracleDriver
+    url: jdbc:oracle:thin:@192.168.0.10:1521:ORCLCDB
+    username: ehr
+    password: kdb1234!

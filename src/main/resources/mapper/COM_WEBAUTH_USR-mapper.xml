@@ -33,11 +33,21 @@
     
     <!-- 신규 데이터 추가 또는 기존 데이터 업데이트 -->
 	<insert id="insertUpdate" parameterType="webauthUser">
-	    INSERT INTO COM_WEBAUTH_USR (EMP_NO, DISP_NM, HANDLE)
-	    VALUES(#{EMP_NO}, #{DISP_NM}, #{HANDLE, typeHandler=epams.com.login.util.webauthn.utility.ByteArrayTypeHandler})
-	    ON DUPLICATE KEY UPDATE
-	    DISP_NM = VALUES(DISP_NM),
-	    HANDLE = VALUES(HANDLE);
+        MERGE INTO COM_WEBAUTH_USR t
+        USING (
+            SELECT 
+                #{EMP_NO} AS EMP_NO, 
+                #{DISP_NM} AS DISP_NM, 
+                #{HANDLE, typeHandler=epams.com.login.util.webauthn.utility.ByteArrayTypeHandler} AS HANDLE 
+            FROM DUAL
+        ) s
+        ON (t.EMP_NO = s.EMP_NO)
+        WHEN MATCHED THEN
+            UPDATE SET t.DISP_NM = s.DISP_NM,
+                       t.HANDLE = s.HANDLE
+        WHEN NOT MATCHED THEN
+            INSERT (EMP_NO, DISP_NM, HANDLE)
+            VALUES (s.EMP_NO, s.DISP_NM, s.HANDLE)
 	</insert>
 	
 	<!-- 기본키 데이터 중복여부 조회 -->
@@ -53,9 +63,12 @@
     </select>
     
 	 <!-- 기본키 데이터 중복여부 조회 -->
-    <select id="findByHandle" parameterType="ByteArray" resultType="webauthUser">
-        SELECT *
-        FROM COM_WEBAUTH_USR WHERE HANDLE=#{HANDLE, typeHandler=epams.com.login.util.webauthn.utility.ByteArrayTypeHandler}
-    </select>
+<select id="findByHandle" parameterType="com.yubico.webauthn.data.ByteArray" resultType="webauthUser">
+    SELECT *
+    FROM COM_WEBAUTH_USR
+    WHERE HANDLE = #{handle, jdbcType=BLOB, javaType=byte[]}
+</select>
+
+
         
 </mapper>

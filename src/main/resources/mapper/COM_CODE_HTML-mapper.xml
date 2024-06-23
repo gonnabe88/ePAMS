@@ -18,7 +18,7 @@
     <!-- 신규 데이터 추가 --> 
     <insert id="insert" parameterType="codeHtmlMap">
         INSERT INTO com_code_html(HTML, CD_ID, CREATED_TIME)
-            VALUES(#{HTML}, #{CD_ID}, NOW())
+            VALUES(#{HTML}, #{CD_ID}, SYSDATE)
     </insert>   
     
     <!-- 기존 데이터 삭제 --> 

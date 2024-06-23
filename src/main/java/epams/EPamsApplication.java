@@ -1,11 +1,12 @@
 package epams;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 
 import com.yubico.webauthn.RelyingParty;
@@ -25,7 +26,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor // 기본생성자
 @SpringBootApplication
 @EnableConfigurationProperties(StorageProperties.class)
-public class EPamsApplication {
+public class EPamsApplication  extends SpringBootServletInitializer {
 
 	/**
 	 * @author 140024
@@ -35,6 +36,16 @@ public class EPamsApplication {
 	public static void main(final String[] args) {
 		SpringApplication.run(EPamsApplication.class, args);
 	}
+
+	/**
+	 * @author 140024
+	 * @since 2024-06-23
+	 * @implNote 3rd party WAS를 통한 실행을 위해 추가 (WAR배포)
+	 */
+	@Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+        return super.configure(application);
+    }
 	
 	/**
 	 * @author 140024

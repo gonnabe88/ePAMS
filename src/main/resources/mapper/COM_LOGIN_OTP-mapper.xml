@@ -18,7 +18,7 @@
     <!-- 신규 데이터 추가 --> 
     <insert id="insert" parameterType="loginOTP">
         INSERT INTO COM_LOGIN_OTP(EMP_NO, OTP, MFA, CREATED_TIME)
-            VALUES(#{EMP_NO}, #{OTP}, #{MFA}, NOW())
+            VALUES(#{EMP_NO}, #{OTP}, #{MFA}, SYSDATE)
     </insert>   
     
     <!-- 기존 데이터 삭제 --> 
@@ -28,27 +28,30 @@
     
     <!-- 기존 데이터 업데이트 --> 
     <update id="update" parameterType="loginOTP">
-        UPDATE COM_LOGIN_OTP SET EMP_NO=#{EMP_NO}, OTP=#{OTP}, MFA=#{MFA}, UPDATED_TIME=NOW() WHERE SEQ_ID=#{SEQ_ID}
+        UPDATE COM_LOGIN_OTP SET EMP_NO=#{EMP_NO}, OTP=#{OTP}, MFA=#{MFA}, UPDATED_TIME=SYSDATE WHERE SEQ_ID=#{SEQ_ID}
     </update>
     
     <!-- 신규 데이터 추가 또는 기존 데이터 업데이트 -->
 	<insert id="insertUpdate" parameterType="loginOTP">
 	    INSERT INTO COM_LOGIN_OTP (EMP_NO, OTP, MFA, CREATED_TIME)
-	    VALUES(#{EMP_NO}, #{OTP}, #{MFA}, NOW())
+	    VALUES(#{EMP_NO}, #{OTP}, #{MFA}, SYSDATE)
 	    ON DUPLICATE KEY UPDATE
 	    OTP = VALUES(OTP),
 	    MFA = VALUES(MFA),
-	    UPDATED_TIME = NOW();
+	    UPDATED_TIME = SYSDATE;
 	</insert>
 	
 	    <!-- 모든 데이터 조회 -->
     <select id="findValidOneByUsername" parameterType="loginOTP" resultType="loginOTP">
-        SELECT *
-		FROM COM_LOGIN_OTP
-		WHERE EMP_NO = #{EMP_NO}
-		  AND CREATED_TIME > NOW() - INTERVAL 3 MINUTE
-		ORDER BY CREATED_TIME DESC
-		LIMIT 1
+    SELECT *
+    FROM (
+        SELECT * 
+        FROM COM_LOGIN_OTP 
+        WHERE EMP_NO = #{EMP_NO}
+          AND CREATED_TIME > SYSDATE - INTERVAL '3' MINUTE
+        ORDER BY CREATED_TIME DESC
+    )
+    WHERE ROWNUM = 1
     </select> 
         
 </mapper>

@@ -5,29 +5,91 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+/**
+ * @author K140024
+ * @implNote 회원 정보를 담는 DTO 클래스
+ * @since 2024-06-11
+ */
 @Getter
 @Setter
 @ToString
 public class MemberDTO {
-    private String username; //행번
-    private String password; //패스워드 
+    
+    /**
+     * @author K140024
+     * @implNote 사용자 이름(행번)
+     * @since 2024-06-11
+     */
+    private String username;
+    
+    /**
+     * @author K140024
+     * @implNote 사용자 비밀번호
+     * @since 2024-06-11
+     */
+    private String password;
+    
+    /**
+     * @author K140024
+     * @implNote 부서명
+     * @since 2024-06-11
+     */
     private String dept;
+    
+    /**
+     * @author K140024
+     * @implNote 팀명
+     * @since 2024-06-11
+     */
     private String team;
-    private MemberRole role = MemberRole.ROLE_KDB; //권한
+    
+    /**
+     * @author K140024
+     * @implNote 사용자 역할(권한)
+     * @since 2024-06-11
+     */
+    private MemberRole role = MemberRole.ROLE_KDB;
+    
+    /**
+     * @author K140024
+     * @implNote OTP 정보
+     * @since 2024-06-11
+     */
     private String OTP;
+    
+    /**
+     * @author K140024
+     * @implNote 사용자 UUID
+     * @since 2024-06-11
+     */
     private String UUID;
+    
+    /**
+     * @author K140024
+     * @implNote 멀티 팩터 인증(MFA) 정보
+     * @since 2024-06-11
+     */
     private String MFA;
+    
+    /**
+     * @author K140024
+     * @implNote 사용자 책임
+     * @since 2024-06-11
+     */
     private String responsibility;
-    
+
+    /**
+     * @author K140024
+     * @implNote MemberEntity 객체를 MemberDTO 객체로 변환하는 메서드
+     * @since 2024-06-11
+     */
     public static MemberDTO toSearchDTO(MemberEntity memberEntity) {
-    	MemberDTO memberDTO = new MemberDTO();
-    	memberDTO.setUsername(memberEntity.getUsername());
-    	memberDTO.setDept(memberEntity.getDept());
-    	memberDTO.setTeam(memberEntity.getTeam());
-    	memberDTO.setResponsibility(memberEntity.getResponsibility());
-    	
-    	return memberDTO;
+        final MemberDTO memberDTO = new MemberDTO();
+        memberDTO.setUsername(memberEntity.getUsername());
+        memberDTO.setDept(memberEntity.getDept());
+        memberDTO.setTeam(memberEntity.getTeam());
+        memberDTO.setResponsibility(memberEntity.getResponsibility());
+        
+        return memberDTO;
     }
-    
-    
 }

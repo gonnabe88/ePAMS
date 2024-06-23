@@ -41,13 +41,13 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
     	memberDTO.setUUID(uuid.toString());
     	loginRepository.updateUuid(memberDTO);
     	
-    	Cookie cookie = new Cookie("UUIDChk",uuid.toString());
-		cookie.setHttpOnly(true); 
-		cookie.setSecure(true);
+    	//Cookie cookie = new Cookie("UUIDChk",uuid.toString());
+		//cookie.setHttpOnly(true); 
+		//cookie.setSecure(true);
 		//cookie.setDomain(domain);
 		//cookie.setPath("/");
 		//cookie.setMaxAge(30*60*1000);
-		response.addCookie(cookie);	
+		//response.addCookie(cookie);	
 		
     	log.info("[LOG] update uuid {}", memberDTO);
     	

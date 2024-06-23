@@ -1,105 +1,115 @@
 plugins {
-	id 'java'
-	id 'org.springframework.boot' version '3.2.5'
-	id 'io.spring.dependency-management' version '1.1.4'
-	id 'org.cyclonedx.bom' version '1.7.2'
+    id 'java'
+    id 'org.springframework.boot' version '3.2.5'
+    id 'io.spring.dependency-management' version '1.1.4'
+    id 'org.cyclonedx.bom' version '1.7.2'
+    id 'war'
 }
 
-group = 'epams' //com.kdb
-version = '0.0.1-SNAPSHOT'
+group = 'epams'
+version = '0.0.2-SNAPSHOT'
 
 java {
-	sourceCompatibility = '17'
+    sourceCompatibility = '17'
 }
 
 configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+    developmentOnly
+    providedRuntime
+    runtimeClasspath {
+        extendsFrom providedRuntime
+    }
 }
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 dependencies {
+    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 
-	// webauthn
-    implementation("com.yubico:webauthn-server-core:2.5.2")
+    // webauthn
+    implementation 'com.yubico:webauthn-server-core:2.5.2'
 
-	// Session DBMS 관리
-	compileOnly "org.springframework.session:spring-session-jdbc"
-	
-	implementation 'org.springframework.boot:spring-boot-starter-security'
-	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-	implementation 'org.springframework.boot:spring-boot-starter-web'	
-	implementation 'org.springframework.boot:spring-boot-starter-validation'
-	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
-	
-	// org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3에 포함된 logback 취약점 조치
-	// CVE-2023-6378, CVE-2023-6481 
+    // Session DBMS 관리
+    compileOnly 'org.springframework.session:spring-session-jdbc'
+    
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.springframework.boot:spring-boot-starter-web'    
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
+    
+    // org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3에 포함된 logback 취약점 조치
+    // CVE-2023-6378, CVE-2023-6481 
     implementation 'ch.qos.logback:logback-classic:1.4.14'
     implementation 'ch.qos.logback:logback-core:1.4.14'
 
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'org.springframework.security:spring-security-test'
-	testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.3'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
+    testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.3'
 
-	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-	
-	//  
-	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
-	implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
-	
-	// getter, setter 등 기능 사용을 위한 lombok
-	compileOnly 'org.projectlombok:lombok'	
-	annotationProcessor 'org.projectlombok:lombok'
-	
-	// DBMS 
-	runtimeOnly 'com.mysql:mysql-connector-j'
-	runtimeOnly 'com.oracle.database.jdbc:ojdbc11'	
-	
-	// Actuator & Prometheus (mornitoring)
-	implementation 'org.springframework.boot:spring-boot-starter-actuator'
-	implementation 'io.micrometer:micrometer-registry-prometheus'
-	
-	// 애플리케이션 계측 라이브러리
-	implementation 'io.micrometer:micrometer-core'
-
-	// JPA
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
     
-    // 객체를 JSON 형식으로 변환
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
+    implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
+    
+    compileOnly 'org.projectlombok:lombok'    
+    annotationProcessor 'org.projectlombok:lombok'
+    
+    runtimeOnly 'com.mysql:mysql-connector-j'
+    runtimeOnly 'com.oracle.database.jdbc:ojdbc11'    
+    runtimeOnly 'com.h2database:h2'
+    
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'io.micrometer:micrometer-registry-prometheus'
+    implementation 'io.micrometer:micrometer-core'
+
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'com.fasterxml.jackson.core:jackson-databind'
-
-	// OWASP Encoder 라이브러리 (2024-06-22 추가)
-	implementation 'org.owasp.encoder:encoder:1.2.3'
-
+    implementation 'org.owasp.encoder:encoder:1.2.3'
 }
 
 tasks.named('test') {
-	useJUnitPlatform()
+    useJUnitPlatform()
 }
 
 tasks.cyclonedxBom {
-    // includeConfigs is the list of configuration names to include when generating the BOM (leave empty to include every configuration), regex is supported
     includeConfigs = ["runtimeClasspath"]
-    // Specified the type of project being built. Defaults to 'library'
     projectType = "application"
-    // Specified the version of the CycloneDX specification to use. Defaults to '1.5'
     schemaVersion = "1.5"
-    // Boms destination directory. Defaults to 'build/reports'
     destination = file("build/reports")
-    // The file name for the generated BOMs (before the file format suffix). Defaults to 'bom'
     outputName = "bom"
-    // The file format generated, can be xml, json or all for generating both. Defaults to 'all'
     outputFormat = "json"
-    // Exclude BOM Serial Number. Defaults to 'true'
     includeBomSerialNumber = false
-    // Override component version. Defaults to the project version
     componentVersion = "2.0.0"
 }
 
 tasks.withType(JavaCompile) {
     options.compilerArgs << "-Xlint:unchecked"
+}
+
+tasks.named('bootJar') {
+    enabled = false
+}
+
+tasks.named('bootWar') {
+    enabled = true
+}
+
+springBoot {
+    mainClass = 'epams.EPamsApplication'
+}
+
+bootRun {
+    if (project.hasProperty('spring.profiles.active') && project.property('spring.profiles.active') == 'prod') {
+        configurations {
+            runtimeClasspath {
+                exclude group: 'org.springframework.boot', module: 'spring-boot-devtools'
+            }
+        }
+    }
 }

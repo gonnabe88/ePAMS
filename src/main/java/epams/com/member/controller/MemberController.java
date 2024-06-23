@@ -3,47 +3,58 @@ package epams.com.member.controller;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
 
-import epams.com.config.security.CustomPasswordEncoder;
 import epams.com.member.dto.MemberDTO;
 import epams.com.member.dto.MemberRole;
 import epams.com.member.entity.MemberEntity;
 import epams.com.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
+/**
+ * @author K140024
+ * @implNote 회원 등록 및 역할 설정을 관리하는 컨트롤러 클래스
+ * @since 2024-06-11
+ */
 @RequiredArgsConstructor
 @Controller
 public class MemberController {
 
+    /**
+     * @author K140024
+     * @implNote 회원 저장소 주입
+     * @since 2024-06-11
+     */
     private final MemberRepository memberRepository;
-    //private final BCryptPasswordEncoder passwordEncoder;
-    private CustomPasswordEncoder passwordEncoder; 
 
-    //java.lang.NullPointerException: Cannot invoke "com.kdb.config.CustomPasswordEncoder.encode(java.lang.CharSequence)" because "this.passwordEncoder" is null
-    @Autowired
-    public MemberController(MemberRepository memberRepository,
-                       @Lazy CustomPasswordEncoder passwordEncoder){
-        this.memberRepository = memberRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
+    /**
+     * @author K140024
+     * @implNote 비밀번호 인코더 주입
+     * @since 2024-06-11
+     */
+    private final PasswordEncoder passwordEncoder; 
 
+    /**
+     * @author K140024
+     * @implNote 회원 등록 폼을 반환하는 메서드
+     * @since 2024-06-11
+     */
     @GetMapping("/register")
     public String registryForm(Model model) {
         model.addAttribute("member", new MemberDTO());
         return "/common/register";
     }
 
+    /**
+     * @author K140024
+     * @implNote 회원 등록을 처리하는 메서드
+     * @since 2024-06-11
+     */
     @PostMapping("/register")
     public String registry(@ModelAttribute MemberDTO registryRequest) {
         MemberEntity member = MemberEntity.builder()
@@ -56,6 +67,11 @@ public class MemberController {
         return "redirect:/common/login";
     }
 
+    /**
+     * @author K140024
+     * @implNote 회원 역할을 설정하는 메서드
+     * @since 2024-06-11
+     */
     @ModelAttribute("roles")
     public Map<String, MemberRole> roles() {
         Map<String, MemberRole> map = new LinkedHashMap<>();

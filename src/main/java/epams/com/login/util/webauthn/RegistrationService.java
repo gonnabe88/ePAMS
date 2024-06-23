@@ -20,44 +20,79 @@ import epams.com.login.util.webauthn.user.WebauthUserRepository;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * @author K140024
+ * @implNote 간편인증 등록을 위한 서비스
+ * @since 2024-06-11
+ */
 @Slf4j
 @Repository
 @Getter
-public class RegistrationService implements CredentialRepository  {
-    
+public class RegistrationService implements CredentialRepository {
+
+    /**
+     * @author K140024
+     * @implNote WebauthUserRepository 주입
+     * @since 2024-06-11
+     */
     @Autowired
     private WebauthUserRepository webauthUserRepository;
+
+    /**
+     * @author K140024
+     * @implNote WebauthDetailRepository 주입
+     * @since 2024-06-11
+     */
     @Autowired
     private WebauthDetailRepository webauthDetailRepository;
 
+    /**
+     * @author K140024
+     * @implNote 사용자 이름으로 자격 증명 ID를 가져오는 메서드
+     * @since 2024-06-11
+     */
     @Override
-    public Set<PublicKeyCredentialDescriptor> getCredentialIdsForUsername(String username) {
-        WebauthUserDTO user = webauthUserRepository.findByUsername(username);
-        List<WebauthDetailDTO> auth = webauthDetailRepository.findAllByUser(user.getUsername());
+    public Set<PublicKeyCredentialDescriptor> getCredentialIdsForUsername(final String username) {
+        final WebauthUserDTO user = webauthUserRepository.findByUsername(username);
+        final List<WebauthDetailDTO> auth = webauthDetailRepository.findAllByUser(user.getUsername());
         return auth.stream()
-        .map(
-            credential ->
-                PublicKeyCredentialDescriptor.builder()
+            .map(
+                credential -> PublicKeyCredentialDescriptor.builder()
                     .id(credential.getCredentialId())
                     .build())
-        .collect(Collectors.toSet());
+            .collect(Collectors.toSet());
     }
 
+    /**
+     * @author K140024
+     * @implNote 사용자 이름으로 사용자 핸들을 가져오는 메서드
+     * @since 2024-06-11
+     */
     @Override
-    public Optional<ByteArray> getUserHandleForUsername(String username) {
-        WebauthUserDTO user = webauthUserRepository.findByUsername(username);
+    public Optional<ByteArray> getUserHandleForUsername(final String username) {
+        final WebauthUserDTO user = webauthUserRepository.findByUsername(username);
         return Optional.of(user.getHandle());
     }
 
+    /**
+     * @author K140024
+     * @implNote 사용자 핸들로 사용자 이름을 가져오는 메서드
+     * @since 2024-06-11
+     */
     @Override
-    public Optional<String> getUsernameForUserHandle(ByteArray userHandle) {
-    	WebauthUserDTO user = webauthUserRepository.findByHandle(userHandle);
+    public Optional<String> getUsernameForUserHandle(final ByteArray userHandle) {
+        final WebauthUserDTO user = webauthUserRepository.findByHandle(userHandle);
         return Optional.of(user.getUsername());
     }
 
+    /**
+     * @author K140024
+     * @implNote 자격 증명 ID와 사용자 핸들로 자격 증명을 조회하는 메서드
+     * @since 2024-06-11
+     */
     @Override
-    public Optional<RegisteredCredential> lookup(ByteArray credentialId, ByteArray userHandle) {
-        Optional<WebauthDetailDTO> auth = webauthDetailRepository.findByCredentialId(credentialId);
+    public Optional<RegisteredCredential> lookup(final ByteArray credentialId, final ByteArray userHandle) {
+        final Optional<WebauthDetailDTO> auth = webauthDetailRepository.findByCredentialId(credentialId);
         auth.ifPresent(credential -> {
             log.warn("Credential ID: " + credential.getCredentialId());
             log.warn("User Handle: " + credential.getUser().getHandle());
@@ -75,19 +110,22 @@ public class RegistrationService implements CredentialRepository  {
         );
     }
 
-
+    /**
+     * @author K140024
+     * @implNote 자격 증명 ID로 모든 자격 증명을 조회하는 메서드
+     * @since 2024-06-11
+     */
     @Override
-    public Set<RegisteredCredential> lookupAll(ByteArray credentialId) {
-        List<WebauthDetailDTO> auth = webauthDetailRepository.findAllByCredentialId(credentialId);
+    public Set<RegisteredCredential> lookupAll(final ByteArray credentialId) {
+        final List<WebauthDetailDTO> auth = webauthDetailRepository.findAllByCredentialId(credentialId);
         return auth.stream()
-        .map(
-            credential ->
-                RegisteredCredential.builder()
+            .map(
+                credential -> RegisteredCredential.builder()
                     .credentialId(credential.getCredentialId())
                     .userHandle(credential.getUser().getHandle())
                     .publicKeyCose(credential.getPublicKey())
                     .signatureCount(credential.getCount())
                     .build())
-        .collect(Collectors.toSet());
+            .collect(Collectors.toSet());
     }
 }

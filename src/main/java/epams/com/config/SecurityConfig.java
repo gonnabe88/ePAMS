@@ -10,8 +10,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.intercept.AuthorizationFilter;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import epams.com.config.security.CustomAuthenticationDetailsSource;
@@ -94,6 +92,7 @@ public class SecurityConfig {
                 authorizeRequests
                     .requestMatchers(
                         "/webauthn/**",
+                        "/h2-console/**",
                         "/actuator/prometheus",
                         "/manifest.webmanifest", "/login/**", "/logout", "/register",
                         "/api/**", 
@@ -136,8 +135,17 @@ public class SecurityConfig {
                 .defaultAuthenticationEntryPointFor(
                     (request, response, authException) -> response.sendRedirect("/error/404"),
                     new AntPathRequestMatcher("/**"))  // 기본 인증 엔트리 포인트 설정
-            );
-           
+            )
+
+            // CSRF 설정
+            .csrf((csrf) -> csrf
+                .ignoringRequestMatchers("/h2-console/**")  // H2 콘솔에 대한 CSRF 보호 비활성화
+            )            
+            
+            // X-Frame-Options 설정
+            .headers((headers) -> headers
+                .frameOptions().sameOrigin()  // H2 콘솔이 iframe 내에서 제대로 작동하도록 설정
+            );;
 
         return http.build();
     }

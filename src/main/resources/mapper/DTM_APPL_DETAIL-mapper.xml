@@ -16,18 +16,22 @@
     </resultMap>-->
      
     <select id="findAllByPeriod" resultType="dtmAppl">
-        SELECT  A.DTM_APPL_ID AS applID,
+        SELECT * FROM (
+            SELECT
+                A.DTM_APPL_ID AS applID,
                 A.EMP_ID      AS empId,
                 A.DTM_TYPE_CD AS dtmCode,
                 C.DTM_NM      AS dtmName,
                 A.STD_DATE    AS startDate,
                 A.END_DATE    AS endDate,
-                A.TZ_DATE     AS applDate
-        FROM OHR.DTM_APPL A, OHR.DTM_CD C
-        WHERE A.DTM_TYPE_CD = C.DTM_CD
-          AND A.TZ_DATE BETWEEN #{startDate} AND #{endDate}
-        ORDER BY A.TZ_DATE DESC
-        LIMIT #{limit} OFFSET #{offset}
+                A.TZ_DATE     AS applDate,
+                ROW_NUMBER() OVER (ORDER BY A.TZ_DATE DESC) AS rnum
+            FROM OHR.DTM_APPL A
+            JOIN OHR.DTM_CD C ON A.DTM_TYPE_CD = C.DTM_CD
+            WHERE A.TZ_DATE BETWEEN #{startDate} AND #{endDate}
+        )
+        WHERE rnum BETWEEN #{offset} + 1 AND #{offset} + #{limit}
+        ORDER BY applDate DESC
     </select>
 
     <select id="countAllByPeriod" parameterType="basePeriod" resultType="long">

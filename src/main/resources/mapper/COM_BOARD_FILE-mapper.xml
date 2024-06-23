@@ -24,7 +24,7 @@
     <!-- 첨부파일 저장 -->
     <insert id="saveFile" parameterType="boardFile">
         INSERT INTO com_board_file(ORIGINAL_FILENAME, STORED_FILENAME, BOARD_ID, CREATED_TIME, STORED_PATH)
-        values (#{ORIGINAL_FILENAME}, #{STORED_FILENAME}, #{BOARD_ID}, NOW(), #{STORED_PATH})
+        values (#{ORIGINAL_FILENAME}, #{STORED_FILENAME}, #{BOARD_ID}, SYSDATE, #{STORED_PATH})
     </insert>
     
     <select id="findFile" parameterType="Long" resultType="boardFile">

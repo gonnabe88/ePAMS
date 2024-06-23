@@ -21,7 +21,7 @@
 	<!-- 게시물 저장 후 ID 반환 -->
     <insert id="save" parameterType="board" useGeneratedKeys="true" keyProperty="SEQ_ID">
         INSERT INTO com_board(BOARD_TITLE, BOARD_WRITER, BOARD_CONTENTS, FILE_ATTACHED, CATEGORY, BOARD_HITS, CREATED_TIME)
-            VALUES(#{BOARD_TITLE}, #{BOARD_WRITER}, #{BOARD_CONTENTS}, #{FILE_ATTACHED}, #{CATEGORY}, 0, NOW())
+            VALUES(#{BOARD_TITLE}, #{BOARD_WRITER}, #{BOARD_CONTENTS}, #{FILE_ATTACHED}, #{CATEGORY}, 0, SYSDATE)
     </insert>
     
 	<!-- 특정 게시물 업데이트 -->
@@ -37,10 +37,10 @@
     
     <!-- Paging 규칙에 따라 전체 게시물 조회 -->
     <select id="findAll" resultType="board">
-        SELECT *
+        SELECT * 
         FROM com_board
         ORDER BY ${sortColumn} ${sortDirection}
-        LIMIT #{limit} OFFSET #{offset}
+        OFFSET #{offset} ROWS FETCH NEXT #{limit} ROWS ONLY
     </select>
     
     <!-- 전체 데이터 개수 조회 -->
@@ -56,7 +56,7 @@
        		BOARD_WRITER, 
        		BOARD_CONTENTS, 
        		BOARD_HITS,
-        	date_format(CREATED_TIME, "%Y-%m-%d %H:%i:%s") AS CREATED_TIME, 
+        	TO_CHAR(CREATED_TIME, 'YYYY-MM-DD HH24:MI:SS') AS CREATED_TIME,  
         	FILE_ATTACHED,
         	CATEGORY
         FROM com_board WHERE SEQ_ID=#{SEQ_ID}

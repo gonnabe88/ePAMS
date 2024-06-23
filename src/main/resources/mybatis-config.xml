@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE configuration SYSTEM "mybatis-3-config.dtd">
 <configuration>
+    <settings>
+        <setting name="jdbcTypeForNull" value="VARCHAR"/>
+    </settings>
     <typeAliases>
         <typeAlias type="com.yubico.webauthn.data.ByteArray" alias="ByteArray"/>
 
@@ -25,7 +28,8 @@
 
         <typeAlias type="epams.com.member.dto.MemberDTO" alias="member"></typeAlias>
     </typeAliases>
+
     <typeHandlers>
-        <typeHandler handler="epams.com.login.util.webauthn.utility.ByteArrayTypeHandler"/>
+        <typeHandler handler="epams.com.login.util.webauthn.utility.ByteArrayTypeHandler" javaType="com.yubico.webauthn.data.ByteArray" jdbcType="BLOB"/>
     </typeHandlers>
 </configuration>

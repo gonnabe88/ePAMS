@@ -26,7 +26,7 @@
     <!-- 신규 데이터 추가 --> 
     <insert id="insert" parameterType="logLogin">
         INSERT INTO com_log_login(EMP_NO, LOGIN_TYPE, LOGIN_RESULT, CREATED_TIME)
-            VALUES(#{EMP_NO}, #{LOGIN_TYPE}, #{LOGIN_RESULT}, NOW())
+            VALUES(#{EMP_NO}, #{LOGIN_TYPE}, #{LOGIN_RESULT}, SYSDATE)
     </insert>   
     
     <!-- 기존 데이터 삭제 (로그 테이블 특성상 불필요) --> 

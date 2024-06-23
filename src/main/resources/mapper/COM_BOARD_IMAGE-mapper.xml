@@ -6,7 +6,7 @@
 
     <insert id="insertBoardImage" parameterType="boardImage" useGeneratedKeys="true" keyProperty="SEQ_ID">
         INSERT INTO com_board_image(ORIGINAL_FILENAME, STORED_FILENAME, CREATED_TIME)
-            VALUES(#{ORIGINAL_FILENAME}, #{STORED_FILENAME}, NOW())
+            VALUES(#{ORIGINAL_FILENAME}, #{STORED_FILENAME}, SYSDATE)
     </insert>
     
      <select id="selectBoardImage" parameterType="String" resultType="boardImage">

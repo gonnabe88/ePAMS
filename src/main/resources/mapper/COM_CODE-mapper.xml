@@ -18,7 +18,7 @@
     <!-- 신규 데이터 추가 --> 
     <insert id="insert" parameterType="code">
         INSERT INTO com_code(CD_ID, CD_NM, CD_TYPE, CREATED_TIME)
-            VALUES(#{CD_ID}, #{CD_NM}, #{CD_TYPE}, NOW())
+            VALUES(#{CD_ID}, #{CD_NM}, #{CD_TYPE}, SYSDATE)
     </insert>   
     
     <!-- 기존 데이터 삭제 --> 
@@ -28,17 +28,17 @@
     
     <!-- 기존 데이터 업데이트 --> 
     <update id="update" parameterType="code">
-        UPDATE com_code SET CD_ID=#{CD_ID}, CD_NM=#{CD_NM}, CD_TYPE=#{CD_TYPE}, UPDATED_TIME=NOW() WHERE CD_ID=#{CD_ID}
+        UPDATE com_code SET CD_ID=#{CD_ID}, CD_NM=#{CD_NM}, CD_TYPE=#{CD_TYPE}, UPDATED_TIME=SYSDATE WHERE CD_ID=#{CD_ID}
     </update>
     
     <!-- 신규 데이터 추가 또는 기존 데이터 업데이트 -->
 	<insert id="insertUpdate" parameterType="code">
 	    INSERT INTO com_code (CD_ID, CD_NM, CD_TYPE, CREATED_TIME)
-	    VALUES (#{CD_ID}, #{CD_NM}, #{CD_TYPE}, NOW())
+	    VALUES (#{CD_ID}, #{CD_NM}, #{CD_TYPE}, SYSDATE)
 	    ON DUPLICATE KEY UPDATE
 	    CD_NM = VALUES(CD_NM),
 	    CD_TYPE = VALUES(CD_TYPE),
-	    UPDATED_TIME = NOW();
+	    UPDATED_TIME = SYSDATE;
 	</insert>
         
 </mapper>

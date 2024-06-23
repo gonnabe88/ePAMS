@@ -32,91 +32,136 @@ import epams.com.member.service.MemberDetailsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * @author K140024
+ * @implNote 메인화면(index) Controller
+ * @since 2024-06-20
+ */
 @Slf4j
 @Controller
 @RequiredArgsConstructor
 public class IndexController<S extends Session> {
-	/**
-    *@author 140024
-    *@implNote 메인화면(index) Controller
-	*@since 2024-06-20
-    */
-	@Value("${kdb.indexBrdCnt}")
-	private int indexBrdCnt;
 
-	private final BoardService boardService;
-	private final MemberDetailsService memberservice;
-	private final RegistrationService service;
-	private final CodeHtmlDetailService codeHtmlDetailService;
-	
-	private Authentication Authentication() {
-	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-	    if (authentication == null || authentication instanceof AnonymousAuthenticationToken) return null;
-	    return authentication;
-	}
-	@GetMapping("/popup")
-	public String popup() {
-		return "/common/popup";
-	}
-	
-	@GetMapping("/index")
-	public String indexMain(@PageableDefault(page = 1) Pageable pageable, Model model) {
-    	
-		final String INDEXMAIN = "/common/index";
-		
-		// 현재 로그인한 사용자 정보
-    	Authentication auth = Authentication();
-    	
-    	// 간편인증 등록 여부 확인
-    	int existingUser = service.getWebauthUserRepository().countByUsername(auth.getName());
-    	int existingAuthUser = service.getWebauthDetailRepository().countByUser(auth.getName());
-    	model.addAttribute("username", auth.getName());
-    	if(existingAuthUser == 0) {
-    		model.addAttribute("simpleauth", false);
-    		log.info("Not simple auth user");
-    	}
-		else {
-			model.addAttribute("simpleauth", true);
-			log.info("simple auth user");
-		}			
-    	
-    	  // 코드
-    	  Map<String, String> codeList = codeHtmlDetailService.getCodeHtmlDetail(INDEXMAIN);
-    	  model.addAttribute("codeList", codeList);	    
+    /**
+     * @author K140024
+     * @implNote 스트링 상수 정의 (applcation.yml)
+     * @since 2024-06-20
+     */
+    @Value("${kdb.indexBrdCnt}")
+    private int indexBrdCnt;
 
-    	  // 메인화면 공지사항 출력	   
-          int currentPage = pageable.getPageNumber(); // 현재 페이지 (1-based index)
-	      pageable = PageRequest.of(currentPage, indexBrdCnt); // pageable 객체 설정 
-	      Page<BoardDTO> boardList = boardService.paging(pageable); // 가장 최근 게시물의 indexBrdCnt 수만큼 가져옴
-	      model.addAttribute("boardList", boardList);
-	      
-	      // 메인화면 직원조회 출력
-	      List<MemberEntity> memberList = memberservice.findAll();
-	      model.addAttribute("memberList", memberList);	      
-	      
-	      // 메인화면 빠른근태신청 출력
-	      LocalDate today = LocalDate.now();    	
-	      DayOfWeek dayOfWeek = today.getDayOfWeek();
-	      model.addAttribute("nowDate", today+"("+dayOfWeek.getDisplayName(TextStyle.NARROW, Locale.KOREAN)+")");
-	      
-	      LocalDate tomorrow = LocalDate.now().plusDays(1);
-	      DayOfWeek dayOfWeek2 = tomorrow.getDayOfWeek();
-	      model.addAttribute("tomorrowDate", tomorrow+"("+dayOfWeek2.getDisplayName(TextStyle.NARROW, Locale.KOREAN)+")");
-	      
-	        
-    	return INDEXMAIN;
-    }      
-    
+    /**
+     * @author K140024
+     * @implNote 게시판 서비스 주입
+     * @since 2024-06-11
+     */
+    private final BoardService boardService;
+
+    /**
+     * @author K140024
+     * @implNote 회원 서비스 주입
+     * @since 2024-06-11
+     */
+    private final MemberDetailsService memberservice;
+
+    /**
+     * @author K140024
+     * @implNote 등록 서비스 주입
+     * @since 2024-06-11
+     */
+    private final RegistrationService service;
+
+    /**
+     * @author K140024
+     * @implNote 코드 상세 서비스 주입
+     * @since 2024-06-11
+     */
+    private final CodeHtmlDetailService codeHtmlDetailService;
+
+    /**
+     * @author K140024
+     * @implNote 현재 인증된 사용자 정보를 반환하는 메서드
+     * @since 2024-06-11
+     */
+    private Authentication Authentication() {
+        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) return null;
+        return authentication;
+    }
+
+    /**
+     * @author K140024
+     * @implNote 팝업 화면을 반환하는 메서드
+     * @since 2024-06-11
+     */
+    @GetMapping("/popup")
+    public String popup() {
+        return "/common/popup";
+    }
+
+    /**
+     * @author K140024
+     * @implNote 메인 화면을 반환하는 메서드
+     * @since 2024-06-11
+     */
+    @GetMapping("/index")
+    public String indexMain(@PageableDefault(page = 1) Pageable pageable, Model model) {
+
+        final String INDEXMAIN = "/common/index";
+
+        // 현재 로그인한 사용자 정보
+        final Authentication auth = Authentication();
+
+        // 간편인증 등록 여부 확인
+        final int existingUser = service.getWebauthUserRepository().countByUsername(auth.getName());
+        final int existingAuthUser = service.getWebauthDetailRepository().countByUser(auth.getName());
+        model.addAttribute("username", auth.getName());
+        if (existingAuthUser == 0) {
+            model.addAttribute("simpleauth", false);
+            log.info("Not simple auth user");
+        } else {
+            model.addAttribute("simpleauth", true);
+            log.info("simple auth user");
+        }
+
+        // 코드
+        final Map<String, String> codeList = codeHtmlDetailService.getCodeHtmlDetail(INDEXMAIN);
+        model.addAttribute("codeList", codeList);
+
+        // 메인화면 공지사항 출력
+        final int currentPage = pageable.getPageNumber(); // 현재 페이지 (1-based index)
+        pageable = PageRequest.of(currentPage, indexBrdCnt); // pageable 객체 설정
+        final Page<BoardDTO> boardList = boardService.paging(pageable); // 가장 최근 게시물의 indexBrdCnt 수만큼 가져옴
+        model.addAttribute("boardList", boardList);
+
+        // 메인화면 직원조회 출력
+        final List<MemberEntity> memberList = memberservice.findAll();
+        model.addAttribute("memberList", memberList);
+
+        // 메인화면 빠른근태신청 출력
+        final LocalDate today = LocalDate.now();
+        final DayOfWeek dayOfWeek = today.getDayOfWeek();
+        model.addAttribute("nowDate", today + "(" + dayOfWeek.getDisplayName(TextStyle.NARROW, Locale.KOREAN) + ")");
+
+        final LocalDate tomorrow = LocalDate.now().plusDays(1);
+        final DayOfWeek dayOfWeek2 = tomorrow.getDayOfWeek();
+        model.addAttribute("tomorrowDate", tomorrow + "(" + dayOfWeek2.getDisplayName(TextStyle.NARROW, Locale.KOREAN) + ")");
+
+        return INDEXMAIN;
+    }
+
+    /**
+     * @author K140024
+     * @implNote 검색 기능을 수행하는 메서드
+     * @since 2024-06-11
+     */
     @PostMapping("/search")
-	public String search(Model model, @RequestParam("text") String text) {
-    	
-    	  // 메인화면 직원조회 출력
-		  List<SearchMemberEntity> memberList = memberservice.findBySearchValue(text);
-	      model.addAttribute("memberList", memberList);	      
-	      
-    	return "/common/memberlist";
-    }    
+    public String search(Model model, @RequestParam("text") String text) {
 
-    
+        // 메인화면 직원조회 출력
+        final List<SearchMemberEntity> memberList = memberservice.findBySearchValue(text);
+        model.addAttribute("memberList", memberList);
 
+        return "/common/memberlist";
+    }
 }

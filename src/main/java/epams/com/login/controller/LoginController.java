@@ -103,7 +103,6 @@ public class LoginController {
         	VIEW = "redirect:/index";
         	
         }
-        log.info("VIEW : " + VIEW);
         return VIEW;
     }
 
@@ -138,7 +137,6 @@ public class LoginController {
             // 로그인 실패 시 실패 여부를 반환
             res.put("result", false);
         }
-        log.info("POST VIEW");
         return res;
     }
 

@@ -43,7 +43,7 @@ public class CodeHtmlMapEntity extends BaseEntity implements Serializable {
     @ManyToOne
     @JoinColumn(
             name = "CD_ID",
-            foreignKey = @ForeignKey(name = "FK_COM_CODE_HTML_CD_ID", foreignKeyDefinition = "FOREIGN KEY (CD_ID) REFERENCES COM_CODE (CD_ID) ON DELETE CASCADE ON UPDATE CASCADE")
+            foreignKey = @ForeignKey(name = "FK_COM_CODE_HTML_CD_ID", foreignKeyDefinition = "FOREIGN KEY (CD_ID) REFERENCES COM_CODE (CD_ID) ON DELETE CASCADE")
         )
     private CodeEntity codeEntity;
 

@@ -10,6 +10,8 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.intercept.AuthorizationFilter;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import epams.com.config.security.CustomAuthenticationDetailsSource;
@@ -135,6 +137,7 @@ public class SecurityConfig {
                     (request, response, authException) -> response.sendRedirect("/error/404"),
                     new AntPathRequestMatcher("/**"))  // 기본 인증 엔트리 포인트 설정
             );
+           
 
         return http.build();
     }

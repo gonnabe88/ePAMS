@@ -84,7 +84,7 @@ const webauthn = (e) => {
     fetch('/api/webauthn/login', {
         method: 'POST',
         headers: {
-            'X-CSRF-Token': token
+            'X-CSRF-Token' : token
         },
         body: formData
     })
@@ -143,7 +143,8 @@ const webauthn = (e) => {
         return fetch("/api/webauthn/welcome", {
             method: 'POST',
             headers: {
-                'X-CSRF-Token': token
+				'header': header,
+				'X-CSRF-Token': token,
             },
             body: formData,
         });
@@ -210,8 +211,8 @@ const normal = (e) => {
     fetch('/login', {
         method: 'POST',
         headers: {
-	        'header': header,
-	        'X-CSRF-Token': token,
+			'header': header,
+			'X-CSRF-Token': token,
     	},
         body: formData
     })

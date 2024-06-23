@@ -59,9 +59,9 @@ public class DtmController<S extends Session> {
 
 	@GetMapping("/main")
 	public String dtmMain(@PageableDefault(page = 1) Pageable pageable, Model model) {
-		final String DTMMAIN = "/dtm/main";
+		final String VIEW = "/dtm/main";
 		// 코드
-		Map<String, String> codeList = codeHtmlDetailService.getCodeHtmlDetail(DTMMAIN);
+		Map<String, String> codeList = codeHtmlDetailService.getCodeHtmlDetail(VIEW);
 		// 리스트의 내용을 출력
 		System.out.println(codeList.toString());
 
@@ -96,7 +96,7 @@ public class DtmController<S extends Session> {
 		model.addAttribute("tomorrowDate",
 				tomorrow + "(" + dayOfWeek2.getDisplayName(TextStyle.NARROW, Locale.KOREAN) + ")");
 
-		return DTMMAIN;
+		return VIEW;
 	}
 
 	@GetMapping("/list")

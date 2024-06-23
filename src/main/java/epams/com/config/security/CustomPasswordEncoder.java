@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class CustomPasswordEncoder implements PasswordEncoder {
 
+
     private final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
     @Override
@@ -36,6 +37,7 @@ public class CustomPasswordEncoder implements PasswordEncoder {
 
     @Override
     public boolean matches(CharSequence rawPassword, String encodedPassword) {
+        // 2024-06-22 취약점 조치 (CWE-256 Unprotected Storage of Credentials)
         return bCryptPasswordEncoder.matches(rawPassword, encodedPassword);
     }
 }

@@ -1,8 +1,5 @@
 package epams.com.login.util.webauthn.authenticator;
 
-import com.yubico.webauthn.data.ByteArray;
-
-import epams.com.board.entity.BoardEntity;
 import epams.com.login.util.webauthn.user.WebauthUserEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -27,22 +24,23 @@ public class WebauthDetailEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment
+    @Column(name = "SEQ_ID")
     private Long SEQ_ID;
 
     @Lob
-    @Column(nullable = false)
-    private ByteArray CRDT_ID;
+    @Column(name = "CRDT_ID", nullable = false)
+    private byte[] CRDT_ID;
 
     @Lob
-    @Column(nullable = false)
-    private ByteArray PBLK_KEY;
+    @Column(name = "PBLK_KEY", nullable = false)
+    private byte[] PBLK_KEY;
 
-	@Column(nullable = false)
+	@Column(name = "CNT", nullable = false)
 	private Long CNT;
 	
 	@Lob
-	@Column(nullable = true)
-	private ByteArray AAGUID;
+	@Column(name = "AAGUID", nullable = true)
+	private byte[] AAGUID;
 
 	@ManyToOne(fetch = FetchType.EAGER) // 즉시 로딩으로 설정
 	@JoinColumn(name="EMP_NO", referencedColumnName = "EMP_NO", insertable = false, updatable = false)

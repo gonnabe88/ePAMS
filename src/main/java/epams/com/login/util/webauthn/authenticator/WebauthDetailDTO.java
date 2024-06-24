@@ -10,7 +10,6 @@ import com.yubico.webauthn.data.AuthenticatorAttestationResponse;
 import com.yubico.webauthn.data.ByteArray;
 
 import epams.com.login.util.webauthn.user.WebauthUserDTO;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -25,7 +24,6 @@ import lombok.ToString;
 @Setter
 @ToString
 @NoArgsConstructor // 기본 생성자
-@AllArgsConstructor // 모든 필드를 매개변수로 하는 생성자
 public class WebauthDetailDTO {
 
     /**
@@ -76,20 +74,38 @@ public class WebauthDetailDTO {
     }
 
     /**
+     * 생성자
+     * 
+     * @param result   RegistrationResult 객체
+     * @param response AuthenticatorAttestationResponse 객체
+     * @param user     WebauthUserDTO 객체
+     * @param name     사용자 이름
+     */
+    public WebauthDetailDTO(ByteArray credentialId, ByteArray publicKey, Long count, ByteArray aaguid, WebauthUserDTO user) {
+        this.credentialId = credentialId;
+        this.publicKey = publicKey;
+        this.count = count;
+        this.aaguid = aaguid;
+        this.user = user;
+    }
+
+    /**
      * WebauthDetailEntity 객체를 WebauthDetailDTO 객체로 변환
      * 
      * @param entity WebauthDetailEntity 객체
      * @return WebauthDetailDTO 객체
      */
     public static WebauthDetailDTO toDTO(final WebauthDetailEntity entity) {
-        final WebauthDetailDTO dto = new WebauthDetailDTO();
-        dto.setSeqId(entity.getSEQ_ID());
-        dto.setCredentialId(entity.getCRDT_ID());
-        dto.setPublicKey(entity.getPBLK_KEY());
-        dto.setCount(entity.getCNT());
-        dto.setAaguid(entity.getAAGUID());
-        dto.setUser(WebauthUserDTO.toDTO(entity.getUser()));
-        return dto;
+        if (entity == null) {
+            return null;
+        }
+        return new WebauthDetailDTO(
+            new ByteArray(entity.getCRDT_ID()),
+            new ByteArray(entity.getPBLK_KEY()),
+            entity.getCNT(),
+            new ByteArray(entity.getAAGUID()),
+            WebauthUserDTO.toDTO(entity.getUser())
+        );
     }
 
     /**
@@ -100,10 +116,10 @@ public class WebauthDetailDTO {
     public WebauthDetailEntity toEntity() {
         final WebauthDetailEntity entity = new WebauthDetailEntity();
         entity.setSEQ_ID(this.getSeqId());
-        entity.setCRDT_ID(this.getCredentialId());
-        entity.setPBLK_KEY(this.getPublicKey());
+        entity.setCRDT_ID(this.getCredentialId().getBytes());
+        entity.setPBLK_KEY(this.getPublicKey().getBytes());
         entity.setCNT(this.getCount());
-        entity.setAAGUID(this.getAaguid());
+        entity.setAAGUID(this.getAaguid().getBytes());
         entity.setUser(this.getUser().toEntity());
         return entity;
     }

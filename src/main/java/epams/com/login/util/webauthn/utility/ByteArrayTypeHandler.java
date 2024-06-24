@@ -1,15 +1,10 @@
 package epams.com.login.util.webauthn.utility;
 
-import com.yubico.webauthn.data.ByteArray;
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
-import org.apache.ibatis.type.MappedJdbcTypes;
-import org.apache.ibatis.type.MappedTypes;
-
+import com.yubico.webauthn.data.ByteArray;
 import java.sql.*;
 
-@MappedTypes(ByteArray.class)
-@MappedJdbcTypes(JdbcType.BLOB)
 public class ByteArrayTypeHandler extends BaseTypeHandler<ByteArray> {
 
     @Override
@@ -20,18 +15,18 @@ public class ByteArrayTypeHandler extends BaseTypeHandler<ByteArray> {
     @Override
     public ByteArray getNullableResult(ResultSet rs, String columnName) throws SQLException {
         byte[] bytes = rs.getBytes(columnName);
-        return bytes != null ? new ByteArray(bytes) : null;
+        return bytes == null ? null : new ByteArray(bytes);
     }
 
     @Override
     public ByteArray getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
         byte[] bytes = rs.getBytes(columnIndex);
-        return bytes != null ? new ByteArray(bytes) : null;
+        return bytes == null ? null : new ByteArray(bytes);
     }
 
     @Override
     public ByteArray getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
         byte[] bytes = cs.getBytes(columnIndex);
-        return bytes != null ? new ByteArray(bytes) : null;
+        return bytes == null ? null : new ByteArray(bytes);
     }
 }

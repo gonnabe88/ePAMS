@@ -114,11 +114,18 @@ public class LoginController {
      */
     @PostMapping("/login")
     @ResponseBody
-    public Map<String, Object> pwlogin(final HttpServletResponse response, @ModelAttribute final MemberDTO memberDTO, final Model model)
+    public Map<String, Object> pwlogin(final HttpServletResponse response, @ModelAttribute MemberDTO memberDTO, final Model model)
     {
+        // Front-end에서 ID가 대문자로 바뀌지 않는 경우에 대비하여 한번 더 대문자 변환 처리
+        if (memberDTO != null && memberDTO.getUsername() != null) {
+            String uppercaseUsername = memberDTO.getUsername().toUpperCase();
+            memberDTO.setUsername(uppercaseUsername);
+        }
+
         final int existingUser = service.getWebauthUserRepository().countByUsername(memberDTO.getUsername());
         final Map<String, Object> res = new ConcurrentHashMap<>();
         if (loginService.pwLogin(memberDTO)) {
+            log.warn("성공?");
             // 로그인 성공 시 인증번호 생성
             try {
 				restapiservice.requestMFA(memberDTO);
@@ -134,6 +141,7 @@ public class LoginController {
                 res.put("simpleauth", true);
             }
         } else {
+            log.warn("실패?");
             // 로그인 실패 시 실패 여부를 반환
             res.put("result", false);
         }

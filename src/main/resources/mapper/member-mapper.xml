@@ -25,7 +25,7 @@
     </insert>
     
     <select id="login" parameterType="member" resultType="member">
-        select * from member where username=#{username} and password=#{password}
+        select USERNAME as username, PASSWORD as password from MEMBER where USERNAME=#{username} and PASSWORD=#{password}
     </select>
     
     <select id="findById" parameterType="Long" resultType="member">

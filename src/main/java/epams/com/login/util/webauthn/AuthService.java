@@ -53,6 +53,7 @@ import epams.com.member.dto.MemberDTO;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import java.util.Arrays;
 
 /**
  * 간편인증 서비스
@@ -116,10 +117,11 @@ public class AuthService {
      * @return 로그인 요청에 대한 JSON 응답
      */
     public String startLogin(final String username, final HttpSession session) {
-        log.warn("POST login");
+        log.warn("POST startLogin START");
         final AssertionRequest request = relyingParty.startAssertion(StartAssertionOptions.builder()
             .username(username)
             .build());
+        log.warn("POST startLogin END");
         try {
             session.setAttribute(username, request.toJson());
             return request.toCredentialsGetJson();
@@ -128,6 +130,80 @@ public class AuthService {
         }
     }
 
+    
+    /**
+     * 로그인 완료 요청 처리
+     * @return 로그인 완료에 대한 응답
+     */
+    public ResponseEntity<?> finishLogin(final String credential, final String username, final Model model, final HttpSession session) {
+        log.warn("finishLogin START");
+        final MemberDTO ismemberDTO = loginRepository.findByUserId(username);
+        final Map<String, Object> response = new ConcurrentHashMap<>();
+        HttpStatus status = HttpStatus.OK;
+    
+        Object sessionData = session.getAttribute(username);
+        if (sessionData == null) {
+            log.error("Session data is null for username: " + username);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Session data not found.");
+        }
+    
+        try {
+            log.warn("POST welcome");
+            final PublicKeyCredential<AuthenticatorAssertionResponse, ClientAssertionExtensionOutputs> pkc;
+            pkc = PublicKeyCredential.parseAssertionResponseJson(credential);
+            
+            log.warn("credential : " + credential);
+    
+            // String 데이터를 AssertionRequest 객체로 변환
+            String sessionDataString = (String) sessionData;
+            AssertionRequest request = AssertionRequest.fromJson(sessionDataString);
+            
+            log.warn("[request] getUsername : " + request.getUsername());
+            log.warn("[request] getUserHandle : " + request.getUserHandle());
+            log.warn("[request] getPublicKeyCredentialRequestOptions : " + request.getPublicKeyCredentialRequestOptions());
+            log.warn("[request] toCredentialsGetJson : " + request.toCredentialsGetJson());
+            
+            final AssertionResult result = relyingParty.finishAssertion(FinishAssertionOptions.builder()
+                .request(request)
+                .response(pkc)
+                .build());
+            
+            if (result.isSuccess()) {
+                model.addAttribute(USERNAME_PARAM, username);
+                final SecurityContext context = SecurityContextHolder.createEmptyContext();
+                final Authentication authentication = 
+                    new UsernamePasswordAuthenticationToken(ismemberDTO.getUsername(), null, List.of(new SimpleGrantedAuthority("ROLE_ADMIN")));
+                context.setAuthentication(authentication);
+                SecurityContextHolder.setContext(context);
+                session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, context);
+                log.warn("isSuccess");
+                logRepository.insert(LogLoginDTO.getDTO(username, SIMPLEAUTH_STR, true));
+                response.put("status", "OK");
+                response.put("redirectUrl", "/index");
+            } else {
+                logRepository.insert(LogLoginDTO.getDTO(username, SIMPLEAUTH_STR, false));
+                response.put("status", "BAD_REQUEST");
+                response.put("redirectUrl", "/login");
+                status = HttpStatus.BAD_REQUEST;
+            }
+        } catch (JsonProcessingException e) {
+            logRepository.insert(LogLoginDTO.getDTO(username, SIMPLEAUTH_STR, false));
+            log.error("Error processing JSON: ", e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error processing JSON.", e);
+        } catch (AssertionFailedException e) {
+            logRepository.insert(LogLoginDTO.getDTO(username, SIMPLEAUTH_STR, false));
+            log.error("Assertion failed: ", e);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Authentication failed", e);
+        } catch (IOException e) {
+            logRepository.insert(LogLoginDTO.getDTO(username, SIMPLEAUTH_STR, false));
+            log.error("Failed to save credential: ", e);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Failed to save credential, please try again!", e);
+        }
+    
+        return ResponseEntity.status(status).body(response);
+    }
+    
+    
     /**
      * 새로운 사용자 등록 요청 처리
      * 
@@ -136,6 +212,7 @@ public class AuthService {
      * @return 등록 요청에 대한 JSON 응답
      */
     public String newUserRegistration(final String username, final HttpSession session) {
+        log.warn("newUserRegistration");
         final WebauthUserDTO existingUser = service.getWebauthUserRepository().findByUsername(username);        	
         final List<WebauthDetailDTO> existingAuthUser = service.getWebauthDetailRepository().findAllByUser(username);
         if (existingAuthUser.isEmpty()) {
@@ -160,8 +237,9 @@ public class AuthService {
      * @return 등록 요청에 대한 JSON 응답
      */
     public String newAuthRegistration(final WebauthUserDTO user, final HttpSession session) {
+        log.warn("newAuthRegistration2");
         final WebauthUserDTO existingUser = service.getWebauthUserRepository().findByHandle(user.getHandle());
-        if (existingUser != null) {
+        if (existingUser == null) {
             final UserIdentity userIdentity = user.toUserIdentity();           
 
             final AuthenticatorSelectionCriteria authSelection = AuthenticatorSelectionCriteria.builder()
@@ -170,11 +248,12 @@ public class AuthService {
                 .userVerification(UserVerificationRequirement.REQUIRED)
                 .build();
 
+
             final StartRegistrationOptions regOptions = StartRegistrationOptions.builder()
                 .user(userIdentity)
                 .authenticatorSelection(authSelection)
                 .build();
-
+                
             final PublicKeyCredentialCreationOptions registration = relyingParty.startRegistration(regOptions);
             try {
                 session.setAttribute(userIdentity.getDisplayName(), registration.toJson());
@@ -188,7 +267,7 @@ public class AuthService {
                 throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error processing JSON.", e);
             }
         } else {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "User " + user.getUsername() + " does not exist. Please register.");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "User " + user.getUsername() + "이미 등록된 사용자입니다.");
         }
     }
 
@@ -200,6 +279,7 @@ public class AuthService {
      * @return 등록 완료에 대한 응답
      */
     public ResponseEntity<String> finishRegistration(final String credential, final HttpSession session) {
+        log.warn("finishRegistration");
         final Authentication auth = getAuthentication();
         final String username = auth.getName();
         try {
@@ -224,55 +304,6 @@ public class AuthService {
         } catch (IOException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Failed to save credential, please try again!", e);
         }
-    }
-
-    /**
-     * 로그인 완료 요청 처리
-     * @return 로그인 완료에 대한 응답
-     */
-    public ResponseEntity<?> finishLogin(final String credential, final String username, final Model model, final HttpSession session) {
-        final MemberDTO ismemberDTO = loginRepository.findByUserId(username);
-        final Map<String, Object> response = new ConcurrentHashMap<>();
-        HttpStatus status = HttpStatus.OK;
-
-        try {
-            log.warn("POST welcome");
-            final PublicKeyCredential<AuthenticatorAssertionResponse, ClientAssertionExtensionOutputs> pkc;
-            pkc = PublicKeyCredential.parseAssertionResponseJson(credential);
-            final AssertionRequest request = AssertionRequest.fromJson((String) session.getAttribute(username));
-            final AssertionResult result = relyingParty.finishAssertion(FinishAssertionOptions.builder()
-                .request(request)
-                .response(pkc)
-                .build());
-            if (result.isSuccess()) {
-                model.addAttribute(USERNAME_PARAM, username);
-                final SecurityContext context = SecurityContextHolder.createEmptyContext();
-                final Authentication authentication = 
-                    new UsernamePasswordAuthenticationToken(ismemberDTO.getUsername(), null, List.of(new SimpleGrantedAuthority("ROLE_ADMIN")));
-                context.setAuthentication(authentication);
-                SecurityContextHolder.setContext(context);
-                session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, context);
-                log.warn("isSuccess");
-                logRepository.insert(LogLoginDTO.getDTO(username, SIMPLEAUTH_STR, true));
-                response.put("status", "OK");
-                response.put("redirectUrl", "/index");
-            } else {
-                logRepository.insert(LogLoginDTO.getDTO(username, SIMPLEAUTH_STR, false));
-                response.put("status", "BAD_REQUEST");
-                response.put("redirectUrl", "/login");
-                status = HttpStatus.BAD_REQUEST;
-            }
-        } catch (JsonProcessingException e) {
-            logRepository.insert(LogLoginDTO.getDTO(username, SIMPLEAUTH_STR, false));
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error processing JSON.", e);
-        } catch (AssertionFailedException e) {
-            logRepository.insert(LogLoginDTO.getDTO(username, SIMPLEAUTH_STR, false));
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Authentication failed", e);
-        } catch (IOException e) {
-            logRepository.insert(LogLoginDTO.getDTO(username, SIMPLEAUTH_STR, false));
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Failed to save credential, please try again!", e);
-        }
-
-        return ResponseEntity.status(status).body(response);
-    }
+    }    
+    
 }

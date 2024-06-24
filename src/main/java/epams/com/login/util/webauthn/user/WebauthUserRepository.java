@@ -1,6 +1,8 @@
 package epams.com.login.util.webauthn.user;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
@@ -29,6 +31,7 @@ public class WebauthUserRepository {
      */
     public List<WebauthUserDTO> findAll() {
         final List<WebauthUserEntity> webauthUserEntityList = sql.selectList("WebauthUser.findAll");
+        log.warn("findAll");
         return WebauthUserDTO.toDTOList(webauthUserEntityList);
     }
 
@@ -38,6 +41,7 @@ public class WebauthUserRepository {
      * @since 2024-06-09
      */
     public Long countById(final WebauthUserDTO webauthUserDTO) {
+        log.warn("countById");
         return sql.selectOne("WebauthUser.countById", webauthUserDTO.toEntity());
     }
 
@@ -47,6 +51,7 @@ public class WebauthUserRepository {
      * @since 2024-06-09
      */
     public void insert(final WebauthUserDTO webauthUserDTO) {
+        log.warn("insert");
         sql.insert("WebauthUser.insert", webauthUserDTO.toEntity());
     }
 
@@ -56,6 +61,7 @@ public class WebauthUserRepository {
      * @since 2024-06-09
      */
     public void delete(final WebauthUserDTO webauthUserDTO) {
+        log.warn("delete");
         sql.delete("WebauthUser.delete", webauthUserDTO.toEntity());
     }
 
@@ -65,6 +71,7 @@ public class WebauthUserRepository {
      * @since 2024-06-09
      */
     public void update(final WebauthUserDTO webauthUserDTO) {
+        log.warn("update");
         sql.update("WebauthUser.update", webauthUserDTO.toEntity());
     }
 
@@ -74,21 +81,25 @@ public class WebauthUserRepository {
      * @since 2024-06-09
      */
     public void insertUpdate(final WebauthUserDTO webauthUserDTO) {
+        log.warn("insertUpdate");
         sql.insert("WebauthUser.insertUpdate", webauthUserDTO.toEntity());
     }
 
     /***
      * @author K140024
-     * @implNote 사용자 이름으로 데이터 조회
+     * @implNote 사용자 이름으로 데이터 조회 (인증 시)
      * @since 2024-06-09
      */
     public WebauthUserDTO findByUsername(final String username) {
-        log.warn("findByUsername : " + username);
+        
         final WebauthUserEntity entity = sql.selectOne("WebauthUser.findByUsername", username);
+        log.warn("findByUsername");
         if (entity == null) {
             // Null인 경우에 대한 적절한 처리를 추가
             return null; // 또는 적절한 기본값 반환
         }
+        log.warn("findByUsername : " + entity.getEMP_NO() + " + " + entity.getDISP_NM() + " + " + new ByteArray(entity.getHANDLE()));
+        
         final WebauthUserDTO webauthUserDTO = WebauthUserDTO.toDTO(entity);
         return webauthUserDTO;
     }
@@ -99,16 +110,24 @@ public class WebauthUserRepository {
      * @since 2024-06-09
      */
     public int countByUsername(final String username) {
+        log.warn("countByUsername");
         return sql.selectOne("WebauthUser.countByUsername", username);
     }
 
     /***
      * @author K140024
-     * @implNote 사용자 핸들로 데이터 조회
+     * @implNote 사용자 핸들로 데이터 조회 (등록 시)
      * @since 2024-06-09
      */
     public WebauthUserDTO findByHandle(final ByteArray handle) {
-        final WebauthUserDTO webauthUserDTO = WebauthUserDTO.toDTO(sql.selectOne("WebauthUser.findByHandle", handle));
+        byte[] handleBytes = handle.getBytes();
+        
+        Map<String, Object> params = new HashMap<>();
+        params.put("handleBytes", handleBytes);
+        final WebauthUserDTO webauthUserDTO = WebauthUserDTO.toDTO(sql.selectOne("WebauthUser.findByHandle", params));
+        log.warn("findByHandle (handle): " + handle);
+        log.warn("findByHandle (ByteArray(handle.getBytes())): " + new ByteArray(handleBytes));
+
         return webauthUserDTO;
     }
 

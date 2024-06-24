@@ -1,4 +1,8 @@
 
+document.getElementById('username').addEventListener('input', function(event) {
+    event.target.value = event.target.value.toUpperCase();
+});
+
 document.addEventListener("DOMContentLoaded", () => {
     const checkbox = document.getElementById('flexSwitchCheckChecked');
     const label = document.getElementById('switchLabel');

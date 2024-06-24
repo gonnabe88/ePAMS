@@ -151,6 +151,7 @@ public class AuthRestController {
         @RequestParam(CREDENTIAL_PARAM) final String credential,
         final HttpSession session
     ) {
+    	log.warn("POST finishauth");
         return authService.finishRegistration(credential, session);
     }
 
@@ -167,6 +168,7 @@ public class AuthRestController {
         final Model model,
         final HttpSession session
     ) {
+    	log.warn("POST welcome");
         return authService.finishLogin(credential, username, model, session);
     }
 }

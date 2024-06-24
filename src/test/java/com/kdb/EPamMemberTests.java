@@ -30,7 +30,7 @@ class EPamMemberTests {
      * @implNote 회원을 등록하는 테스트 메서드
      * @since 2024-06-11
      */
-    //@Test
+    @Test
     public void RegistOneMember() throws IOException {
         final Random random = new Random();
         final List<String> dept = new ArrayList<>(Arrays.asList(

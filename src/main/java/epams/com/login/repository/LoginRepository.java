@@ -5,13 +5,15 @@ import org.springframework.stereotype.Repository;
 
 import epams.com.member.dto.MemberDTO;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author K140024
  * @implNote 로그인 관련 데이터베이스 작업을 처리하는 리포지토리 클래스
  * @since 2024-06-11
  */
-@Repository
+@Slf4j
+ @Repository
 @RequiredArgsConstructor
 public class LoginRepository {
 
@@ -28,6 +30,7 @@ public class LoginRepository {
      * @since 2024-06-11
      */
     public MemberDTO login(final MemberDTO memberDTO) {
+        log.warn(memberDTO.toString());
         return sql.selectOne("Member.login", memberDTO);
     }
 

@@ -35,6 +35,7 @@ public class WebauthDetailRepository {
 	 */
     public List<WebauthDetailDTO> findAll() {
     	final List<WebauthDetailEntity> webauthEntities = sql.selectList("WebauthDetail.findAll");
+		log.warn("findAll");
         return WebauthDetailDTO.toDTOList(webauthEntities);
     }
     
@@ -44,6 +45,7 @@ public class WebauthDetailRepository {
 	 * @since 2024-06-09
 	 */
     public Long countById(final WebauthDetailDTO webauthDetailDTO) {
+		log.warn("countById");
         return sql.selectOne("WebauthDetail.countById", webauthDetailDTO.toEntity());
     }
     
@@ -53,6 +55,7 @@ public class WebauthDetailRepository {
 	 * @since 2024-06-09
 	 */
     public void insert(final WebauthDetailDTO webauthDetailDTO) {
+		log.warn("insert");
         sql.insert("WebauthDetail.insert", webauthDetailDTO.toEntity());
     }
     
@@ -62,6 +65,7 @@ public class WebauthDetailRepository {
 	 * @since 2024-06-09
 	 */
     public void delete(final WebauthDetailDTO webauthDetailDTO) {
+		log.warn("delete");
         sql.delete("WebauthDetail.delete", webauthDetailDTO.toEntity());
     }
     
@@ -71,6 +75,7 @@ public class WebauthDetailRepository {
 	 * @since 2024-06-09
 	 */
     public void update(final WebauthDetailDTO webauthDetailDTO) {
+		log.warn("update");
         sql.update("WebauthDetail.update", webauthDetailDTO.toEntity());
     }
     
@@ -80,6 +85,7 @@ public class WebauthDetailRepository {
 	 * @since 2024-06-09
 	 */
     public Optional<WebauthDetailDTO> findByCredentialId(final ByteArray credentialId) {
+		log.warn("findByCredentialId");
         final WebauthDetailEntity webauthEntities = sql.selectOne("WebauthDetail.findByCredentialId", credentialId);
         final WebauthDetailDTO webauthDetailDTO = WebauthDetailDTO.toDTO(webauthEntities);
         Optional<WebauthDetailDTO> result = Optional.empty();
@@ -95,6 +101,7 @@ public class WebauthDetailRepository {
 	 * @since 2024-06-09
 	 */
     public List<WebauthDetailDTO> findAllByCredentialId(final ByteArray credentialId) {
+		log.warn("findAllByCredentialId");
     	return sql.selectList("WebauthDetail.findAllByCredentialId", credentialId);
     }
     
@@ -104,6 +111,7 @@ public class WebauthDetailRepository {
 	 * @since 2024-06-09
 	 */
     public Optional<WebauthDetailDTO> findByUser(final String username) {
+		log.warn("findByUser");
     	final WebauthDetailDTO webauthDetailDTO = WebauthDetailDTO.toDTO(sql.selectOne("WebauthDetail.findByUser", username));
     	Optional<WebauthDetailDTO> result = Optional.empty();
     	if (webauthDetailDTO != null) {
@@ -118,6 +126,7 @@ public class WebauthDetailRepository {
      * @since 2024-06-09
      */
     public List<WebauthDetailDTO> findAllByUser(final String username) {
+		log.warn("findAllByUser");
         final List<WebauthDetailEntity> webauthEntities = sql.selectList("WebauthDetail.findAllByUser", username);
         return WebauthDetailDTO.toDTOList(webauthEntities);
     }
@@ -128,6 +137,7 @@ public class WebauthDetailRepository {
      * @since 2024-06-09
      */
     public int countByUser(final String username) {
+		log.warn("countByUser");
        return sql.selectOne("WebauthDetail.countByUser", username);
     }
     

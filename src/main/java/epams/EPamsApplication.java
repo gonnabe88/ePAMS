@@ -17,12 +17,14 @@ import epams.com.config.storage.StorageService;
 import epams.com.login.util.webauthn.RegistrationService;
 import epams.com.login.util.webauthn.configuration.WebAuthProperties;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author 140024
  * @since 2024-03-02
  * @implNote Spring Boot 메인 애플리케이션 클래스.
  */
+@Slf4j
 @NoArgsConstructor // 기본생성자
 @SpringBootApplication
 @EnableConfigurationProperties(StorageProperties.class)
@@ -72,11 +74,10 @@ public class EPamsApplication  extends SpringBootServletInitializer {
 	@Bean
 	@Autowired
 	RelyingParty relyingParty(final RegistrationService regisrationRepository, final WebAuthProperties properties) {
-
+		
 		final RelyingPartyIdentity rpIdentity = RelyingPartyIdentity.builder().id(properties.getHostName()) // Relying Party HostName
 				.name(properties.getDisplay()) // Relying Party Display 설정
 				.build();
-
 		return RelyingParty.builder().identity(rpIdentity) // Relying Party Identity 설정
 				.credentialRepository(regisrationRepository) // 등록 서비스 설정
 				.origins(properties.getOrigin()) // 허용되는 원본(origin) 설정

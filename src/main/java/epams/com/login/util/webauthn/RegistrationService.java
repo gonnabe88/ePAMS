@@ -53,6 +53,7 @@ public class RegistrationService implements CredentialRepository {
      */
     @Override
     public Set<PublicKeyCredentialDescriptor> getCredentialIdsForUsername(final String username) {
+        log.warn("getCredentialIdsForUsername");
         final WebauthUserDTO user = webauthUserRepository.findByUsername(username);
         final List<WebauthDetailDTO> auth = webauthDetailRepository.findAllByUser(user.getUsername());
         return auth.stream()
@@ -70,6 +71,7 @@ public class RegistrationService implements CredentialRepository {
      */
     @Override
     public Optional<ByteArray> getUserHandleForUsername(final String username) {
+        log.warn("getUserHandleForUsername");
         final WebauthUserDTO user = webauthUserRepository.findByUsername(username);
         return Optional.of(user.getHandle());
     }
@@ -81,6 +83,7 @@ public class RegistrationService implements CredentialRepository {
      */
     @Override
     public Optional<String> getUsernameForUserHandle(final ByteArray userHandle) {
+        log.warn("getUsernameForUserHandle");
         final WebauthUserDTO user = webauthUserRepository.findByHandle(userHandle);
         return Optional.of(user.getUsername());
     }
@@ -94,10 +97,10 @@ public class RegistrationService implements CredentialRepository {
     public Optional<RegisteredCredential> lookup(final ByteArray credentialId, final ByteArray userHandle) {
         final Optional<WebauthDetailDTO> auth = webauthDetailRepository.findByCredentialId(credentialId);
         auth.ifPresent(credential -> {
-            log.warn("Credential ID: " + credential.getCredentialId());
-            log.warn("User Handle: " + credential.getUser().getHandle());
-            log.warn("Public Key: " + credential.getPublicKey());
-            log.warn("Signature Count: " + credential.getCount());
+            log.warn("[lookup] Credential ID: " + credential.getCredentialId());
+            log.warn("[lookup] User Handle: " + credential.getUser().getHandle());
+            log.warn("[lookup] Public Key: " + credential.getPublicKey());
+            log.warn("[lookup] Signature Count: " + credential.getCount());
         });
 
         return auth.map(
@@ -117,6 +120,7 @@ public class RegistrationService implements CredentialRepository {
      */
     @Override
     public Set<RegisteredCredential> lookupAll(final ByteArray credentialId) {
+        log.warn("lookupAll");
         final List<WebauthDetailDTO> auth = webauthDetailRepository.findAllByCredentialId(credentialId);
         return auth.stream()
             .map(

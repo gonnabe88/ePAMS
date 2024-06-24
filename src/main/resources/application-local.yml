@@ -25,29 +25,29 @@ authn:
 spring:
   devtools.livereload.enabled: true  # 로컬 개발 환경에서 livereload 활성화
   
-  datasource:
-    driver-class-name: oracle.jdbc.OracleDriver
-    url: jdbc:oracle:thin:@192.168.0.10:1521:ORCLCDB
-    username: ehr
-    password: kdb1234!
-    hikari:
-      connection-timeout: 60000
-      idle-timeout: 300000
-      max-lifetime: 1800000
-      maximum-pool-size: 10
-
   # datasource:
-  #   driver-class-name: org.h2.Driver
-  #   url: jdbc:h2:file:C:/h2data/ehr;MODE=Oracle;DB_CLOSE_ON_EXIT=FALSE;
+  #   driver-class-name: oracle.jdbc.OracleDriver
+  #   url: jdbc:oracle:thin:@192.168.0.10:1521:ORCLCDB
   #   username: ehr
-  #   password: password
-  # sql:
-  #   init:
-  #     schema-locations: classpath:schema.sql
-  #     mode: always
-  # h2:
-  #   console:
-  #     enabled: true
+  #   password: kdb1234!
+  #   hikari:
+  #     connection-timeout: 60000
+  #     idle-timeout: 300000
+  #     max-lifetime: 1800000
+  #     maximum-pool-size: 10
+
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:file:C:/h2data/ehr;MODE=Oracle;DB_CLOSE_ON_EXIT=FALSE;
+    username: ehr
+    password: password
+  sql:
+    init:
+      schema-locations: classpath:schema.sql
+      mode: always
+  h2:
+    console:
+      enabled: true
   
   # datasource:
   #   driver-class-name: com.mysql.cj.jdbc.Driver
@@ -55,14 +55,14 @@ spring:
   #   username: root
   #   password: ${DATABASE_PASSWORD} # 시스템 환경변수로 설정
 
-  # jpa:
-  #   open-in-view: true
-  #   hibernate:
-  #     ddl-auto: update
-  #     naming:
-  #       physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl      
-  #   show-sql: false
-  #   properties:
-  #     dialect: org.hibernate.dialect.MySQL8InnoDBDialect
-  #     hibernate:
-  #       "[format_sql]": true
+  jpa:
+    open-in-view: true
+    hibernate:
+      ddl-auto: update
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl      
+    show-sql: false
+    properties:
+      dialect: org.hibernate.dialect.MySQL8InnoDBDialect
+      hibernate:
+        "[format_sql]": true

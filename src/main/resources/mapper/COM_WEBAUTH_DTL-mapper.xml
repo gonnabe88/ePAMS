@@ -18,10 +18,10 @@
     <insert id="insert" parameterType="webauthDetail">
         INSERT INTO COM_WEBAUTH_DTL(EMP_NO, CRDT_ID, PBLK_KEY, CNT, AAGUID)
             VALUES(#{EMP_NO}, 
-            	   #{CRDT_ID, typeHandler=epams.com.login.util.webauthn.utility.ByteArrayTypeHandler}, 
-            	   #{PBLK_KEY, typeHandler=epams.com.login.util.webauthn.utility.ByteArrayTypeHandler}, 
+            	   #{CRDT_ID}, 
+            	   #{PBLK_KEY}, 
             	   #{CNT}, 
-            	   #{AAGUID, typeHandler=epams.com.login.util.webauthn.utility.ByteArrayTypeHandler})
+            	   #{AAGUID})
     </insert>   
     
     <!-- 기존 데이터 삭제 --> 
@@ -34,17 +34,17 @@
         UPDATE COM_WEBAUTH_DTL 
         SET 
         	EMP_NO=#{EMP_NO}, 
-        	CRDT_ID=#{CRDT_ID, typeHandler=epams.com.login.util.webauthn.utility.ByteArrayTypeHandler},
-        	PBLK_KEY=#{PBLK_KEY, typeHandler=epams.com.login.util.webauthn.utility.ByteArrayTypeHandler},
+        	CRDT_ID=#{CRDT_ID},
+        	PBLK_KEY=#{PBLK_KEY},
         	CNT=#{CNT},
-        	AAGUID=#{AAGUID, typeHandler=epams.com.login.util.webauthn.utility.ByteArrayTypeHandler}
+        	AAGUID=#{AAGUID}
        	WHERE SEQ_ID=#{SEQ_ID}
     </update>
     
     <!-- 신규 데이터 추가 또는 기존 데이터 업데이트 -->
 	<insert id="insertUpdate" parameterType="webauthDetail">
 	    INSERT INTO COM_WEBAUTH_DTL (EMP_NO, CRDT_ID, PBLK_KEY, CNT, AAGUID)
-	    VALUES(#{EMP_NO}, #{CRDT_ID, typeHandler=epams.com.login.util.webauthn.utility.ByteArrayTypeHandler}, #{PBLK_KEY, typeHandler=epams.com.login.util.webauthn.utility.ByteArrayTypeHandler}, #{CNT}, #{AAGUID, typeHandler=epams.com.login.util.webauthn.utility.ByteArrayTypeHandler})
+	    VALUES(#{EMP_NO}, #{CRDT_ID}, #{PBLK_KEY}, #{CNT}, #{AAGUID})
 	    ON DUPLICATE KEY 
 	    UPDATE
 	    	CRDT_ID = VALUES(CRDT_ID),
@@ -54,40 +54,55 @@
 	</insert>
 	
     <!-- 기본키 데이터 조회 -->
-	<select id="findByCredentialId" parameterType="ByteArray" resultMap="WebauthDetailMap">
+	<select id="findByCredentialId" parameterType="ByteArray" resultMap="webauthDetailResultMap">
 	    SELECT d.*, u.EMP_NO as EMP_NO, u.DISP_NM as DISP_NM, u.HANDLE as HANDLE
 	    FROM COM_WEBAUTH_DTL d
 	    LEFT JOIN COM_WEBAUTH_USR u ON d.EMP_NO = u.EMP_NO
-	    WHERE d.CRDT_ID = #{CRDT_ID, typeHandler=epams.com.login.util.webauthn.utility.ByteArrayTypeHandler}
+	    WHERE d.CRDT_ID = #{CRDT_ID}
 	</select>
 	
-	<resultMap id="WebauthDetailMap" type="epams.com.login.util.webauthn.authenticator.WebauthDetailEntity">
-    <id property="SEQ_ID" column="SEQ_ID"/>
-    <result property="CRDT_ID" column="CRDT_ID" typeHandler="epams.com.login.util.webauthn.utility.ByteArrayTypeHandler"/>
-    <result property="PBLK_KEY" column="PBLK_KEY" typeHandler="epams.com.login.util.webauthn.utility.ByteArrayTypeHandler"/>
-    <result property="CNT" column="CNT"/>
-    <result property="AAGUID" column="AAGUID" typeHandler="epams.com.login.util.webauthn.utility.ByteArrayTypeHandler"/>
-    <association property="user" javaType="epams.com.login.util.webauthn.user.WebauthUserEntity">
-        <id property="EMP_NO" column="EMP_NO"/>
-        <result property="DISP_NM" column="DISP_NM"/>
-        <result property="HANDLE" column="HANDLE" typeHandler="epams.com.login.util.webauthn.utility.ByteArrayTypeHandler"/>
-    </association>
-	</resultMap>
+    <resultMap id="webauthDetailResultMap" type="epams.com.login.util.webauthn.authenticator.WebauthDetailEntity">
+        <id column="SEQ_ID" property="SEQ_ID" />
+        <result column="CRDT_ID" property="CRDT_ID" />
+        <result column="PBLK_KEY" property="PBLK_KEY" />
+        <result column="CNT" property="CNT" />
+        <result column="AAGUID" property="AAGUID" />
+        <association property="user" javaType="epams.com.login.util.webauthn.user.WebauthUserEntity">
+            <id column="EMP_NO" property="EMP_NO" />
+            <result column="DISP_NM" property="DISP_NM" />
+            <result column="HANDLE" property="HANDLE" />
+        </association>
+    </resultMap>
     
     <!-- 기본키 데이터 조회 -->
     <select id="findAllByCredentialId" parameterType="ByteArray" resultType="webauthDetail">
         SELECT SEQ_ID, CRDT_ID, PBLK_KEY, CNT, AAGUID, EMP_NO
-        FROM COM_WEBAUTH_DTL WHERE CRDT_ID=#{CRDT_ID, typeHandler=epams.com.login.util.webauthn.utility.ByteArrayTypeHandler}
+        FROM COM_WEBAUTH_DTL WHERE CRDT_ID=#{CRDT_ID}
     </select>
     
     <!-- 사용자 데이터 조회 -->
-    <select id="findAllByUser" parameterType="String" resultType="webauthDetail">
-        SELECT *
-        FROM COM_WEBAUTH_DTL WHERE EMP_NO=#{username}
+    <select id="findAllByUser" parameterType="String" resultMap="webauthDetailResultMap">
+        SELECT 
+            d.SEQ_ID,
+            d.CRDT_ID,
+            d.PBLK_KEY,
+            d.CNT,
+            d.AAGUID,
+            u.EMP_NO,
+            u.DISP_NM,
+            u.HANDLE
+        FROM 
+            COM_WEBAUTH_DTL d
+        LEFT JOIN 
+            COM_WEBAUTH_USR u
+        ON 
+            d.EMP_NO = u.EMP_NO
+        WHERE 
+            d.EMP_NO = #{username}
     </select>
     
     <!-- 사용자 데이터 조회 -->
-    <select id="findByUser" parameterType="String" resultType="webauthDetail">
+    <select id="findByUser" parameterType="String" resultMap="webauthDetailResultMap">
         SELECT *
         FROM COM_WEBAUTH_DTL WHERE EMP_NO=#{username}
     </select>

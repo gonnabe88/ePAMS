@@ -1,8 +1,5 @@
 package epams.com.login.util.webauthn.user;
 
-import com.yubico.webauthn.data.ByteArray;
-import com.yubico.webauthn.data.UserIdentity;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -18,16 +15,15 @@ import lombok.Setter;
 @NoArgsConstructor
 @Table(name = "COM_WEBAUTH_USR")
 public class WebauthUserEntity {
-    
+
     @Id
     @Column(name = "EMP_NO", nullable = false, unique = true)
     private String EMP_NO;
 
-    @Column(name = "DISP_NM",nullable = false)
+    @Column(name = "DISP_NM", nullable = false)
     private String DISP_NM;
 
     @Lob
     @Column(name = "HANDLE", nullable = false)
-    private ByteArray HANDLE;
-
+    private byte[] HANDLE;
 }

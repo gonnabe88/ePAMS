@@ -26,6 +26,8 @@ import epams.com.admin.service.CodeHtmlDetailService;
 import epams.com.board.dto.BoardDTO;
 import epams.com.board.service.BoardService;
 import epams.com.login.util.webauthn.RegistrationService;
+import epams.com.login.util.webauthn.authenticator.Authenticator;
+import epams.com.login.util.webauthn.user.AppUser;
 import epams.com.member.entity.MemberEntity;
 import epams.com.member.entity.SearchMemberEntity;
 import epams.com.member.service.MemberDetailsService;
@@ -113,10 +115,10 @@ public class IndexController<S extends Session> {
         final Authentication auth = Authentication();
 
         // 간편인증 등록 여부 확인
-        final int existingUser = service.getWebauthUserRepository().countByUsername(auth.getName());
-        final int existingAuthUser = service.getWebauthDetailRepository().countByUser(auth.getName());
+        final AppUser existingUser = service.getUserRepo().findByUsername(auth.getName());
+        final Authenticator existingAuthUser = service.getAuthRepository().findByUser(existingUser);
         model.addAttribute("username", auth.getName());
-        if (existingAuthUser == 0) {
+        if (existingAuthUser == null) {
             model.addAttribute("simpleauth", false);
             log.info("Not simple auth user");
         } else {

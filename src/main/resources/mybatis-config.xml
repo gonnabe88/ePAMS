@@ -5,7 +5,6 @@
         <setting name="jdbcTypeForNull" value="VARCHAR"/>
     </settings>
     <typeAliases>
-        <typeAlias type="com.yubico.webauthn.data.ByteArray" alias="ByteArray"/>
 
         <!-- 다른 타입 알리아스들 -->
         <typeAlias type="epams.com.board.entity.BoardImageEntity" alias="boardImage"></typeAlias>
@@ -20,8 +19,6 @@
         <typeAlias type="epams.com.admin.entity.LogViewEntity" alias="viewLog"></typeAlias>
 
         <typeAlias type="epams.com.login.entity.LoginOTPEntity" alias="loginOTP"></typeAlias>
-        <typeAlias type="epams.com.login.util.webauthn.user.WebauthUserEntity" alias="webauthUser"></typeAlias>
-        <typeAlias type="epams.com.login.util.webauthn.authenticator.WebauthDetailEntity" alias="webauthDetail"></typeAlias>
 
         <typeAlias type="epams.dtm.dto.BasePeriodDTO" alias="basePeriod"></typeAlias>
         <typeAlias type="epams.dtm.dto.DtmApplDTO" alias="dtmAppl"></typeAlias>
@@ -29,7 +26,4 @@
         <typeAlias type="epams.com.member.dto.MemberDTO" alias="member"></typeAlias>
     </typeAliases>
 
-    <typeHandlers>
-        <typeHandler handler="epams.com.login.util.webauthn.utility.ByteArrayTypeHandler" javaType="com.yubico.webauthn.data.ByteArray" jdbcType="BLOB"/>
-    </typeHandlers>
 </configuration>

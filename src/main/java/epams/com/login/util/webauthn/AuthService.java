@@ -17,6 +17,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -46,14 +49,15 @@ import epams.com.admin.dto.LogLoginDTO;
 import epams.com.admin.repository.LogRepository;
 import epams.com.config.security.CustomGeneralRuntimeException;
 import epams.com.login.repository.LoginRepository;
-import epams.com.login.util.webauthn.authenticator.WebauthDetailDTO;
-import epams.com.login.util.webauthn.user.WebauthUserDTO;
+import epams.com.login.util.webauthn.authenticator.Authenticator;
+import epams.com.login.util.webauthn.authenticator.Authenticator;
+import epams.com.login.util.webauthn.user.AppUser;
+import epams.com.login.util.webauthn.user.AppUser;
 import epams.com.login.util.webauthn.utility.Utility;
 import epams.com.member.dto.MemberDTO;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import java.util.Arrays;
 
 /**
  * 간편인증 서비스
@@ -211,19 +215,27 @@ public class AuthService {
      * @param session  HTTP 세션
      * @return 등록 요청에 대한 JSON 응답
      */
-    public String newUserRegistration(final String username, final HttpSession session) {
-        log.warn("newUserRegistration");
-        final WebauthUserDTO existingUser = service.getWebauthUserRepository().findByUsername(username);        	
-        final List<WebauthDetailDTO> existingAuthUser = service.getWebauthDetailRepository().findAllByUser(username);
+    @PostMapping("/register")
+    @ResponseBody
+    public String newUserRegistration(
+		@RequestParam(value="username") String username,
+        HttpSession session
+    ) {
+    	//Authentication auth = Authentication();
+    	//String username = auth.getName();
+    	log.warn("register : "+username);
+        AppUser existingUser = service.getUserRepo().findByUsername(username);
+        List<Authenticator> existingAuthUser = service.getAuthRepository().findAllByUser(existingUser);
         if (existingAuthUser.isEmpty()) {
-            final UserIdentity userIdentity = UserIdentity.builder()
+            UserIdentity userIdentity = UserIdentity.builder()
                 .name(username)
                 .displayName(username)
                 .id(Utility.generateRandom(32))
                 .build();
-            final WebauthUserDTO saveUser = new WebauthUserDTO(userIdentity);
-            service.getWebauthUserRepository().insertUpdate(saveUser);
-            return newAuthRegistration(saveUser, session);
+            AppUser saveUser = new AppUser(userIdentity);
+            service.getUserRepo().save(saveUser);
+            String response = newAuthRegistration(saveUser, session);
+            return response;
         } else {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Username " + username + " already exists. Choose a new name.");
         }
@@ -232,14 +244,14 @@ public class AuthService {
     /**
      * 새로운 인증 등록 요청 처리
      * 
-     * @param user    WebauthUserDTO 객체
+     * @param user    AppUser 객체
      * @param session HTTP 세션
      * @return 등록 요청에 대한 JSON 응답
      */
-    public String newAuthRegistration(final WebauthUserDTO user, final HttpSession session) {
+    public String newAuthRegistration(final AppUser user, final HttpSession session) {
         log.warn("newAuthRegistration2");
-        final WebauthUserDTO existingUser = service.getWebauthUserRepository().findByHandle(user.getHandle());
-        if (existingUser == null) {
+        final AppUser existingUser = service.getUserRepo().findByHandle(user.getHandle());
+        if (existingUser != null) {
             final UserIdentity userIdentity = user.toUserIdentity();           
 
             final AuthenticatorSelectionCriteria authSelection = AuthenticatorSelectionCriteria.builder()
@@ -283,7 +295,7 @@ public class AuthService {
         final Authentication auth = getAuthentication();
         final String username = auth.getName();
         try {
-            final WebauthUserDTO user = service.getWebauthUserRepository().findByUsername(username);
+            final AppUser user = service.getUserRepo().findByUsername(username);
             final PublicKeyCredentialCreationOptions requestOptions = PublicKeyCredentialCreationOptions.fromJson((String) session.getAttribute(user.getUsername()));
             if (requestOptions != null) {
                 final PublicKeyCredential<AuthenticatorAttestationResponse, ClientRegistrationExtensionOutputs> pkc =
@@ -293,8 +305,8 @@ public class AuthService {
                     .response(pkc)
                     .build();
                 final RegistrationResult result = relyingParty.finishRegistration(options);
-                final WebauthDetailDTO savedAuth = new WebauthDetailDTO(result, pkc.getResponse(), user);
-                service.getWebauthDetailRepository().insert(savedAuth);
+                final Authenticator savedAuth = new Authenticator(result, pkc.getResponse(), user, user.getUsername());
+                service.getAuthRepository().save(savedAuth);
                 return ResponseEntity.ok("Registration successful!");
             } else {
                 throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Cached request expired. Try to register again!");

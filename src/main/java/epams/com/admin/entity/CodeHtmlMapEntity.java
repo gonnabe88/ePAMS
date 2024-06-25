@@ -56,7 +56,7 @@ public class CodeHtmlMapEntity extends BaseEntity implements Serializable {
     @ManyToOne
     @JoinColumn(
             name = "HTML",
-            foreignKey = @ForeignKey(name = "FK_COM_CODE_HTML_HTML", foreignKeyDefinition = "FOREIGN KEY (HTML) REFERENCES COM_HTML (HTML) ON DELETE CASCADE ON UPDATE CASCADE")
+            foreignKey = @ForeignKey(name = "FK_COM_CODE_HTML_HTML", foreignKeyDefinition = "FOREIGN KEY (HTML) REFERENCES COM_HTML (HTML) ON DELETE CASCADE")
         )
     private HtmlEntity htmlEntity;
     

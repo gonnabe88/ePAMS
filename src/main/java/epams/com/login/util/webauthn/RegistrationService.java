@@ -13,10 +13,10 @@ import com.yubico.webauthn.RegisteredCredential;
 import com.yubico.webauthn.data.ByteArray;
 import com.yubico.webauthn.data.PublicKeyCredentialDescriptor;
 
-import epams.com.login.util.webauthn.authenticator.WebauthDetailDTO;
-import epams.com.login.util.webauthn.authenticator.WebauthDetailRepository;
-import epams.com.login.util.webauthn.user.WebauthUserDTO;
-import epams.com.login.util.webauthn.user.WebauthUserRepository;
+import epams.com.login.util.webauthn.authenticator.AuthenticatorRepository;
+import epams.com.login.util.webauthn.authenticator.Authenticator;
+import epams.com.login.util.webauthn.user.UserRepository;
+import epams.com.login.util.webauthn.user.AppUser;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
@@ -26,8 +26,8 @@ import lombok.extern.slf4j.Slf4j;
  * @since 2024-06-11
  */
 @Slf4j
-@Repository
 @Getter
+@Repository
 public class RegistrationService implements CredentialRepository {
 
     /**
@@ -36,7 +36,7 @@ public class RegistrationService implements CredentialRepository {
      * @since 2024-06-11
      */
     @Autowired
-    private WebauthUserRepository webauthUserRepository;
+    private UserRepository userRepo;
 
     /**
      * @author K140024
@@ -44,7 +44,7 @@ public class RegistrationService implements CredentialRepository {
      * @since 2024-06-11
      */
     @Autowired
-    private WebauthDetailRepository webauthDetailRepository;
+    private AuthenticatorRepository authRepository;
 
     /**
      * @author K140024
@@ -54,8 +54,8 @@ public class RegistrationService implements CredentialRepository {
     @Override
     public Set<PublicKeyCredentialDescriptor> getCredentialIdsForUsername(final String username) {
         log.warn("getCredentialIdsForUsername");
-        final WebauthUserDTO user = webauthUserRepository.findByUsername(username);
-        final List<WebauthDetailDTO> auth = webauthDetailRepository.findAllByUser(user.getUsername());
+        final AppUser user = userRepo.findByUsername(username);
+        final List<Authenticator> auth = authRepository.findAllByUser(user);
         return auth.stream()
             .map(
                 credential -> PublicKeyCredentialDescriptor.builder()
@@ -72,7 +72,7 @@ public class RegistrationService implements CredentialRepository {
     @Override
     public Optional<ByteArray> getUserHandleForUsername(final String username) {
         log.warn("getUserHandleForUsername");
-        final WebauthUserDTO user = webauthUserRepository.findByUsername(username);
+        final AppUser user = userRepo.findByUsername(username);
         return Optional.of(user.getHandle());
     }
 
@@ -84,7 +84,7 @@ public class RegistrationService implements CredentialRepository {
     @Override
     public Optional<String> getUsernameForUserHandle(final ByteArray userHandle) {
         log.warn("getUsernameForUserHandle");
-        final WebauthUserDTO user = webauthUserRepository.findByHandle(userHandle);
+        final AppUser user = userRepo.findByHandle(userHandle);
         return Optional.of(user.getUsername());
     }
 
@@ -95,7 +95,7 @@ public class RegistrationService implements CredentialRepository {
      */
     @Override
     public Optional<RegisteredCredential> lookup(final ByteArray credentialId, final ByteArray userHandle) {
-        final Optional<WebauthDetailDTO> auth = webauthDetailRepository.findByCredentialId(credentialId);
+        final Optional<Authenticator> auth = authRepository.findByCredentialId(credentialId);
         auth.ifPresent(credential -> {
             log.warn("[lookup] Credential ID: " + credential.getCredentialId());
             log.warn("[lookup] User Handle: " + credential.getUser().getHandle());
@@ -121,7 +121,7 @@ public class RegistrationService implements CredentialRepository {
     @Override
     public Set<RegisteredCredential> lookupAll(final ByteArray credentialId) {
         log.warn("lookupAll");
-        final List<WebauthDetailDTO> auth = webauthDetailRepository.findAllByCredentialId(credentialId);
+        final List<Authenticator> auth = authRepository.findAllByCredentialId(credentialId);
         return auth.stream()
             .map(
                 credential -> RegisteredCredential.builder()

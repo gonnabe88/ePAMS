@@ -8,6 +8,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 import com.yubico.webauthn.RelyingParty;
 import com.yubico.webauthn.data.RelyingPartyIdentity;
@@ -27,6 +28,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @NoArgsConstructor // 기본생성자
 @SpringBootApplication
+@EnableScheduling
 @EnableConfigurationProperties(StorageProperties.class)
 public class EPamsApplication  extends SpringBootServletInitializer {
 

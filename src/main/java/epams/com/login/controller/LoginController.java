@@ -20,6 +20,8 @@ import epams.com.config.security.CustomGeneralRuntimeException;
 import epams.com.login.service.LoginService;
 import epams.com.login.service.MFALoginService;
 import epams.com.login.util.webauthn.RegistrationService;
+import epams.com.login.util.webauthn.authenticator.Authenticator;
+import epams.com.login.util.webauthn.user.AppUser;
 import epams.com.member.dto.MemberDTO;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -88,10 +90,10 @@ public class LoginController {
             @RequestParam(value = "isChecked", defaultValue = "false") final boolean isChecked, final Model model) {
     	String VIEW = "/common/login";
         final Authentication auth = Authentication();
-        final int existingUser = service.getWebauthUserRepository().countByUsername(username);
-        final int existingAuthUser = service.getWebauthDetailRepository().countByUser(username);
+        final AppUser existingUser = service.getUserRepo().findByUsername(username);
+        final Authenticator existingAuthUser = service.getAuthRepository().findByUser(existingUser);
         
-        if (existingAuthUser == 0) {
+        if (existingAuthUser == null) {
             model.addAttribute("isChecked", "false");
             log.info("Not simple auth user");
         } else {
@@ -122,7 +124,7 @@ public class LoginController {
             memberDTO.setUsername(uppercaseUsername);
         }
 
-        final int existingUser = service.getWebauthUserRepository().countByUsername(memberDTO.getUsername());
+        final AppUser existingUser = service.getUserRepo().findByUsername(memberDTO.getUsername());
         final Map<String, Object> res = new ConcurrentHashMap<>();
         if (loginService.pwLogin(memberDTO)) {
             log.warn("성공?");
@@ -134,7 +136,7 @@ public class LoginController {
 			}
             // 로그인 성공 시 추가 인증 단계로 넘어가기 위해 성공 여부를 반환
             res.put("result", true);
-            if (existingUser == 0) {
+            if (existingUser == null) {
                 res.put("simpleauth", false);
             }
             else {

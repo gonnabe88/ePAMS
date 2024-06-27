@@ -305,7 +305,7 @@ public class AuthService {
                     .response(pkc)
                     .build();
                 final RegistrationResult result = relyingParty.finishRegistration(options);
-                final Authenticator savedAuth = new Authenticator(result, pkc.getResponse(), user, user.getUsername());
+                final Authenticator savedAuth = new Authenticator(result, pkc.getResponse(), user);
                 service.getAuthRepository().save(savedAuth);
                 return ResponseEntity.ok("Registration successful!");
             } else {

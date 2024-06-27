@@ -8,6 +8,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
 
+import org.hibernate.annotations.Comment;
+
 import com.yubico.webauthn.data.ByteArray;
 import com.yubico.webauthn.data.UserIdentity;
 
@@ -17,18 +19,22 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor
-@Table(name = "HURXE_WWUSRM")
+@Table(name = "THURXE_CWUSRM")
+@Comment("인사_외부근태 Webauthn사용자기본")
 public class AppUser {
     
     @Id
-    @Column(name = "EMP_NO", nullable = false, unique = true)
+    @Column(name = "ENO", nullable = false, unique = true, length = 32)
+    @Comment("직원번호")
     private String username;
 
-    @Column(name = "DISP_NM", nullable = false)
+    @Column(name = "WEBAUTHN_DISP_NM", nullable = false, length = 32)
+    @Comment("Webauthn 출력명")
     private String displayName;
 
     @Lob
-    @Column(name = "HANDLE", nullable = false, length = 64)
+    @Column(name = "WEBAUTHN_USR_HANDLE", nullable = false, length = 64)
+    @Comment("Webauthn 사용자 Handle")
     private ByteArray handle;
 
     public AppUser(UserIdentity user) {

@@ -5,11 +5,11 @@
 <mapper namespace="BoardImage">
 
     <insert id="insertBoardImage" parameterType="boardImage" useGeneratedKeys="true" keyProperty="SEQ_ID">
-        INSERT INTO com_board_image(ORIGINAL_FILENAME, STORED_FILENAME, CREATED_TIME)
+        INSERT INTO THURXE_CBRDIM(ORIGINAL_FILENAME, STORED_FILENAME, CREATED_TIME)
             VALUES(#{ORIGINAL_FILENAME}, #{STORED_FILENAME}, SYSDATE)
     </insert>
     
      <select id="selectBoardImage" parameterType="String" resultType="boardImage">
-        SELECT * FROM com_board_image WHERE STORED_FILENAME = #{STORED_FILENAME}
+        SELECT * FROM THURXE_CBRDIM WHERE STORED_FILENAME = #{STORED_FILENAME}
     </select>
 </mapper>

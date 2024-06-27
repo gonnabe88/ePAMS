@@ -2,6 +2,8 @@ package epams.com.login.util.webauthn.authenticator;
 
 import java.util.Optional;
 
+import org.hibernate.annotations.Comment;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -24,44 +26,47 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor
-@Table(name = "HURXE_WWCREM")
+@Table(name = "THURXE_CWCRDM")
+@Comment("인사_외부근태 Webauthn자격증명기본")
 public class Authenticator {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment
-    @Column(name = "SEQ_ID")
+    @Column(name = "WEBAUTHN_SNO", columnDefinition = "NUMBER(10)")
+    @Comment("Webauthn 일련번호")
     private Long id;
 
-    @Column(name = "USERNAME")
-    private String name;
-
     @Lob
-    @Column(name = "CRDT_ID", nullable = false)
+    @Column(name = "WEBAUTHN_CRDT_ID", nullable = false)
+    @Comment("Webauthn 자격증명 ID")
     private ByteArray credentialId;
 
     @Lob
-    @Column(name = "PBLK_KEY", nullable = false)
+    @Column(name = "WEBAUTHN_PBLK_KEY", nullable = false)
+    @Comment("Webauthn 공개키")
     private ByteArray publicKey;
 
-	@Column(name = "CNT", nullable = false)
+	@Column(name = "WEBAUTHN_CNT", nullable = false, columnDefinition = "NUMBER(10)")
+    @Comment("Webauthn 자격증명수")
 	private Long count;
 	
 	@Lob
-	@Column(name = "AAGUID", nullable = true)
+	@Column(name = "WEBAUTHN_AAGUID", nullable = true)
+    @Comment("Webauthn Authenticator Attestation GUID")
 	private ByteArray aaguid;
 
     @ManyToOne(targetEntity = AppUser.class)
-    @JoinColumn(name="EMP_NO", nullable = false)
+    @JoinColumn(name="ENO", nullable = false)
+    @Comment("직원번호")
     private AppUser user;
 	
 
-public Authenticator(RegistrationResult result, AuthenticatorAttestationResponse response, AppUser user, String name) {
+public Authenticator(RegistrationResult result, AuthenticatorAttestationResponse response, AppUser user) {
     Optional<AttestedCredentialData> attestationData = response.getAttestation().getAuthenticatorData().getAttestedCredentialData();
     this.credentialId = result.getKeyId().getId();
     this.publicKey = result.getPublicKeyCose();
     this.aaguid = attestationData.get().getAaguid();
     this.count = result.getSignatureCount();
-    this.name = name;
     this.user = user;
 }
 }

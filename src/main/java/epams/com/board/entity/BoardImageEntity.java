@@ -1,5 +1,7 @@
 package epams.com.board.entity;
 
+import org.hibernate.annotations.Comment;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -22,7 +24,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-@Table(name = "COM_BOARD_IMAGE")
+@Table(name = "THURXE_CBRDIM")
+@Comment("인사_외부근태 공지사항게시판이미지기본")
 public class BoardImageEntity extends BaseEntity {
 	
     /***
@@ -32,7 +35,7 @@ public class BoardImageEntity extends BaseEntity {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
+    @Column(name = "BOARD_IMAGE_SNO")
     private Long SEQ_ID;
 
     /***
@@ -40,7 +43,7 @@ public class BoardImageEntity extends BaseEntity {
      * @implNote 원본 파일명
      * @since 2024-06-09
      */
-    @Column
+    @Column(name = "ORIGINAL_FILENAME")
     private String ORIGINAL_FILENAME;
     
     /***
@@ -48,7 +51,7 @@ public class BoardImageEntity extends BaseEntity {
      * @implNote 저장파일명 (중복방지)
      * @since 2024-06-10
      */
-    @Column
+    @Column(name = "STORED_FILENAME")
     private String STORED_FILENAME;
     
     /***
@@ -57,7 +60,7 @@ public class BoardImageEntity extends BaseEntity {
      * @since 2024-06-10
      */
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "BOARD_ID")
+    @JoinColumn(name = "BOARD_SNO")
     private BoardEntity boardEntity;
     
     /***

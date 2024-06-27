@@ -20,13 +20,13 @@
 	
 	<!-- 게시물 저장 후 ID 반환 -->
     <insert id="save" parameterType="board" useGeneratedKeys="true" keyProperty="SEQ_ID">
-        INSERT INTO com_board(BOARD_TITLE, BOARD_WRITER, BOARD_CONTENTS, FILE_ATTACHED, CATEGORY, BOARD_HITS, CREATED_TIME)
+        INSERT INTO THURXE_CNBRDM(BOARD_TITLE, BOARD_WRITER, BOARD_CONTENTS, FILE_ATTACHED, CATEGORY, BOARD_HITS, CREATED_TIME)
             VALUES(#{BOARD_TITLE}, #{BOARD_WRITER}, #{BOARD_CONTENTS}, #{FILE_ATTACHED}, #{CATEGORY}, 0, SYSDATE)
     </insert>
     
 	<!-- 특정 게시물 업데이트 -->
     <update id="update" parameterType="board" useGeneratedKeys="true" keyProperty="SEQ_ID">
-        UPDATE com_board 
+        UPDATE THURXE_CNBRDM 
         SET BOARD_TITLE=#{BOARD_TITLE}, 
         	BOARD_CONTENTS=#{BOARD_CONTENTS}, 
 	        FILE_ATTACHED=#{FILE_ATTACHED},
@@ -38,14 +38,14 @@
     <!-- Paging 규칙에 따라 전체 게시물 조회 -->
     <select id="findAll" resultType="board">
         SELECT * 
-        FROM com_board
+        FROM THURXE_CNBRDM
         ORDER BY ${sortColumn} ${sortDirection}
         OFFSET #{offset} ROWS FETCH NEXT #{limit} ROWS ONLY
     </select>
     
     <!-- 전체 데이터 개수 조회 -->
     <select id="count" resultType="long">
-        SELECT COUNT(*) FROM com_board
+        SELECT COUNT(*) FROM THURXE_CNBRDM
     </select>
     
     <!-- 특정 게시물 조회 -->
@@ -59,17 +59,17 @@
         	TO_CHAR(CREATED_TIME, 'YYYY-MM-DD HH24:MI:SS') AS CREATED_TIME,  
         	FILE_ATTACHED,
         	CATEGORY
-        FROM com_board WHERE SEQ_ID=#{SEQ_ID}
+        FROM THURXE_CNBRDM WHERE SEQ_ID=#{SEQ_ID}
     </select>
     
     <!-- 특정 게시물 조회 시 HIT+1 -->
     <update id="updateHits" parameterType="Long">
-        UPDATE com_board SET BOARD_HITS=BOARD_HITS+1 WHERE SEQ_ID=#{SEQ_ID}
+        UPDATE THURXE_CNBRDM SET BOARD_HITS=BOARD_HITS+1 WHERE SEQ_ID=#{SEQ_ID}
     </update>
 
     
     <delete id="delete" parameterType="Long">
-        DELETE FROM com_board WHERE SEQ_ID=#{SEQ_ID}
+        DELETE FROM THURXE_CNBRDM WHERE SEQ_ID=#{SEQ_ID}
     </delete>
     
     
@@ -78,11 +78,11 @@
         
     
     <insert id="insertBoardImage" parameterType="boardImage" useGeneratedKeys="true" keyProperty="seqId">
-        insert into com_board_image(ORIGINAL_FILENAME, STORED_FILENAME)
+        insert into THURXE_CNBRDM_image(ORIGINAL_FILENAME, STORED_FILENAME)
             values(#{ORIGINAL_FILENAME}, #{STORED_FILENAME})
     </insert>
     
      <select id="selectBoardImage" parameterType="String" resultType="boardImage">
-        select * from com_board_image where STORED_FILENAME = #{STORED_FILENAME}
+        select * from THURXE_CNBRDM_image where STORED_FILENAME = #{STORED_FILENAME}
     </select>
 </mapper>

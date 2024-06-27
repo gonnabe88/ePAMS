@@ -2,6 +2,8 @@ package epams.com.admin.entity;
 
 import java.time.LocalDateTime;
 
+import org.hibernate.annotations.Comment;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -25,7 +27,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-@Table(name = "COM_LOG_LOGIN")
+@Table(name = "THURXE_CLOGNL")
+@Comment("인사_외부근태 로그인로그")
 public class LogLoginEntity {
 
     /***
@@ -35,7 +38,8 @@ public class LogLoginEntity {
      */
     @Id // 기본키
     @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment
-    @Column(name = "SEQ_ID")
+    @Column(name = "LOGIN_LOG_SNO")
+    @Comment("로그인로그일련번호")
     private Long SEQ_ID; 
     
     /***
@@ -43,7 +47,8 @@ public class LogLoginEntity {
      * @implNote 행번 
      * @since 2024-06-09
      */
-    @Column(name = "EMP_NO", nullable = false)
+    @Column(name = "SNO", nullable = false)
+    @Comment("사원번호")
     private String EMP_NO; 
     
     /***
@@ -52,6 +57,7 @@ public class LogLoginEntity {
      * @since 2024-06-09
      */
     @Column(name = "LOGIN_TYPE", nullable = false)
+    @Comment("로그인타입")
     private String LOGIN_TYPE; 
     
     /***
@@ -60,6 +66,7 @@ public class LogLoginEntity {
      * @since 2024-06-09
      */
     @Column(name = "LOGIN_RESULT", nullable = false)
+    @Comment("로그인결과")
     private boolean LOGIN_RESULT;
     
     /***
@@ -68,6 +75,7 @@ public class LogLoginEntity {
      * @since 2024-06-09
      */
     @Column(name = "CREATED_TIME", updatable = false)
+    @Comment("생성시간")
     private LocalDateTime CREATED_TIME;  
 
 }

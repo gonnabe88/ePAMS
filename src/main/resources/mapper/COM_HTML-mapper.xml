@@ -6,34 +6,34 @@
      
     <!-- 모든 데이터 조회 -->
     <select id="findAll" resultType="html">
-        SELECT * FROM com_html
+        SELECT * FROM THURXE_CHTMLM
     </select>    
     
     <!-- 기본키 데이터 중복여부 조회 -->
     <select id="countById" parameterType="Long" resultType="html">
         SELECT COUNT(*)
-        FROM com_html WHERE HTML=#{HTML}
+        FROM THURXE_CHTMLM WHERE HTML=#{HTML}
     </select>
     
     <!-- 신규 데이터 추가 --> 
     <insert id="insert" parameterType="html">
-        INSERT INTO com_html(HTML, HTML_NM, CREATED_TIME)
+        INSERT INTO THURXE_CHTMLM(HTML, HTML_NM, CREATED_TIME)
             VALUES(#{HTML}, #{HTML_NM}, SYSDATE)
     </insert>   
     
     <!-- 기존 데이터 삭제 --> 
     <delete id="delete" parameterType="html">
-        DELETE FROM com_html WHERE HTML=#{HTML}
+        DELETE FROM THURXE_CHTMLM WHERE HTML=#{HTML}
     </delete>
     
     <!-- 기존 데이터 업데이트(기본키 제외) --> 
     <update id="update" parameterType="html">
-        UPDATE com_html SET HTML_NM=#{HTML_NM}, UPDATED_TIME=SYSDATE WHERE HTML=#{HTML}
+        UPDATE THURXE_CHTMLM SET HTML_NM=#{HTML_NM}, UPDATED_TIME=SYSDATE WHERE HTML=#{HTML}
     </update>
     
     <!-- 신규 데이터 추가 또는 기존 데이터 업데이트 -->
 	<insert id="insertUpdate" parameterType="html">
-	    INSERT INTO com_html (HTML, HTML_NM, CREATED_TIME)
+	    INSERT INTO THURXE_CHTMLM (HTML, HTML_NM, CREATED_TIME)
 	    VALUES (#{HTML}, #{HTML_NM}, SYSDATE)
 	    ON DUPLICATE KEY UPDATE
 	    HTML_NM = VALUES(HTML_NM),

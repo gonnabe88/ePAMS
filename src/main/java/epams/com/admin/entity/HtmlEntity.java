@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.hibernate.annotations.Comment;
+
 import epams.com.board.entity.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -27,7 +29,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-@Table(name = "COM_HTML")
+@Table(name = "THURXE_CHTMLM")
+@Comment("인사_외부근태 HTML화면기본")
 public class HtmlEntity extends BaseEntity implements Serializable {
 
     /**
@@ -42,6 +45,7 @@ public class HtmlEntity extends BaseEntity implements Serializable {
      */
     @Id // 기본키
     @Column(length = 128)
+    @Comment("HTML")
     private String HTML;
 
     /***
@@ -50,6 +54,7 @@ public class HtmlEntity extends BaseEntity implements Serializable {
      * @since 2024-06-09
      */
     @Column(length = 100, nullable = false)
+    @Comment("HTML이름")
     private String HTML_NM;
 
     /***

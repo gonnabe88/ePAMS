@@ -10,6 +10,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.intercept.AuthorizationFilter;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import epams.com.config.security.CustomAuthenticationDetailsSource;
@@ -19,6 +20,7 @@ import epams.com.config.security.CustomPasswordEncoder;
 import epams.com.config.security.CustomSecurityFilter;
 import epams.com.login.repository.LoginRepository;
 import epams.com.member.service.MemberDetailsService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
 @Configuration
@@ -35,7 +37,7 @@ public class SecurityConfig {
      * @return CustomAuthenticationDetailsSource 인스턴스
      */
     @Bean
-    public AuthenticationDetailsSource authenticationDetailsSource() {
+    public AuthenticationDetailsSource<HttpServletRequest, WebAuthenticationDetails> authenticationDetailsSource() {
         return new CustomAuthenticationDetailsSource();
     }
 

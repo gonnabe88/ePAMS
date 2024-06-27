@@ -2,6 +2,8 @@ package epams.com.admin.entity;
 
 import java.io.Serializable;
 
+import org.hibernate.annotations.Comment;
+
 import epams.com.board.entity.BaseEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ForeignKey;
@@ -26,7 +28,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-@Table(name = "COM_CODE_HTML")
+@Table(name = "THURXE_CCDHTR")
+@Comment("인사_외부근태 코드HTML관계")
 public class CodeHtmlMapEntity extends BaseEntity implements Serializable {
 
     /**
@@ -43,8 +46,9 @@ public class CodeHtmlMapEntity extends BaseEntity implements Serializable {
     @ManyToOne
     @JoinColumn(
             name = "CD_ID",
-            foreignKey = @ForeignKey(name = "FK_COM_CODE_HTML_CD_ID", foreignKeyDefinition = "FOREIGN KEY (CD_ID) REFERENCES COM_CODE (CD_ID) ON DELETE CASCADE")
+            foreignKey = @ForeignKey(name = "FK_THURXE_CCDHTR_CD_ID", foreignKeyDefinition = "FOREIGN KEY (CD_ID) REFERENCES THURXE_CCODEM (CD_ID) ON DELETE CASCADE")
         )
+    @Comment("공통코드식별번호")
     private CodeEntity codeEntity;
 
     /***
@@ -56,8 +60,9 @@ public class CodeHtmlMapEntity extends BaseEntity implements Serializable {
     @ManyToOne
     @JoinColumn(
             name = "HTML",
-            foreignKey = @ForeignKey(name = "FK_COM_CODE_HTML_HTML", foreignKeyDefinition = "FOREIGN KEY (HTML) REFERENCES COM_HTML (HTML) ON DELETE CASCADE")
+            foreignKey = @ForeignKey(name = "FK_THURXE_CCDHTR_HTML", foreignKeyDefinition = "FOREIGN KEY (HTML) REFERENCES THURXE_CHTMLM (HTML) ON DELETE CASCADE")
         )
+    @Comment("HTML")
     private HtmlEntity htmlEntity;
     
     /***

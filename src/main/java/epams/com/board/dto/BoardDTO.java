@@ -145,7 +145,7 @@ public class BoardDTO {
         boardDTO.setSeqId(boardEntity.getSEQ_ID());
         boardDTO.setBoardWriter(boardEntity.getBOARD_WRITER());
         boardDTO.setBoardTitle(boardEntity.getBOARD_TITLE());
-        boardDTO.setBoardContents(new String(boardEntity.getBOARD_CONTENTS(), StandardCharsets.UTF_8));
+        boardDTO.setBoardContents(boardEntity.getBOARD_CONTENTS());
         boardDTO.setCategory(boardEntity.getCATEGORY());
         boardDTO.setBoardHits(boardEntity.getBOARD_HITS());
         boardDTO.setCreatedTime(boardEntity.getCREATED_TIME());
@@ -168,7 +168,7 @@ public class BoardDTO {
         boardEntity.setSEQ_ID(this.seqId);
         boardEntity.setBOARD_WRITER(this.boardWriter);
         boardEntity.setBOARD_TITLE(this.boardTitle);
-        boardEntity.setBOARD_CONTENTS(this.boardContents.getBytes(StandardCharsets.UTF_8));
+        boardEntity.setBOARD_CONTENTS(this.boardContents);
         boardEntity.setCATEGORY(this.category);
         boardEntity.setBOARD_HITS(this.boardHits);
         return boardEntity;

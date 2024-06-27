@@ -14,23 +14,23 @@
     
     <!-- 모든 데이터 조회 -->
     <select id="findAll" resultType="LogLogin">
-        SELECT * FROM com_log_login
+        SELECT * FROM THURXE_CLOGNL
     </select>    
     
     <!-- 기본키 데이터 중복여부 조회 -->
     <select id="countById" parameterType="Long" resultType="logLogin">
         SELECT COUNT(*)
-        FROM com_log_login WHERE SEQ_ID=#{SEQ_ID}
+        FROM THURXE_CLOGNL WHERE SEQ_ID=#{SEQ_ID}
     </select>
     
     <!-- 신규 데이터 추가 --> 
     <insert id="insert" parameterType="logLogin">
-        INSERT INTO com_log_login(EMP_NO, LOGIN_TYPE, LOGIN_RESULT, CREATED_TIME)
+        INSERT INTO THURXE_CLOGNL(EMP_NO, LOGIN_TYPE, LOGIN_RESULT, CREATED_TIME)
             VALUES(#{EMP_NO}, #{LOGIN_TYPE}, #{LOGIN_RESULT}, SYSDATE)
     </insert>   
     
     <!-- 기존 데이터 삭제 (로그 테이블 특성상 불필요) --> 
     
     <!-- 기존 데이터 업데이트 (로그 테이블 특성상 불필요) -->
-     
+
 </mapper>

@@ -32,7 +32,7 @@ public class BaseEntity {
 	 * @since 2024-06-09
 	 */
     @CreationTimestamp
-    @Column(updatable = false)
+    @Column(name = "CREATED_TIME", updatable = false)
     private LocalDateTime CREATED_TIME;
 
 	/***
@@ -41,6 +41,6 @@ public class BaseEntity {
 	 * @since 2024-06-09
 	 */
     @UpdateTimestamp
-    @Column(insertable = false)
+    @Column(name = "UPDATED_TIME", insertable = false)
     private LocalDateTime UPDATED_TIME;
 }

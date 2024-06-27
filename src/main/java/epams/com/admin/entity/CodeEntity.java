@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.hibernate.annotations.Comment;
+
 import epams.com.board.entity.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -30,7 +32,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-@Table(name = "COM_CODE")
+@Table(name = "THURXE_CCODEM")
+@Comment("인사_외부근태 공통코드기본")
 public class CodeEntity extends BaseEntity implements Serializable {
 	
     /**
@@ -45,6 +48,7 @@ public class CodeEntity extends BaseEntity implements Serializable {
      */
     @Id // 기본키
     @Column(length = 128)
+    @Comment("공통코드식별번호")
     private String CD_ID;
     
     /***
@@ -53,6 +57,7 @@ public class CodeEntity extends BaseEntity implements Serializable {
      * @since 2024-06-09
      */
     @Column(length = 500, nullable = false)
+    @Comment("공통코드명칭")
     private String CD_NM;
 
     /***
@@ -61,6 +66,7 @@ public class CodeEntity extends BaseEntity implements Serializable {
      * @since 2024-06-09
      */
     @Column(length = 20, nullable = false) // 크기 20, not null
+    @Comment("공통코드타입")
     private String CD_TYPE;
     
     /***
@@ -70,9 +76,9 @@ public class CodeEntity extends BaseEntity implements Serializable {
      */
     @ManyToMany
     @JoinTable(
-        name = "com_code_html",
-        joinColumns = @JoinColumn(name = "CD_ID", foreignKey = @ForeignKey(name = "fk_com_code_html_cd")),
-        inverseJoinColumns = @JoinColumn(name = "HTML", foreignKey = @ForeignKey(name = "fk_com_code_html_html"))
+        name = "THURXE_CCDHTR",
+        joinColumns = @JoinColumn(name = "CD_ID", foreignKey = @ForeignKey(name = "FK_THURXE_CCDHTR_CD_ID")),
+        inverseJoinColumns = @JoinColumn(name = "HTML", foreignKey = @ForeignKey(name = "FK_THURXE_CCDHTR_HTML"))
     )
     
     /***

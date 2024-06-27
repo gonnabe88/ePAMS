@@ -3,6 +3,8 @@ package epams.com.board.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.annotations.Comment;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -25,7 +27,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-@Table(name = "COM_BOARD")
+@Table(name = "THURXE_CBRDMM")
+@Comment("인사_외부근태 공지사항게시판메인기본")
 public class BoardEntity extends BaseEntity {
     /***
      * @author 140024
@@ -34,7 +37,8 @@ public class BoardEntity extends BaseEntity {
      */
     @Id 
     @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment
-    @Column
+    @Column(name = "BOARD_SNO")
+    @Comment("게시글일련번호")
     private Long SEQ_ID;
     
     /***
@@ -42,7 +46,8 @@ public class BoardEntity extends BaseEntity {
      * @implNote 제목
      * @since 2024-06-09
      */
-    @Column(nullable = false)
+    @Column(name = "BOARD_TITLE", nullable = false)
+    @Comment("게시글제목")
     private String BOARD_TITLE;
     
     /***
@@ -51,15 +56,17 @@ public class BoardEntity extends BaseEntity {
      * @implSpec Blob 타입으로 선언
      * @since 2024-06-09
      */
-    @Column(columnDefinition = "BLOB", nullable = false)
-    private byte[] BOARD_CONTENTS;
+    @Column(name = "BOARD_CONTENTS",  length = 4000, nullable = false)
+    @Comment("게시글내용")
+    private String BOARD_CONTENTS;
 
     /***
      * @author 140024
      * @implNote 작성자
      * @since 2024-06-09
      */
-    @Column(length = 255, nullable = false) 
+    @Column(name = "BOARD_WRITER",  length = 255, nullable = false) 
+    @Comment("게시글작성자")
     private String BOARD_WRITER;
 
     /***
@@ -67,7 +74,8 @@ public class BoardEntity extends BaseEntity {
      * @implNote 카테고리 (IT, 인사 등)
      * @since 2024-06-09
      */
-    @Column(length = 16, nullable = false)
+    @Column(name = "CATEGORY", length = 16, nullable = false)
+    @Comment("카테고리")
     private String CATEGORY;
 
     /***
@@ -75,7 +83,8 @@ public class BoardEntity extends BaseEntity {
      * @implNote 조회수
      * @since 2024-06-09
      */
-    @Column
+    @Column(name = "BOARD_HITS")
+    @Comment("게시글조회수")
     private int BOARD_HITS;
 
     /***
@@ -83,7 +92,8 @@ public class BoardEntity extends BaseEntity {
      * @implNote 파일첨부 여부 (첨부 1, 미첨부 0)
      * @since 2024-06-09
      */
-    @Column
+    @Column(name = "FILE_ATTACHED")
+    @Comment("파일첨부여부")
     private int FILE_ATTACHED; // 1 or 0
 
     /***

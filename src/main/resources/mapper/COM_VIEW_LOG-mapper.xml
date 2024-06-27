@@ -14,18 +14,18 @@
     
     <!-- 모든 데이터 조회 -->
     <select id="findAll" resultType="viewLog">
-        SELECT * FROM COM_VIEW_LOG
+        SELECT * FROM THURXE_CVIEWL
     </select>    
     
     <!-- 기본키 데이터 중복여부 조회 -->
     <select id="countById" parameterType="Long" resultType="viewLog">
         SELECT COUNT(*)
-        FROM COM_VIEW_LOG WHERE SEQ_ID=#{SEQ_ID}
+        FROM THURXE_CVIEWL WHERE SEQ_ID=#{SEQ_ID}
     </select>
     
     <!-- 신규 데이터 추가 --> 
     <insert id="insert" parameterType="viewLog">
-        INSERT INTO COM_VIEW_LOG(CTRL_NM, MTHD_NM, CLIENT_IP, USER_AGENT, RQST_URL, CALL_TIME)
+        INSERT INTO THURXE_CVIEWL(CTRL_NM, MTHD_NM, CLIENT_IP, USER_AGENT, RQST_URL, CALL_TIME)
             VALUES(#{CTRL_NM}, #{MTHD_NM}, #{CLIENT_IP}, #{USER_AGENT}, #{RQST_URL}, #{CALL_TIME})
     </insert>   
     

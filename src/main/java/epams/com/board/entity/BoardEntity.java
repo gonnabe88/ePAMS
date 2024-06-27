@@ -36,8 +36,7 @@ public class BoardEntity extends BaseEntity {
      * @since 2024-06-09
      */
     @Id 
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment
-    @Column(name = "BOARD_SNO")
+    @Column(name = "SEQ_ID")
     @Comment("게시글일련번호")
     private Long SEQ_ID;
     

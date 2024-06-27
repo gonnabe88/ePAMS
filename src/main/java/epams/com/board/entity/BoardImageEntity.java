@@ -34,7 +34,6 @@ public class BoardImageEntity extends BaseEntity {
      * @since 2024-06-09
      */
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "BOARD_IMAGE_SNO")
     private Long SEQ_ID;
 
@@ -83,5 +82,15 @@ public class BoardImageEntity extends BaseEntity {
         }
         this.boardEntity.setSEQ_ID(boardId);
     }
+
+        // Getters and Setters for each field
+        public Long getBOARD_IMAGE_SNO() {
+            return SEQ_ID;
+        }
+    
+        public void setBOARD_IMAGE_SNO(Long BOARD_IMAGE_SNO) {
+            this.SEQ_ID = BOARD_IMAGE_SNO;
+        }
+    
 
 }

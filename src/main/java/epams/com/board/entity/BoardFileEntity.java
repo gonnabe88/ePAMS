@@ -68,11 +68,11 @@ public class BoardFileEntity extends BaseEntity {
 
     /***
      * @author 140024
-     * @implNote 게시글 ID (외래키 설정 BOARD_FILE.BOARD_ID - BOARD.SEQ_ID)
+     * @implNote 게시글 ID (외래키 설정 BOARD_FILE.BOARD_SNO - BOARD.SEQ_ID)
      * @since 2024-06-10
      */
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "BOARD_SNO", foreignKey = @ForeignKey(name = "FK_BOARD_FILE_SNO_BOARD_SNO", foreignKeyDefinition = "FOREIGN KEY (BOARD_SNO) REFERENCES THURXE_CBRDMM (BOARD_SNO) ON DELETE CASCADE"))
+    @JoinColumn(name = "BOARD_SNO", foreignKey = @ForeignKey(name = "FK_BOARD_FILE_SNO_BOARD_SNO", foreignKeyDefinition = "FOREIGN KEY (BOARD_SNO) REFERENCES THURXE_CBRDMM (SEQ_ID) ON DELETE CASCADE"))
     private BoardEntity boardEntity;
     
     /***
@@ -80,7 +80,7 @@ public class BoardFileEntity extends BaseEntity {
      * @implNote lombok getter에서 자동으로 인식하지 못하는 문제로 별도 추가
      * @since 2024-06-10
      */
-    public Long getBOARD_ID() {
+    public Long getBOARD_SNO() {
         return boardEntity != null ? boardEntity.getSEQ_ID() : null;
     }
     
@@ -89,7 +89,7 @@ public class BoardFileEntity extends BaseEntity {
      * @implNote lombok setter에서 자동으로 인식하지 못하는 문제로 별도 추가
      * @since 2024-06-10
      */
-    public void setBOARD_ID(final Long boardId) {
+    public void setBOARD_SNO(final Long boardId) {
         if (this.boardEntity == null) {
             this.boardEntity = new BoardEntity();
         }

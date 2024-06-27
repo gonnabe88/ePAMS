@@ -142,19 +142,21 @@ public class BoardDTO {
      */
     public static BoardDTO toDTO(final BoardEntity boardEntity) {
     	final BoardDTO boardDTO = new BoardDTO();
-        boardDTO.setSeqId(boardEntity.getSEQ_ID());
-        boardDTO.setBoardWriter(boardEntity.getBOARD_WRITER());
-        boardDTO.setBoardTitle(boardEntity.getBOARD_TITLE());
-        boardDTO.setBoardContents(boardEntity.getBOARD_CONTENTS());
-        boardDTO.setCategory(boardEntity.getCATEGORY());
-        boardDTO.setBoardHits(boardEntity.getBOARD_HITS());
-        boardDTO.setCreatedTime(boardEntity.getCREATED_TIME());
-        boardDTO.setUpdatedTime(boardEntity.getUPDATED_TIME());
-        if (boardEntity.getFILE_ATTACHED() == 0) {
-            boardDTO.setFileAttached(boardEntity.getFILE_ATTACHED()); // 0
-        } else {
-            boardDTO.setFileAttached(boardEntity.getFILE_ATTACHED()); // 1
-        }
+        if(boardEntity != null) {
+            boardDTO.setSeqId(boardEntity.getSEQ_ID());
+            boardDTO.setBoardWriter(boardEntity.getBOARD_WRITER());
+            boardDTO.setBoardTitle(boardEntity.getBOARD_TITLE());
+            boardDTO.setBoardContents(boardEntity.getBOARD_CONTENTS());
+            boardDTO.setCategory(boardEntity.getCATEGORY());
+            boardDTO.setBoardHits(boardEntity.getBOARD_HITS());
+            boardDTO.setCreatedTime(boardEntity.getCREATED_TIME());
+            boardDTO.setUpdatedTime(boardEntity.getUPDATED_TIME());
+            if (boardEntity.getFILE_ATTACHED() == 0) {
+                boardDTO.setFileAttached(boardEntity.getFILE_ATTACHED()); // 0
+            } else {
+                boardDTO.setFileAttached(boardEntity.getFILE_ATTACHED()); // 1
+            }
+        }        
         return boardDTO;
     }
     

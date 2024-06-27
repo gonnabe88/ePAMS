@@ -25,7 +25,7 @@
     
     <!-- 신규 데이터 추가 --> 
     <insert id="insert" parameterType="logLogin">
-        INSERT INTO THURXE_CLOGNL(EMP_NO, LOGIN_TYPE, LOGIN_RESULT, CREATED_TIME)
+        INSERT INTO THURXE_CLOGNL(SNO, LOGIN_TYPE, LOGIN_RESULT, CREATED_TIME)
             VALUES(#{EMP_NO}, #{LOGIN_TYPE}, #{LOGIN_RESULT}, SYSDATE)
     </insert>   
     

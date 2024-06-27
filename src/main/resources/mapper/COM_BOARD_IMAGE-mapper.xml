@@ -5,8 +5,11 @@
 <mapper namespace="BoardImage">
 
     <insert id="insertBoardImage" parameterType="boardImage" useGeneratedKeys="true" keyProperty="SEQ_ID">
-        INSERT INTO THURXE_CBRDIM(ORIGINAL_FILENAME, STORED_FILENAME, CREATED_TIME)
-            VALUES(#{ORIGINAL_FILENAME}, #{STORED_FILENAME}, SYSDATE)
+        <selectKey keyProperty="SEQ_ID" resultType="long" order="BEFORE">
+            SELECT "EHR"."ISEQ$$_73888".nextval FROM dual
+        </selectKey>
+        INSERT INTO THURXE_CBRDIM(BOARD_IMAGE_SNO, ORIGINAL_FILENAME, STORED_FILENAME, CREATED_TIME)
+            VALUES(#{BOARD_IMAGE_SNO}, #{ORIGINAL_FILENAME}, #{STORED_FILENAME}, SYSDATE)
     </insert>
     
      <select id="selectBoardImage" parameterType="String" resultType="boardImage">

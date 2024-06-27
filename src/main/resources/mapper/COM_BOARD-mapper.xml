@@ -19,14 +19,17 @@
 	-->
 	
 	<!-- 게시물 저장 후 ID 반환 -->
-    <insert id="save" parameterType="board" useGeneratedKeys="true" keyProperty="SEQ_ID">
-        INSERT INTO THURXE_CNBRDM(BOARD_TITLE, BOARD_WRITER, BOARD_CONTENTS, FILE_ATTACHED, CATEGORY, BOARD_HITS, CREATED_TIME)
-            VALUES(#{BOARD_TITLE}, #{BOARD_WRITER}, #{BOARD_CONTENTS}, #{FILE_ATTACHED}, #{CATEGORY}, 0, SYSDATE)
+    <insert id="save" parameterType="board">
+        <selectKey keyProperty="SEQ_ID" resultType="long" order="BEFORE">
+            SELECT "EHR"."ISEQ$$_73882".nextval FROM dual
+        </selectKey>
+        INSERT INTO THURXE_CBRDMM(SEQ_ID, BOARD_TITLE, BOARD_WRITER, BOARD_CONTENTS, FILE_ATTACHED, CATEGORY, BOARD_HITS, CREATED_TIME)
+            VALUES(#{SEQ_ID}, #{BOARD_TITLE}, #{BOARD_WRITER}, #{BOARD_CONTENTS}, #{FILE_ATTACHED}, #{CATEGORY}, 0, SYSDATE)
     </insert>
     
 	<!-- 특정 게시물 업데이트 -->
-    <update id="update" parameterType="board" useGeneratedKeys="true" keyProperty="SEQ_ID">
-        UPDATE THURXE_CNBRDM 
+    <update id="update" parameterType="board">
+        UPDATE THURXE_CBRDMM 
         SET BOARD_TITLE=#{BOARD_TITLE}, 
         	BOARD_CONTENTS=#{BOARD_CONTENTS}, 
 	        FILE_ATTACHED=#{FILE_ATTACHED},
@@ -38,14 +41,14 @@
     <!-- Paging 규칙에 따라 전체 게시물 조회 -->
     <select id="findAll" resultType="board">
         SELECT * 
-        FROM THURXE_CNBRDM
+        FROM THURXE_CBRDMM
         ORDER BY ${sortColumn} ${sortDirection}
         OFFSET #{offset} ROWS FETCH NEXT #{limit} ROWS ONLY
     </select>
     
     <!-- 전체 데이터 개수 조회 -->
     <select id="count" resultType="long">
-        SELECT COUNT(*) FROM THURXE_CNBRDM
+        SELECT COUNT(*) FROM THURXE_CBRDMM
     </select>
     
     <!-- 특정 게시물 조회 -->
@@ -59,17 +62,17 @@
         	TO_CHAR(CREATED_TIME, 'YYYY-MM-DD HH24:MI:SS') AS CREATED_TIME,  
         	FILE_ATTACHED,
         	CATEGORY
-        FROM THURXE_CNBRDM WHERE SEQ_ID=#{SEQ_ID}
+        FROM THURXE_CBRDMM WHERE SEQ_ID=#{SEQ_ID}
     </select>
     
     <!-- 특정 게시물 조회 시 HIT+1 -->
     <update id="updateHits" parameterType="Long">
-        UPDATE THURXE_CNBRDM SET BOARD_HITS=BOARD_HITS+1 WHERE SEQ_ID=#{SEQ_ID}
+        UPDATE THURXE_CBRDMM SET BOARD_HITS=BOARD_HITS+1 WHERE SEQ_ID=#{SEQ_ID}
     </update>
 
     
     <delete id="delete" parameterType="Long">
-        DELETE FROM THURXE_CNBRDM WHERE SEQ_ID=#{SEQ_ID}
+        DELETE FROM THURXE_CBRDMM WHERE SEQ_ID=#{SEQ_ID}
     </delete>
     
     
@@ -78,11 +81,11 @@
         
     
     <insert id="insertBoardImage" parameterType="boardImage" useGeneratedKeys="true" keyProperty="seqId">
-        insert into THURXE_CNBRDM_image(ORIGINAL_FILENAME, STORED_FILENAME)
+        insert into THURXE_CBRDMM_image(ORIGINAL_FILENAME, STORED_FILENAME)
             values(#{ORIGINAL_FILENAME}, #{STORED_FILENAME})
     </insert>
     
      <select id="selectBoardImage" parameterType="String" resultType="boardImage">
-        select * from THURXE_CNBRDM_image where STORED_FILENAME = #{STORED_FILENAME}
+        select * from THURXE_CBRDMM_image where STORED_FILENAME = #{STORED_FILENAME}
     </select>
 </mapper>

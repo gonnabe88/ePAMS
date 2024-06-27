@@ -17,7 +17,7 @@
     
     <!-- 신규 데이터 추가 --> 
     <insert id="insert" parameterType="loginOTP">
-        INSERT INTO THURXE_COTPIM(EMP_NO, OTP, MFA, CREATED_TIME)
+        INSERT INTO THURXE_COTPIM(SNO, OTP, MFA, CREATED_TIME)
             VALUES(#{EMP_NO}, #{OTP}, #{MFA}, SYSDATE)
     </insert>   
     
@@ -28,12 +28,12 @@
     
     <!-- 기존 데이터 업데이트 --> 
     <update id="update" parameterType="loginOTP">
-        UPDATE THURXE_COTPIM SET EMP_NO=#{EMP_NO}, OTP=#{OTP}, MFA=#{MFA}, UPDATED_TIME=SYSDATE WHERE SEQ_ID=#{SEQ_ID}
+        UPDATE THURXE_COTPIM SET SNO=#{EMP_NO}, OTP=#{OTP}, MFA=#{MFA}, UPDATED_TIME=SYSDATE WHERE SEQ_ID=#{SEQ_ID}
     </update>
     
     <!-- 신규 데이터 추가 또는 기존 데이터 업데이트 -->
 	<insert id="insertUpdate" parameterType="loginOTP">
-	    INSERT INTO THURXE_COTPIM (EMP_NO, OTP, MFA, CREATED_TIME)
+	    INSERT INTO THURXE_COTPIM (SNO, OTP, MFA, CREATED_TIME)
 	    VALUES(#{EMP_NO}, #{OTP}, #{MFA}, SYSDATE)
 	    ON DUPLICATE KEY UPDATE
 	    OTP = VALUES(OTP),
@@ -47,7 +47,7 @@
     FROM (
         SELECT * 
         FROM THURXE_COTPIM 
-        WHERE EMP_NO = #{EMP_NO}
+        WHERE SNO = #{EMP_NO}
           AND CREATED_TIME > SYSDATE - INTERVAL '3' MINUTE
         ORDER BY CREATED_TIME DESC
     )

@@ -10,6 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,9 +35,10 @@ public class BoardFileEntity extends BaseEntity {
      * @since 2024-06-10
      */
     @Id
-    @Column(name = "BOARD_FILE_SNO")
+    @Column(name = "BLB_APG_FL_SNO", columnDefinition = "NUMBER(22)")
     @Comment("게시판첨부파일일련번호")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "BLB_APG_FL_SNO")
+    @SequenceGenerator(name = "BLB_APG_FL_SNO", sequenceName = "BLB_APG_FL_SNO", allocationSize = 1)
     private Long SEQ_ID;
 
     /***
@@ -44,7 +46,7 @@ public class BoardFileEntity extends BaseEntity {
      * @implNote 파일명
      * @since 2024-06-10
      */
-    @Column(name = "ORIGINAL_FILENAME")
+    @Column(name = "ORC_FL_NM")
     @Comment("원본파일명")
     private String ORIGINAL_FILENAME;
 
@@ -53,8 +55,8 @@ public class BoardFileEntity extends BaseEntity {
      * @implNote 저장파일명 (중복방지)
      * @since 2024-06-10
      */
-    @Column(name = "STORED_FILENAME")
-    @Comment("저장파일명")
+    @Column(name = "SVR_FL_NM")
+    @Comment("서버파일명")
     private String STORED_FILENAME;
     
     /***
@@ -62,8 +64,8 @@ public class BoardFileEntity extends BaseEntity {
      * @implNote 저장경로
      * @since 2024-06-10
      */
-    @Column(name = "STORED_PATH")
-    @Comment("저장경로")
+    @Column(name = "FL_KPN_PTH")
+    @Comment("파일저장경로")
     private String STORED_PATH;
 
     /***
@@ -72,7 +74,8 @@ public class BoardFileEntity extends BaseEntity {
      * @since 2024-06-10
      */
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "BOARD_SNO", foreignKey = @ForeignKey(name = "FK_BOARD_FILE_SNO_BOARD_SNO", foreignKeyDefinition = "FOREIGN KEY (BOARD_SNO) REFERENCES THURXE_CBRDMM (SEQ_ID) ON DELETE CASCADE"))
+    @JoinColumn(name = "BLB_SNO", foreignKey = @ForeignKey(name = "FK_THURXE_CBRDFM_BLB_SNO", foreignKeyDefinition = "FOREIGN KEY (BLB_SNO) REFERENCES THURXE_CBRDMM (BLB_SNO) ON DELETE CASCADE"))
+    @Comment("게시판일련번호")
     private BoardEntity boardEntity;
     
     /***
@@ -80,7 +83,7 @@ public class BoardFileEntity extends BaseEntity {
      * @implNote lombok getter에서 자동으로 인식하지 못하는 문제로 별도 추가
      * @since 2024-06-10
      */
-    public Long getBOARD_SNO() {
+    public Long getBLB_SNO() {
         return boardEntity != null ? boardEntity.getSEQ_ID() : null;
     }
     
@@ -89,7 +92,7 @@ public class BoardFileEntity extends BaseEntity {
      * @implNote lombok setter에서 자동으로 인식하지 못하는 문제로 별도 추가
      * @since 2024-06-10
      */
-    public void setBOARD_SNO(final Long boardId) {
+    public void setBLB_SNO(final Long boardId) {
         if (this.boardEntity == null) {
             this.boardEntity = new BoardEntity();
         }

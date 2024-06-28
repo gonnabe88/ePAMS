@@ -1,13 +1,13 @@
 package epams.com.board.dto;
 
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import epams.com.admin.entity.CodeEntity;
 import epams.com.board.entity.BoardEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -68,7 +68,7 @@ public class BoardDTO {
      * @implNote 생성시간
      * @since 2024-06-09
      */
-    private LocalDateTime createdTime;
+    private LocalDate createdTime;
     
     
     /***
@@ -76,7 +76,7 @@ public class BoardDTO {
      * @implNote 수정시간
      * @since 2024-06-09
      */
-    private LocalDateTime updatedTime;
+    private LocalDate updatedTime;
 
     /***
      * @author 140024
@@ -125,7 +125,7 @@ public class BoardDTO {
      * @implNote 특정 필드들을 매개변수로 하는 생성자
      * @since 2024-06-09
      */
-    public BoardDTO(final Long seqId, final String boardWriter, final byte[] boardContents, final String boardTitle, final String category, final int boardHits, final LocalDateTime boardCreatedTime) {
+    public BoardDTO(final Long seqId, final String boardWriter, final byte[] boardContents, final String boardTitle, final String category, final int boardHits, final LocalDate boardCreatedTime) {
         this.seqId = seqId;
         this.boardWriter = boardWriter;
         this.boardContents = new String(boardContents, StandardCharsets.UTF_8);

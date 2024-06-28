@@ -5,11 +5,13 @@ import org.hibernate.annotations.Comment;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,14 +29,17 @@ import lombok.Setter;
 @Table(name = "THURXE_CBRDIM")
 @Comment("인사_외부근태 공지사항게시판이미지기본")
 public class BoardImageEntity extends BaseEntity {
-	
+
     /***
      * @author 140024
      * @implNote 자동으로 생성되는 auto increment number
      * @since 2024-06-09
      */
     @Id
-    @Column(name = "BOARD_IMAGE_SNO")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "BLB_IMG_SNO")
+    @SequenceGenerator(name = "BLB_IMG_SNO", sequenceName = "BLB_IMG_SNO", allocationSize = 1)
+    @Column(name = "BLB_IMG_SNO", columnDefinition = "NUMBER(22)")
+    @Comment("게시판이미지일련번호")
     private Long SEQ_ID;
 
     /***
@@ -42,55 +47,57 @@ public class BoardImageEntity extends BaseEntity {
      * @implNote 원본 파일명
      * @since 2024-06-09
      */
-    @Column(name = "ORIGINAL_FILENAME")
+    @Column(name = "ORC_FL_NM")
+    @Comment("원본파일명")
     private String ORIGINAL_FILENAME;
-    
+
     /***
      * @author 140024
      * @implNote 저장파일명 (중복방지)
      * @since 2024-06-10
      */
-    @Column(name = "STORED_FILENAME")
+    @Column(name = "SVR_FL_NM")
+    @Comment("서버파일명")
     private String STORED_FILENAME;
-    
+
     /***
      * @author 140024
      * @implNote 게시글 ID (외래키 설정 BOARD_IMAGE.BOARDID - BOARD.SEQID)
      * @since 2024-06-10
      */
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "BOARD_SNO")
+    @JoinColumn(name = "BLB_SNO", foreignKey = @ForeignKey(name = "FK_THURXE_CBRDIM_BLB_SNO", foreignKeyDefinition = "FOREIGN KEY (BLB_SNO) REFERENCES THURXE_CBRDMM (BLB_SNO) ON DELETE CASCADE"))
+    @Comment("게시판일련번호")
     private BoardEntity boardEntity;
-    
+
     /***
      * @author 140024
      * @implNote lombok getter에서 자동으로 인식하지 못하는 문제로 별도 추가
      * @since 2024-06-10
      */
-    public Long getBOARD_ID() {
+    public Long getBLB_SNO() {
         return boardEntity != null ? boardEntity.getSEQ_ID() : null;
     }
-    
+
     /***
      * @author 140024
      * @implNote lombok setter에서 자동으로 인식하지 못하는 문제로 별도 추가
      * @since 2024-06-10
      */
-    public void setBOARD_ID(final Long boardId) {
+    public void setBLB_SNO(final Long boardId) {
         if (this.boardEntity == null) {
             this.boardEntity = new BoardEntity();
         }
         this.boardEntity.setSEQ_ID(boardId);
     }
 
-        // Getters and Setters for each field
-        public Long getBOARD_IMAGE_SNO() {
-            return SEQ_ID;
-        }
-    
-        public void setBOARD_IMAGE_SNO(Long BOARD_IMAGE_SNO) {
-            this.SEQ_ID = BOARD_IMAGE_SNO;
-        }
-    
+    // Getters and Setters for each field
+    public Long getBOARD_IMAGE_SNO() {
+        return SEQ_ID;
+    }
+
+    public void setBOARD_IMAGE_SNO(Long BOARD_IMAGE_SNO) {
+        this.SEQ_ID = BOARD_IMAGE_SNO;
+    }
 
 }

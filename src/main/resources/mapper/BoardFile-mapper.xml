@@ -6,29 +6,32 @@
 
     <!-- BoardFile TABLE Result Map 정의 -->
     <resultMap id="boardFileMap" type="boardFile">
-        <id property="SEQ_ID" column="BOARD_FILE_SNO"/>
-        <result property="ORIGINAL_FILENAME" column="ORIGINAL_FILENAME"/>
-        <result property="STORED_FILENAME" column="STORED_FILENAME"/>
-        <result property="CREATED_TIME" column="CREATED_TIME"/>
-        <result property="UPDATED_TIME" column="UPDATED_TIME"/>
-        <result property="STORED_PATH" column="STORED_PATH"/>
-        <association property="boardEntity" column="BOARD_SNO" javaType="board" 
+        <id property="SEQ_ID" column="BLB_APG_FL_SNO"/>
+        <result property="ORIGINAL_FILENAME" column="ORC_FL_NM"/>
+        <result property="STORED_FILENAME" column="SVR_FL_NM"/>
+        <result property="STORED_PATH" column="FL_KPN_PTH"/>
+        <result property="CREATED_TIME" column="GNT_DTM"/>
+        <result property="UPDATED_TIME" column="AMN_DTM"/>
+        <association property="boardEntity" column="BLB_SNO" javaType="board" 
                      select="selectBoardById"/>
     </resultMap>
     
     <!-- BoardEntity를 조회하는 메소드 정의 (for association) -->
-    <select id="selectBoardById" parameterType="Long" resultType="board">
-        SELECT * FROM THURXE_CBRDMM WHERE SEQ_ID = #{BOARD_SNO}
+    <select id="selectBoardById" parameterType="Long" resultMap="Board.boardMap">
+        SELECT * FROM THURXE_CBRDMM WHERE BLB_SNO = #{BLB_SNO}
     </select>
     
     <!-- 첨부파일 저장 -->
     <insert id="saveFile" parameterType="boardFile">
-        INSERT INTO THURXE_CBRDFM(ORIGINAL_FILENAME, STORED_FILENAME, BOARD_SNO, CREATED_TIME, STORED_PATH)
-        values (#{ORIGINAL_FILENAME}, #{STORED_FILENAME}, #{BOARD_SNO}, SYSDATE, #{STORED_PATH})
+        <selectKey keyProperty="SEQ_ID" resultType="long" order="BEFORE">
+            SELECT "EHR"."BLB_APG_FL_SNO".nextval FROM dual
+        </selectKey>
+        INSERT INTO THURXE_CBRDFM(BLB_APG_FL_SNO, ORC_FL_NM, SVR_FL_NM, BLB_SNO, GNT_DTM, FL_KPN_PTH)
+        values (#{SEQ_ID}, #{ORIGINAL_FILENAME}, #{STORED_FILENAME}, #{BLB_SNO}, SYSDATE, #{STORED_PATH})
     </insert>
     
     <select id="findFile" parameterType="Long" resultMap="boardFileMap">
-        SELECT * FROM THURXE_CBRDFM WHERE BOARD_SNO = #{BOARD_SNO}
+        SELECT * FROM THURXE_CBRDFM WHERE BLB_SNO = #{BLB_SNO}
     </select>
 
     <delete id="deleteFile" parameterType="Long">

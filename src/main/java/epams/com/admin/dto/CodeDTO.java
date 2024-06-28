@@ -1,6 +1,6 @@
 package epams.com.admin.dto;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -49,14 +49,14 @@ public class CodeDTO {
      * @implNote 생성시간
      * @since 2024-06-09
      */
-    private LocalDateTime createdTime;
+    private LocalDate createdTime;
     
     /***
      * @author 140024
      * @implNote 수정시간
      * @since 2024-06-09
      */
-    private LocalDateTime updatedTime;
+    private LocalDate updatedTime;
     
     /***
      * @author 140024

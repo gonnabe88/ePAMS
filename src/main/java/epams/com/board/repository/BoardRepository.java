@@ -37,8 +37,8 @@ public class BoardRepository {
 	 * @implNote paging 조건에 따라 모든 게시물을 조회하여 반환
 	 * @since 2024-06-09
 	 */
-    public List<BoardDTO> findAll(final int offset, final int pageSize, final String sortColumn, final String sortDirection) {
-    	List<BoardEntity> boardEntities = sql.selectList("Board.findAll", Map.of("offset", offset, "limit", pageSize, "sortColumn", sortColumn, "sortDirection", sortDirection)); 
+    public List<BoardDTO> findAll(final int offset, final int pageSize, final String sortDirection) {
+    	List<BoardEntity> boardEntities = sql.selectList("Board.findAll", Map.of("offset", offset, "limit", pageSize, "sortDirection", sortDirection)); 
         return BoardDTO.toDTOList(boardEntities);
     }    
     

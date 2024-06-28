@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper SYSTEM "mybatis-3-mapper.dtd">
+
+
+<mapper namespace="Board">
+
+    <!-- BOARD TABLE Result Map 정의 -->
+    <resultMap id="boardMap" type="board">
+        <id property="SEQ_ID" column="BLB_SNO"/>
+        <result property="BOARD_TITLE" column="BLB_TTL_CONE"/>
+        <result property="BOARD_CONTENTS" column="BLB_CONE"/>
+        <result property="BOARD_WRITER" column="DUPR_ENO"/>
+        <result property="CATEGORY" column="CTG_NM"/>
+        <result property="BOARD_HITS" column="NAC_INQ_NBR"/>
+        <result property="FILE_ATTACHED" column="FL_APG_YN"/>
+        <result property="CREATED_TIME" column="GNT_DTM"/>
+        <result property="UPDATED_TIME" column="AMN_DTM"/>
+    </resultMap>
+	
+	<!-- 게시물 저장 후 ID 반환 -->
+    <insert id="save" parameterType="board">
+        <selectKey keyProperty="SEQ_ID" resultType="long" order="BEFORE">
+            SELECT "EHR"."BLB_SNO".nextval FROM dual
+        </selectKey>
+        INSERT INTO THURXE_CBRDMM(
+            BLB_SNO, 
+            BLB_TTL_CONE, 
+            DUPR_ENO, 
+            BLB_CONE, 
+            FL_APG_YN, 
+            CTG_NM, 
+            NAC_INQ_NBR, 
+            GNT_DTM)
+        VALUES(
+            #{SEQ_ID}, 
+            #{BOARD_TITLE}, 
+            #{BOARD_WRITER}, 
+            #{BOARD_CONTENTS}, 
+            #{FILE_ATTACHED}, 
+            #{CATEGORY}, 
+            0, 
+            SYSDATE
+        )
+    </insert>
+    
+	<!-- 특정 게시물 업데이트 -->
+    <update id="update" parameterType="board">
+        UPDATE THURXE_CBRDMM 
+        SET BLB_TTL_CONE=#{BOARD_TITLE}, 
+        	BLB_CONE=#{BOARD_CONTENTS}, 
+	        FL_APG_YN=#{FILE_ATTACHED},
+	        CTG_NM=#{CATEGORY},
+	        AMN_DTM=#{UPDATED_TIME}
+       	WHERE BLB_SNO=#{SEQ_ID}
+    </update>
+    
+    <!-- Paging 규칙에 따라 전체 게시물 조회 -->
+    <select id="findAll" resultMap="boardMap">
+        SELECT * 
+        FROM THURXE_CBRDMM
+        ORDER BY BLB_SNO ${sortDirection}
+        OFFSET #{offset} ROWS FETCH NEXT #{limit} ROWS ONLY
+    </select>
+    
+    <!-- 전체 데이터 개수 조회 -->
+    <select id="count" resultType="long">
+        SELECT COUNT(*) FROM THURXE_CBRDMM
+    </select>
+    
+    <!-- 특정 게시물 조회 -->
+    <select id="findById" parameterType="Long" resultMap="boardMap">
+        SELECT 
+        	BLB_SNO, 
+       		BLB_TTL_CONE,
+       		DUPR_ENO, 
+       		BLB_CONE, 
+       		NAC_INQ_NBR,
+        	TO_CHAR(GNT_DTM, 'YYYY-MM-DD HH24:MI:SS') AS GNT_DTM,  
+        	FL_APG_YN,
+        	CTG_NM
+        FROM THURXE_CBRDMM WHERE BLB_SNO=#{SEQ_ID}
+    </select>
+    
+    <!-- 특정 게시물 조회 시 HIT+1 -->
+    <update id="updateHits" parameterType="Long">
+        UPDATE THURXE_CBRDMM SET NAC_INQ_NBR=NAC_INQ_NBR+1 WHERE BLB_SNO=#{SEQ_ID}
+    </update>
+
+    
+    <delete id="delete" parameterType="Long">
+        DELETE FROM THURXE_CBRDMM WHERE BLB_SNO=#{SEQ_ID}
+    </delete>
+    
+</mapper>

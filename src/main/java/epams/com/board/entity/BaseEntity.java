@@ -1,7 +1,9 @@
 package epams.com.board.entity;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -32,8 +34,9 @@ public class BaseEntity {
 	 * @since 2024-06-09
 	 */
     @CreationTimestamp
-    @Column(name = "CREATED_TIME", updatable = false)
-    private LocalDateTime CREATED_TIME;
+    @Column(name = "GNT_DTM", updatable = false, columnDefinition = "DATE")
+    @Comment("생성일시")
+    private LocalDate CREATED_TIME;
 
 	/***
 	 * @author 140024
@@ -41,6 +44,8 @@ public class BaseEntity {
 	 * @since 2024-06-09
 	 */
     @UpdateTimestamp
-    @Column(name = "UPDATED_TIME", insertable = false)
-    private LocalDateTime UPDATED_TIME;
+    @Column(name = "AMN_DTM", insertable = false, columnDefinition = "DATE")
+    @Comment("수정일시")
+    private LocalDate UPDATED_TIME;
+
 }

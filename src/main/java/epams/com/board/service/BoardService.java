@@ -212,7 +212,7 @@ public class BoardService {
     	final int pageSize = pageable.getPageSize(); // 페이지 크기
     	final int offset = page * pageSize; // 오프셋 계산
         // 한 페이지당 3개씩 글을 보여주고 정렬 기준은 id 기준으로 내림차순 정렬
-    	final List<BoardDTO> boardDTOs = boardRepository2.findAll(offset, pageSize, "SEQ_ID", "DESC");
+    	final List<BoardDTO> boardDTOs = boardRepository2.findAll(offset, pageSize, "DESC");
         // 전체 데이터 개수 조회
     	final long totalElements = boardRepository2.count(); // 전체 데이터 개수를 조회하는 메소드 필요
         return new PageImpl<>(boardDTOs, PageRequest.of(page, pageSize), totalElements);

@@ -269,7 +269,7 @@
 								<div class="card-body">
 									<span th:if="${board.category}" th:classappend="|badge badge-sm mb-2 ${(board.category == 'IT') ? 'bg-primary' : (board.category == '인사') ? 'bg-info' : ''}|" style="--bs-badge-padding-x: .35rem" th:text="${board.category}"></span> <a class="card-title" th:href="@{|/board/${board.seqId}|}">
 										<h6 style="display: flex; align-items: center;">
-											<span th:text="${board.boardTitle}" style="margin-right: 0.5rem;"> </span> <span th:if="${T(java.time.LocalDateTime).now().minusDays(7).isBefore(board.createdTime)}" class="badge rounded-pill bg-warning text-dark" style="--bs-badge-font-size: .80em;"> new </span>
+											<span th:text="${board.boardTitle}" style="margin-right: 0.5rem;"> </span> <span th:if="${T(java.time.LocalDate).now().minusDays(7).isBefore(board.createdTime)}" class="badge rounded-pill bg-warning text-dark" style="--bs-badge-font-size: .80em;"> new </span>
 										</h6>
 									</a>
 									<div class="d-flex flex-row mb-3 gap-3">

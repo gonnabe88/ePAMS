@@ -89,7 +89,7 @@ public class LoginService {
         }  
         // username & password(hash)와 일치하는 사용자를 찾음
         final MemberDTO ismemberDTO = loginRepository.login(memberDTO);
-        log.warn(ismemberDTO.toString());
+        //log.warn(ismemberDTO.toString());
         return ismemberDTO != null;
     }
 

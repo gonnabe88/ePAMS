@@ -28,7 +28,7 @@ spring:
   datasource:
     driver-class-name: oracle.jdbc.OracleDriver
     url: jdbc:oracle:thin:@localhost:1521/XE
-    username: EHR
+    username: system
     password: kdb1234!
     hikari:
       connection-timeout: 60000

@@ -41,7 +41,7 @@ public class BoardEntity extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "BLB_SNO")
     @SequenceGenerator(name = "BLB_SNO", sequenceName = "BLB_SNO", allocationSize = 1)
     @Comment("게시판일련번호")
-    private Long SEQ_ID;
+    private Long BLB_SNO;
     
     /***
      * @author 140024
@@ -50,7 +50,7 @@ public class BoardEntity extends BaseEntity {
      */
     @Column(name = "BLB_TTL_CONE", length = 200, nullable = false)
     @Comment("게시판제목")
-    private String BOARD_TITLE;
+    private String BLB_TTL_CONE;
     
     /***
      * @author 140024
@@ -60,7 +60,7 @@ public class BoardEntity extends BaseEntity {
      */
     @Column(name = "BLB_CONE", length = 4000, nullable = false)
     @Comment("게시판내용")
-    private String BOARD_CONTENTS;
+    private String BLB_CONE;
 
     /***
      * @author 140024
@@ -69,7 +69,7 @@ public class BoardEntity extends BaseEntity {
      */
     @Column(name = "DUPR_ENO",  length = 255, nullable = false) 
     @Comment("작성자사원번호")
-    private String BOARD_WRITER;
+    private String DUPR_ENO;
 
     /***
      * @author 140024
@@ -78,7 +78,7 @@ public class BoardEntity extends BaseEntity {
      */
     @Column(name = "CTG_NM", length = 16, nullable = false)
     @Comment("카테고리명")
-    private String CATEGORY;
+    private String CTG_NM;
 
     /***
      * @author 140024
@@ -87,7 +87,7 @@ public class BoardEntity extends BaseEntity {
      */
     @Column(name = "NAC_INQ_NBR")
     @Comment("게시물조회수")
-    private int BOARD_HITS;
+    private int NAC_INQ_NBR;
 
     /***
      * @author 140024
@@ -96,7 +96,7 @@ public class BoardEntity extends BaseEntity {
      */
     @Column(name = "FL_APG_YN", length = 1)
     @Comment("파일첨부여부")
-    private int FILE_ATTACHED; // 1 or 0
+    private int FL_APG_YN; // 1 or 0
 
     /***
      * @author 140024

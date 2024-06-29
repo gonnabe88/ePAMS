@@ -143,19 +143,15 @@ public class BoardDTO {
     public static BoardDTO toDTO(final BoardEntity boardEntity) {
     	final BoardDTO boardDTO = new BoardDTO();
         if(boardEntity != null) {
-            boardDTO.setSeqId(boardEntity.getSEQ_ID());
-            boardDTO.setBoardWriter(boardEntity.getBOARD_WRITER());
-            boardDTO.setBoardTitle(boardEntity.getBOARD_TITLE());
-            boardDTO.setBoardContents(boardEntity.getBOARD_CONTENTS());
-            boardDTO.setCategory(boardEntity.getCATEGORY());
-            boardDTO.setBoardHits(boardEntity.getBOARD_HITS());
-            boardDTO.setCreatedTime(boardEntity.getCREATED_TIME());
-            boardDTO.setUpdatedTime(boardEntity.getUPDATED_TIME());
-            if (boardEntity.getFILE_ATTACHED() == 0) {
-                boardDTO.setFileAttached(boardEntity.getFILE_ATTACHED()); // 0
-            } else {
-                boardDTO.setFileAttached(boardEntity.getFILE_ATTACHED()); // 1
-            }
+            boardDTO.setSeqId(boardEntity.getBLB_SNO());
+            boardDTO.setBoardWriter(boardEntity.getDUPR_ENO());
+            boardDTO.setBoardTitle(boardEntity.getBLB_TTL_CONE());
+            boardDTO.setBoardContents(boardEntity.getBLB_CONE());
+            boardDTO.setCategory(boardEntity.getCTG_NM());
+            boardDTO.setBoardHits(boardEntity.getNAC_INQ_NBR());
+            boardDTO.setCreatedTime(boardEntity.getGNT_DTM());
+            boardDTO.setUpdatedTime(boardEntity.getAMN_DTM());
+            boardDTO.setFileAttached(boardEntity.getFL_APG_YN()); 
         }        
         return boardDTO;
     }
@@ -167,12 +163,15 @@ public class BoardDTO {
      */
     public BoardEntity toEntity() {
         final BoardEntity boardEntity = new BoardEntity();
-        boardEntity.setSEQ_ID(this.seqId);
-        boardEntity.setBOARD_WRITER(this.boardWriter);
-        boardEntity.setBOARD_TITLE(this.boardTitle);
-        boardEntity.setBOARD_CONTENTS(this.boardContents);
-        boardEntity.setCATEGORY(this.category);
-        boardEntity.setBOARD_HITS(this.boardHits);
+        boardEntity.setBLB_SNO(this.seqId);
+        boardEntity.setDUPR_ENO(this.boardWriter);
+        boardEntity.setBLB_TTL_CONE(this.boardTitle);
+        boardEntity.setBLB_CONE(this.boardContents);
+        boardEntity.setFL_APG_YN(this.fileAttached);
+        boardEntity.setCTG_NM(this.category);
+        boardEntity.setNAC_INQ_NBR(this.boardHits);
+        boardEntity.setAMN_DTM(this.updatedTime);
+        boardEntity.setGNT_DTM(this.createdTime);
         return boardEntity;
     }
     

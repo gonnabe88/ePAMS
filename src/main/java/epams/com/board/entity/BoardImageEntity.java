@@ -40,7 +40,7 @@ public class BoardImageEntity extends BaseEntity {
     @SequenceGenerator(name = "BLB_IMG_SNO", sequenceName = "BLB_IMG_SNO", allocationSize = 1)
     @Column(name = "BLB_IMG_SNO", columnDefinition = "NUMBER(22)")
     @Comment("게시판이미지일련번호")
-    private Long SEQ_ID;
+    private Long BLB_IMG_SNO;
 
     /***
      * @author 140024
@@ -49,7 +49,7 @@ public class BoardImageEntity extends BaseEntity {
      */
     @Column(name = "ORC_FL_NM")
     @Comment("원본파일명")
-    private String ORIGINAL_FILENAME;
+    private String ORC_FL_NM;
 
     /***
      * @author 140024
@@ -58,7 +58,7 @@ public class BoardImageEntity extends BaseEntity {
      */
     @Column(name = "SVR_FL_NM")
     @Comment("서버파일명")
-    private String STORED_FILENAME;
+    private String SVR_FL_NM;
 
     /***
      * @author 140024
@@ -76,7 +76,7 @@ public class BoardImageEntity extends BaseEntity {
      * @since 2024-06-10
      */
     public Long getBLB_SNO() {
-        return boardEntity != null ? boardEntity.getSEQ_ID() : null;
+        return boardEntity != null ? boardEntity.getBLB_SNO() : null;
     }
 
     /***
@@ -88,16 +88,7 @@ public class BoardImageEntity extends BaseEntity {
         if (this.boardEntity == null) {
             this.boardEntity = new BoardEntity();
         }
-        this.boardEntity.setSEQ_ID(boardId);
-    }
-
-    // Getters and Setters for each field
-    public Long getBOARD_IMAGE_SNO() {
-        return SEQ_ID;
-    }
-
-    public void setBOARD_IMAGE_SNO(Long BOARD_IMAGE_SNO) {
-        this.SEQ_ID = BOARD_IMAGE_SNO;
+        this.boardEntity.setBLB_SNO(boardId);
     }
 
 }

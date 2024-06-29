@@ -102,13 +102,13 @@ public class BoardFileDTO {
      */
     public static BoardFileDTO toDTO(BoardFileEntity boardFileEntity) {
         BoardFileDTO boardFileDTO = new BoardFileDTO();
-        boardFileDTO.setSeqId(boardFileEntity.getSEQ_ID());
-        boardFileDTO.setOriginalFileName(boardFileEntity.getORIGINAL_FILENAME());
-        boardFileDTO.setStoredFileName(boardFileEntity.getSTORED_FILENAME());
-        boardFileDTO.setStoredPath(boardFileEntity.getSTORED_PATH());
-        boardFileDTO.setBoardId(boardFileEntity.getBoardEntity().getSEQ_ID());
-        boardFileDTO.setCreatedTime(boardFileEntity.getCREATED_TIME());
-        boardFileDTO.setUpdatedTime(boardFileEntity.getUPDATED_TIME());
+        boardFileDTO.setSeqId(boardFileEntity.getBLB_APG_FL_SNO());
+        boardFileDTO.setOriginalFileName(boardFileEntity.getORC_FL_NM());
+        boardFileDTO.setStoredFileName(boardFileEntity.getSVR_FL_NM());
+        boardFileDTO.setStoredPath(boardFileEntity.getFL_KPN_PTH());
+        boardFileDTO.setBoardId(boardFileEntity.getBoardEntity().getBLB_SNO());
+        boardFileDTO.setCreatedTime(boardFileEntity.getGNT_DTM());
+        boardFileDTO.setUpdatedTime(boardFileEntity.getAMN_DTM());
         return boardFileDTO;
     }
 
@@ -119,17 +119,17 @@ public class BoardFileDTO {
      */
     public BoardFileEntity toEntity() {
         BoardFileEntity boardFileEntity = new BoardFileEntity();
-        boardFileEntity.setSEQ_ID(this.seqId);
-        boardFileEntity.setORIGINAL_FILENAME(this.originalFileName);
-        boardFileEntity.setSTORED_FILENAME(this.storedFileName);
-        boardFileEntity.setSTORED_PATH(this.storedPath);
+        boardFileEntity.setBLB_APG_FL_SNO(this.seqId);
+        boardFileEntity.setORC_FL_NM(this.originalFileName);
+        boardFileEntity.setSVR_FL_NM(this.storedFileName);
+        boardFileEntity.setFL_KPN_PTH(this.storedPath);
         if (this.boardId != null) {
             BoardEntity boardEntity = new BoardEntity();
-            boardEntity.setSEQ_ID(this.boardId);
+            boardEntity.setBLB_SNO(this.boardId);
             boardFileEntity.setBoardEntity(boardEntity);
         }
-        boardFileEntity.setCREATED_TIME(this.createdTime);
-        boardFileEntity.setUPDATED_TIME(this.updatedTime);
+        boardFileEntity.setGNT_DTM(this.createdTime);
+        boardFileEntity.setAMN_DTM(this.updatedTime);
         return boardFileEntity;
     }
 

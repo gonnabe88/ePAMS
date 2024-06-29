@@ -35,7 +35,7 @@ public class BaseEntity {
     @CreationTimestamp
     @Column(name = "GNT_DTM", updatable = false, columnDefinition = "DATE")
     @Comment("생성일시")
-    private LocalDate CREATED_TIME;
+    private LocalDate GNT_DTM;
 
 	/***
 	 * @author 140024
@@ -45,6 +45,6 @@ public class BaseEntity {
     @UpdateTimestamp
     @Column(name = "AMN_DTM", insertable = false, columnDefinition = "DATE")
     @Comment("수정일시")
-    private LocalDate UPDATED_TIME;
+    private LocalDate AMN_DTM;
 
 }

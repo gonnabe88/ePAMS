@@ -33,10 +33,8 @@ public class BoardFileRepository {
 	 * @implNote 첨부파일 저장 후 ID 반환
 	 * @since 2024-06-09
 	 */
-    public Long saveFile(final BoardFileDTO boardFileDTO) {
-    	BoardFileEntity boardFileEntity = boardFileDTO.toEntity();
-    	sql.insert("BoardFile.saveFile", boardFileEntity);
-    	return boardFileEntity.getSEQ_ID();
+    public Long saveFile(final BoardFileDTO boardFileDTO) {    	
+    	return (long)sql.insert("BoardFile.saveFile", boardFileDTO.toEntity());
     }    
 
 	/***

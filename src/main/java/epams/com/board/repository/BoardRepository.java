@@ -56,9 +56,10 @@ public class BoardRepository {
 	 * @implNote 게시물 저장 후 ID 반환
 	 * @since 2024-06-09
 	 */
-    public Long save(final BoardEntity boardEntity) {
-    	sql.insert("Board.save", boardEntity);
-    	return boardEntity.getSEQ_ID();
+    public Long save(final BoardDTO boardDTO) {    	
+		BoardEntity entity = boardDTO.toEntity();
+		sql.insert("Board.save", entity);
+    	return entity.getBLB_SNO();
     }
     
 	/***
@@ -66,9 +67,10 @@ public class BoardRepository {
 	 * @implNote 게시물 업데이트
 	 * @since 2024-06-09
 	 */
-    public Long update(final BoardEntity boardEntity) {
-        sql.update("Board.update", boardEntity);
-        return boardEntity.getSEQ_ID();
+    public Long update(final BoardDTO boardDTO) {      
+		BoardEntity entity = boardDTO.toEntity();  
+        sql.update("Board.update", entity);
+		return entity.getBLB_SNO();
     }    
     
 	/***
@@ -77,7 +79,6 @@ public class BoardRepository {
 	 * @since 2024-06-09
 	 */
     public BoardDTO findById(final Long seqId) {
-    	log.warn("Board.findById : "+seqId);
     	BoardEntity boardEntity = sql.selectOne("Board.findById", seqId);
         return BoardDTO.toDTO(boardEntity);
     }

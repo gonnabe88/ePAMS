@@ -67,8 +67,8 @@ public class CodeHtmlMapDTO {
         htmlEntity.setHTML(this.html);
         entity.setCodeEntity(codeEntity);
         entity.setHtmlEntity(htmlEntity);
-        entity.setCREATED_TIME(this.createdTime);
-        entity.setUPDATED_TIME(this.updatedTime);
+        entity.setGNT_DTM(this.createdTime);
+        entity.setAMN_DTM(this.updatedTime);
         return entity;
     }
 
@@ -81,8 +81,8 @@ public class CodeHtmlMapDTO {
         final CodeHtmlMapDTO dto = new CodeHtmlMapDTO();
         dto.setHtml(entity.getHtmlEntity().getHTML());
         dto.setCode(entity.getCodeEntity().getCD_ID());
-        dto.setCreatedTime(entity.getCREATED_TIME());
-        dto.setUpdatedTime(entity.getUPDATED_TIME());
+        dto.setCreatedTime(entity.getGNT_DTM());
+        dto.setUpdatedTime(entity.getAMN_DTM());
         return dto;
     }
 

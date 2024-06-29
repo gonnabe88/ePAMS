@@ -68,8 +68,8 @@ public class CodeDTO {
         codeDTO.setCode(codeEntity.getCD_ID());
         codeDTO.setCodeName(codeEntity.getCD_NM());
         codeDTO.setCodeType(codeEntity.getCD_TYPE());
-        codeDTO.setCreatedTime(codeEntity.getCREATED_TIME());
-        codeDTO.setUpdatedTime(codeEntity.getUPDATED_TIME());
+        codeDTO.setCreatedTime(codeEntity.getGNT_DTM());
+        codeDTO.setUpdatedTime(codeEntity.getAMN_DTM());
         return codeDTO;
     }
 
@@ -83,8 +83,8 @@ public class CodeDTO {
         codeEntity.setCD_ID(this.code);
         codeEntity.setCD_NM(this.codeName);
         codeEntity.setCD_TYPE(this.codeType);
-        codeEntity.setUPDATED_TIME(this.updatedTime);
-        codeEntity.setCREATED_TIME(this.createdTime);
+        codeEntity.setAMN_DTM(this.updatedTime);
+        codeEntity.setGNT_DTM(this.createdTime);
         return codeEntity;
     }
     

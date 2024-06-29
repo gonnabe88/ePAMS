@@ -4,7 +4,7 @@
 
 <mapper namespace="BoardFile">
 
-    <!-- BoardFile TABLE Result Map 정의 -->
+    <!-- BoardFile TABLE Result Map 정의
     <resultMap id="boardFileMap" type="boardFile">
         <id property="SEQ_ID" column="BLB_APG_FL_SNO"/>
         <result property="ORIGINAL_FILENAME" column="ORC_FL_NM"/>
@@ -13,32 +13,55 @@
         <result property="CREATED_TIME" column="GNT_DTM"/>
         <result property="UPDATED_TIME" column="AMN_DTM"/>
         <association property="boardEntity" column="BLB_SNO" javaType="board" select="selectBoardById"/>
-    </resultMap>
+    </resultMap>-->
     
     <!-- BoardEntity를 조회하는 메소드 정의 (for association) -->
-    <select id="selectBoardById" parameterType="Long" resultMap="Board.boardMap">
-        SELECT * FROM THURXE_CBRDMM WHERE BLB_SNO = #{BLB_SNO}
+    <select id="selectBoardById" parameterType="Long" resultType="board">
+        SELECT * FROM THURXE_CBRDMM 
+        WHERE 
+            BLB_SNO = #{BLB_SNO}
     </select>
     
     <!-- 첨부파일 저장 -->
     <insert id="saveFile" parameterType="boardFile">
-        <selectKey keyProperty="SEQ_ID" resultType="long" order="BEFORE">
+        <selectKey keyProperty="BLB_APG_FL_SNO" resultType="long" order="BEFORE">
             SELECT "EHR"."BLB_APG_FL_SNO".nextval FROM dual
         </selectKey>
-        INSERT INTO THURXE_CBRDFM(BLB_APG_FL_SNO, ORC_FL_NM, SVR_FL_NM, BLB_SNO, GNT_DTM, FL_KPN_PTH)
-        values (#{SEQ_ID}, #{ORIGINAL_FILENAME}, #{STORED_FILENAME}, #{BLB_SNO}, SYSDATE, #{STORED_PATH})
+        INSERT INTO THURXE_CBRDFM
+        (
+            BLB_APG_FL_SNO, 
+            ORC_FL_NM, 
+            SVR_FL_NM, 
+            BLB_SNO, 
+            GNT_DTM, 
+            FL_KPN_PTH
+        )
+        values (
+            #{BLB_APG_FL_SNO}, 
+            #{ORC_FL_NM}, 
+            #{SVR_FL_NM}, 
+            #{BLB_SNO}, 
+            SYSDATE, 
+            #{FL_KPN_PTH}
+        )
     </insert>
     
-    <select id="findFile" parameterType="Long" resultMap="boardFileMap">
-        SELECT * FROM THURXE_CBRDFM WHERE BLB_SNO = #{BLB_SNO}
+    <select id="findFile" parameterType="Long" resultType="boardFile">
+        SELECT * FROM THURXE_CBRDFM 
+        WHERE 
+            BLB_SNO = #{BLB_SNO}
     </select>
 
     <delete id="deleteFile" parameterType="Long">
-        DELETE FROM THURXE_CBRDFM WHERE BLB_APG_FL_SNO = #{SEQ_ID}
+        DELETE FROM THURXE_CBRDFM 
+        WHERE 
+            BLB_APG_FL_SNO = #{BLB_APG_FL_SNO}
     </delete>
     
-    <select id="findByFileId" parameterType="Long" resultMap="boardFileMap">
-        SELECT * FROM THURXE_CBRDFM WHERE BLB_APG_FL_SNO = #{SEQ_ID}
+    <select id="findByFileId" parameterType="Long" resultType="boardFile">
+        SELECT * FROM THURXE_CBRDFM 
+        WHERE 
+            BLB_APG_FL_SNO = #{BLB_APG_FL_SNO}
     </select>
         
 </mapper>

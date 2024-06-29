@@ -39,7 +39,7 @@ public class BoardFileEntity extends BaseEntity {
     @Comment("게시판첨부파일일련번호")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "BLB_APG_FL_SNO")
     @SequenceGenerator(name = "BLB_APG_FL_SNO", sequenceName = "BLB_APG_FL_SNO", allocationSize = 1)
-    private Long SEQ_ID;
+    private Long BLB_APG_FL_SNO;
 
     /***
      * @author 140024
@@ -48,7 +48,7 @@ public class BoardFileEntity extends BaseEntity {
      */
     @Column(name = "ORC_FL_NM")
     @Comment("원본파일명")
-    private String ORIGINAL_FILENAME;
+    private String ORC_FL_NM;
 
     /***
      * @author 140024
@@ -57,7 +57,7 @@ public class BoardFileEntity extends BaseEntity {
      */
     @Column(name = "SVR_FL_NM")
     @Comment("서버파일명")
-    private String STORED_FILENAME;
+    private String SVR_FL_NM;
     
     /***
      * @author 140024
@@ -66,7 +66,7 @@ public class BoardFileEntity extends BaseEntity {
      */
     @Column(name = "FL_KPN_PTH")
     @Comment("파일저장경로")
-    private String STORED_PATH;
+    private String FL_KPN_PTH;
 
     /***
      * @author 140024
@@ -84,7 +84,7 @@ public class BoardFileEntity extends BaseEntity {
      * @since 2024-06-10
      */
     public Long getBLB_SNO() {
-        return boardEntity != null ? boardEntity.getSEQ_ID() : null;
+        return boardEntity != null ? boardEntity.getBLB_SNO() : null;
     }
     
     /***
@@ -96,6 +96,6 @@ public class BoardFileEntity extends BaseEntity {
         if (this.boardEntity == null) {
             this.boardEntity = new BoardEntity();
         }
-        this.boardEntity.setSEQ_ID(boardId);
+        this.boardEntity.setBLB_SNO(boardId);
     }
 }

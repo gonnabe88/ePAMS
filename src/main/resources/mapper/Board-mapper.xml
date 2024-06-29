@@ -4,7 +4,7 @@
 
 <mapper namespace="Board">
 
-    <!-- BOARD TABLE Result Map 정의 -->
+    <!-- BOARD TABLE Result Map 정의
     <resultMap id="boardMap" type="board">
         <id property="SEQ_ID" column="BLB_SNO"/>
         <result property="BOARD_TITLE" column="BLB_TTL_CONE"/>
@@ -15,11 +15,11 @@
         <result property="FILE_ATTACHED" column="FL_APG_YN"/>
         <result property="CREATED_TIME" column="GNT_DTM"/>
         <result property="UPDATED_TIME" column="AMN_DTM"/>
-    </resultMap>
+    </resultMap> -->
 	
 	<!-- 게시물 저장 후 ID 반환 -->
     <insert id="save" parameterType="board">
-        <selectKey keyProperty="SEQ_ID" resultType="long" order="BEFORE">
+        <selectKey keyProperty="BLB_SNO" resultType="long" order="BEFORE">
             SELECT "EHR"."BLB_SNO".nextval FROM dual
         </selectKey>
         INSERT INTO THURXE_CBRDMM(
@@ -32,12 +32,12 @@
             NAC_INQ_NBR, 
             GNT_DTM)
         VALUES(
-            #{SEQ_ID}, 
-            #{BOARD_TITLE}, 
-            #{BOARD_WRITER}, 
-            #{BOARD_CONTENTS}, 
-            #{FILE_ATTACHED}, 
-            #{CATEGORY}, 
+            #{BLB_SNO}, 
+            #{BLB_TTL_CONE}, 
+            #{DUPR_ENO}, 
+            #{BLB_CONE}, 
+            #{FL_APG_YN}, 
+            #{CTG_NM}, 
             0, 
             SYSDATE
         )
@@ -46,16 +46,16 @@
 	<!-- 특정 게시물 업데이트 -->
     <update id="update" parameterType="board">
         UPDATE THURXE_CBRDMM 
-        SET BLB_TTL_CONE=#{BOARD_TITLE}, 
-        	BLB_CONE=#{BOARD_CONTENTS}, 
-	        FL_APG_YN=#{FILE_ATTACHED},
-	        CTG_NM=#{CATEGORY},
-	        AMN_DTM=#{UPDATED_TIME}
-       	WHERE BLB_SNO=#{SEQ_ID}
+        SET BLB_TTL_CONE=#{BLB_TTL_CONE}, 
+        	BLB_CONE=#{BLB_CONE}, 
+	        FL_APG_YN=#{FL_APG_YN},
+	        CTG_NM=#{CTG_NM},
+	        AMN_DTM=#{AMN_DTM}
+       	WHERE BLB_SNO=#{BLB_SNO}
     </update>
     
     <!-- Paging 규칙에 따라 전체 게시물 조회 -->
-    <select id="findAll" resultMap="boardMap">
+    <select id="findAll" resultType="board">
         SELECT * 
         FROM THURXE_CBRDMM
         ORDER BY BLB_SNO ${sortDirection}
@@ -68,7 +68,7 @@
     </select>
     
     <!-- 특정 게시물 조회 -->
-    <select id="findById" parameterType="Long" resultMap="boardMap">
+    <select id="findById" parameterType="Long" resultType="board">
         SELECT 
         	BLB_SNO, 
        		BLB_TTL_CONE,
@@ -78,17 +78,17 @@
         	TO_CHAR(GNT_DTM, 'YYYY-MM-DD HH24:MI:SS') AS GNT_DTM,  
         	FL_APG_YN,
         	CTG_NM
-        FROM THURXE_CBRDMM WHERE BLB_SNO=#{SEQ_ID}
+        FROM THURXE_CBRDMM WHERE BLB_SNO=#{BLB_SNO}
     </select>
     
     <!-- 특정 게시물 조회 시 HIT+1 -->
     <update id="updateHits" parameterType="Long">
-        UPDATE THURXE_CBRDMM SET NAC_INQ_NBR=NAC_INQ_NBR+1 WHERE BLB_SNO=#{SEQ_ID}
+        UPDATE THURXE_CBRDMM SET NAC_INQ_NBR=NAC_INQ_NBR+1 WHERE BLB_SNO=#{BLB_SNO}
     </update>
 
     
     <delete id="delete" parameterType="Long">
-        DELETE FROM THURXE_CBRDMM WHERE BLB_SNO=#{SEQ_ID}
+        DELETE FROM THURXE_CBRDMM WHERE BLB_SNO=#{BLB_SNO}
     </delete>
     
 </mapper>

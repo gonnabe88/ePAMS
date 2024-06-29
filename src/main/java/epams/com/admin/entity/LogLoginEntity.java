@@ -1,7 +1,5 @@
 package epams.com.admin.entity;
 
-import java.time.LocalDateTime;
-
 import org.hibernate.annotations.Comment;
 
 import jakarta.persistence.Column;
@@ -15,7 +13,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
+import java.time.LocalDate;
 /***
  * @author 140024
  * @implNote Login Log Table을 객체로 관리하기 위한 entity
@@ -38,7 +36,7 @@ public class LogLoginEntity {
      */
     @Id // 기본키
     @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment
-    @Column(name = "LOGIN_LOG_SNO")
+    @Column(name = "LGN_LOG_SNO", columnDefinition = "NUMBER(22)")
     @Comment("로그인로그일련번호")
     private Long SEQ_ID; 
     
@@ -47,7 +45,7 @@ public class LogLoginEntity {
      * @implNote 행번 
      * @since 2024-06-09
      */
-    @Column(name = "SNO", nullable = false)
+    @Column(name = "ENO", nullable = false, length = 32)
     @Comment("사원번호")
     private String EMP_NO; 
     
@@ -56,8 +54,8 @@ public class LogLoginEntity {
      * @implNote 인증방식
      * @since 2024-06-09
      */
-    @Column(name = "LOGIN_TYPE", nullable = false)
-    @Comment("로그인타입")
+    @Column(name = "LGN_KD_NM", nullable = false, length = 100)
+    @Comment("로그인종류명")
     private String LOGIN_TYPE; 
     
     /***
@@ -65,8 +63,8 @@ public class LogLoginEntity {
      * @implNote 성공여부
      * @since 2024-06-09
      */
-    @Column(name = "LOGIN_RESULT", nullable = false)
-    @Comment("로그인결과")
+    @Column(name = "LGN_SCS_YN", nullable = false, length = 1)
+    @Comment("로그인성공여부")
     private boolean LOGIN_RESULT;
     
     /***
@@ -74,8 +72,8 @@ public class LogLoginEntity {
      * @implNote 생성시간(인증시간)
      * @since 2024-06-09
      */
-    @Column(name = "CREATED_TIME", updatable = false)
-    @Comment("생성시간")
-    private LocalDateTime CREATED_TIME;  
+    @Column(name = "GNT_DTM", updatable = false, columnDefinition = "DATE")
+    @Comment("생성일시")
+    private LocalDate CREATED_TIME;  
 
 }

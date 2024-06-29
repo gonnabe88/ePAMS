@@ -3,18 +3,22 @@
 
 
 <mapper namespace="CodeHtmlDetail">
-     
+    
     <!-- html에 해당하는 Code 목록 조회 -->
     <select id="findAllByHtml" parameterType="String" resultType="CodeHtmlDetail">
         SELECT 
-        	CH.HTML   AS html, 
-        	H.HTML_NM AS htmlName, 
-        	CH.CD_ID     AS code, 
-        	C.CD_NM   AS codeName 
-        FROM THURXE_CCDHTR CH, THURXE_CCODEM C, THURXE_CHTMLM H
-        WHERE CH.HTML = H.HTML AND
-        	  CH.CD_ID   = C.CD_ID AND
-        	  CH.HTML = #{html}
+            CH.HTML_PTH_NM AS html, 
+            H.HTML_NM      AS htmlName, 
+            CH.CDVA_ID     AS code, 
+            C.CDVA_NM      AS codeName 
+        FROM 
+            THURXE_CCDHTR CH, 
+            THURXE_CCODEM C, 
+            THURXE_CHTMLM H
+        WHERE 
+            CH.HTML_PTH_NM = H.HTML_PTH_NM AND
+            CH.CDVA_ID     = C.CDVA_ID AND
+            CH.HTML_PTH_NM = #{html}
     </select>    
-        
+    
 </mapper>

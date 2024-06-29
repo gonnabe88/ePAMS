@@ -8,7 +8,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import epams.com.board.dto.BoardDTO;
 import epams.dtm.dto.BasePeriodDTO;
 import epams.dtm.dto.DtmApplDTO;
 import epams.dtm.repository.DtmRepository;

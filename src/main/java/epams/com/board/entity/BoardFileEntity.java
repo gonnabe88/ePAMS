@@ -98,5 +98,4 @@ public class BoardFileEntity extends BaseEntity {
         }
         this.boardEntity.setSEQ_ID(boardId);
     }
-
 }

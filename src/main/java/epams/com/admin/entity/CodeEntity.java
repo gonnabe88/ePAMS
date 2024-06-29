@@ -47,8 +47,8 @@ public class CodeEntity extends BaseEntity implements Serializable {
      * @since 2024-06-09
      */
     @Id // 기본키
-    @Column(length = 128)
-    @Comment("공통코드식별번호")
+    @Column(name="CDVA_ID", length = 40)
+    @Comment("코드값ID")
     private String CD_ID;
     
     /***
@@ -56,8 +56,8 @@ public class CodeEntity extends BaseEntity implements Serializable {
      * @implNote 코드명
      * @since 2024-06-09
      */
-    @Column(length = 500, nullable = false)
-    @Comment("공통코드명칭")
+    @Column(name="CDVA_NM", length = 100, nullable = false)
+    @Comment("코드값명")
     private String CD_NM;
 
     /***
@@ -65,8 +65,8 @@ public class CodeEntity extends BaseEntity implements Serializable {
      * @implNote 코드형식
      * @since 2024-06-09
      */
-    @Column(length = 20, nullable = false) // 크기 20, not null
-    @Comment("공통코드타입")
+    @Column(name="CDVA_KD_NM", length = 100, nullable = false) // 크기 20, not null
+    @Comment("코드값종류명")
     private String CD_TYPE;
     
     /***
@@ -77,8 +77,8 @@ public class CodeEntity extends BaseEntity implements Serializable {
     @ManyToMany
     @JoinTable(
         name = "THURXE_CCDHTR",
-        joinColumns = @JoinColumn(name = "CD_ID", foreignKey = @ForeignKey(name = "FK_THURXE_CCDHTR_CD_ID")),
-        inverseJoinColumns = @JoinColumn(name = "HTML", foreignKey = @ForeignKey(name = "FK_THURXE_CCDHTR_HTML"))
+        joinColumns = @JoinColumn(name = "CDVA_ID", foreignKey = @ForeignKey(name = "FK_THURXE_CCDHTR_CDVA_ID")),
+        inverseJoinColumns = @JoinColumn(name = "HTML_PTH_NM", foreignKey = @ForeignKey(name = "FK_THURXE_CCDHTR_HTML_PTH_NM"))
     )
     
     /***

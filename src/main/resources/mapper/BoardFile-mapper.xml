@@ -12,8 +12,7 @@
         <result property="STORED_PATH" column="FL_KPN_PTH"/>
         <result property="CREATED_TIME" column="GNT_DTM"/>
         <result property="UPDATED_TIME" column="AMN_DTM"/>
-        <association property="boardEntity" column="BLB_SNO" javaType="board" 
-                     select="selectBoardById"/>
+        <association property="boardEntity" column="BLB_SNO" javaType="board" select="selectBoardById"/>
     </resultMap>
     
     <!-- BoardEntity를 조회하는 메소드 정의 (for association) -->
@@ -35,11 +34,11 @@
     </select>
 
     <delete id="deleteFile" parameterType="Long">
-        DELETE FROM THURXE_CBRDFM WHERE BOARD_FILE_SNO = #{SEQ_ID}
+        DELETE FROM THURXE_CBRDFM WHERE BLB_APG_FL_SNO = #{SEQ_ID}
     </delete>
     
     <select id="findByFileId" parameterType="Long" resultMap="boardFileMap">
-        SELECT * FROM THURXE_CBRDFM WHERE BOARD_FILE_SNO = #{SEQ_ID}
+        SELECT * FROM THURXE_CBRDFM WHERE BLB_APG_FL_SNO = #{SEQ_ID}
     </select>
         
 </mapper>

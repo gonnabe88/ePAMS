@@ -3,53 +3,63 @@
 
 
 <mapper namespace="LoginOTP">
-     
+
+    <!-- Result Map 정의 --> 
+    <resultMap id="loginOTPMap" type="loginOTP">
+    <id property="SEQ_ID" column="OTP_ISN_SNO"/>
+        <result property="EMP_NO" column="ENO"/>
+        <result property="OTP" column="OTP_SMS_CER_NO"/>
+        <result property="MFA" column="CER_KD_NM"/>
+        <result property="CREATED_TIME" column="GNT_TIME"/>
+    </resultMap>
+
     <!-- 모든 데이터 조회 -->
-    <select id="findAll" resultType="loginOTP">
+    <select id="findAll" resultMap="loginOTPMap">
         SELECT * FROM THURXE_COTPIM
     </select>    
     
     <!-- 기본키 데이터 중복여부 조회 -->
-    <select id="countById" parameterType="Long" resultType="loginOTP">
+    <select id="countById" parameterType="Long" resultMap="loginOTPMap">
         SELECT COUNT(*)
-        FROM THURXE_COTPIM WHERE SEQ_ID=#{SEQ_ID}
+        FROM THURXE_COTPIM 
+        WHERE 
+            OTP_ISN_SNO = #{SEQ_ID}
     </select>
     
     <!-- 신규 데이터 추가 --> 
     <insert id="insert" parameterType="loginOTP">
-        INSERT INTO THURXE_COTPIM(SNO, OTP, MFA, CREATED_TIME)
-            VALUES(#{EMP_NO}, #{OTP}, #{MFA}, SYSDATE)
+        INSERT INTO THURXE_COTPIM
+        (
+            ENO, 
+            OTP_SMS_CER_NO, 
+            CER_KD_NM, 
+            GNT_TIME
+        )
+        VALUES
+        (
+            #{EMP_NO}, 
+            #{OTP}, 
+            #{MFA}, 
+            SYSDATE
+        )
     </insert>   
     
     <!-- 기존 데이터 삭제 --> 
     <delete id="delete" parameterType="loginOTP">
-        DELETE FROM THURXE_COTPIM WHERE SEQ_ID=#{SEQ_ID}
+        DELETE FROM THURXE_COTPIM 
+        WHERE 
+            OTP_ISN_SNO = #{SEQ_ID}
     </delete>
-    
-    <!-- 기존 데이터 업데이트 --> 
-    <update id="update" parameterType="loginOTP">
-        UPDATE THURXE_COTPIM SET SNO=#{EMP_NO}, OTP=#{OTP}, MFA=#{MFA}, UPDATED_TIME=SYSDATE WHERE SEQ_ID=#{SEQ_ID}
-    </update>
-    
-    <!-- 신규 데이터 추가 또는 기존 데이터 업데이트 -->
-	<insert id="insertUpdate" parameterType="loginOTP">
-	    INSERT INTO THURXE_COTPIM (SNO, OTP, MFA, CREATED_TIME)
-	    VALUES(#{EMP_NO}, #{OTP}, #{MFA}, SYSDATE)
-	    ON DUPLICATE KEY UPDATE
-	    OTP = VALUES(OTP),
-	    MFA = VALUES(MFA),
-	    UPDATED_TIME = SYSDATE;
-	</insert>
 	
-	    <!-- 모든 데이터 조회 -->
-    <select id="findValidOneByUsername" parameterType="loginOTP" resultType="loginOTP">
+    <!-- 모든 데이터 조회 -->
+    <select id="findValidOneByUsername" parameterType="loginOTP" resultMap="loginOTPMap">
     SELECT *
     FROM (
         SELECT * 
         FROM THURXE_COTPIM 
-        WHERE SNO = #{EMP_NO}
-          AND CREATED_TIME > SYSDATE - INTERVAL '3' MINUTE
-        ORDER BY CREATED_TIME DESC
+        WHERE ENO = #{EMP_NO}
+            AND GNT_TIME > SYSDATE - INTERVAL '3' MINUTE
+        ORDER BY GNT_TIME DESC
     )
     WHERE ROWNUM = 1
     </select> 

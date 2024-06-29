@@ -3,30 +3,43 @@
 
 <mapper namespace="LogLogin">
     
-    <!-- com.kdb.common.dto.LogLoginDTO Result Map 정의
-    <resultMap id="LogLoginResultMap" type="com.kdb.com.dto.LogLoginDTO">
-        <result property="empNo" column="EMP_NO"/>
-        <result property="type" column="TYPE"/>
-        <result property="result" column="RESULT"/>
-        <result property="createdTime" column="CREATED_TIME"/>
+    <!-- Result Map 정의 -->
+    <resultMap id="logLoginMap" type="logLogin">
+        <id property="SEQ_ID" column="LGN_LOG_SNO"/>
+        <result property="EMP_NO" column="ENO"/>
+        <result property="LOGIN_TYPE" column="LGN_KD_NM"/>
+        <result property="LOGIN_RESULT" column="LGN_SCS_YN"/>
+        <result property="CREATED_TIME" column="GNT_DTM"/>
     </resultMap>
-    -->
     
     <!-- 모든 데이터 조회 -->
-    <select id="findAll" resultType="LogLogin">
+    <select id="findAll" resultMap="logLoginMap">
         SELECT * FROM THURXE_CLOGNL
     </select>    
     
     <!-- 기본키 데이터 중복여부 조회 -->
-    <select id="countById" parameterType="Long" resultType="logLogin">
+    <select id="countById" parameterType="Long" resultMap="logLoginMap">
         SELECT COUNT(*)
-        FROM THURXE_CLOGNL WHERE SEQ_ID=#{SEQ_ID}
+        FROM THURXE_CLOGNL 
+        WHERE 
+            LGN_LOG_SNO = #{SEQ_ID}
     </select>
     
     <!-- 신규 데이터 추가 --> 
     <insert id="insert" parameterType="logLogin">
-        INSERT INTO THURXE_CLOGNL(SNO, LOGIN_TYPE, LOGIN_RESULT, CREATED_TIME)
-            VALUES(#{EMP_NO}, #{LOGIN_TYPE}, #{LOGIN_RESULT}, SYSDATE)
+        INSERT INTO THURXE_CLOGNL
+        (
+            ENO, 
+            LGN_KD_NM, 
+            LGN_SCS_YN, 
+            GNT_DTM
+        )
+        VALUES(
+            #{EMP_NO}, 
+            #{LOGIN_TYPE}, 
+            #{LOGIN_RESULT}, 
+            SYSDATE
+        )
     </insert>   
     
     <!-- 기존 데이터 삭제 (로그 테이블 특성상 불필요) --> 

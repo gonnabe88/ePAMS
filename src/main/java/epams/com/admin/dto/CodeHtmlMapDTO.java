@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import epams.com.admin.entity.CodeEntity;
-import epams.com.admin.entity.CodeHtmlMapEntity;
+import epams.com.admin.entity.CodeHtmlEntity;
 import epams.com.admin.entity.HtmlEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -59,8 +59,8 @@ public class CodeHtmlMapDTO {
      * @implNote DTO를 Entity로 변환하는 메서드
      * @since 2024-06-09
      */
-    public CodeHtmlMapEntity toEntity() {
-        final CodeHtmlMapEntity entity = new CodeHtmlMapEntity();
+    public CodeHtmlEntity toEntity() {
+        final CodeHtmlEntity entity = new CodeHtmlEntity();
         final CodeEntity codeEntity = new CodeEntity();
         codeEntity.setCD_ID(this.code);
         final HtmlEntity htmlEntity = new HtmlEntity();
@@ -77,7 +77,7 @@ public class CodeHtmlMapDTO {
      * @implNote Entity를 DTO로 변환하는 메서드
      * @since 2024-06-09
      */
-    public static CodeHtmlMapDTO toDTO(final CodeHtmlMapEntity entity) {
+    public static CodeHtmlMapDTO toDTO(final CodeHtmlEntity entity) {
         final CodeHtmlMapDTO dto = new CodeHtmlMapDTO();
         dto.setHtml(entity.getHtmlEntity().getHTML());
         dto.setCode(entity.getCodeEntity().getCD_ID());
@@ -91,7 +91,7 @@ public class CodeHtmlMapDTO {
      * @implNote Entity 리스트를 DTO 리스트로 변환하는 메서드
      * @since 2024-06-09
      */
-    public static List<CodeHtmlMapDTO> toDTOList(final List<CodeHtmlMapEntity> entities) {
+    public static List<CodeHtmlMapDTO> toDTOList(final List<CodeHtmlEntity> entities) {
         return entities.stream().map(CodeHtmlMapDTO::toDTO).collect(Collectors.toList());
     }
 
@@ -100,7 +100,7 @@ public class CodeHtmlMapDTO {
      * @implNote DTO 리스트를 Entity 리스트로 변환하는 메서드
      * @since 2024-06-09
      */
-    public static List<CodeHtmlMapEntity> toEntityList(final List<CodeHtmlMapDTO> dtos) {
+    public static List<CodeHtmlEntity> toEntityList(final List<CodeHtmlMapDTO> dtos) {
         return dtos.stream().map(CodeHtmlMapDTO::toEntity).collect(Collectors.toList());
     }
     

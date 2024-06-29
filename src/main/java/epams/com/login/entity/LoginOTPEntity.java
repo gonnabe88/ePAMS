@@ -1,7 +1,6 @@
 package epams.com.login.entity;
 
-import java.time.LocalDateTime;
-
+import java.time.LocalDate;
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -36,8 +35,8 @@ public class LoginOTPEntity {
      */
     @Id 
     @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment
-    @Column(name = "OTP_ISSUE_SNO")
-    @Comment("OTP발급이력식별번호")
+    @Column(name = "OTP_ISN_SNO")
+    @Comment("OTP발급일련번호")
     private Long SEQ_ID;
     
     /***
@@ -45,7 +44,7 @@ public class LoginOTPEntity {
      * @implNote 행번
      * @since 2024-06-09
      */
-    @Column(name = "SNO", length = 20, nullable = false) // 크기 20, not null
+    @Column(name = "ENO", length = 20, nullable = false) // 크기 20, not null
     @Comment("사원번호")
     private String EMP_NO; //행번
     
@@ -54,8 +53,8 @@ public class LoginOTPEntity {
      * @implNote OTP 번호
      * @since 2024-06-09
      */
-    @Column(name = "OTP", length = 6) // 크기 20, not null
-    @Comment("OTP번호")
+    @Column(name = "OTP_SMS_CER_NO", length = 8) // 크기 20, not null
+    @Comment("OTPSMS인증번호")
     private String OTP; //OTP
     
     /***
@@ -63,8 +62,8 @@ public class LoginOTPEntity {
      * @implNote MFA 인증방식
      * @since 2024-06-09
      */
-    @Column(name = "MFA", length = 10)
-    @Comment("MultiFator Athentication 방식")
+    @Column(name = "CER_KD_NM", length = 10)
+    @Comment("인증종류명")
     private String MFA; //MfA 방식
     
     
@@ -74,8 +73,8 @@ public class LoginOTPEntity {
      * @since 2024-06-09
      */
     @CreationTimestamp
-    @Column(name = "CREATED_TIME", updatable = false)
+    @Column(name = "GNT_TIME", updatable = false, columnDefinition = "DATE")
     @Comment("생성시간")
-    private LocalDateTime CREATED_TIME; //OTP 생성 시간
+    private LocalDate CREATED_TIME; //OTP 생성 시간
     
 }

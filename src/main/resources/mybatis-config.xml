@@ -14,7 +14,7 @@
         <typeAlias type="epams.com.admin.entity.LogLoginEntity" alias="logLogin"></typeAlias>
         <typeAlias type="epams.com.admin.entity.CodeEntity" alias="code"></typeAlias>
         <typeAlias type="epams.com.admin.entity.HtmlEntity" alias="html"></typeAlias>
-        <typeAlias type="epams.com.admin.entity.CodeHtmlMapEntity" alias="codeHtmlMap"></typeAlias>
+        <typeAlias type="epams.com.admin.entity.CodeHtmlEntity" alias="codeHtml"></typeAlias>
         <typeAlias type="epams.com.admin.dto.CodeHtmlDetailDTO" alias="codeHtmlDetail"></typeAlias>
         <typeAlias type="epams.com.admin.entity.LogViewEntity" alias="viewLog"></typeAlias>
 

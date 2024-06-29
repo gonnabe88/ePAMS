@@ -1,44 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE mapper SYSTEM "mybatis-3-mapper.dtd">
 
-
 <mapper namespace="Code">
      
+    <!-- Result Map 정의 -->
+    <resultMap id="codeMap" type="code">
+        <id property="CD_ID" column="CDVA_ID"/>
+        <result property="CD_NM" column="CDVA_NM"/>
+        <result property="CD_TYPE" column="CDVA_KD_NM"/>
+        <result property="UPDATED_TIME" column="AMN_DTM"/>
+        <result property="CREATED_TIME" column="GNT_DTM"/>
+    </resultMap>
+
     <!-- 모든 데이터 조회 -->
-    <select id="findAll" resultType="code">
+    <select id="findAll" resultMap="codeMap">
         SELECT * FROM THURXE_CCODEM
     </select>    
     
     <!-- 기본키 데이터 중복여부 조회 -->
-    <select id="countById" parameterType="Long" resultType="code">
+    <select id="countById" parameterType="Long" resultMap="codeMap">
         SELECT COUNT(*)
-        FROM THURXE_CCODEM WHERE CD_ID=#{CD_ID}
+        FROM THURXE_CCODEM WHERE CDVA_ID=#{CD_ID}
     </select>
     
     <!-- 신규 데이터 추가 --> 
     <insert id="insert" parameterType="code">
-        INSERT INTO THURXE_CCODEM(CD_ID, CD_NM, CD_TYPE, CREATED_TIME)
-            VALUES(#{CD_ID}, #{CD_NM}, #{CD_TYPE}, SYSDATE)
+        INSERT INTO THURXE_CCODEM(
+            CDVA_ID, 
+            CDVA_NM, 
+            CDVA_KD_NM, 
+            GNT_DTM
+        )
+        VALUES(
+            #{CD_ID}, 
+            #{CD_NM}, 
+            #{CD_TYPE}, 
+            SYSDATE
+        )
     </insert>   
     
     <!-- 기존 데이터 삭제 --> 
     <delete id="delete" parameterType="code">
-        DELETE FROM THURXE_CCODEM WHERE CD_ID=#{CD_ID}
+        DELETE FROM THURXE_CCODEM 
+        WHERE 
+            CDVA_ID = #{CD_ID}
     </delete>
     
     <!-- 기존 데이터 업데이트 --> 
     <update id="update" parameterType="code">
-        UPDATE THURXE_CCODEM SET CD_ID=#{CD_ID}, CD_NM=#{CD_NM}, CD_TYPE=#{CD_TYPE}, UPDATED_TIME=SYSDATE WHERE CD_ID=#{CD_ID}
+        UPDATE THURXE_CCODEM 
+        SET 
+            CDVA_ID = #{CD_ID}, 
+            CDVA_NM = #{CD_NM}, 
+            CDVA_KD_NM = #{CD_TYPE}, 
+            AMN_DTM = SYSDATE 
+        WHERE 
+            CDVA_ID = #{CD_ID}
     </update>
     
     <!-- 신규 데이터 추가 또는 기존 데이터 업데이트 -->
 	<insert id="insertUpdate" parameterType="code">
-	    INSERT INTO THURXE_CCODEM (CD_ID, CD_NM, CD_TYPE, CREATED_TIME)
-	    VALUES (#{CD_ID}, #{CD_NM}, #{CD_TYPE}, SYSDATE)
+	    INSERT INTO THURXE_CCODEM (
+            CDVA_ID, 
+            CDVA_NM, 
+            CDVA_KD_NM, 
+            GNT_DTM
+        )
+	    VALUES (
+            #{CD_ID}, 
+            #{CD_NM}, 
+            #{CD_TYPE}, 
+            SYSDATE
+        )
 	    ON DUPLICATE KEY UPDATE
-	    CD_NM = VALUES(CD_NM),
-	    CD_TYPE = VALUES(CD_TYPE),
-	    UPDATED_TIME = SYSDATE;
+	        CDVA_NM = VALUES(CD_NM),
+	        CDVA_KD_NM = VALUES(CD_TYPE),
+	        AMN_DTM = SYSDATE;
 	</insert>
         
 </mapper>

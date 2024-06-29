@@ -48,7 +48,7 @@ public class BoardEntity extends BaseEntity {
      * @implNote 제목
      * @since 2024-06-09
      */
-    @Column(name = "BLB_TTL_CONE", nullable = false)
+    @Column(name = "BLB_TTL_CONE", length = 200, nullable = false)
     @Comment("게시판제목")
     private String BOARD_TITLE;
     
@@ -94,7 +94,7 @@ public class BoardEntity extends BaseEntity {
      * @implNote 파일첨부 여부 (첨부 1, 미첨부 0)
      * @since 2024-06-09
      */
-    @Column(name = "FL_APG_YN")
+    @Column(name = "FL_APG_YN", length = 1)
     @Comment("파일첨부여부")
     private int FILE_ATTACHED; // 1 or 0
 

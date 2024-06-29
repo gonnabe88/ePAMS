@@ -1,6 +1,6 @@
 package epams.com.admin.dto;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -46,7 +46,7 @@ public class LogLoginDTO {
      * @implNote 생성시간 (CREATED_TIME)
      * @since 2024-06-09
      */
-    private LocalDateTime createdTime;
+    private LocalDate createdTime;
     
     /***
      * @author 140024

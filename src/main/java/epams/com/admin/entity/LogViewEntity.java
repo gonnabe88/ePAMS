@@ -1,6 +1,6 @@
 package epams.com.admin.entity;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import org.hibernate.annotations.Comment;
 
@@ -38,7 +38,7 @@ public class LogViewEntity {
      */
     @Id // 기본키
     @GeneratedValue(strategy = GenerationType.IDENTITY)  // auto_increment
-    @Column(name = "VIEW_LOG_SNO")
+    @Column(name = "PAG_LOG_SNO", columnDefinition = "NUMBER(22)")
     @Comment("페이지뷰로그일련번호")
     private Long SEQ_ID;
     
@@ -56,7 +56,7 @@ public class LogViewEntity {
      * @implNote 호출 메소드명
      * @since 2024-06-09
      */
-    @Column(name = "MTHD_NM", length = 20, nullable = false) 
+    @Column(name = "MTH_NM", length = 100, nullable = false) 
     @Comment("메소드명")
     private String MTHD_NM;
     
@@ -65,7 +65,7 @@ public class LogViewEntity {
      * @implNote 접속 IP
      * @since 2024-06-09
      */
-    @Column(name = "CLIENT_IP", length = 15, nullable = false) 
+    @Column(name = "CLI_IP_ADDR", length = 300, nullable = false) 
     @Comment("클라이언트IP주소")
     private String CLIENT_IP;
     
@@ -74,7 +74,7 @@ public class LogViewEntity {
      * @implNote 단말정보
      * @since 2024-06-09
      */
-    @Column(name = "USER_AGENT", length = 500, nullable = false) 
+    @Column(name = "USR_CNC_ENV_INF", length = 2000, nullable = false) 
     @Comment("USER AGENT")
     private String USER_AGENT;
     
@@ -83,7 +83,7 @@ public class LogViewEntity {
      * @implNote 요청 URL
      * @since 2024-06-09
      */
-    @Column(name = "RQST_URL", length = 500, nullable = false) 
+    @Column(name = "REQ_URL_ADDR", length = 500, nullable = false) 
     @Comment("요청 URL주소")
     private String RQST_URL;
     
@@ -92,9 +92,9 @@ public class LogViewEntity {
      * @implNote 호출시간
      * @since 2024-06-09
      */
-    @Column(name = "CALL_TIME", updatable = false)
+    @Column(name = "CALL_DTM", updatable = false, columnDefinition = "DATE")
     @Comment("호출시간")
-    private LocalDateTime CALL_TIME;
+    private LocalDate CALL_TIME;
     
     
     

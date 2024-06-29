@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import epams.com.admin.dto.CodeHtmlDetailDTO;
 import epams.com.admin.dto.CodeHtmlMapDTO;
-import epams.com.admin.entity.CodeHtmlMapEntity;
+import epams.com.admin.entity.CodeHtmlEntity;
 import lombok.RequiredArgsConstructor;
 
 /***
@@ -42,7 +42,7 @@ public class CodeHtmlMapRepository {
 	 * @since 2024-06-09
 	 */
     public List<CodeHtmlMapDTO> findAll() {
-    	final List<CodeHtmlMapEntity> htmlEntitys = sql.selectList("CodeHtmlMap.findAll");
+    	final List<CodeHtmlEntity> htmlEntitys = sql.selectList("CodeHtmlMap.findAll");
         return CodeHtmlMapDTO.toDTOList(htmlEntitys);
     }
     

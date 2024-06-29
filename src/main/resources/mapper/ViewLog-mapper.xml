@@ -3,34 +3,48 @@
 
 <mapper namespace="ViewLog">
     
-    <!-- com.kdb.common.dto.LogLoginDTO Result Map 정의
-    <resultMap id="LogLoginResultMap" type="com.kdb.com.dto.LogLoginDTO">
-        <result property="empNo" column="EMP_NO"/>
-        <result property="type" column="TYPE"/>
-        <result property="result" column="RESULT"/>
-        <result property="createdTime" column="CREATED_TIME"/>
+    <!-- Result Map 정의 --> 
+    <resultMap id="viewLogMap" type="viewLog">
+    <id property="SEQ_ID" column="PAG_LOG_SNO"/>
+        <result property="CTRL_NM" column="CTRL_NM"/>
+        <result property="MTHD_NM" column="MTH_NM"/>
+        <result property="CLIENT_IP" column="CLI_IP_ADDR"/>
+        <result property="USER_AGENT" column="USR_CNC_ENV_INF"/>
+        <result property="RQST_URL" column="REQ_URL_ADDR"/>
+        <result property="CALL_TIME" column="CALL_DTM"/>
     </resultMap>
-    -->
     
     <!-- 모든 데이터 조회 -->
-    <select id="findAll" resultType="viewLog">
+    <select id="findAll" resultMap="viewLogMap">
         SELECT * FROM THURXE_CVIEWL
     </select>    
     
     <!-- 기본키 데이터 중복여부 조회 -->
-    <select id="countById" parameterType="Long" resultType="viewLog">
+    <select id="countById" parameterType="Long" resultMap="viewLogMap">
         SELECT COUNT(*)
-        FROM THURXE_CVIEWL WHERE SEQ_ID=#{SEQ_ID}
+        FROM THURXE_CVIEWL WHERE PAG_LOG_SNO=#{SEQ_ID}
     </select>
     
     <!-- 신규 데이터 추가 --> 
     <insert id="insert" parameterType="viewLog">
-        INSERT INTO THURXE_CVIEWL(CTRL_NM, MTHD_NM, CLIENT_IP, USER_AGENT, RQST_URL, CALL_TIME)
-            VALUES(#{CTRL_NM}, #{MTHD_NM}, #{CLIENT_IP}, #{USER_AGENT}, #{RQST_URL}, #{CALL_TIME})
+        INSERT INTO THURXE_CVIEWL
+        (
+            CTRL_NM, 
+            MTH_NM, 
+            CLI_IP_ADDR, 
+            USR_CNC_ENV_INF, 
+            REQ_URL_ADDR, 
+            CALL_DTM
+        )            
+        VALUES
+        (
+            #{CTRL_NM}, 
+            #{MTHD_NM}, 
+            #{CLIENT_IP}, 
+            #{USER_AGENT}, 
+            #{RQST_URL}, 
+            #{CALL_TIME}
+        )
     </insert>   
     
-    <!-- 기존 데이터 삭제 (로그 테이블 특성상 불필요) --> 
-    
-    <!-- 기존 데이터 업데이트 (로그 테이블 특성상 불필요) -->
-     
 </mapper>

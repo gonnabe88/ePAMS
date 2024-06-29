@@ -30,7 +30,7 @@ import lombok.Setter;
 @Builder
 @Table(name = "THURXE_CCDHTR")
 @Comment("인사_외부근태 코드HTML관계")
-public class CodeHtmlMapEntity extends BaseEntity implements Serializable {
+public class CodeHtmlEntity extends BaseEntity implements Serializable {
 
     /**
 	 * 
@@ -45,10 +45,10 @@ public class CodeHtmlMapEntity extends BaseEntity implements Serializable {
 	@Id
     @ManyToOne
     @JoinColumn(
-            name = "CD_ID",
-            foreignKey = @ForeignKey(name = "FK_THURXE_CCDHTR_CD_ID", foreignKeyDefinition = "FOREIGN KEY (CD_ID) REFERENCES THURXE_CCODEM (CD_ID) ON DELETE CASCADE")
+            name = "CDVA_ID",
+            foreignKey = @ForeignKey(name = "FK_THURXE_CCDHTR_CDVA_ID", foreignKeyDefinition = "FOREIGN KEY (CDVA_ID) REFERENCES THURXE_CCODEM (CDVA_ID) ON DELETE CASCADE")
         )
-    @Comment("공통코드식별번호")
+    @Comment("코드값ID")
     private CodeEntity codeEntity;
 
     /***
@@ -59,15 +59,15 @@ public class CodeHtmlMapEntity extends BaseEntity implements Serializable {
     @Id
     @ManyToOne
     @JoinColumn(
-            name = "HTML",
-            foreignKey = @ForeignKey(name = "FK_THURXE_CCDHTR_HTML", foreignKeyDefinition = "FOREIGN KEY (HTML) REFERENCES THURXE_CHTMLM (HTML) ON DELETE CASCADE")
+            name = "HTML_PTH_NM",
+            foreignKey = @ForeignKey(name = "FK_THURXE_CCDHTR_HTML_PTH_NM", foreignKeyDefinition = "FOREIGN KEY (HTML_PTH_NM) REFERENCES THURXE_CHTMLM (HTML_PTH_NM) ON DELETE CASCADE")
         )
-    @Comment("HTML")
+    @Comment("HTML경로명")
     private HtmlEntity htmlEntity;
     
     /***
      * @author 140024
-     * @implNote HTML getter
+     * @implNote getter
      * @since 2024-06-09
      */
     public String getHTML() {
@@ -76,7 +76,7 @@ public class CodeHtmlMapEntity extends BaseEntity implements Serializable {
 
     /***
      * @author 140024
-     * @implNote CD_ID getter
+     * @implNote getter
      * @since 2024-06-09
      */
     public String getCD_ID() {

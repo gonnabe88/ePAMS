@@ -1,6 +1,6 @@
 package epams.com.admin.advice;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.AfterReturning;
@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * Controller의 메소드 호출을 로깅하는 Aspect.
+ * 
  * @author 140024
  * @since 2024-04-02
  */
@@ -23,14 +24,15 @@ public class ControllerLoggingAspect {
 
     /** View 로그 저장소 */
     private final ViewLogRepository viewLogRepository;
-    
+
     /** HTTP 요청 객체 */
     private final HttpServletRequest request;
 
     /**
      * ControllerLoggingAspect 생성자.
+     * 
      * @param viewLogRepository View 로그 저장소
-     * @param request HTTP 요청 객체
+     * @param request           HTTP 요청 객체
      */
     public ControllerLoggingAspect(final ViewLogRepository viewLogRepository, final HttpServletRequest request) {
         this.viewLogRepository = viewLogRepository;
@@ -47,29 +49,30 @@ public class ControllerLoggingAspect {
 
     /**
      * Controller 메소드 호출 후 로깅.
+     * 
      * @param joinPoint 조인포인트 정보
      */
     @AfterReturning("controllerMethods()")
     public void logControllerCall(final JoinPoint joinPoint) {
-    	
-    	// 시그니쳐 정보
-    	final Signature signature = joinPoint.getSignature();
-    	
+
+        // 시그니쳐 정보
+        final Signature signature = joinPoint.getSignature();
+
         // 컨트롤러 이름
         final String controllerName = signature.getDeclaringTypeName();
-        
+
         // 메소드 이름
         final String methodName = signature.getName();
-        
+
         // 호출 시간
-        final LocalDateTime callTime = LocalDateTime.now();
-        
+        final LocalDate callTime = LocalDate.now();
+
         // 클라이언트 IP
         final String clientIp = ClientIpUtil.getClientIp(request);
-        
+
         // 사용자 에이전트
         final String userAgent = request.getHeader("User-Agent");
-        
+
         // 요청 URL
         final String requestUrl = request.getRequestURL().toString();
 

@@ -1,6 +1,6 @@
 package epams.com.login.dto;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,7 +19,7 @@ import lombok.ToString;
 @AllArgsConstructor // 모든 필드를 매개변수로 하는 생성자
 public class LoginOTPDTO {
 	
-	   /***
+	/***
      * @author 140024
      * @implNote 자동으로 생성되는 auto increment number
      * @since 2024-06-09
@@ -53,7 +53,7 @@ public class LoginOTPDTO {
      * @implNote 생성시간
      * @since 2024-06-09
      */
-    private LocalDateTime createTime; //OTP 생성 시간    
+    private LocalDate createTime; //OTP 생성 시간    
 
     /***
      * @author 140024

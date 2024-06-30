@@ -7,7 +7,7 @@ import epams.com.config.security.CustomGeneralRuntimeException;
 import epams.com.login.dto.LoginOTPDTO;
 import epams.com.login.repository.LoginOTPRepository;
 import epams.com.login.repository.LoginRepository;
-import epams.com.member.dto.MemberDTO;
+import epams.com.member.dto.TempUserDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -44,7 +44,7 @@ public class LoginService {
      * @return 로그인 성공 여부
      */
     public boolean otpLogin(final String username, final String OTP) {
-        final MemberDTO ismemberDTO = loginRepository.findByUserId(username);
+        final TempUserDTO ismemberDTO = loginRepository.findByUserId(username);
         LoginOTPDTO loginOTPDTO = new LoginOTPDTO();
         loginOTPDTO.setUsername(username);
         loginOTPDTO = loginOTPRepo.findValidOneByUsername(loginOTPDTO);
@@ -63,7 +63,7 @@ public class LoginService {
      * @return 로그인 성공 여부
      */
     public boolean fidoLogin(final String username) {
-        final MemberDTO ismemberDTO = loginRepository.findByUserId(username);
+        final TempUserDTO ismemberDTO = loginRepository.findByUserId(username);
         final boolean fidoresult = true;
 
         // ONEGUARD FIDO 연동 인증부 구현 필요
@@ -79,7 +79,7 @@ public class LoginService {
      * @return 로그인 성공 여부
      * @throws Exception 암호화 예외 발생 시
      */
-    public boolean pwLogin(final MemberDTO memberDTO)  {
+    public boolean pwLogin(final TempUserDTO memberDTO)  {
         // 사용자가 입력한 패스워드 HASH
         try {
             // 사용자가 입력한 패스워드 HASH
@@ -88,7 +88,7 @@ public class LoginService {
             throw new CustomGeneralRuntimeException("Password encryption failed", e);
         }  
         // username & password(hash)와 일치하는 사용자를 찾음
-        final MemberDTO ismemberDTO = loginRepository.login(memberDTO);
+        final TempUserDTO ismemberDTO = loginRepository.login(memberDTO);
         //log.warn(ismemberDTO.toString());
         return ismemberDTO != null;
     }

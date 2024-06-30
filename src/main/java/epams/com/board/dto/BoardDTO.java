@@ -2,7 +2,6 @@ package epams.com.board.dto;
 
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,104 +27,83 @@ import lombok.ToString;
 public class BoardDTO {
     /***
      * @author 140024
-     * @implNote 자동으로 생성되는 auto increment number
+     * @implNote [Column] 게시판일련번호(BLB_SNO)
      * @since 2024-06-09
      */
     private Long seqId;
-    
+
     /***
      * @author 140024
-     * @implNote 작성자
-     * @since 2024-06-09
-     */
-    private String boardWriter;
-    
-    /***
-     * @author 140024
-     * @implNote 제목
+     * @implNote [Column] 게시판제목(BLB_TTL_CONE)
      * @since 2024-06-09
      */
     private String boardTitle;
-    
+
     /***
      * @author 140024
-     * @implNote 본문
-     * @implSpec String 타입으로 선언 후 Entity byte[] <> String 변환하여 사용
+     * @implNote [Column] 게시판내용(BLB_CONE)
+     * @implSpec ByteArray를 String으로 변환하여 저장
      * @since 2024-06-09
      */
     private String boardContents;
-    
+
     /***
      * @author 140024
-     * @implNote 조회수
+     * @implNote [Column] 작성자사원번호(DUPR_ENO)
+     * @since 2024-06-09
+     */
+    private String boardWriter;
+
+    /***
+     * @author 140024
+     * @implNote [Column] 카테고리명(CTG_NM)
+     * @since 2024-06-09
+     */
+    private String category;
+
+    /***
+     * @author 140024
+     * @implNote [Column] 게시물조회수(NAC_INQ_NBR)
      * @since 2024-06-09
      */
     private int boardHits;
-    
-    
+
     /***
      * @author 140024
-     * @implNote 생성시간
+     * @implNote [Column] 파일첨부여부(FL_APG_YN)
      * @since 2024-06-09
      */
-    private LocalDate createdTime;
-    
-    
+    private int fileAttached; 
+
     /***
      * @author 140024
-     * @implNote 수정시간
+     * @implNote [Column] 수정일시(AMN_DTM)
      * @since 2024-06-09
      */
     private LocalDate updatedTime;
 
     /***
      * @author 140024
+     * @implNote [Column] 생성일시(GNT_DTM)
+     * @since 2024-06-09
+     */
+    private LocalDate createdTime;
+
+    /***
+     * @author 140024
      * @implNote 첨부파일 리스트
+     * @implSpec 첨부파일 바이너리를 MultipartFile 형식으로 저장
      * @since 2024-06-09
      */
-    private List<MultipartFile> boardFile; // save.html -> Controller 파일 담는 용도
-    
-    /***
-     * @author 140024
-     * @implNote 첨부파일명(사용자 원본)
-     * @since 2024-06-09
-     */
-    private String originalFileName; // 원본 파일 이름
-    
-    /***
-     * @author 140024
-     * @implNote 첨부파일명(서버 저장)
-     * @since 2024-06-09
-     */
-    private String storedFileName; // 서버 저장용 파일 이름
-    
-    /***
-     * @author 140024
-     * @implNote 첨부파일 보유여부
-     * @since 2024-06-09
-     */
-    private int fileAttached; // 파일 첨부 여부(첨부 1, 미첨부 0)
-    
-    /***
-     * @author 140024
-     * @implNote 카테고리
-     * @since 2024-06-09
-     */
-    private String category;
-    
-    /***
-     * @author 140024
-     * @implNote 테스트
-     * @since 2024-06-09
-     */
-    private String test;    
-    
+    private List<MultipartFile> boardFile; 
+
     /***
      * @author 140024
      * @implNote 특정 필드들을 매개변수로 하는 생성자
      * @since 2024-06-09
      */
-    public BoardDTO(final Long seqId, final String boardWriter, final byte[] boardContents, final String boardTitle, final String category, final int boardHits, final LocalDate boardCreatedTime) {
+    public BoardDTO(final Long seqId, final String boardWriter, final byte[] boardContents, final String boardTitle,
+            final String category, final int boardHits, final LocalDate boardCreatedTime) {
         this.seqId = seqId;
         this.boardWriter = boardWriter;
         this.boardContents = new String(boardContents, StandardCharsets.UTF_8);
@@ -133,16 +111,16 @@ public class BoardDTO {
         this.boardHits = boardHits;
         this.createdTime = boardCreatedTime;
         this.category = category;
-    }   
-    
+    }
+
     /***
      * @author 140024
      * @implNote Entity > DTO 변경 메소드
      * @since 2024-06-09
      */
     public static BoardDTO toDTO(final BoardEntity boardEntity) {
-    	final BoardDTO boardDTO = new BoardDTO();
-        if(boardEntity != null) {
+        final BoardDTO boardDTO = new BoardDTO();
+        if (boardEntity != null) {
             boardDTO.setSeqId(boardEntity.getBLB_SNO());
             boardDTO.setBoardWriter(boardEntity.getDUPR_ENO());
             boardDTO.setBoardTitle(boardEntity.getBLB_TTL_CONE());
@@ -151,11 +129,11 @@ public class BoardDTO {
             boardDTO.setBoardHits(boardEntity.getNAC_INQ_NBR());
             boardDTO.setCreatedTime(boardEntity.getGNT_DTM());
             boardDTO.setUpdatedTime(boardEntity.getAMN_DTM());
-            boardDTO.setFileAttached(boardEntity.getFL_APG_YN()); 
-        }        
+            boardDTO.setFileAttached(boardEntity.getFL_APG_YN());
+        }
         return boardDTO;
     }
-    
+
     /***
      * @author 140024
      * @implNote DTO > Entity 변경 메소드
@@ -174,7 +152,7 @@ public class BoardDTO {
         boardEntity.setGNT_DTM(this.createdTime);
         return boardEntity;
     }
-    
+
     /***
      * @author 140024
      * @implNote List<Entity> > List<DTO> 변경 메소드
@@ -196,5 +174,5 @@ public class BoardDTO {
                 .map(BoardDTO::toEntity)
                 .collect(Collectors.toList());
     }
-    
+
 }

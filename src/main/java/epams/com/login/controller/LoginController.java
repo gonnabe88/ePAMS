@@ -22,7 +22,7 @@ import epams.com.login.service.MFALoginService;
 import epams.com.login.util.webauthn.RegistrationService;
 import epams.com.login.util.webauthn.authenticator.Authenticator;
 import epams.com.login.util.webauthn.user.AppUser;
-import epams.com.member.dto.MemberDTO;
+import epams.com.member.dto.TempUserDTO;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -116,7 +116,7 @@ public class LoginController {
      */
     @PostMapping("/login")
     @ResponseBody
-    public Map<String, Object> pwlogin(final HttpServletResponse response, @ModelAttribute MemberDTO memberDTO, final Model model)
+    public Map<String, Object> pwlogin(final HttpServletResponse response, @ModelAttribute TempUserDTO memberDTO, final Model model)
     {
         // Front-end에서 ID가 대문자로 바뀌지 않는 경우에 대비하여 한번 더 대문자 변환 처리
         if (memberDTO != null && memberDTO.getUsername() != null) {

@@ -8,11 +8,11 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import epams.com.member.entity.MemberEntity;
+import epams.com.member.entity.TempUserEntity;
 
-public class MemberDetailsDTO implements UserDetails {
+public class TempUserDetailsDTO implements UserDetails {
 
-	private MemberEntity member;
+	private TempUserEntity member;
 	
 
 	public String getUUID() {

@@ -3,7 +3,7 @@ package epams.com.login.repository;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
-import epams.com.member.dto.MemberDTO;
+import epams.com.member.dto.TempUserDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -29,7 +29,7 @@ public class LoginRepository {
      * @implNote 로그인 정보를 확인하고 사용자 정보를 반환하는 메서드
      * @since 2024-06-11
      */
-    public MemberDTO login(final MemberDTO memberDTO) {
+    public TempUserDTO login(final TempUserDTO memberDTO) {
         log.warn(memberDTO.toString());
         return sql.selectOne("Member.login", memberDTO);
     }
@@ -39,7 +39,7 @@ public class LoginRepository {
      * @implNote 사용자 ID로 사용자 정보를 찾는 메서드
      * @since 2024-06-11
      */
-    public MemberDTO findByUserId(final String userId) {
+    public TempUserDTO findByUserId(final String userId) {
         return sql.selectOne("Member.findByUserId", userId);
     }
 
@@ -48,7 +48,7 @@ public class LoginRepository {
      * @implNote 인증 정보를 확인하고 사용자 정보를 반환하는 메서드
      * @since 2024-06-11
      */
-    public MemberDTO auth(final MemberDTO memberDTO) {
+    public TempUserDTO auth(final TempUserDTO memberDTO) {
         return sql.selectOne("Member.auth", memberDTO);
     }
 
@@ -66,7 +66,7 @@ public class LoginRepository {
      * @implNote UUID를 업데이트하는 메서드
      * @since 2024-06-11
      */
-    public void updateUuid(final MemberDTO memberDTO) {
+    public void updateUuid(final TempUserDTO memberDTO) {
         sql.update("Member.updateUuid", memberDTO);
     }
 }

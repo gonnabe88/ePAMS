@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import epams.com.login.entity.LoginOTPEntity;
-import epams.com.member.entity.MemberEntity;
+import epams.com.member.entity.TempUserEntity;
 
 public interface LoginMFARepository {
 	

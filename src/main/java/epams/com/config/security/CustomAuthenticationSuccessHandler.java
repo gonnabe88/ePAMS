@@ -8,7 +8,7 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.stereotype.Component;
 
 import epams.com.login.repository.LoginRepository;
-import epams.com.member.dto.MemberDTO;
+import epams.com.member.dto.TempUserDTO;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
@@ -34,7 +34,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
     	
-    	MemberDTO memberDTO = new MemberDTO();
+    	TempUserDTO memberDTO = new TempUserDTO();
     	UUID uuid = UUID.randomUUID();
     	
     	memberDTO.setUsername(authentication.getName());

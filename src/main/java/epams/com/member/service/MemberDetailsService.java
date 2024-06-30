@@ -10,9 +10,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import epams.com.member.entity.MemberEntity;
+import epams.com.member.entity.TempUserEntity;
 import epams.com.member.entity.SearchMemberEntity;
-import epams.com.member.repository.MemberRepository;
+import epams.com.member.repository.MemberJpaRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -29,7 +29,7 @@ public class MemberDetailsService implements UserDetailsService {
     /**
      * 회원 저장소
      */
-    private final MemberRepository memberRepository;
+    private final MemberJpaRepository memberRepository;
 
     /**
      * 회원 정보를 저장하는 메소드
@@ -38,16 +38,16 @@ public class MemberDetailsService implements UserDetailsService {
      * @param changed 변경된 회원 목록
      * @param deleted 삭제된 회원 목록
      */
-    public void saveMembers(final List<MemberEntity> added, final List<MemberEntity> changed, final List<MemberEntity> deleted) {
+    public void saveMembers(final List<TempUserEntity> added, final List<TempUserEntity> changed, final List<TempUserEntity> deleted) {
 
         // Handle added members
-        for (final MemberEntity newMember : added) {
+        for (final TempUserEntity newMember : added) {
             memberRepository.save(newMember);
         }
 
         // Handle changed members
-        for (final MemberEntity changedMember : changed) {
-            final Optional<MemberEntity> memberOpt = memberRepository.findByUsername(changedMember.getUsername());
+        for (final TempUserEntity changedMember : changed) {
+            final Optional<TempUserEntity> memberOpt = memberRepository.findByUsername(changedMember.getUsername());
             memberOpt.ifPresent(member -> {
                 member.setUsername(changedMember.getUsername());
                 member.setDept(changedMember.getDept());
@@ -59,8 +59,8 @@ public class MemberDetailsService implements UserDetailsService {
         }
 
         // Handle deleted members
-        for (final MemberEntity deletedMember : deleted) {
-            final Optional<MemberEntity> memberOpt = memberRepository.findByUsername(deletedMember.getUsername());
+        for (final TempUserEntity deletedMember : deleted) {
+            final Optional<TempUserEntity> memberOpt = memberRepository.findByUsername(deletedMember.getUsername());
             memberOpt.ifPresent(memberRepository::delete);
         }
     }
@@ -74,13 +74,13 @@ public class MemberDetailsService implements UserDetailsService {
      */
     @Override
     public UserDetails loadUserByUsername(final String username) {
-        final Optional<MemberEntity> findMember = memberRepository.findByUsername(username);
+        final Optional<TempUserEntity> findMember = memberRepository.findByUsername(username);
 
         if (findMember.isEmpty()) {
             throw new UsernameNotFoundException("존재하지 않는 username 입니다." + username);
         }
 
-        final MemberEntity member = findMember.get();
+        final TempUserEntity member = findMember.get();
 
         return new User(member.getUsername(), member.getPassword(), AuthorityUtils.createAuthorityList(member.getRole().toString()));
     }
@@ -100,7 +100,7 @@ public class MemberDetailsService implements UserDetailsService {
      * 
      * @return 모든 회원 목록
      */
-    public List<MemberEntity> findAll() {
+    public List<TempUserEntity> findAll() {
         return memberRepository.findAll();
     }
 }

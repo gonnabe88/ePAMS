@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import epams.com.login.dto.LoginOTPDTO;
 import epams.com.login.repository.LoginOTPRepository;
-import epams.com.member.dto.MemberDTO;
+import epams.com.member.dto.TempUserDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -46,7 +46,7 @@ public class MFALoginService {
      * @implNote 멀티 팩터 인증 요청을 처리하는 메서드
      * @since 2024-06-11
      */
-    public Map<String, String> requestMFA(final MemberDTO memberDTO) throws NoSuchAlgorithmException {
+    public Map<String, String> requestMFA(final TempUserDTO memberDTO) throws NoSuchAlgorithmException {
 
         final LoginOTPDTO loginOTPDTO = new LoginOTPDTO();
 

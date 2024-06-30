@@ -26,25 +26,23 @@ import lombok.Setter;
 @Getter
 @Setter
 public class BaseEntity {
-	
 	/***
 	 * @author 140024
-	 * @implNote 생성시간
-	 * @since 2024-06-09
-	 */
-    @CreationTimestamp
-    @Column(name = "GNT_DTM", updatable = false, columnDefinition = "DATE")
-    @Comment("생성일시")
-    private LocalDate GNT_DTM;
-
-	/***
-	 * @author 140024
-	 * @implNote 업데이트시간
+	 * @implNote 수정일시
 	 * @since 2024-06-09
 	 */
     @UpdateTimestamp
     @Column(name = "AMN_DTM", insertable = false, columnDefinition = "DATE")
     @Comment("수정일시")
     private LocalDate AMN_DTM;
-
+	
+	/***
+	 * @author 140024
+	 * @implNote 생성일시
+	 * @since 2024-06-09
+	 */
+    @CreationTimestamp
+    @Column(name = "GNT_DTM", updatable = false, columnDefinition = "DATE")
+    @Comment("생성일시")
+    private LocalDate GNT_DTM;
 }

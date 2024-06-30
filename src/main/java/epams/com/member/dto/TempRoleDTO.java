@@ -1,13 +1,13 @@
 package epams.com.member.dto;
 
-public enum MemberRole {
+public enum TempRoleDTO {
+    
     ROLE_ADMIN("ADMIN"),
-    ROLE_KDB("KDB"),
-    ROLE_ITO("ITO");
+    ROLE_NORMAL("NORMAL");
 
     private String description;
 
-    MemberRole(String description){
+    TempRoleDTO(String description){
         this.description = description;
     }
 }

@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import epams.com.member.dto.MemberDTO;
-import epams.com.member.dto.MemberRole;
-import epams.com.member.entity.MemberEntity;
-import epams.com.member.repository.MemberRepository;
+import epams.com.member.dto.TempUserDTO;
+import epams.com.member.dto.TempRoleDTO;
+import epams.com.member.entity.TempUserEntity;
+import epams.com.member.repository.MemberJpaRepository;
 import lombok.RequiredArgsConstructor;
 
 /**
@@ -30,7 +30,7 @@ public class MemberController {
      * @implNote 회원 저장소 주입
      * @since 2024-06-11
      */
-    private final MemberRepository memberRepository;
+    private final MemberJpaRepository memberRepository;
 
     /**
      * @author K140024
@@ -46,7 +46,7 @@ public class MemberController {
      */
     @GetMapping("/register")
     public String registryForm(Model model) {
-        model.addAttribute("member", new MemberDTO());
+        model.addAttribute("member", new TempUserDTO());
         return "/common/register";
     }
 
@@ -56,8 +56,8 @@ public class MemberController {
      * @since 2024-06-11
      */
     @PostMapping("/register")
-    public String registry(@ModelAttribute MemberDTO registryRequest) {
-        MemberEntity member = MemberEntity.builder()
+    public String registry(@ModelAttribute TempUserDTO registryRequest) {
+        TempUserEntity member = TempUserEntity.builder()
                 .username(registryRequest.getUsername())
                 .password(passwordEncoder.encode(registryRequest.getPassword()))
                 .role(registryRequest.getRole())
@@ -73,11 +73,10 @@ public class MemberController {
      * @since 2024-06-11
      */
     @ModelAttribute("roles")
-    public Map<String, MemberRole> roles() {
-        Map<String, MemberRole> map = new LinkedHashMap<>();
-        map.put("ADMIN", MemberRole.ROLE_ADMIN);
-        map.put("KDB", MemberRole.ROLE_KDB);
-        map.put("ITO", MemberRole.ROLE_ITO);
+    public Map<String, TempRoleDTO> roles() {
+        Map<String, TempRoleDTO> map = new LinkedHashMap<>();
+        map.put("ADMIN", TempRoleDTO.ROLE_ADMIN);
+        map.put("KDB", TempRoleDTO.ROLE_NORMAL);
         return map;
     }
 }

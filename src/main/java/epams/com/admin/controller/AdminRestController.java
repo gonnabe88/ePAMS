@@ -23,7 +23,7 @@ import epams.com.admin.service.LogService;
 import epams.com.admin.service.LoginOtpService;
 import epams.com.admin.service.ViewLogService;
 import epams.com.login.dto.LoginOTPDTO;
-import epams.com.member.entity.MemberEntity;
+import epams.com.member.entity.TempUserEntity;
 import epams.com.member.service.MemberDetailsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -151,8 +151,8 @@ public class AdminRestController {
      * @since 2024-06-09
      */
     @GetMapping("/member")
-    public ResponseEntity<List<MemberEntity>> searchAllMember(final Model model) throws IOException {
-        final List<MemberEntity> memberList = memberService.findAll();
+    public ResponseEntity<List<TempUserEntity>> searchAllMember(final Model model) throws IOException {
+        final List<TempUserEntity> memberList = memberService.findAll();
         final Map<String, Object> data = new ConcurrentHashMap<>();
         data.put("data", memberList);
 
@@ -170,10 +170,10 @@ public class AdminRestController {
      * @since 2024-06-09
      */
     @PostMapping("/member/save")
-    public ResponseEntity<Map<String, String>> saveMembers(@RequestBody final Map<String, List<MemberEntity>> payload) {
-        final List<MemberEntity> added = payload.get("added");
-        final List<MemberEntity> changed = payload.get("changed");
-        final List<MemberEntity> deleted = payload.get("deleted");
+    public ResponseEntity<Map<String, String>> saveMembers(@RequestBody final Map<String, List<TempUserEntity>> payload) {
+        final List<TempUserEntity> added = payload.get("added");
+        final List<TempUserEntity> changed = payload.get("changed");
+        final List<TempUserEntity> deleted = payload.get("deleted");
 
         memberService.saveMembers(added, changed, deleted);
 

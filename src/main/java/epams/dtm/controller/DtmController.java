@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import epams.com.admin.service.CodeHtmlDetailService;
 import epams.com.board.dto.BoardDTO;
 import epams.com.board.service.BoardService;
-import epams.com.member.entity.MemberEntity;
+import epams.com.member.entity.TempUserEntity;
 import epams.com.member.service.MemberDetailsService;
 import epams.dtm.dto.BasePeriodDTO;
 import epams.dtm.dto.DtmApplDTO;
@@ -109,7 +109,7 @@ public class DtmController<S extends Session> {
         model.addAttribute("endPage", endPage);
 
         // 메인화면 직원조회 출력
-        final List<MemberEntity> memberList = memberservice.findAll();
+        final List<TempUserEntity> memberList = memberservice.findAll();
         model.addAttribute("memberList", memberList);
 
         // 메인화면 빠른근태신청 출력

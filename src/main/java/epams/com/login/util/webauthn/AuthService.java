@@ -54,7 +54,7 @@ import epams.com.login.util.webauthn.authenticator.Authenticator;
 import epams.com.login.util.webauthn.user.AppUser;
 import epams.com.login.util.webauthn.user.AppUser;
 import epams.com.login.util.webauthn.utility.Utility;
-import epams.com.member.dto.MemberDTO;
+import epams.com.member.dto.TempUserDTO;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -141,7 +141,7 @@ public class AuthService {
      */
     public ResponseEntity<?> finishLogin(final String credential, final String username, final Model model, final HttpSession session) {
         log.warn("finishLogin START");
-        final MemberDTO ismemberDTO = loginRepository.findByUserId(username);
+        final TempUserDTO ismemberDTO = loginRepository.findByUserId(username);
         final Map<String, Object> response = new ConcurrentHashMap<>();
         HttpStatus status = HttpStatus.OK;
     

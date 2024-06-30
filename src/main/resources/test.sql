@@ -3,7 +3,8 @@ create user ohr identified by "kdb1234!";
 
 CREATE TABLE "OHR"."DTM_HIS" 
 
-   (	"DTM_HIS_ID" NUMBER NOT NULL ENABLE, 
+   (	
+	"DTM_HIS_ID" NUMBER NOT NULL ENABLE, 
 
 	"EMP_ID" NUMBER NOT NULL ENABLE, 
 

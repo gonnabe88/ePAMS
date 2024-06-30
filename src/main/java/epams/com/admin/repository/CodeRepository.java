@@ -28,7 +28,7 @@ public class CodeRepository {
     
 	/***
 	 * @author 140024
-	 * @implNote paging 조건에 따라 모든 게시물을 조회하여 반환
+	 * @implNote 모든 내용 조회
 	 * @since 2024-06-09
 	 */
     public List<CodeDTO> findAll() {

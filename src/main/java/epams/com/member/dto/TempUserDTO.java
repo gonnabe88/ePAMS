@@ -80,7 +80,7 @@ public class TempUserDTO {
 
     /**
      * @author K140024
-     * @implNote MemberEntity 객체를 MemberDTO 객체로 변환하는 메서드
+     * @implNote RoleEntity 객체를 RoleDTO 객체로 변환하는 메서드
      * @since 2024-06-11
      */
     public static TempUserDTO toSearchDTO(TempUserEntity memberEntity) {

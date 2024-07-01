@@ -25,7 +25,7 @@
             </div>
             <h6 class="auth-title">사용자 등록</h6>
 
-            <form th:action="@{/auth-register}" th:object = "${memberDTO}" method="post">
+            <form th:action="@{/auth-register}" th:object = "${roleDTO}" method="post">
                 <div class="form-group position-relative has-icon-left mb-4">
                     <input type="text" th:field="*{userId}" class="form-control form-control-xl" placeholder="사용자 계정">
                     <div class="form-control-icon">

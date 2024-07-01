@@ -28,9 +28,10 @@ import epams.com.board.service.BoardService;
 import epams.com.login.util.webauthn.RegistrationService;
 import epams.com.login.util.webauthn.authenticator.Authenticator;
 import epams.com.login.util.webauthn.user.AppUser;
+import epams.com.member.dto.IamUserDTO;
 import epams.com.member.entity.TempUserEntity;
-import epams.com.member.entity.SearchMemberEntity;
 import epams.com.member.service.MemberDetailsService;
+import epams.com.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -65,6 +66,7 @@ public class IndexController<S extends Session> {
      * @since 2024-06-11
      */
     private final MemberDetailsService memberservice;
+    private final MemberService memberservice2;
 
     /**
      * @author K140024
@@ -137,8 +139,8 @@ public class IndexController<S extends Session> {
         model.addAttribute("boardList", boardList);
 
         // 메인화면 직원조회 출력
-        final List<TempUserEntity> memberList = memberservice.findAll();
-        model.addAttribute("memberList", memberList);
+        //final List<TempUserEntity> memberList = memberservice.findAll();
+        //model.addAttribute("memberList", memberList);
 
         // 메인화면 빠른근태신청 출력
         final LocalDate today = LocalDate.now();
@@ -161,7 +163,8 @@ public class IndexController<S extends Session> {
     public String search(Model model, @RequestParam("text") String text) {
 
         // 메인화면 직원조회 출력
-        final List<SearchMemberEntity> memberList = memberservice.findBySearchValue(text);
+        //final List<SearchMemberEntity> memberList = memberservice.findBySearchValue(text);
+        final List<IamUserDTO> memberList = memberservice2.findBySearchValue(text);
         model.addAttribute("memberList", memberList);
 
         return "/common/memberlist";

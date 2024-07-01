@@ -23,9 +23,9 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-@Table(name = "THURXE_CUSERM")
-@Comment("인사_외부근태 사용자메인기본")
-public class MemberEntity extends BaseEntity{
+@Table(name = "THURXE_CROLEM")
+@Comment("인사_외부근태 역할메인기본")
+public class RoleEntity extends BaseEntity{
 
     /***
      * @author 140024
@@ -42,20 +42,8 @@ public class MemberEntity extends BaseEntity{
      * @implNote 관리자여부
      * @since 2024-06-30
      */
-    @Column(name = "ADMIN_YN", nullable = false, length = 1)
-    @Comment("관리자여부")
-    private String ADMIN_YN = "ADMIN_YN";
-
-    /***
-     * @author 140024
-     * @implNote 마지막로그인일시
-     * @implSpec 외래키
-     * @since 2024-06-30
-     */
-    @UpdateTimestamp
-    @Column(name = "LAST_LOGIN_DATE", columnDefinition = "DATE")
-    @Comment("마지막로그인일시")
-    private LocalDate LAST_LOGIN_DATE;
-
+    @Column(name = "ROLE_ID", nullable = false, length = 32)
+    @Comment("권한ID")
+    private String ROLE_ID = "ROLE_ADMIN";
 
 }

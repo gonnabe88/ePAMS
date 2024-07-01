@@ -1,32 +1,26 @@
 package epams.com.admin.controller;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
-import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import epams.com.admin.dto.CodeDTO;
 import epams.com.admin.dto.HtmlDTO;
 import epams.com.admin.dto.LogLoginDTO;
 import epams.com.admin.dto.LogViewDTO;
-import epams.com.admin.service.CodeService;
-import epams.com.admin.service.HtmlService;
-import epams.com.admin.service.LogService;
-import epams.com.admin.service.LoginOtpService;
-import epams.com.admin.service.ViewLogService;
+import epams.com.admin.service.*;
 import epams.com.login.dto.LoginOTPDTO;
-import epams.com.member.entity.TempUserEntity;
+import epams.com.member.dto.IamUserDTO;
+import epams.com.member.dto.RoleDTO;
 import epams.com.member.service.MemberDetailsService;
+import epams.com.member.service.MemberService;
+import epams.com.member.service.RoleService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /***
  * @author 140024
@@ -45,6 +39,7 @@ public class AdminRestController {
      * @since 2024-06-09
      */
     private final MemberDetailsService memberService;
+    private final MemberService memberService2;
 
     /***
      * @author 140024
@@ -80,6 +75,13 @@ public class AdminRestController {
      * @since 2024-06-09
      */
     private final ViewLogService viewLogService;
+
+    /***
+     * @author 140024
+     * @implNote 역할 서비스
+     * @since 2024-06-09
+     */
+    private final RoleService roleService;
 
     /***
      * @author 140024
@@ -151,8 +153,8 @@ public class AdminRestController {
      * @since 2024-06-09
      */
     @GetMapping("/member")
-    public ResponseEntity<List<TempUserEntity>> searchAllMember(final Model model) throws IOException {
-        final List<TempUserEntity> memberList = memberService.findAll();
+    public ResponseEntity<List<IamUserDTO>> searchAllMember(final Model model) throws IOException {
+        final List<IamUserDTO> memberList = memberService2.findAll();
         final Map<String, Object> data = new ConcurrentHashMap<>();
         data.put("data", memberList);
 
@@ -162,22 +164,6 @@ public class AdminRestController {
         response.put("data", memberList);
 
         return ResponseEntity.ok(memberList);
-    }
-
-    /***
-     * @author 140024
-     * @implNote 멤버 데이터를 저장
-     * @since 2024-06-09
-     */
-    @PostMapping("/member/save")
-    public ResponseEntity<Map<String, String>> saveMembers(@RequestBody final Map<String, List<TempUserEntity>> payload) {
-        final List<TempUserEntity> added = payload.get("added");
-        final List<TempUserEntity> changed = payload.get("changed");
-        final List<TempUserEntity> deleted = payload.get("deleted");
-
-        memberService.saveMembers(added, changed, deleted);
-
-        return ResponseEntity.ok(Map.of("message", "Data saved successfully!"));
     }
 
     /***
@@ -228,6 +214,32 @@ public class AdminRestController {
         final List<LogViewDTO> changed = payload.get("changed");
         final List<LogViewDTO> deleted = payload.get("deleted");
         viewLogService.save(added, changed, deleted);
+
+        return ResponseEntity.ok(Map.of("message", "Data saved successfully!"));
+    }
+
+    /***
+     * @author 140024
+     * @implNote 모든 데이터를 검색
+     * @since 2024-06-09
+     */
+    @GetMapping("/role")
+    public ResponseEntity<List<RoleDTO>> searchRole(final Model model) throws IOException {
+        final List<RoleDTO> dtos = roleService.findAll();
+        return ResponseEntity.ok(dtos);
+    }
+
+    /***
+     * @author 140024
+     * @implNote 변경된 테이터를 저장
+     * @since 2024-06-09
+     */
+    @PostMapping("/role/save")
+    public ResponseEntity<Map<String, String>> saveRole(@RequestBody final Map<String, List<RoleDTO>> payload) {
+        final List<RoleDTO> added = payload.get("added");
+        final List<RoleDTO> changed = payload.get("changed");
+        final List<RoleDTO> deleted = payload.get("deleted");
+        roleService.save(added, changed, deleted);
 
         return ResponseEntity.ok(Map.of("message", "Data saved successfully!"));
     }

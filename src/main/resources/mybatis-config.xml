@@ -6,7 +6,7 @@
     </settings>
     <typeAliases>
 
-        <!-- 다른 타입 알리아스들 -->
+        <!-- Entity -->
         <typeAlias type="epams.com.board.entity.BoardImageEntity" alias="boardImage"></typeAlias>
         <typeAlias type="epams.com.board.entity.BoardEntity" alias="board"></typeAlias>
         <typeAlias type="epams.com.board.entity.BoardFileEntity" alias="boardFile"></typeAlias>
@@ -20,10 +20,14 @@
 
         <typeAlias type="epams.com.login.entity.LoginOTPEntity" alias="loginOTP"></typeAlias>
 
+        <typeAlias type="epams.com.member.entity.IamUserEntity" alias="iamUser"></typeAlias>
+        <typeAlias type="epams.com.member.entity.RoleEntity" alias="role"></typeAlias>
+
+        <!-- DTO -->
         <typeAlias type="epams.dtm.dto.BasePeriodDTO" alias="basePeriod"></typeAlias>
         <typeAlias type="epams.dtm.dto.DtmApplDTO" alias="dtmAppl"></typeAlias>
 
-        <typeAlias type="epams.com.member.dto.MemberDTO" alias="member"></typeAlias>
+        <typeAlias type="epams.com.member.dto.TempUserDTO" alias="member"></typeAlias>
     </typeAliases>
 
 </configuration>

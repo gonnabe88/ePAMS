@@ -93,7 +93,7 @@ public class TempUserEntity implements Serializable {
 
     /**
      * @author K140024
-     * @implNote 사용자 정보를 기반으로 MemberEntity 객체를 생성하는 생성자
+     * @implNote 사용자 정보를 기반으로 RoleEntity 객체를 생성하는 생성자
      * @since 2024-06-11
      */
     @Builder

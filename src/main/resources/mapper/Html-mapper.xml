@@ -8,8 +8,8 @@
     <resultMap id="htmlMap" type="html">
         <id property="HTML" column="HTML_PTH_NM"/>
         <result property="HTML_NM" column="HTML_NM"/>
-        <result property="UPDATED_TIME" column="AMN_DTM"/>
-        <result property="CREATED_TIME" column="GNT_DTM"/>
+        <result property="AMN_DTM" column="AMN_DTM"/>
+        <result property="GNT_DTM" column="GNT_DTM"/>
     </resultMap>
 
     <!-- 모든 데이터 조회 -->

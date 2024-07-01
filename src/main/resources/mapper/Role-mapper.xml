@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper SYSTEM "mybatis-3-mapper.dtd">
+
+<mapper namespace="Role">
+
+    <!-- 모든 데이터 조회 -->
+    <select id="findAll" resultType="role">
+        SELECT * FROM THURXE_CROLEM
+    </select>
+
+    <!-- 기본키 데이터 중복여부 조회 -->
+    <select id="countById" parameterType="Long" resultType="role">
+        SELECT COUNT(*)
+        FROM THURXE_CROLEM WHERE ENO=#{ENO}
+    </select>
+
+    <!-- 신규 데이터 추가 -->
+    <insert id="insert" parameterType="role">
+        INSERT INTO THURXE_CROLEM(
+            ENO,
+            ROLE_ID,
+            AMT_DTM,
+            GNT_DTM
+        )
+        VALUES(
+            #{ENO},
+            #{ROLE_ID},
+            SYSDATE,
+            SYSDATE
+        )
+    </insert>
+
+    <!-- 기존 데이터 삭제 -->
+    <delete id="delete" parameterType="role">
+        DELETE FROM THURXE_CROLEM
+        WHERE
+            ENO = #{ENO}
+    </delete>
+
+    <!-- 기존 데이터 업데이트 -->
+    <update id="update" parameterType="role">
+        UPDATE THURXE_CROLEM
+        SET
+            ENO = #{ENO},
+            ROLE_ID = #{ROLE_ID},
+            AMN_DTM = SYSDATE
+        WHERE
+            ENO = #{ENO}
+    </update>
+
+</mapper>

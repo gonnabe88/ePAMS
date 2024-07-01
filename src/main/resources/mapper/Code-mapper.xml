@@ -8,8 +8,8 @@
         <id property="CD_ID" column="CDVA_ID"/>
         <result property="CD_NM" column="CDVA_NM"/>
         <result property="CD_TYPE" column="CDVA_KD_NM"/>
-        <result property="UPDATED_TIME" column="AMN_DTM"/>
-        <result property="CREATED_TIME" column="GNT_DTM"/>
+        <result property="AMN_DTM" column="AMN_DTM"/>
+        <result property="GNT_DTM" column="GNT_DTM"/>
     </resultMap>
 
     <!-- 모든 데이터 조회 -->

@@ -24,7 +24,6 @@ public class CodeRepository {
 	 * @since 2024-06-10
 	 */
     private final SqlSessionTemplate sql;
-
     
 	/***
 	 * @author 140024

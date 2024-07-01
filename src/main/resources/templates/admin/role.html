@@ -18,7 +18,7 @@
 					<div class="page-heading">
 						<div class="align-middle">
 							<h2>
-								<i class="bi bi-bell-fill"></i> 사용자목록
+								<i class="bi bi-bell-fill"></i> 역할관리
 							</h2>
 							<br>
 							<div class="d-flex flex-wrap gap-2 justify-content-start align-items-center mb-3">
@@ -65,11 +65,12 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 	<script src="/extensions/tabulator/kdb_tabulator.js"></script>
 	<script>
-		window.url = "/api/admin/member"
+		window.url = "/api/admin/role"
 		window.columns = [
 			{ title: "행번", field: "username", sorter: "string", editor: "input", minWidth: 100 },
-	        { title: "이름", field: "realname", sorter: "string", editor: "input", minWidth: 100 },
-	        { title: "변경일자", field: "createdDate", sorter: "date", editor: "input", minWidth: 100 }
+	        { title: "역할", field: "roldId", sorter: "string", minWidth: 100, editor:"list", editorParams:{values:{"ROLE_ADMIN":"최고관리자"}}},
+			{ title: "변경일자", field: "updatedTime", sorter: "date", editor: "input", minWidth: 100 },
+			{ title: "생성일자", field: "createdDate", sorter: "date", editor: "input", minWidth: 100 }
 		]
 
 	    document.addEventListener("DOMContentLoaded", function() {

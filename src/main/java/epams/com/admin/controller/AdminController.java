@@ -147,4 +147,15 @@ public class AdminController {
         return "/admin/viewlog";
     }
 
+    /***
+     * @author 140024
+     * @implNote 뷰 이력 (admin/login.html)
+     * @since 2024-06-09
+     */
+    @GetMapping("/role")
+    public String role(HttpServletRequest request) {
+        return "/admin/role";
+    }
+
+
 }

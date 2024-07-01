@@ -55,7 +55,6 @@ public class EPamsApplication  extends SpringBootServletInitializer {
 	 * @author 140024
 	 * @since 2024-04-02
 	 * @implNote StorageService 초기화 빈. 애플리케이션 시작 시 스토리지 서비스를 초기화
-	 * @param StorageService
 	 */
 	@Bean
 	CommandLineRunner init(final StorageService storageService) {
@@ -70,8 +69,6 @@ public class EPamsApplication  extends SpringBootServletInitializer {
 	 * @author 140024
 	 * @since 2024-05-02
 	 * @implNote relyingParty Baen 등록 WebAuthn(간편인증) 등록 및 인증을 처리하는 서비스
-	 * @param registrationRepo 등록 서비스를 제공하는 RegistrationService 빈
-	 * @param properties       WebAuthn 설정 속성을 제공하는 WebAuthProperties 빈
 	 */
 	@Bean
 	@Autowired

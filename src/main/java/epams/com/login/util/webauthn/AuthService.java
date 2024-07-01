@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import epams.com.member.dto.IamUserDTO;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -141,13 +142,15 @@ public class AuthService {
      */
     public ResponseEntity<?> finishLogin(final String credential, final String username, final Model model, final HttpSession session) {
         log.warn("finishLogin START");
-        final TempUserDTO ismemberDTO = loginRepository.findByUserId(username);
+        final IamUserDTO iamUserDTO = new IamUserDTO();
+        iamUserDTO.setUsername(username);
+        loginRepository.findByUserId(iamUserDTO);
         final Map<String, Object> response = new ConcurrentHashMap<>();
         HttpStatus status = HttpStatus.OK;
     
-        Object sessionData = session.getAttribute(username);
+        Object sessionData = session.getAttribute(iamUserDTO.getUsername());
         if (sessionData == null) {
-            log.error("Session data is null for username: " + username);
+            log.error("Session data is null for username: " + iamUserDTO.getUsername());
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Session data not found.");
         }
     
@@ -173,33 +176,33 @@ public class AuthService {
                 .build());
             
             if (result.isSuccess()) {
-                model.addAttribute(USERNAME_PARAM, username);
+                model.addAttribute(USERNAME_PARAM, iamUserDTO.getUsername());
                 final SecurityContext context = SecurityContextHolder.createEmptyContext();
                 final Authentication authentication = 
-                    new UsernamePasswordAuthenticationToken(ismemberDTO.getUsername(), null, List.of(new SimpleGrantedAuthority("ROLE_ADMIN")));
+                    new UsernamePasswordAuthenticationToken(iamUserDTO.getUsername(), null, List.of(new SimpleGrantedAuthority("ROLE_ADMIN")));
                 context.setAuthentication(authentication);
                 SecurityContextHolder.setContext(context);
                 session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, context);
                 log.warn("isSuccess");
-                logRepository.insert(LogLoginDTO.getDTO(username, SIMPLEAUTH_STR, true));
+                logRepository.insert(LogLoginDTO.getDTO(iamUserDTO.getUsername(), SIMPLEAUTH_STR, true));
                 response.put("status", "OK");
                 response.put("redirectUrl", "/index");
             } else {
-                logRepository.insert(LogLoginDTO.getDTO(username, SIMPLEAUTH_STR, false));
+                logRepository.insert(LogLoginDTO.getDTO(iamUserDTO.getUsername(), SIMPLEAUTH_STR, false));
                 response.put("status", "BAD_REQUEST");
                 response.put("redirectUrl", "/login");
                 status = HttpStatus.BAD_REQUEST;
             }
         } catch (JsonProcessingException e) {
-            logRepository.insert(LogLoginDTO.getDTO(username, SIMPLEAUTH_STR, false));
+            logRepository.insert(LogLoginDTO.getDTO(iamUserDTO.getUsername(), SIMPLEAUTH_STR, false));
             log.error("Error processing JSON: ", e);
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error processing JSON.", e);
         } catch (AssertionFailedException e) {
-            logRepository.insert(LogLoginDTO.getDTO(username, SIMPLEAUTH_STR, false));
+            logRepository.insert(LogLoginDTO.getDTO(iamUserDTO.getUsername(), SIMPLEAUTH_STR, false));
             log.error("Assertion failed: ", e);
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Authentication failed", e);
         } catch (IOException e) {
-            logRepository.insert(LogLoginDTO.getDTO(username, SIMPLEAUTH_STR, false));
+            logRepository.insert(LogLoginDTO.getDTO(iamUserDTO.getUsername(), SIMPLEAUTH_STR, false));
             log.error("Failed to save credential: ", e);
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Failed to save credential, please try again!", e);
         }

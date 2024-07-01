@@ -2,7 +2,9 @@ package epams.com.member.repository;
 
 import java.util.List;
 
+import epams.com.admin.dto.CodeDTO;
 import epams.com.member.dto.RoleDTO;
+import epams.com.member.entity.RoleEntity;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -46,6 +48,26 @@ public class MemberRepository {
         RoleDTO member = new RoleDTO();
         log.warn("findBySearchValue : {}", IamUserDTO.toDTOs(iamUserEntities));
         return IamUserDTO.toDTOs(iamUserEntities);
+    }
+
+    /***
+     * @author 140024
+     * @implNote 신규 데이터 입력
+     * @since 2024-06-09
+     */
+    public void insert(final IamUserDTO iamUserDTO) {
+        sql.insert("IamUser.insert", iamUserDTO.toEntity());
+    }
+
+    public RoleDTO findOneRoleByUsername(final IamUserDTO iamUserDTO) {
+        RoleEntity roleEntity = new RoleEntity();
+        try {
+            roleEntity = sql.selectOne("Role.findOneRoleByUsername", iamUserDTO.toEntity());
+        } catch (Exception e) {
+            roleEntity.setROLE_ID("ROLE_NORMAL");
+            roleEntity.setENO(iamUserDTO.getUsername());
+        }
+        return RoleDTO.toDTO(roleEntity);
     }
 
 }

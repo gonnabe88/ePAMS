@@ -15,13 +15,4 @@ public interface MemberJpaRepository extends JpaRepository<TempUserEntity, Strin
 	
     Optional<TempUserEntity> findByUsername(String username);
     
-    @Transactional
-    @Query(value = "SELECT * FROM member s WHERE s.username LIKE %:searchValue% OR s.responsibility LIKE %:searchValue% ",  nativeQuery = true)
-    List<SearchMemberEntity> findBySearchValue(@Param("searchValue") String searchValue);
-    
-    @Transactional
-    @Query(value = "SELECT * FROM member s",  nativeQuery = true)
-    List<TempUserEntity> findAll();
-    
-    
 }

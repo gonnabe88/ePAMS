@@ -5,15 +5,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import epams.com.member.entity.IamUserEntity;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 /***
  * @author 140024
  * @implNote 사용자
  * @since 2024-06-30
  */
+@ToString
 @NoArgsConstructor
 @Getter
 @Setter
@@ -21,32 +20,38 @@ public class IamUserDTO {
 
     /***
      * @author 140024
-     * @implNote 행번(EMP_NO)
+     * @implNote [column] 행번(EMP_NO)
      * @since 2024-06-30
      */
     private String username;
 
     /***
      * @author 140024
-     * @implNote 사용자명(EMP_NM)
+     * @implNote [column] 사용자명(EMP_NM)
      * @since 2024-06-30
      */
     private String realname;
 
     /***
      * @author 140024
-     * @implNote 패스워드(EMP_PWD)
+     * @implNote [column] 패스워드(EMP_PWD)
      * @since 2024-06-30
      */
     private String password;
 
     /***
      * @author 140024
-     * @implNote 생성일자(TZ_DATE)
+     * @implNote [column] 생성일자(TZ_DATE)
      * @since 2024-06-30
      */
     private LocalDate createdDate;
 
+    /***
+     * @author 140024
+     * @implNote 로그인 유형
+     * @since 2024-06-30
+     */
+    private String MFA;
 
     public static IamUserDTO toDTO(IamUserEntity entity) {
         if (entity == null) {
@@ -75,5 +80,13 @@ public class IamUserDTO {
         entity.setEMP_PWD(this.getPassword());
         entity.setTZ_DATE(this.getCreatedDate());
         return entity;
+    }
+
+    @Builder
+    public IamUserDTO(String username, String realname, String password, LocalDate createdDate) {
+        this.username = username;
+        this.realname = realname;
+        this.password = password;
+        this.createdDate = createdDate;
     }
 }

@@ -4,6 +4,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import epams.com.member.dto.IamUserDTO;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,7 +23,7 @@ import epams.com.login.service.MFALoginService;
 import epams.com.login.util.webauthn.RegistrationService;
 import epams.com.login.util.webauthn.authenticator.Authenticator;
 import epams.com.login.util.webauthn.user.AppUser;
-import epams.com.member.dto.TempUserDTO;
+import epams.com.member.dto.IamUserDTO;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -116,23 +117,23 @@ public class LoginController {
      */
     @PostMapping("/login")
     @ResponseBody
-    public Map<String, Object> pwlogin(final HttpServletResponse response, @ModelAttribute TempUserDTO memberDTO, final Model model)
+    public Map<String, Object> pwlogin(final HttpServletResponse response, @ModelAttribute IamUserDTO iamUserDTO, final Model model)
     {
         // Front-end에서 ID가 대문자로 바뀌지 않는 경우에 대비하여 한번 더 대문자 변환 처리
-        if (memberDTO != null && memberDTO.getUsername() != null) {
-            String uppercaseUsername = memberDTO.getUsername().toUpperCase();
-            memberDTO.setUsername(uppercaseUsername);
+        if (iamUserDTO != null && iamUserDTO.getUsername() != null) {
+            String uppercaseUsername = iamUserDTO.getUsername().toUpperCase();
+            iamUserDTO.setUsername(uppercaseUsername);
         }
 
-        final AppUser existingUser = service.getUserRepo().findByUsername(memberDTO.getUsername());
+        final AppUser existingUser = service.getUserRepo().findByUsername(iamUserDTO.getUsername());
         final Map<String, Object> res = new ConcurrentHashMap<>();
-        if (loginService.pwLogin(memberDTO)) {
+        if (loginService.pwLogin(iamUserDTO)) {
             log.warn("성공?");
             // 로그인 성공 시 인증번호 생성
             try {
-				restapiservice.requestMFA(memberDTO);
+				restapiservice.requestMFA(iamUserDTO);
 			} catch (NoSuchAlgorithmException e) {
-	            throw new CustomGeneralRuntimeException("NoSuchAlgorithmException : restapiservice.requestMFA(memberDTO)", e);
+	            throw new CustomGeneralRuntimeException("NoSuchAlgorithmException : restapiservice.requestMFA(iamUserDTO)", e);
 			}
             // 로그인 성공 시 추가 인증 단계로 넘어가기 위해 성공 여부를 반환
             res.put("result", true);

@@ -14,11 +14,6 @@ public class TempUserDetailsDTO implements UserDetails {
 
 	private TempUserEntity member;
 	
-
-	public String getUUID() {
-		return member.getUuid();
-	}
-	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		List<GrantedAuthority> authorities = new ArrayList<>();

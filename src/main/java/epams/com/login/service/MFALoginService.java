@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import epams.com.login.dto.LoginOTPDTO;
 import epams.com.login.repository.LoginOTPRepository;
-import epams.com.member.dto.TempUserDTO;
+import epams.com.member.dto.IamUserDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -46,11 +46,11 @@ public class MFALoginService {
      * @implNote 멀티 팩터 인증 요청을 처리하는 메서드
      * @since 2024-06-11
      */
-    public Map<String, String> requestMFA(final TempUserDTO memberDTO) throws NoSuchAlgorithmException {
+    public Map<String, String> requestMFA(final IamUserDTO iamUserDTO) throws NoSuchAlgorithmException {
 
         final LoginOTPDTO loginOTPDTO = new LoginOTPDTO();
 
-        if (memberDTO.getMFA().equals("SMS") || memberDTO.getMFA().equals("카카오톡")) {
+        if (iamUserDTO.getMFA().equals("SMS") || iamUserDTO.getMFA().equals("카카오톡")) {
             // SMS, 카카오톡 인증 시 필요한 인증번호 Random 숫자 6자리 발급
             final String OTP = String.format("%06d", generateOTP(6));
             loginOTPDTO.setOTP(OTP);
@@ -59,13 +59,13 @@ public class MFALoginService {
             log.warn("SMS & 카카오톡 인증문자 발송 : " + OTP);
         }
 
-		loginOTPDTO.setUsername(memberDTO.getUsername());
-        loginOTPDTO.setMFA(memberDTO.getMFA());
+		loginOTPDTO.setUsername(iamUserDTO.getUsername());
+        loginOTPDTO.setMFA(iamUserDTO.getMFA());
         loginOTPRepo.insert(loginOTPDTO);
 
         final Map<String, String> mfaInfo = new HashMap<>();
-        mfaInfo.put("username", memberDTO.getUsername());
-        mfaInfo.put("MFA", memberDTO.getMFA());
+        mfaInfo.put("username", iamUserDTO.getUsername());
+        mfaInfo.put("MFA", iamUserDTO.getMFA());
 
         return mfaInfo;
     }

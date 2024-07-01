@@ -39,7 +39,6 @@ spring:
   session:
     jdbc:
       initialize-schema: always
-      schema: classpath:session-schema.sql
 
   web:
     resources:

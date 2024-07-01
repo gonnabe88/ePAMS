@@ -2,6 +2,7 @@ package epams.com.member.service;
 
 import java.util.List;
 
+import epams.com.member.dto.RoleDTO;
 import org.springframework.stereotype.Service;
 
 import epams.com.member.dto.IamUserDTO;
@@ -37,4 +38,9 @@ public class MemberService {
     public List<IamUserDTO> findAll() {
         return memberRepository.findAll();
     }
+
+    public RoleDTO findOneRoleByUsername(final IamUserDTO iamUserDTO) {
+        return memberRepository.findOneRoleByUsername(iamUserDTO);
+    }
+
 }

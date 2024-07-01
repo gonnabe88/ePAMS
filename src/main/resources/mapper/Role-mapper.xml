@@ -3,6 +3,13 @@
 
 <mapper namespace="Role">
 
+    <!-- 특정 계정에 대한 역할 1건 데이터 조회 -->
+    <select id="findOneRoleByUsername" parameterType="iamUser" resultType="role">
+        SELECT * FROM THURXE_CROLEM
+        WHERE
+            ENO = #{ENO}
+    </select>
+
     <!-- 모든 데이터 조회 -->
     <select id="findAll" resultType="role">
         SELECT * FROM THURXE_CROLEM

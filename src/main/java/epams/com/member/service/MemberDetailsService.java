@@ -86,16 +86,6 @@ public class MemberDetailsService implements UserDetailsService {
     }
 
     /**
-     * 검색 값을 사용하여 회원을 찾는 메소드
-     * 
-     * @param searchValue 검색 값
-     * @return 검색된 회원 목록
-     */
-    public List<SearchMemberEntity> findBySearchValue(final String searchValue) {
-        return memberRepository.findBySearchValue(searchValue);
-    }
-
-    /**
      * 모든 회원을 찾는 메소드
      * 
      * @return 모든 회원 목록

@@ -1,9 +1,10 @@
 package epams.com.login.repository;
 
+import epams.com.member.entity.IamUserEntity;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
-import epams.com.member.dto.TempUserDTO;
+import epams.com.member.dto.IamUserDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -29,9 +30,10 @@ public class LoginRepository {
      * @implNote 로그인 정보를 확인하고 사용자 정보를 반환하는 메서드
      * @since 2024-06-11
      */
-    public TempUserDTO login(final TempUserDTO memberDTO) {
-        log.warn(memberDTO.toString());
-        return sql.selectOne("Member.login", memberDTO);
+    public IamUserDTO login(final IamUserDTO iamUserDTO) {
+        log.warn(iamUserDTO.toString());
+        IamUserEntity iamUserEntity = sql.selectOne("IamUser.login", iamUserDTO.toEntity());
+        return IamUserDTO.toDTO(iamUserEntity);
     }
 
     /**
@@ -39,34 +41,9 @@ public class LoginRepository {
      * @implNote 사용자 ID로 사용자 정보를 찾는 메서드
      * @since 2024-06-11
      */
-    public TempUserDTO findByUserId(final String userId) {
-        return sql.selectOne("Member.findByUserId", userId);
+    public IamUserDTO findByUserId(final IamUserDTO iamUserDTO) {
+        final IamUserEntity iamUserEntity = sql.selectOne("IamUser.findByUserId", iamUserDTO.toEntity());
+        return IamUserDTO.toDTO(iamUserEntity);
     }
 
-    /**
-     * @author K140024
-     * @implNote 인증 정보를 확인하고 사용자 정보를 반환하는 메서드
-     * @since 2024-06-11
-     */
-    public TempUserDTO auth(final TempUserDTO memberDTO) {
-        return sql.selectOne("Member.auth", memberDTO);
-    }
-
-    /**
-     * @author K140024
-     * @implNote 사용자 이름으로 UUID를 찾는 메서드
-     * @since 2024-06-11
-     */
-    public String findUuid(final String username) {
-        return sql.selectOne("Member.findUuid", username);
-    }
-
-    /**
-     * @author K140024
-     * @implNote UUID를 업데이트하는 메서드
-     * @since 2024-06-11
-     */
-    public void updateUuid(final TempUserDTO memberDTO) {
-        sql.update("Member.updateUuid", memberDTO);
-    }
 }

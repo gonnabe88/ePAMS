@@ -1,5 +1,6 @@
 package epams.com.login.service;
 
+import epams.com.member.dto.IamUserDTO;
 import org.springframework.stereotype.Service;
 
 import epams.com.config.security.CustomGeneralEncryptionException;
@@ -7,7 +8,7 @@ import epams.com.config.security.CustomGeneralRuntimeException;
 import epams.com.login.dto.LoginOTPDTO;
 import epams.com.login.repository.LoginOTPRepository;
 import epams.com.login.repository.LoginRepository;
-import epams.com.member.dto.TempUserDTO;
+import epams.com.member.dto.IamUserDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -43,16 +44,20 @@ public class LoginService {
      * @param OTP OTP 코드
      * @return 로그인 성공 여부
      */
-    public boolean otpLogin(final String username, final String OTP) {
-        final TempUserDTO ismemberDTO = loginRepository.findByUserId(username);
+    public boolean otpLogin(final IamUserDTO iamUserDTO, final String OTP) {
+        final IamUserDTO isiamUserDTO = loginRepository.findByUserId(iamUserDTO);
         LoginOTPDTO loginOTPDTO = new LoginOTPDTO();
-        loginOTPDTO.setUsername(username);
+        loginOTPDTO.setUsername(iamUserDTO.getUsername());
         loginOTPDTO = loginOTPRepo.findValidOneByUsername(loginOTPDTO);
+
+        log.warn("isiamUserDTO : " + isiamUserDTO.toString());
+        log.warn("loginOTPDTO : " + loginOTPDTO.toString());
+        log.warn("OTP : " + OTP);
 
         // ONEGUARD mOTP 연동 인증부 구현 필요
         log.warn("ONEGUAER OTP 검증 요청 및 응답");
 
-        return ismemberDTO != null && OTP.equals(loginOTPDTO.getOTP());
+        return (isiamUserDTO.getUsername() != null) && OTP.equals(loginOTPDTO.getOTP());
 
     }
 
@@ -62,35 +67,36 @@ public class LoginService {
      * @param username 사용자 이름
      * @return 로그인 성공 여부
      */
-    public boolean fidoLogin(final String username) {
-        final TempUserDTO ismemberDTO = loginRepository.findByUserId(username);
+    public boolean fidoLogin(final IamUserDTO iamUserDTO) {
+
         final boolean fidoresult = true;
 
         // ONEGUARD FIDO 연동 인증부 구현 필요
 
-        return ismemberDTO != null && fidoresult;
+        return loginRepository.findByUserId(iamUserDTO) != null && fidoresult;
 
     }
 
     /**
      * 패스워드 로그인 처리
      * 
-     * @param memberDTO 사용자 정보
+     * @param iamUserDTO 사용자 정보
      * @return 로그인 성공 여부
      * @throws Exception 암호화 예외 발생 시
      */
-    public boolean pwLogin(final TempUserDTO memberDTO)  {
+    public boolean pwLogin(final IamUserDTO iamUserDTO)  {
         // 사용자가 입력한 패스워드 HASH
         try {
             // 사용자가 입력한 패스워드 HASH
-            memberDTO.setPassword(encshaService.encrypt(memberDTO.getPassword()));
+            log.warn("해시 전 : " + iamUserDTO.toString());
+            iamUserDTO.setPassword(encshaService.encrypt(iamUserDTO.getPassword()));
         } catch (CustomGeneralEncryptionException e) {
             throw new CustomGeneralRuntimeException("Password encryption failed", e);
-        }  
+        }
+        log.warn(iamUserDTO.toString());
         // username & password(hash)와 일치하는 사용자를 찾음
-        final TempUserDTO ismemberDTO = loginRepository.login(memberDTO);
-        //log.warn(ismemberDTO.toString());
-        return ismemberDTO != null;
+        final IamUserDTO isiamUserDTO = loginRepository.login(iamUserDTO);
+        return isiamUserDTO.getUsername() != null;
     }
 
 }

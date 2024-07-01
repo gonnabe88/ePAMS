@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
+import epams.com.member.repository.MemberRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,6 +24,9 @@ class EPamMemberTests {
         private MemberJpaRepository memberRepository;
 
         @Autowired
+        private MemberRepository memberRepository2;
+
+        @Autowired
         private PasswordEncoder passwordEncoder;
 
         /**
@@ -30,7 +34,7 @@ class EPamMemberTests {
          * @implNote 회원을 등록하는 테스트 메서드
          * @since 2024-06-11
          */
-        // @Test
+        //@Test
         public void RegistOneMember() throws IOException {
                 final Random random = new Random();
                 final List<String> dept = new ArrayList<>(Arrays.asList(

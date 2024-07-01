@@ -2,6 +2,8 @@ package epams.com.member.controller;
 
 import java.util.List;
 
+import epams.com.member.dto.IamUserDTO;
+import epams.com.member.service.MemberService;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,7 +31,7 @@ public class MemberRestController {
      * @implNote MemberDetailsService 주입
      * @since 2024-06-11
      */
-    private final MemberDetailsService memberservice;
+    private final MemberService memberservice;
 
     /**
      * @author K140024
@@ -37,9 +39,8 @@ public class MemberRestController {
      * @since 2024-06-11
      */
     @GetMapping("/search")
-    public List<SearchMemberEntity> search(final Model model, @RequestParam("text") final String text) throws Exception {
-        final List<SearchMemberEntity> memberList = memberservice.findBySearchValue(text);
-        return memberList;
+    public List<IamUserDTO> search(final Model model, @RequestParam("text") final String text) throws Exception {
+        return memberservice.findBySearchValue(text);
     }
 
 }

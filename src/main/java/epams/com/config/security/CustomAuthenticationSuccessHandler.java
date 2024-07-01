@@ -39,7 +39,6 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
     	
     	memberDTO.setUsername(authentication.getName());
     	memberDTO.setUUID(uuid.toString());
-    	loginRepository.updateUuid(memberDTO);
     	
     	//Cookie cookie = new Cookie("UUIDChk",uuid.toString());
 		//cookie.setHttpOnly(true); 

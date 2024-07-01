@@ -5,16 +5,14 @@ import java.time.LocalDate;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 /***
  * @author 140024
  * @implNote 사용자
  * @since 2024-06-30
  */
-@Entity
+@ToString
 @NoArgsConstructor
 @Getter
 @Setter
@@ -53,5 +51,4 @@ public class IamUserEntity{
     @Column(name = "TZ_DATE")
     private LocalDate TZ_DATE;
 
-    
 }

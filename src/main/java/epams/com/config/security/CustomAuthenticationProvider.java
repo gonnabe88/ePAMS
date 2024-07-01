@@ -1,10 +1,16 @@
 package epams.com.config.security;
 
+import epams.com.member.dto.IamUserDTO;
+import epams.com.member.dto.RoleDTO;
+import epams.com.member.repository.MemberRepository;
+import epams.com.member.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -16,6 +22,8 @@ import epams.com.login.service.LoginService;
 import epams.com.login.service.ShaEncryptService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.List;
 
 /**
  * @author K140024
@@ -58,6 +66,15 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
     /**
      * @author K140024
+     * @implNote 로그인 기록 저장소 주입
+     * @since 2024-06-11
+     */
+    private final MemberService memberService;
+
+
+
+    /**
+     * @author K140024
      * @implNote 인증을 수행하는 메서드
      * @since 2024-06-11
      */
@@ -65,65 +82,55 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 
         final CustomWebAuthenticationDetails customWebAuthenticationDetails = (CustomWebAuthenticationDetails) authentication.getDetails();
-        final String username = authentication.getName();
-        String password = null;
-        try {
-            // 입력받은 password HASH
-            password = encshaService.encrypt(authentication.getCredentials().toString());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
+        // 사용자 로그인 정보
+        final IamUserDTO iamUserDTO = new IamUserDTO();
+        iamUserDTO.setUsername(authentication.getName());
+        iamUserDTO.setPassword(authentication.getCredentials().toString());
+        
         final String OTP = customWebAuthenticationDetails.getOTP();
         final String MFA = customWebAuthenticationDetails.getMFA();
 
         // DB에 저장된 사용자 정보(패스워드 등) 가져옴
-        final UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+        final boolean pwLoginResult = loginService.pwLogin(iamUserDTO);
+        final RoleDTO role = memberService.findOneRoleByUsername(iamUserDTO);
 
         boolean loginResult = false;
 
         switch (MFA) {
             case "SMS":
+                // @TODO SMS 인증 로직 추가
             case "카카오톡":
+                // @TODO 카카오톡 인증 로직 추가
             case "OTP":
-                loginResult = loginService.otpLogin(username, OTP);
+                loginResult = loginService.otpLogin(iamUserDTO, OTP);
                 break;
             case "FIDO":
-                loginResult = loginService.fidoLogin(username);
+                loginResult = loginService.fidoLogin(iamUserDTO);
                 break;
         }
 
-        // 사용자가 없는 경우
-        if (userDetails == null) {
-            logRepository.insert(LogLoginDTO.getDTO(username, "Unknown User", false));
-            throw new UsernameNotFoundException("User not found");
-        }
-
-		// 패스워드가 Null인 경우
-        if (password == null) {
-            log.warn("패스워드 NULL");
-            logRepository.insert(LogLoginDTO.getDTO(username, "패스워드", false));
-            throw new AuthenticationException("Invalid credentials") {};
-        }
-
-		// 패스워드가 일치하지 않는 경우
-        if (!password.equals(userDetails.getPassword())) {
-            log.warn("패스워드 불일치");
-            logRepository.insert(LogLoginDTO.getDTO(username, "패스워드", false));
+        // 1차 인증(ID/PW) 실패
+        if (!pwLoginResult) {
+            log.warn("1차 인증 실패");
+            logRepository.insert(LogLoginDTO.getDTO(iamUserDTO.getUsername(), "ID/PW", false));
             throw new AuthenticationException("Invalid credentials") {};
         }
 
         // 2차 인증(SMS, 카카오, OTP, FIDO) 실패
         if (!loginResult) {
             log.warn("2차 인증 실패");
-            logRepository.insert(LogLoginDTO.getDTO(username, MFA, false));
+            logRepository.insert(LogLoginDTO.getDTO(iamUserDTO.getUsername(), MFA, false));
             throw new AuthenticationException("Invalid MFA credentials") {};
         }
 
-        // Create a fully authenticated Authentication object
+        // Authentication 객체 생성 (인증 성공)
         final Authentication authenticated = new UsernamePasswordAuthenticationToken(
-                userDetails, password, userDetails.getAuthorities());
+                iamUserDTO.getUsername(), iamUserDTO.getPassword(), List.of(new SimpleGrantedAuthority(role.getRoleId())));
+        log.warn("로그인 성공");
         // 로그인 성공 로깅
-        logRepository.insert(LogLoginDTO.getDTO(username, MFA, true));
+        logRepository.insert(LogLoginDTO.getDTO(iamUserDTO.getUsername(), MFA, true));
+
         return authenticated;
     }
 

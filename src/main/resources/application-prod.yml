@@ -35,3 +35,15 @@ spring:
     url: jdbc:oracle:thin:@192.168.0.10:1521:ORCLCDB
     username: ehr
     password: kdb1234!
+
+  jpa:
+    open-in-view: true
+    hibernate:
+      ddl-auto: update
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    show-sql: false
+    properties:
+      dialect: org.hibernate.dialect.MySQL8InnoDBDialect
+      hibernate:
+        "[format_sql]": true

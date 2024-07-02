@@ -1,29 +1,22 @@
 package epams.com.config.security;
 
-import epams.com.member.dto.IamUserDTO;
-import epams.com.member.dto.RoleDTO;
-import epams.com.member.repository.MemberRepository;
-import epams.com.member.service.MemberService;
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.List;
+
 import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 import epams.com.admin.dto.LogLoginDTO;
 import epams.com.admin.repository.LogRepository;
 import epams.com.login.service.LoginService;
-import epams.com.login.service.ShaEncryptService;
+import epams.com.member.dto.IamUserDTO;
+import epams.com.member.dto.RoleDTO;
+import epams.com.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
-import java.util.List;
 
 /**
  * @author K140024
@@ -34,13 +27,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @Component
 public class CustomAuthenticationProvider implements AuthenticationProvider {
-
-    /**
-     * @author K140024
-     * @implNote SHA 암호화 서비스 주입
-     * @since 2024-06-11
-     */
-    private final ShaEncryptService encshaService;
 
     /**
      * @author K140024
@@ -58,20 +44,10 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
     /**
      * @author K140024
-     * @implNote 사용자 세부 정보 서비스 주입
-     * @since 2024-06-11
-     */
-    @Autowired
-    private UserDetailsService userDetailsService;
-
-    /**
-     * @author K140024
      * @implNote 로그인 기록 저장소 주입
      * @since 2024-06-11
      */
     private final MemberService memberService;
-
-
 
     /**
      * @author K140024
@@ -79,21 +55,25 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
      * @since 2024-06-11
      */
     @Override
-    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+    public Authentication authenticate(final Authentication authentication){
 
-        final CustomWebAuthenticationDetails customWebAuthenticationDetails = (CustomWebAuthenticationDetails) authentication.getDetails();
+    	// authentication 객체를 통해 사용자로부터 전달받은 인증 정보
+        final CustomWebAuthenticationDetails customDetails = (CustomWebAuthenticationDetails) authentication.getDetails();
 
-        // 사용자 로그인 정보
+        // 사용자 로그인 정보 추출
         final IamUserDTO iamUserDTO = new IamUserDTO();
         iamUserDTO.setUsername(authentication.getName());
         iamUserDTO.setPassword(authentication.getCredentials().toString());
-        
-        final String OTP = customWebAuthenticationDetails.getOTP();
-        final String MFA = customWebAuthenticationDetails.getMFA();
 
-        // DB에 저장된 사용자 정보(패스워드 등) 가져옴
+        // ID & PW 로그인 검증
         final boolean pwLoginResult = loginService.pwLogin(iamUserDTO);
+        
+        // 사용자 역할 조회
         final RoleDTO role = memberService.findOneRoleByUsername(iamUserDTO);
+        
+        // OTP & MFA 정보 추출
+        final String OTP = customDetails.getOTP();
+        final String MFA = customDetails.getMFA();
 
         boolean loginResult = false;
 
@@ -108,6 +88,8 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
             case "FIDO":
                 loginResult = loginService.fidoLogin(iamUserDTO);
                 break;
+            default:
+            	loginResult = loginService.fidoLogin(iamUserDTO);
         }
 
         // 1차 인증(ID/PW) 실패
@@ -140,7 +122,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
      * @since 2024-06-11
      */
     @Override
-    public boolean supports(Class<?> authentication) {
+    public boolean supports(final Class<?> authentication) {
         log.info("[LOG] CustomAuthenticationProvider > support");
         return authentication.equals(UsernamePasswordAuthenticationToken.class);
     }

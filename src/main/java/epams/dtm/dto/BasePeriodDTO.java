@@ -60,4 +60,5 @@ public class BasePeriodDTO {
        this.offset = 9999;
     }
     
+    
 }

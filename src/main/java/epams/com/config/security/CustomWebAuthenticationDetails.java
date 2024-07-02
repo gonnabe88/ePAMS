@@ -5,16 +5,29 @@ import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * @author K140024
+ * @implNote CustomWebAuthenticationDetails 인증 정보 추가(커스텀)
+ * @since 2024-06-11
+ */
 @Slf4j
 public class CustomWebAuthenticationDetails extends WebAuthenticationDetails {
 	
+	private static final long serialVersionUID = 8476298563946165595L;
+	
 	/**
-	 * 
+	 * @author K140024
+	 * @implNote 인증 시 사용될 OTP 번호
+	 * @since 2024-06-11
 	 */
-	//private static final long serialVersionUID = 8476298563946165595L;
-	private String UUID;
-	private String OTP;
-	private String MFA;
+	private final String OTP;
+	
+	/**
+	 * @author K140024
+	 * @implNote 인증 시 사용될 Multi-Fator 인증 방식
+	 * @since 2024-06-11
+	 */
+	private final String MFA;
 	
 	/**
 	 * Records the remote address and will also set the session Id if a session already
@@ -22,21 +35,26 @@ public class CustomWebAuthenticationDetails extends WebAuthenticationDetails {
 	 *
 	 * @param request that the authentication request was received from
 	 */
-	public CustomWebAuthenticationDetails(HttpServletRequest request) {
+	public CustomWebAuthenticationDetails(final HttpServletRequest request) {
 		super(request);
 		OTP = request.getParameter("OTP");
-		MFA = request.getParameter("MFA");		
-		log.warn("{} {}",request.getParameter("MFA"), request.getParameter("OTP"));
+		MFA = request.getParameter("MFA");
 	}
 	
-	public String getUUID() {
-		return UUID;
-	}	
-	
+	/**
+	 * @author K140024
+	 * @implNote OTP getter
+	 * @since 2024-06-11
+	 */
 	public String getOTP() {
 		return OTP;
 	}
 	
+	/**
+	 * @author K140024
+	 * @implNote MFA getter
+	 * @since 2024-06-11
+	 */
 	public String getMFA() {
 		return MFA;
 	}

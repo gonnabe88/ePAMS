@@ -1,7 +1,4 @@
-create user ohr identified by "kdb1234!";
-
-
-CREATE TABLE "OHR"."DTM_HIS" 
+CREATE TABLE "OHR"."DTM_HIS"
 
    (	"DTM_HIS_ID" NUMBER NOT NULL ENABLE, 
 

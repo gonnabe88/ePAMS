@@ -42,7 +42,7 @@ import lombok.extern.slf4j.Slf4j;
 public class DtmController<S extends Session> {
 
     /**
-     * @author K140024
+     * @author K140024 kk
      * @implNote list 화면에 노출할 게시물 수 설정값 (application.yml)
      * @since 2024-06-11
      */

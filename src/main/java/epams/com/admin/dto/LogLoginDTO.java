@@ -68,10 +68,10 @@ public class LogLoginDTO {
      */
     public static LogLoginDTO toDTO(final LogLoginEntity logLoginEntity) {
     	final LogLoginDTO logLoginDTO = new LogLoginDTO();
-    	logLoginDTO.setEmpNo(logLoginEntity.getEMP_NO());
-    	logLoginDTO.setLoginType(logLoginEntity.getLOGIN_TYPE());
-    	logLoginDTO.setLoginResult(logLoginEntity.isLOGIN_RESULT());
-    	logLoginDTO.setCreatedTime(logLoginEntity.getCREATED_TIME());
+    	logLoginDTO.setEmpNo(logLoginEntity.getENO());
+    	logLoginDTO.setLoginType(logLoginEntity.getLGN_KD_NM());
+    	logLoginDTO.setLoginResult(logLoginEntity.isLGN_SCS_YN());
+    	logLoginDTO.setCreatedTime(logLoginEntity.getGNT_DTM());
         return logLoginDTO;
     }
     
@@ -82,10 +82,10 @@ public class LogLoginDTO {
      */
     public LogLoginEntity toEntity() {
     	final LogLoginEntity logLoginEntity = new LogLoginEntity();
-    	logLoginEntity.setEMP_NO(this.empNo);
-    	logLoginEntity.setLOGIN_TYPE(this.loginType);
-    	logLoginEntity.setLOGIN_RESULT(this.loginResult);
-    	logLoginEntity.setCREATED_TIME(this.createdTime);
+    	logLoginEntity.setENO(this.empNo);
+    	logLoginEntity.setLGN_KD_NM(this.loginType);
+    	logLoginEntity.setLGN_SCS_YN(this.loginResult);
+    	logLoginEntity.setGNT_DTM(this.createdTime);
         return logLoginEntity;
     }
     

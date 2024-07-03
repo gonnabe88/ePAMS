@@ -49,7 +49,7 @@ public class CodeEntity extends BaseEntity implements Serializable {
     @Id // 기본키
     @Column(name="CDVA_ID", length = 40)
     @Comment("코드값ID")
-    private String CD_ID;
+    private String CDVA_ID;
     
     /***
      * @author 140024
@@ -58,7 +58,7 @@ public class CodeEntity extends BaseEntity implements Serializable {
      */
     @Column(name="CDVA_NM", length = 100, nullable = false)
     @Comment("코드값명")
-    private String CD_NM;
+    private String CDVA_NM;
 
     /***
      * @author 140024
@@ -67,7 +67,7 @@ public class CodeEntity extends BaseEntity implements Serializable {
      */
     @Column(name="CDVA_KD_NM", length = 100, nullable = false) // 크기 20, not null
     @Comment("코드값종류명")
-    private String CD_TYPE;
+    private String CDVA_KD_NM;
     
     /***
      * @author 140024

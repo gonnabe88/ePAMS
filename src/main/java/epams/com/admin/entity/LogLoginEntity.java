@@ -38,7 +38,7 @@ public class LogLoginEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment
     @Column(name = "LGN_LOG_SNO", columnDefinition = "NUMBER(22)")
     @Comment("로그인로그일련번호")
-    private Long SEQ_ID; 
+    private Long LGN_LOG_SNO;
     
     /***
      * @author 140024
@@ -47,7 +47,7 @@ public class LogLoginEntity {
      */
     @Column(name = "ENO", nullable = false, length = 32)
     @Comment("사원번호")
-    private String EMP_NO; 
+    private String ENO;
     
     /***
      * @author 140024
@@ -56,7 +56,7 @@ public class LogLoginEntity {
      */
     @Column(name = "LGN_KD_NM", nullable = false, length = 100)
     @Comment("로그인종류명")
-    private String LOGIN_TYPE; 
+    private String LGN_KD_NM;
     
     /***
      * @author 140024
@@ -65,7 +65,7 @@ public class LogLoginEntity {
      */
     @Column(name = "LGN_SCS_YN", nullable = false, length = 1)
     @Comment("로그인성공여부")
-    private boolean LOGIN_RESULT;
+    private boolean LGN_SCS_YN;
     
     /***
      * @author 140024
@@ -74,6 +74,6 @@ public class LogLoginEntity {
      */
     @Column(name = "GNT_DTM", updatable = false, columnDefinition = "DATE")
     @Comment("생성일시")
-    private LocalDate CREATED_TIME;  
+    private LocalDate GNT_DTM;
 
 }

@@ -81,11 +81,11 @@ public class LogViewDTO {
         return new LogViewDTO(
                 entity.getSEQ_ID(),
                 entity.getCTRL_NM(),
-                entity.getMTHD_NM(),
-                entity.getCLIENT_IP(),
-                entity.getUSER_AGENT(),
-                entity.getRQST_URL(),
-                entity.getCALL_TIME());
+                entity.getMTH_NM(),
+                entity.getCLI_IP_ADDR(),
+                entity.getUSR_CNC_ENV_INF(),
+                entity.getREQ_URL_ADDR(),
+                entity.getCALL_DTM());
     }
 
     /***
@@ -97,11 +97,11 @@ public class LogViewDTO {
         return LogViewEntity.builder()
                 .SEQ_ID(dto.getSeqId())
                 .CTRL_NM(dto.getControllerName())
-                .MTHD_NM(dto.getMethodName())
-                .CLIENT_IP(dto.getClientIp())
-                .USER_AGENT(dto.getUserAgent())
-                .RQST_URL(dto.getRequestUrl())
-                .CALL_TIME(dto.getCallTime())
+                .MTH_NM(dto.getMethodName())
+                .CLI_IP_ADDR(dto.getClientIp())
+                .USR_CNC_ENV_INF(dto.getUserAgent())
+                .REQ_URL_ADDR(dto.getRequestUrl())
+                .CALL_DTM(dto.getCallTime())
                 .build();
     }
 

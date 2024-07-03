@@ -3,9 +3,8 @@ package epams.com.login.controller;
 import java.security.NoSuchAlgorithmException;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
-
-import javax.annotation.Nonnull;
 
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -125,7 +124,7 @@ public class LoginController {
      */
     @PostMapping("/login")
     @ResponseBody
-    public Map<String, Object> pwlogin(final HttpServletResponse response, @ModelAttribute final @Nonnull IamUserDTO iamUserDTO, final Model model)
+    public Map<String, Object> pwlogin(final HttpServletResponse response, @ModelAttribute final IamUserDTO iamUserDTO, final Model model)
     {
         // Front-end에서 ID가 대문자로 바뀌지 않는 경우에 대비하여 한번 더 대문자 변환 처리
         if (iamUserDTO != null && iamUserDTO.getUsername() != null) {
@@ -133,7 +132,7 @@ public class LoginController {
             iamUserDTO.setUsername(uppercaseUsername);
         }
 
-		final AppUser existingUser = service.getUserRepo().findByUsername(iamUserDTO.getUsername());
+		final AppUser existingUser = service.getUserRepo().findByUsername(Objects.requireNonNull(iamUserDTO).getUsername());
         final Map<String, Object> res = new ConcurrentHashMap<>();
         if (loginService.pwLogin(iamUserDTO)) {
             log.warn("성공?");

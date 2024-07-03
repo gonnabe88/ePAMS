@@ -6,8 +6,8 @@
 
     <!-- Result Map 정의 -->
     <resultMap id="codeHtmlMap" type="codeHtml">
-        <id property="CD_ID" column="CDVA_ID"/>
-        <id property="HTML" column="HTML_PTH_NM"/>
+        <id property="CDVA_ID" column="CDVA_ID"/>
+        <id property="HTML_PTH_NM" column="HTML_PTH_NM"/>
         <result property="AMN_DTM" column="AMN_DTM"/>
         <result property="GNT_DTM" column="GNT_DTM"/>
     </resultMap>
@@ -20,18 +20,18 @@
     <!-- 기본키 데이터 중복여부 조회 -->
     <select id="countById" parameterType="Long" resultMap="codeHtmlMap">
         SELECT COUNT(*)
-        FROM THURXE_CCDHTR WHERE HTML_PTH_NM=#{HTML} AND CDVA_ID=#{CD_ID}
+        FROM THURXE_CCDHTR WHERE HTML_PTH_NM=#{HTML_PTH_NM} AND CDVA_ID=#{CDVA_ID}
     </select>
     
     <!-- 신규 데이터 추가 --> 
     <insert id="insert" parameterType="codeHtml">
         INSERT INTO THURXE_CCDHTR(HTML_PTH_NM, CDVA_ID, GNT_DTM)
-            VALUES(#{HTML}, #{CD_ID}, SYSDATE)
+            VALUES(#{HTML_PTH_NM}, #{CDVA_ID}, SYSDATE)
     </insert>   
     
     <!-- 기존 데이터 삭제 --> 
     <delete id="delete" parameterType="codeHtml">
-        DELETE FROM THURXE_CCDHTR WHERE HTML_PTH_NM=#{HTML} AND CDVA_ID=#{CD_ID}
+        DELETE FROM THURXE_CCDHTR WHERE HTML_PTH_NM=#{HTML_PTH_NM} AND CDVA_ID=#{CDVA_ID}
     </delete>
     
 </mapper>

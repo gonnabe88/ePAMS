@@ -6,7 +6,7 @@
      
     <!-- Result Map 정의 -->
     <resultMap id="htmlMap" type="html">
-        <id property="HTML" column="HTML_PTH_NM"/>
+        <id property="HTML_PTH_NM" column="HTML_PTH_NM"/>
         <result property="HTML_NM" column="HTML_NM"/>
         <result property="AMN_DTM" column="AMN_DTM"/>
         <result property="GNT_DTM" column="GNT_DTM"/>
@@ -22,7 +22,7 @@
         SELECT COUNT(*)
         FROM THURXE_CHTMLM 
         WHERE 
-            HTML_PTH_NM = #{HTML}
+            HTML_PTH_NM = #{HTML_PTH_NM}
     </select>
     
     <!-- 신규 데이터 추가 --> 
@@ -35,7 +35,7 @@
         )
         VALUES
         (
-            #{HTML}, 
+            #{HTML_PTH_NM},
             #{HTML_NM}, 
             SYSDATE
         )
@@ -45,7 +45,7 @@
     <delete id="delete" parameterType="html">
         DELETE FROM THURXE_CHTMLM 
         WHERE 
-            HTML_PTH_NM = #{HTML}
+            HTML_PTH_NM = #{HTML_PTH_NM}
     </delete>
     
     <!-- 기존 데이터 업데이트(기본키 제외) --> 
@@ -55,7 +55,7 @@
             HTML_NM = #{HTML_NM}, 
             AMN_DTM = SYSDATE 
         WHERE 
-            HTML_PTH_NM = #{HTML}
+            HTML_PTH_NM = #{HTML_PTH_NM}
     </update>
     
     <!-- 신규 데이터 추가 또는 기존 데이터 업데이트 -->
@@ -68,7 +68,7 @@
         )
 	    VALUES 
         (
-            #{HTML}, 
+            #{HTML_PTH_NM},
             #{HTML_NM}, 
             SYSDATE
         )

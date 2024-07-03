@@ -58,7 +58,7 @@ public class LogViewEntity {
      */
     @Column(name = "MTH_NM", length = 100, nullable = false) 
     @Comment("메소드명")
-    private String MTHD_NM;
+    private String MTH_NM;
     
     /***
      * @author 140024
@@ -67,7 +67,7 @@ public class LogViewEntity {
      */
     @Column(name = "CLI_IP_ADDR", length = 300, nullable = false) 
     @Comment("클라이언트IP주소")
-    private String CLIENT_IP;
+    private String CLI_IP_ADDR;
     
     /***
      * @author 140024
@@ -76,7 +76,7 @@ public class LogViewEntity {
      */
     @Column(name = "USR_CNC_ENV_INF", length = 2000, nullable = false) 
     @Comment("USER AGENT")
-    private String USER_AGENT;
+    private String USR_CNC_ENV_INF;
     
     /***
      * @author 140024
@@ -85,7 +85,7 @@ public class LogViewEntity {
      */
     @Column(name = "REQ_URL_ADDR", length = 500, nullable = false) 
     @Comment("요청 URL주소")
-    private String RQST_URL;
+    private String REQ_URL_ADDR;
     
     /***
      * @author 140024
@@ -94,7 +94,7 @@ public class LogViewEntity {
      */
     @Column(name = "CALL_DTM", updatable = false, columnDefinition = "DATE")
     @Comment("호출시간")
-    private LocalDate CALL_TIME;
+    private LocalDate CALL_DTM;
     
     
     

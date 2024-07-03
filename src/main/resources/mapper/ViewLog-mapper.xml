@@ -7,11 +7,11 @@
     <resultMap id="viewLogMap" type="viewLog">
     <id property="SEQ_ID" column="PAG_LOG_SNO"/>
         <result property="CTRL_NM" column="CTRL_NM"/>
-        <result property="MTHD_NM" column="MTH_NM"/>
-        <result property="CLIENT_IP" column="CLI_IP_ADDR"/>
-        <result property="USER_AGENT" column="USR_CNC_ENV_INF"/>
-        <result property="RQST_URL" column="REQ_URL_ADDR"/>
-        <result property="CALL_TIME" column="CALL_DTM"/>
+        <result property="MTH_NM" column="MTH_NM"/>
+        <result property="CLI_IP_ADDR" column="CLI_IP_ADDR"/>
+        <result property="USR_CNC_ENV_INF" column="USR_CNC_ENV_INF"/>
+        <result property="REQ_URL_ADDR" column="REQ_URL_ADDR"/>
+        <result property="CALL_DTM" column="CALL_DTM"/>
     </resultMap>
     
     <!-- 모든 데이터 조회 -->
@@ -22,7 +22,7 @@
     <!-- 기본키 데이터 중복여부 조회 -->
     <select id="countById" parameterType="Long" resultMap="viewLogMap">
         SELECT COUNT(*)
-        FROM THURXE_CVIEWL WHERE PAG_LOG_SNO=#{SEQ_ID}
+        FROM THURXE_CVIEWL WHERE PAG_LOG_SNO=#{PAG_LOG_SNO}
     </select>
     
     <!-- 신규 데이터 추가 --> 
@@ -39,11 +39,11 @@
         VALUES
         (
             #{CTRL_NM}, 
-            #{MTHD_NM}, 
-            #{CLIENT_IP}, 
-            #{USER_AGENT}, 
-            #{RQST_URL}, 
-            #{CALL_TIME}
+            #{MTH_NM},
+            #{CLI_IP_ADDR},
+            #{USR_CNC_ENV_INF},
+            #{REQ_URL_ADDR},
+            #{CALL_DTM}
         )
     </insert>   
     

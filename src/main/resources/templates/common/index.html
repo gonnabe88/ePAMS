@@ -2,292 +2,354 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.thymeleaf.org" layout:decorate="~{common/layout/layout}">
 
 <head>
-<!-- (start) private script -->
-<th:block layout:fragment="css">
-	<link rel="stylesheet" href="/extensions/aos/aos.css">
-	<link rel="stylesheet" href="/extensions/animate/animate.min.css" />
-</th:block>
-<!-- (end) private script -->
+	<!-- (start) private script -->
+	<th:block layout:fragment="css">
+		<link rel="stylesheet" href="/extensions/aos/aos.css">
+		<link rel="stylesheet" href="/extensions/animate/animate.min.css" />
+	</th:block>
+	<!-- (end) private script -->
 </head>
 
 <body>
-	<div layout:fragment="contents">
-		<div class="row no-drag">
-			<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-				<div class="carousel-indicators">
-					<button type="button" style="border-radius: 50%; width: 10px; height: 10px;" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-					<button type="button" style="border-radius: 50%; width: 10px; height: 10px;" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-					<button type="button" style="border-radius: 50%; width: 10px; height: 10px;" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-					<!--	<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-					<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3" aria-label="Slide 4"></button> -->
+<div layout:fragment="contents">
+	<div class="row no-drag">
+		<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+			<div class="carousel-indicators">
+				<button type="button" style="border-radius: 50%; width: 10px; height: 10px;" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+				<button type="button" style="border-radius: 50%; width: 10px; height: 10px;" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+				<button type="button" style="border-radius: 50%; width: 10px; height: 10px;" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+				<!--	<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3" aria-label="Slide 4"></button> -->
+			</div>
+			<div class="carousel-inner">
+				<div class="carousel-item active">
+					<!-- <div class="bg-no-repeat bg-cover bg-50 px-8"
+                        style="background-image: url(images/kdb/BACKGROUND3.png); background-repeat: no-repeat; background-size: cover; position: relative; height: 40vh;"> -->
+					<div class="carousel-img-1">
+						<div class="container-md">
+							<div class="align-items-center ms-5">
+								<div class="col-lg-12 pe-xl-12">
+									<div class="row">
+										<p class="mt-5 mb-5">
+											<span style="background-color: rgba(255, 255, 255, 0.5); color: #25396f;"></span>
+										</p>
+									</div>
+									<span class="h2 mt-5 mb-5" style="background-color: rgba(255, 255, 255, 0.5); color: #25396f;"></span><br> <span class="h2 mt-5 mb-5" style="background-color: rgba(255, 255, 255, 0.5); color: #25396f;"></span>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
-				<div class="carousel-inner">
-					<div class="carousel-item active">
-						<!-- <div class="bg-no-repeat bg-cover bg-50 px-8"
-							style="background-image: url(images/kdb/BACKGROUND3.png); background-repeat: no-repeat; background-size: cover; position: relative; height: 40vh;"> -->
-						<div class="carousel-img-1">
-							<div class="container-md">
-								<div class="align-items-center ms-5">
-									<div class="col-lg-12 pe-xl-12">
-										<div class="row">
-											<p class="mt-5 mb-5">
-												<span style="background-color: rgba(255, 255, 255, 0.5); color: #25396f;"></span>
-											</p>
+				<div class="carousel-item">
+					<div class="carousel-img-2">
+						<div class="container-md d-flex justify-content-start align-items-center" style="height: 100%;">
+							<div class="col-lg-1 col-2"></div>
+							<div class="text-start">
+								<h5>연차 및 저축휴가</h5>
+								<h2>언제 어디서든</h2>
+								<h2>편리하게 신청하세요</h2>
+								<a href="/dtm/main"><span class="badge text-bg-primary">바로가기</span></a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="carousel-item">
+					<div class="carousel-img-3">
+						<div class="container-md d-flex justify-content-start align-items-center" style="height: 100%;">
+							<div class="col-lg-1 col-2"></div>
+							<div class="text-start">
+								<h5>직원조회</h5>
+								<h2>언제 어디서든</h2>
+								<h2>간편하게 검색하세요</h2>
+								<span class="badge text-bg-primary" onclick="scrollToDiv()">바로가기</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+					<span class="carousel-control-prev-icon" aria-hidden="true"></span> <span class="visually-hidden">Previous</span>
+				</button>
+				<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+					<span class="carousel-control-next-icon" aria-hidden="true"></span> <span class="visually-hidden">Next</span>
+				</button>
+			</div>
+		</div>
+	</div>
+
+	<!-- end carousel (rolling image) -->
+	<div id="main-content">
+		<div class="container">
+			<div class="row d-flex justify-content-start mb-1">
+				<h5 class="text-start">
+					<i class="bi bi-stars"></i> <span th:text="${codeList['COM_BANNER1_CD']}"></span>
+				</h5>
+				<div class="container">
+					<div class="row d-flex justify-content-end">
+
+						<h6 class="text-end">
+							<a href="/dtm/main" style="text-decoration: none; color: inherit;"> 직접 신청하러 가기 <i class="bi bi-arrow-right-circle-fill"></i>
+							</a>
+						</h6>
+
+					</div>
+				</div>
+			</div>
+
+			<div class="d-flex justify-content-center">
+				<div class="row col-lg-12 col-md-12 d-flex justify-content-center">
+					<div class="row col-lg-12 col-md-12 col-sm-12">
+						<div class="col-lg-4">
+							<div data-aos="fade-up" data-aos-offset="50" data-aos-easing="ease-out-cubic" data-aos-duration="1000">
+								<section class="section">
+									<div class="shadow card" style="margin-bottom: 1.0rem;">
+										<div class="card-body align-content-center" style="padding: 0.8rem;">
+											<div class="d-flex justify-content-center">
+												<div class="col-10 mb-0 align-content-center">
+													<h6 style="margin-bottom: 0;">
+														<span class="badge rounded-pill bg-primary me-1">오늘</span>연차휴가 1일
+													</h6>
+													<h7>[[${nowDate}]]</h7>
+												</div>
+												<div class="col-2 mb-0 align-content-center">
+													<div class="d-flex justify-content-end">
+														<div class="btn btn-primary btn-sm" style="--bs-btn-padding-y: 0.35rem;" th:date="${nowDate}" th:onclick="ApplAlert(this.getAttribute('date'))">신청</div>
+													</div>
+												</div>
+											</div>
 										</div>
-										<span class="h2 mt-5 mb-5" style="background-color: rgba(255, 255, 255, 0.5); color: #25396f;"></span><br> <span class="h2 mt-5 mb-5" style="background-color: rgba(255, 255, 255, 0.5); color: #25396f;"></span>
+									</div>
+								</section>
+							</div>
+						</div>
+						<div class="col-lg-4">
+							<div data-aos="fade-up" data-aos-offset="50" data-aos-easing="ease-out-cubic" data-aos-duration="1000">
+								<section class="section">
+									<div class="shadow card" style="margin-bottom: 1.0rem;">
+										<div class="card-body align-content-center" style="padding: 0.8rem;">
+											<div class="d-flex justify-content-center ">
+												<div class="col-10 mb-0 align-content-center">
+													<h6 style="margin-bottom: 0;">
+														<span class="badge rounded-pill bg-primary me-1">오늘</span>연차휴가 오전 반차
+													</h6>
+													<h7>[[${nowDate}]]</h7>
+												</div>
+												<div class="col-2 mb-0 align-content-center">
+													<div class="d-flex justify-content-end">
+														<div class="btn btn-primary btn-sm" style="--bs-btn-padding-y: 0.35rem;" th:date="${nowDate}" th:onclick="ApplAlert(this.getAttribute('date'))">신청</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</section>
+							</div>
+						</div>
+						<div class="col-lg-4">
+							<div data-aos="fade-up" data-aos-offset="50" data-aos-easing="ease-out-cubic" data-aos-duration="1000">
+								<section class="section">
+									<div class="shadow card" style="margin-bottom: 1.0rem;">
+										<div class="card-body align-content-center" style="padding: 0.8rem;">
+											<div class="d-flex justify-content-center ">
+												<div class="col-10 mb-0 align-content-center">
+													<h6 style="margin-bottom: 0;">
+														<span class="badge rounded-pill bg-primary me-1">오늘</span>연차휴가 오전 반반차
+													</h6>
+													<h7>[[${nowDate}]]</h7>
+												</div>
+												<div class="col-2 mb-0 align-content-center">
+													<div class="d-flex justify-content-end">
+														<div class="btn btn-primary btn-sm" style="--bs-btn-padding-y: 0.35rem;" th:date="${nowDate}" th:onclick="ApplAlert(this.getAttribute('date'))">신청</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</section>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="d-flex justify-content-center mt-4">
+				<div class="row col-lg-12 col-md-12 d-flex justify-content-center">
+					<div class="row col-lg-12 col-md-12 col-sm-12">
+						<div class="col-lg-4">
+							<div data-aos="fade-up" data-aos-offset="50" data-aos-easing="ease-out-cubic" data-aos-duration="1000">
+								<section class="section">
+									<div class="shadow card" style="margin-bottom: 1.0rem;">
+										<div class="card-body align-content-center" style="padding: 0.8rem;">
+											<div class="d-flex justify-content-center">
+												<div class="col-10 mb-0 align-content-center">
+													<h6 style="margin-bottom: 0;">
+														<span class="badge rounded-pill bg-info me-1">내일</span>연차휴가 1일
+													</h6>
+													<h7>[[${tomorrowDate}]]</h7>
+												</div>
+												<div class="col-2 mb-0 align-content-center">
+													<div class="d-flex justify-content-end">
+														<div class="btn btn-info btn-sm" style="--bs-btn-padding-y: 0.35rem;" th:date="${tomorrowDate}" th:onclick="ApplAlert(this.getAttribute('date'))">신청</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</section>
+							</div>
+						</div>
+						<div class="col-lg-4">
+							<div data-aos="fade-up" data-aos-offset="50" data-aos-easing="ease-out-cubic" data-aos-duration="1000">
+								<section class="section">
+									<div class="shadow card" style="margin-bottom: 1.0rem;">
+										<div class="card-body align-content-center" style="padding: 0.8rem;">
+											<div class="d-flex justify-content-center ">
+												<div class="col-10 mb-0 align-content-center">
+													<h6 style="margin-bottom: 0;">
+														<span class="badge rounded-pill bg-info me-1">내일</span>연차휴가 오전 반차
+													</h6>
+													<h7>[[${tomorrowDate}]]</h7>
+												</div>
+												<div class="col-2 mb-0 align-content-center">
+													<div class="d-flex justify-content-end">
+														<div class="btn btn-info btn-sm" style="--bs-btn-padding-y: 0.35rem;" th:date="${tomorrowDate}" th:onclick="ApplAlert(this.getAttribute('date'))">신청</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</section>
+							</div>
+						</div>
+						<div class="col-lg-4">
+							<div data-aos="fade-up" data-aos-offset="50" data-aos-easing="ease-out-cubic" data-aos-duration="1000">
+								<section class="section">
+									<div class="shadow card" style="margin-bottom: 1.0rem;">
+										<div class="card-body align-content-center" style="padding: 0.8rem;">
+											<div class="d-flex justify-content-center ">
+												<div class="col-10 mb-0 align-content-center">
+													<h6 style="margin-bottom: 0;">
+														<span class="badge rounded-pill bg-info me-1">내일</span>연차휴가 오전 반반차
+													</h6>
+													<h7>[[${tomorrowDate}]]</h7>
+												</div>
+												<div class="col-2 mb-0 align-content-center">
+													<div class="d-flex justify-content-end">
+														<div class="btn btn-info btn-sm" style="--bs-btn-padding-y: 0.35rem;" th:date="${tomorrowDate}" th:onclick="ApplAlert(this.getAttribute('date'))">신청</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</section>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="divider">
+		<div class="divider-text" style="background-color: transparent;">
+			<img class="divider-text" src="/images/kdb/epams_r_cw_action.gif" style="width: 50px; height: 50px; border-radius: 50%; padding: 0;" />
+		</div>
+	</div>
+
+	<div id="main-content">
+		<div class="container">
+			<div class="row d-flex justify-content-start mb-2">
+				<h5 class="text-start">
+					<i class="bi bi-bell-fill"></i> 최근 공지사항
+				</h5>
+			</div>
+			<div class="row d-flex justify-content-center">
+				<div class="row col-lg-12">
+					<section>
+						<div class="shadow card" th:each="board : ${boardList}">
+							<div class="card-body">
+								<span th:if="${board.category}" th:classappend="|badge badge-sm mb-2 ${(board.category == 'IT') ? 'bg-primary' : (board.category == '인사') ? 'bg-info' : ''}|" style="--bs-badge-padding-x: .35rem" th:text="${board.category}"></span> <a class="card-title" th:href="@{|/board/${board.seqId}|}">
+								<h6 style="display: flex; align-items: center;">
+									<span th:text="${board.boardTitle}" style="margin-right: 0.5rem;"> </span> <span th:if="${T(java.time.LocalDate).now().minusDays(7).isBefore(board.createdTime)}" class="badge rounded-pill bg-warning text-dark" style="--bs-badge-font-size: .80em;"> new </span>
+								</h6>
+							</a>
+								<div class="d-flex flex-row mb-3 gap-3">
+									<div>
+										<i class="bi bi-building"></i>
+										<h7 th:text="${board.boardWriter}"></h7>
+									</div>
+									<div>
+										<i class="bi bi-calendar-check"></i>
+										<h7 th:text="${#temporals.format(board.createdTime, 'yyyy-MM-dd')}"></h7>
+									</div>
+									<div>
+										<i class="bi bi-eye"></i>
+										<h7 th:text="${board.boardHits}"></h7>
 									</div>
 								</div>
-							</div>
-						</div>
-					</div>
-					<div class="carousel-item">
-						<div class="carousel-img-2">
-							<div class="container-md d-flex justify-content-start align-items-center" style="height: 100%;">
-								<div class="col-lg-1 col-2"></div>
-								<div class="text-start">
-									<h5>연차 및 저축휴가</h5>
-									<h2>언제 어디서든</h2>
-									<h2>편리하게 신청하세요</h2>
-									<a href="/dtm/main"><span class="badge text-bg-primary">바로가기</span></a>
+								<div class="truncate-multiline">
+									<p th:utext="${board.boardContents}"></p>
 								</div>
 							</div>
 						</div>
-					</div>
-					<div class="carousel-item">
-						<div class="carousel-img-3">
-							<div class="container-md d-flex justify-content-start align-items-center" style="height: 100%;">
-								<div class="col-lg-1 col-2"></div>
-								<div class="text-start">
-									<h5>직원조회</h5>
-									<h2>언제 어디서든</h2>
-									<h2>간편하게 검색하세요</h2>
-									<span class="badge text-bg-primary" onclick="scrollToDiv()">바로가기</span>
-								</div>
-							</div>
-						</div>
-					</div>
-					<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-						<span class="carousel-control-prev-icon" aria-hidden="true"></span> <span class="visually-hidden">Previous</span>
-					</button>
-					<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-						<span class="carousel-control-next-icon" aria-hidden="true"></span> <span class="visually-hidden">Next</span>
-					</button>
+					</section>
 				</div>
 			</div>
 		</div>
+	</div>
 
-		<!-- end carousel (rolling image) -->
-		<div id="main-content">
-			<div class="container">
-				<div class="row d-flex justify-content-start mb-1">
-					<h5 class="text-start">
-						<i class="bi bi-stars"></i> <span th:text="${codeList['COM_BANNER1_CD']}"></span>
-					</h5>
-					<div class="container">
-						<div class="row d-flex justify-content-end">
-
-							<h6 class="text-end">
-								<a href="/dtm/main" style="text-decoration: none; color: inherit;"> 직접 신청하러 가기 <i class="bi bi-arrow-right-circle-fill"></i>
-								</a>
-							</h6>
-
-						</div>
-					</div>
-				</div>
-
-				<div class="d-flex justify-content-center">
-					<div class="row col-lg-12 col-md-12 d-flex justify-content-center">
-						<div class="row col-lg-12 col-md-12 col-sm-12">
-							<div class="col-lg-4">
-								<div data-aos="fade-up" data-aos-offset="50" data-aos-easing="ease-out-cubic" data-aos-duration="1000">
-									<section class="section">
-										<div class="shadow card" style="margin-bottom: 1.0rem;">
-											<div class="card-body align-content-center" style="padding: 0.8rem;">
-												<div class="d-flex justify-content-center">
-													<div class="col-10 mb-0 align-content-center">
-														<h6 style="margin-bottom: 0;">
-															<span class="badge rounded-pill bg-primary me-1">오늘</span>연차휴가 1일
-														</h6>
-														<h7>[[${nowDate}]]</h7>
-													</div>
-													<div class="col-2 mb-0 align-content-center">
-														<div class="d-flex justify-content-end">
-															<div class="btn btn-primary btn-sm" style="--bs-btn-padding-y: 0.35rem;" th:date="${nowDate}" th:onclick="ApplAlert(this.getAttribute('date'))">신청</div>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</section>
-								</div>
-							</div>
-							<div class="col-lg-4">
-								<div data-aos="fade-up" data-aos-offset="50" data-aos-easing="ease-out-cubic" data-aos-duration="1000">
-									<section class="section">
-										<div class="shadow card" style="margin-bottom: 1.0rem;">
-											<div class="card-body align-content-center" style="padding: 0.8rem;">
-												<div class="d-flex justify-content-center ">
-													<div class="col-10 mb-0 align-content-center">
-														<h6 style="margin-bottom: 0;">
-															<span class="badge rounded-pill bg-primary me-1">오늘</span>연차휴가 오전 반차
-														</h6>
-														<h7>[[${nowDate}]]</h7>
-													</div>
-													<div class="col-2 mb-0 align-content-center">
-														<div class="d-flex justify-content-end">
-															<div class="btn btn-primary btn-sm" style="--bs-btn-padding-y: 0.35rem;" th:date="${nowDate}" th:onclick="ApplAlert(this.getAttribute('date'))">신청</div>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</section>
-								</div>
-							</div>
-							<div class="col-lg-4">
-								<div data-aos="fade-up" data-aos-offset="50" data-aos-easing="ease-out-cubic" data-aos-duration="1000">
-									<section class="section">
-										<div class="shadow card" style="margin-bottom: 1.0rem;">
-											<div class="card-body align-content-center" style="padding: 0.8rem;">
-												<div class="d-flex justify-content-center ">
-													<div class="col-10 mb-0 align-content-center">
-														<h6 style="margin-bottom: 0;">
-															<span class="badge rounded-pill bg-primary me-1">오늘</span>연차휴가 오전 반반차
-														</h6>
-														<h7>[[${nowDate}]]</h7>
-													</div>
-													<div class="col-2 mb-0 align-content-center">
-														<div class="d-flex justify-content-end">
-															<div class="btn btn-primary btn-sm" style="--bs-btn-padding-y: 0.35rem;" th:date="${nowDate}" th:onclick="ApplAlert(this.getAttribute('date'))">신청</div>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</section>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<div class="d-flex justify-content-center mt-4">
-					<div class="row col-lg-12 col-md-12 d-flex justify-content-center">
-						<div class="row col-lg-12 col-md-12 col-sm-12">
-							<div class="col-lg-4">
-								<div data-aos="fade-up" data-aos-offset="50" data-aos-easing="ease-out-cubic" data-aos-duration="1000">
-									<section class="section">
-										<div class="shadow card" style="margin-bottom: 1.0rem;">
-											<div class="card-body align-content-center" style="padding: 0.8rem;">
-												<div class="d-flex justify-content-center">
-													<div class="col-10 mb-0 align-content-center">
-														<h6 style="margin-bottom: 0;">
-															<span class="badge rounded-pill bg-info me-1">내일</span>연차휴가 1일
-														</h6>
-														<h7>[[${tomorrowDate}]]</h7>
-													</div>
-													<div class="col-2 mb-0 align-content-center">
-														<div class="d-flex justify-content-end">
-															<div class="btn btn-info btn-sm" style="--bs-btn-padding-y: 0.35rem;" th:date="${tomorrowDate}" th:onclick="ApplAlert(this.getAttribute('date'))">신청</div>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</section>
-								</div>
-							</div>
-							<div class="col-lg-4">
-								<div data-aos="fade-up" data-aos-offset="50" data-aos-easing="ease-out-cubic" data-aos-duration="1000">
-									<section class="section">
-										<div class="shadow card" style="margin-bottom: 1.0rem;">
-											<div class="card-body align-content-center" style="padding: 0.8rem;">
-												<div class="d-flex justify-content-center ">
-													<div class="col-10 mb-0 align-content-center">
-														<h6 style="margin-bottom: 0;">
-															<span class="badge rounded-pill bg-info me-1">내일</span>연차휴가 오전 반차
-														</h6>
-														<h7>[[${tomorrowDate}]]</h7>
-													</div>
-													<div class="col-2 mb-0 align-content-center">
-														<div class="d-flex justify-content-end">
-															<div class="btn btn-info btn-sm" style="--bs-btn-padding-y: 0.35rem;" th:date="${tomorrowDate}" th:onclick="ApplAlert(this.getAttribute('date'))">신청</div>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</section>
-								</div>
-							</div>
-							<div class="col-lg-4">
-								<div data-aos="fade-up" data-aos-offset="50" data-aos-easing="ease-out-cubic" data-aos-duration="1000">
-									<section class="section">
-										<div class="shadow card" style="margin-bottom: 1.0rem;">
-											<div class="card-body align-content-center" style="padding: 0.8rem;">
-												<div class="d-flex justify-content-center ">
-													<div class="col-10 mb-0 align-content-center">
-														<h6 style="margin-bottom: 0;">
-															<span class="badge rounded-pill bg-info me-1">내일</span>연차휴가 오전 반반차
-														</h6>
-														<h7>[[${tomorrowDate}]]</h7>
-													</div>
-													<div class="col-2 mb-0 align-content-center">
-														<div class="d-flex justify-content-end">
-															<div class="btn btn-info btn-sm" style="--bs-btn-padding-y: 0.35rem;" th:date="${tomorrowDate}" th:onclick="ApplAlert(this.getAttribute('date'))">신청</div>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</section>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+	<div class="divider">
+		<div class="divider-text" style="background-color: transparent;">
+			<img class="divider-text" src="/images/kdb/epams_r_cw_action.gif" style="width: 50px; height: 50px; border-radius: 50%; padding: 0;" />
 		</div>
+	</div>
 
-		<div class="divider">
-			<div class="divider-text" style="background-color: transparent;">
-				<img class="divider-text" src="/images/kdb/epams_r_cw_action.gif" style="width: 50px; height: 50px; border-radius: 50%; padding: 0;" />
-			</div>
-		</div>
-
-		<div id="main-content">
+	<div id="main-content">
+		<div id="searchDiv">
 			<div class="container">
 				<div class="row d-flex justify-content-start mb-2">
 					<h5 class="text-start">
-						<i class="bi bi-bell-fill"></i> 최근 공지사항
+						<i class="bi bi-search"></i> 직원검색
 					</h5>
 				</div>
+
 				<div class="row d-flex justify-content-center">
 					<div class="row col-lg-12">
-						<section>
-							<div class="shadow card" th:each="board : ${boardList}">
-								<div class="card-body">
-									<span th:if="${board.category}" th:classappend="|badge badge-sm mb-2 ${(board.category == 'IT') ? 'bg-primary' : (board.category == '인사') ? 'bg-info' : ''}|" style="--bs-badge-padding-x: .35rem" th:text="${board.category}"></span> <a class="card-title" th:href="@{|/board/${board.seqId}|}">
-										<h6 style="display: flex; align-items: center;">
-											<span th:text="${board.boardTitle}" style="margin-right: 0.5rem;"> </span> <span th:if="${T(java.time.LocalDate).now().minusDays(7).isBefore(board.createdTime)}" class="badge rounded-pill bg-warning text-dark" style="--bs-badge-font-size: .80em;"> new </span>
-										</h6>
-									</a>
-									<div class="d-flex flex-row mb-3 gap-3">
-										<div>
-											<i class="bi bi-building"></i>
-											<h7 th:text="${board.boardWriter}"></h7>
-										</div>
-										<div>
-											<i class="bi bi-calendar-check"></i>
-											<h7 th:text="${#temporals.format(board.createdTime, 'yyyy-MM-dd')}"></h7>
-										</div>
-										<div>
-											<i class="bi bi-eye"></i>
-											<h7 th:text="${board.boardHits}"></h7>
+						<section class="section">
+							<div class="shadow card">
+								<div class="card-header">
+									<h4 class="card-title">담당자가 궁금하신가요?</h4>
+								</div>
+								<div class="card-content">
+									<div class="card-body">
+										<p>이름, 팀/부서, 업무명으로 검색하세요</p>
+										<div class="row">
+											<div class="col-12 mb-1">
+												<div class="input-group mb-3">
+													<span class="input-group-text" id="basic-addon1"><i class="bi bi-search"></i></span> <input type="text" id="searchMember" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2">
+													<button class="btn btn-primary" type="button" id="button-addon2" onclick="search()">조회</button>
+												</div>
+											</div>
 										</div>
 									</div>
-									<div class="truncate-multiline">
-										<p th:utext="${board.boardContents}"></p>
+								</div>
+								<div class="divider">
+									<div class="divider-text" style="background-color: transparent;">
+										<h5 class="card-title">조회결과</h5>
+									</div>
+								</div>
+								<div class="d-flex justify-content-center">
+									<div class="row col-lg-12 col-md-12 col-sm-12">
+										<div class="col-12 justify-self-center">
+											<div id="memberList">
+												<div class="animate__animated animate__fadeIn animate__slow">
+													<div class="shadow card" style="background-color: #F2F7FF; margin: 3rem;">
+														<div class="card-body d-flex justify-content-center align-items-center" style="height: 100px;">
+															<h5>No Result</h5>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -296,286 +358,179 @@
 				</div>
 			</div>
 		</div>
-
-		<div class="divider">
-			<div class="divider-text" style="background-color: transparent;">
-				<img class="divider-text" src="/images/kdb/epams_r_cw_action.gif" style="width: 50px; height: 50px; border-radius: 50%; padding: 0;" />
-			</div>
-		</div>
-
-		<div id="main-content">
-			<div id="searchDiv">
-				<div class="container">
-					<div class="row d-flex justify-content-start mb-2">
-						<h5 class="text-start">
-							<i class="bi bi-search"></i> 직원검색
-						</h5>
-					</div>
-
-					<div class="row d-flex justify-content-center">
-						<div class="row col-lg-12">
-							<section class="section">
-								<div class="shadow card">
-									<div class="card-header">
-										<h4 class="card-title">담당자가 궁금하신가요?</h4>
-									</div>
-									<div class="card-content">
-										<div class="card-body">
-											<p>이름, 팀/부서, 업무명으로 검색하세요</p>
-											<div class="row">
-												<div class="col-12 mb-1">
-													<div class="input-group mb-3">
-														<span class="input-group-text" id="basic-addon1"><i class="bi bi-search"></i></span> <input type="text" id="searchMember" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2">
-														<button class="btn btn-primary" type="button" id="button-addon2" onclick="search()">조회</button>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="divider">
-										<div class="divider-text" style="background-color: transparent;">
-											<h5 class="card-title">조회결과</h5>
-										</div>
-									</div>
-									<div class="d-flex justify-content-center">
-										<div class="row col-lg-12 col-md-12 col-sm-12">
-											<div class="col-12 justify-self-center">
-												<div id="memberList">
-													<div class="animate__animated animate__fadeIn animate__slow">
-														<div class="shadow card" style="background-color: #F2F7FF; margin: 3rem;">
-															<div class="card-body d-flex justify-content-center align-items-center" style="height: 100px;">
-																<h5>No Result</h5>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</section>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
 	</div>
+</div>
 
-	<!-- (start) private script -->
-	<th:block layout:fragment="script">
-		<script src="/extensions/webauthn/js/base64js.min.js"></script>
-		<script src="/extensions/webauthn/js/custom.js"></script>
-		<script src="/extensions/aos/aos.js"></script>
-		
-		<script>		
+<!-- (start) private script -->
+<th:block layout:fragment="script">
+	<script src="/extensions/webauthn/js/base64js.min.js"></script>
+	<script src="/extensions/webauthn/js/custom.js"></script>
+	<script src="/extensions/aos/aos.js"></script>
+
+	<script>
 		// 직원 검색
-        function scrollToDiv() {
-            const target = document.getElementById('searchDiv');
-            target.scrollIntoView({ behavior: 'smooth' });
-        }    
-        
-			const search = () => {
-				const text = $("#searchMember").val();
-			    let header = $("meta[name='_csrf_header']").attr('content');
-			    let token = $("meta[name='_csrf']").attr('content');
-			    console.log("searchMember :"+text);
-			    $.ajax({
-			        type: "post",
-			        url: "/search",
-			        dataType: "json",
-			        data: {
-			            "text": text
-			        },       
-			        //CSRF Token
-			        beforeSend: function (xhr) {
-			        	xhr.setRequestHeader(header, token);
-			        },                
-			        complete: function(data) {         
-						console.log("search reply : " + data.responseText)
-						$("#memberList").replaceWith(data.responseText);
-				    }
-			    });
-			}
-		</script>
+		function scrollToDiv() {
+			const target = document.getElementById('searchDiv');
+			target.scrollIntoView({ behavior: 'smooth' });
+		}
 
-		<script>
-			AOS.init({
-				easing: 'ease-out-back',
-				duration: 1000
-			});
-		</script>
-
-<script th:inline="javascript">
-	$(document).ready(function() {	
-		const simpleauth = /*[[${simpleauth}]]*/ simpleauth;
-		const username = /*[[${username}]]*/ username;
-		console.log("WebAuthn : " + simpleauth + " " + username);
-
-		if (simpleauth == false) {
-			Swal.fire({
-				title: "간편인증",
-				html: "편리한 로그인을 위해 휴대폰 간편인증을 등록합니다.",
-				inputAttributes: {
-					autocomplete: 'new-password',
-					autocapitalize: "off",
-					autofocus: "on"
+		const search = () => {
+			const text = $("#searchMember").val();
+			let header = $("meta[name='_csrf_header']").attr('content');
+			let token = $("meta[name='_csrf']").attr('content');
+			console.log("searchMember :"+text);
+			$.ajax({
+				type: "post",
+				url: "/search",
+				dataType: "json",
+				data: {
+					"text": text
 				},
-				showCancelButton: true,
-				confirmButtonText: "등록",
-				cancelButtonText: "나중에 할게요",
-				showLoaderOnConfirm: true,
-				preConfirm: async () => {
-					return webauthn_reg(username);
+				//CSRF Token
+				beforeSend: function (xhr) {
+					xhr.setRequestHeader(header, token);
 				},
-				allowOutsideClick: () => !Swal.isLoading()
-			}).then((result) => {
-				if (result.isConfirmed) {
-					console.log("등록 확인");
+				complete: function(data) {
+					console.log("search reply : " + data.responseText)
+					$("#memberList").replaceWith(data.responseText);
 				}
 			});
 		}
-	});
+	</script>
 
-	async function webauthn_reg(username) {
-		console.log("In webauthn_reg");
-		const header = document.querySelector('meta[name="_csrf_header"]').content;
-		const token = document.querySelector('meta[name="_csrf"]').content;
-		const formData = new FormData();
-		formData.append("username", username);
-
-		try {
-			const response = await fetch('/api/webauthn/register', {
-				method: 'POST',
-				headers: {
-					'header': header,
-					'X-CSRF-Token': token,
-				},
-				body: formData,
-			});
-
-			if (!response.ok) {
-				throw new Error('Network response was not ok ' + response.statusText);
-			}
-
-			const credentialCreateJson = await response.json();
-			console.log("credentialCreateJson:", credentialCreateJson);
-
-			if (!credentialCreateJson.publicKey.challenge) {
-				throw new Error('Challenge is missing in the publicKey');
-			}
-
-			const publicKey = {
-				...credentialCreateJson.publicKey,
-				challenge: base64urlToUint8array(credentialCreateJson.publicKey.challenge),
-				user: {
-					...credentialCreateJson.publicKey.user,
-					id: base64urlToUint8array(credentialCreateJson.publicKey.user.id),
-				},
-				excludeCredentials: credentialCreateJson.publicKey.excludeCredentials.map(credential => ({
-					...credential,
-					id: base64urlToUint8array(credential.id),
-				})),
-				extensions: credentialCreateJson.publicKey.extensions,
-			};
-
-			console.log("publicKey:", publicKey);
-
-			const publicKeyCredential = await navigator.credentials.create({ publicKey });
-
-			console.log("publicKeyCredential:", publicKeyCredential);
-
-			const encodedResult = {
-				type: publicKeyCredential.type,
-				id: publicKeyCredential.id,
-				response: {
-					attestationObject: uint8arrayToBase64url(publicKeyCredential.response.attestationObject),
-					clientDataJSON: uint8arrayToBase64url(publicKeyCredential.response.clientDataJSON),
-					transports: publicKeyCredential.response.getTransports && publicKeyCredential.response.getTransports() || [],
-				},
-				clientExtensionResults: publicKeyCredential.getClientExtensionResults(),
-			};
-
-			console.log("encodedResult:", encodedResult);
-
-			formData.append("credential", JSON.stringify(encodedResult));
-
-			const finishResponse = await fetch("/api/webauthn/finishauth", {
-				method: 'POST',
-				headers: {
-					'header': header,
-					'X-CSRF-Token': token,
-				},
-				body: formData,
-			});
-
-			if (finishResponse.ok) {
-				popupMsg("등록 성공", "간편인증 등록을 성공하였습니다.", "success");
-			} else {
-				const error = await finishResponse.text();
-				popupMsg("등록 오류", error, "error");
-			}
-		} catch (error) {
-			console.error('Error:', error);
-			popupMsg("등록 취소", "간편인증 등록을 취소하였습니다.", "info");
-		}
-	}
-
-	const popupMsg = (title, text, icon) => {
-		Swal.fire({
-			title: title,
-			text: text,
-			icon: icon,
-			confirmButtonText: '확인'
+	<script>
+		AOS.init({
+			easing: 'ease-out-back',
+			duration: 1000
 		});
-	}
+	</script>
 
-	const popupRedirectMsg = (title, text, icon, url) => {
-		Swal.fire({
-			title: title,
-			text: text,
-			icon: icon,
-			confirmButtonText: '확인'
-		}).then(() => {
-			window.location.href = url;
-		});
-	}
+	<script th:inline="javascript">
+		$(document).ready(function() {
+			const simpleauth = /*[[${simpleauth}]]*/ simpleauth
+			const username = /*[[${username}]]*/ username
+			console.log("WebAuthn : "+simpleauth + username);
 
-	function base64urlToUint8array(base64urlString) {
-		const padding = '='.repeat((4 - base64urlString.length % 4) % 4);
-		const base64 = (base64urlString + padding)
-			.replace(/\-/g, '+')
-			.replace(/_/g, '/');
-		const rawData = window.atob(base64);
-		const outputArray = new Uint8Array(rawData.length);
-		for (let i = 0; i < rawData.length; ++i) {
-			outputArray[i] = rawData.charCodeAt(i);
-		}
-		return outputArray;
-	}
-
-	function uint8arrayToBase64url(uint8array) {
-		const base64String = btoa(String.fromCharCode.apply(null, uint8array));
-		return base64String.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
-	}
-
-	function initialCheckStatus(response) {
-		if (response.ok) {
-			return response.json();
-		} else {
-			throw new Error('Network response was not ok ' + response.statusText);
-		}
-	}
-</script>
-
-
-
-
-
-		<script>
-			const ApplAlert = (date) => {	
+			if(simpleauth == false) {
 				Swal.fire({
-					  title: "신청하시겠습니까?",
-					  html: `
+					title: "간편인증",
+					html: "편리한 로그인을 위해 휴대폰 간편인증을 등록합니다.",
+					inputAttributes: {
+						autocomplete: 'new-password',
+						autocapitalize: "off",
+						autofocus : "on"
+					},
+					showCancelButton: true,
+					confirmButtonText: "등록",
+					cancelButtonText: "나중에 할게요",
+					showLoaderOnConfirm: true,
+					preConfirm: async () => {},
+					allowOutsideClick: () => !Swal.isLoading()
+				}).then((result) => {
+					if (result.isConfirmed) {
+						webauthn_reg(username);
+					}
+				}); //Swal(PW 인증)
+			}
+
+		});
+
+		function webauthn_reg(username) {
+			console.log("In webauthn_reg");
+			const header = document.querySelector('meta[name="_csrf_header"]').content;
+			const token = document.querySelector('meta[name="_csrf"]').content;
+			const formData = new FormData();
+			formData.append("username", username);
+			fetch('/api/webauthn/register', {
+				method: 'POST',
+				headers: {
+					'header': header,
+					'X-CSRF-Token': token,
+				},
+				body: formData,
+			})
+					.then(response => initialCheckStatus(response))
+					.then(credentialCreateJson => ({
+						publicKey: {
+							...credentialCreateJson.publicKey,
+							challenge: base64urlToUint8array(credentialCreateJson.publicKey.challenge),
+							user: {
+								...credentialCreateJson.publicKey.user,
+								id: base64urlToUint8array(credentialCreateJson.publicKey.user.id),
+							},
+							excludeCredentials: credentialCreateJson.publicKey.excludeCredentials.map(credential => ({
+								...credential,
+								id: base64urlToUint8array(credential.id),
+							})),
+							extensions: credentialCreateJson.publicKey.extensions,
+						},
+					}))
+					.then(credentialCreateOptions =>
+							navigator.credentials.create(credentialCreateOptions))
+					.then(publicKeyCredential => ({
+
+						type: publicKeyCredential.type,
+						id: publicKeyCredential.id,
+						response: {
+							attestationObject: uint8arrayToBase64url(publicKeyCredential.response.attestationObject),
+							clientDataJSON: uint8arrayToBase64url(publicKeyCredential.response.clientDataJSON),
+							transports: publicKeyCredential.response.getTransports && publicKeyCredential.response.getTransports() || [],
+						},
+						clientExtensionResults: publicKeyCredential.getClientExtensionResults(),
+					}))
+					.then((encodedResult) => {
+						//const form = document.getElementById("form");
+						//const formData = new FormData(form);
+						console.log("encodedResult : ")
+						formData.append("credential", JSON.stringify(encodedResult));
+						return fetch("/api/webauthn/finishauth", {
+							method: 'POST',
+							headers: {
+								'header': header,
+								'X-CSRF-Token': token,
+							},
+							body: formData,
+						})
+					})
+					.then((response) => {
+						//followRedirect(response);
+						if(response.status == 200)
+							popupMsg("등록 성공", "간편인증 등록을 성공하였습니다.", "success");
+						else {
+							popupMsg("등록 오류", error, "error", "");
+						}
+					})
+					.catch((error) => {
+						popupMsg("등록 취소", "간편인증 등록을 취소하였습니다.", "info");
+					});
+		}
+
+		const popupMsg = (title, text, icon) => {
+			Swal.fire({
+				title: title,
+				text: text,
+				icon: icon,
+				confirmButtonText: '확인'
+			});
+		}
+
+		const popupRedirectMsg = (title, text, icon, url) => {
+			Swal.fire({
+				title: title,
+				text: text,
+				icon: icon,
+				confirmButtonText: '확인'
+			}).then(() => {
+				window.location.href = url
+			});
+		}
+	</script>
+
+	<script>
+		const ApplAlert = (date) => {
+			Swal.fire({
+				title: "신청하시겠습니까?",
+				html: `
 					  <p style=\"text-align:center\">${date} 연차 1일</p>
 					  
 					  <div class="accordion" id="accordionExample">
@@ -604,28 +559,28 @@
 					  </div>
 					  </div>
 					  `,
-					  icon: "info",
-					  showCancelButton: true,
-					  scrollbarPadding: false,
-					  confirmButtonColor: "#3085d6",
-					  cancelButtonColor: "#d33",
-					  confirmButtonText: "네, 신청할게요!",
-					  cancelButtonText: "아니요",
-					}).then((result) => {
-					  
-					  if (result.isConfirmed) {
-					    Swal.fire({
-					      title: "신청되었습니다.",
-					      html: `<p style=\"text-align:center\">${date} 연차 1일</p>`,
-					      icon: "success",
-					      confirmButtonColor: "#3085d6",
-					      confirmButtonText: "확인"
-					    });
-					  }
+				icon: "info",
+				showCancelButton: true,
+				scrollbarPadding: false,
+				confirmButtonColor: "#3085d6",
+				cancelButtonColor: "#d33",
+				confirmButtonText: "네, 신청할게요!",
+				cancelButtonText: "아니요",
+			}).then((result) => {
+
+				if (result.isConfirmed) {
+					Swal.fire({
+						title: "신청되었습니다.",
+						html: `<p style=\"text-align:center\">${date} 연차 1일</p>`,
+						icon: "success",
+						confirmButtonColor: "#3085d6",
+						confirmButtonText: "확인"
 					});
-			}
-		</script>
-	</th:block>
-	<!-- (end) private script -->
+				}
+			});
+		}
+	</script>
+</th:block>
+<!-- (end) private script -->
 </body>
 </html>

@@ -37,7 +37,7 @@ public class LoginOTPEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment
     @Column(name = "OTP_ISN_SNO")
     @Comment("OTP발급일련번호")
-    private Long SEQ_ID;
+    private Long OTP_ISN_SNO;
     
     /***
      * @author 140024
@@ -46,7 +46,7 @@ public class LoginOTPEntity {
      */
     @Column(name = "ENO", length = 20, nullable = false) // 크기 20, not null
     @Comment("사원번호")
-    private String EMP_NO; //행번
+    private String ENO; //행번
     
     /***
      * @author 140024
@@ -55,7 +55,7 @@ public class LoginOTPEntity {
      */
     @Column(name = "OTP_SMS_CER_NO", length = 8) // 크기 20, not null
     @Comment("OTPSMS인증번호")
-    private String OTP; //OTP
+    private String OTP_SMS_CER_NO; //OTP
     
     /***
      * @author 140024
@@ -64,7 +64,7 @@ public class LoginOTPEntity {
      */
     @Column(name = "CER_KD_NM", length = 10)
     @Comment("인증종류명")
-    private String MFA; //MfA 방식
+    private String CER_KD_NM; //MfA 방식
     
     
     /***
@@ -75,6 +75,6 @@ public class LoginOTPEntity {
     @CreationTimestamp
     @Column(name = "GNT_TIME", updatable = false, columnDefinition = "DATE")
     @Comment("생성시간")
-    private LocalDate CREATED_TIME; //OTP 생성 시간
+    private LocalDate GNT_TIME; //OTP 생성 시간
     
 }

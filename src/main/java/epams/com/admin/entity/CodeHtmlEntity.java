@@ -70,8 +70,8 @@ public class CodeHtmlEntity extends BaseEntity implements Serializable {
      * @implNote getter
      * @since 2024-06-09
      */
-    public String getHTML() {
-        return this.htmlEntity != null ? this.htmlEntity.getHTML() : null;
+    public String getHTML_PTH_NM() {
+        return this.htmlEntity != null ? this.htmlEntity.getHTML_PTH_NM() : null;
     }
 
     /***
@@ -79,8 +79,8 @@ public class CodeHtmlEntity extends BaseEntity implements Serializable {
      * @implNote getter
      * @since 2024-06-09
      */
-    public String getCD_ID() {
-        return this.codeEntity != null ? this.codeEntity.getCD_ID() : null;
+    public String getCDVA_ID() {
+        return this.codeEntity != null ? this.codeEntity.getCDVA_ID() : null;
     }
 
 }

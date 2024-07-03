@@ -5,9 +5,9 @@
      
     <!-- Result Map 정의 -->
     <resultMap id="codeMap" type="code">
-        <id property="CD_ID" column="CDVA_ID"/>
-        <result property="CD_NM" column="CDVA_NM"/>
-        <result property="CD_TYPE" column="CDVA_KD_NM"/>
+        <id property="CDVA_ID" column="CDVA_ID"/>
+        <result property="CDVA_NM" column="CDVA_NM"/>
+        <result property="CDVA_KD_NM" column="CDVA_KD_NM"/>
         <result property="AMN_DTM" column="AMN_DTM"/>
         <result property="GNT_DTM" column="GNT_DTM"/>
     </resultMap>
@@ -20,13 +20,13 @@
     <!-- 특정 ID 데이터 조회 -->
     <select id="findById" parameterType="String" resultMap="codeMap">
         SELECT * FROM THURXE_CCODEM
-        WHERE CDVA_ID=#{CD_ID}
+        WHERE CDVA_ID=#{CDVA_ID}
     </select>   
     
     <!-- 기본키 데이터 중복여부 조회 -->
     <select id="countById" parameterType="Long" resultMap="codeMap">
         SELECT COUNT(*)
-        FROM THURXE_CCODEM WHERE CDVA_ID=#{CD_ID}
+        FROM THURXE_CCODEM WHERE CDVA_ID=#{CDVA_ID}
     </select>
     
     <!-- 신규 데이터 추가 --> 
@@ -38,9 +38,9 @@
             GNT_DTM
         )
         VALUES(
-            #{CD_ID}, 
-            #{CD_NM}, 
-            #{CD_TYPE}, 
+            #{CDVA_ID},
+            #{CDVA_NM},
+            #{CDVA_KD_NM},
             SYSDATE
         )
     </insert>   
@@ -49,19 +49,19 @@
     <delete id="delete" parameterType="code">
         DELETE FROM THURXE_CCODEM 
         WHERE 
-            CDVA_ID = #{CD_ID}
+            CDVA_ID = #{CDVA_ID}
     </delete>
     
     <!-- 기존 데이터 업데이트 --> 
     <update id="update" parameterType="code">
         UPDATE THURXE_CCODEM 
         SET 
-            CDVA_ID = #{CD_ID}, 
-            CDVA_NM = #{CD_NM}, 
-            CDVA_KD_NM = #{CD_TYPE}, 
+            CDVA_ID = #{CDVA_ID},
+            CDVA_NM = #{CDVA_NM},
+            CDVA_KD_NM = #{CDVA_KD_NM},
             AMN_DTM = SYSDATE 
         WHERE 
-            CDVA_ID = #{CD_ID}
+            CDVA_ID = #{CDVA_ID}
     </update>
     
     <!-- 신규 데이터 추가 또는 기존 데이터 업데이트 -->
@@ -73,14 +73,14 @@
             GNT_DTM
         )
 	    VALUES (
-            #{CD_ID}, 
-            #{CD_NM}, 
-            #{CD_TYPE}, 
+            #{CDVA_ID},
+            #{CDVA_NM},
+            #{CDVA_KD_NM},
             SYSDATE
         )
 	    ON DUPLICATE KEY UPDATE
-	        CDVA_NM = VALUES(CD_NM),
-	        CDVA_KD_NM = VALUES(CD_TYPE),
+	        CDVA_NM = VALUES(CDVA_NM),
+	        CDVA_KD_NM = VALUES(CDVA_KD_NM),
 	        AMN_DTM = SYSDATE;
 	</insert>
         

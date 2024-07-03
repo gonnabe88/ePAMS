@@ -66,11 +66,11 @@ public class LoginOTPDTO {
      */
     public static LoginOTPEntity toEntity(final LoginOTPDTO loginOTPDTO) {
         final LoginOTPEntity mfaEntity = new LoginOTPEntity();
-        mfaEntity.setSEQ_ID(loginOTPDTO.getSeqId());
-        mfaEntity.setEMP_NO(loginOTPDTO.getUsername());
-        mfaEntity.setOTP(loginOTPDTO.getOTP());
-        mfaEntity.setMFA(loginOTPDTO.getMFA());
-        mfaEntity.setCREATED_TIME(loginOTPDTO.getCreateTime());
+        mfaEntity.setOTP_ISN_SNO(loginOTPDTO.getSeqId());
+        mfaEntity.setENO(loginOTPDTO.getUsername());
+        mfaEntity.setOTP_SMS_CER_NO(loginOTPDTO.getOTP());
+        mfaEntity.setCER_KD_NM(loginOTPDTO.getMFA());
+        mfaEntity.setGNT_TIME(loginOTPDTO.getCreateTime());
         return mfaEntity;
     }
     
@@ -81,11 +81,11 @@ public class LoginOTPDTO {
      */
     public static LoginOTPDTO toDTO(final LoginOTPEntity loginOTPEntity) {
         final LoginOTPDTO mfaDTO = new LoginOTPDTO();
-        mfaDTO.setSeqId(loginOTPEntity.getSEQ_ID());
-        mfaDTO.setUsername(loginOTPEntity.getEMP_NO());
-        mfaDTO.setOTP(loginOTPEntity.getOTP());
-        mfaDTO.setMFA(loginOTPEntity.getMFA());
-        mfaDTO.setCreateTime(loginOTPEntity.getCREATED_TIME());
+        mfaDTO.setSeqId(loginOTPEntity.getOTP_ISN_SNO());
+        mfaDTO.setUsername(loginOTPEntity.getENO());
+        mfaDTO.setOTP(loginOTPEntity.getOTP_SMS_CER_NO());
+        mfaDTO.setMFA(loginOTPEntity.getCER_KD_NM());
+        mfaDTO.setCreateTime(loginOTPEntity.getGNT_TIME());
         return mfaDTO;
     }
 

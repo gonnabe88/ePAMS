@@ -1,13 +1,11 @@
 package epams.dtm.repository;
 
 import java.util.List;
-import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import epams.com.admin.dto.LogLoginDTO;
-import epams.com.admin.entity.LogLoginEntity;
 import epams.dtm.dto.BasePeriodDTO;
 import epams.dtm.dto.DtmApplDTO;
 import lombok.RequiredArgsConstructor;

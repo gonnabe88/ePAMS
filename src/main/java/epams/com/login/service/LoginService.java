@@ -1,6 +1,5 @@
 package epams.com.login.service;
 
-import epams.com.member.dto.IamUserDTO;
 import org.springframework.stereotype.Service;
 
 import epams.com.config.security.CustomGeneralEncryptionException;
@@ -50,10 +49,6 @@ public class LoginService {
         loginOTPDTO.setUsername(iamUserDTO.getUsername());
         loginOTPDTO = loginOTPRepo.findValidOneByUsername(loginOTPDTO);
 
-        log.warn("isiamUserDTO : " + isiamUserDTO.toString());
-        log.warn("loginOTPDTO : " + loginOTPDTO.toString());
-        log.warn("OTP : " + OTP);
-
         // ONEGUARD mOTP 연동 인증부 구현 필요
         log.warn("ONEGUAER OTP 검증 요청 및 응답");
 
@@ -88,12 +83,10 @@ public class LoginService {
         // 사용자가 입력한 패스워드 HASH
         try {
             // 사용자가 입력한 패스워드 HASH
-            log.warn("해시 전 : " + iamUserDTO.toString());
             iamUserDTO.setPassword(encshaService.encrypt(iamUserDTO.getPassword()));
         } catch (CustomGeneralEncryptionException e) {
             throw new CustomGeneralRuntimeException("Password encryption failed", e);
         }
-        log.warn(iamUserDTO.toString());
         // username & password(hash)와 일치하는 사용자를 찾음
         final IamUserDTO isiamUserDTO = loginRepository.login(iamUserDTO);
         return isiamUserDTO.getUsername() != null;

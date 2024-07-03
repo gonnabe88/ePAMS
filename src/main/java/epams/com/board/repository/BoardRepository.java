@@ -38,7 +38,7 @@ public class BoardRepository {
 	 * @since 2024-06-09
 	 */
     public List<BoardDTO> findAll(final int offset, final int pageSize, final String sortDirection) {
-    	List<BoardEntity> boardEntities = sql.selectList("Board.findAll", Map.of("offset", offset, "limit", pageSize, "sortDirection", sortDirection)); 
+    	final List<BoardEntity> boardEntities = sql.selectList("Board.findAll", Map.of("offset", offset, "limit", pageSize, "sortDirection", sortDirection)); 
         return BoardDTO.toDTOList(boardEntities);
     }    
     
@@ -57,7 +57,7 @@ public class BoardRepository {
 	 * @since 2024-06-09
 	 */
     public Long save(final BoardDTO boardDTO) {    	
-		BoardEntity entity = boardDTO.toEntity();
+		final BoardEntity entity = boardDTO.toEntity();
 		sql.insert("Board.save", entity);
     	return entity.getBLB_SNO();
     }
@@ -68,7 +68,7 @@ public class BoardRepository {
 	 * @since 2024-06-09
 	 */
     public Long update(final BoardDTO boardDTO) {      
-		BoardEntity entity = boardDTO.toEntity();  
+		final BoardEntity entity = boardDTO.toEntity();  
         sql.update("Board.update", entity);
 		return entity.getBLB_SNO();
     }    
@@ -79,7 +79,7 @@ public class BoardRepository {
 	 * @since 2024-06-09
 	 */
     public BoardDTO findById(final Long seqId) {
-    	BoardEntity boardEntity = sql.selectOne("Board.findById", seqId);
+    	final BoardEntity boardEntity = sql.selectOne("Board.findById", seqId);
         return BoardDTO.toDTO(boardEntity);
     }
     
@@ -135,7 +135,7 @@ public class BoardRepository {
 	 * @since 2024-06-09
 	 */
     public BoardImageDTO findBoardstoredFilename(final String storedFileName) {
-    	BoardImageEntity boardImageEntity = sql.selectOne("BoardImage.selectBoardImage", storedFileName);
+    	final BoardImageEntity boardImageEntity = sql.selectOne("BoardImage.selectBoardImage", storedFileName);
     	return BoardImageDTO.toDTO(boardImageEntity);
     }
     

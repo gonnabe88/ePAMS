@@ -1,6 +1,7 @@
 package epams.com.admin.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
@@ -33,6 +34,15 @@ public class CodeRepository {
     public List<CodeDTO> findAll() {
     	final List<CodeEntity> codeEntities = sql.selectList("Code.findAll");
         return CodeDTO.toDTOList(codeEntities);
+    }
+    
+	/***
+	 * @author 140024
+	 * @implNote 특정 ID에 해당하는 내용 조회
+	 * @since 2024-06-09
+	 */
+    public Optional<CodeEntity> findById(String code) {
+        return sql.selectOne("Code.findById", code);
     }
     
 	/***

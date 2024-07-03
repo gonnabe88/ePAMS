@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import epams.com.member.dto.IamUserDTO;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -51,11 +50,9 @@ import epams.com.admin.repository.LogRepository;
 import epams.com.config.security.CustomGeneralRuntimeException;
 import epams.com.login.repository.LoginRepository;
 import epams.com.login.util.webauthn.authenticator.Authenticator;
-import epams.com.login.util.webauthn.authenticator.Authenticator;
-import epams.com.login.util.webauthn.user.AppUser;
 import epams.com.login.util.webauthn.user.AppUser;
 import epams.com.login.util.webauthn.utility.Utility;
-import epams.com.member.dto.TempUserDTO;
+import epams.com.member.dto.IamUserDTO;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -148,9 +145,8 @@ public class AuthService {
         final Map<String, Object> response = new ConcurrentHashMap<>();
         HttpStatus status = HttpStatus.OK;
     
-        Object sessionData = session.getAttribute(iamUserDTO.getUsername());
+        final Object sessionData = session.getAttribute(iamUserDTO.getUsername());
         if (sessionData == null) {
-            log.error("Session data is null for username: " + iamUserDTO.getUsername());
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Session data not found.");
         }
     
@@ -158,17 +154,10 @@ public class AuthService {
             log.warn("POST welcome");
             final PublicKeyCredential<AuthenticatorAssertionResponse, ClientAssertionExtensionOutputs> pkc;
             pkc = PublicKeyCredential.parseAssertionResponseJson(credential);
-            
-            log.warn("credential : " + credential);
     
             // String 데이터를 AssertionRequest 객체로 변환
-            String sessionDataString = (String) sessionData;
-            AssertionRequest request = AssertionRequest.fromJson(sessionDataString);
-            
-            log.warn("[request] getUsername : " + request.getUsername());
-            log.warn("[request] getUserHandle : " + request.getUserHandle());
-            log.warn("[request] getPublicKeyCredentialRequestOptions : " + request.getPublicKeyCredentialRequestOptions());
-            log.warn("[request] toCredentialsGetJson : " + request.toCredentialsGetJson());
+            final String sessionDataString = (String) sessionData;
+            final AssertionRequest request = AssertionRequest.fromJson(sessionDataString);
             
             final AssertionResult result = relyingParty.finishAssertion(FinishAssertionOptions.builder()
                 .request(request)
@@ -183,7 +172,6 @@ public class AuthService {
                 context.setAuthentication(authentication);
                 SecurityContextHolder.setContext(context);
                 session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, context);
-                log.warn("isSuccess");
                 logRepository.insert(LogLoginDTO.getDTO(iamUserDTO.getUsername(), SIMPLEAUTH_STR, true));
                 response.put("status", "OK");
                 response.put("redirectUrl", "/index");
@@ -221,24 +209,20 @@ public class AuthService {
     @PostMapping("/register")
     @ResponseBody
     public String newUserRegistration(
-		@RequestParam(value="username") String username,
-        HttpSession session
+		final @RequestParam("username") String username,
+        final HttpSession session
     ) {
-    	//Authentication auth = Authentication();
-    	//String username = auth.getName();
-    	log.warn("register : "+username);
-        AppUser existingUser = service.getUserRepo().findByUsername(username);
-        List<Authenticator> existingAuthUser = service.getAuthRepository().findAllByUser(existingUser);
+        final AppUser existingUser = service.getUserRepo().findByUsername(username);
+        final List<Authenticator> existingAuthUser = service.getAuthRepository().findAllByUser(existingUser);
         if (existingAuthUser.isEmpty()) {
-            UserIdentity userIdentity = UserIdentity.builder()
+            final UserIdentity userIdentity = UserIdentity.builder()
                 .name(username)
                 .displayName(username)
                 .id(Utility.generateRandom(32))
                 .build();
-            AppUser saveUser = new AppUser(userIdentity);
+            final AppUser saveUser = new AppUser(userIdentity.getName(), userIdentity.getDisplayName(), userIdentity.getId());
             service.getUserRepo().save(saveUser);
-            String response = newAuthRegistration(saveUser, session);
-            return response;
+            return newAuthRegistration(saveUser, session);
         } else {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Username " + username + " already exists. Choose a new name.");
         }
@@ -252,7 +236,6 @@ public class AuthService {
      * @return 등록 요청에 대한 JSON 응답
      */
     public String newAuthRegistration(final AppUser user, final HttpSession session) {
-        log.warn("newAuthRegistration2");
         final AppUser existingUser = service.getUserRepo().findByHandle(user.getHandle());
         if (existingUser != null) {
             final UserIdentity userIdentity = user.toUserIdentity();           
@@ -268,7 +251,7 @@ public class AuthService {
                 .user(userIdentity)
                 .authenticatorSelection(authSelection)
                 .build();
-                
+            
             final PublicKeyCredentialCreationOptions registration = relyingParty.startRegistration(regOptions);
             try {
                 session.setAttribute(userIdentity.getDisplayName(), registration.toJson());
@@ -281,6 +264,7 @@ public class AuthService {
             } catch (JsonProcessingException e) {
                 throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error processing JSON.", e);
             }
+            
         } else {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "User " + user.getUsername() + "이미 등록된 사용자입니다.");
         }
@@ -297,18 +281,25 @@ public class AuthService {
         log.warn("finishRegistration");
         final Authentication auth = getAuthentication();
         final String username = auth.getName();
-        try {
+        try {        	
             final AppUser user = service.getUserRepo().findByUsername(username);
+            
             final PublicKeyCredentialCreationOptions requestOptions = PublicKeyCredentialCreationOptions.fromJson((String) session.getAttribute(user.getUsername()));
+            log.warn("requestOptions");
             if (requestOptions != null) {
+            	log.warn(credential.toString());
                 final PublicKeyCredential<AuthenticatorAttestationResponse, ClientRegistrationExtensionOutputs> pkc =
                     PublicKeyCredential.parseRegistrationResponseJson(credential);
+                log.warn(pkc.toString());
                 final FinishRegistrationOptions options = FinishRegistrationOptions.builder()
                     .request(requestOptions)
                     .response(pkc)
                     .build();
+                
                 final RegistrationResult result = relyingParty.finishRegistration(options);
+                log.warn(result.toString());
                 final Authenticator savedAuth = new Authenticator(result, pkc.getResponse(), user);
+                log.warn(savedAuth.toString());
                 service.getAuthRepository().save(savedAuth);
                 return ResponseEntity.ok("Registration successful!");
             } else {

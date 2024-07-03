@@ -21,7 +21,7 @@ management:
 # spring
 spring:
   profiles:
-    active: prod # 기본 활성 프로파일을 local로 설정 (운영: prod)
+    active: local # 기본 활성 프로파일을 local로 설정 (운영: prod)
 
   application:
     name: ePAMS

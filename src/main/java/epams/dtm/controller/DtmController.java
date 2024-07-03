@@ -76,7 +76,7 @@ public class DtmController<S extends Session> {
      * @implNote 코드 상세 서비스 주입
      * @since 2024-06-11
      */
-    private final CodeHtmlDetailService codeHtmlDetailService;
+    private final CodeHtmlDetailService codeDetailService;
 
     /**
      * @author K140024
@@ -91,18 +91,17 @@ public class DtmController<S extends Session> {
      * @since 2024-06-11
      */
     @GetMapping("/main")
-    public String dtmMain(@PageableDefault(page = 1) Pageable pageable, Model model) {
+    public String dtmMain(@PageableDefault(page = 1) final Pageable pageable, final Model model) {
         final String VIEW = "/dtm/main";
 
         // 코드
-        final Map<String, String> codeList = codeHtmlDetailService.getCodeHtmlDetail(VIEW);
-        System.out.println(codeList.toString());
+        final Map<String, String> codeList = codeDetailService.getCodeHtmlDetail(VIEW);
         model.addAttribute("codeList", codeList);
 
         // 메인화면 공지사항 출력
         final Page<BoardDTO> boardList = boardService.paging(pageable);
         final int blockLimit = 3;
-        final int startPage = (((int) (Math.ceil((double) pageable.getPageNumber() / blockLimit))) - 1) * blockLimit + 1;
+        final int startPage = ((int) Math.ceil((double) pageable.getPageNumber() / blockLimit) - 1) * blockLimit + 1;
         final int endPage = ((startPage + blockLimit - 1) < boardList.getTotalPages()) ? startPage + blockLimit - 1 : boardList.getTotalPages();
         model.addAttribute("boardList", boardList);
         model.addAttribute("startPage", startPage);
@@ -130,12 +129,11 @@ public class DtmController<S extends Session> {
      * @since 2024-06-11
      */
     @GetMapping("/list")
-    public String dtmList(@PageableDefault(page = 1) Pageable pageable, @ModelAttribute final BasePeriodDTO period, Model model) {
+    public String dtmList(@PageableDefault(page = 1) final Pageable pageable, @ModelAttribute final BasePeriodDTO period, final Model model) {
         final String DTMMAIN = "/dtm/list";
 
         // 코드
-        final Map<String, String> codeList = codeHtmlDetailService.getCodeHtmlDetail(DTMMAIN);
-        System.out.println(codeList.toString());
+        final Map<String, String> codeList = codeDetailService.getCodeHtmlDetail(DTMMAIN);
         model.addAttribute("codeList", codeList);
 
         // 메인화면 근태내용 출력

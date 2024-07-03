@@ -31,8 +31,7 @@ public class LoginRepository {
      * @since 2024-06-11
      */
     public IamUserDTO login(final IamUserDTO iamUserDTO) {
-        log.warn(iamUserDTO.toString());
-        IamUserEntity iamUserEntity = sql.selectOne("IamUser.login", iamUserDTO.toEntity());
+        final IamUserEntity iamUserEntity = sql.selectOne("IamUser.login", iamUserDTO.toEntity());
         return IamUserDTO.toDTO(iamUserEntity);
     }
 

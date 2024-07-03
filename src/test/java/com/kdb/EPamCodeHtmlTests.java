@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -19,12 +18,14 @@ import epams.com.admin.entity.CodeEntity;
 import epams.com.admin.repository.CodeHtmlMapRepository;
 import epams.com.admin.repository.CodeRepository;
 import epams.com.admin.repository.HtmlRepository;
+import lombok.NoArgsConstructor;
 
 /**
  * @author K140024
  * @implNote EPamsApplication 클래스의 테스트 케이스
  * @since 2024-06-22
  */
+@NoArgsConstructor
 @SpringBootTest(classes = EPamsApplication.class)
 class EPamCodeHtmlTests {
 
@@ -44,7 +45,7 @@ class EPamCodeHtmlTests {
      * CodeHtmlMapRepository 인스턴스
      */
     @Autowired
-    private CodeHtmlMapRepository codeHtmlMapRepository;
+    private CodeHtmlMapRepository codeHtmlMapRepo;
 
     /**
      * CodeEntity를 데이터베이스에 삽입하는 테스트 메소드
@@ -74,7 +75,6 @@ class EPamCodeHtmlTests {
      */
     //@Test
     public void HtmlInsert() throws IOException {
-        // 입력받은 (HTML 경로, HTML 설명) 리스트
         final List<Map.Entry<String, String>> inputList = List.of(
                 Map.entry("/board/list", "공지사항"),
                 Map.entry("/dtm/main", "근태신청"),
@@ -84,10 +84,8 @@ class EPamCodeHtmlTests {
                 Map.entry("/common/index", "메인화면")
         );
 
-        // HtmlDTO 객체 리스트
         final List<HtmlDTO> htmlDTOs = new ArrayList<>();
 
-        // 입력받은 리스트만큼 HtmlDTO 객체 생성
         for (final Map.Entry<String, String> entry : inputList) {
             final HtmlDTO htmlDTO = new HtmlDTO();
             htmlDTO.setHtml(entry.getKey());
@@ -96,15 +94,13 @@ class EPamCodeHtmlTests {
             htmlRepository.insert(htmlDTO);
         }
 
-        // 테스트: 생성된 객체 수가 입력받은 리스트의 크기와 동일한지 확인
-        assertEquals(inputList.size(), htmlDTOs.size());
+        assertEquals(inputList.size(), htmlDTOs.size(), "생성된 HtmlDTO 객체의 수가 입력받은 리스트의 크기와 동일하지 않습니다.");
 
-        // 테스트: 각 객체의 값이 올바르게 설정되었는지 확인
         for (int i = 0; i < inputList.size(); i++) {
             final HtmlDTO htmlDTO = htmlDTOs.get(i);
             final Map.Entry<String, String> entry = inputList.get(i);
-            assertEquals(entry.getKey(), htmlDTO.getHtml());
-            assertEquals(entry.getValue(), htmlDTO.getHtmlName());
+            assertEquals(entry.getKey(), htmlDTO.getHtml(), "HtmlDTO 객체의 Html 값이 예상과 다릅니다. 인덱스: " + i);
+            assertEquals(entry.getValue(), htmlDTO.getHtmlName(), "HtmlDTO 객체의 HtmlName 값이 예상과 다릅니다. 인덱스: " + i);
         }
     }
 
@@ -115,7 +111,6 @@ class EPamCodeHtmlTests {
      */
     //@Test
     public void htmlCodeMapInsert() throws IOException {
-        // 입력받은 (HTML 경로, HTML 설명) 리스트
         final List<Map.Entry<String, String>> inputList = List.of(
                 Map.entry("/dtm/main", "DTM_INDEX_CD"),
                 Map.entry("/common/index", "COM_BANNERCONTENT1_CD"),
@@ -123,27 +118,23 @@ class EPamCodeHtmlTests {
                 Map.entry("/common/index", "COM_INDEX_CD")
         );
 
-        // CodeHtmlMapDTO 객체 리스트
         final List<CodeHtmlMapDTO> codeHtmlMapDTOs = new ArrayList<>();
 
-        // 입력받은 리스트만큼 CodeHtmlMapDTO 객체 생성
         for (final Map.Entry<String, String> entry : inputList) {
             final CodeHtmlMapDTO codeHtmlMapDTO = new CodeHtmlMapDTO();
             codeHtmlMapDTO.setHtml(entry.getKey());
             codeHtmlMapDTO.setCode(entry.getValue());
             codeHtmlMapDTOs.add(codeHtmlMapDTO);
-            codeHtmlMapRepository.insert(codeHtmlMapDTO);
+            codeHtmlMapRepo.insert(codeHtmlMapDTO);
         }
 
-        // 테스트: 생성된 객체 수가 입력받은 리스트의 크기와 동일한지 확인
-        assertEquals(inputList.size(), codeHtmlMapDTOs.size());
+        assertEquals(inputList.size(), codeHtmlMapDTOs.size(), "생성된 CodeHtmlMapDTO 객체의 수가 입력받은 리스트의 크기와 동일하지 않습니다.");
 
-        // 테스트: 각 객체의 값이 올바르게 설정되었는지 확인
         for (int i = 0; i < inputList.size(); i++) {
             final CodeHtmlMapDTO codeHtmlMapDTO = codeHtmlMapDTOs.get(i);
             final Map.Entry<String, String> entry = inputList.get(i);
-            assertEquals(entry.getKey(), codeHtmlMapDTO.getHtml());
-            assertEquals(entry.getValue(), codeHtmlMapDTO.getCode());
+            assertEquals(entry.getKey(), codeHtmlMapDTO.getHtml(), "CodeHtmlMapDTO 객체의 Html 값이 예상과 다릅니다. 인덱스: " + i);
+            assertEquals(entry.getValue(), codeHtmlMapDTO.getCode(), "CodeHtmlMapDTO 객체의 Code 값이 예상과 다릅니다. 인덱스: " + i);
         }
     }
 }

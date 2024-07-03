@@ -1,16 +1,24 @@
+package epams.com.login.util.webauthn.utility;
+
+import java.sql.CallableStatement;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import org.apache.ibatis.type.BaseTypeHandler;
+import org.apache.ibatis.type.JdbcType;
+
+import com.yubico.webauthn.data.ByteArray;
+
+import lombok.NoArgsConstructor;
+
 /**
  * @author K140024
  * @implNote 2단계 인증 로직 (Custom)에서 ByteArray 타입을 처리하기 위한 MyBatis 타입 핸들러.
  *            이 핸들러는 데이터베이스에서 ByteArray 데이터를 저장하고 조회할 때 사용됩니다.
  * @since 2024-06-20
  */
-package epams.com.login.util.webauthn.utility;
-
-import org.apache.ibatis.type.BaseTypeHandler;
-import org.apache.ibatis.type.JdbcType;
-import com.yubico.webauthn.data.ByteArray;
-import java.sql.*;
-
+@NoArgsConstructor
 public class ByteArrayTypeHandler extends BaseTypeHandler<ByteArray> {
 
     /**
@@ -20,8 +28,8 @@ public class ByteArrayTypeHandler extends BaseTypeHandler<ByteArray> {
      * @throws SQLException SQL 처리 중 예외 발생
      */
     @Override
-    public void setNonNullParameter(PreparedStatement ps, int i, ByteArray parameter, JdbcType jdbcType) throws SQLException {
-        ps.setBytes(i, parameter.getBytes());
+    public void setNonNullParameter(final PreparedStatement pstate, final int index, final ByteArray parameter, final JdbcType jdbcType) throws SQLException {
+    	pstate.setBytes(index, parameter.getBytes());
     }
 
     /**
@@ -32,8 +40,8 @@ public class ByteArrayTypeHandler extends BaseTypeHandler<ByteArray> {
      * @throws SQLException SQL 처리 중 예외 발생
      */
     @Override
-    public ByteArray getNullableResult(ResultSet rs, String columnName) throws SQLException {
-        byte[] bytes = rs.getBytes(columnName);
+    public ByteArray getNullableResult(final ResultSet rset, final String columnName) throws SQLException {
+        final byte[] bytes = rset.getBytes(columnName);
         return bytes == null ? null : new ByteArray(bytes);
     }
 
@@ -45,8 +53,8 @@ public class ByteArrayTypeHandler extends BaseTypeHandler<ByteArray> {
      * @throws SQLException SQL 처리 중 예외 발생
      */
     @Override
-    public ByteArray getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
-        byte[] bytes = rs.getBytes(columnIndex);
+    public ByteArray getNullableResult(final ResultSet rset, final int columnIndex) throws SQLException {
+        final byte[] bytes = rset.getBytes(columnIndex);
         return bytes == null ? null : new ByteArray(bytes);
     }
 
@@ -58,8 +66,8 @@ public class ByteArrayTypeHandler extends BaseTypeHandler<ByteArray> {
      * @throws SQLException SQL 처리 중 예외 발생
      */
     @Override
-    public ByteArray getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
-        byte[] bytes = cs.getBytes(columnIndex);
+    public ByteArray getNullableResult(final CallableStatement cstate, final int columnIndex) throws SQLException {
+        final byte[] bytes = cstate.getBytes(columnIndex);
         return bytes == null ? null : new ByteArray(bytes);
     }
 }

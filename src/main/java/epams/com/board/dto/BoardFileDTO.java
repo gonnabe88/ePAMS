@@ -1,7 +1,6 @@
 package epams.com.board.dto;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -100,8 +99,8 @@ public class BoardFileDTO {
      * @implNote Entity > DTO 변경 메소드
      * @since 2024-06-09
      */
-    public static BoardFileDTO toDTO(BoardFileEntity boardFileEntity) {
-        BoardFileDTO boardFileDTO = new BoardFileDTO();
+    public static BoardFileDTO toDTO(final BoardFileEntity boardFileEntity) {
+        final BoardFileDTO boardFileDTO = new BoardFileDTO();
         boardFileDTO.setSeqId(boardFileEntity.getBLB_APG_FL_SNO());
         boardFileDTO.setOriginalFileName(boardFileEntity.getORC_FL_NM());
         boardFileDTO.setStoredFileName(boardFileEntity.getSVR_FL_NM());
@@ -118,13 +117,13 @@ public class BoardFileDTO {
      * @since 2024-06-09
      */
     public BoardFileEntity toEntity() {
-        BoardFileEntity boardFileEntity = new BoardFileEntity();
+        final BoardFileEntity boardFileEntity = new BoardFileEntity();
         boardFileEntity.setBLB_APG_FL_SNO(this.seqId);
         boardFileEntity.setORC_FL_NM(this.originalFileName);
         boardFileEntity.setSVR_FL_NM(this.storedFileName);
         boardFileEntity.setFL_KPN_PTH(this.storedPath);
         if (this.boardId != null) {
-            BoardEntity boardEntity = new BoardEntity();
+            final BoardEntity boardEntity = new BoardEntity();
             boardEntity.setBLB_SNO(this.boardId);
             boardFileEntity.setBoardEntity(boardEntity);
         }
@@ -138,7 +137,7 @@ public class BoardFileDTO {
      * @implNote List<Entity> > List<DTO> 변경 메소드
      * @since 2024-06-09
      */
-    public static List<BoardFileDTO> toDTOList(List<BoardFileEntity> boardFileEntities) {
+    public static List<BoardFileDTO> toDTOList(final List<BoardFileEntity> boardFileEntities) {
         return boardFileEntities.stream().map(BoardFileDTO::toDTO).collect(Collectors.toList());
     }
 
@@ -147,7 +146,7 @@ public class BoardFileDTO {
      * @implNote List<HtmlDTO> > List<CodeEntity> 변경 메소드
      * @since 2024-06-09
      */
-    public static List<BoardFileEntity> toEntityList(List<BoardFileDTO> boardFileDTOs) {
+    public static List<BoardFileEntity> toEntityList(final List<BoardFileDTO> boardFileDTOs) {
         return boardFileDTOs.stream().map(BoardFileDTO::toEntity).collect(Collectors.toList());
     }
     

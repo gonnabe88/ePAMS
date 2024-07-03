@@ -1,10 +1,12 @@
 package epams.com.login.controller;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import epams.com.member.dto.IamUserDTO;
+import javax.annotation.Nonnull;
+
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -29,6 +31,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
 
 /**
  * @author K140024
@@ -60,10 +63,15 @@ public class LoginController {
      * 
      * @return 인증된 사용자 정보 또는 null
      */
-    private Authentication Authentication() { 
-	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-	    if (authentication == null || authentication instanceof AnonymousAuthenticationToken) return null;
-	    return authentication;
+    private Authentication authentication() {
+        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        final Authentication result;
+        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
+            result = null;
+        } else {
+            result = authentication;
+        }
+        return result;
     }
 
     /**
@@ -90,7 +98,7 @@ public class LoginController {
     public String login(final HttpServletResponse response, @CookieValue(value = "idChk", required = false) final String username,
             @RequestParam(value = "isChecked", defaultValue = "false") final boolean isChecked, final Model model) {
     	String VIEW = "/common/login";
-        final Authentication auth = Authentication();
+        final Authentication auth = authentication();
         final AppUser existingUser = service.getUserRepo().findByUsername(username);
         final Authenticator existingAuthUser = service.getAuthRepository().findByUser(existingUser);
         
@@ -117,15 +125,15 @@ public class LoginController {
      */
     @PostMapping("/login")
     @ResponseBody
-    public Map<String, Object> pwlogin(final HttpServletResponse response, @ModelAttribute IamUserDTO iamUserDTO, final Model model)
+    public Map<String, Object> pwlogin(final HttpServletResponse response, @ModelAttribute final @Nonnull IamUserDTO iamUserDTO, final Model model)
     {
         // Front-end에서 ID가 대문자로 바뀌지 않는 경우에 대비하여 한번 더 대문자 변환 처리
         if (iamUserDTO != null && iamUserDTO.getUsername() != null) {
-            String uppercaseUsername = iamUserDTO.getUsername().toUpperCase();
+            final String uppercaseUsername = iamUserDTO.getUsername().toUpperCase(Locale.getDefault());
             iamUserDTO.setUsername(uppercaseUsername);
         }
 
-        final AppUser existingUser = service.getUserRepo().findByUsername(iamUserDTO.getUsername());
+		final AppUser existingUser = service.getUserRepo().findByUsername(iamUserDTO.getUsername());
         final Map<String, Object> res = new ConcurrentHashMap<>();
         if (loginService.pwLogin(iamUserDTO)) {
             log.warn("성공?");

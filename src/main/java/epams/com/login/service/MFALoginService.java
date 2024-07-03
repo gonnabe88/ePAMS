@@ -2,8 +2,8 @@ package epams.com.login.service;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.springframework.stereotype.Service;
 
@@ -50,20 +50,20 @@ public class MFALoginService {
 
         final LoginOTPDTO loginOTPDTO = new LoginOTPDTO();
 
-        if (iamUserDTO.getMFA().equals("SMS") || iamUserDTO.getMFA().equals("카카오톡")) {
+        if ("SMS".equals(iamUserDTO.getMFA()) || "카카오톡".equals(iamUserDTO.getMFA())) {
             // SMS, 카카오톡 인증 시 필요한 인증번호 Random 숫자 6자리 발급
             final String OTP = String.format("%06d", generateOTP(6));
             loginOTPDTO.setOTP(OTP);
 
-            //TODO: SMS, 카카오톡 ONEGUARD mOTP 연동 인증부 구현 필요 
-            log.warn("SMS & 카카오톡 인증문자 발송 : " + OTP);
+            //TODO: SMS, 카카오톡 ONEGUARD mOTP 연동 인증부 구현 필요
+        	log.warn("SMS & 카카오톡 인증문자 발송 : " + OTP);
         }
 
 		loginOTPDTO.setUsername(iamUserDTO.getUsername());
         loginOTPDTO.setMFA(iamUserDTO.getMFA());
         loginOTPRepo.insert(loginOTPDTO);
 
-        final Map<String, String> mfaInfo = new HashMap<>();
+        final Map<String, String> mfaInfo = new ConcurrentHashMap<>();
         mfaInfo.put("username", iamUserDTO.getUsername());
         mfaInfo.put("MFA", iamUserDTO.getMFA());
 

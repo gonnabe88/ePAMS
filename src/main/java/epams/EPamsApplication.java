@@ -47,7 +47,7 @@ public class EPamsApplication  extends SpringBootServletInitializer {
 	 * @implNote 3rd party WAS를 통한 실행을 위해 추가 (WAR배포)
 	 */
 	@Override
-    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+    protected SpringApplicationBuilder configure(final SpringApplicationBuilder application) {
         return super.configure(application);
     }
 	
@@ -57,7 +57,7 @@ public class EPamsApplication  extends SpringBootServletInitializer {
 	 * @implNote StorageService 초기화 빈. 애플리케이션 시작 시 스토리지 서비스를 초기화
 	 */
 	@Bean
-	CommandLineRunner init(final StorageService storageService) {
+	/* default */ CommandLineRunner init(final StorageService storageService) {
 
 		return (args) -> {
 			// storageService.deleteAll(); // 스토리지 초기화 시 모든 데이터를 삭제
@@ -72,13 +72,13 @@ public class EPamsApplication  extends SpringBootServletInitializer {
 	 */
 	@Bean
 	@Autowired
-	RelyingParty relyingParty(final RegistrationService regisrationRepository, final WebAuthProperties properties) {
+	/* default */ RelyingParty relyingParty(final RegistrationService regisrationRepo, final WebAuthProperties properties) {
 		
 		final RelyingPartyIdentity rpIdentity = RelyingPartyIdentity.builder().id(properties.getHostName()) // Relying Party HostName
 				.name(properties.getDisplay()) // Relying Party Display 설정
 				.build();
 		return RelyingParty.builder().identity(rpIdentity) // Relying Party Identity 설정
-				.credentialRepository(regisrationRepository) // 등록 서비스 설정
+				.credentialRepository(regisrationRepo) // 등록 서비스 설정
 				.origins(properties.getOrigin()) // 허용되는 원본(origin) 설정
 				.build();
 	}

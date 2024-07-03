@@ -9,6 +9,7 @@ import org.springframework.core.codec.EncodingException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -17,6 +18,7 @@ import lombok.extern.slf4j.Slf4j;
  * @since 2024-06-11
  */
 @Slf4j
+@NoArgsConstructor
 public class CustomPasswordEncoder implements PasswordEncoder {
 
     /**
@@ -24,7 +26,7 @@ public class CustomPasswordEncoder implements PasswordEncoder {
      * @implNote 기본 BCryptPasswordEncoder 인스턴스
      * @since 2024-06-11
      */
-    private final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+    private final BCryptPasswordEncoder bCryptPwEncoder = new BCryptPasswordEncoder();
 
     /**
      * @author K140024
@@ -34,13 +36,13 @@ public class CustomPasswordEncoder implements PasswordEncoder {
     @Override
     public String encode(final CharSequence rawPassword) {
         try {
-            final MessageDigest md = MessageDigest.getInstance("SHA-256");
+            final MessageDigest msg = MessageDigest.getInstance("SHA-256");
             final Encoder encoder = Base64.getEncoder();
-            final byte[] digest = md.digest(rawPassword.toString().getBytes(StandardCharsets.UTF_8));
+            final byte[] digest = msg.digest(rawPassword.toString().getBytes(StandardCharsets.UTF_8));
             return encoder.encodeToString(digest);
         } catch (Exception e) {
             log.error("Encoding failed", e);
-            throw new EncodingException("Failed to encode SHA-256");
+            throw new EncodingException("Failed to encode SHA-256", e);
         }
     }
 
@@ -52,6 +54,6 @@ public class CustomPasswordEncoder implements PasswordEncoder {
     @Override
     public boolean matches(final CharSequence rawPassword, final String encodedPassword) {
         // 2024-06-22 취약점 조치 (CWE-256 Unprotected Storage of Credentials)
-        return bCryptPasswordEncoder.matches(rawPassword, encodedPassword);
+        return bCryptPwEncoder.matches(rawPassword, encodedPassword);
     }
 }

@@ -23,13 +23,28 @@ import epams.com.member.service.MemberDetailsService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
+/**
+ * @author K140024
+ * @implNote Spring Security 설정
+ * @since 2024-06-11
+ */
 @Configuration
 @RequiredArgsConstructor
 @EnableWebSecurity
 public class SecurityConfig {
 
-    // 의존성 주입: 사용자 정보 서비스와 로그인 리포지토리
-    private final MemberDetailsService memberDetailsService;
+	/**
+	 * @author K140024
+	 * @implNote 의존성 주입: 사용자 정보 서비스
+	 * @since 2024-06-11
+	 */
+    private final MemberDetailsService memberService;
+    
+	/**
+	 * @author K140024
+	 * @implNote 의존성 주입: 로그인 리포지토리
+	 * @since 2024-06-11
+	 */
     private final LoginRepository loginRepository;
 
     /**
@@ -76,11 +91,11 @@ public class SecurityConfig {
      */
     @SuppressWarnings("removal")
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(final HttpSecurity http) throws Exception {
 
         http
             // 커스텀 보안 필터 추가
-            .addFilterBefore(new CustomSecurityFilter(memberDetailsService, new CustomPasswordEncoder()), AuthorizationFilter.class)
+            .addFilterBefore(new CustomSecurityFilter(memberService, new CustomPasswordEncoder()), AuthorizationFilter.class)
 
             // 세션 관리 설정
             .sessionManagement((auth) -> auth
@@ -147,7 +162,7 @@ public class SecurityConfig {
             // X-Frame-Options 설정
             .headers((headers) -> headers
                 .frameOptions().sameOrigin()  // H2 콘솔이 iframe 내에서 제대로 작동하도록 설정
-            );;
+            );
 
         return http.build();
     }

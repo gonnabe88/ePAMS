@@ -17,6 +17,12 @@
         SELECT * FROM THURXE_CCODEM
     </select>    
     
+    <!-- 특정 ID 데이터 조회 -->
+    <select id="findById" parameterType="String" resultMap="codeMap">
+        SELECT * FROM THURXE_CCODEM
+        WHERE CDVA_ID=#{CD_ID}
+    </select>   
+    
     <!-- 기본키 데이터 중복여부 조회 -->
     <select id="countById" parameterType="Long" resultMap="codeMap">
         SELECT COUNT(*)

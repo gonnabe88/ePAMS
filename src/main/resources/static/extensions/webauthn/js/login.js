@@ -13,7 +13,7 @@ document.addEventListener("submit", (e) => {
         body: formData
     })
     .then(response => initialCheckStatus(response))
-    .then(credentialGetJson => ({
+    .then(credentialGetJson =>({
         publicKey: {
         ...credentialGetJson.publicKey,
         allowCredentials: credentialGetJson.publicKey.allowCredentials
@@ -27,7 +27,8 @@ document.addEventListener("submit", (e) => {
     }))
     .then(credentialGetOptions =>
         navigator.credentials.get(credentialGetOptions))
-    .then(publicKeyCredential => ({
+    .then(publicKeyCredential =>
+	({
         type: publicKeyCredential.type,
         id: publicKeyCredential.id,
         response: {

@@ -35,10 +35,20 @@ public class MemberService {
         return memberRepository.findBySearchValue(searchValue);
     }
 
+    /**
+     * 모든 사용자를 조회하는 메소드
+     * 
+     * @since 2024-06-11
+     */
     public List<IamUserDTO> findAll() {
         return memberRepository.findAll();
     }
-
+    
+    /**
+     * 특정 사용자의 권한을 조회하는 메소드
+     * 
+     * @since 2024-06-11
+     */
     public RoleDTO findOneRoleByUsername(final IamUserDTO iamUserDTO) {
         return memberRepository.findOneRoleByUsername(iamUserDTO);
     }

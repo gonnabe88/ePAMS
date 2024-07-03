@@ -71,7 +71,7 @@ public class RoleDTO {
      * @implNote List<Entity> > List<DTO> 변경 메소드
      * @since 2024-06-09
      */
-    public static List<RoleDTO> toDTOs(List<RoleEntity> memberEntities) {
+    public static List<RoleDTO> toDTOs(final List<RoleEntity> memberEntities) {
         return memberEntities.stream().map(RoleDTO::toDTO).collect(Collectors.toList());
     }
 
@@ -80,7 +80,7 @@ public class RoleDTO {
      * @implNote List<HtmlDTO> > List<CodeEntity> 변경 메소드
      * @since 2024-06-09
      */
-    public static List<RoleEntity> toEntities(List<RoleDTO> roleDTOS) {
+    public static List<RoleEntity> toEntities(final List<RoleDTO> roleDTOS) {
         return roleDTOS.stream().map(RoleDTO::toEntity).collect(Collectors.toList());
     }
 
@@ -90,7 +90,7 @@ public class RoleDTO {
      * @since 2024-06-09
      */
     public RoleEntity toEntity() {
-        RoleEntity roleEntity = new RoleEntity();
+        final RoleEntity roleEntity = new RoleEntity();
         roleEntity.setENO(this.getUsername());
         roleEntity.setROLE_ID(this.getRoleId());
         roleEntity.setAMN_DTM(this.getUpdatedTime());

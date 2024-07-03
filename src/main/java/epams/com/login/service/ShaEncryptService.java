@@ -35,9 +35,9 @@ public class ShaEncryptService {
             final String decodedStr = new String(decodedBytes, StandardCharsets.UTF_8);
             log.warn(decodedStr);
 
-            final MessageDigest md = MessageDigest.getInstance("SHA-256");
+            final MessageDigest msg = MessageDigest.getInstance("SHA-256");
             final Encoder encoder = Base64.getEncoder();
-            final byte[] digest = md.digest(decodedStr.getBytes(StandardCharsets.UTF_8));
+            final byte[] digest = msg.digest(decodedStr.getBytes(StandardCharsets.UTF_8));
             return encoder.encodeToString(digest);
         } catch (final NoSuchAlgorithmException e) {
             throw new CustomGeneralEncryptionException("Fail to encrypt SHA-256", e);

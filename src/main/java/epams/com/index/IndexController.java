@@ -29,8 +29,6 @@ import epams.com.login.util.webauthn.RegistrationService;
 import epams.com.login.util.webauthn.authenticator.Authenticator;
 import epams.com.login.util.webauthn.user.AppUser;
 import epams.com.member.dto.IamUserDTO;
-import epams.com.member.entity.TempUserEntity;
-import epams.com.member.service.MemberDetailsService;
 import epams.com.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -65,7 +63,6 @@ public class IndexController<S extends Session> {
      * @implNote 회원 서비스 주입
      * @since 2024-06-11
      */
-    private final MemberDetailsService memberservice;
     private final MemberService memberservice2;
 
     /**
@@ -80,17 +77,22 @@ public class IndexController<S extends Session> {
      * @implNote 코드 상세 서비스 주입
      * @since 2024-06-11
      */
-    private final CodeHtmlDetailService codeHtmlDetailService;
+    private final CodeHtmlDetailService codeDetailService;
 
     /**
      * @author K140024
      * @implNote 현재 인증된 사용자 정보를 반환하는 메서드
      * @since 2024-06-11
      */
-    private Authentication Authentication() {
+    private Authentication authentication() {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) return null;
-        return authentication;
+        final Authentication result;
+        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
+            result = null;
+        } else {
+            result = authentication;
+        }
+        return result;
     }
 
     /**
@@ -109,12 +111,12 @@ public class IndexController<S extends Session> {
      * @since 2024-06-11
      */
     @GetMapping("/index")
-    public String indexMain(@PageableDefault(page = 1) Pageable pageable, Model model) {
+    public String indexMain(@PageableDefault(page = 1) final Pageable pageable, final Model model) {
 
         final String INDEXMAIN = "/common/index";
 
         // 현재 로그인한 사용자 정보
-        final Authentication auth = Authentication();
+        final Authentication auth = authentication();
 
         // 간편인증 등록 여부 확인
         final AppUser existingUser = service.getUserRepo().findByUsername(auth.getName());
@@ -129,18 +131,13 @@ public class IndexController<S extends Session> {
         }
 
         // 코드
-        final Map<String, String> codeList = codeHtmlDetailService.getCodeHtmlDetail(INDEXMAIN);
+        final Map<String, String> codeList = codeDetailService.getCodeHtmlDetail(INDEXMAIN);
         model.addAttribute("codeList", codeList);
 
         // 메인화면 공지사항 출력
         final int currentPage = pageable.getPageNumber(); // 현재 페이지 (1-based index)
-        pageable = PageRequest.of(currentPage, indexBrdCnt); // pageable 객체 설정
-        final Page<BoardDTO> boardList = boardService.paging(pageable); // 가장 최근 게시물의 indexBrdCnt 수만큼 가져옴
+        final Page<BoardDTO> boardList = boardService.paging(PageRequest.of(currentPage, indexBrdCnt)); // 가장 최근 게시물의 indexBrdCnt 수만큼 가져옴
         model.addAttribute("boardList", boardList);
-
-        // 메인화면 직원조회 출력
-        //final List<TempUserEntity> memberList = memberservice.findAll();
-        //model.addAttribute("memberList", memberList);
 
         // 메인화면 빠른근태신청 출력
         final LocalDate today = LocalDate.now();
@@ -160,10 +157,9 @@ public class IndexController<S extends Session> {
      * @since 2024-06-11
      */
     @PostMapping("/search")
-    public String search(Model model, @RequestParam("text") String text) {
+    public String search(final Model model, final @RequestParam("text") String text) {
 
         // 메인화면 직원조회 출력
-        //final List<SearchMemberEntity> memberList = memberservice.findBySearchValue(text);
         final List<IamUserDTO> memberList = memberservice2.findBySearchValue(text);
         model.addAttribute("memberList", memberList);
 

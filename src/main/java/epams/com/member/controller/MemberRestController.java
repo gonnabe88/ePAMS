@@ -2,16 +2,14 @@ package epams.com.member.controller;
 
 import java.util.List;
 
-import epams.com.member.dto.IamUserDTO;
-import epams.com.member.service.MemberService;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import epams.com.member.entity.SearchMemberEntity;
-import epams.com.member.service.MemberDetailsService;
+import epams.com.member.dto.IamUserDTO;
+import epams.com.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -39,7 +37,7 @@ public class MemberRestController {
      * @since 2024-06-11
      */
     @GetMapping("/search")
-    public List<IamUserDTO> search(final Model model, @RequestParam("text") final String text) throws Exception {
+    public List<IamUserDTO> search(final Model model, @RequestParam("text") final String text) {
         return memberservice.findBySearchValue(text);
     }
 

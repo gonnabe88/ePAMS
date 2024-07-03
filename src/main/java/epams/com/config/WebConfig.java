@@ -4,10 +4,13 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import lombok.NoArgsConstructor;
+
 /**
  * WebConfig 클래스는 WebMvcConfigurer 인터페이스를 구현한 설정 클래스입니다.
  * 이 클래스는 정적 리소스 핸들러를 추가하는 역할을 수행합니다.
  */
+@NoArgsConstructor
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
@@ -18,7 +21,7 @@ public class WebConfig implements WebMvcConfigurer {
      * @param registry 리소스 핸들러 레지스트리 객체
      */
     @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+    public void addResourceHandlers(final ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/**")
                 .addResourceLocations("classpath:/static/");
     }

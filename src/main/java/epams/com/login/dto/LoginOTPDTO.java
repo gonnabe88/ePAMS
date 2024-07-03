@@ -11,7 +11,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-
+/***
+ * @author 140024
+ * @implNote THURXE_COTPIM (OTP 발급내역)
+ * @since 2024-06-09
+ */
 @Getter
 @Setter
 @ToString
@@ -60,8 +64,8 @@ public class LoginOTPDTO {
      * @implNote Entity > DTO 변경 메소드
      * @since 2024-06-09
      */
-    public static LoginOTPEntity toEntity(LoginOTPDTO loginOTPDTO) {
-        LoginOTPEntity mfaEntity = new LoginOTPEntity();
+    public static LoginOTPEntity toEntity(final LoginOTPDTO loginOTPDTO) {
+        final LoginOTPEntity mfaEntity = new LoginOTPEntity();
         mfaEntity.setSEQ_ID(loginOTPDTO.getSeqId());
         mfaEntity.setEMP_NO(loginOTPDTO.getUsername());
         mfaEntity.setOTP(loginOTPDTO.getOTP());
@@ -75,8 +79,8 @@ public class LoginOTPDTO {
      * @implNote DTO > Entity 변경 메소드
      * @since 2024-06-09
      */
-    public static LoginOTPDTO toDTO(LoginOTPEntity loginOTPEntity) {
-        LoginOTPDTO mfaDTO = new LoginOTPDTO();
+    public static LoginOTPDTO toDTO(final LoginOTPEntity loginOTPEntity) {
+        final LoginOTPDTO mfaDTO = new LoginOTPDTO();
         mfaDTO.setSeqId(loginOTPEntity.getSEQ_ID());
         mfaDTO.setUsername(loginOTPEntity.getEMP_NO());
         mfaDTO.setOTP(loginOTPEntity.getOTP());
@@ -90,7 +94,7 @@ public class LoginOTPDTO {
      * @implNote List<Entity> > List<DTO> 변경 메소드
      * @since 2024-06-09
      */
-    public static List<LoginOTPDTO> toDTOList(List<LoginOTPEntity> entityList) {
+    public static List<LoginOTPDTO> toDTOList(final List<LoginOTPEntity> entityList) {
         return entityList.stream().map(LoginOTPDTO::toDTO).collect(Collectors.toList());
     }
 
@@ -99,7 +103,7 @@ public class LoginOTPDTO {
      * @implNote List<DTO> > List<Entity> 변경 메소드
      * @since 2024-06-09
      */
-    public static List<LoginOTPEntity> toEntityList(List<LoginOTPDTO> dtoList) {
+    public static List<LoginOTPEntity> toEntityList(final List<LoginOTPDTO> dtoList) {
         return dtoList.stream().map(LoginOTPDTO::toEntity).collect(Collectors.toList());
     }    
     

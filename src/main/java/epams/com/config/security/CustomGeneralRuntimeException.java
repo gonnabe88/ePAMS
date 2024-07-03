@@ -1,16 +1,33 @@
 package epams.com.config.security;
 
+/**
+ * @author K140024
+ * @implNote 일반적인 런타임 예외를 처리하기 위한 커스텀 예외 클래스
+ * @since 2024-06-11
+ */
 public class CustomGeneralRuntimeException extends RuntimeException {
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = -3078530608175015209L;
 
-	public CustomGeneralRuntimeException(String message) {
+    /**
+     * serialVersionUID
+     */
+    private static final long serialVersionUID = -3078530608175015209L;
+
+    /**
+     * 메시지로 초기화하는 생성자
+     * 
+     * @param message 예외 메시지
+     */
+    public CustomGeneralRuntimeException(final String message) {
         super(message);
     }
-	
-    public CustomGeneralRuntimeException(String message, Throwable cause) {
+
+    /**
+     * 메시지와 원인으로 초기화하는 생성자
+     * 
+     * @param message 예외 메시지
+     * @param cause 예외의 원인
+     */
+    public CustomGeneralRuntimeException(final String message, final Throwable cause) {
         super(message, cause);
     }
 }

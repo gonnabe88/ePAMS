@@ -405,126 +405,171 @@
 			});
 		</script>
 
-		<script th:inline="javascript">
-			$(document).ready(function() {	
-				const simpleauth = /*[[${simpleauth}]]*/ simpleauth
-				const username = /*[[${username}]]*/ username
-				console.log("WebAuthn : "+simpleauth + username);
+<script th:inline="javascript">
+	$(document).ready(function() {	
+		const simpleauth = /*[[${simpleauth}]]*/ simpleauth;
+		const username = /*[[${username}]]*/ username;
+		console.log("WebAuthn : " + simpleauth + " " + username);
 
-				if(simpleauth == false) {
-				     Swal.fire({
-				         title: "간편인증",
-				         html: "편리한 로그인을 위해 휴대폰 간편인증을 등록합니다.",
-				         inputAttributes: {
-				 			autocomplete: 'new-password',
-				            autocapitalize: "off",
-				            autofocus : "on"
-				         },
-				         showCancelButton: true,
-				         confirmButtonText: "등록",
-				         cancelButtonText: "나중에 할게요",
-				         showLoaderOnConfirm: true,
-				         preConfirm: async () => {},
-				         allowOutsideClick: () => !Swal.isLoading()
-				     }).then((result) => {
-				         if (result.isConfirmed) {
-				        	 webauthn_reg(username);
-				         }
-				     }); //Swal(PW 인증)  
+		if (simpleauth == false) {
+			Swal.fire({
+				title: "간편인증",
+				html: "편리한 로그인을 위해 휴대폰 간편인증을 등록합니다.",
+				inputAttributes: {
+					autocomplete: 'new-password',
+					autocapitalize: "off",
+					autofocus: "on"
+				},
+				showCancelButton: true,
+				confirmButtonText: "등록",
+				cancelButtonText: "나중에 할게요",
+				showLoaderOnConfirm: true,
+				preConfirm: async () => {
+					return webauthn_reg(username);
+				},
+				allowOutsideClick: () => !Swal.isLoading()
+			}).then((result) => {
+				if (result.isConfirmed) {
+					console.log("등록 확인");
 				}
-					
 			});
-			
-			function webauthn_reg(username) {
-				console.log("In webauthn_reg");
-				const header = document.querySelector('meta[name="_csrf_header"]').content;
-			    const token = document.querySelector('meta[name="_csrf"]').content;
-			    const formData = new FormData();
-			    formData.append("username", username);
-			    fetch('/api/webauthn/register', {
-			        method: 'POST',
-			        headers: {
-				        'header': header,
-				        'X-CSRF-Token': token,
-			    	},
-			        body: formData,
-			    })
-			    .then(response => initialCheckStatus(response))
-			    .then(credentialCreateJson => ({
-			        publicKey: {
-			            ...credentialCreateJson.publicKey,
-			            challenge: base64urlToUint8array(credentialCreateJson.publicKey.challenge),
-			        user: {
-			            ...credentialCreateJson.publicKey.user,
-			            id: base64urlToUint8array(credentialCreateJson.publicKey.user.id),
-			        },
-			        excludeCredentials: credentialCreateJson.publicKey.excludeCredentials.map(credential => ({
-			            ...credential,
-			            id: base64urlToUint8array(credential.id),
-			        })),
-			        extensions: credentialCreateJson.publicKey.extensions,
-			        },
-			    }))
-			    .then(credentialCreateOptions =>
-			        navigator.credentials.create(credentialCreateOptions))
-			    .then(publicKeyCredential => ({
-			    	
-			        type: publicKeyCredential.type,
-			        id: publicKeyCredential.id,
-			        response: {
-			        attestationObject: uint8arrayToBase64url(publicKeyCredential.response.attestationObject),
-			        clientDataJSON: uint8arrayToBase64url(publicKeyCredential.response.clientDataJSON),
-			        transports: publicKeyCredential.response.getTransports && publicKeyCredential.response.getTransports() || [],
-			        },
-			        clientExtensionResults: publicKeyCredential.getClientExtensionResults(),
-			    }))
-			    .then((encodedResult) => {
-			        //const form = document.getElementById("form");
-			        //const formData = new FormData(form);
-			        console.log("encodedResult : ")
-			        formData.append("credential", JSON.stringify(encodedResult));
-			        return fetch("/api/webauthn/finishauth", {
-			            method: 'POST',
-			        	headers: {
-				        'header': header,
-				        'X-CSRF-Token': token,
-			    	},
-			            body: formData,
-			        })
-			    })
-			    .then((response) => {
-			        //followRedirect(response);
-			    	if(response.status == 200)
-			    		popupMsg("등록 성공", "간편인증 등록을 성공하였습니다.", "success");
-			    	else {
-			    		popupMsg("등록 오류", error, "error", "");
-					}
-			    })
-			    .catch((error) => {
-		    		popupMsg("등록 취소", "간편인증 등록을 취소하였습니다.", "info");
-			    });
+		}
+	});
+
+	async function webauthn_reg(username) {
+		console.log("In webauthn_reg");
+		const header = document.querySelector('meta[name="_csrf_header"]').content;
+		const token = document.querySelector('meta[name="_csrf"]').content;
+		const formData = new FormData();
+		formData.append("username", username);
+
+		try {
+			const response = await fetch('/api/webauthn/register', {
+				method: 'POST',
+				headers: {
+					'header': header,
+					'X-CSRF-Token': token,
+				},
+				body: formData,
+			});
+
+			if (!response.ok) {
+				throw new Error('Network response was not ok ' + response.statusText);
 			}
-			
-			const popupMsg = (title, text, icon) => {	
-				Swal.fire({
-			            title: title,
-			            text: text,
-			            icon: icon,
-			            confirmButtonText: '확인'
-			        });
+
+			const credentialCreateJson = await response.json();
+			console.log("credentialCreateJson:", credentialCreateJson);
+
+			if (!credentialCreateJson.publicKey.challenge) {
+				throw new Error('Challenge is missing in the publicKey');
 			}
-			
-			const popupRedirectMsg = (title, text, icon, url) => {	
-				Swal.fire({
-			            title: title,
-			            text: text,
-			            icon: icon,
-			            confirmButtonText: '확인'
-			        }).then(() => {
-						window.location.href = url
-					});
+
+			const publicKey = {
+				...credentialCreateJson.publicKey,
+				challenge: base64urlToUint8array(credentialCreateJson.publicKey.challenge),
+				user: {
+					...credentialCreateJson.publicKey.user,
+					id: base64urlToUint8array(credentialCreateJson.publicKey.user.id),
+				},
+				excludeCredentials: credentialCreateJson.publicKey.excludeCredentials.map(credential => ({
+					...credential,
+					id: base64urlToUint8array(credential.id),
+				})),
+				extensions: credentialCreateJson.publicKey.extensions,
+			};
+
+			console.log("publicKey:", publicKey);
+
+			const publicKeyCredential = await navigator.credentials.create({ publicKey });
+
+			console.log("publicKeyCredential:", publicKeyCredential);
+
+			const encodedResult = {
+				type: publicKeyCredential.type,
+				id: publicKeyCredential.id,
+				response: {
+					attestationObject: uint8arrayToBase64url(publicKeyCredential.response.attestationObject),
+					clientDataJSON: uint8arrayToBase64url(publicKeyCredential.response.clientDataJSON),
+					transports: publicKeyCredential.response.getTransports && publicKeyCredential.response.getTransports() || [],
+				},
+				clientExtensionResults: publicKeyCredential.getClientExtensionResults(),
+			};
+
+			console.log("encodedResult:", encodedResult);
+
+			formData.append("credential", JSON.stringify(encodedResult));
+
+			const finishResponse = await fetch("/api/webauthn/finishauth", {
+				method: 'POST',
+				headers: {
+					'header': header,
+					'X-CSRF-Token': token,
+				},
+				body: formData,
+			});
+
+			if (finishResponse.ok) {
+				popupMsg("등록 성공", "간편인증 등록을 성공하였습니다.", "success");
+			} else {
+				const error = await finishResponse.text();
+				popupMsg("등록 오류", error, "error");
 			}
-		</script>
+		} catch (error) {
+			console.error('Error:', error);
+			popupMsg("등록 취소", "간편인증 등록을 취소하였습니다.", "info");
+		}
+	}
+
+	const popupMsg = (title, text, icon) => {
+		Swal.fire({
+			title: title,
+			text: text,
+			icon: icon,
+			confirmButtonText: '확인'
+		});
+	}
+
+	const popupRedirectMsg = (title, text, icon, url) => {
+		Swal.fire({
+			title: title,
+			text: text,
+			icon: icon,
+			confirmButtonText: '확인'
+		}).then(() => {
+			window.location.href = url;
+		});
+	}
+
+	function base64urlToUint8array(base64urlString) {
+		const padding = '='.repeat((4 - base64urlString.length % 4) % 4);
+		const base64 = (base64urlString + padding)
+			.replace(/\-/g, '+')
+			.replace(/_/g, '/');
+		const rawData = window.atob(base64);
+		const outputArray = new Uint8Array(rawData.length);
+		for (let i = 0; i < rawData.length; ++i) {
+			outputArray[i] = rawData.charCodeAt(i);
+		}
+		return outputArray;
+	}
+
+	function uint8arrayToBase64url(uint8array) {
+		const base64String = btoa(String.fromCharCode.apply(null, uint8array));
+		return base64String.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+	}
+
+	function initialCheckStatus(response) {
+		if (response.ok) {
+			return response.json();
+		} else {
+			throw new Error('Network response was not ok ' + response.statusText);
+		}
+	}
+</script>
+
+
+
+
 
 		<script>
 			const ApplAlert = (date) => {	

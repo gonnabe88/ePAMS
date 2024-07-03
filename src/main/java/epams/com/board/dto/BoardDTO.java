@@ -158,7 +158,7 @@ public class BoardDTO {
      * @implNote List<Entity> > List<DTO> 변경 메소드
      * @since 2024-06-09
      */
-    public static List<BoardDTO> toDTOList(List<BoardEntity> boardEntities) {
+    public static List<BoardDTO> toDTOList(final List<BoardEntity> boardEntities) {
         return boardEntities.stream()
                 .map(BoardDTO::toDTO)
                 .collect(Collectors.toList());
@@ -169,7 +169,7 @@ public class BoardDTO {
      * @implNote List<HtmlDTO> > List<CodeEntity> 변경 메소드
      * @since 2024-06-09
      */
-    public static List<BoardEntity> toEntityList(List<BoardDTO> boardDTOs) {
+    public static List<BoardEntity> toEntityList(final List<BoardDTO> boardDTOs) {
         return boardDTOs.stream()
                 .map(BoardDTO::toEntity)
                 .collect(Collectors.toList());

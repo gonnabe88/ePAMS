@@ -36,7 +36,7 @@ public class DtmService {
 	 * @implNote logRepository 객체의 findLoginLogAll 호출하여 LogLoginEntity 리스트 반환
 	 * @since 2024-06-09
 	 */
-    public Page<DtmApplDTO> findAllByPeriod(final Pageable pageable, BasePeriodDTO period) {
+    public Page<DtmApplDTO> findAllByPeriod(final Pageable pageable, final BasePeriodDTO period) {
     	final int page = pageable.getPageNumber() - 1; // 페이지 번호
     	final int pageSize = pageable.getPageSize(); // 페이지 크기
         period.setLimit(pageSize);

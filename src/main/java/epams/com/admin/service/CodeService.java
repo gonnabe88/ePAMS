@@ -1,13 +1,10 @@
 package epams.com.admin.service;
 
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
 import epams.com.admin.dto.CodeDTO;
-import epams.com.admin.entity.CodeEntity;
 import epams.com.admin.repository.CodeRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

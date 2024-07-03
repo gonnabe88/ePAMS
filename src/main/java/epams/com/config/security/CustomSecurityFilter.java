@@ -32,7 +32,7 @@ public class CustomSecurityFilter extends OncePerRequestFilter {
      * @implNote 사용자 세부 정보 서비스 주입
      * @since 2024-06-11
      */
-    private final MemberDetailsService userDetailsService;
+    private final MemberDetailsService userService;
 
     /**
      * @author K140024
@@ -52,8 +52,8 @@ public class CustomSecurityFilter extends OncePerRequestFilter {
         final String username = request.getParameter("username");
         final String password = request.getParameter("password");
 
-        if (username != null && password != null && (request.getRequestURI().equals("/authenticate"))) {
-            final UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+        if (username != null && password != null && "/authenticate".equals(request.getRequestURI())) {
+            final UserDetails userDetails = userService.loadUserByUsername(username);
 
             log.warn("CustomSecurityFilter : {} {}", username, password);
 

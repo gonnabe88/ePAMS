@@ -43,7 +43,7 @@ public class BoardFileRepository {
 	 * @since 2024-06-09
 	 */
     public List<BoardFileDTO> findFile(final Long boardId) {
-    	List<BoardFileEntity> boardFileEntities = sql.selectList("BoardFile.findFile", boardId);
+    	final List<BoardFileEntity> boardFileEntities = sql.selectList("BoardFile.findFile", boardId);
         return BoardFileDTO.toDTOList(boardFileEntities);
     }
     
@@ -80,7 +80,7 @@ public class BoardFileRepository {
 	 * @since 2024-06-09
 	 */
     public BoardImageDTO findBoardstoredFilename(final String storedFileName) {
-    	BoardImageEntity boardImageEntity = sql.selectOne("BoardImage.selectBoardImage", storedFileName);
+    	final BoardImageEntity boardImageEntity = sql.selectOne("BoardImage.selectBoardImage", storedFileName);
     	return BoardImageDTO.toDTO(boardImageEntity);
     }
     

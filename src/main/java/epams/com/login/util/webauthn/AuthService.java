@@ -287,19 +287,14 @@ public class AuthService {
             final PublicKeyCredentialCreationOptions requestOptions = PublicKeyCredentialCreationOptions.fromJson((String) session.getAttribute(user.getUsername()));
             log.warn("requestOptions");
             if (requestOptions != null) {
-            	log.warn(credential.toString());
-                final PublicKeyCredential<AuthenticatorAttestationResponse, ClientRegistrationExtensionOutputs> pkc =
-                    PublicKeyCredential.parseRegistrationResponseJson(credential);
-                log.warn(pkc.toString());
+                final PublicKeyCredential<AuthenticatorAttestationResponse, ClientRegistrationExtensionOutputs> pkc = PublicKeyCredential.parseRegistrationResponseJson(credential);
                 final FinishRegistrationOptions options = FinishRegistrationOptions.builder()
                     .request(requestOptions)
                     .response(pkc)
                     .build();
                 
                 final RegistrationResult result = relyingParty.finishRegistration(options);
-                log.warn(result.toString());
                 final Authenticator savedAuth = new Authenticator(result, pkc.getResponse(), user);
-                log.warn(savedAuth.toString());
                 service.getAuthRepository().save(savedAuth);
                 return ResponseEntity.ok("Registration successful!");
             } else {

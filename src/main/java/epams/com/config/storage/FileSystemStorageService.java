@@ -9,7 +9,6 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.stream.Stream;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
@@ -31,6 +30,11 @@ public class FileSystemStorageService implements StorageService {
      */
     private final Path rootLocation;
 
+    /**
+     * @author K140024
+     * @implNote 파일 저장 위치 확인하는 메소드
+     * @since 2024-06-11
+     */
     public FileSystemStorageService(final StorageProperties properties) {
         if (properties.getLocation().trim().isEmpty()) {
             throw new StorageException("File upload location cannot be empty.");

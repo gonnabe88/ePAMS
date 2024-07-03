@@ -165,7 +165,6 @@ public class BoardController {
     public String update(@ModelAttribute final BoardDTO boardDTO, final Model model) throws IOException {
         boardDTO.setBoardWriter(authentication().getName());
         final BoardDTO board = boardService.update(boardDTO);
-        log.warn("업데이트 내용"+boardDTO.toString());
         model.addAttribute("board", board);
         return "/common/detail";
     }
@@ -218,7 +217,6 @@ public class BoardController {
         final BoardDTO boardDTO = boardService.findById(seqId);
         model.addAttribute("board", boardDTO);
         model.addAttribute("page", pageable.getPageNumber());
-        log.warn(boardDTO.toString());
         
         // 파일이 첨부된 경우 첨부파일 리스트 반환
         if (boardDTO.getFileAttached() == FILE_ATTACHED) {
@@ -259,7 +257,6 @@ public class BoardController {
         final BoardFileDTO boardfile = boardService.findOneFile(fileId);
         final UrlResource resource;
         ResponseEntity<Resource> responseEntity = ResponseEntity.status(500).body(null);
-        log.warn("fileID:" + fileId);
         try {
             resource = new UrlResource("file:" + filepath + boardfile.getStoredFileName());
             

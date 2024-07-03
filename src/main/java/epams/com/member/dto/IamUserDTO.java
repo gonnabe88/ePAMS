@@ -8,6 +8,8 @@ import epams.com.member.entity.IamUserEntity;
 import lombok.*;
 
 /***
+ * 사용자 정보를 담는 DTO 클래스입니다.
+ * 
  * @author 140024
  * @implNote 사용자
  * @since 2024-06-30
@@ -19,62 +21,90 @@ import lombok.*;
 public class IamUserDTO {
 
     /***
+     * 사용자 행번(EMP_NO)
+     * 
      * @author 140024
-     * @implNote [column] 행번(EMP_NO)
      * @since 2024-06-30
      */
     private String username;
 
     /***
+     * 사용자명(EMP_NM)
+     * 
      * @author 140024
-     * @implNote [column] 사용자명(EMP_NM)
      * @since 2024-06-30
      */
     private String realname;
 
     /***
+     * 사용자 패스워드(EMP_PWD)
+     * 
      * @author 140024
-     * @implNote [column] 패스워드(EMP_PWD)
      * @since 2024-06-30
      */
     private String password;
 
     /***
+     * 생성일자(TZ_DATE)
+     * 
      * @author 140024
-     * @implNote [column] 생성일자(TZ_DATE)
      * @since 2024-06-30
      */
     private LocalDate createdDate;
 
     /***
+     * 로그인 유형
+     * 
      * @author 140024
-     * @implNote 로그인 유형
      * @since 2024-06-30
      */
     private String MFA;
 
-    public static IamUserDTO toDTO(IamUserEntity entity) {
-        if (entity == null) {
-            return null;
+    /***
+     * 엔티티 객체를 DTO로 변환하는 메서드입니다.
+     * 
+     * @author 140024
+     * @since 2024-06-30
+     */
+    public static IamUserDTO toDTO(final IamUserEntity entity) {
+        final IamUserDTO dto = new IamUserDTO();
+        if (entity != null) {
+            dto.setUsername(entity.getEMP_NO());
+            dto.setRealname(entity.getEMP_NM());
+            dto.setPassword(entity.getEMP_PWD());
+            dto.setCreatedDate(entity.getTZ_DATE());
         }
-        IamUserDTO dto = new IamUserDTO();
-        dto.setUsername(entity.getEMP_NO());
-        dto.setRealname(entity.getEMP_NM());
-        dto.setPassword(entity.getEMP_PWD());
-        dto.setCreatedDate(entity.getTZ_DATE());
         return dto;
     }
 
-    public static List<IamUserDTO> toDTOs(List<IamUserEntity> entities) {
+    /***
+     * 엔티티 객체 리스트를 DTO 리스트로 변환하는 메서드입니다.
+     * 
+     * @author 140024
+     * @since 2024-06-30
+     */
+    public static List<IamUserDTO> toDTOs(final List<IamUserEntity> entities) {
         return entities.stream().map(IamUserDTO::toDTO).collect(Collectors.toList());
     }
 
-    public static List<IamUserEntity> toEntities(List<IamUserDTO> dtos) {
+    /***
+     * DTO 객체 리스트를 엔티티 리스트로 변환하는 메서드입니다.
+     * 
+     * @author 140024
+     * @since 2024-06-30
+     */
+    public static List<IamUserEntity> toEntities(final List<IamUserDTO> dtos) {
         return dtos.stream().map(IamUserDTO::toEntity).collect(Collectors.toList());
     }
 
+    /***
+     * DTO 객체를 엔티티 객체로 변환하는 메서드입니다.
+     * 
+     * @author 140024
+     * @since 2024-06-30
+     */
     public IamUserEntity toEntity() {
-        IamUserEntity entity = new IamUserEntity();
+        final IamUserEntity entity = new IamUserEntity();
         entity.setEMP_NO(this.getUsername());
         entity.setEMP_NM(this.getRealname());
         entity.setEMP_PWD(this.getPassword());
@@ -82,8 +112,14 @@ public class IamUserDTO {
         return entity;
     }
 
+    /***
+     * IamUserDTO 생성자입니다.
+     * 
+     * @author 140024
+     * @since 2024-06-30
+     */
     @Builder
-    public IamUserDTO(String username, String realname, String password, LocalDate createdDate) {
+    public IamUserDTO(final String username, final String realname, final String password, final LocalDate createdDate) {
         this.username = username;
         this.realname = realname;
         this.password = password;

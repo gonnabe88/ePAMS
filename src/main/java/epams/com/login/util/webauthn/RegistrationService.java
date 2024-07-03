@@ -18,6 +18,7 @@ import epams.com.login.util.webauthn.authenticator.Authenticator;
 import epams.com.login.util.webauthn.user.UserRepository;
 import epams.com.login.util.webauthn.user.AppUser;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -27,6 +28,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @Getter
+@NoArgsConstructor
 @Repository
 public class RegistrationService implements CredentialRepository {
 
@@ -96,12 +98,6 @@ public class RegistrationService implements CredentialRepository {
     @Override
     public Optional<RegisteredCredential> lookup(final ByteArray credentialId, final ByteArray userHandle) {
         final Optional<Authenticator> auth = authRepository.findByCredentialId(credentialId);
-        auth.ifPresent(credential -> {
-            log.warn("[lookup] Credential ID: " + credential.getCredentialId());
-            log.warn("[lookup] User Handle: " + credential.getUser().getHandle());
-            log.warn("[lookup] Public Key: " + credential.getPublicKey());
-            log.warn("[lookup] Signature Count: " + credential.getCount());
-        });
 
         return auth.map(
             credential -> RegisteredCredential.builder()

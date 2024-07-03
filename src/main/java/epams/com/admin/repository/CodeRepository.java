@@ -41,7 +41,7 @@ public class CodeRepository {
 	 * @implNote 특정 ID에 해당하는 내용 조회
 	 * @since 2024-06-09
 	 */
-    public Optional<CodeEntity> findById(String code) {
+    public Optional<CodeEntity> findById(final String code) {
         return sql.selectOne("Code.findById", code);
     }
     

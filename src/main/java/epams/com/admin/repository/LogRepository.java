@@ -1,19 +1,20 @@
 package epams.com.admin.repository;
 
-import java.util.List;
-
-import org.mybatis.spring.SqlSessionTemplate;
-import org.springframework.stereotype.Repository;
-
 import epams.com.admin.dto.LogLoginDTO;
 import epams.com.admin.entity.LogLoginEntity;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /***
  * @author 140024
  * @implNote 각종 로그 데이터 관리를 위한 repository
  * @since 2024-06-09
  */
+@Slf4j
 @Repository
 @RequiredArgsConstructor
 public class LogRepository {

@@ -1,11 +1,12 @@
 package epams.com.member.dto;
 
-import java.time.LocalDate;
-import java.util.List;
-import java.util.stream.Collectors;
-
+import com.fasterxml.jackson.annotation.JsonFormat;
 import epams.com.member.entity.IamUserEntity;
 import lombok.*;
+
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /***
  * 사용자 정보를 담는 DTO 클래스입니다.
@@ -50,7 +51,8 @@ public class IamUserDTO {
      * @author 140024
      * @since 2024-06-30
      */
-    private LocalDate createdDate;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime createdDate;
 
     /***
      * 로그인 유형
@@ -119,7 +121,7 @@ public class IamUserDTO {
      * @since 2024-06-30
      */
     @Builder
-    public IamUserDTO(final String username, final String realname, final String password, final LocalDate createdDate) {
+    public IamUserDTO(final String username, final String realname, final String password, final LocalDateTime createdDate) {
         this.username = username;
         this.realname = realname;
         this.password = password;

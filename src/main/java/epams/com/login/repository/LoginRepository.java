@@ -31,6 +31,9 @@ public class LoginRepository {
      * @since 2024-06-11
      */
     public IamUserDTO login(final IamUserDTO iamUserDTO) {
+        if(log.isWarnEnabled()){
+            log.warn("{} 로그인 정보 확인", iamUserDTO.getUsername());
+        }
         final IamUserEntity iamUserEntity = sql.selectOne("IamUser.login", iamUserDTO.toEntity());
         return IamUserDTO.toDTO(iamUserEntity);
     }

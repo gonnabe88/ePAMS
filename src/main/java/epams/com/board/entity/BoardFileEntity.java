@@ -29,16 +29,23 @@ import lombok.Setter;
 @Comment("인사_외부근태 공지사항게시판파일기본")
 public class BoardFileEntity extends BaseEntity {
 	
+    /**
+     * @author 140024
+     * @implNote 시퀀스 이름 상수
+     * @since 2024-06-09
+     */
+    private static final String SEQUENCE = "BLB_APG_FL_SNO";
+	
     /***
      * @author 140024
      * @implNote 자동으로 생성되는 auto increment number
      * @since 2024-06-10
      */
     @Id
-    @Column(name = "BLB_APG_FL_SNO", columnDefinition = "NUMBER(22)")
+    @Column(name = SEQUENCE, columnDefinition = "NUMBER(22)")
     @Comment("게시판첨부파일일련번호")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "BLB_APG_FL_SNO")
-    @SequenceGenerator(name = "BLB_APG_FL_SNO", sequenceName = "BLB_APG_FL_SNO", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQUENCE)
+    @SequenceGenerator(name = SEQUENCE, sequenceName = SEQUENCE, allocationSize = 1)
     private Long BLB_APG_FL_SNO;
 
     /***

@@ -56,7 +56,9 @@ public class MFALoginService {
             loginOTPDTO.setOTP(OTP);
 
             //TODO: SMS, 카카오톡 ONEGUARD mOTP 연동 인증부 구현 필요
-        	log.warn("SMS & 카카오톡 인증문자 발송 : " + OTP);
+            if (log.isWarnEnabled()) {
+            	log.warn("SMS & 카카오톡 인증문자 발송 : " + OTP);
+            }
         }
 
 		loginOTPDTO.setUsername(iamUserDTO.getUsername());

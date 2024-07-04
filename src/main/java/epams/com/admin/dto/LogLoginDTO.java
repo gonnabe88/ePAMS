@@ -1,15 +1,12 @@
 package epams.com.admin.dto;
 
-import java.time.LocalDate;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import epams.com.admin.entity.LogLoginEntity;
+import lombok.*;
+
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import epams.com.admin.entity.LogLoginEntity;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 
 /***
  * @author 140024
@@ -40,20 +37,21 @@ public class LogLoginDTO {
      * @implNote 성공여부 (RESULT)
      * @since 2024-06-09
      */
-    private boolean loginResult;
+    private char loginResult;
     /***
      * @author 140024
      * @implNote 생성시간 (CREATED_TIME)
      * @since 2024-06-09
      */
-    private LocalDate createdTime;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime createdTime;
     
     /***
      * @author 140024
      * @implNote DTO 생성 메소드
      * @since 2024-06-09
      */
-    public static LogLoginDTO getDTO(final String empNo, final String loginType, final Boolean loginResult) {
+    public static LogLoginDTO getDTO(final String empNo, final String loginType, final char loginResult) {
     	final LogLoginDTO logLoginDTO = new LogLoginDTO();
     	logLoginDTO.setEmpNo(empNo);
     	logLoginDTO.setLoginType(loginType);
@@ -70,7 +68,7 @@ public class LogLoginDTO {
     	final LogLoginDTO logLoginDTO = new LogLoginDTO();
     	logLoginDTO.setEmpNo(logLoginEntity.getENO());
     	logLoginDTO.setLoginType(logLoginEntity.getLGN_KD_NM());
-    	logLoginDTO.setLoginResult(logLoginEntity.isLGN_SCS_YN());
+    	logLoginDTO.setLoginResult(logLoginEntity.getLGN_SCS_YN());
     	logLoginDTO.setCreatedTime(logLoginEntity.getGNT_DTM());
         return logLoginDTO;
     }

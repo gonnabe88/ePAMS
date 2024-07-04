@@ -11,11 +11,11 @@
     <!-- ID/PW 일치 사용자 조회 -->
     <select id="login" parameterType="iamUser" resultType="iamUser">
         SELECT 
-            A.EMP_NO, 
+            A.EMP_NO,
             A.EMP_PWD
         FROM OHR.IF_IAM_USER A 
         WHERE 
-            A.EMP_NO=#{EMP_NO} AND 
+            A.EMP_NO=#{EMP_NO} AND
             A.EMP_PWD=#{EMP_PWD}
     </select>
     

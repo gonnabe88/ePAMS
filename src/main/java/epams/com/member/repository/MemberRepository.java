@@ -84,9 +84,15 @@ public class MemberRepository {
     public RoleDTO findOneRoleByUsername(final IamUserDTO iamUserDTO) {
         RoleEntity roleEntity = new RoleEntity();
         try {
+            if(log.isWarnEnabled()){
+                log.warn("{} 사용자의 역할을 조회합니다.", iamUserDTO.getUsername());
+            }
             roleEntity = sql.selectOne("Role.findOneRoleByUsername", iamUserDTO.toEntity());
         } catch (RuntimeException npe) {
-            roleEntity.setROLE_ID("ROLE_NORMAL");
+            if(log.isWarnEnabled()){
+                log.warn("{} 사용자의 역할이 존재하지 않습니다. 기본 역할을 부여합니다.", iamUserDTO.getUsername());
+            }
+            roleEntity.setATH_ID("ROLE_NORMAL");
             roleEntity.setENO(iamUserDTO.getUsername());
         } 
         return RoleDTO.toDTO(roleEntity);

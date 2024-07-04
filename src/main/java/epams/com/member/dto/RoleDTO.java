@@ -1,15 +1,12 @@
 package epams.com.member.dto;
 
-import java.time.LocalDate;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import epams.com.member.entity.RoleEntity;
+import lombok.*;
+
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import epams.com.member.entity.RoleEntity;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 
 /***
  * @author 140024
@@ -43,14 +40,16 @@ public class RoleDTO {
      * @implNote [Column] 수정일시(AMN_DTM)
      * @since 2024-06-09
      */
-    private LocalDate updatedTime;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime updatedTime;
 
     /***
      * @author 140024
      * @implNote [Column] 생성일시(GNT_DTM)
      * @since 2024-06-09
      */
-    private LocalDate createdTime;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime createdTime;
 
     /***
      * @author 140024
@@ -60,7 +59,7 @@ public class RoleDTO {
     public static RoleDTO toDTO(final RoleEntity roleEntity) {
         final RoleDTO roleDTO = new RoleDTO();
         roleDTO.setUsername(roleEntity.getENO());
-        roleDTO.setRoleId(roleEntity.getROLE_ID());
+        roleDTO.setRoleId(roleEntity.getATH_ID());
         roleDTO.setUpdatedTime(roleEntity.getAMN_DTM());
         roleDTO.setCreatedTime(roleEntity.getGNT_DTM());
         return roleDTO;
@@ -92,7 +91,7 @@ public class RoleDTO {
     public RoleEntity toEntity() {
         final RoleEntity roleEntity = new RoleEntity();
         roleEntity.setENO(this.getUsername());
-        roleEntity.setROLE_ID(this.getRoleId());
+        roleEntity.setATH_ID(this.getRoleId());
         roleEntity.setAMN_DTM(this.getUpdatedTime());
         roleEntity.setGNT_DTM(this.getCreatedTime());
         return roleEntity;

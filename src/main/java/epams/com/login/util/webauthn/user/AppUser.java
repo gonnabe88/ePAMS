@@ -1,5 +1,6 @@
 package epams.com.login.util.webauthn.user;
 
+import epams.com.board.entity.BaseEntity;
 import org.hibernate.annotations.Comment;
 
 import com.yubico.webauthn.data.ByteArray;
@@ -25,7 +26,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Table(name = "THURXE_CWUSRM")
 @Comment("인사_외부근태 Webauthn사용자기본")
-public class AppUser {
+public class AppUser extends BaseEntity {
 
     /**
      * 직원번호

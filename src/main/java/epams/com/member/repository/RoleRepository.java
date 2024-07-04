@@ -9,6 +9,13 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * *
+ *
+ * @author 140024
+ * @implNote 사용자 역할 레파지토리
+ * @since 2024-06-10
+ */
 @Slf4j
 @Repository
 @RequiredArgsConstructor

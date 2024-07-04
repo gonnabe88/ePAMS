@@ -4,21 +4,21 @@
 
 <mapper namespace="Html">
      
-    <!-- Result Map 정의 -->
+    <!-- Result Map 정의
     <resultMap id="htmlMap" type="html">
         <id property="HTML_PTH_NM" column="HTML_PTH_NM"/>
         <result property="HTML_NM" column="HTML_NM"/>
         <result property="AMN_DTM" column="AMN_DTM"/>
         <result property="GNT_DTM" column="GNT_DTM"/>
-    </resultMap>
+    </resultMap>-->
 
     <!-- 모든 데이터 조회 -->
-    <select id="findAll" resultMap="htmlMap">
+    <select id="findAll" resultType="html">
         SELECT * FROM THURXE_CHTMLM
     </select>    
     
     <!-- 기본키 데이터 중복여부 조회 -->
-    <select id="countById" parameterType="Long" resultMap="htmlMap">
+    <select id="countById" parameterType="Long" resultType="html">
         SELECT COUNT(*)
         FROM THURXE_CHTMLM 
         WHERE 

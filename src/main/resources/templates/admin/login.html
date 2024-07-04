@@ -63,18 +63,19 @@
 	<th:block layout:fragment="script">
 	<script src="/extensions/tabulator/tabulator.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/luxon@3.4.4/build/global/luxon.min.js"></script>
 	<script src="/extensions/tabulator/kdb_tabulator.js"></script>
 	<script>
 		window.url = "/api/admin/login"
 		window.columns = [
 			{ title: "행번", field: "empNo", headerHozAlign: "center", sorter: "string", minWidth: 100},
 	        { title: "인증방식", field: "loginType", sorter: "string", minWidth: 100 },
-	        { title: "인증결과", field: "loginResult", sorter: "boolean" , formatter:"tickCross"},
-	        { title: "인증시간", field: "createdTime", sorter: "string"}
+	        { title: "인증결과", field: "loginResult", sorter: "number" , formatter:"tickCross"},
+			{ title: "인증시간", field: "createdTime", sorter: "datetime", sorterParams:{format:"yyyy-MM-dd HH:mm:ss"}}
 		];
-		
 	    document.addEventListener("DOMContentLoaded", function() {
 	        createTable(false, window.columns, window.url);
+
 	    });
 	</script>
 

@@ -1,19 +1,11 @@
 package epams.com.admin.entity;
 
+import jakarta.persistence.*;
+import lombok.*;
 import org.hibernate.annotations.Comment;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 /***
  * @author 140024
  * @implNote Login Log Table을 객체로 관리하기 위한 entity
@@ -54,7 +46,7 @@ public class LogLoginEntity {
      * @implNote 인증방식
      * @since 2024-06-09
      */
-    @Column(name = "LGN_KD_NM", nullable = false, length = 100)
+    @Column(name = "LGN_KD_NM", nullable = false, length = 200)
     @Comment("로그인종류명")
     private String LGN_KD_NM;
     
@@ -65,7 +57,7 @@ public class LogLoginEntity {
      */
     @Column(name = "LGN_SCS_YN", nullable = false, length = 1)
     @Comment("로그인성공여부")
-    private boolean LGN_SCS_YN;
+    private char LGN_SCS_YN;
     
     /***
      * @author 140024
@@ -74,6 +66,6 @@ public class LogLoginEntity {
      */
     @Column(name = "GNT_DTM", updatable = false, columnDefinition = "DATE")
     @Comment("생성일시")
-    private LocalDate GNT_DTM;
+    private LocalDateTime GNT_DTM;
 
 }

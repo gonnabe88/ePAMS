@@ -28,6 +28,11 @@ import lombok.Setter;
 public class TempUserEntity implements Serializable {
 
     /**
+	 * VersionID
+	 */
+	private static final long serialVersionUID = 5837283909818295247L;
+
+	/**
      * @author K140024
      * @implNote 사용자 이름
      * @since 2024-06-11

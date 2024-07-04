@@ -1,20 +1,10 @@
 package epams.com.admin.entity;
 
-import java.time.LocalDate;
-
+import jakarta.persistence.*;
+import lombok.*;
 import org.hibernate.annotations.Comment;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import java.time.LocalDateTime;
 
 /***
  * @author 140024
@@ -39,15 +29,15 @@ public class LogViewEntity {
     @Id // 기본키
     @GeneratedValue(strategy = GenerationType.IDENTITY)  // auto_increment
     @Column(name = "PAG_LOG_SNO", columnDefinition = "NUMBER(22)")
-    @Comment("페이지뷰로그일련번호")
-    private Long SEQ_ID;
+    @Comment("페이지로그일련번호")
+    private Long PAG_LOG_SNO;
     
     /***
      * @author 140024
      * @implNote 호출 컨트롤러명
      * @since 2024-06-09
      */
-    @Column(name = "CTRL_NM", length = 100, nullable = false)
+    @Column(name = "CTRL_NM", length = 400, nullable = false)
     @Comment("컨트롤러명")
     private String CTRL_NM;
 
@@ -71,11 +61,11 @@ public class LogViewEntity {
     
     /***
      * @author 140024
-     * @implNote 단말정보
+     * @implNote 사용자접속환경내용
      * @since 2024-06-09
      */
     @Column(name = "USR_CNC_ENV_INF", length = 2000, nullable = false) 
-    @Comment("USER AGENT")
+    @Comment("사용자접속환경내용")
     private String USR_CNC_ENV_INF;
     
     /***
@@ -84,7 +74,7 @@ public class LogViewEntity {
      * @since 2024-06-09
      */
     @Column(name = "REQ_URL_ADDR", length = 500, nullable = false) 
-    @Comment("요청 URL주소")
+    @Comment("요청URL주소")
     private String REQ_URL_ADDR;
     
     /***
@@ -92,9 +82,9 @@ public class LogViewEntity {
      * @implNote 호출시간
      * @since 2024-06-09
      */
-    @Column(name = "CALL_DTM", updatable = false, columnDefinition = "DATE")
-    @Comment("호출시간")
-    private LocalDate CALL_DTM;
+    @Column(name = "GNT_DTM", updatable = false, columnDefinition = "DATE")
+    @Comment("생성시간")
+    private LocalDateTime GNT_DTM;
     
     
     

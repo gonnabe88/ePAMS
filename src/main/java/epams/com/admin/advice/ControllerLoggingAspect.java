@@ -1,16 +1,17 @@
 package epams.com.admin.advice;
 
-import java.time.LocalDate;
+import epams.com.admin.dto.LogViewDTO;
+import epams.com.admin.repository.ViewLogRepository;
+import epams.com.admin.util.ClientIpUtil;
+import jakarta.servlet.http.HttpServletRequest;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
-import epams.com.admin.dto.LogViewDTO;
-import epams.com.admin.repository.ViewLogRepository;
-import epams.com.admin.util.ClientIpUtil;
-import jakarta.servlet.http.HttpServletRequest;
+
+import java.time.LocalDateTime;
 
 /**
  * Controller의 메소드 호출을 로깅하는 Aspect.
@@ -65,7 +66,7 @@ public class ControllerLoggingAspect {
         final String methodName = signature.getName();
 
         // 호출 시간
-        final LocalDate callTime = LocalDate.now();
+        final LocalDateTime callTime = LocalDateTime.now();
 
         // 클라이언트 IP
         final String clientIp = ClientIpUtil.getClientIp(request);

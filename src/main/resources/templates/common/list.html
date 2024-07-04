@@ -52,7 +52,7 @@
 													        	<span th:text="${board.boardTitle}"> </span> 
 													        </h4>
 													        <h6>
-													        	<span th:if="${T(java.time.LocalDate).now().minusDays(7).isBefore(board.createdTime)}" class="badge rounded-pill bg-warning text-dark">  new </span>
+													        	<span th:if="${T(java.time.LocalDateTime).now().minusDays(7).isBefore(board.createdTime)}" class="badge rounded-pill bg-warning text-dark">  new </span>
 													        </h6>
 												        </div>
 												    </a>												    

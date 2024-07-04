@@ -1,9 +1,11 @@
 package epams.com.login.dto;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import epams.com.login.entity.LoginOTPEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -57,7 +59,8 @@ public class LoginOTPDTO {
      * @implNote 생성시간
      * @since 2024-06-09
      */
-    private LocalDate createTime; //OTP 생성 시간    
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime createTime; //OTP 생성 시간
 
     /***
      * @author 140024
@@ -70,7 +73,7 @@ public class LoginOTPDTO {
         mfaEntity.setENO(loginOTPDTO.getUsername());
         mfaEntity.setOTP_SMS_CER_NO(loginOTPDTO.getOTP());
         mfaEntity.setCER_KD_NM(loginOTPDTO.getMFA());
-        mfaEntity.setGNT_TIME(loginOTPDTO.getCreateTime());
+        mfaEntity.setGNT_DTM(loginOTPDTO.getCreateTime());
         return mfaEntity;
     }
     
@@ -85,7 +88,7 @@ public class LoginOTPDTO {
         mfaDTO.setUsername(loginOTPEntity.getENO());
         mfaDTO.setOTP(loginOTPEntity.getOTP_SMS_CER_NO());
         mfaDTO.setMFA(loginOTPEntity.getCER_KD_NM());
-        mfaDTO.setCreateTime(loginOTPEntity.getGNT_TIME());
+        mfaDTO.setCreateTime(loginOTPEntity.getGNT_DTM());
         return mfaDTO;
     }
 

@@ -1,14 +1,5 @@
 package epams.com.config.security;
 
-import java.util.List;
-
-import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.stereotype.Component;
-
 import epams.com.admin.dto.LogLoginDTO;
 import epams.com.admin.repository.LogRepository;
 import epams.com.login.service.LoginService;
@@ -17,6 +8,14 @@ import epams.com.member.dto.RoleDTO;
 import epams.com.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  * @author K140024
@@ -95,23 +94,25 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         // 1차 인증(ID/PW) 실패
         if (!pwLoginResult) {
             log.warn("1차 인증 실패");
-            logRepository.insert(LogLoginDTO.getDTO(iamUserDTO.getUsername(), "ID/PW", false));
+            logRepository.insert(LogLoginDTO.getDTO(iamUserDTO.getUsername(), "ID/PW(사후)", '0'));
             throw new AuthenticationException("Invalid credentials") {};
         }
 
         // 2차 인증(SMS, 카카오, OTP, FIDO) 실패
         if (!loginResult) {
             log.warn("2차 인증 실패");
-            logRepository.insert(LogLoginDTO.getDTO(iamUserDTO.getUsername(), MFA, false));
+            logRepository.insert(LogLoginDTO.getDTO(iamUserDTO.getUsername(), MFA, '0'));
             throw new AuthenticationException("Invalid MFA credentials") {};
         }
 
         // Authentication 객체 생성 (인증 성공)
         final Authentication authenticated = new UsernamePasswordAuthenticationToken(
                 iamUserDTO.getUsername(), iamUserDTO.getPassword(), List.of(new SimpleGrantedAuthority(role.getRoleId())));
-        log.warn("로그인 성공");
+        if(log.isWarnEnabled()){
+            log.warn("로그인 사용자 정보: {}, {}", iamUserDTO.getUsername(), role.getRoleId());
+        }
         // 로그인 성공 로깅
-        logRepository.insert(LogLoginDTO.getDTO(iamUserDTO.getUsername(), MFA, true));
+        logRepository.insert(LogLoginDTO.getDTO(iamUserDTO.getUsername(), MFA, '1'));
 
         return authenticated;
     }

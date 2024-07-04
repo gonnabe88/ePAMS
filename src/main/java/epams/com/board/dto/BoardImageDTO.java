@@ -1,15 +1,12 @@
 package epams.com.board.dto;
 
-import java.time.LocalDate;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import epams.com.board.entity.BoardImageEntity;
+import lombok.*;
+
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import epams.com.board.entity.BoardImageEntity;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 
 /***
  * @author 140024
@@ -56,26 +53,28 @@ public class BoardImageDTO {
      * @implNote 생성시간
      * @since 2024-06-09
      */
-    private LocalDate createdTime;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime createdTime;
 
     /***
      * @author 140024
      * @implNote 수정시간
      * @since 2024-06-09
      */
-    private LocalDate updatedTime;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime updatedTime;
 
     /***
      * @author 140024
      * @implNote Entity > DTO 변경 메소드
      * @since 2024-06-09
      */
-    public static BoardImageDTO toDTO(BoardImageEntity boardImageEntity) {
+    public static BoardImageDTO toDTO(final BoardImageEntity brdImgEntity) {
         final BoardImageDTO boardImageDTO = new BoardImageDTO();
-        boardImageDTO.setSeqId(boardImageEntity.getBLB_IMG_SNO());
-        boardImageDTO.setOriginalFileName(boardImageEntity.getORC_FL_NM());
-        boardImageDTO.setStoredFileName(boardImageEntity.getSVR_FL_NM());
-        boardImageDTO.setBoardId(boardImageEntity.getBoardEntity().getBLB_SNO());
+        boardImageDTO.setSeqId(brdImgEntity.getBLB_IMG_SNO());
+        boardImageDTO.setOriginalFileName(brdImgEntity.getORC_FL_NM());
+        boardImageDTO.setStoredFileName(brdImgEntity.getSVR_FL_NM());
+        boardImageDTO.setBoardId(brdImgEntity.getBoardEntity().getBLB_SNO());
         return boardImageDTO;
     }
 
@@ -85,7 +84,7 @@ public class BoardImageDTO {
      * @since 2024-06-09
      */
     public BoardImageEntity toEntity() {
-        BoardImageEntity boardImageEntity = new BoardImageEntity();
+        final BoardImageEntity boardImageEntity = new BoardImageEntity();
         boardImageEntity.setBLB_IMG_SNO(this.seqId);
         boardImageEntity.setORC_FL_NM(this.originalFileName);
         boardImageEntity.setSVR_FL_NM(this.storedFileName);
@@ -99,8 +98,8 @@ public class BoardImageDTO {
      * @implNote List<Entity> > List<DTO> 변경 메소드
      * @since 2024-06-09
      */
-    public static List<BoardImageDTO> toDTOList(List<BoardImageEntity> boardImageEntities) {
-        return boardImageEntities.stream().map(BoardImageDTO::toDTO).collect(Collectors.toList());
+    public static List<BoardImageDTO> toDTOList(final List<BoardImageEntity> brdImgEntities) {
+        return brdImgEntities.stream().map(BoardImageDTO::toDTO).collect(Collectors.toList());
     }
 
     /***
@@ -108,7 +107,7 @@ public class BoardImageDTO {
      * @implNote List<HtmlDTO> > List<CodeEntity> 변경 메소드
      * @since 2024-06-09
      */
-    public static List<BoardImageEntity> toEntityList(List<BoardImageDTO> boardImageDTOs) {
-        return boardImageDTOs.stream().map(BoardImageDTO::toEntity).collect(Collectors.toList());
+    public static List<BoardImageEntity> toEntityList(final List<BoardImageDTO> brdImgDTOs) {
+        return brdImgDTOs.stream().map(BoardImageDTO::toEntity).collect(Collectors.toList());
     }
 }

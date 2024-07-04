@@ -30,15 +30,22 @@ import lombok.Setter;
 @Comment("인사_외부근태 공지사항게시판이미지기본")
 public class BoardImageEntity extends BaseEntity {
 
+    /**
+     * @author 140024
+     * @implNote 시퀀스 이름 상수
+     * @since 2024-06-09
+     */
+    private static final String SEQUENCE = "BLB_IMG_SNO";
+
     /***
      * @author 140024
      * @implNote 자동으로 생성되는 auto increment number
      * @since 2024-06-09
      */
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "BLB_IMG_SNO")
-    @SequenceGenerator(name = "BLB_IMG_SNO", sequenceName = "BLB_IMG_SNO", allocationSize = 1)
-    @Column(name = "BLB_IMG_SNO", columnDefinition = "NUMBER(22)")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQUENCE)
+    @SequenceGenerator(name = SEQUENCE, sequenceName = SEQUENCE, allocationSize = 1)
+    @Column(name = SEQUENCE, columnDefinition = "NUMBER(22)")
     @Comment("게시판이미지일련번호")
     private Long BLB_IMG_SNO;
 
@@ -47,7 +54,7 @@ public class BoardImageEntity extends BaseEntity {
      * @implNote 원본 파일명
      * @since 2024-06-09
      */
-    @Column(name = "ORC_FL_NM")
+    @Column(name = "ORC_FL_NM", length = 255, nullable = false)
     @Comment("원본파일명")
     private String ORC_FL_NM;
 
@@ -56,7 +63,7 @@ public class BoardImageEntity extends BaseEntity {
      * @implNote 저장파일명 (중복방지)
      * @since 2024-06-10
      */
-    @Column(name = "SVR_FL_NM")
+    @Column(name = "SVR_FL_NM", length = 100, nullable = false)
     @Comment("서버파일명")
     private String SVR_FL_NM;
 

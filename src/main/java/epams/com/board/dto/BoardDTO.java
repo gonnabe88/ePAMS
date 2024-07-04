@@ -1,18 +1,14 @@
 package epams.com.board.dto;
 
-import java.nio.charset.StandardCharsets;
-import java.time.LocalDate;
-import java.util.List;
-import java.util.stream.Collectors;
-
+import com.fasterxml.jackson.annotation.JsonFormat;
+import epams.com.board.entity.BoardEntity;
+import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import epams.com.board.entity.BoardEntity;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /***
  * @author 140024
@@ -80,14 +76,16 @@ public class BoardDTO {
      * @implNote [Column] 수정일시(AMN_DTM)
      * @since 2024-06-09
      */
-    private LocalDate updatedTime;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime updatedTime;
 
     /***
      * @author 140024
      * @implNote [Column] 생성일시(GNT_DTM)
      * @since 2024-06-09
      */
-    private LocalDate createdTime;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime createdTime;
 
     /***
      * @author 140024
@@ -103,7 +101,7 @@ public class BoardDTO {
      * @since 2024-06-09
      */
     public BoardDTO(final Long seqId, final String boardWriter, final byte[] boardContents, final String boardTitle,
-            final String category, final int boardHits, final LocalDate boardCreatedTime) {
+            final String category, final int boardHits, final LocalDateTime boardCreatedTime) {
         this.seqId = seqId;
         this.boardWriter = boardWriter;
         this.boardContents = new String(boardContents, StandardCharsets.UTF_8);
@@ -123,7 +121,7 @@ public class BoardDTO {
         if (boardEntity != null) {
             boardDTO.setSeqId(boardEntity.getBLB_SNO());
             boardDTO.setBoardWriter(boardEntity.getDUPR_ENO());
-            boardDTO.setBoardTitle(boardEntity.getBLB_TTL_CONE());
+            boardDTO.setBoardTitle(boardEntity.getBLB_NM());
             boardDTO.setBoardContents(boardEntity.getBLB_CONE());
             boardDTO.setCategory(boardEntity.getCTG_NM());
             boardDTO.setBoardHits(boardEntity.getNAC_INQ_NBR());
@@ -143,7 +141,7 @@ public class BoardDTO {
         final BoardEntity boardEntity = new BoardEntity();
         boardEntity.setBLB_SNO(this.seqId);
         boardEntity.setDUPR_ENO(this.boardWriter);
-        boardEntity.setBLB_TTL_CONE(this.boardTitle);
+        boardEntity.setBLB_NM(this.boardTitle);
         boardEntity.setBLB_CONE(this.boardContents);
         boardEntity.setFL_APG_YN(this.fileAttached);
         boardEntity.setCTG_NM(this.category);

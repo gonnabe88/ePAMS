@@ -1,13 +1,13 @@
 package epams.com.member.entity;
 
-import java.time.LocalDate;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+
+import java.time.LocalDateTime;
 
 /***
  * @author 140024
@@ -51,6 +51,6 @@ public class IamUserEntity{
      * @since 2024-06-30
      */
     @Column(name = "TZ_DATE")
-    private LocalDate TZ_DATE;
+    private LocalDateTime TZ_DATE;
 
 }

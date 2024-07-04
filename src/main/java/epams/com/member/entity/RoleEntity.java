@@ -1,9 +1,6 @@
 package epams.com.member.entity;
 
-import java.time.LocalDate;
-
 import org.hibernate.annotations.Comment;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import epams.com.board.entity.BaseEntity;
 import jakarta.persistence.Column;
@@ -42,8 +39,8 @@ public class RoleEntity extends BaseEntity{
      * @implNote 관리자여부
      * @since 2024-06-30
      */
-    @Column(name = "ROLE_ID", nullable = false, length = 32)
+    @Column(name = "ATH_ID", nullable = false, length = 32)
     @Comment("권한ID")
-    private String ROLE_ID = "ROLE_ADMIN";
+    private String ATH_ID;
 
 }

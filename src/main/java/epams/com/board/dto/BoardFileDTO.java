@@ -1,16 +1,13 @@
 package epams.com.board.dto;
 
-import java.time.LocalDate;
-import java.util.List;
-import java.util.stream.Collectors;
-
+import com.fasterxml.jackson.annotation.JsonFormat;
 import epams.com.board.entity.BoardEntity;
 import epams.com.board.entity.BoardFileEntity;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
+
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /***
  * @author 140024
@@ -70,14 +67,16 @@ public class BoardFileDTO {
      * @implNote 생성시간
      * @since 2024-06-09
      */
-    private LocalDate createdTime;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime createdTime;
     
     /***
      * @author 140024
      * @implNote 수정시간
      * @since 2024-06-09
      */
-    private LocalDate updatedTime;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime updatedTime;
 	
     /***
      * @author 140024

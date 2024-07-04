@@ -7,7 +7,7 @@
     <!-- BOARD TABLE Result Map 정의
     <resultMap id="boardMap" type="board">
         <id property="SEQ_ID" column="BLB_SNO"/>
-        <result property="BOARD_TITLE" column="BLB_TTL_CONE"/>
+        <result property="BOARD_TITLE" column="BLB_NM"/>
         <result property="BOARD_CONTENTS" column="BLB_CONE"/>
         <result property="BOARD_WRITER" column="DUPR_ENO"/>
         <result property="CATEGORY" column="CTG_NM"/>
@@ -24,7 +24,7 @@
         </selectKey>
         INSERT INTO THURXE_CBRDMM(
             BLB_SNO, 
-            BLB_TTL_CONE, 
+            BLB_NM,
             DUPR_ENO, 
             BLB_CONE, 
             FL_APG_YN, 
@@ -33,7 +33,7 @@
             GNT_DTM)
         VALUES(
             #{BLB_SNO}, 
-            #{BLB_TTL_CONE}, 
+            #{BLB_NM},
             #{DUPR_ENO}, 
             #{BLB_CONE}, 
             #{FL_APG_YN}, 
@@ -46,7 +46,7 @@
 	<!-- 특정 게시물 업데이트 -->
     <update id="update" parameterType="board">
         UPDATE THURXE_CBRDMM 
-        SET BLB_TTL_CONE=#{BLB_TTL_CONE}, 
+        SET BLB_NM=#{BLB_NM},
         	BLB_CONE=#{BLB_CONE}, 
 	        FL_APG_YN=#{FL_APG_YN},
 	        CTG_NM=#{CTG_NM},
@@ -71,7 +71,7 @@
     <select id="findById" parameterType="Long" resultType="board">
         SELECT 
         	BLB_SNO, 
-       		BLB_TTL_CONE,
+       		BLB_NM,
        		DUPR_ENO, 
        		BLB_CONE, 
        		NAC_INQ_NBR,

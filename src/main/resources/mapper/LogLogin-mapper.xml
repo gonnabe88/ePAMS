@@ -3,22 +3,22 @@
 
 <mapper namespace="LogLogin">
     
-    <!-- Result Map 정의 -->
+    <!-- Result Map 정의
     <resultMap id="logLoginMap" type="logLogin">
         <id property="LGN_LOG_SNO" column="LGN_LOG_SNO"/>
         <result property="ENO" column="ENO"/>
         <result property="LGN_KD_NM" column="LGN_KD_NM"/>
         <result property="LGN_SCS_YN" column="LGN_SCS_YN"/>
         <result property="GNT_DTM" column="GNT_DTM"/>
-    </resultMap>
+    </resultMap> -->
     
     <!-- 모든 데이터 조회 -->
-    <select id="findAll" resultMap="logLoginMap">
+    <select id="findAll" resultType="logLogin">
         SELECT * FROM THURXE_CLOGNL
     </select>    
     
     <!-- 기본키 데이터 중복여부 조회 -->
-    <select id="countById" parameterType="Long" resultMap="logLoginMap">
+    <select id="countById" parameterType="Long" resultType="logLogin">
         SELECT COUNT(*)
         FROM THURXE_CLOGNL 
         WHERE 

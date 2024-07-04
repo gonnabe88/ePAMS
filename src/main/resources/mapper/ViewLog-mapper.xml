@@ -3,7 +3,7 @@
 
 <mapper namespace="ViewLog">
     
-    <!-- Result Map 정의 --> 
+    <!-- Result Map 정의
     <resultMap id="viewLogMap" type="viewLog">
     <id property="SEQ_ID" column="PAG_LOG_SNO"/>
         <result property="CTRL_NM" column="CTRL_NM"/>
@@ -11,16 +11,16 @@
         <result property="CLI_IP_ADDR" column="CLI_IP_ADDR"/>
         <result property="USR_CNC_ENV_INF" column="USR_CNC_ENV_INF"/>
         <result property="REQ_URL_ADDR" column="REQ_URL_ADDR"/>
-        <result property="CALL_DTM" column="CALL_DTM"/>
-    </resultMap>
-    
+        <result property="GNT_DTM" column="GNT_DTM"/>
+    </resultMap> -->
+
     <!-- 모든 데이터 조회 -->
-    <select id="findAll" resultMap="viewLogMap">
+    <select id="findAll" resultType="viewLog">
         SELECT * FROM THURXE_CVIEWL
     </select>    
     
     <!-- 기본키 데이터 중복여부 조회 -->
-    <select id="countById" parameterType="Long" resultMap="viewLogMap">
+    <select id="countById" parameterType="Long" resultType="viewLog">
         SELECT COUNT(*)
         FROM THURXE_CVIEWL WHERE PAG_LOG_SNO=#{PAG_LOG_SNO}
     </select>
@@ -34,7 +34,7 @@
             CLI_IP_ADDR, 
             USR_CNC_ENV_INF, 
             REQ_URL_ADDR, 
-            CALL_DTM
+            GNT_DTM
         )            
         VALUES
         (
@@ -43,7 +43,7 @@
             #{CLI_IP_ADDR},
             #{USR_CNC_ENV_INF},
             #{REQ_URL_ADDR},
-            #{CALL_DTM}
+            #{GNT_DTM}
         )
     </insert>   
     

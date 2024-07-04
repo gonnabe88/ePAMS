@@ -1,15 +1,11 @@
 package epams.com.admin.dto;
 
-import java.time.LocalDate;
+import epams.com.admin.entity.LogViewEntity;
+import lombok.*;
+
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import epams.com.admin.entity.LogViewEntity;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 
 /***
  * @author 140024
@@ -70,7 +66,7 @@ public class LogViewDTO {
      * @implNote 호출시간
      * @since 2024-06-09
      */
-    private LocalDate callTime;
+    private LocalDateTime callTime;
 
     /***
      * @author 140024
@@ -79,13 +75,13 @@ public class LogViewDTO {
      */
     public static LogViewDTO toDTO(final LogViewEntity entity) {
         return new LogViewDTO(
-                entity.getSEQ_ID(),
+                entity.getPAG_LOG_SNO(),
                 entity.getCTRL_NM(),
                 entity.getMTH_NM(),
                 entity.getCLI_IP_ADDR(),
                 entity.getUSR_CNC_ENV_INF(),
                 entity.getREQ_URL_ADDR(),
-                entity.getCALL_DTM());
+                entity.getGNT_DTM());
     }
 
     /***
@@ -95,13 +91,13 @@ public class LogViewDTO {
      */
     public static LogViewEntity toEntity(final LogViewDTO dto) {
         return LogViewEntity.builder()
-                .SEQ_ID(dto.getSeqId())
+                .PAG_LOG_SNO(dto.getSeqId())
                 .CTRL_NM(dto.getControllerName())
                 .MTH_NM(dto.getMethodName())
                 .CLI_IP_ADDR(dto.getClientIp())
                 .USR_CNC_ENV_INF(dto.getUserAgent())
                 .REQ_URL_ADDR(dto.getRequestUrl())
-                .CALL_DTM(dto.getCallTime())
+                .GNT_DTM(dto.getCallTime())
                 .build();
     }
 

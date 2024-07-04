@@ -1,12 +1,5 @@
 package epams.com.board.entity;
 
-import java.time.LocalDate;
-
-import org.hibernate.annotations.Comment;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
@@ -14,6 +7,12 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Comment;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import java.time.LocalDateTime;
 
 /***
  * @author 140024
@@ -34,7 +33,7 @@ public class BaseEntity {
     @UpdateTimestamp
     @Column(name = "AMN_DTM", insertable = false, columnDefinition = "DATE")
     @Comment("수정일시")
-    private LocalDate AMN_DTM;
+    private LocalDateTime AMN_DTM;
 	
 	/***
 	 * @author 140024
@@ -44,5 +43,5 @@ public class BaseEntity {
     @CreationTimestamp
     @Column(name = "GNT_DTM", updatable = false, columnDefinition = "DATE")
     @Comment("생성일시")
-    private LocalDate GNT_DTM;
+    private LocalDateTime GNT_DTM;
 }

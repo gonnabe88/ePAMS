@@ -43,7 +43,7 @@ public class LoginOTPRepository {
 	 * @implNote 기본키 검색
 	 * @since 2024-06-09
 	 */
-    public Long countById(LoginOTPDTO loginOTP) {
+    public Long countById(final LoginOTPDTO loginOTP) {
         return sql.selectOne("LoginOTP.countById", LoginOTPDTO.toEntity(loginOTP));
     }
     
@@ -52,7 +52,7 @@ public class LoginOTPRepository {
 	 * @implNote 신규 데이터 입력
 	 * @since 2024-06-09
 	 */
-    public void insert(LoginOTPDTO loginOTP) {
+    public void insert(final LoginOTPDTO loginOTP) {
         sql.insert("LoginOTP.insert", LoginOTPDTO.toEntity(loginOTP));
     }
     
@@ -61,7 +61,7 @@ public class LoginOTPRepository {
 	 * @implNote 기존 데이터 삭제
 	 * @since 2024-06-09
 	 */
-    public void delete(LoginOTPDTO loginOTP) {
+    public void delete(final LoginOTPDTO loginOTP) {
         sql.delete("LoginOTP.delete", LoginOTPDTO.toEntity(loginOTP));
     }
     
@@ -70,7 +70,7 @@ public class LoginOTPRepository {
 	 * @implNote 데이터 업데이트(기본키 제외)
 	 * @since 2024-06-09
 	 */
-    public void update(LoginOTPDTO loginOTP) {
+    public void update(final LoginOTPDTO loginOTP) {
         sql.update("LoginOTP.update", LoginOTPDTO.toEntity(loginOTP));
     }
     
@@ -79,9 +79,9 @@ public class LoginOTPRepository {
 	 * @implNote 데이터 업데이트(기본키 제외)
 	 * @since 2024-06-09
 	 */
-    public LoginOTPDTO findValidOneByUsername(LoginOTPDTO loginOTP) {
+    public LoginOTPDTO findValidOneByUsername(final LoginOTPDTO loginOTP) {
     	
-    	LoginOTPEntity loginOTPEntity = sql.selectOne("LoginOTP.findValidOneByUsername", LoginOTPDTO.toEntity(loginOTP));
+    	final LoginOTPEntity loginOTPEntity = sql.selectOne("LoginOTP.findValidOneByUsername", LoginOTPDTO.toEntity(loginOTP));
     	return LoginOTPDTO.toDTO(loginOTPEntity);
     }
 

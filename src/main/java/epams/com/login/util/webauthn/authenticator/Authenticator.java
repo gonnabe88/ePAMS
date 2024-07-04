@@ -1,12 +1,8 @@
 package epams.com.login.util.webauthn.authenticator;
 
-import java.util.Optional;
-
+import epams.com.board.entity.BaseEntity;
 import org.hibernate.annotations.Comment;
 
-import com.yubico.webauthn.RegistrationResult;
-import com.yubico.webauthn.data.AttestedCredentialData;
-import com.yubico.webauthn.data.AuthenticatorAttestationResponse;
 import com.yubico.webauthn.data.ByteArray;
 
 import epams.com.login.util.webauthn.user.AppUser;
@@ -34,7 +30,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Table(name = "THURXE_CWCRDM")
 @Comment("인사_외부근태 Webauthn자격증명기본")
-public class Authenticator {
+public class Authenticator extends BaseEntity {
 
     /**
      * @author K140024
@@ -101,12 +97,16 @@ public class Authenticator {
      * @implNote Authenticator 생성자
      * @since 2024-06-11
      */
-    public Authenticator(final RegistrationResult result, final AuthenticatorAttestationResponse response, final AppUser user) {
-        final Optional<AttestedCredentialData> attestationData = response.getAttestation().getAuthenticatorData().getAttestedCredentialData();
-        this.credentialId = result.getKeyId().getId();
-        this.publicKey = result.getPublicKeyCose();
-        this.aaguid = attestationData.get().getAaguid();
-        this.count = result.getSignatureCount();
+    public Authenticator(
+    		final ByteArray credentialId,
+    		final ByteArray publicKey,
+    		final ByteArray aaguid,
+    		final Long count,
+    		final AppUser user) {
+    	this.credentialId = credentialId;
+        this.publicKey = publicKey;
+        this.aaguid = aaguid;
+        this.count = count;
         this.user = user;
     }
 }

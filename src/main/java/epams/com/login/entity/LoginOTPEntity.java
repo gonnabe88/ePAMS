@@ -1,18 +1,13 @@
 package epams.com.login.entity;
 
-import java.time.LocalDate;
-import org.hibernate.annotations.Comment;
-import org.hibernate.annotations.CreationTimestamp;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Comment;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.time.LocalDateTime;
 
 
 /***
@@ -34,8 +29,8 @@ public class LoginOTPEntity {
      * @since 2024-06-09
      */
     @Id 
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment
-    @Column(name = "OTP_ISN_SNO")
+    @GeneratedValue(strategy = GenerationType.IDENTITY) 
+    @Column(name = "OTP_ISN_SNO", columnDefinition = "NUMBER(22)")
     @Comment("OTP발급일련번호")
     private Long OTP_ISN_SNO;
     
@@ -44,7 +39,7 @@ public class LoginOTPEntity {
      * @implNote 행번
      * @since 2024-06-09
      */
-    @Column(name = "ENO", length = 20, nullable = false) // 크기 20, not null
+    @Column(name = "ENO", length = 32, nullable = false)
     @Comment("사원번호")
     private String ENO; //행번
     
@@ -53,7 +48,7 @@ public class LoginOTPEntity {
      * @implNote OTP 번호
      * @since 2024-06-09
      */
-    @Column(name = "OTP_SMS_CER_NO", length = 8) // 크기 20, not null
+    @Column(name = "OTP_SMS_CER_NO", length = 8) 
     @Comment("OTPSMS인증번호")
     private String OTP_SMS_CER_NO; //OTP
     
@@ -62,9 +57,9 @@ public class LoginOTPEntity {
      * @implNote MFA 인증방식
      * @since 2024-06-09
      */
-    @Column(name = "CER_KD_NM", length = 10)
+    @Column(name = "CER_KD_NM", length = 100)
     @Comment("인증종류명")
-    private String CER_KD_NM; //MfA 방식
+    private String CER_KD_NM; 
     
     
     /***
@@ -73,8 +68,8 @@ public class LoginOTPEntity {
      * @since 2024-06-09
      */
     @CreationTimestamp
-    @Column(name = "GNT_TIME", updatable = false, columnDefinition = "DATE")
+    @Column(name = "GNT_DTM", updatable = false, columnDefinition = "DATE")
     @Comment("생성시간")
-    private LocalDate GNT_TIME; //OTP 생성 시간
+    private LocalDateTime GNT_DTM;
     
 }

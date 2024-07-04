@@ -1,15 +1,12 @@
 package epams.com.admin.dto;
 
-import java.time.LocalDate;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import epams.com.admin.entity.HtmlEntity;
+import lombok.*;
+
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import epams.com.admin.entity.HtmlEntity;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 
 /***
  * @author 140024
@@ -42,14 +39,16 @@ public class HtmlDTO {
      * @implNote 생성시간
      * @since 2024-06-09
      */
-    private LocalDate createdTime;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime createdTime;
 
     /***
      * @author 140024
      * @implNote 수정시간
      * @since 2024-06-09
      */
-    private LocalDate updatedTime;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime updatedTime;
 
     /***
      * @author 140024

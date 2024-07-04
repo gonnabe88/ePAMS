@@ -56,7 +56,7 @@ public class CodeEntity extends BaseEntity implements Serializable {
      * @implNote 코드명
      * @since 2024-06-09
      */
-    @Column(name="CDVA_NM", length = 100, nullable = false)
+    @Column(name="CDVA_NM", length = 200, nullable = false)
     @Comment("코드값명")
     private String CDVA_NM;
 
@@ -65,7 +65,7 @@ public class CodeEntity extends BaseEntity implements Serializable {
      * @implNote 코드형식
      * @since 2024-06-09
      */
-    @Column(name="CDVA_KD_NM", length = 100, nullable = false) // 크기 20, not null
+    @Column(name="CDVA_KD_NM", length = 200, nullable = false) // 크기 20, not null
     @Comment("코드값종류명")
     private String CDVA_KD_NM;
     

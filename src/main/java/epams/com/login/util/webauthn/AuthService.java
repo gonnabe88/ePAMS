@@ -172,25 +172,25 @@ public class AuthService {
                 context.setAuthentication(authentication);
                 SecurityContextHolder.setContext(context);
                 session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, context);
-                logRepository.insert(LogLoginDTO.getDTO(iamUserDTO.getUsername(), SIMPLEAUTH_STR, true));
+                logRepository.insert(LogLoginDTO.getDTO(iamUserDTO.getUsername(), SIMPLEAUTH_STR, '1'));
                 response.put("status", "OK");
                 response.put("redirectUrl", "/index");
             } else {
-                logRepository.insert(LogLoginDTO.getDTO(iamUserDTO.getUsername(), SIMPLEAUTH_STR, false));
+                logRepository.insert(LogLoginDTO.getDTO(iamUserDTO.getUsername(), SIMPLEAUTH_STR, '0'));
                 response.put("status", "BAD_REQUEST");
                 response.put("redirectUrl", "/login");
                 status = HttpStatus.BAD_REQUEST;
             }
         } catch (JsonProcessingException e) {
-            logRepository.insert(LogLoginDTO.getDTO(iamUserDTO.getUsername(), SIMPLEAUTH_STR, false));
+            logRepository.insert(LogLoginDTO.getDTO(iamUserDTO.getUsername(), SIMPLEAUTH_STR, '0'));
             log.error("Error processing JSON: ", e);
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error processing JSON.", e);
         } catch (AssertionFailedException e) {
-            logRepository.insert(LogLoginDTO.getDTO(iamUserDTO.getUsername(), SIMPLEAUTH_STR, false));
+            logRepository.insert(LogLoginDTO.getDTO(iamUserDTO.getUsername(), SIMPLEAUTH_STR, '0'));
             log.error("Assertion failed: ", e);
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Authentication failed", e);
         } catch (IOException e) {
-            logRepository.insert(LogLoginDTO.getDTO(iamUserDTO.getUsername(), SIMPLEAUTH_STR, false));
+            logRepository.insert(LogLoginDTO.getDTO(iamUserDTO.getUsername(), SIMPLEAUTH_STR, '0'));
             log.error("Failed to save credential: ", e);
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Failed to save credential, please try again!", e);
         }
@@ -214,11 +214,12 @@ public class AuthService {
     ) {
         final AppUser existingUser = service.getUserRepo().findByUsername(username);
         final List<Authenticator> existingAuthUser = service.getAuthRepository().findAllByUser(existingUser);
+        final Utility util = new Utility();
         if (existingAuthUser.isEmpty()) {
             final UserIdentity userIdentity = UserIdentity.builder()
                 .name(username)
                 .displayName(username)
-                .id(Utility.generateRandom(32))
+                .id(util.generateRandom(32))
                 .build();
             final AppUser saveUser = new AppUser(userIdentity.getName(), userIdentity.getDisplayName(), userIdentity.getId());
             service.getUserRepo().save(saveUser);
@@ -285,6 +286,7 @@ public class AuthService {
             final AppUser user = service.getUserRepo().findByUsername(username);
             
             final PublicKeyCredentialCreationOptions requestOptions = PublicKeyCredentialCreationOptions.fromJson((String) session.getAttribute(user.getUsername()));
+            
             log.warn("requestOptions");
             if (requestOptions != null) {
                 final PublicKeyCredential<AuthenticatorAttestationResponse, ClientRegistrationExtensionOutputs> pkc = PublicKeyCredential.parseRegistrationResponseJson(credential);
@@ -292,9 +294,14 @@ public class AuthService {
                     .request(requestOptions)
                     .response(pkc)
                     .build();
-                
+                final AuthenticatorAttestationResponse response = pkc.getResponse();
                 final RegistrationResult result = relyingParty.finishRegistration(options);
-                final Authenticator savedAuth = new Authenticator(result, pkc.getResponse(), user);
+                final Authenticator savedAuth = new Authenticator(
+                		result.getKeyId().getId(),
+                		result.getPublicKeyCose(),
+                		response.getAttestation().getAuthenticatorData().getAttestedCredentialData().get().getAaguid(),
+                		result.getSignatureCount(), 
+                		user);
                 service.getAuthRepository().save(savedAuth);
                 return ResponseEntity.ok("Registration successful!");
             } else {

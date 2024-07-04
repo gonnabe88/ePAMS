@@ -1,8 +1,13 @@
 package com.kdb;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import epams.EPamsApplication;
+import epams.com.member.dto.IamUserDTO;
+import epams.com.member.repository.MemberRepository;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -10,23 +15,13 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.crypto.password.PasswordEncoder;
-
-import epams.EPamsApplication;
-import epams.com.member.dto.IamUserDTO;
-import epams.com.member.repository.MemberRepository;
-import lombok.NoArgsConstructor;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author K140024
  * @implNote 회원을 등록하는 테스트 클래스
  * @since 2024-06-11
  */
-@NoArgsConstructor
 @SpringBootTest(classes = EPamsApplication.class)
 class IamUserRegistTests {
 

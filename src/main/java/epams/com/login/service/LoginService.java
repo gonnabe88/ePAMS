@@ -1,5 +1,7 @@
 package epams.com.login.service;
 
+import epams.com.admin.dto.LogLoginDTO;
+import epams.com.admin.repository.LogRepository;
 import org.springframework.stereotype.Service;
 
 import epams.com.config.security.CustomGeneralEncryptionException;
@@ -35,6 +37,13 @@ public class LoginService {
      * ShaEncryptService 인스턴스
      */
     private final ShaEncryptService encshaService;
+
+    /**
+     * @author K140024
+     * @implNote 로그인 기록 저장소 주입
+     * @since 2024-06-11
+     */
+    private final LogRepository logRepository;
 
     /**
      * OTP 로그인 처리
@@ -89,7 +98,15 @@ public class LoginService {
         }
         // username & password(hash)와 일치하는 사용자를 찾음
         final IamUserDTO isiamUserDTO = loginRepository.login(iamUserDTO);
-        return isiamUserDTO.getUsername() != null;
+        final boolean result = isiamUserDTO.getUsername() != null;
+        if(!result) {
+            if(log.isWarnEnabled())
+            {
+                log.warn("로그인 실패: {}", iamUserDTO.getUsername());
+            }
+            logRepository.insert(LogLoginDTO.getDTO(iamUserDTO.getUsername(), "ID/PW", '0'));
+        }
+        return result;
     }
 
 }

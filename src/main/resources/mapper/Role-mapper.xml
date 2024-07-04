@@ -7,7 +7,7 @@
     <select id="findOneRoleByUsername" parameterType="iamUser" resultType="role">
         SELECT * FROM THURXE_CROLEM
         WHERE
-            ENO = #{ENO}
+            ENO = #{EMP_NO}
     </select>
 
     <!-- 모든 데이터 조회 -->
@@ -25,13 +25,13 @@
     <insert id="insert" parameterType="role">
         INSERT INTO THURXE_CROLEM(
             ENO,
-            ROLE_ID,
-            AMT_DTM,
+            ATH_ID,
+            AMN_DTM,
             GNT_DTM
         )
         VALUES(
             #{ENO},
-            #{ROLE_ID},
+            #{ATH_ID},
             SYSDATE,
             SYSDATE
         )
@@ -49,7 +49,7 @@
         UPDATE THURXE_CROLEM
         SET
             ENO = #{ENO},
-            ROLE_ID = #{ROLE_ID},
+            ATH_ID = #{ATH_ID},
             AMN_DTM = SYSDATE
         WHERE
             ENO = #{ENO}

@@ -4,21 +4,21 @@
 
 <mapper namespace="CodeHtmlMap">
 
-    <!-- Result Map 정의 -->
+    <!-- Result Map 정의
     <resultMap id="codeHtmlMap" type="codeHtml">
         <id property="CDVA_ID" column="CDVA_ID"/>
         <id property="HTML_PTH_NM" column="HTML_PTH_NM"/>
         <result property="AMN_DTM" column="AMN_DTM"/>
         <result property="GNT_DTM" column="GNT_DTM"/>
-    </resultMap>
+    </resultMap>-->
 
     <!-- 모든 데이터 조회 -->
-    <select id="findAll" resultMap="codeHtmlMap">
+    <select id="findAll" resultType="codeHtml">
         SELECT * FROM THURXE_CCDHTR
     </select>    
     
     <!-- 기본키 데이터 중복여부 조회 -->
-    <select id="countById" parameterType="Long" resultMap="codeHtmlMap">
+    <select id="countById" parameterType="Long" resultType="codeHtml">
         SELECT COUNT(*)
         FROM THURXE_CCDHTR WHERE HTML_PTH_NM=#{HTML_PTH_NM} AND CDVA_ID=#{CDVA_ID}
     </select>

@@ -47,6 +47,13 @@ public class AuthRestController {
      * @since 2024-06-22
      */
     private final AuthService authService;
+    
+    /**
+     * @author K140024
+     * @implNote 간편인증 등록 서비스
+     * @since 2024-06-22
+     */
+    private final AuthRegistService authRegistService;
 
     /**
      * @author K140024
@@ -88,8 +95,7 @@ public class AuthRestController {
         if (username == null || username.isEmpty() || !username.matches("^[a-zA-Z0-9]{7,}$")) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid username");
         }
-        final String sanitizedUsername = Encode.forHtml(username);
-        return authService.startLogin(sanitizedUsername, session);
+        return authService.startLogin(Encode.forHtml(username), session);
     }
 
     /**
@@ -134,7 +140,7 @@ public class AuthRestController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid username");
         }
         final String sanitizedUsername = Encode.forHtml(username);
-        return authService.newUserRegistration(sanitizedUsername, session);
+        return authRegistService.newUserRegistration(sanitizedUsername, session);
     }
 
     /**
@@ -152,7 +158,7 @@ public class AuthRestController {
         final HttpSession session
     ) {
     	log.warn("POST finishauth");
-        return authService.finishRegistration(credential, session);
+        return authRegistService.finishRegistration(credential, session);
     }
 
     /**

@@ -28,7 +28,7 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
      * @param exception 인증 예외
      */
     @Override
-    public void onAuthenticationFailure(final HttpServletRequest request, HttpServletResponse response,
+    public void onAuthenticationFailure(final HttpServletRequest request, final HttpServletResponse response,
             AuthenticationException exception) throws IOException, ServletException {
         
         // 인증 실패 시 응답 상태를 500으로 설정합니다.

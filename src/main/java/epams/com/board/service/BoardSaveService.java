@@ -11,7 +11,8 @@ import org.springframework.web.multipart.MultipartFile;
 import epams.com.board.dto.BoardDTO;
 import epams.com.board.dto.BoardFileDTO;
 import epams.com.board.repository.BoardFileRepository;
-import epams.com.board.repository.BoardRepository;
+import epams.com.board.repository.BoardMainRepository;
+import epams.com.board.repository.BoardSaveRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -38,8 +39,15 @@ public class BoardSaveService {
      * @implNote BoardRepository2 주입
      * @since 2024-04-26
      */
-    private final BoardRepository boardRepo;
+    private final BoardSaveRepository boardSaveRepo;
 
+    /**
+     * @author K140024
+     * @implNote BoardMainRepository 주입
+     * @since 2024-04-26
+     */
+    private final BoardMainRepository boardMainRepo;
+    
     /**
      * @author K140024
      * @implNote BoardFileRepository2 주입
@@ -57,7 +65,7 @@ public class BoardSaveService {
 
         if (newBoardDTO.getBoardFile() != null) { // 새로운 첨부파일이 있는 경우
             newBoardDTO.setFileAttached(FILE_ATTACHED); // 첨부파일 여부 1 세팅
-            newBoardDTO.setSeqId(boardRepo.save(newBoardDTO)); // 게시글 저장 & 채번된 게시글 ID 세팅
+            newBoardDTO.setSeqId(boardSaveRepo.save(newBoardDTO)); // 게시글 저장 & 채번된 게시글 ID 세팅
             for (final MultipartFile boardFile : newBoardDTO.getBoardFile()) {
                 final String originalFilename = boardFile.getOriginalFilename(); // 파일명 세팅
                 final String storedFileName = System.currentTimeMillis() + "_" + originalFilename; // 저장 파일명 세팅
@@ -68,19 +76,8 @@ public class BoardSaveService {
                 boardFileRepo.saveFile(boardFileDTO); // DBMS에 파일 정보 저장
             }
         } else {
-            newBoardDTO.setSeqId(boardRepo.save(newBoardDTO)); // 첨부파일이 없는 경우
+            newBoardDTO.setSeqId(boardSaveRepo.save(newBoardDTO)); // 첨부파일이 없는 경우
         }
-        return findById(newBoardDTO.getSeqId()); // 저장한 게시물 객체 리턴
+        return boardMainRepo.findById(newBoardDTO.getSeqId()); // 저장한 게시물 객체 리턴
     }
-
-    /**
-     * @author K140024
-     * @implNote 게시물 ID로 게시물 조회
-     * @since 2024-04-26
-     */
-    @Transactional
-    public BoardDTO findById(final Long seqId) {
-        return boardRepo.findById(seqId);
-    }
-
 }

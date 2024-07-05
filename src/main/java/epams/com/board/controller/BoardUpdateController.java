@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import epams.com.board.dto.BoardDTO;
 import epams.com.board.dto.BoardFileDTO;
+import epams.com.board.service.BoardMainService;
 import epams.com.board.service.BoardUpdateService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -55,6 +56,13 @@ public class BoardUpdateController {
      */
     @Value("${kdb.maxPageBtn}")
     private int maxPageBtn;
+    
+    /**
+     * @author K140024
+     * @implNote 게시글 관련 서비스
+     * @since 2024-04-26
+     */
+    private final BoardMainService boardMainServ;
     
     /**
      * @author K140024
@@ -100,11 +108,11 @@ public class BoardUpdateController {
     @GetMapping("/update/{seqId}")
     public String updateForm(@PathVariable("seqId") final Long seqId, final Model model) {
         final int FILE_ATTACHED = 1; // 상수로 리터럴 값을 추출
-        final BoardDTO boardDTO = boardUpdateServ.findById(seqId);
+        final BoardDTO boardDTO = boardMainServ.findById(seqId);
         model.addAttribute("board", boardDTO);
         
         if (boardDTO.getFileAttached() == FILE_ATTACHED) {
-            final List<BoardFileDTO> boardFileDTOList = boardUpdateServ.findFile(seqId);
+            final List<BoardFileDTO> boardFileDTOList = boardMainServ.findFile(seqId);
             model.addAttribute("boardFileList", boardFileDTOList);
         }
         

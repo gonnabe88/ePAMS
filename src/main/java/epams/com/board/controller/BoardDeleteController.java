@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import epams.com.board.service.BoardService;
+import epams.com.board.service.BoardDeleteService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -52,7 +52,7 @@ public class BoardDeleteController {
      * @implNote 게시글 관련 서비스
      * @since 2024-04-26
      */
-    private final BoardService boardService;
+    private final BoardDeleteService boardDelService;
 
     /**
      * @author K140024
@@ -61,7 +61,7 @@ public class BoardDeleteController {
      */
     @GetMapping("/delete/{seqId}")
     public ResponseEntity<String> delete(@PathVariable("seqId") final Long seqId) {
-        boardService.delete(seqId);
+        boardDelService.delete(seqId);
         return ResponseEntity.ok("/board/list");
     }
     
@@ -73,6 +73,6 @@ public class BoardDeleteController {
     @DeleteMapping("{boardId}/deleteFile/{seqId}")
     public ResponseEntity<String> deleteFile(@PathVariable("boardId") final Long boardId, @PathVariable("seqId") final Long seqId) {
         log.warn("deleteFile 컨트롤러");
-    	return ResponseEntity.ok(boardService.deleteFile(seqId, boardId));
+    	return ResponseEntity.ok(boardDelService.deleteFile(seqId, boardId));
     }
 }

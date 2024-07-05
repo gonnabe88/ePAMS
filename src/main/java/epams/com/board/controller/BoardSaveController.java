@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import epams.com.board.dto.BoardDTO;
-import epams.com.board.service.BoardService;
+import epams.com.board.service.BoardSaveService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -58,7 +58,7 @@ public class BoardSaveController {
      * @implNote 게시글 관련 서비스
      * @since 2024-04-26
      */
-    private final BoardService boardService;
+    private final BoardSaveService boardSaveService;
 
     /**
      * @author K140024
@@ -94,7 +94,7 @@ public class BoardSaveController {
     @PostMapping("/save")
     public ResponseEntity<String> save(@ModelAttribute final BoardDTO boardDTO) throws IOException {
         boardDTO.setBoardWriter(authentication().getName());        
-        final Long seqId = boardService.save(boardDTO).getSeqId();
+        final Long seqId = boardSaveService.save(boardDTO).getSeqId();
         final String redirectUrl = "/board/" + seqId;
         return ResponseEntity.ok(redirectUrl);
     }

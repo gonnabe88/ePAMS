@@ -9,17 +9,29 @@ import org.springframework.stereotype.Component;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * CustomAuthenticationFailureHandler는 인증 실패 시 실행되는 핸들러입니다.
+ */
 @Slf4j
-@Component(value = "authenticationFailureHandler")
+@NoArgsConstructor
+@Component("authenticationFailureHandler")
 public class CustomAuthenticationFailureHandler implements AuthenticationFailureHandler {
-	
-	@Override
-	public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
-			AuthenticationException exception) throws IOException, ServletException {
-		
-		// TODO Auto-generated method stub
-		response.setStatus(500);		
-	}	
+    
+    /**
+     * 인증 실패 시 호출되는 메소드입니다.
+     * 
+     * @param request  현재 HTTP 요청
+     * @param response 현재 HTTP 응답
+     * @param exception 인증 예외
+     */
+    @Override
+    public void onAuthenticationFailure(final HttpServletRequest request, HttpServletResponse response,
+            AuthenticationException exception) throws IOException, ServletException {
+        
+        // 인증 실패 시 응답 상태를 500으로 설정합니다.
+        response.setStatus(500);
+    }    
 }

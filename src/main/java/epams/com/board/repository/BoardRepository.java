@@ -9,9 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import epams.com.board.dto.BoardDTO;
 import epams.com.board.dto.BoardFileDTO;
-import epams.com.board.dto.BoardImageDTO;
 import epams.com.board.entity.BoardEntity;
-import epams.com.board.entity.BoardImageEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -118,26 +116,5 @@ public class BoardRepository {
 	 */
     public void delete(final Long seqId) {
         sql.delete("Board.delete", seqId);
-    }
-
-	/***
-	 * @author 140024
-	 * @implNote 게시물에 삽입된 이미지 추가
-	 * @since 2024-06-09
-	 */
-    public void insertBoardImage(final BoardImageDTO boardImageDTO) {
-    	sql.insert("BoardImage.insertBoardImage", boardImageDTO.toEntity());
-    }
-    
-	/***
-	 * @author 140024
-	 * @implNote 게시물에 삽입된 이미지 찾기
-	 * @since 2024-06-09
-	 */
-    public BoardImageDTO findBoardstoredFilename(final String storedFileName) {
-    	final BoardImageEntity boardImageEntity = sql.selectOne("BoardImage.selectBoardImage", storedFileName);
-    	return BoardImageDTO.toDTO(boardImageEntity);
-    }
-    
-    
+    }    
 }

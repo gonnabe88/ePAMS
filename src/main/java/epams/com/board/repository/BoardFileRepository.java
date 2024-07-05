@@ -6,9 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import epams.com.board.dto.BoardFileDTO;
-import epams.com.board.dto.BoardImageDTO;
 import epams.com.board.entity.BoardFileEntity;
-import epams.com.board.entity.BoardImageEntity;
 import lombok.RequiredArgsConstructor;
 
 /***
@@ -63,26 +61,5 @@ public class BoardFileRepository {
 	 */
     public void deleteFile(final Long seqId) {
         sql.delete("BoardFile.deleteFile", seqId);
-    }
-
-	/***
-	 * @author 140024
-	 * @implNote 게시물에 삽입된 이미지 추가
-	 * @since 2024-06-09
-	 */
-    public void insertBoardImage(final BoardImageDTO boardImageDTO) {
-    	sql.insert("BoardImage.insertBoardImage", boardImageDTO);
-    }
-    
-	/***
-	 * @author 140024
-	 * @implNote 게시물에 삽입된 이미지 찾기
-	 * @since 2024-06-09
-	 */
-    public BoardImageDTO findBoardstoredFilename(final String storedFileName) {
-    	final BoardImageEntity boardImageEntity = sql.selectOne("BoardImage.selectBoardImage", storedFileName);
-    	return BoardImageDTO.toDTO(boardImageEntity);
-    }
-    
-    
+    }    
 }

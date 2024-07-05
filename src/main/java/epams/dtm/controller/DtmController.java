@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import epams.com.admin.service.CodeHtmlDetailService;
 import epams.com.board.dto.BoardDTO;
-import epams.com.board.service.BoardService;
+import epams.com.board.service.BoardMainService;
 import epams.com.member.entity.TempUserEntity;
 import epams.com.member.service.MemberDetailsService;
 import epams.dtm.dto.BasePeriodDTO;
@@ -62,7 +62,7 @@ public class DtmController<S extends Session> {
      * @implNote 게시판 서비스 주입
      * @since 2024-06-11
      */
-    private final BoardService boardService;
+    private final BoardMainService boardService;
 
     /**
      * @author K140024

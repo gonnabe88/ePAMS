@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import epams.com.board.dto.BoardDTO;
 import epams.com.board.dto.BoardFileDTO;
-import epams.com.board.service.BoardService;
+import epams.com.board.service.BoardUpdateService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -61,7 +61,7 @@ public class BoardUpdateController {
      * @implNote 게시글 관련 서비스
      * @since 2024-04-26
      */
-    private final BoardService boardService;
+    private final BoardUpdateService boardUpdateServ;
 
     /**
      * @author K140024
@@ -87,7 +87,7 @@ public class BoardUpdateController {
     @PostMapping("/update")
     public String update(@ModelAttribute final BoardDTO boardDTO, final Model model) throws IOException {
         boardDTO.setBoardWriter(authentication().getName());
-        final BoardDTO board = boardService.update(boardDTO);
+        final BoardDTO board = boardUpdateServ.update(boardDTO);
         model.addAttribute("board", board);
         return "/common/detail";
     }
@@ -100,11 +100,11 @@ public class BoardUpdateController {
     @GetMapping("/update/{seqId}")
     public String updateForm(@PathVariable("seqId") final Long seqId, final Model model) {
         final int FILE_ATTACHED = 1; // 상수로 리터럴 값을 추출
-        final BoardDTO boardDTO = boardService.findById(seqId);
+        final BoardDTO boardDTO = boardUpdateServ.findById(seqId);
         model.addAttribute("board", boardDTO);
         
         if (boardDTO.getFileAttached() == FILE_ATTACHED) {
-            final List<BoardFileDTO> boardFileDTOList = boardService.findFile(seqId);
+            final List<BoardFileDTO> boardFileDTOList = boardUpdateServ.findFile(seqId);
             model.addAttribute("boardFileList", boardFileDTOList);
         }
         

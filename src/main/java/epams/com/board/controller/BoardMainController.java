@@ -22,7 +22,7 @@ import org.springframework.web.util.UriUtils;
 
 import epams.com.board.dto.BoardDTO;
 import epams.com.board.dto.BoardFileDTO;
-import epams.com.board.service.BoardService;
+import epams.com.board.service.BoardMainService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -66,7 +66,7 @@ public class BoardMainController {
      * @implNote 게시글 관련 서비스
      * @since 2024-04-26
      */
-    private final BoardService boardService;
+    private final BoardMainService boardService;
     
     /**
      * @author K140024
@@ -112,8 +112,7 @@ public class BoardMainController {
     public ResponseEntity<List<BoardFileDTO>> getFileList(@PathVariable("boardId") final Long boardId) {
         final List<BoardFileDTO> boardFileList = boardService.findFile(boardId);
         return ResponseEntity.ok(boardFileList);
-    }
-    
+    }    
     
     /**
      * @author K140024

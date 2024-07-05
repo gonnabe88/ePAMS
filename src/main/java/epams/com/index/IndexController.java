@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import epams.com.admin.service.CodeHtmlDetailService;
 import epams.com.board.dto.BoardDTO;
-import epams.com.board.service.BoardService;
+import epams.com.board.service.BoardMainService;
 import epams.com.login.util.webauthn.RegistrationService;
 import epams.com.login.util.webauthn.authenticator.Authenticator;
 import epams.com.login.util.webauthn.user.AppUser;
@@ -56,7 +56,7 @@ public class IndexController<S extends Session> {
      * @implNote 게시판 서비스 주입
      * @since 2024-06-11
      */
-    private final BoardService boardService;
+    private final BoardMainService boardService;
 
     /**
      * @author K140024

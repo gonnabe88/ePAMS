@@ -31,6 +31,11 @@ repositories {
 dependencies {
     providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 
+	// jUnit
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.0'
+    testImplementation 'org.junit.platform:junit-platform-suite-engine:1.10.0' // JUnit Platform Suite 추가
+
     // webauthn
     implementation 'com.yubico:webauthn-server-core:2.5.2'
 

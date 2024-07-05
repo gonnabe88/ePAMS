@@ -23,7 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import epams.com.board.dto.BoardImageDTO;
-import epams.com.board.service.BoardService;
+import epams.com.board.service.BoardImageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -67,7 +67,7 @@ public class BoardImageController {
      * @implNote 게시글 관련 서비스
      * @since 2024-04-26
      */
-    private final BoardService boardService;
+    private final BoardImageService boardImgService;
 
     /**
      * @author K140024
@@ -91,7 +91,7 @@ public class BoardImageController {
                 final BoardImageDTO boardImageDTO = new BoardImageDTO();
                 boardImageDTO.setOriginalFileName(originalFilename);
                 boardImageDTO.setStoredFileName(storedFilename);
-                boardService.saveBoardImage(boardImageDTO);
+                boardImgService.saveBoardImage(boardImageDTO);
 
                 final String fileUrl = "/board/upload/image/" + storedFilename;
 

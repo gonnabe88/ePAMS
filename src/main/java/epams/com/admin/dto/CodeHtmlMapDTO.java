@@ -1,15 +1,19 @@
 package epams.com.admin.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import epams.com.admin.entity.CodeEntity;
-import epams.com.admin.entity.CodeHtmlEntity;
-import epams.com.admin.entity.HtmlEntity;
-import lombok.*;
-
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import epams.com.admin.entity.CodeEntity;
+import epams.com.admin.entity.CodeHtmlEntity;
+import epams.com.admin.entity.HtmlEntity;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 /***
  * @author 140024

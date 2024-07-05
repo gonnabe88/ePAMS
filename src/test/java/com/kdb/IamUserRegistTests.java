@@ -1,21 +1,24 @@
 package com.kdb;
 
-import epams.EPamsApplication;
-import epams.com.member.dto.IamUserDTO;
-import epams.com.member.repository.MemberRepository;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
-
-import static org.junit.jupiter.api.Assertions.*;
+import epams.EPamsApplication;
+import epams.com.member.dto.IamUserDTO;
+import epams.com.member.repository.MemberRepository;
 
 /**
  * @author K140024
@@ -31,7 +34,7 @@ class IamUserRegistTests {
      * @since 2024-06-11
      */
     @Autowired
-    private MemberRepository memberRepository;
+    private final MemberRepository memberRepository;
 
     /**
      * @author K140024
@@ -39,15 +42,29 @@ class IamUserRegistTests {
      * @since 2024-06-11
      */
     @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     /**
      * @author K140024
      * @implNote 사용자 정보를 받아올 DTO List
      * @since 2024-06-11
      */
-    private final List<IamUserDTO> testUsers = new ArrayList<>();
+    private final List<IamUserDTO> testUsers;
 
+    /**
+     * 생성자
+     *
+     */
+    @Autowired
+    public IamUserRegistTests(
+    		final MemberRepository memberRepository,
+    		final PasswordEncoder passwordEncoder,
+    		final List<IamUserDTO> testUsers) {
+        this.memberRepository = memberRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.testUsers = testUsers;
+    }
+    
     /**
      * @author K140024
      * @implNote 테스트 데이터 설정
@@ -75,14 +92,14 @@ class IamUserRegistTests {
                                 .username(temp)
                                 .realname("박종훈")
                                 .password(passwordEncoder.encode("kdb1234!"))
-                                .createdDate(LocalDate.now())
+                                .createdDate(LocalDateTime.now())
                                 .build();
                     } else {
                         dto = IamUserDTO.builder()
                                 .username(temp)
                                 .realname(names.get(random.nextInt(25)))
                                 .password(passwordEncoder.encode("kdb1234!"))
-                                .createdDate(LocalDate.now())
+                                .createdDate(LocalDateTime.now())
                                 .build();
                     }
                     memberRepository.insert(dto);

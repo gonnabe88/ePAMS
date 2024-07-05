@@ -139,8 +139,7 @@ public class AuthRestController {
         if (username == null || username.isEmpty() || !username.matches("^[a-zA-Z0-9]{7,}$")) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid username");
         }
-        final String sanitizedUsername = Encode.forHtml(username);
-        return authRegistService.newUserRegistration(sanitizedUsername, session);
+        return authRegistService.newUserRegistration(Encode.forHtml(username), session);
     }
 
     /**

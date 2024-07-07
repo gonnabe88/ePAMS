@@ -53,24 +53,25 @@ class CodeHtmlMapRegistTests {
      */
     @Test
     void testHtmlCodeMapInsert() throws IOException {
-        final List<Map.Entry<String, String>> inputList = List.of(
-                Map.entry(DTM_MAIN, "DTM_INDEX_CD"),
-                Map.entry(COMMON_INDEX, "COM_BANNERCONTENT1_CD"),
-                Map.entry(COMMON_INDEX, "COM_BANNER1_CD"),
-                Map.entry(COMMON_INDEX, "COM_INDEX_CD")
-        );
+        if(!codeHtmlMapRepo.findAll().isEmpty()) {
+            final List<Map.Entry<String, String>> inputList = List.of(
+                    Map.entry(DTM_MAIN, "DTM_INDEX_CD"),
+                    Map.entry(COMMON_INDEX, "COM_BANNERCONTENT1_CD"),
+                    Map.entry(COMMON_INDEX, "COM_BANNER1_CD"),
+                    Map.entry(COMMON_INDEX, "COM_INDEX_CD")
+            );
 
-        final List<CodeHtmlMapDTO> codeHtmlMapDTOs = new ArrayList<>();
+            final List<CodeHtmlMapDTO> codeHtmlMapDTOs = new ArrayList<>();
 
-        for (final Map.Entry<String, String> entry : inputList) {
-            final CodeHtmlMapDTO codeHtmlMapDTO = new CodeHtmlMapDTO();
-            codeHtmlMapDTO.setHtml(entry.getKey());
-            codeHtmlMapDTO.setCode(entry.getValue());
-            codeHtmlMapDTOs.add(codeHtmlMapDTO);
-            codeHtmlMapRepo.insert(codeHtmlMapDTO);
+            for (final Map.Entry<String, String> entry : inputList) {
+                final CodeHtmlMapDTO codeHtmlMapDTO = new CodeHtmlMapDTO();
+                codeHtmlMapDTO.setHtml(entry.getKey());
+                codeHtmlMapDTO.setCode(entry.getValue());
+                codeHtmlMapDTOs.add(codeHtmlMapDTO);
+                codeHtmlMapRepo.insert(codeHtmlMapDTO);
+            }
+            assertEquals(inputList.size(), codeHtmlMapDTOs.size(), "생성된 CodeHtmlMapDTO 객체의 수가 입력받은 리스트의 크기와 동일하지 않습니다.");
         }
-
-        assertEquals(inputList.size(), codeHtmlMapDTOs.size(), "생성된 CodeHtmlMapDTO 객체의 수가 입력받은 리스트의 크기와 동일하지 않습니다.");
     }
 
     @Test

@@ -70,18 +70,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 // 간편인증 WebAuthn 인증 로직
-const updateSpinnerText = (text) => {
-    document.getElementById('spinner-text').innerText = text;
+
+const showSpinnerButton = () => {
+    const loginBtn = document.getElementById('login');
+    loginBtn.innerHTML = `
+            <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+            <span role="status">Loading...</span>
+        `;
+    loginBtn.setAttribute('disabled', 'true');
 }
 
 const webauthn = (e) => {
     const header = document.querySelector('meta[name="_csrf_header"]').content;
     const token = document.querySelector('meta[name="_csrf"]').content;
     e.preventDefault();
-    const formData = new FormData(e.target);    
+    const formData = new FormData(e.target);
 
-	document.getElementById('spinner').style.display = 'flex'; // 스피너 표시
-	updateSpinnerText('간편인증 요청...'); // 초기 요청 중
+    showSpinnerButton();
 
     console.time("total");
     console.time("fetch /api/webauthn/login");
@@ -94,12 +99,10 @@ const webauthn = (e) => {
     })
     .then(response => {
         console.timeEnd("fetch /api/webauthn/login");
-        updateSpinnerText('간편인증 응답 대기...'); // 초기 응답 처리 중
         return initialCheckStatus(response);
     })
     .then(credentialGetJson => {
         console.time("parse credentialGetJson");
-        updateSpinnerText('간편인증 자격증명 수신...'); // 자격 증명 파싱 중
         const result = {
             publicKey: {
                 ...credentialGetJson.publicKey,
@@ -117,13 +120,11 @@ const webauthn = (e) => {
     })
     .then(credentialGetOptions => {
         console.time("navigator.credentials.get");
-        updateSpinnerText('간편인증 실행중'); // 인증 장치에서 자격 증명 요청 중
         return navigator.credentials.get(credentialGetOptions);
     })
     .then(publicKeyCredential => {
         console.timeEnd("navigator.credentials.get");
         console.time("process publicKeyCredential");
-        updateSpinnerText('간편인증 인증기기 처리 중...'); // 인증 장치 응답 처리 중
         const result = {
             type: publicKeyCredential.type,
             id: publicKeyCredential.id,
@@ -140,7 +141,6 @@ const webauthn = (e) => {
     })
     .then((encodedResult) => {
         console.time("fetch /api/webauthn/welcome");
-        updateSpinnerText('간편인증 인증 요청...'); // 최종 요청 중
         const formData = new FormData();
         formData.append("credential", JSON.stringify(encodedResult));
         formData.append("username", document.querySelector('input[name="username"]').value);
@@ -155,7 +155,6 @@ const webauthn = (e) => {
     })
     .then(response => {
         console.timeEnd("fetch /api/webauthn/welcome");
-        updateSpinnerText('간편인증 인증 응답...'); // 최종 응답 처리 중
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
@@ -164,7 +163,6 @@ const webauthn = (e) => {
     })
     .then(data => {
         console.timeEnd("response.json");
-        document.getElementById('spinner').style.display = 'none'; // 스피너 숨김
         if (data.status === 'OK') {
             console.timeEnd("total");
             
@@ -197,7 +195,6 @@ const webauthn = (e) => {
     })
     .catch(error => {
         console.timeEnd("total");
-        document.getElementById('spinner').style.display = 'none'; // 스피너 숨김
         console.error('Error:', error);
         popupMsg(error);
     });

@@ -31,6 +31,10 @@ repositories {
 dependencies {
     providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 
+    // angola
+    implementation 'com.algolia:algoliasearch-core:3.16.5'
+    implementation 'com.algolia:algoliasearch-java-net:3.16.5'
+
 	// jUnit
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.0'

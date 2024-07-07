@@ -6,6 +6,8 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  *
  * 수정사항
+ * 20240706 (K140024) carousel-img-1, carousel-img-2, carousel-img-3 media query 추가
+ * 20240706 (K140024) main-content class 추가
  * 20240617 (K140024) Font unicode U+AC00-U+D7AF(한글) 추가 
  */
  
@@ -7054,7 +7056,8 @@ fieldset:disabled .btn {
 }
 
 .carousel-img-1{
-		background-image: url(/images/kdb/banner/office_1920x420.png);
+    background-image: linear-gradient(to right top, #baa0f2, #c5aff6, #d1bff9, #dccefc, #e8deff);
+        /*background-image: url(/images/kdb/banner/office_1920x420.png);*/
 		/* background-color: #845EC2; */
 	    background-repeat: no-repeat;
 	    background-size: cover;
@@ -7063,11 +7066,10 @@ fieldset:disabled .btn {
 	    height: 35vh;
 }
 
-
-
 @media (max-width: 1100px) {
 	.carousel-img-1{
-		background-image: url(/images/kdb/banner/office_1400x360.png);
+        background-image: linear-gradient(to right top, #baa0f2, #c5aff6, #d1bff9, #dccefc, #e8deff);
+        /*background-image: url(/images/kdb/banner/office_1400x360.png);*/
 	    background-repeat: no-repeat;
 	    background-size: cover;
 	    background-position: center; /* 이미지가 정 중앙에 오도록 설정 */
@@ -7078,7 +7080,8 @@ fieldset:disabled .btn {
 	
 @media (max-width: 550px) {
 	.carousel-img-1{
-		background-image: url(/images/kdb/banner/office_400x260.png);
+        background-image: linear-gradient(to right top, #baa0f2, #c5aff6, #d1bff9, #dccefc, #e8deff);
+        /*background-image: url(/images/kdb/banner/office_400x260.png);*/
 	    background-repeat: no-repeat;
 	    background-size: cover;
 	    background-position: center; /* 이미지가 정 중앙에 오도록 설정 */
@@ -7089,7 +7092,8 @@ fieldset:disabled .btn {
 
 
 .carousel-img-2{
-		background-image: url(/images/kdb/banner/right_shifted_1920x420_from_user.png);
+        background-image: linear-gradient(to right top, #80abfe, #96bdff, #afceff, #c8dfff, #e4f0ff);
+		/*background-image: url(/images/kdb/banner/right_shifted_1920x420_from_user.png);*/
 		/* background-color: #2C73D2; */
 	    background-repeat: no-repeat;
 	    background-size: cover;
@@ -7101,7 +7105,8 @@ fieldset:disabled .btn {
 
 @media (max-width: 1100px) {
 	.carousel-img-2{
-		background-image: url(/images/kdb/banner/right_shifted_1400x340_from_user.png);
+        background-image: linear-gradient(to right top, #80abfe, #96bdff, #afceff, #c8dfff, #e4f0ff);
+		/*background-image: url(/images/kdb/banner/right_shifted_1400x340_from_user.png);*/
 	    background-repeat: no-repeat;
 	    background-size: cover;
 	    background-position: center; /* 이미지가 정 중앙에 오도록 설정 */
@@ -7113,7 +7118,8 @@ fieldset:disabled .btn {
 	
 @media (max-width: 550px) {
 	.carousel-img-2{
-		background-image: url(/images/kdb/banner/right_shifted_400x260_from_user.png);
+        background-image: linear-gradient(to right top, #80abfe, #96bdff, #afceff, #c8dfff, #e4f0ff);
+		/*background-image: url(/images/kdb/banner/right_shifted_400x260_from_user.png);*/
 	    background-repeat: no-repeat;
 	    background-size: cover;
 	    background-position: center; /* 이미지가 정 중앙에 오도록 설정 */
@@ -7124,7 +7130,8 @@ fieldset:disabled .btn {
 
 
 .carousel-img-3{
-		background-image: url(/images/kdb/banner/latest_image_1920x420.png);
+        background-image: linear-gradient(to right top, #f9f871, #f9fa8f, #f9fcab, #fafec6, #fcffe0);
+		/*background-image: url(/images/kdb/banner/latest_image_1920x420.png);*/
 		/* background-color: #2C73D2; */
 	    background-repeat: no-repeat;
 	    background-size: cover;
@@ -7136,7 +7143,8 @@ fieldset:disabled .btn {
 
 @media (max-width: 1100px) {
 	.carousel-img-3{
-		background-image: url(/images/kdb/banner/latest_image_1400x360.png);
+        background-image: linear-gradient(to right top, #f9f871, #f9fa8f, #f9fcab, #fafec6, #fcffe0);
+		/*background-image: url(/images/kdb/banner/latest_image_1400x360.png);*/
 	    background-repeat: no-repeat;
 	    background-size: cover;
 	    background-position: center; /* 이미지가 정 중앙에 오도록 설정 */
@@ -7148,7 +7156,8 @@ fieldset:disabled .btn {
 	
 @media (max-width: 550px) {
 	.carousel-img-3{
-		background-image: url(/images/kdb/banner/latest_image_400x260.png);
+        background-image: linear-gradient(to right top, #f9f871, #f9fa8f, #f9fcab, #fafec6, #fcffe0);
+		/*background-image: url(/images/kdb/banner/latest_image_400x260.png);*/
 	    background-repeat: no-repeat;
 	    background-size: cover;
 	    background-position: center; /* 이미지가 정 중앙에 오도록 설정 */
@@ -24347,6 +24356,13 @@ body .bi:before,
 
 #main-content {
     flex-grow: 1
+}
+
+.main-content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    padding: 1rem;
 }
 
 .page-heading {

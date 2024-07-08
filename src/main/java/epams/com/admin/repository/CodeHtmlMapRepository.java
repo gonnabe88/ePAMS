@@ -2,6 +2,7 @@ package epams.com.admin.repository;
 
 import java.util.List;
 
+import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -15,6 +16,7 @@ import lombok.RequiredArgsConstructor;
  * @implNote Code 정보를 DBMS에서 가져오기 위한 레파지토리 
  * @since 2024-06-14
  */
+@Slf4j
 @Repository
 @RequiredArgsConstructor
 public class CodeHtmlMapRepository {
@@ -42,8 +44,9 @@ public class CodeHtmlMapRepository {
 	 * @since 2024-06-09
 	 */
     public List<CodeHtmlMapDTO> findAll() {
-    	final List<CodeHtmlEntity> htmlEntitys = sql.selectList("CodeHtmlMap.findAll");
-        return CodeHtmlMapDTO.toDTOList(htmlEntitys);
+    	final List<CodeHtmlEntity> htmlEntity = sql.selectList("CodeHtmlMap.findAll");
+		log.warn("htmlEntity: {}", htmlEntity.toString());
+        return CodeHtmlMapDTO.toDTOList(htmlEntity);
     }
     
 	/***

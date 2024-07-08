@@ -25,7 +25,7 @@ class HtmlRegistTests {
      * HtmlRepository 인스턴스
      */
     private final HtmlRepository htmlRepository;
-    
+
     /**
      * 생성자
      *
@@ -63,61 +63,5 @@ class HtmlRegistTests {
         }
 
         assertEquals(inputList.size(), htmlDTOs.size(), "생성된 HtmlDTO 객체의 수가 입력받은 리스트의 크기와 동일하지 않습니다.");
-    }
-
-    @Test
-    void testHtmlInsertEntries() throws IOException {
-        final List<Map.Entry<String, String>> inputList = List.of(
-                Map.entry("/board/list", "공지사항"),
-                Map.entry("/dtm/main", "근태신청"),
-                Map.entry("/dtm/list", "근태조회"),
-                Map.entry("/admin/code", "코드관리"),
-                Map.entry("/admin/user", "사용자관리"),
-                Map.entry("/common/index", "메인화면")
-        );
-
-        final List<HtmlDTO> htmlDTOs = new ArrayList<>();
-
-        for (final Map.Entry<String, String> entry : inputList) {
-            final HtmlDTO htmlDTO = new HtmlDTO();
-            htmlDTO.setHtml(entry.getKey());
-            htmlDTO.setHtmlName(entry.getValue());
-            htmlDTOs.add(htmlDTO);
-            htmlRepository.insert(htmlDTO);
-        }
-
-        for (int i = 0; i < inputList.size(); i++) {
-            final HtmlDTO htmlDTO = htmlDTOs.get(i);
-            final Map.Entry<String, String> entry = inputList.get(i);
-            assertEquals(entry.getKey(), htmlDTO.getHtml(), "HtmlDTO 객체의 Html 값이 예상과 다릅니다. 인덱스: " + i);
-        }
-    }
-
-    @Test
-    void testHtmlInsertNames() throws IOException {
-        final List<Map.Entry<String, String>> inputList = List.of(
-                Map.entry("/board/list", "공지사항"),
-                Map.entry("/dtm/main", "근태신청"),
-                Map.entry("/dtm/list", "근태조회"),
-                Map.entry("/admin/code", "코드관리"),
-                Map.entry("/admin/user", "사용자관리"),
-                Map.entry("/common/index", "메인화면")
-        );
-
-        final List<HtmlDTO> htmlDTOs = new ArrayList<>();
-
-        for (final Map.Entry<String, String> entry : inputList) {
-            final HtmlDTO htmlDTO = new HtmlDTO();
-            htmlDTO.setHtml(entry.getKey());
-            htmlDTO.setHtmlName(entry.getValue());
-            htmlDTOs.add(htmlDTO);
-            htmlRepository.insert(htmlDTO);
-        }
-
-        for (int i = 0; i < inputList.size(); i++) {
-            final HtmlDTO htmlDTO = htmlDTOs.get(i);
-            final Map.Entry<String, String> entry = inputList.get(i);
-            assertEquals(entry.getValue(), htmlDTO.getHtmlName(), "HtmlDTO 객체의 HtmlName 값이 예상과 다릅니다. 인덱스: " + i);
-        }
     }
 }

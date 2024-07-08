@@ -36,6 +36,16 @@ public class MemberService {
     }
 
     /**
+     * 부서/팀 목록을 리턴하는 메소드
+     *
+     * @param searchValue 검색 값
+     * @return 검색된 회원 목록
+     */
+    public List<IamUserDTO> findAllDept() {
+        return memberRepository.findAllDept();
+    }
+
+    /**
      * 모든 사용자를 조회하는 메소드
      * 
      * @since 2024-06-11

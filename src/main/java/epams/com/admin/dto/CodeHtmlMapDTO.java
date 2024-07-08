@@ -82,10 +82,12 @@ public class CodeHtmlMapDTO {
      */
     public static CodeHtmlMapDTO toDTO(final CodeHtmlEntity entity) {
         final CodeHtmlMapDTO dto = new CodeHtmlMapDTO();
-        dto.setHtml(entity.getHtmlEntity().getHTML_PTH_NM());
-        dto.setCode(entity.getCodeEntity().getCDVA_ID());
-        dto.setCreatedTime(entity.getGNT_DTM());
-        dto.setUpdatedTime(entity.getAMN_DTM());
+        if(entity.getHtmlEntity() != null & entity.getCodeEntity() != null) {
+            dto.setHtml(entity.getHtmlEntity().getHTML_PTH_NM());
+            dto.setCode(entity.getCodeEntity().getCDVA_ID());
+            dto.setCreatedTime(entity.getGNT_DTM());
+            dto.setUpdatedTime(entity.getAMN_DTM());
+        }
         return dto;
     }
 

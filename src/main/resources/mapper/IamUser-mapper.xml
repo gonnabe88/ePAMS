@@ -6,8 +6,13 @@
     <!-- 모든 데이터 조회 -->
     <select id="findAll" resultType="iamUser">
         SELECT * FROM OHR.IF_IAM_USER
-    </select>     
-    
+    </select>
+
+    <!-- 모든 데이터 조회 -->
+    <select id="findAllDept" resultType="iamUser">
+        SELECT DISTINCT(A.EMP_NM) FROM OHR.IF_IAM_USER A
+    </select>
+
     <!-- ID/PW 일치 사용자 조회 -->
     <select id="login" parameterType="iamUser" resultType="iamUser">
         SELECT 

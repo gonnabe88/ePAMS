@@ -36,6 +36,7 @@ spring:
     username: ehr
     password: kdb1234!
 
+  # 나중에 실제로 운영에 배포할 떄는 꼭 지울것
   jpa:
     open-in-view: true
     hibernate:

@@ -19,7 +19,7 @@
 					<div class="page-heading">
 						<div class="align-middle">
 							<h2>
-								<i class="bi bi-bell-fill"></i> 코드관리
+								<i class="bi bi-bell-fill"></i> 화면코드관리
 							</h2>
 							<br>
 							<div class="d-flex flex-wrap gap-2 justify-content-start align-items-center mb-3">
@@ -56,9 +56,34 @@
 				</div>
 			</div>
 		</div>
+
+		<!-- Modal for user search -->
+		<div class="modal fade" id="userSearchModal" tabindex="-1" role="dialog" aria-labelledby="userSearchModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="userSearchModalLabel">검색</h5>
+						<button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="d-flex justify-content-center">
+						<input type="text" id="searchUserInput" class="form-control" placeholder="Search user...">
+						<button type="button" class="btn btn-primary" id="searchUserButton"><i class="bi bi-search"></i></button>
+						</div>
+						<ul id="userSearchResults" class="list-group mt-3">
+							<!-- Results will be appended here -->
+						</ul>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+						<button type="button" class="btn btn-primary" id="applySelection">적용</button>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
-
-
 
 	<!-- (start) private script -->
 	<th:block layout:fragment="script">
@@ -66,13 +91,13 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/luxon@3.4.4/build/global/luxon.min.js"></script>
 	<script src="/extensions/tabulator/kdb_tabulator.js"></script>
+	<script src="/extensions/tabulator/kdb_tabulator_search.js"></script>
 	<script>
 
-		window.url = "/api/admin/code"
+		window.url = "/api/admin/codeHtmlMap"
 		window.columns = [
-			{ title: "코드", field: "code", sorter: "string", minWidth: 100 },
-	        { title: "코드명", field: "codeName", sorter: "string", editor: "input", minWidth: 100 },
-	        { title: "코드타입", field: "codeType", sorter: "string", editor: "input" },
+			{ title: "화면명", field: "html", sorter: "string", editor: function(cell, onRendered, success, cancel) { return searchEditor(cell, onRendered, success, cancel, '/api/admin/html', 'html'); },  minWidth: 100 },
+	        { title: "코드명", field: "code", sorter: "string", editor: function(cell, onRendered, success, cancel) { return searchEditor(cell, onRendered, success, cancel, '/api/admin/code', 'code'); }, minWidth: 100 },
 	        { title: "변경일자", field: "updatedTime", sorter: "datetime", sorterParams:{format:"yyyy-MM-dd HH:mm:ss"}},
 	        { title: "등록일자", field: "createdTime", sorter: "datetime", sorterParams:{format:"yyyy-MM-dd HH:mm:ss"}}
 		]

@@ -3,15 +3,6 @@
 
 <mapper namespace="LogLogin">
     
-    <!-- Result Map 정의
-    <resultMap id="logLoginMap" type="logLogin">
-        <id property="LGN_LOG_SNO" column="LGN_LOG_SNO"/>
-        <result property="ENO" column="ENO"/>
-        <result property="LGN_KD_NM" column="LGN_KD_NM"/>
-        <result property="LGN_SCS_YN" column="LGN_SCS_YN"/>
-        <result property="GNT_DTM" column="GNT_DTM"/>
-    </resultMap> -->
-    
     <!-- 모든 데이터 조회 -->
     <select id="findAll" resultType="logLogin">
         SELECT * FROM THURXE_CLOGNL
@@ -40,7 +31,20 @@
             #{LGN_SCS_YN},
             SYSDATE
         )
-    </insert>   
+    </insert>
+
+    <!-- 일자별 건수 조회 -->
+    <select id="findLoginCountsByDate" resultType="epams.com.admin.dto.CountByDateDTO">
+        SELECT
+            TO_CHAR(GNT_DTM, 'YYYY-MM-DD') AS createdDate,
+            COUNT(*) AS count
+        FROM
+            THURXE_CLOGNL
+        GROUP BY
+            TO_CHAR(GNT_DTM, 'YYYY-MM-DD')
+        ORDER BY
+            TO_CHAR(GNT_DTM, 'YYYY-MM-DD')
+    </select>
     
     <!-- 기존 데이터 삭제 (로그 테이블 특성상 불필요) --> 
     

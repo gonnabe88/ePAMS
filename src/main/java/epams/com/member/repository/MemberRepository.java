@@ -45,6 +45,17 @@ public class MemberRepository {
     /**
      * *
      * @author 140024
+     * @implNote 모든 부서/팀 조회
+     * @since 2024-06-09
+     */
+    public List<IamUserDTO> findAllDept() {
+        final List<IamUserEntity> iamUserEntities = sql.selectList("IamUser.findAllDept");
+        return IamUserDTO.toDTOs(iamUserEntities);
+    }
+
+    /**
+     * *
+     * @author 140024
      * @implNote 특정 키워드 통합 조회
      * @since 2024-06-09
      */

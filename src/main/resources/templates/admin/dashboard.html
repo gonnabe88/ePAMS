@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org" layout:decorate="~{common/layout/layout}">
+
+<head>
+    <!-- (start) private script -->
+    <th:block layout:fragment="css">
+        <link rel="stylesheet" href="/extensions/apexcharts/apexcharts.css">
+    </th:block>
+    <!-- (end) private script -->
+</head>
+
+<body>
+<div layout:fragment="contents">
+    <div class="container">
+        <div id="main-content">
+            <h2>
+                <i class="bi bi-bell-fill"></i> 대시보드
+            </h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title"> 로그인 성공/실패 이력 </h4>
+                        </div>
+                        <div class="card-body">
+                            <div id="login-chart"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title"> View 페이지 호출 건수 </h4>
+                        </div>
+                        <div class="card-body">
+                            <div id="viewlog-chart"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title"> 로그인 종류 </h4>
+                        </div>
+                        <div class="card-body">
+                            <div id="login-type-chart"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title"> View 페이지 호출 건수 </h4>
+                        </div>
+                        <div class="card-body">
+                            <div id="viewlog-chart"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- (start) private script -->
+<th:block layout:fragment="script">
+    <script src="/extensions/apexcharts/apexcharts.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // 로그인 성공/실패 이력 데이터를 가져와서 그래프를 그리기
+            fetch('/api/admin/logincount')
+                .then(response => response.json())
+                .then(data => {
+                    const categories = data.map(item => item.createdDate);
+                    const successData = data.map(item => item.successCount);
+                    const failureData = data.map(item => item.failureCount);
+
+                    const loginData = { categories, successData, failureData };
+
+                    var options = {
+                        series: [
+                            {
+                                name: "성공",
+                                data: loginData.successData
+                            },
+                            {
+                                name: "실패",
+                                data: loginData.failureData
+                            }
+                        ],
+                        chart: {
+                            type: 'line',
+                            height: 350,
+                            dropShadow: {
+                                enabled: true,
+                                color: '#000',
+                                top: 18,
+                                left: 7,
+                                blur: 10,
+                                opacity: 0.2
+                            },
+                            toolbar: {
+                                show: false
+                            }
+                        },
+                        colors: ['#2d8cda', '#c96363'],
+                        dataLabels: {
+                            enabled: true,
+                        },
+                        stroke: {
+                            curve: 'smooth'
+                        },
+                        markers: {
+                            size: 1
+                        },
+                        xaxis: {
+                            categories: loginData.categories,
+                            title: {
+                                text: '날짜'
+                            }
+                        },
+                        yaxis: {
+                            title: {
+                                text: '건수'
+                            }
+                        }
+                    };
+
+                    var chart = new ApexCharts(document.querySelector('#login-chart'), options);
+                    chart.render();
+                });
+
+            // View 페이지 호출 건수 데이터를 가져와서 그래프를 그리기
+            fetch('/api/admin/viewcount')
+                .then(response => response.json())
+                .then(data => {
+                    const categories = data.map(item => item.createdDate);
+                    const totalData = data.map(item => item.totalCount);
+
+                    const viewLogData = { categories, totalData };
+
+                    var options = {
+                        series: [
+                            {
+                                name: "페이지뷰",
+                                data: viewLogData.totalData
+                            }
+                        ],
+                        chart: {
+                            type: 'line',
+                            height: 350,
+                            dropShadow: {
+                                enabled: true,
+                                color: '#000',
+                                top: 18,
+                                left: 7,
+                                blur: 10,
+                                opacity: 0.2
+                            },
+                            toolbar: {
+                                show: false
+                            }
+                        },
+                        colors: ['#2d8cda'],
+                        dataLabels: {
+                            enabled: true,
+                        },
+                        stroke: {
+                            curve: 'smooth'
+                        },
+                        markers: {
+                            size: 1
+                        },
+                        xaxis: {
+                            categories: viewLogData.categories,
+                            title: {
+                                text: '날짜'
+                            }
+                        },
+                        yaxis: {
+                            title: {
+                                text: '건수'
+                            }
+                        }
+                    };
+
+                    var chart = new ApexCharts(document.querySelector('#viewlog-chart'), options);
+                    chart.render();
+                });
+
+            // 로그인 종류별 성공 건수 데이터를 가져와서 파이 차트를 그리기
+            fetch('/api/admin/logintype')
+                .then(response => response.json())
+                .then(data => {
+                    const labels = data.map(item => item.category);
+                    const series = data.map(item => item.totalCount);
+
+                    var options = {
+                        series: series,
+                        chart: {
+                            width: 380,
+                            type: 'pie',
+                        },
+                        labels: labels,
+                        responsive: [{
+                            breakpoint: 480,
+                            options: {
+                                chart: {
+                                    width: 200
+                                },
+                                legend: {
+                                    position: 'bottom'
+                                }
+                            }
+                        }]
+                    };
+
+                    var chart = new ApexCharts(document.querySelector("#login-type-chart"), options);
+                    chart.render();
+                });
+
+        });
+    </script>
+</th:block>
+<!-- (end) private script -->
+</body>
+</html>

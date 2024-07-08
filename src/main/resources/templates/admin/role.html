@@ -6,6 +6,64 @@
 <th:block layout:fragment="css">
 	<link rel="stylesheet" href="/extensions/tabulator/tabulator_modern.min.css">
 	<link rel="stylesheet" href="/extensions/tabulator/kdb_tabulator.css">
+	<style>
+		/* CSS 코드 */
+		.org-closed {
+			display: none;
+			padding-inline-start: 5px;
+		}
+
+		.org {
+			padding-inline-start: 5px;
+		}
+
+		.org-item.has-sub > a::after {
+			padding-inline-start: 5px;
+			content: "\25BC"; /* 화살표 아이콘 (아래 방향) */
+			float: right;
+			margin-left: 5px;
+		}
+
+		.org-item.has-sub.open > a::after {
+			padding-inline-start: 5px;
+			content: "\25B2"; /* 화살표 아이콘 (위 방향) */
+		}
+
+		.org-item.has-sub .org {
+			display: none;
+			padding-inline-start: 5px;
+			animation: slideDown 0.5s forwards;
+		}
+
+		.org-item.has-sub.open .org {
+			display: block;
+			padding-inline-start: 5px;
+			animation: slideDown 0.5s forwards;
+		}
+
+		@keyframes slideDown {
+			from {
+				max-height: 0;
+				opacity: 0;
+			}
+			to {
+				max-height: 500px; /* 원하는 최대 높이로 설정 */
+				opacity: 1;
+			}
+		}
+
+		ul.orghead, ul.orghead li {
+			/* Marker 안보이게 수정 */
+			list-style-type: none;
+			padding-inline-start: 5px;
+		}
+
+		.org-item a::marker {
+			/* Marker 안보이게 수정 */
+			content: "";
+		}
+
+	</style>
 </th:block>
 <!-- (end) private script -->
 </head>
@@ -55,28 +113,160 @@
 				</div>
 			</div>
 		</div>
-	</div>
 
+		<!-- Modal for user search -->
+		<div class="modal fade" id="userSearchModal" tabindex="-1" role="dialog" aria-labelledby="userSearchModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="userSearchModalLabel">사용자 검색</h5>
+						<button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="row">
+							<div class="col-6">
+								<ul class="orghead">
+									<li class="org-item has-sub">
+										<a href="#" class="org-link">
+											<i class="bi bi-collection-fill"></i>
+											<span>수석부행장</span>
+										</a>
+										<ul class="org org-closed">
+											<li class="org-item has-sub">
+												<a href="extra-component-avatar.html" class="org-link">리스크관리부문</a>
+												<ul class="org org-closed">
+													<li class="org-item has-sub">
+														<a href="extra-component-avatar.html" class="org-link">리스크관리본부</a>
+														<ul class="org org-closed">
+															<li class="org-item">
+																<a href="extra-component-avatar.html" class="org-link">리스크관리팀</a>
+															</li>
+														</ul>
+													</li>
+													<li class="org-item has-sub">
+														<a href="extra-component-avatar.html" class="org-link">IDT본부</a>
+														<ul class="org org-closed">
+															<li class="org-item">
+																<a href="extra-component-avatar.html" class="org-link">IT기획부</a>
+															</li>
+															<li class="org-item">
+																<a href="extra-component-avatar.html" class="org-link">디지털금융부</a>
+															</li>
+															<li class="org-item">
+																<a href="extra-component-avatar.html" class="org-link">코어금융부</a>
+															</li>
+														</ul>
+													</li>
+												</ul>
+											</li>
+											<li class="org-item has-sub">
+												<a href="extra-component-comment.html" class="org-link">경영관리부문</a>
+												<ul class="org org-closed">
+													<li class="org-item has-sub">
+														<a href="extra-component-avatar.html" class="org-link">리스크관리본부</a>
+														<ul class="org org-closed">
+															<li class="org-item">
+																<a href="extra-component-avatar.html" class="org-link">리스크관리팀</a>
+															</li>
+														</ul>
+													</li>
+													<li class="org-item has-sub">
+														<a href="extra-component-avatar.html" class="org-link">IDT본부</a>
+														<ul class="org org-closed">
+															<li class="org-item">
+																<a href="extra-component-avatar.html" class="org-link">IT기획부</a>
+															</li>
+															<li class="org-item">
+																<a href="extra-component-avatar.html" class="org-link">디지털금융부</a>
+															</li>
+															<li class="org-item">
+																<a href="extra-component-avatar.html" class="org-link">코어금융부</a>
+															</li>
+														</ul>
+													</li>
+												</ul>
+											</li>
+										</ul>
+									</li>
+								</ul>
+							</div>
+							<div class="col-6">
+								<input type="text" id="searchUserInput" class="form-control" placeholder="Search user...">
+								<ul id="userSearchResults" class="list-group mt-3">
+									<!-- Results will be appended here -->
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
 
 	<!-- (start) private script -->
 	<th:block layout:fragment="script">
-	<script type="text/javascript" src="https://unpkg.com/tabulator-tables/dist/js/tabulator.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
-	<script src="/extensions/tabulator/kdb_tabulator.js"></script>
-	<script>
-		window.url = "/api/admin/role"
-		window.columns = [
-			{ title: "행번", field: "username", sorter: "string", editor: "input", minWidth: 100 },
-	        { title: "역할", field: "roleId", sorter: "string", minWidth: 100, editor:"list", editorParams:{values:{"ROLE_ADMIN":"최고관리자", "ROLE_NORMAL":"일반사용자"}}},
-			{ title: "변경일자", field: "updatedTime", sorter: "date", minWidth: 100 },
-			{ title: "생성일자", field: "createdTime", sorter: "date", minWidth: 100 }
-		]
+		<script src="/extensions/tabulator/tabulator.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/luxon@3.4.4/build/global/luxon.min.js"></script>
+		<script src="/extensions/tabulator/kdb_tabulator.js"></script>
+		<script src="/extensions/tabulator/kdb_tabulator_membersearch.js"></script>
 
-	    document.addEventListener("DOMContentLoaded", function() {
-	        createTable(false, window.columns, window.url);
-	    });
-	</script>
+		<script>
+			// JavaScript 코드
+			document.addEventListener('DOMContentLoaded', function () {
+				const hasSubItems = document.querySelectorAll('.org-item.has-sub > a');
+
+				hasSubItems.forEach(item => {
+					item.addEventListener('click', function (event) {
+						event.preventDefault();
+						const parentItem = this.parentElement;
+						const subMenu = parentItem.querySelector('.org');
+
+						// 현재 클릭한 항목의 모든 자식 항목을 찾기
+						const allSubMenus = parentItem.parentElement.querySelectorAll('.org-item.has-sub .org');
+
+						// 다른 열린 하위 메뉴를 닫기
+						allSubMenus.forEach(menu => {
+							if (menu !== subMenu) {
+								menu.style.display = 'none';
+								menu.parentElement.classList.remove('open');
+							}
+						});
+
+						// 현재 클릭한 항목을 열거나 닫기
+						if (parentItem.classList.contains('open')) {
+							subMenu.style.display = 'none';
+							parentItem.classList.remove('open');
+						} else {
+							subMenu.style.display = 'block';
+							parentItem.classList.add('open');
+						}
+					});
+				});
+			});
+
+
+
+		</script>
+		<script>
+			window.url = "/api/admin/role";
+			window.columns = [
+				{ title: "행번", field: "username", sorter: "string", editor: userSearchEditor, minWidth: 100 },
+				{ title: "역할", field: "roleId", sorter: "string", minWidth: 100, editor:"list", editorParams:{values:{"ROLE_ADMIN":"최고관리자", "ROLE_NORMAL":"일반사용자"}}},
+				{ title: "변경일자", field: "updatedTime", sorter: "date", minWidth: 100 },
+				{ title: "생성일자", field: "createdTime", sorter: "date", minWidth: 100 }
+			];
+
+			document.addEventListener("DOMContentLoaded", function() {
+				createTable(false, window.columns, window.url);
+			});
+		</script>
 	</th:block>
 
 	<!-- (end) private script -->

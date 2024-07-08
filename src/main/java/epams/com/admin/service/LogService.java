@@ -33,5 +33,6 @@ public class LogService {
 	 */
     public List<LogLoginDTO> findAll() {    	
     	return logRepository.findAll();
-    }  
+    }
+
 }

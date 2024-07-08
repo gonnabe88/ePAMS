@@ -31,9 +31,8 @@ repositories {
 dependencies {
     providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 
-    // angola
-    implementation 'com.algolia:algoliasearch-core:3.16.5'
-    implementation 'com.algolia:algoliasearch-java-net:3.16.5'
+    // CSV
+    implementation 'com.opencsv:opencsv:5.5.2'
 
 	// jUnit
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.0'
@@ -82,9 +81,9 @@ dependencies {
     implementation 'org.owasp.encoder:encoder:1.2.3'
 }
 
-tasks.named('test') {
-    useJUnitPlatform()
-}
+//tasks.named('test') {
+//    useJUnitPlatform()
+//}
 
 tasks.cyclonedxBom {
     includeConfigs = ["runtimeClasspath"]

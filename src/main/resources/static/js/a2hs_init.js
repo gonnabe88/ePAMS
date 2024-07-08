@@ -19,6 +19,7 @@ installButton.addEventListener("click", async () => {
     if (!installPrompt) {
         return;
     }
+    console.log("installButton fired");
     const result = await installPrompt.prompt();
     installPrompt = null;
     installButton.setAttribute("hidden", "");

@@ -13,7 +13,7 @@ const defaultColumns = [
         headerSort: false,
         hozAlign: "center",
         width: 30,
-        cellClick: function(e, cell) {
+        cellClick: function (e, cell) {
             e.preventDefault(); // 기본 동작 막기
             e.stopPropagation(); // 이벤트 전파 막기
             cell.getRow().toggleSelect();
@@ -79,11 +79,11 @@ function createTable(selectableRange, columns, url) {
         columns: finalColumns,
         sortOrderReverse: true,
         initialSort: [
-            { column: "createdTime", dir: "desc" }
+            {column: "createdTime", dir: "desc"}
         ],
     });
 
-    table.on("cellEdited", function(cell) {
+    table.on("cellEdited", function (cell) {
         var row = cell.getRow().getData();
         if (!addedRowIds.has(row.id)) {
             console.log("Edited row:", row);
@@ -92,18 +92,18 @@ function createTable(selectableRange, columns, url) {
         }
     });
 
-    table.on("rowAdded", function(row) {
+    table.on("rowAdded", function (row) {
         var rowData = row.getData();
         console.log("Added row:", rowData);
         addedData.push(rowData);
         addedRowIds.add(rowData.id); // 추가된 행의 ID를 저장
         // Highlight all cells in the new row
-        row.getCells().forEach(function(cell) {
+        row.getCells().forEach(function (cell) {
             cell.getElement().classList.add("highlight-cell");
         });
     });
 
-    table.on("rowDeleted", function(row) {
+    table.on("rowDeleted", function (row) {
         var rowData = row.getData();
         console.log("Deleted row:", rowData);
         addedData = addedData.filter(item => item.id !== rowData.id);
@@ -111,22 +111,22 @@ function createTable(selectableRange, columns, url) {
         addedRowIds.delete(rowData.id); // 삭제된 행의 ID를 제거
     });
 
-    document.getElementById("add-row").addEventListener("click", function() {
+    document.getElementById("add-row").addEventListener("click", function () {
         table.addData({}, true);
     });
 
-    document.getElementById("del-row").addEventListener("click", function() {
+    document.getElementById("del-row").addEventListener("click", function () {
         var selectedRows = table.getSelectedRows();
-        selectedRows.forEach(function(row) {
+        selectedRows.forEach(function (row) {
             row.delete();
         });
     });
 
-    document.getElementById("reload").addEventListener("click", function() {
+    document.getElementById("reload").addEventListener("click", function () {
         table.setData(url);
     });
 
-    document.getElementById("save").addEventListener("click", function() {
+    document.getElementById("save").addEventListener("click", function () {
         console.log('editedData:', editedData);
         console.log('addedData:', addedData);
         console.log('deletedData:', deletedData);
@@ -169,7 +169,7 @@ function createTable(selectableRange, columns, url) {
 
     // 조회버튼 클릭 또는 엔터 시
     document.getElementById("search-button").addEventListener("click", performSearch);
-    document.getElementById("search-input").addEventListener("keyup", function(event) {
+    document.getElementById("search-input").addEventListener("keyup", function (event) {
         if (event.key === "Enter") {
             performSearch();
         }
@@ -181,8 +181,8 @@ function createTable(selectableRange, columns, url) {
             // Get all columns from the table
             var columns = table.getColumns();
             // Create filter conditions for all columns
-            var filters = columns.map(function(column) {
-                return { field: column.getField(), type: "like", value: searchValue };
+            var filters = columns.map(function (column) {
+                return {field: column.getField(), type: "like", value: searchValue};
             });
             table.setFilter([filters]); // Nested array for multiple filters
         } else {
@@ -191,13 +191,13 @@ function createTable(selectableRange, columns, url) {
     }
 
     // 초기화버튼 엔터 또는 클릭 시
-    document.getElementById("reset-button").addEventListener("click", function() {
+    document.getElementById("reset-button").addEventListener("click", function () {
         document.getElementById("search-input").value = "";
         table.clearFilter(); // Clear all filters
     });
 
     // 토글 버튼 이벤트 리스너 추가
-    document.getElementById("toggle-selectable").addEventListener("click", function() {
+    document.getElementById("toggle-selectable").addEventListener("click", function () {
         var currentSetting = table.options.selectableRange;
         table.destroy();
         createTable(!currentSetting, window.columns, window.url);

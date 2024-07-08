@@ -2,6 +2,7 @@ package epams.com.admin.entity;
 
 import java.io.Serializable;
 
+import lombok.*;
 import org.hibernate.annotations.Comment;
 
 import epams.com.board.entity.BaseEntity;
@@ -11,11 +12,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 /***
  * @author 140024
@@ -27,6 +23,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
+@ToString
 @Builder
 @Table(name = "THURXE_CCDHTR")
 @Comment("인사_외부근태 코드HTML관계")
@@ -64,7 +61,8 @@ public class CodeHtmlEntity extends BaseEntity implements Serializable {
         )
     @Comment("HTML경로명")
     private HtmlEntity htmlEntity;
-    
+
+
     /***
      * @author 140024
      * @implNote getter
@@ -83,4 +81,27 @@ public class CodeHtmlEntity extends BaseEntity implements Serializable {
         return this.codeEntity != null ? this.codeEntity.getCDVA_ID() : null;
     }
 
+    /***
+     * @author 140024
+     * @implNote setter for HTML_PTH_NM
+     * @since 2024-06-09
+     */
+    public void setHTML_PTH_NM(String html) {
+        if (this.htmlEntity == null) {
+            this.htmlEntity = new HtmlEntity();
+        }
+        this.htmlEntity.setHTML_PTH_NM(html);
+    }
+
+    /***
+     * @author 140024
+     * @implNote setter for CDVA_ID
+     * @since 2024-06-09
+     */
+    public void setCDVA_ID(String code) {
+        if (this.codeEntity == null) {
+            this.codeEntity = new CodeEntity();
+        }
+        this.codeEntity.setCDVA_ID(code);
+    }
 }

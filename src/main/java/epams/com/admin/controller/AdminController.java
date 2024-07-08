@@ -139,7 +139,7 @@ public class AdminController {
 
         /***
      * @author 140024
-     * @implNote 뷰 이력 (admin/login.html)
+     * @implNote 뷰 이력 (admin/viewlog.html)
      * @since 2024-06-09
      */
     @GetMapping("/viewlog")
@@ -149,7 +149,7 @@ public class AdminController {
 
     /***
      * @author 140024
-     * @implNote 뷰 이력 (admin/login.html)
+     * @implNote 역할 관리 (admin/role.html)
      * @since 2024-06-09
      */
     @GetMapping("/role")
@@ -157,5 +157,22 @@ public class AdminController {
         return "/admin/role";
     }
 
-
+    /***
+     * @author 140024
+     * @implNote 대시보드 (admin/dashboard.html)
+     * @since 2024-06-09
+     */
+    @GetMapping("/dashboard")
+    public String dashboard(HttpServletRequest request) {
+        return "/admin/dashboard";
+    }
+    /***
+     * @author 140024
+     * @implNote 화면코드관리 (admin/codeHtmlMap.html)
+     * @since 2024-06-09
+     */
+    @GetMapping("/codeHtmlMap")
+    public String codeHtmlMap(HttpServletRequest request) {
+        return "/admin/codeHtmlMap";
+    }
 }

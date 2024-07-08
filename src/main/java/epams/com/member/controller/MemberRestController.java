@@ -41,4 +41,8 @@ public class MemberRestController {
         return memberservice.findBySearchValue(text);
     }
 
+    @GetMapping("/deptlist")
+    public List<IamUserDTO> searchAllDept(final Model model) {
+        return memberservice.findAllDept();
+    }
 }

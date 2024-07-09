@@ -50,5 +50,17 @@
         WHERE 
             OTP_ISN_SNO = #{OTP_ISN_SNO}
     </delete>
-        
+
+    <!-- 모든 데이터 조회 -->
+    <select id="findValidOneByUsername" parameterType="loginOTP" resultType="loginOTP">
+        SELECT *
+        FROM (
+        SELECT *
+        FROM THURXE_COTPIM
+        WHERE ENO = #{ENO}
+        AND GNT_DTM > SYSDATE - INTERVAL '3' MINUTE
+        ORDER BY GNT_DTM DESC
+        )
+        WHERE ROWNUM = 1
+    </select>
 </mapper>

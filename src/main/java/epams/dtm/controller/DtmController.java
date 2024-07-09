@@ -114,36 +114,4 @@ public class DtmController<S extends Session> {
         return VIEW;
     }
 
-    /**
-     * @author K140024
-     * @implNote DTM 리스트 화면을 반환하는 메서드
-     * @since 2024-06-11
-     */
-    @GetMapping("/list")
-    public String dtmList(@PageableDefault(page = 1) final Pageable pageable, @ModelAttribute final BasePeriodDTO period, final Model model) {
-        final String DTMMAIN = "/dtm/list";
-
-        // 코드
-        final Map<String, String> codeList = codeDetailService.getCodeHtmlDetail(DTMMAIN);
-        model.addAttribute("codeList", codeList);
-
-        // 메인화면 근태내용 출력
-        final int currentPage = pageable.getPageNumber();
-        final Pageable updatedPageable = PageRequest.of(currentPage, listBrdCnt);
-        final Page<DtmApplDTO> dtmApplList = dtmService.findAllByPeriod(updatedPageable, period);
-        final int totalPages = dtmApplList.getTotalPages();
-        int startPage = Math.max(1, currentPage - (maxPageBtn / 2));
-        final int endPage = Math.min(totalPages, startPage + maxPageBtn - 1);
-
-        if (endPage - startPage < maxPageBtn - 1) {
-            startPage = Math.max(1, endPage - maxPageBtn + 1);
-        }
-
-        model.addAttribute("dtmApplList", dtmApplList);
-        model.addAttribute("startPage", startPage);
-        model.addAttribute("endPage", endPage);
-
-        return DTMMAIN;
-    }
-
 }

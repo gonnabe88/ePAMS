@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="DtmHis">
+
+    <!-- 모든 데이터 조회 -->
+    <select id="findAll" resultType="dtmHis">
+        SELECT * FROM OHR.DTM_HIS
+    </select>
+
+    <!-- 특정 데이터 조회 -->
+    <select id="findById" parameterType="Long" resultType="dtmHis">
+        SELECT * FROM OHR.DTM_HIS WHERE DTM_HIS_ID = #{DTM_HIS_ID}
+    </select>
+
+    <!-- 특정 데이터 조회 -->
+    <select id="findByEmpId" parameterType="Long" resultType="dtmHis">
+        SELECT * FROM OHR.DTM_HIS WHERE EMP_ID = #{EMP_ID}
+    </select>
+
+    <!-- 특정 데이터 조회 -->
+    <select id="findByDtmKindCd" parameterType="String" resultType="dtmHis">
+        SELECT * FROM OHR.DTM_HIS WHERE DTM_KIND_CD = #{DTM_KIND_CD}
+    </select>
+
+    <!-- 갯수 조회 -->
+    <select id="countById" parameterType="dtmHis" resultType="long">
+        SELECT COUNT(*) FROM OHR.DTM_HIS WHERE EMP_ID = #{EMP_ID}
+    </select>
+
+    <!-- 신규 데이터 추가 -->
+    <insert id="insert" parameterType="dtmHis">
+        <selectKey keyProperty="DTM_HIS_ID" resultType="long" order="BEFORE">
+            SELECT "OHR"."S_DTM_SEQUENCE".nextval FROM dual
+        </selectKey>
+        INSERT INTO OHR.DTM_HIS (
+            DTM_HIS_ID, EMP_ID, DTM_KIND_CD, DTM_REASON_CD, STA_YMD, STA_HM,
+            END_YMD, END_HM, DTM_REASON, DEST_PLC, TELNO, CHILD_NO,
+            APPL_ID, STAT_CD, FINAL_APPR_YMD, MODI_TYPE, MODI_REASON,
+            MODI_DTM_HIS_ID, MOD_USER_ID, MOD_DATE, TZ_CD, TZ_DATE,
+            COMPANY_NM, DOCUMENT, AD_USE_YN, MAIL_SEND_YN, ESB_ASK_DT,
+            CHILD_BIRTH_YMD, DTM_STORE_YN, FILE_ID, SEAL_MGR_YN,
+            SECU_MGR_YN, INFO_MGR_YN, SAFE_MGR_YN, PLACE_CD
+        ) VALUES (
+                     #{DTM_HIS_ID}, #{EMP_ID}, #{DTM_KIND_CD}, #{DTM_REASON_CD}, #{STA_YMD}, #{STA_HM},
+                     #{END_YMD}, #{END_HM}, #{DTM_REASON}, #{DEST_PLC}, #{TELNO}, #{CHILD_NO},
+                     #{APPL_ID}, #{STAT_CD}, #{FINAL_APPR_YMD}, #{MODI_TYPE}, #{MODI_REASON},
+                     #{MODI_DTM_HIS_ID}, #{MOD_USER_ID}, #{MOD_DATE}, #{TZ_CD}, #{TZ_DATE},
+                     #{COMPANY_NM}, #{DOCUMENT}, #{AD_USE_YN}, #{MAIL_SEND_YN}, #{ESB_ASK_DT},
+                     #{CHILD_BIRTH_YMD}, #{DTM_STORE_YN}, #{FILE_ID}, #{SEAL_MGR_YN},
+                     #{SECU_MGR_YN}, #{INFO_MGR_YN}, #{SAFE_MGR_YN}, #{PLACE_CD}
+                 )
+    </insert>
+
+    <!-- 기존 데이터 삭제 -->
+    <delete id="deleteById" parameterType="Long">
+        DELETE FROM OHR.DTM_HIS WHERE DTM_HIS_ID = #{DTM_HIS_ID}
+    </delete>
+
+    <!-- 기존 데이터 업데이트 -->
+    <update id="updateById" parameterType="dtmHis">
+        UPDATE OHR.DTM_HIS SET
+                               EMP_ID = #{EMP_ID},
+                               DTM_KIND_CD = #{DTM_KIND_CD},
+                               DTM_REASON_CD = #{DTM_REASON_CD},
+                               STA_YMD = #{STA_YMD},
+                               STA_HM = #{STA_HM},
+                               END_YMD = #{END_YMD},
+                               END_HM = #{END_HM},
+                               DTM_REASON = #{DTM_REASON},
+                               DEST_PLC = #{DEST_PLC},
+                               TELNO = #{TELNO},
+                               CHILD_NO = #{CHILD_NO},
+                               APPL_ID = #{APPL_ID},
+                               STAT_CD = #{STAT_CD},
+                               FINAL_APPR_YMD = #{FINAL_APPR_YMD},
+                               MODI_TYPE = #{MODI_TYPE},
+                               MODI_REASON = #{MODI_REASON},
+                               MODI_DTM_HIS_ID = #{MODI_DTM_HIS_ID},
+                               MOD_USER_ID = #{MOD_USER_ID},
+                               MOD_DATE = #{MOD_DATE},
+                               TZ_CD = #{TZ_CD},
+                               TZ_DATE = #{TZ_DATE},
+                               COMPANY_NM = #{COMPANY_NM},
+                               DOCUMENT = #{DOCUMENT},
+                               AD_USE_YN = #{AD_USE_YN},
+                               MAIL_SEND_YN = #{MAIL_SEND_YN},
+                               ESB_ASK_DT = #{ESB_ASK_DT},
+                               CHILD_BIRTH_YMD = #{CHILD_BIRTH_YMD},
+                               DTM_STORE_YN = #{DTM_STORE_YN},
+                               FILE_ID = #{FILE_ID},
+                               SEAL_MGR_YN = #{SEAL_MGR_YN},
+                               SECU_MGR_YN = #{SECU_MGR_YN},
+                               INFO_MGR_YN = #{INFO_MGR_YN},
+                               SAFE_MGR_YN = #{SAFE_MGR_YN},
+                               PLACE_CD = #{PLACE_CD}
+        WHERE DTM_HIS_ID = #{DTM_HIS_ID}
+    </update>
+
+</mapper>

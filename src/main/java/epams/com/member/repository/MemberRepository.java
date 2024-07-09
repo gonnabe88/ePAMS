@@ -45,6 +45,17 @@ public class MemberRepository {
     /**
      * *
      * @author 140024
+     * @implNote 모든 부서/팀 조회
+     * @since 2024-06-09
+     */
+    public List<IamUserDTO> findAllDept() {
+        final List<IamUserEntity> iamUserEntities = sql.selectList("IamUser.findAllDept");
+        return IamUserDTO.toDTOs(iamUserEntities);
+    }
+
+    /**
+     * *
+     * @author 140024
      * @implNote 특정 키워드 통합 조회
      * @since 2024-06-09
      */
@@ -82,16 +93,20 @@ public class MemberRepository {
      * @since 2024-06-10
      */
     public RoleDTO findOneRoleByUsername(final IamUserDTO iamUserDTO) {
-        RoleEntity roleEntity = new RoleEntity();
+        RoleEntity roleEntity;
         try {
             if(log.isWarnEnabled()){
                 log.warn("{} 사용자의 역할을 조회합니다.", iamUserDTO.getUsername());
             }
             roleEntity = sql.selectOne("Role.findOneRoleByUsername", iamUserDTO.toEntity());
-        } catch (RuntimeException npe) {
+            if(log.isWarnEnabled()){
+                log.warn("{} 사용자의 역할은 {}입니다.", roleEntity.getENO(), roleEntity.getATH_ID());
+            }
+        } catch (Exception e) {
             if(log.isWarnEnabled()){
                 log.warn("{} 사용자의 역할이 존재하지 않습니다. 기본 역할을 부여합니다.", iamUserDTO.getUsername());
             }
+            roleEntity = new RoleEntity();
             roleEntity.setATH_ID("ROLE_NORMAL");
             roleEntity.setENO(iamUserDTO.getUsername());
         } 

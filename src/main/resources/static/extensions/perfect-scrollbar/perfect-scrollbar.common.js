@@ -1348,4 +1348,4 @@ PerfectScrollbar.prototype.removePsClasses = function removePsClasses () {
 };
 
 module.exports = PerfectScrollbar;
-//# sourceMappingURL=perfect-scrollbar.common.js.map
+//# sourceMappingURL=perfect-scrollbar.sidebar.js.map

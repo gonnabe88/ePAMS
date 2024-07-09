@@ -103,6 +103,7 @@ public class Authenticator extends BaseEntity {
     		final ByteArray aaguid,
     		final Long count,
     		final AppUser user) {
+    	super();
     	this.credentialId = credentialId;
         this.publicKey = publicKey;
         this.aaguid = aaguid;

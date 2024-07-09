@@ -40,6 +40,13 @@ spring:
     jdbc:
       initialize-schema: always
 
+  sql:
+    init:
+      schema-locations: classpath:session-schema.sql
+      mode: always
+      encoding: UTF-8  # SQL 스크립트 인코딩을 UTF-8로 설정
+      continue-on-error: true  # 오류 발생 시 계속 진행
+
   web:
     resources:
       static-locations: classpath:/templates

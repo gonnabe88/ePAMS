@@ -13,7 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 import epams.com.board.dto.BoardDTO;
 import epams.com.board.dto.BoardFileDTO;
 import epams.com.board.repository.BoardFileRepository;
-import epams.com.board.repository.BoardRepository;
+import epams.com.board.repository.BoardMainRepository;
+import epams.com.board.repository.BoardUpdateRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -37,18 +38,25 @@ public class BoardMainService {
 
     /**
      * @author K140024
-     * @implNote BoardRepository2 주입
+     * @implNote BoardMainRepository 주입
      * @since 2024-04-26
      */
-    private final BoardRepository boardRepo;
+    private final BoardMainRepository boardMainRepo;
 
     /**
      * @author K140024
-     * @implNote BoardFileRepository2 주입
+     * @implNote BoardFileRepository 주입
      * @since 2024-04-26
      */
     private final BoardFileRepository boardFileRepo;
 
+    /**
+     * @author K140024
+     * @implNote BoardUpdateRepository 주입
+     * @since 2024-04-26
+     */
+    private final BoardUpdateRepository boardUpdateRepo;
+    
     /**
      * @author K140024
      * @implNote 게시물 조회수 업데이트
@@ -56,7 +64,7 @@ public class BoardMainService {
      */
     @Transactional
     public void updateHits(final Long seqId) {
-        boardRepo.updateHits(seqId);
+    	boardUpdateRepo.updateHits(seqId);
     }
 
     /**
@@ -69,9 +77,9 @@ public class BoardMainService {
         final int pageSize = pageable.getPageSize(); // 페이지 크기
         final int offset = page * pageSize; // 오프셋 계산
         // 한 페이지당 3개씩 글을 보여주고 정렬 기준은 id 기준으로 내림차순 정렬
-        final List<BoardDTO> boardDTOs = boardRepo.findAll(offset, pageSize, "DESC");
+        final List<BoardDTO> boardDTOs = boardMainRepo.findAll(offset, pageSize, "DESC");
         // 전체 데이터 개수 조회
-        final long totalElements = boardRepo.count(); // 전체 데이터 개수를 조회하는 메소드 필요
+        final long totalElements = boardMainRepo.count(); // 전체 데이터 개수를 조회하는 메소드 필요
         return new PageImpl<>(boardDTOs, PageRequest.of(page, pageSize), totalElements);
     }
 
@@ -100,7 +108,7 @@ public class BoardMainService {
      */
     @Transactional
     public BoardDTO findById(final Long seqId) {
-        return boardRepo.findById(seqId);
+        return boardMainRepo.findById(seqId);
     }
 
 }

@@ -32,3 +32,16 @@
 .highlight-cell {
 	background-color: yellow !important; /* 수정/추가된 행의 배경색 */
 }
+
+ .tabulator-row .tabulator-cell.tabulator-editing {
+	 border: none;
+	 background-color: aliceblue;
+ }
+
+ .d-flex.align-items-center {
+	 height: 100%;
+ }
+ .btn-primary.btn-sm {
+	 height: 100%; /* Adjust button height to match input height */
+	 align-self: center; /* Ensure the button is vertically centered */
+ }

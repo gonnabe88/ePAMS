@@ -48,6 +48,17 @@ public class CodeRestController {
 
     /***
      * @author 140024
+     * @implNote 모든 코드 데이터를 검색
+     * @since 2024-06-09
+     */
+    @GetMapping("/codelist")
+    public ResponseEntity<List<CodeDTO>> searchOnlyCode(final Model model) throws IOException {
+        final List<CodeDTO> codeDTOs = codeService.findAll();
+        return ResponseEntity.ok(codeDTOs);
+    }
+
+    /***
+     * @author 140024
      * @implNote 코드 데이터를 저장
      * @since 2024-06-09
      */

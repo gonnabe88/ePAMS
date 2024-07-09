@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper SYSTEM "mybatis-3-mapper.dtd">
+
+<mapper namespace="Dashboard">
+
+    <!-- 일자별 로그인 건수 조회 -->
+    <select id="findLoginCountsByDate" resultType="epams.com.admin.dto.CountByDateDTO">
+        SELECT
+            TO_CHAR(GNT_DTM, 'YYYY-MM-DD') AS createdDate,
+            SUM(CASE WHEN LGN_SCS_YN = '1' THEN 1 ELSE 0 END) AS successCount,
+            SUM(CASE WHEN LGN_SCS_YN = '0' THEN 1 ELSE 0 END) AS failureCount
+        FROM
+            THURXE_CLOGNL
+        GROUP BY
+            TO_CHAR(GNT_DTM, 'YYYY-MM-DD')
+        ORDER BY
+            createdDate
+    </select>
+
+    <!-- 일자별 페이지뷰 건수 조회 -->
+    <select id="findViewCountsByDate" resultType="epams.com.admin.dto.CountByDateDTO">
+        SELECT
+            TO_CHAR(GNT_DTM, 'YYYY-MM-DD') AS createdDate,
+            COUNT(*) AS totalCount
+        FROM
+            THURXE_CVIEWL
+        GROUP BY
+            TO_CHAR(GNT_DTM, 'YYYY-MM-DD')
+        ORDER BY
+            createdDate
+    </select>
+
+    <!-- 로그인종류명별 성공 건수 조회 -->
+    <select id="findLoginTypeCountByCategory" resultType="epams.com.admin.dto.CountByCategoryDTO">
+        SELECT
+            LGN_KD_NM AS category,
+            COUNT(*) AS totalCount
+        FROM
+            THURXE_CLOGNL
+        WHERE
+            LGN_SCS_YN = 1
+        GROUP BY
+            LGN_KD_NM
+        ORDER BY
+            totalCount DESC
+    </select>
+
+</mapper>

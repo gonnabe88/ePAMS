@@ -1,13 +1,12 @@
 package epams.com.admin.service;
 
-import java.util.List;
-
-import org.springframework.stereotype.Service;
-
 import epams.com.admin.repository.LoginOtpRepository;
 import epams.com.login.dto.LoginOTPDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author K140024
@@ -55,5 +54,6 @@ public class LoginOtpService {
         for (final LoginOTPDTO dto : deleted) {
         	loginOtpRepo.delete(dto);
         }
+
     }
 }

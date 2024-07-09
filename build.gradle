@@ -31,6 +31,9 @@ repositories {
 dependencies {
     providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 
+    // CSV
+    implementation 'com.opencsv:opencsv:5.5.2'
+
 	// jUnit
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.0'
@@ -78,9 +81,9 @@ dependencies {
     implementation 'org.owasp.encoder:encoder:1.2.3'
 }
 
-tasks.named('test') {
-    useJUnitPlatform()
-}
+//tasks.named('test') {
+//    useJUnitPlatform()
+//}
 
 tasks.cyclonedxBom {
     includeConfigs = ["runtimeClasspath"]

@@ -1,0 +1,253 @@
+
+/* 반응형 웹 우측 여백 제거*/
+html, body {
+    margin: 0px;
+    overflow-x: hidden;
+}
+
+/* 데스크탑 화면 스크롤바 커스텀 */
+@media screen and (min-width: 800px) {
+    body {
+        padding-right: 0 !important;
+        width: auto !important;
+        overflow-x: hidden !important;
+        overflow-y: auto !important;
+    }
+    body::-webkit-scrollbar {
+        width: 5px;
+        height: 5px;
+    }
+    body::-webkit-scrollbar-thumb {
+        background-color: rgba(206, 212, 218, 0.5); /* 흐린 색상 */
+        border-radius: 10px;
+        transition: background-color 1.0s ease; /* 색상 전환에 대한 부드러운 트랜지션 */
+    }
+    body::-webkit-scrollbar-track {
+        background-color: rgba(255, 255, 255, 0.5); /* 흐린 색상 */
+        border-radius: 10px;
+        box-shadow: inset 0px 0px 5px rgba(255, 255, 255, 0.5); /* 흐린 색상 */
+        transition: background-color 1.0s ease, box-shadow 1.0s ease; /* 색상 전환에 대한 부드러운 트랜지션 */
+    }
+    body:hover::-webkit-scrollbar-thumb {
+        background-color: #ced4da; /* 현재 색상 */
+    }
+    body:hover::-webkit-scrollbar-track {
+        background-color: #fff; /* 현재 색상 */
+        box-shadow: inset 0px 0px 5px white; /* 현재 색상 */
+    }
+
+    .sidebar-wrapper::-webkit-scrollbar {
+        width: 5px;
+        height: 5px;
+    }
+    .sidebar-wrapper::-webkit-scrollbar-thumb {
+        background-color: rgba(206, 212, 218, 0.5); /* 흐린 색상 */
+        border-radius: 10px;
+        transition: background-color 1.0s ease; /* 색상 전환에 대한 부드러운 트랜지션 */
+    }
+    .sidebar-wrapper::-webkit-scrollbar-track {
+        background-color: rgba(255, 255, 255, 0.5); /* 흐린 색상 */
+        border-radius: 10px;
+        box-shadow: inset 0px 0px 5px rgba(255, 255, 255, 0.5); /* 흐린 색상 */
+        transition: background-color 1.0s ease, box-shadow 1.0s ease; /* 색상 전환에 대한 부드러운 트랜지션 */
+    }
+    .sidebar-wrapper:hover::-webkit-scrollbar-thumb {
+        background-color: #ced4da; /* 현재 색상 */
+    }
+    .sidebar-wrapper:hover::-webkit-scrollbar-track {
+        background-color: #fff; /* 현재 색상 */
+        box-shadow: inset 0px 0px 5px white; /* 현재 색상 */
+    }
+
+    .scroll-multiline::-webkit-scrollbar {
+        width: 5px;
+        height: 5px;
+    }
+    .scroll-multiline::-webkit-scrollbar-thumb {
+        background-color: rgba(206, 212, 218, 0.5); /* 흐린 색상 */
+        border-radius: 10px;
+        transition: background-color 1.0s ease; /* 색상 전환에 대한 부드러운 트랜지션 */
+    }
+    .scroll-multiline::-webkit-scrollbar-track {
+        background-color: rgba(255, 255, 255, 0.5); /* 흐린 색상 */
+        border-radius: 10px;
+        box-shadow: inset 0px 0px 5px rgba(255, 255, 255, 0.5); /* 흐린 색상 */
+        transition: background-color 1.0s ease, box-shadow 1.0s ease; /* 색상 전환에 대한 부드러운 트랜지션 */
+    }
+    .scroll-multiline:hover::-webkit-scrollbar-thumb {
+        background-color: #ced4da; /* 현재 색상 */
+    }
+    .scroll-multiline:hover::-webkit-scrollbar-track {
+        background-color: #fff; /* 현재 색상 */
+        box-shadow: inset 0px 0px 5px white; /* 현재 색상 */
+    }
+
+
+    .truncate-multiline::-webkit-scrollbar {
+        /* width: 5px; 기본 상태에서 스크롤바 보임*/
+        width: 0; /* 기본 상태에서 스크롤바 숨김 */
+        height: 0; /* 기본 상태에서 스크롤바 숨김 */
+    }
+    .truncate-multiline::-webkit-scrollbar-thumb {
+        background-color: rgba(206, 212, 218, 0.5); /* 흐린 색상 */
+        border-radius: 10px;
+        transition: background-color 1.0s ease; /* 색상 전환에 대한 부드러운 트랜지션 */
+    }
+    .truncate-multiline::-webkit-scrollbar-track {
+        background-color: rgba(255, 255, 255, 0.5); /* 흐린 색상 */
+        border-radius: 10px;
+        box-shadow: inset 0px 0px 5px rgba(255, 255, 255, 0.5); /* 흐린 색상 */
+        transition: background-color 1.0s ease, box-shadow 1.0s ease; /* 색상 전환에 대한 부드러운 트랜지션 */
+    }
+    .truncate-multiline:hover::-webkit-scrollbar-thumb {
+        background-color: #ced4da; /* 현재 색상 */
+    }
+    .truncate-multiline:hover::-webkit-scrollbar-track {
+        background-color: #fff; /* 현재 색상 */
+        box-shadow: inset 0px 0px 5px white; /* 현재 색상 */
+    }
+
+
+}
+
+/* 리스트나 미리보기 화면에서 큰 컨텐츠가 오버플로되는 것을 방지 */
+.card-body, .list-unstyled {
+    max-width: 300px;
+}
+
+@media (min-width: 370px) {
+    .card-body, .list-unstyled {
+        max-width: 340px;
+    }
+}
+
+@media (min-width: 420px) {
+    .card-body, .list-unstyled {
+        max-width: 390px;
+    }
+}
+
+@media (min-width: 470px) {
+    .card-body, .list-unstyled {
+        max-width: 440px;
+    }
+}
+
+@media (min-width: 520px) {
+    .card-body, .list-unstyled {
+        max-width: 490px;
+    }
+}
+
+@media (min-width: 576px) {
+    .card-body, .list-unstyled {
+        max-width: 540px;
+    }
+}
+
+@media (min-width: 768px) {
+    .card-body, .list-unstyled {
+        max-width: 100%;
+    }
+}
+
+/* 리스트나 미리보기 화면에서 큰 컨텐츠가 오버플로되는 것을 방지 */
+.truncate-multiline {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3; /* 원하는 줄 수 */
+    overflow-y: hidden; /* 오버플로되면 표시하지 않음 */
+    overflow-x: scroll;
+    text-overflow: ellipsis; /* 텍스트는 오버플로되면 ...줄임말 표시 */
+    max-width: 100%; /* 너비는 card-body에서 제한 */
+    max-height: 500px; /* 최대 높이 제한 */
+}
+
+/* 리스트나 미리보기 화면에서 큰 컨텐츠가 오버플로되는 것을 방지 */
+.scroll-multiline {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: scroll; /* 오버플로되면 스크롤 */
+    text-overflow: ellipsis; /* 텍스트는 오버플로되면 ...줄임말 표시 */
+    max-width: 100%; /* 너비는 card-body에서 제한 */
+    max-height: 100%; /* 최대 높이 제한 */
+}
+
+/* 리스트나 미리보기 화면에서 큰 컨텐츠가 오버플로되는 것을 방지 */
+.responsive {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: scroll; /* 오버플로되면 스크롤 */
+    text-overflow: ellipsis; /* 텍스트는 오버플로되면 ...줄임말 표시 */
+    max-width: 100%; /* 너비는 card-body에서 제한 */
+    max-height: 100%; /* 최대 높이 제한 */
+}
+
+
+/* 우측하단 Scroll To Top 버튼 */
+#scrollToTopBtn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    width: 2.5rem;
+    height: 2.5rem;
+    background: #E4F0FF;
+    border: none;
+    color: #fff;
+    font-size: 1rem;
+    opacity: 0.5;
+    border-radius: 50%;
+    transition: opacity 0.3s ease-out, background 0.3s ease-out;
+}
+
+#scrollToTopBtn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: transparent;
+    z-index: -1;
+    transition: background 0.3s ease-out;
+}
+
+#scrollToTopBtn:hover {
+    color: #fff;
+    opacity: 1;
+}
+/* 우측하단 Scroll To Top 버튼 */
+
+.custom-shape-divider-top-1711120872 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+}
+
+.custom-shape-divider-top-1711120872 svg {
+    position: relative;
+    display: block;
+    width: calc(274% + 1.3px);
+    height: 322px;
+    transform: rotateY(180deg);
+}
+
+.custom-shape-divider-top-1711120872 .shape-fill {
+    fill: #4477C5;
+}
+
+/** For mobile devices **/
+@media (max-width: 767px) {
+    .custom-shape-divider-top-1711120872 svg {
+        width: calc(299% + 1.3px);
+        height: 263px;
+    }
+}

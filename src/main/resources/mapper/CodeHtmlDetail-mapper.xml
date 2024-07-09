@@ -7,8 +7,8 @@
     <!-- html에 해당하는 Code 목록 조회 -->
     <select id="findAllByHtml" parameterType="String" resultType="CodeHtmlDetail">
         SELECT 
-            CH.HTML_PTH_NM AS html, 
-            H.HTML_NM      AS htmlName, 
+            CH.HTML_FL_PTH AS html,
+            H.HTML_FL_NM      AS htmlName,
             CH.CDVA_ID     AS code, 
             C.CDVA_NM      AS codeName 
         FROM 
@@ -16,9 +16,9 @@
             THURXE_CCODEM C, 
             THURXE_CHTMLM H
         WHERE 
-            CH.HTML_PTH_NM = H.HTML_PTH_NM AND
+            CH.HTML_FL_PTH = H.HTML_FL_PTH AND
             CH.CDVA_ID     = C.CDVA_ID AND
-            CH.HTML_PTH_NM = #{html}
+            CH.HTML_FL_PTH = #{html}
     </select>    
     
 </mapper>

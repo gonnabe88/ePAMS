@@ -27,7 +27,6 @@
         <typeAlias type="epams.dtm.dto.BasePeriodDTO" alias="basePeriod"></typeAlias>
         <typeAlias type="epams.dtm.dto.DtmApplDTO" alias="dtmAppl"></typeAlias>
 
-        <typeAlias type="epams.com.member.dto.TempUserDTO" alias="member"></typeAlias>
     </typeAliases>
 
 </configuration>

@@ -18,9 +18,7 @@ import epams.com.config.security.CustomAuthenticationFailureHandler;
 import epams.com.config.security.CustomAuthenticationSuccessHandler;
 import epams.com.config.security.CustomGeneralEncryptionException;
 import epams.com.config.security.CustomPasswordEncoder;
-import epams.com.config.security.CustomSecurityFilter;
 import epams.com.login.repository.LoginRepository;
-import epams.com.member.service.MemberDetailsService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 
@@ -34,12 +32,6 @@ import lombok.AllArgsConstructor;
 @EnableWebSecurity
 public class SecurityConfig {
 
-	/**
-	 * @author K140024
-	 * @implNote 의존성 주입: 사용자 정보 서비스
-	 * @since 2024-06-11
-	 */
-	private final MemberDetailsService memberService;
 
 	/**
 	 * @author K140024
@@ -100,9 +92,6 @@ public class SecurityConfig {
     SecurityFilterChain filterChain(final HttpSecurity http) throws Exception {
 
 		http
-		    // 커스텀 보안 필터 추가
-		    .addFilterBefore(new CustomSecurityFilter(memberService, new CustomPasswordEncoder()), AuthorizationFilter.class)
-
 		    // 세션 관리 설정
 		    .sessionManagement((auth) -> auth
 		        .sessionFixation().changeSessionId() // 세션 고정 보호를 위해 세션 ID를 변경

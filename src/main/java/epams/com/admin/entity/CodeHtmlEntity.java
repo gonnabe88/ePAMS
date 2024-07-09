@@ -56,8 +56,8 @@ public class CodeHtmlEntity extends BaseEntity implements Serializable {
     @Id
     @ManyToOne
     @JoinColumn(
-            name = "HTML_PTH_NM",
-            foreignKey = @ForeignKey(name = "FK_THURXE_CCDHTR_HTML_PTH_NM", foreignKeyDefinition = "FOREIGN KEY (HTML_PTH_NM) REFERENCES THURXE_CHTMLM (HTML_PTH_NM) ON DELETE CASCADE")
+            name = "HTML_FL_PTH",
+            foreignKey = @ForeignKey(name = "FK_THURXE_CCDHTR_HTML_FL_PTH", foreignKeyDefinition = "FOREIGN KEY (HTML_FL_PTH) REFERENCES THURXE_CHTMLM (HTML_FL_PTH) ON DELETE CASCADE")
         )
     @Comment("HTML경로명")
     private HtmlEntity htmlEntity;
@@ -68,7 +68,7 @@ public class CodeHtmlEntity extends BaseEntity implements Serializable {
      * @implNote getter
      * @since 2024-06-09
      */
-    public String getHTML_PTH_NM() {
+    public String getHTML_FL_NM() {
         return this.htmlEntity != null ? this.htmlEntity.getHTML_FL_PTH() : null;
     }
 
@@ -83,14 +83,14 @@ public class CodeHtmlEntity extends BaseEntity implements Serializable {
 
     /***
      * @author 140024
-     * @implNote setter for HTML_PTH_NM
+     * @implNote setter for HTML_FL_NM
      * @since 2024-06-09
      */
-    public void setHTML_PTH_NM(String html) {
+    public void setHTML_FL_NM(String html) {
         if (this.htmlEntity == null) {
             this.htmlEntity = new HtmlEntity();
         }
-        this.htmlEntity.setHTML_PTH_NM(html);
+        this.htmlEntity.setHTML_FL_NM(html);
     }
 
     /***

@@ -22,8 +22,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import epams.com.admin.service.CodeHtmlDetailService;
 import epams.com.board.dto.BoardDTO;
 import epams.com.board.service.BoardMainService;
-import epams.com.member.entity.TempUserEntity;
-import epams.com.member.service.MemberDetailsService;
 import epams.dtm.dto.BasePeriodDTO;
 import epams.dtm.dto.DtmApplDTO;
 import epams.dtm.service.DtmService;
@@ -66,13 +64,6 @@ public class DtmController<S extends Session> {
 
     /**
      * @author K140024
-     * @implNote 회원 서비스 주입
-     * @since 2024-06-11
-     */
-    private final MemberDetailsService memberservice;
-
-    /**
-     * @author K140024
      * @implNote 코드 상세 서비스 주입
      * @since 2024-06-11
      */
@@ -108,8 +99,8 @@ public class DtmController<S extends Session> {
         model.addAttribute("endPage", endPage);
 
         // 메인화면 직원조회 출력
-        final List<TempUserEntity> memberList = memberservice.findAll();
-        model.addAttribute("memberList", memberList);
+        //final List<TempUserEntity> memberList = memberservice.findAll();
+        //model.addAttribute("memberList", memberList);
 
         // 메인화면 빠른근태신청 출력
         final LocalDate today = LocalDate.now();

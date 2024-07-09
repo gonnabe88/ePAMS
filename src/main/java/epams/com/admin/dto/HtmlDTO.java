@@ -57,8 +57,8 @@ public class HtmlDTO {
      */
     public static HtmlDTO toDTO(final HtmlEntity htmlEntity) {
         final HtmlDTO HtmlDTO = new HtmlDTO();
-        HtmlDTO.setHtml(htmlEntity.getHTML_PTH_NM());
-        HtmlDTO.setHtmlName(htmlEntity.getHTML_NM());
+        HtmlDTO.setHtml(htmlEntity.getHTML_FL_PTH());
+        HtmlDTO.setHtmlName(htmlEntity.getHTML_FL_NM());
         HtmlDTO.setCreatedTime(htmlEntity.getGNT_DTM());
         HtmlDTO.setUpdatedTime(htmlEntity.getAMN_DTM());
         return HtmlDTO;
@@ -71,8 +71,8 @@ public class HtmlDTO {
      */
     public HtmlEntity toEntity() {
         final HtmlEntity htmlEntity = new HtmlEntity();
-        htmlEntity.setHTML_PTH_NM(this.html);
-        htmlEntity.setHTML_NM(this.htmlName);
+        htmlEntity.setHTML_FL_PTH(this.html);
+        htmlEntity.setHTML_FL_NM(this.htmlName);
         htmlEntity.setAMN_DTM(this.updatedTime);
         htmlEntity.setGNT_DTM(this.createdTime);
         return htmlEntity;

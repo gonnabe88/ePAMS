@@ -7,7 +7,7 @@
     <resultMap id="logLoginMap" type="logLogin">
         <id property="LGN_LOG_SNO" column="LGN_LOG_SNO"/>
         <result property="ENO" column="ENO"/>
-        <result property="LGN_KD_NM" column="LGN_KD_NM"/>
+        <result property="CER_KD_NM" column="CER_KD_NM"/>
         <result property="LGN_SCS_YN" column="LGN_SCS_YN"/>
         <result property="GNT_DTM" column="GNT_DTM"/>
     </resultMap> -->
@@ -30,13 +30,13 @@
         INSERT INTO THURXE_CLOGNL
         (
             ENO, 
-            LGN_KD_NM, 
+            CER_KD_NM,
             LGN_SCS_YN, 
             GNT_DTM
         )
         VALUES(
             #{ENO},
-            #{LGN_KD_NM},
+            #{CER_KD_NM},
             #{LGN_SCS_YN},
             SYSDATE
         )

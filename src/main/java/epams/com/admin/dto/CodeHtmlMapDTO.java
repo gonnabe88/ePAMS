@@ -67,7 +67,7 @@ public class CodeHtmlMapDTO {
         final CodeEntity codeEntity = new CodeEntity();
         codeEntity.setCDVA_ID(this.code);
         final HtmlEntity htmlEntity = new HtmlEntity();
-        htmlEntity.setHTML_PTH_NM(this.html);
+        htmlEntity.setHTML_FL_PTH(this.html);
         entity.setCodeEntity(codeEntity);
         entity.setHtmlEntity(htmlEntity);
         entity.setGNT_DTM(this.createdTime);
@@ -82,7 +82,7 @@ public class CodeHtmlMapDTO {
      */
     public static CodeHtmlMapDTO toDTO(final CodeHtmlEntity entity) {
         final CodeHtmlMapDTO dto = new CodeHtmlMapDTO();
-        dto.setHtml(entity.getHtmlEntity().getHTML_PTH_NM());
+        dto.setHtml(entity.getHtmlEntity().getHTML_FL_PTH());
         dto.setCode(entity.getCodeEntity().getCDVA_ID());
         dto.setCreatedTime(entity.getGNT_DTM());
         dto.setUpdatedTime(entity.getAMN_DTM());

@@ -6,8 +6,8 @@
      
     <!-- Result Map 정의
     <resultMap id="htmlMap" type="html">
-        <id property="HTML_PTH_NM" column="HTML_PTH_NM"/>
-        <result property="HTML_NM" column="HTML_NM"/>
+        <id property="HTML_FL_PTH" column="HTML_FL_PTH"/>
+        <result property="HTML_FL_NM" column="HTML_FL_NM"/>
         <result property="AMN_DTM" column="AMN_DTM"/>
         <result property="GNT_DTM" column="GNT_DTM"/>
     </resultMap>-->
@@ -22,21 +22,21 @@
         SELECT COUNT(*)
         FROM THURXE_CHTMLM 
         WHERE 
-            HTML_PTH_NM = #{HTML_PTH_NM}
+            HTML_FL_PTH = #{HTML_FL_PTH}
     </select>
     
     <!-- 신규 데이터 추가 --> 
     <insert id="insert" parameterType="html">
         INSERT INTO THURXE_CHTMLM
         (
-            HTML_PTH_NM, 
-            HTML_NM, 
+            HTML_FL_PTH,
+            HTML_FL_NM,
             GNT_DTM
         )
         VALUES
         (
-            #{HTML_PTH_NM},
-            #{HTML_NM}, 
+            #{HTML_FL_PTH},
+            #{HTML_FL_NM},
             SYSDATE
         )
     </insert>   
@@ -45,35 +45,35 @@
     <delete id="delete" parameterType="html">
         DELETE FROM THURXE_CHTMLM 
         WHERE 
-            HTML_PTH_NM = #{HTML_PTH_NM}
+            HTML_FL_PTH = #{HTML_FL_PTH}
     </delete>
     
     <!-- 기존 데이터 업데이트(기본키 제외) --> 
     <update id="update" parameterType="html">
         UPDATE THURXE_CHTMLM 
         SET 
-            HTML_NM = #{HTML_NM}, 
+            HTML_FL_NM = #{HTML_FL_NM},
             AMN_DTM = SYSDATE 
         WHERE 
-            HTML_PTH_NM = #{HTML_PTH_NM}
+            HTML_FL_PTH = #{HTML_FL_PTH}
     </update>
     
     <!-- 신규 데이터 추가 또는 기존 데이터 업데이트 -->
 	<insert id="insertUpdate" parameterType="html">
 	    INSERT INTO THURXE_CHTMLM 
         (
-            HTML_PTH_NM, 
-            HTML_NM, 
+            HTML_FL_PTH,
+            HTML_FL_NM,
             GNT_DTM
         )
 	    VALUES 
         (
-            #{HTML_PTH_NM},
-            #{HTML_NM}, 
+            #{HTML_FL_PTH},
+            #{HTML_FL_NM},
             SYSDATE
         )
 	    ON DUPLICATE KEY UPDATE
-	        HTML_NM = VALUES(HTML_NM),
+	        HTML_FL_NM = VALUES(HTML_FL_NM),
 	        AMN_DTM = SYSDATE;
 	</insert>
         

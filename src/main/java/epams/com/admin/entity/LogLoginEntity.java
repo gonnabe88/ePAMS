@@ -46,9 +46,9 @@ public class LogLoginEntity {
      * @implNote 인증방식
      * @since 2024-06-09
      */
-    @Column(name = "LGN_KD_NM", nullable = false, length = 200)
+    @Column(name = "CER_KD_NM", nullable = false, length = 200)
     @Comment("로그인종류명")
-    private String LGN_KD_NM;
+    private String CER_KD_NM;
     
     /***
      * @author 140024

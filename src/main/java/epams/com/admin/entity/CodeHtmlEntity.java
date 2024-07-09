@@ -71,7 +71,7 @@ public class CodeHtmlEntity extends BaseEntity implements Serializable {
      * @since 2024-06-09
      */
     public String getHTML_PTH_NM() {
-        return this.htmlEntity != null ? this.htmlEntity.getHTML_PTH_NM() : null;
+        return this.htmlEntity != null ? this.htmlEntity.getHTML_FL_PTH() : null;
     }
 
     /***

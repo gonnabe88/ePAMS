@@ -22,7 +22,7 @@ import lombok.Setter;
 @Setter
 @Table(name = "THURXE_CROLEM")
 @Comment("인사_외부근태 역할메인기본")
-public class RoleEntity extends BaseEntity{
+public class RoleEntity extends BaseEntity {
 
     /***
      * @author 140024

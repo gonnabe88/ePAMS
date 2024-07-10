@@ -45,7 +45,7 @@ public class HtmlEntity extends BaseEntity implements Serializable {
      */
     @Id // 기본키
     @Column(name="HTML_FL_PTH", length = 500)
-    @Comment("HTML경로명")
+    @Comment("HTML파일경로")
     private String HTML_FL_PTH;
 
     /***
@@ -54,7 +54,7 @@ public class HtmlEntity extends BaseEntity implements Serializable {
      * @since 2024-06-09
      */
     @Column(name="HTML_FL_NM", length = 200, nullable = false)
-    @Comment("HTML명")
+    @Comment("HTML파일명")
     private String HTML_FL_NM;
 
     /***

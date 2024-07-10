@@ -32,8 +32,7 @@ public class HtmlRepository {
 	 * @since 2024-06-09final 
 	 */
     public List<HtmlDTO> findAll() {
-    	final List<HtmlEntity> htmlEntitys = sql.selectList("Html.findAll");
-        return HtmlDTO.toDTOList(htmlEntitys);
+        return sql.selectList("Html.findAll");
     }
     
 	/***
@@ -42,7 +41,7 @@ public class HtmlRepository {
 	 * @since 2024-06-09
 	 */
     public Long countById(final HtmlDTO htmlDTO) {
-        return sql.selectOne("Html.countById", htmlDTO.toEntity());
+        return sql.selectOne("Html.countById", htmlDTO);
     }
     
 	/***
@@ -51,7 +50,7 @@ public class HtmlRepository {
 	 * @since 2024-06-09
 	 */
     public void insert(final HtmlDTO htmlDTO) {
-        sql.insert("Html.insert", htmlDTO.toEntity());
+        sql.insert("Html.insert", htmlDTO);
     }
     
 	/***
@@ -60,7 +59,7 @@ public class HtmlRepository {
 	 * @since 2024-06-09
 	 */
     public void delete(final HtmlDTO htmlDTO) {
-        sql.delete("Html.delete", htmlDTO.toEntity());
+        sql.delete("Html.delete", htmlDTO);
     }
     
 	/***
@@ -69,7 +68,7 @@ public class HtmlRepository {
 	 * @since 2024-06-09
 	 */
     public void update(final HtmlDTO htmlDTO) {
-        sql.update("Html.update", htmlDTO.toEntity());
+        sql.update("Html.update", htmlDTO);
     }
     
 	/***
@@ -78,7 +77,7 @@ public class HtmlRepository {
 	 * @since 2024-06-09
 	 */
     public void insertUpdate(final HtmlDTO htmlDTO) {
-        sql.insert("Html.insertUpdate", htmlDTO.toEntity());
+        sql.insert("Html.insertUpdate", htmlDTO);
     }
     
     

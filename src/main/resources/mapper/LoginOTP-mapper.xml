@@ -1,54 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE mapper SYSTEM "mybatis-3-mapper.dtd">
 
-
 <mapper namespace="LoginOTP">
 
-    <!-- Result Map 정의
-    <resultMap id="loginOTPMap" type="loginOTP">
-    <id property="OTP_ISN_SNO" column="OTP_ISN_SNO"/>
-        <result property="ENO" column="ENO"/>
-        <result property="OTP_SMS_CER_NO" column="OTP_SMS_CER_NO"/>
-        <result property="CER_KD_NM" column="CER_KD_NM"/>
-        <result property="GNT_DTM" column="GNT_DTM"/>
-    </resultMap> -->
+    <!-- Result Map 정의 -->
+    <resultMap id="loginOTPMap" type="loginOTPDTO">
+        <id property="seqId" column="OTP_ISN_SNO"/>
+        <result property="username" column="ENO"/>
+        <result property="OTP" column="OTP_SMS_CER_NO"/>
+        <result property="MFA" column="CER_KD_NM"/>
+        <result property="deleteYn" column="DEL_YN"/>
+        <result property="guid" column="GUID"/>
+        <result property="guidPrgSno" column="GUID_PRG_SNO"/>
+        <result property="lstChgUsid" column="LST_CHG_USID"/>
+        <result property="updatedTime" column="LST_CHG_DTM"/>
+        <result property="createdTime" column="GNT_DTM"/>
+    </resultMap>
 
     <!-- 모든 데이터 조회 -->
-    <select id="findAll" resultType="loginOTP">
+    <select id="findAll" resultMap="loginOTPMap">
         SELECT * FROM THURXE_COTPIM
-    </select>    
-    
-    <!-- 기본키 데이터 중복여부 조회 -->
-    <select id="countById" parameterType="Long" resultType="loginOTP">
-        SELECT COUNT(*)
-        FROM THURXE_COTPIM 
-        WHERE 
-            OTP_ISN_SNO = #{OTP_ISN_SNO}
     </select>
-    
-    <!-- 신규 데이터 추가 --> 
-    <insert id="insert" parameterType="loginOTP">
-        INSERT INTO THURXE_COTPIM
-        (
-            ENO, 
-            OTP_SMS_CER_NO, 
-            CER_KD_NM, 
+
+    <!-- 기본키 데이터 중복여부 조회 -->
+    <select id="countById" parameterType="Long" resultType="int">
+        SELECT COUNT(*)
+        FROM THURXE_COTPIM
+        WHERE OTP_ISN_SNO = #{seqId}
+    </select>
+
+    <!-- 신규 데이터 추가 -->
+    <insert id="insert" parameterType="loginOTPDTO">
+        <selectKey keyProperty="seqId" resultType="long" order="BEFORE">
+            SELECT "EHR"."OTP_ISN_SNO".nextval FROM dual
+        </selectKey>
+        INSERT INTO THURXE_COTPIM (
+            OTP_ISN_SNO,
+            ENO,
+            OTP_SMS_CER_NO,
+            CER_KD_NM,
+            DEL_YN,
+            GUID,
+            GUID_PRG_SNO,
+            LST_CHG_USID,
+            LST_CHG_DTM,
             GNT_DTM
         )
-        VALUES
-        (
-            #{ENO}, 
-            #{OTP_SMS_CER_NO}, 
-            #{CER_KD_NM}, 
+            VALUES (
+            #{seqId},
+            #{username},
+            #{OTP},
+            #{MFA},
+            #{deleteYn},
+            #{guid},
+            #{guidPrgSno},
+            #{lstChgUsid},
+            SYSDATE,
             SYSDATE
         )
-    </insert>   
-    
-    <!-- 기존 데이터 삭제 --> 
-    <delete id="delete" parameterType="loginOTP">
-        DELETE FROM THURXE_COTPIM 
-        WHERE 
-            OTP_ISN_SNO = #{OTP_ISN_SNO}
+    </insert>
+
+    <!-- 기존 데이터 삭제 -->
+    <delete id="delete" parameterType="loginOTPDTO">
+        DELETE FROM THURXE_COTPIM
+        WHERE OTP_ISN_SNO = #{seqId}
     </delete>
-        
+
 </mapper>

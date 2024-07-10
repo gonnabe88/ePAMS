@@ -34,8 +34,7 @@ public class LoginOTPRepository {
 	 * @since 2024-06-09
 	 */
     public List<LoginOTPDTO> findAll() {
-    	final List<LoginOTPEntity> codeEntities = sql.selectList("LoginOTP.findAll");
-        return LoginOTPDTO.toDTOList(codeEntities);
+        return sql.selectList("LoginOTP.findAll");
     }
     
 	/***
@@ -44,7 +43,7 @@ public class LoginOTPRepository {
 	 * @since 2024-06-09
 	 */
     public Long countById(final LoginOTPDTO loginOTP) {
-        return sql.selectOne("LoginOTP.countById", LoginOTPDTO.toEntity(loginOTP));
+        return sql.selectOne("LoginOTP.countById", loginOTP);
     }
     
 	/***
@@ -53,7 +52,7 @@ public class LoginOTPRepository {
 	 * @since 2024-06-09
 	 */
     public void insert(final LoginOTPDTO loginOTP) {
-        sql.insert("LoginOTP.insert", LoginOTPDTO.toEntity(loginOTP));
+        sql.insert("LoginOTP.insert", loginOTP);
     }
     
 	/***
@@ -62,7 +61,7 @@ public class LoginOTPRepository {
 	 * @since 2024-06-09
 	 */
     public void delete(final LoginOTPDTO loginOTP) {
-        sql.delete("LoginOTP.delete", LoginOTPDTO.toEntity(loginOTP));
+        sql.delete("LoginOTP.delete", loginOTP);
     }
     
 	/***
@@ -71,7 +70,7 @@ public class LoginOTPRepository {
 	 * @since 2024-06-09
 	 */
     public void update(final LoginOTPDTO loginOTP) {
-        sql.update("LoginOTP.update", LoginOTPDTO.toEntity(loginOTP));
+        sql.update("LoginOTP.update", loginOTP);
     }
     
 	/***
@@ -80,9 +79,8 @@ public class LoginOTPRepository {
 	 * @since 2024-06-09
 	 */
     public LoginOTPDTO findValidOneByUsername(final LoginOTPDTO loginOTP) {
-    	
-    	final LoginOTPEntity loginOTPEntity = sql.selectOne("LoginOTP.findValidOneByUsername", LoginOTPDTO.toEntity(loginOTP));
-    	return LoginOTPDTO.toDTO(loginOTPEntity);
+
+    	return sql.selectOne("LoginOTP.findValidOneByUsername", loginOTP);
     }
 
 }

@@ -3,76 +3,116 @@
 
 <mapper namespace="Code">
 
+    <!-- Result Map 정의 -->
+    <resultMap id="codeMap" type="codeDTO">
+        <id property="code" column="CDVA_ID"/>
+        <result property="codeName" column="CDVA_NM"/>
+        <result property="codeType" column="CDVA_KD_NM"/>
+        <result property="deleteYn" column="DEL_YN"/>
+        <result property="guid" column="GUID"/>
+        <result property="guidPrgSno" column="GUID_PRG_SNO"/>
+        <result property="lstChgUsid" column="LST_CHG_USID"/>
+        <result property="updatedTime" column="LST_CHG_DTM"/>
+        <result property="createdTime" column="GNT_DTM"/>
+    </resultMap>
+
     <!-- 모든 데이터 조회 -->
-    <select id="findAll" resultType="code">
+    <select id="findAll" resultMap="codeMap">
         SELECT * FROM THURXE_CCODEM
-    </select>    
-    
-    <!-- 특정 ID 데이터 조회 -->
-    <select id="findById" parameterType="String" resultType="code">
-        SELECT * FROM THURXE_CCODEM
-        WHERE CDVA_ID=#{CDVA_ID}
-    </select>   
-    
-    <!-- 기본키 데이터 중복여부 조회 -->
-    <select id="countById" parameterType="Long" resultType="code">
-        SELECT COUNT(*)
-        FROM THURXE_CCODEM WHERE CDVA_ID=#{CDVA_ID}
     </select>
-    
-    <!-- 신규 데이터 추가 --> 
-    <insert id="insert" parameterType="code">
-        INSERT INTO THURXE_CCODEM(
-            CDVA_ID, 
-            CDVA_NM, 
-            CDVA_KD_NM, 
+
+    <!-- 특정 ID 데이터 조회 -->
+    <select id="findById" parameterType="String" resultMap="codeMap">
+        SELECT * FROM THURXE_CCODEM
+        WHERE CDVA_ID = #{CDVA_ID}
+    </select>
+
+    <!-- 기본키 데이터 중복여부 조회 -->
+    <select id="countById" parameterType="String" resultType="int">
+        SELECT COUNT(*)
+        FROM THURXE_CCODEM WHERE CDVA_ID = #{CDVA_ID}
+    </select>
+
+    <!-- 신규 데이터 추가 -->
+    <insert id="insert" parameterType="codeDTO">
+        INSERT INTO THURXE_CCODEM (
+            CDVA_ID,
+            CDVA_NM,
+            CDVA_KD_NM,
+            DEL_YN,
+            GUID,
+            GUID_PRG_SNO,
+            LST_CHG_USID,
+            LST_CHG_DTM,
             GNT_DTM
         )
-        VALUES(
-            #{CDVA_ID},
-            #{CDVA_NM},
-            #{CDVA_KD_NM},
+        VALUES (
+            #{code},
+            #{codeName},
+            #{codeType},
+            #{deleteYn},
+            #{guid},
+            #{guidPrgSno},
+            #{lstChgUsid},
+            SYSDATE,
             SYSDATE
         )
-    </insert>   
-    
-    <!-- 기존 데이터 삭제 --> 
-    <delete id="delete" parameterType="code">
-        DELETE FROM THURXE_CCODEM 
-        WHERE 
-            CDVA_ID = #{CDVA_ID}
+    </insert>
+
+    <!-- 기존 데이터 삭제 -->
+    <delete id="delete" parameterType="codeDTO">
+        DELETE FROM THURXE_CCODEM
+        WHERE
+            CDVA_ID = #{code}
     </delete>
-    
-    <!-- 기존 데이터 업데이트 --> 
-    <update id="update" parameterType="code">
-        UPDATE THURXE_CCODEM 
-        SET 
-            CDVA_ID = #{CDVA_ID},
-            CDVA_NM = #{CDVA_NM},
-            CDVA_KD_NM = #{CDVA_KD_NM},
-            AMN_DTM = SYSDATE 
-        WHERE 
-            CDVA_ID = #{CDVA_ID}
+
+    <!-- 기존 데이터 업데이트 -->
+    <update id="update" parameterType="codeDTO">
+        UPDATE THURXE_CCODEM
+        SET
+            CDVA_NM = #{codeName},
+            CDVA_KD_NM = #{codeType},
+            DEL_YN = #{deleteYn},
+            GUID = #{guid},
+            GUID_PRG_SNO = #{guidPrgSno},
+            LST_CHG_USID = #{lstChgUsid},
+            LST_CHG_DTM = SYSDATE
+        WHERE
+            CDVA_ID = #{code}
     </update>
-    
+
     <!-- 신규 데이터 추가 또는 기존 데이터 업데이트 -->
-	<insert id="insertUpdate" parameterType="code">
-	    INSERT INTO THURXE_CCODEM (
-            CDVA_ID, 
-            CDVA_NM, 
-            CDVA_KD_NM, 
+    <insert id="insertUpdate" parameterType="codeDTO">
+        INSERT INTO THURXE_CCODEM (
+            CDVA_ID,
+            CDVA_NM,
+            CDVA_KD_NM,
+            DEL_YN,
+            GUID,
+            GUID_PRG_SNO,
+            LST_CHG_USID,
+            LST_CHG_DTM,
             GNT_DTM
         )
-	    VALUES (
-            #{CDVA_ID},
-            #{CDVA_NM},
-            #{CDVA_KD_NM},
+        VALUES (
+            #{code},
+            #{codeName},
+            #{codeType},
+            #{deleteYn},
+            #{guid},
+            #{guidPrgSno},
+            #{lstChgUsid},
+            SYSDATE,
             SYSDATE
         )
-	    ON DUPLICATE KEY UPDATE
-	        CDVA_NM = VALUES(CDVA_NM),
-	        CDVA_KD_NM = VALUES(CDVA_KD_NM),
-	        AMN_DTM = SYSDATE;
-	</insert>
-        
+        ON DUPLICATE KEY UPDATE
+            CDVA_NM = VALUES(CDVA_NM),
+            CDVA_KD_NM = VALUES(CDVA_KD_NM),
+            DEL_YN = VALUES(DEL_YN),
+            GUID = VALUES(GUID),
+            GUID_PRG_SNO = VALUES(GUID_PRG_SNO),
+            LST_CHG_USID = VALUES(LST_CHG_USID),
+            LST_CHG_DTM = SYSDATE;
+    </insert>
+
 </mapper>

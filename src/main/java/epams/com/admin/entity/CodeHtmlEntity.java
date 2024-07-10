@@ -34,19 +34,6 @@ public class CodeHtmlEntity extends BaseEntity implements Serializable {
 	 */
 	private static final long serialVersionUID = 6855998655976669255L;
 
-	/***
-     * @author 140024
-     * @implNote 공통코드 (복합키)
-     * @since 2024-06-09
-     */
-	@Id
-    @ManyToOne
-    @JoinColumn(
-            name = "CDVA_ID",
-            foreignKey = @ForeignKey(name = "FK_THURXE_CCDHTR_CDVA_ID", foreignKeyDefinition = "FOREIGN KEY (CDVA_ID) REFERENCES THURXE_CCODEM (CDVA_ID) ON DELETE CASCADE")
-        )
-    @Comment("코드값ID")
-    private CodeEntity codeEntity;
 
     /***
      * @author 140024
@@ -62,6 +49,19 @@ public class CodeHtmlEntity extends BaseEntity implements Serializable {
     @Comment("HTML경로명")
     private HtmlEntity htmlEntity;
 
+    /***
+     * @author 140024
+     * @implNote 공통코드 (복합키)
+     * @since 2024-06-09
+     */
+    @Id
+    @ManyToOne
+    @JoinColumn(
+            name = "CDVA_ID",
+            foreignKey = @ForeignKey(name = "FK_THURXE_CCDHTR_CDVA_ID", foreignKeyDefinition = "FOREIGN KEY (CDVA_ID) REFERENCES THURXE_CCODEM (CDVA_ID) ON DELETE CASCADE")
+    )
+    @Comment("코드값ID")
+    private CodeEntity codeEntity;
 
     /***
      * @author 140024

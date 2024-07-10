@@ -32,8 +32,7 @@ public class LoginOtpRepository {
 	 * @since 2024-06-09
 	 */
     public List<LoginOTPDTO> findAll() {
-    	final List<LoginOTPEntity> entities = sql.selectList("LoginOTP.findAll");
-        return LoginOTPDTO.toDTOList(entities);
+        return sql.selectList("LoginOTP.findAll");
     }
     
 	/***
@@ -42,7 +41,7 @@ public class LoginOtpRepository {
 	 * @since 2024-06-09
 	 */
     public Long countById(final LoginOTPDTO dto) {
-        return sql.selectOne("LoginOTP.countById", LoginOTPDTO.toEntity(dto));
+        return sql.selectOne("LoginOTP.countById", dto);
     }
     
 	/***
@@ -51,7 +50,7 @@ public class LoginOtpRepository {
 	 * @since 2024-06-09
 	 */
     public void insert(final LoginOTPDTO dto) {
-        sql.insert("LoginOTP.insert", LoginOTPDTO.toEntity(dto));
+        sql.insert("LoginOTP.insert", dto);
     }
     
 	/***
@@ -60,7 +59,7 @@ public class LoginOtpRepository {
 	 * @since 2024-06-09
 	 */
     public void delete(final LoginOTPDTO dto) {
-        sql.delete("LoginOTP.delete", LoginOTPDTO.toEntity(dto));
+        sql.delete("LoginOTP.delete", dto);
     }
     
 	/***
@@ -69,7 +68,7 @@ public class LoginOtpRepository {
 	 * @since 2024-06-09
 	 */
     public void update(final LoginOTPDTO dto) {
-        sql.update("LoginOTP.update", LoginOTPDTO.toEntity(dto));
+        sql.update("LoginOTP.update", dto);
     }
     
 }

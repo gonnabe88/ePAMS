@@ -32,7 +32,7 @@ public class BoardImageRepository {
 	 * @since 2024-06-09
 	 */
     public void insertBoardImage(final BoardImageDTO boardImageDTO) {
-    	sql.insert("BoardImage.insertBoardImage", boardImageDTO.toEntity());
+    	sql.insert("BoardImage.insertBoardImage", boardImageDTO);
     }
     
 	/***
@@ -41,8 +41,7 @@ public class BoardImageRepository {
 	 * @since 2024-06-09
 	 */
     public BoardImageDTO findBoardstoredFilename(final String storedFileName) {
-    	final BoardImageEntity boardImageEntity = sql.selectOne("BoardImage.selectBoardImage", storedFileName);
-    	return BoardImageDTO.toDTO(boardImageEntity);
+    	return sql.selectOne("BoardImage.selectBoardImage", storedFileName);
     }
     
     

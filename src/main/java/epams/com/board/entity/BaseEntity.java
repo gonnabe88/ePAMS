@@ -25,15 +25,52 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class BaseEntity {
+
+	/***
+	 * @author 140024
+	 * @implNote 삭제여부(시스템 공통 컬럼)
+	 * @since 2024-06-09
+	 */
+	@Column(name = "DEL_YN", length = 1, nullable = false)
+	@Comment("삭제여부")
+	private String DEL_YN = "N";
+
+	/***
+	 * @author 140024
+	 * @implNote GUID 거래ID(시스템 공통 컬럼 - Nexcore)
+	 * @since 2024-06-09
+	 */
+	@Column(name = "GUID", length = 38, nullable = false)
+	@Comment("GUID")
+	private String GUID = new String(new char[38]).replace('\0', '0');
+
+	/***
+	 * @author 140024
+	 * @implNote GUID 거래ID 진행 일련번호(시스템 공통 컬럼 - Nexcore)
+	 * @since 2024-06-09
+	 */
+	@Column(name = "GUID_PRG_SNO", columnDefinition = "NUMBER(4)", nullable = false)
+	@Comment("GUID진행일련번호")
+	private int GUID_PRG_SNO = 0;
+
+	/***
+	 * @author 140024
+	 * @implNote 최종변경사용자ID(시스템 공통 컬럼)
+	 * @since 2024-06-09
+	 */
+	@Column(name = "LST_CHG_USID", length = 14, nullable = false)
+	@Comment("최종변경사용자ID")
+	private String LST_CHG_USID = new String(new char[14]).replace('\0', '0');
+
 	/***
 	 * @author 140024
 	 * @implNote 수정일시
 	 * @since 2024-06-09
 	 */
     @UpdateTimestamp
-    @Column(name = "AMN_DTM", insertable = false, columnDefinition = "DATE")
-    @Comment("수정일시")
-    private LocalDateTime AMN_DTM;
+    @Column(name = "LST_CHG_DTM", columnDefinition = "DATE")
+    @Comment("최종변경일시")
+    private LocalDateTime LST_CHG_DTM;
 	
 	/***
 	 * @author 140024
@@ -41,7 +78,7 @@ public class BaseEntity {
 	 * @since 2024-06-09
 	 */
     @CreationTimestamp
-    @Column(name = "GNT_DTM", updatable = false, columnDefinition = "DATE")
+    @Column(name = "GNT_DTM", columnDefinition = "DATE")
     @Comment("생성일시")
     private LocalDateTime GNT_DTM;
 }

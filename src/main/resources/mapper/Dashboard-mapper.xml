@@ -33,14 +33,14 @@
     <!-- 로그인종류명별 성공 건수 조회 -->
     <select id="findLoginTypeCountByCategory" resultType="epams.com.admin.dto.CountByCategoryDTO">
         SELECT
-            LGN_KD_NM AS category,
+            CER_KD_NM AS category,
             COUNT(*) AS totalCount
         FROM
             THURXE_CLOGNL
         WHERE
             LGN_SCS_YN = 1
         GROUP BY
-            LGN_KD_NM
+            CER_KD_NM
         ORDER BY
             totalCount DESC
     </select>

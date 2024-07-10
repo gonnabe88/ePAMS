@@ -38,8 +38,7 @@ public class MemberRepository {
      * @since 2024-06-09
      */
     public List<IamUserDTO> findAll() {
-        final List<IamUserEntity> iamUserEntities = sql.selectList("IamUser.findAll");
-        return IamUserDTO.toDTOs(iamUserEntities);
+        return sql.selectList("IamUser.findAll");
     }
 
     /**
@@ -49,8 +48,7 @@ public class MemberRepository {
      * @since 2024-06-09
      */
     public List<IamUserDTO> findAllDept() {
-        final List<IamUserEntity> iamUserEntities = sql.selectList("IamUser.findAllDept");
-        return IamUserDTO.toDTOs(iamUserEntities);
+        return sql.selectList("IamUser.findAllDept");
     }
 
     /**
@@ -60,8 +58,7 @@ public class MemberRepository {
      * @since 2024-06-09
      */
     public List<IamUserDTO> findBySearchValue(final String searchValue) {
-        final List<IamUserEntity> iamUserEntities = sql.selectList("IamUser.findBySearchValue", searchValue);
-        return IamUserDTO.toDTOs(iamUserEntities);
+        return sql.selectList("IamUser.findBySearchValue", searchValue);
     }
     
     
@@ -73,8 +70,7 @@ public class MemberRepository {
      * @since 2024-06-09
      */
     public IamUserDTO findByUsername(final IamUserDTO iamUserDTO) {
-        final IamUserEntity iamUserEntity = sql.selectOne("IamUser.findByUsername", iamUserDTO.toEntity());
-        return IamUserDTO.toDTO(iamUserEntity);
+        return sql.selectOne("IamUser.findByUsername", iamUserDTO);
     }
     
     /***
@@ -83,7 +79,7 @@ public class MemberRepository {
      * @since 2024-06-09
      */
     public void insert(final IamUserDTO iamUserDTO) {
-        sql.insert("IamUser.insert", iamUserDTO.toEntity());
+        sql.insert("IamUser.insert", iamUserDTO);
     }
 
     /**
@@ -93,24 +89,24 @@ public class MemberRepository {
      * @since 2024-06-10
      */
     public RoleDTO findOneRoleByUsername(final IamUserDTO iamUserDTO) {
-        RoleEntity roleEntity;
+        RoleDTO roleDTO;
         try {
             if(log.isWarnEnabled()){
                 log.warn("{} 사용자의 역할을 조회합니다.", iamUserDTO.getUsername());
             }
-            roleEntity = sql.selectOne("Role.findOneRoleByUsername", iamUserDTO.toEntity());
+            roleDTO = sql.selectOne("Role.findOneRoleByUsername", iamUserDTO);
             if(log.isWarnEnabled()){
-                log.warn("{} 사용자의 역할은 {}입니다.", roleEntity.getENO(), roleEntity.getATH_ID());
+                log.warn("{} 사용자의 역할은 {}입니다.", roleDTO.getUsername(), roleDTO.getRoleId());
             }
         } catch (Exception e) {
             if(log.isWarnEnabled()){
                 log.warn("{} 사용자의 역할이 존재하지 않습니다. 기본 역할을 부여합니다.", iamUserDTO.getUsername());
             }
-            roleEntity = new RoleEntity();
-            roleEntity.setATH_ID("ROLE_NORMAL");
-            roleEntity.setENO(iamUserDTO.getUsername());
+            roleDTO = new RoleDTO();
+            roleDTO.setRoleId("ROLE_NORMAL");
+            roleDTO.setUsername(iamUserDTO.getUsername());
         } 
-        return RoleDTO.toDTO(roleEntity);
+        return roleDTO;
     }
 
 }

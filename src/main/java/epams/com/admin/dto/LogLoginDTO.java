@@ -2,6 +2,7 @@ package epams.com.admin.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import epams.com.admin.entity.LogLoginEntity;
+import epams.com.board.dto.BaseDTO;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -18,34 +19,36 @@ import java.util.stream.Collectors;
 @ToString
 @NoArgsConstructor // 기본생성자
 @AllArgsConstructor // 모든 필드를 매개변수로 하는 생성자
-public class LogLoginDTO {
-	
+public class LogLoginDTO extends BaseDTO {
+
     /***
      * @author 140024
-     * @implNote 행번 (EMP_NO)
+     * @implNote 로그인로그일련번호(LGN_LOG_SNO)
+     * @since 2024-06-09
+     */
+    private Long seqId;
+
+    /***
+     * @author 140024
+     * @implNote 사원번호 (ENO)
      * @since 2024-06-09
      */
     private String empNo;
+
     /***
      * @author 140024
-     * @implNote 인증방식 (TYPE)
+     * @implNote 인증방식 (CER_KD_NM)
      * @since 2024-06-09
      */
-    private String loginType; 
+    private String loginType;
+
     /***
      * @author 140024
-     * @implNote 성공여부 (RESULT)
+     * @implNote 로그인성공여부 (LGN_SCS_YN)
      * @since 2024-06-09
      */
     private char loginResult;
-    /***
-     * @author 140024
-     * @implNote 생성시간 (CREATED_TIME)
-     * @since 2024-06-09
-     */
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime createdTime;
-    
+
     /***
      * @author 140024
      * @implNote DTO 생성 메소드
@@ -57,56 +60,6 @@ public class LogLoginDTO {
     	logLoginDTO.setLoginType(loginType);
     	logLoginDTO.setLoginResult(loginResult);
         return logLoginDTO;
-    }
-    
-    /***
-     * @author 140024
-     * @implNote Entity > DTO 변경 메소드
-     * @since 2024-06-09
-     */
-    public static LogLoginDTO toDTO(final LogLoginEntity logLoginEntity) {
-    	final LogLoginDTO logLoginDTO = new LogLoginDTO();
-    	logLoginDTO.setEmpNo(logLoginEntity.getENO());
-    	logLoginDTO.setLoginType(logLoginEntity.getCER_KD_NM());
-    	logLoginDTO.setLoginResult(logLoginEntity.getLGN_SCS_YN());
-    	logLoginDTO.setCreatedTime(logLoginEntity.getGNT_DTM());
-        return logLoginDTO;
-    }
-    
-    /***
-     * @author 140024
-     * @implNote DTO > Entity 변경 메소드
-     * @since 2024-06-09
-     */
-    public LogLoginEntity toEntity() {
-    	final LogLoginEntity logLoginEntity = new LogLoginEntity();
-    	logLoginEntity.setENO(this.empNo);
-    	logLoginEntity.setCER_KD_NM(this.loginType);
-    	logLoginEntity.setLGN_SCS_YN(this.loginResult);
-    	logLoginEntity.setGNT_DTM(this.createdTime);
-        return logLoginEntity;
-    }
-    
-    /***
-     * @author 140024
-     * @implNote List<Entity> > List<DTO> 변경 메소드
-     * @since 2024-06-09
-     */
-    public static List<LogLoginDTO> toDTOList(final List<LogLoginEntity> logLoginEntity) {
-        return logLoginEntity.stream()
-                .map(LogLoginDTO::toDTO)
-                .collect(Collectors.toList());
-    }
-
-    /***
-     * @author 140024
-     * @implNote List<DTO> > List<Entity> 변경 메소드
-     * @since 2024-06-09
-     */
-    public static List<LogLoginEntity> toEntityList(final List<LogLoginDTO> LogLoginDTOs) {
-        return LogLoginDTOs.stream()
-                .map(LogLoginDTO::toEntity)
-                .collect(Collectors.toList());
     }
     
 }

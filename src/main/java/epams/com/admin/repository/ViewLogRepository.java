@@ -30,8 +30,7 @@ public class ViewLogRepository {
      * @since 2024-06-09
      */
     public List<LogViewDTO> findAll() {
-    	final List<LogViewEntity> entities = sql.selectList("ViewLog.findAll");
-    	return LogViewDTO.toDTOList(entities);
+    	return sql.selectList("ViewLog.findAll");
     }
     
     /***
@@ -41,7 +40,7 @@ public class ViewLogRepository {
      * @since 2024-06-09 PMD MethodArgumentCouldBeFinal 취약점 조치 (140024) 
      */
     public void insert(final LogViewDTO dto) {
-    	sql.update("ViewLog.insert", LogViewDTO.toEntity(dto));
+    	sql.update("ViewLog.insert", dto);
     }
 
     	/***
@@ -50,7 +49,7 @@ public class ViewLogRepository {
 	 * @since 2024-06-09
 	 */
     public void delete(final LogViewDTO dto) {
-        sql.delete("ViewLog.delete", LogViewDTO.toEntity(dto));
+        sql.delete("ViewLog.delete", dto);
     }
     
 	/***
@@ -59,7 +58,7 @@ public class ViewLogRepository {
 	 * @since 2024-06-09
 	 */
     public void update(final LogViewDTO dto) {
-        sql.update("ViewLog.update", LogViewDTO.toEntity(dto));
+        sql.update("ViewLog.update", dto);
     }
     
 }

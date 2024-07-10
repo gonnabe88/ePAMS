@@ -38,8 +38,7 @@ public class RoleRepository {
      * @since 2024-06-09
      */
     public List<RoleDTO> findAll() {
-        final List<RoleEntity> entities = sql.selectList("Role.findAll");
-        return RoleDTO.toDTOs(entities);
+        return sql.selectList("Role.findAll");
     }
 
     /***
@@ -48,7 +47,7 @@ public class RoleRepository {
      * @since 2024-06-09
      */
     public Long countById(final RoleDTO roleDTO) {
-        return sql.selectOne("Role.countById", roleDTO.toEntity());
+        return sql.selectOne("Role.countById", roleDTO);
     }
 
     /***
@@ -57,7 +56,7 @@ public class RoleRepository {
      * @since 2024-06-09
      */
     public void insert(final RoleDTO roleDTO) {
-        sql.insert("Role.insert", roleDTO.toEntity());
+        sql.insert("Role.insert", roleDTO);
     }
 
     /***
@@ -66,7 +65,7 @@ public class RoleRepository {
      * @since 2024-06-09
      */
     public void delete(final RoleDTO roleDTO) {
-        sql.delete("Role.delete", roleDTO.toEntity());
+        sql.delete("Role.delete", roleDTO);
     }
 
     /***
@@ -75,7 +74,7 @@ public class RoleRepository {
      * @since 2024-06-09
      */
     public void update(final RoleDTO roleDTO) {
-        sql.update("Role.update", roleDTO.toEntity());
+        sql.update("Role.update", roleDTO);
     }
 
 

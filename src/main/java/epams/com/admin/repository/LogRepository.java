@@ -31,8 +31,7 @@ public class LogRepository {
      * @since 2024-06-09
      */
     public List<LogLoginDTO> findAll() {
-    	final List<LogLoginEntity> logLoginEntities = sql.selectList("LogLogin.findAll");
-    	return LogLoginDTO.toDTOList(logLoginEntities);
+    	return sql.selectList("LogLogin.findAll");
     }
     
     /***
@@ -42,6 +41,6 @@ public class LogRepository {
      * @since 2024-06-09 PMD MethodArgumentCouldBeFinal 취약점 조치 (140024) 
      */
     public void insert(final LogLoginDTO logLoginDTO) {
-    	sql.update("LogLogin.insert", logLoginDTO.toEntity());
+		sql.update("LogLogin.insert", logLoginDTO);
     }
 }

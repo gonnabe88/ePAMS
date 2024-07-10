@@ -34,8 +34,7 @@ public class LoginRepository {
         if(log.isWarnEnabled()){
             log.warn("{} 로그인 정보 확인", iamUserDTO.getUsername());
         }
-        final IamUserEntity iamUserEntity = sql.selectOne("IamUser.login", iamUserDTO.toEntity());
-        return IamUserDTO.toDTO(iamUserEntity);
+        return sql.selectOne("IamUser.login", iamUserDTO);
     }
 
     /**
@@ -44,8 +43,7 @@ public class LoginRepository {
      * @since 2024-06-11
      */
     public IamUserDTO findByUserId(final IamUserDTO iamUserDTO) {
-        final IamUserEntity iamUserEntity = sql.selectOne("IamUser.findByUserId", iamUserDTO.toEntity());
-        return IamUserDTO.toDTO(iamUserEntity);
+        return sql.selectOne("IamUser.findByUserId", iamUserDTO);
     }
 
 }

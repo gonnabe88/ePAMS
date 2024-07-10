@@ -81,7 +81,7 @@ public class ControllerLoggingAspect {
         final LogViewDTO viewLog = new LogViewDTO();
         viewLog.setControllerName(controllerName);
         viewLog.setMethodName(methodName);
-        viewLog.setCallTime(callTime);
+        viewLog.setCreatedTime(callTime);
         viewLog.setClientIp(clientIp);
         viewLog.setUserAgent(userAgent);
         viewLog.setRequestUrl(requestUrl);

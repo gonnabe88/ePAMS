@@ -36,8 +36,7 @@ public class BoardMainRepository {
 	 * @since 2024-06-09
 	 */
     public List<BoardDTO> findAll(final int offset, final int pageSize, final String sortDirection) {
-    	final List<BoardEntity> boardEntities = sql.selectList("Board.findAll", Map.of("offset", offset, "limit", pageSize, "sortDirection", sortDirection)); 
-        return BoardDTO.toDTOList(boardEntities);
+        return sql.selectList("Board.findAll", Map.of("offset", offset, "limit", pageSize, "sortDirection", sortDirection));
     }    
     
 	/***
@@ -55,8 +54,7 @@ public class BoardMainRepository {
 	 * @since 2024-06-09
 	 */
     public BoardDTO findById(final Long seqId) {
-    	final BoardEntity boardEntity = sql.selectOne("Board.findById", seqId);
-        return BoardDTO.toDTO(boardEntity);
+        return sql.selectOne("Board.findById", seqId);
     }
     
 	/***

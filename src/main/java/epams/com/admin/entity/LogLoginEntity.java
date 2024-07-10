@@ -1,5 +1,7 @@
 package epams.com.admin.entity;
 
+import epams.com.board.dto.BaseDTO;
+import epams.com.board.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.Comment;
@@ -19,7 +21,14 @@ import java.time.LocalDateTime;
 @Builder
 @Table(name = "THURXE_CLOGNL")
 @Comment("인사_외부근태 로그인로그")
-public class LogLoginEntity {
+public class LogLoginEntity extends BaseEntity {
+
+    /**
+     * @author 140024
+     * @implNote BLB_SNO 시퀀스 이름 상수
+     * @since 2024-06-09
+     */
+    private static final String SEQUENCE = "LGN_LOG_SNO";
 
     /***
      * @author 140024
@@ -27,8 +36,9 @@ public class LogLoginEntity {
      * @since 2024-06-09
      */
     @Id // 기본키
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment
-    @Column(name = "LGN_LOG_SNO", columnDefinition = "NUMBER(22)")
+    @Column(name = SEQUENCE, columnDefinition = "NUMBER(22)")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQUENCE)
+    @SequenceGenerator(name = SEQUENCE, sequenceName = SEQUENCE, allocationSize = 1)
     @Comment("로그인로그일련번호")
     private Long LGN_LOG_SNO;
     
@@ -58,14 +68,5 @@ public class LogLoginEntity {
     @Column(name = "LGN_SCS_YN", nullable = false, length = 1)
     @Comment("로그인성공여부")
     private char LGN_SCS_YN;
-    
-    /***
-     * @author 140024
-     * @implNote 생성시간(인증시간)
-     * @since 2024-06-09
-     */
-    @Column(name = "GNT_DTM", updatable = false, columnDefinition = "DATE")
-    @Comment("생성일시")
-    private LocalDateTime GNT_DTM;
 
 }

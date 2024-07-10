@@ -1,6 +1,7 @@
 package epams.com.admin.dto;
 
 import epams.com.admin.entity.LogViewEntity;
+import epams.com.board.dto.BaseDTO;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -17,110 +18,49 @@ import java.util.stream.Collectors;
 @ToString
 @NoArgsConstructor // 기본생성자
 @AllArgsConstructor // 모든 필드를 매개변수로 하는 생성자
-public class LogViewDTO {
+public class LogViewDTO extends BaseDTO {
 
     /***
      * @author 140024
-     * @implNote 행번 (EMP_NO)
+     * @implNote 페이지로그일련번호 (PAG_LOG_SNO)
      * @since 2024-06-09
      */
     private Long seqId;
 
     /***
      * @author 140024
-     * @implNote 인증방식 (TYPE)
+     * @implNote 컨트롤러명 (CTRL_NM)
      * @since 2024-06-09
      */
     private String controllerName;
 
     /***
      * @author 140024
-     * @implNote 호출 메소드명
+     * @implNote 메소드명(MTH_NM)
      * @since 2024-06-09
      */
     private String methodName;
 
     /***
      * @author 140024
-     * @implNote 접속 IP
+     * @implNote 클라이언트IP주소(CLI_IP_ADDR)
      * @since 2024-06-09
      */
     private String clientIp;
 
     /***
      * @author 140024
-     * @implNote 단말정보
+     * @implNote 사용자접속환경내용(USR_CNC_ENV_INF)
      * @since 2024-06-09
      */
     private String userAgent;
 
     /***
      * @author 140024
-     * @implNote 요청 URL
+     * @implNote 요청URL주소(REQ_URL_ADDR)
      * @since 2024-06-09
      */
     private String requestUrl;
 
-    /***
-     * @author 140024
-     * @implNote 호출시간
-     * @since 2024-06-09
-     */
-    private LocalDateTime callTime;
-
-    /***
-     * @author 140024
-     * @implNote Entity > DTO 변경 메소드
-     * @since 2024-06-09
-     */
-    public static LogViewDTO toDTO(final LogViewEntity entity) {
-        return new LogViewDTO(
-                entity.getPAG_LOG_SNO(),
-                entity.getCTRL_NM(),
-                entity.getMTH_NM(),
-                entity.getCLI_IP_ADDR(),
-                entity.getUSR_CNC_ENV_INF(),
-                entity.getREQ_URL_ADDR(),
-                entity.getGNT_DTM());
-    }
-
-    /***
-     * @author 140024
-     * @implNote DTO > Entity 변경 메소드
-     * @since 2024-06-09
-     */
-    public static LogViewEntity toEntity(final LogViewDTO dto) {
-        return LogViewEntity.builder()
-                .PAG_LOG_SNO(dto.getSeqId())
-                .CTRL_NM(dto.getControllerName())
-                .MTH_NM(dto.getMethodName())
-                .CLI_IP_ADDR(dto.getClientIp())
-                .USR_CNC_ENV_INF(dto.getUserAgent())
-                .REQ_URL_ADDR(dto.getRequestUrl())
-                .GNT_DTM(dto.getCallTime())
-                .build();
-    }
-
-    /***
-     * @author 140024
-     * @implNote List<Entity> > List<DTO> 변경 메소드
-     * @since 2024-06-09
-     */
-    public static List<LogViewDTO> toDTOList(final List<LogViewEntity> entityList) {
-        return entityList.stream()
-                .map(LogViewDTO::toDTO)
-                .collect(Collectors.toList());
-    }
-
-    /***
-     * @author 140024
-     * @implNote List<DTO> > List<Entity> 변경 메소드
-     * @since 2024-06-09
-     */
-    public static List<LogViewEntity> toEntityList(final List<LogViewDTO> dtoList) {
-        return dtoList.stream()
-                .map(LogViewDTO::toEntity)
-                .collect(Collectors.toList());
-    }
 
 }

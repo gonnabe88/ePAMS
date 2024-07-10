@@ -44,9 +44,7 @@ public class CodeHtmlMapRepository {
 	 * @since 2024-06-09
 	 */
     public List<CodeHtmlMapDTO> findAll() {
-    	final List<CodeHtmlEntity> htmlEntity = sql.selectList("CodeHtmlMap.findAll");
-		log.warn("htmlEntity: {}", htmlEntity.toString());
-        return CodeHtmlMapDTO.toDTOList(htmlEntity);
+        return sql.selectList("CodeHtmlMap.findAll");
     }
     
 	/***
@@ -55,7 +53,7 @@ public class CodeHtmlMapRepository {
 	 * @since 2024-06-09
 	 */
     public Long countById(final CodeHtmlMapDTO codeHtmlMapDTO) {
-        return sql.selectOne("CodeHtmlMap.countById", codeHtmlMapDTO.toEntity());
+        return sql.selectOne("CodeHtmlMap.countById", codeHtmlMapDTO);
     }
     
 	/***
@@ -64,7 +62,7 @@ public class CodeHtmlMapRepository {
 	 * @since 2024-06-09
 	 */
     public void insert(final CodeHtmlMapDTO codeHtmlMapDTO) {
-        sql.insert("CodeHtmlMap.insert", codeHtmlMapDTO.toEntity());
+        sql.insert("CodeHtmlMap.insert", codeHtmlMapDTO);
     }
     
 	/***
@@ -73,7 +71,7 @@ public class CodeHtmlMapRepository {
 	 * @since 2024-06-09
 	 */
     public void delete(final CodeHtmlMapDTO codeHtmlMapDTO) {
-        sql.delete("CodeHtmlMap.delete", codeHtmlMapDTO.toEntity());
+        sql.delete("CodeHtmlMap.delete", codeHtmlMapDTO);
     }
     
 	/***
@@ -82,7 +80,7 @@ public class CodeHtmlMapRepository {
 	 * @since 2024-06-09
 	 */
     public void update(final CodeHtmlMapDTO codeHtmlMapDTO) {
-        sql.update("CodeHtmlMap.update", codeHtmlMapDTO.toEntity());
+        sql.update("CodeHtmlMap.update", codeHtmlMapDTO);
     }
     
 }

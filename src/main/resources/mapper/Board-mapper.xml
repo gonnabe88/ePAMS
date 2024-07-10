@@ -1,94 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE mapper SYSTEM "mybatis-3-mapper.dtd">
 
-
 <mapper namespace="Board">
 
-    <!-- BOARD TABLE Result Map 정의
-    <resultMap id="boardMap" type="board">
-        <id property="SEQ_ID" column="BLB_SNO"/>
-        <result property="BOARD_TITLE" column="BLB_NM"/>
-        <result property="BOARD_CONTENTS" column="BLB_CONE"/>
-        <result property="BOARD_WRITER" column="DUPR_ENO"/>
-        <result property="CATEGORY" column="CTG_NM"/>
-        <result property="BOARD_HITS" column="NAC_INQ_NBR"/>
-        <result property="FILE_ATTACHED" column="FL_APG_YN"/>
-        <result property="CREATED_TIME" column="GNT_DTM"/>
-        <result property="UPDATED_TIME" column="AMN_DTM"/>
-    </resultMap> -->
-	
-	<!-- 게시물 저장 후 ID 반환 -->
-    <insert id="save" parameterType="board">
-        <selectKey keyProperty="BLB_SNO" resultType="long" order="BEFORE">
+    <!-- BOARD TABLE Result Map 정의-->
+    <resultMap id="boardMap" type="boardDTO">
+        <id property="seqId" column="BLB_SNO"/>
+        <result property="boardTitle" column="BLB_NM"/>
+        <result property="boardContents" column="BLB_CONE"/>
+        <result property="boardWriter" column="DUPR_ENO"/>
+        <result property="category" column="CTG_NM"/>
+        <result property="boardHits" column="NAC_INQ_NBR"/>
+        <result property="fileAttached" column="FL_APG_YN"/>
+        <result property="deleteYn" column="DEL_YN"/>
+        <result property="guid" column="GUID"/>
+        <result property="guidPrgSno" column="GUID_PRG_SNO"/>
+        <result property="lstChgUsid" column="LST_CHG_USID"/>
+        <result property="updatedTime" column="LST_CHG_DTM"/>
+        <result property="createdTime" column="GNT_DTM"/>
+    </resultMap>
+
+    <!-- BoardEntity를 조회하는 메소드 정의 (for association) -->
+    <select id="selectBoardById" parameterType="Long" resultMap="boardMap">
+        SELECT * FROM THURXE_CBRDMM
+        WHERE
+        BLB_SNO = #{boardId}
+    </select>
+
+    <!-- 게시물 저장 후 ID 반환 -->
+    <insert id="save" parameterType="boardDTO">
+        <selectKey keyProperty="seqId" resultType="long" order="BEFORE">
             SELECT "EHR"."BLB_SNO".nextval FROM dual
         </selectKey>
         INSERT INTO THURXE_CBRDMM(
-            BLB_SNO, 
-            BLB_NM,
-            DUPR_ENO, 
-            BLB_CONE, 
-            FL_APG_YN, 
-            CTG_NM, 
-            NAC_INQ_NBR, 
-            GNT_DTM)
+        BLB_SNO,
+        BLB_NM,
+        DUPR_ENO,
+        BLB_CONE,
+        FL_APG_YN,
+        CTG_NM,
+        NAC_INQ_NBR,
+        GNT_DTM,
+        DEL_YN,
+        GUID,
+        GUID_PRG_SNO,
+        LST_CHG_USID,
+        LST_CHG_DTM)
         VALUES(
-            #{BLB_SNO}, 
-            #{BLB_NM},
-            #{DUPR_ENO}, 
-            #{BLB_CONE}, 
-            #{FL_APG_YN}, 
-            #{CTG_NM}, 
-            0, 
-            SYSDATE
+        #{seqId},
+        #{boardTitle},
+        #{boardWriter},
+        #{boardContents},
+        #{fileAttached},
+        #{category},
+        0,
+        SYSDATE,
+        #{deleteYn},
+        #{guid},
+        #{guidPrgSno},
+        #{lstChgUsid},
+        #{updatedTime}
         )
     </insert>
-    
-	<!-- 특정 게시물 업데이트 -->
-    <update id="update" parameterType="board">
-        UPDATE THURXE_CBRDMM 
-        SET BLB_NM=#{BLB_NM},
-        	BLB_CONE=#{BLB_CONE}, 
-	        FL_APG_YN=#{FL_APG_YN},
-	        CTG_NM=#{CTG_NM},
-	        AMN_DTM=#{AMN_DTM}
-       	WHERE BLB_SNO=#{BLB_SNO}
+
+    <!-- 특정 게시물 업데이트 -->
+    <update id="update" parameterType="boardDTO">
+        UPDATE THURXE_CBRDMM
+        SET BLB_NM=#{boardTitle},
+        BLB_CONE=#{boardContents},
+        FL_APG_YN=#{fileAttached},
+        CTG_NM=#{category},
+        LST_CHG_DTM=#{updatedTime}
+        WHERE BLB_SNO=#{seqId}
     </update>
-    
+
     <!-- Paging 규칙에 따라 전체 게시물 조회 -->
-    <select id="findAll" resultType="board">
-        SELECT * 
+    <select id="findAll" resultMap="boardMap">
+        SELECT *
         FROM THURXE_CBRDMM
         ORDER BY BLB_SNO ${sortDirection}
         OFFSET #{offset} ROWS FETCH NEXT #{limit} ROWS ONLY
     </select>
-    
+
     <!-- 전체 데이터 개수 조회 -->
     <select id="count" resultType="long">
         SELECT COUNT(*) FROM THURXE_CBRDMM
     </select>
-    
+
     <!-- 특정 게시물 조회 -->
-    <select id="findById" parameterType="Long" resultType="board">
-        SELECT 
-        	BLB_SNO, 
-       		BLB_NM,
-       		DUPR_ENO, 
-       		BLB_CONE, 
-       		NAC_INQ_NBR,
-        	TO_CHAR(GNT_DTM, 'YYYY-MM-DD HH24:MI:SS') AS GNT_DTM,  
-        	FL_APG_YN,
-        	CTG_NM
-        FROM THURXE_CBRDMM WHERE BLB_SNO=#{BLB_SNO}
+    <select id="findById" parameterType="Long" resultMap="boardMap">
+        SELECT
+            BLB_SNO,
+            BLB_NM,
+            DUPR_ENO,
+            BLB_CONE,
+            NAC_INQ_NBR,
+            TO_CHAR(GNT_DTM, 'YYYY-MM-DD HH24:MI:SS') AS GNT_DTM,
+            FL_APG_YN,
+            CTG_NM,
+            DEL_YN,
+            GUID,
+            GUID_PRG_SNO,
+            LST_CHG_USID,
+            LST_CHG_DTM
+        FROM THURXE_CBRDMM WHERE BLB_SNO=#{seqId}
     </select>
-    
+
     <!-- 특정 게시물 조회 시 HIT+1 -->
     <update id="updateHits" parameterType="Long">
-        UPDATE THURXE_CBRDMM SET NAC_INQ_NBR=NAC_INQ_NBR+1 WHERE BLB_SNO=#{BLB_SNO}
+        UPDATE THURXE_CBRDMM SET NAC_INQ_NBR=NAC_INQ_NBR+1 WHERE BLB_SNO=#{seqId}
     </update>
 
-    
+    <!-- 특정 게시물 삭제 -->
     <delete id="delete" parameterType="Long">
-        DELETE FROM THURXE_CBRDMM WHERE BLB_SNO=#{BLB_SNO}
+        DELETE FROM THURXE_CBRDMM WHERE BLB_SNO=#{seqId}
     </delete>
-    
+
 </mapper>

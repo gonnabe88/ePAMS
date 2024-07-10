@@ -32,7 +32,7 @@ public class BoardFileRepository {
 	 * @since 2024-06-09
 	 */
     public Long saveFile(final BoardFileDTO boardFileDTO) {    	
-    	return (long)sql.insert("BoardFile.saveFile", boardFileDTO.toEntity());
+    	return (long)sql.insert("BoardFile.saveFile", boardFileDTO);
     }    
 
 	/***
@@ -41,8 +41,7 @@ public class BoardFileRepository {
 	 * @since 2024-06-09
 	 */
     public List<BoardFileDTO> findFile(final Long boardId) {
-    	final List<BoardFileEntity> boardFileEntities = sql.selectList("BoardFile.findFile", boardId);
-        return BoardFileDTO.toDTOList(boardFileEntities);
+        return sql.selectList("BoardFile.findFile", boardId);
     }
     
 	/***
@@ -51,7 +50,7 @@ public class BoardFileRepository {
 	 * @since 2024-06-09
 	 */
     public BoardFileDTO findByFileId(final Long seqId) {
-        return BoardFileDTO.toDTO(sql.selectOne("BoardFile.findByFileId", seqId));
+        return sql.selectOne("BoardFile.findByFileId", seqId);
     }
 
 	/***

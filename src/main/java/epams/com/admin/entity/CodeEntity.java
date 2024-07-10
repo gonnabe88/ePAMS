@@ -53,7 +53,7 @@ public class CodeEntity extends BaseEntity implements Serializable {
     
     /***
      * @author 140024
-     * @implNote 코드명
+     * @implNote 코드값명
      * @since 2024-06-09
      */
     @Column(name="CDVA_NM", length = 200, nullable = false)

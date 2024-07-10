@@ -98,7 +98,7 @@ public class LoginService {
         }
         // username & password(hash)와 일치하는 사용자를 찾음
         final IamUserDTO isiamUserDTO = loginRepository.login(iamUserDTO);
-        final boolean result = isiamUserDTO.getUsername() != null;
+        final boolean result = isiamUserDTO != null;
         if(!result) {
             if(log.isWarnEnabled())
             {

@@ -1,45 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE mapper SYSTEM "mybatis-3-mapper.dtd">
 
-
 <mapper namespace="BoardImage">
 
-    <!-- BoardFile TABLE Result Map 정의 
-    <resultMap id="boardImageMap" type="boardImage">
-        <id property="SEQ_ID" column="BLB_IMG_SNO"/>
-        <result property="ORIGINAL_FILENAME" column="ORC_FL_NM"/>
-        <result property="STORED_FILENAME" column="SVR_FL_NM"/>
-        <result property="STORED_PATH" column="FL_KPN_PTH"/>
-        <result property="CREATED_TIME" column="GNT_DTM"/>
-        <result property="UPDATED_TIME" column="AMN_DTM"/>
-        <association property="boardEntity" column="BLB_SNO" javaType="board" select="selectBoardById"/>
-    </resultMap>-->
+    <!-- BoardImage TABLE Result Map 정의 -->
+    <resultMap id="boardImageMap" type="boardImageDTO">
+        <id property="seqId" column="BLB_IMG_SNO"/>
+        <result property="originalFileName" column="ORC_FL_NM"/>
+        <result property="storedFileName" column="SVR_FL_NM"/>
+        <result property="boardId" column="BLB_SNO"/>
+        <result property="deleteYn" column="DEL_YN"/>
+        <result property="guid" column="GUID"/>
+        <result property="guidPrgSno" column="GUID_PRG_SNO"/>
+        <result property="lstChgUsid" column="LST_CHG_USID"/>
+        <result property="updatedTime" column="LST_CHG_DTM"/>
+        <result property="createdTime" column="GNT_DTM"/>
+        <association property="boardDTO" column="BLB_SNO" javaType="boardDTO" select="Board.selectBoardById"/>
+    </resultMap>
 
     <!-- 이미지 저장 -->
-    <insert id="insertBoardImage" parameterType="boardImage">
-        <selectKey keyProperty="BLB_IMG_SNO" resultType="long" order="BEFORE">
+    <insert id="insertBoardImage" parameterType="boardImageDTO">
+        <selectKey keyProperty="seqId" resultType="long" order="BEFORE">
             SELECT "EHR"."BLB_IMG_SNO".nextval FROM dual
         </selectKey>
         INSERT INTO THURXE_CBRDIM
         (
-            BLB_IMG_SNO, 
-            ORC_FL_NM, 
-            SVR_FL_NM, 
-            GNT_DTM
+        BLB_IMG_SNO,
+        ORC_FL_NM,
+        SVR_FL_NM,
+        BLB_SNO,
+        DEL_YN,
+        GUID,
+        GUID_PRG_SNO,
+        LST_CHG_USID,
+        LST_CHG_DTM,
+        GNT_DTM
         )
         VALUES
         (
-            #{BLB_IMG_SNO}, 
-            #{ORC_FL_NM}, 
-            #{SVR_FL_NM}, 
-            SYSDATE
+        #{seqId},
+        #{originalFileName},
+        #{storedFileName},
+        #{boardId},
+        #{deleteYn},
+        #{guid},
+        #{guidPrgSno},
+        #{lstChgUsid},
+        SYSDATE,
+        SYSDATE
         )
     </insert>
-    
-    <select id="selectBoardImage" parameterType="String" resultType="boardImage">
-        SELECT * FROM THURXE_CBRDIM 
-        WHERE 
-            SVR_FL_NM = #{SVR_FL_NM}
+
+    <select id="selectBoardImage" parameterType="String" resultMap="boardImageMap">
+        SELECT * FROM THURXE_CBRDIM
+        WHERE
+        SVR_FL_NM = #{storedFileName}
     </select>
-    
+
 </mapper>

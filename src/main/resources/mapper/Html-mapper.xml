@@ -1,80 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE mapper SYSTEM "mybatis-3-mapper.dtd">
 
-
 <mapper namespace="Html">
-     
-    <!-- Result Map 정의
-    <resultMap id="htmlMap" type="html">
-        <id property="HTML_FL_PTH" column="HTML_FL_PTH"/>
-        <result property="HTML_FL_NM" column="HTML_FL_NM"/>
-        <result property="AMN_DTM" column="AMN_DTM"/>
-        <result property="GNT_DTM" column="GNT_DTM"/>
-    </resultMap>-->
+
+    <!-- Result Map 정의 -->
+    <resultMap id="htmlMap" type="htmlDTO">
+        <id property="html" column="HTML_FL_PTH"/>
+        <result property="htmlName" column="HTML_FL_NM"/>
+        <result property="deleteYn" column="DEL_YN"/>
+        <result property="guid" column="GUID"/>
+        <result property="guidPrgSno" column="GUID_PRG_SNO"/>
+        <result property="lstChgUsid" column="LST_CHG_USID"/>
+        <result property="updatedTime" column="LST_CHG_DTM"/>
+        <result property="createdTime" column="GNT_DTM"/>
+    </resultMap>
 
     <!-- 모든 데이터 조회 -->
-    <select id="findAll" resultType="html">
+    <select id="findAll" resultMap="htmlMap">
         SELECT * FROM THURXE_CHTMLM
-    </select>    
-    
-    <!-- 기본키 데이터 중복여부 조회 -->
-    <select id="countById" parameterType="Long" resultType="html">
-        SELECT COUNT(*)
-        FROM THURXE_CHTMLM 
-        WHERE 
-            HTML_FL_PTH = #{HTML_FL_PTH}
     </select>
-    
-    <!-- 신규 데이터 추가 --> 
-    <insert id="insert" parameterType="html">
-        INSERT INTO THURXE_CHTMLM
-        (
+
+    <!-- 기본키 데이터 중복여부 조회 -->
+    <select id="countById" parameterType="String" resultType="int">
+        SELECT COUNT(*)
+        FROM THURXE_CHTMLM
+        WHERE HTML_FL_PTH = #{html}
+    </select>
+
+    <!-- 신규 데이터 추가 -->
+    <insert id="insert" parameterType="htmlDTO">
+        INSERT INTO THURXE_CHTMLM (
             HTML_FL_PTH,
             HTML_FL_NM,
+            DEL_YN,
+            GUID,
+            GUID_PRG_SNO,
+            LST_CHG_USID,
+            LST_CHG_DTM,
             GNT_DTM
         )
-        VALUES
-        (
-            #{HTML_FL_PTH},
-            #{HTML_FL_NM},
+        VALUES (
+            #{html},
+            #{htmlName},
+            #{deleteYn},
+            #{guid},
+            #{guidPrgSno},
+            #{lstChgUsid},
+            SYSDATE,
             SYSDATE
         )
-    </insert>   
-    
-    <!-- 기존 데이터 삭제 --> 
-    <delete id="delete" parameterType="html">
-        DELETE FROM THURXE_CHTMLM 
-        WHERE 
-            HTML_FL_PTH = #{HTML_FL_PTH}
+    </insert>
+
+    <!-- 기존 데이터 삭제 -->
+    <delete id="delete" parameterType="htmlDTO">
+        DELETE FROM THURXE_CHTMLM
+        WHERE HTML_FL_PTH = #{html}
     </delete>
-    
-    <!-- 기존 데이터 업데이트(기본키 제외) --> 
-    <update id="update" parameterType="html">
-        UPDATE THURXE_CHTMLM 
-        SET 
-            HTML_FL_NM = #{HTML_FL_NM},
-            AMN_DTM = SYSDATE 
-        WHERE 
-            HTML_FL_PTH = #{HTML_FL_PTH}
+
+    <!-- 기존 데이터 업데이트(기본키 제외) -->
+    <update id="update" parameterType="htmlDTO">
+        UPDATE THURXE_CHTMLM
+        SET
+            HTML_FL_NM = #{htmlName},
+            DEL_YN = #{deleteYn},
+            GUID = #{guid},
+            GUID_PRG_SNO = #{guidPrgSno},
+            LST_CHG_USID = #{lstChgUsid},
+            LST_CHG_DTM = SYSDATE
+        WHERE
+            HTML_FL_PTH = #{html}
     </update>
-    
+
     <!-- 신규 데이터 추가 또는 기존 데이터 업데이트 -->
-	<insert id="insertUpdate" parameterType="html">
-	    INSERT INTO THURXE_CHTMLM 
-        (
+    <insert id="insertUpdate" parameterType="htmlDTO">
+        INSERT INTO THURXE_CHTMLM (
             HTML_FL_PTH,
             HTML_FL_NM,
+            DEL_YN,
+            GUID,
+            GUID_PRG_SNO,
+            LST_CHG_USID,
+            LST_CHG_DTM,
             GNT_DTM
         )
-	    VALUES 
-        (
-            #{HTML_FL_PTH},
-            #{HTML_FL_NM},
+        VALUES (
+            #{html},
+            #{htmlName},
+            #{deleteYn},
+            #{guid},
+            #{guidPrgSno},
+            #{lstChgUsid},
+        SYSDATE,
             SYSDATE
         )
-	    ON DUPLICATE KEY UPDATE
-	        HTML_FL_NM = VALUES(HTML_FL_NM),
-	        AMN_DTM = SYSDATE;
-	</insert>
-        
+        ON DUPLICATE KEY UPDATE
+            HTML_FL_NM = VALUES(HTML_FL_NM),
+            DEL_YN = VALUES(DEL_YN),
+            GUID = VALUES(GUID),
+            GUID_PRG_SNO = VALUES(GUID_PRG_SNO),
+            LST_CHG_USID = VALUES(LST_CHG_USID),
+            LST_CHG_DTM = SYSDATE;
+    </insert>
+
 </mapper>

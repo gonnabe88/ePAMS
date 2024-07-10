@@ -3,57 +3,50 @@
 
 <mapper namespace="IamUser">
 
+    <!-- Result Map 정의 -->
+    <resultMap id="iamUserMap" type="iamUserDTO">
+        <id property="username" column="EMP_NO"/>
+        <result property="realname" column="EMP_NM"/>
+        <result property="password" column="EMP_PWD"/>
+        <result property="createdDate" column="TZ_DATE"/>
+    </resultMap>
+
     <!-- 모든 데이터 조회 -->
-    <select id="findAll" resultType="iamUser">
+    <select id="findAll" resultMap="iamUserMap">
         SELECT * FROM OHR.IF_IAM_USER
     </select>
 
     <!-- 모든 데이터 조회 -->
-    <select id="findAllDept" resultType="iamUser">
+    <select id="findAllDept" resultType="iamUserDTO">
         SELECT DISTINCT(A.EMP_NM) FROM OHR.IF_IAM_USER A
     </select>
 
     <!-- ID/PW 일치 사용자 조회 -->
-    <select id="login" parameterType="iamUser" resultType="iamUser">
-        SELECT 
-            A.EMP_NO,
-            A.EMP_PWD
-        FROM OHR.IF_IAM_USER A 
-        WHERE 
-            A.EMP_NO=#{EMP_NO} AND
-            A.EMP_PWD=#{EMP_PWD}
+    <select id="login" parameterType="iamUserDTO" resultMap="iamUserMap">
+        SELECT
+        A.EMP_NO,
+        A.EMP_PWD
+        FROM OHR.IF_IAM_USER A
+        WHERE
+        A.EMP_NO = #{username} AND
+        A.EMP_PWD = #{password}
     </select>
-    
+
     <!-- ID 일치 사용자 조회 -->
-    <select id="findByUserId" parameterType="iamUser" resultType="iamUser">
+    <select id="findByUserId" parameterType="iamUserDTO" resultMap="iamUserMap">
         SELECT *
         FROM OHR.IF_IAM_USER A
         WHERE
-        A.EMP_NO=#{EMP_NO}
+        A.EMP_NO = #{username}
     </select>
 
     <!-- 통합 키워드 사용자 조회 -->
-    <select id="findBySearchValue" parameterType="String" resultType="iamUser">
+    <select id="findBySearchValue" parameterType="String" resultMap="iamUserMap">
         SELECT *
         FROM OHR.IF_IAM_USER A
         WHERE
-            A.EMP_NO LIKE '%' || #{searchValue} || '%' OR
-            A.EMP_NM LIKE '%' || #{searchValue} || '%'
+        A.EMP_NO LIKE '%' || #{searchValue} || '%' OR
+        A.EMP_NM LIKE '%' || #{searchValue} || '%'
     </select>
 
-    <!-- 신규 데이터 추가 -->
-    <insert id="insert" parameterType="iamUser">
-        INSERT INTO OHR.IF_IAM_USER(
-        EMP_NO,
-        EMP_NM,
-        EMP_PWD,
-        TZ_DATE
-        )
-        VALUES(
-        #{EMP_NO},
-        #{EMP_NM},
-        #{EMP_PWD},
-        SYSDATE
-        )
-    </insert>
 </mapper>

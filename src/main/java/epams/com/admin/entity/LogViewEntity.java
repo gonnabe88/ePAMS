@@ -1,5 +1,7 @@
 package epams.com.admin.entity;
 
+import epams.com.board.dto.BaseDTO;
+import epams.com.board.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.Comment;
@@ -19,16 +21,23 @@ import java.time.LocalDateTime;
 @Builder
 @Table(name = "THURXE_CVIEWL")
 @Comment("인사_외부근태 페이지뷰로그")
-public class LogViewEntity {
-	
+public class LogViewEntity extends BaseEntity {
+
+    /**
+     * @author 140024
+     * @implNote BLB_SNO 시퀀스 이름 상수
+     * @since 2024-06-09
+     */
+    private static final String SEQUENCE = "PAG_LOG_SNO";
+
     /***
      * @author 140024
      * @implNote ID
      * @since 2024-06-09
      */
     @Id // 기본키
-    @GeneratedValue(strategy = GenerationType.IDENTITY)  // auto_increment
-    @Column(name = "PAG_LOG_SNO", columnDefinition = "NUMBER(22)")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQUENCE)
+    @SequenceGenerator(name = SEQUENCE, sequenceName = SEQUENCE, allocationSize = 1)
     @Comment("페이지로그일련번호")
     private Long PAG_LOG_SNO;
     
@@ -76,16 +85,5 @@ public class LogViewEntity {
     @Column(name = "REQ_URL_ADDR", length = 500, nullable = false) 
     @Comment("요청URL주소")
     private String REQ_URL_ADDR;
-    
-    /***
-     * @author 140024
-     * @implNote 호출시간
-     * @since 2024-06-09
-     */
-    @Column(name = "GNT_DTM", updatable = false, columnDefinition = "DATE")
-    @Comment("생성시간")
-    private LocalDateTime GNT_DTM;
-    
-    
     
 }

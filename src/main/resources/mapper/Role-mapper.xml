@@ -3,56 +3,78 @@
 
 <mapper namespace="Role">
 
+    <!-- Result Map 정의 -->
+    <resultMap id="roleMap" type="roleDTO">
+        <id property="username" column="ENO"/>
+        <result property="roleId" column="ATH_ID"/>
+        <result property="deleteYn" column="DEL_YN"/>
+        <result property="guid" column="GUID"/>
+        <result property="guidPrgSno" column="GUID_PRG_SNO"/>
+        <result property="lstChgUsid" column="LST_CHG_USID"/>
+        <result property="updatedTime" column="LST_CHG_DTM"/>
+        <result property="createdTime" column="GNT_DTM"/>
+    </resultMap>
+
     <!-- 특정 계정에 대한 역할 1건 데이터 조회 -->
-    <select id="findOneRoleByUsername" parameterType="iamUser" resultType="role">
+    <select id="findOneRoleByUsername" parameterType="iamUserDTO" resultMap="roleMap">
         SELECT * FROM THURXE_CROLEM
         WHERE
-            ENO = #{EMP_NO}
+        ENO = #{username}
     </select>
 
     <!-- 모든 데이터 조회 -->
-    <select id="findAll" resultType="role">
+    <select id="findAll" resultMap="roleMap">
         SELECT * FROM THURXE_CROLEM
     </select>
 
     <!-- 기본키 데이터 중복여부 조회 -->
-    <select id="countById" parameterType="Long" resultType="role">
+    <select id="countById" parameterType="String" resultType="int">
         SELECT COUNT(*)
-        FROM THURXE_CROLEM WHERE ENO=#{ENO}
+        FROM THURXE_CROLEM
+        WHERE ENO = #{username}
     </select>
 
     <!-- 신규 데이터 추가 -->
-    <insert id="insert" parameterType="role">
+    <insert id="insert" parameterType="roleDTO">
         INSERT INTO THURXE_CROLEM(
-            ENO,
-            ATH_ID,
-            AMN_DTM,
-            GNT_DTM
+        ENO,
+        ATH_ID,
+        DEL_YN,
+        GUID,
+        GUID_PRG_SNO,
+        LST_CHG_USID,
+        LST_CHG_DTM,
+        GNT_DTM
         )
         VALUES(
-            #{ENO},
-            #{ATH_ID},
-            SYSDATE,
-            SYSDATE
+        #{username},
+        #{roleId},
+        #{deleteYn},
+        #{guid},
+        #{guidPrgSno},
+        #{lstChgUsid},
+        SYSDATE,
+        SYSDATE
         )
     </insert>
 
     <!-- 기존 데이터 삭제 -->
-    <delete id="delete" parameterType="role">
+    <delete id="delete" parameterType="roleDTO">
         DELETE FROM THURXE_CROLEM
-        WHERE
-            ENO = #{ENO}
+        WHERE ENO = #{username}
     </delete>
 
     <!-- 기존 데이터 업데이트 -->
-    <update id="update" parameterType="role">
+    <update id="update" parameterType="roleDTO">
         UPDATE THURXE_CROLEM
         SET
-            ENO = #{ENO},
-            ATH_ID = #{ATH_ID},
-            AMN_DTM = SYSDATE
-        WHERE
-            ENO = #{ENO}
+        ATH_ID = #{roleId},
+        DEL_YN = #{deleteYn},
+        GUID = #{guid},
+        GUID_PRG_SNO = #{guidPrgSno},
+        LST_CHG_USID = #{lstChgUsid},
+        LST_CHG_DTM = SYSDATE
+        WHERE ENO = #{username}
     </update>
 
 </mapper>

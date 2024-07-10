@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @ToString
 @NoArgsConstructor // 기본생성자
 @AllArgsConstructor // 모든 필드를 매개변수로 하는 생성자
-public class BoardFileDTO {
+public class BoardFileDTO extends BaseDTO {
 	
     /***
      * @author 140024
@@ -61,23 +61,7 @@ public class BoardFileDTO {
      * @since 2024-06-09
      */
     private String storedPath;
-    
-    /***
-     * @author 140024
-     * @implNote 생성시간
-     * @since 2024-06-09
-     */
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime createdTime;
-    
-    /***
-     * @author 140024
-     * @implNote 수정시간
-     * @since 2024-06-09
-     */
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime updatedTime;
-	
+
     /***
      * @author 140024
      * @implNote 주어진 파라미터를 사용하여 BoardFileDTO 객체를 생성하고 반환하는 정적 팩토리 메소드
@@ -92,61 +76,4 @@ public class BoardFileDTO {
         boardFileDTO.setBoardDTO(boardDTO);
         return boardFileDTO;
     }
-    
-    /***
-     * @author 140024
-     * @implNote Entity > DTO 변경 메소드
-     * @since 2024-06-09
-     */
-    public static BoardFileDTO toDTO(final BoardFileEntity boardFileEntity) {
-        final BoardFileDTO boardFileDTO = new BoardFileDTO();
-        boardFileDTO.setSeqId(boardFileEntity.getBLB_APG_FL_SNO());
-        boardFileDTO.setOriginalFileName(boardFileEntity.getORC_FL_NM());
-        boardFileDTO.setStoredFileName(boardFileEntity.getSVR_FL_NM());
-        boardFileDTO.setStoredPath(boardFileEntity.getFL_KPN_PTH());
-        boardFileDTO.setBoardId(boardFileEntity.getBoardEntity().getBLB_SNO());
-        boardFileDTO.setCreatedTime(boardFileEntity.getGNT_DTM());
-        boardFileDTO.setUpdatedTime(boardFileEntity.getAMN_DTM());
-        return boardFileDTO;
-    }
-
-    /***
-     * @author 140024
-     * @implNote DTO > Entity 변경 메소드
-     * @since 2024-06-09
-     */
-    public BoardFileEntity toEntity() {
-        final BoardFileEntity boardFileEntity = new BoardFileEntity();
-        boardFileEntity.setBLB_APG_FL_SNO(this.seqId);
-        boardFileEntity.setORC_FL_NM(this.originalFileName);
-        boardFileEntity.setSVR_FL_NM(this.storedFileName);
-        boardFileEntity.setFL_KPN_PTH(this.storedPath);
-        if (this.boardId != null) {
-            final BoardEntity boardEntity = new BoardEntity();
-            boardEntity.setBLB_SNO(this.boardId);
-            boardFileEntity.setBoardEntity(boardEntity);
-        }
-        boardFileEntity.setGNT_DTM(this.createdTime);
-        boardFileEntity.setAMN_DTM(this.updatedTime);
-        return boardFileEntity;
-    }
-
-    /***
-     * @author 140024
-     * @implNote List<Entity> > List<DTO> 변경 메소드
-     * @since 2024-06-09
-     */
-    public static List<BoardFileDTO> toDTOList(final List<BoardFileEntity> boardFileEntities) {
-        return boardFileEntities.stream().map(BoardFileDTO::toDTO).collect(Collectors.toList());
-    }
-
-    /***
-     * @author 140024
-     * @implNote List<HtmlDTO> > List<CodeEntity> 변경 메소드
-     * @since 2024-06-09
-     */
-    public static List<BoardFileEntity> toEntityList(final List<BoardFileDTO> boardFileDTOs) {
-        return boardFileDTOs.stream().map(BoardFileDTO::toEntity).collect(Collectors.toList());
-    }
-    
 }

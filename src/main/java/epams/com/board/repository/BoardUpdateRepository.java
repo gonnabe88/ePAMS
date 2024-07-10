@@ -31,10 +31,9 @@ public class BoardUpdateRepository {
 	 * @implNote 게시물 업데이트
 	 * @since 2024-06-09
 	 */
-    public Long update(final BoardDTO boardDTO) {      
-		final BoardEntity entity = boardDTO.toEntity();  
-        sql.update("Board.update", entity);
-		return entity.getBLB_SNO();
+    public Long update(final BoardDTO boardDTO) {
+        sql.update("Board.update", boardDTO);
+		return boardDTO.getSeqId();
     }    
     
 	/***

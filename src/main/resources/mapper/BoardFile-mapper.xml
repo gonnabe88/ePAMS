@@ -1,67 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE mapper SYSTEM "mybatis-3-mapper.dtd">
 
-
 <mapper namespace="BoardFile">
 
-    <!-- BoardFile TABLE Result Map 정의
-    <resultMap id="boardFileMap" type="boardFile">
-        <id property="SEQ_ID" column="BLB_APG_FL_SNO"/>
-        <result property="ORIGINAL_FILENAME" column="ORC_FL_NM"/>
-        <result property="STORED_FILENAME" column="SVR_FL_NM"/>
-        <result property="STORED_PATH" column="FL_KPN_PTH"/>
-        <result property="CREATED_TIME" column="GNT_DTM"/>
-        <result property="UPDATED_TIME" column="AMN_DTM"/>
-        <association property="boardEntity" column="BLB_SNO" javaType="board" select="selectBoardById"/>
-    </resultMap>-->
-    
-    <!-- BoardEntity를 조회하는 메소드 정의 (for association) -->
-    <select id="selectBoardById" parameterType="Long" resultType="board">
-        SELECT * FROM THURXE_CBRDMM 
-        WHERE 
-            BLB_SNO = #{BLB_SNO}
-    </select>
-    
+    <!-- BoardFile TABLE Result Map 정의 -->
+    <resultMap id="boardFileMap" type="boardFileDTO">
+        <id property="seqId" column="BLB_APG_FL_SNO"/>
+        <result property="originalFileName" column="ORC_FL_NM"/>
+        <result property="storedFileName" column="SVR_FL_NM"/>
+        <result property="storedPath" column="FL_KPN_PTH"/>
+        <result property="boardId" column="BLB_SNO"/>
+        <result property="deleteYn" column="DEL_YN"/>
+        <result property="guid" column="GUID"/>
+        <result property="guidPrgSno" column="GUID_PRG_SNO"/>
+        <result property="lstChgUsid" column="LST_CHG_USID"/>
+        <result property="updatedTime" column="LST_CHG_DTM"/>
+        <result property="createdTime" column="GNT_DTM"/>
+        <association property="boardDTO" column="BLB_SNO" javaType="boardDTO" select="Board.selectBoardById"/>
+    </resultMap>
+
     <!-- 첨부파일 저장 -->
-    <insert id="saveFile" parameterType="boardFile">
-        <selectKey keyProperty="BLB_APG_FL_SNO" resultType="long" order="BEFORE">
+    <insert id="saveFile" parameterType="boardFileDTO">
+        <selectKey keyProperty="seqId" resultType="long" order="BEFORE">
             SELECT "EHR"."BLB_APG_FL_SNO".nextval FROM dual
         </selectKey>
         INSERT INTO THURXE_CBRDFM
         (
-            BLB_APG_FL_SNO, 
-            ORC_FL_NM, 
-            SVR_FL_NM, 
-            BLB_SNO, 
-            GNT_DTM, 
-            FL_KPN_PTH
+        BLB_APG_FL_SNO,
+        ORC_FL_NM,
+        SVR_FL_NM,
+        FL_KPN_PTH,
+        BLB_SNO,
+        DEL_YN,
+        GUID,
+        GUID_PRG_SNO,
+        LST_CHG_USID,
+        LST_CHG_DTM,
+        GNT_DTM
         )
-        values (
-            #{BLB_APG_FL_SNO}, 
-            #{ORC_FL_NM}, 
-            #{SVR_FL_NM}, 
-            #{BLB_SNO}, 
-            SYSDATE, 
-            #{FL_KPN_PTH}
+        VALUES (
+        #{seqId},
+        #{originalFileName},
+        #{storedFileName},
+        #{storedPath},
+        #{boardId},
+        #{deleteYn},
+        #{guid},
+        #{guidPrgSno},
+        #{lstChgUsid},
+        SYSDATE,
+        SYSDATE
         )
     </insert>
-    
-    <select id="findFile" parameterType="Long" resultType="boardFile">
-        SELECT * FROM THURXE_CBRDFM 
-        WHERE 
-            BLB_SNO = #{BLB_SNO}
+
+    <select id="findFile" parameterType="Long" resultMap="boardFileMap">
+        SELECT * FROM THURXE_CBRDFM
+        WHERE
+        BLB_SNO = #{boardId}
     </select>
 
     <delete id="deleteFile" parameterType="Long">
-        DELETE FROM THURXE_CBRDFM 
-        WHERE 
-            BLB_APG_FL_SNO = #{BLB_APG_FL_SNO}
+        DELETE FROM THURXE_CBRDFM
+        WHERE
+        BLB_APG_FL_SNO = #{seqId}
     </delete>
-    
-    <select id="findByFileId" parameterType="Long" resultType="boardFile">
-        SELECT * FROM THURXE_CBRDFM 
-        WHERE 
-            BLB_APG_FL_SNO = #{BLB_APG_FL_SNO}
+
+    <select id="findByFileId" parameterType="Long" resultMap="boardFileMap">
+        SELECT * FROM THURXE_CBRDFM
+        WHERE
+        BLB_APG_FL_SNO = #{seqId}
     </select>
-        
+
 </mapper>

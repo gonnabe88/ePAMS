@@ -2,49 +2,68 @@
 <!DOCTYPE mapper SYSTEM "mybatis-3-mapper.dtd">
 
 <mapper namespace="ViewLog">
-    
-    <!-- Result Map 정의
-    <resultMap id="viewLogMap" type="viewLog">
-    <id property="SEQ_ID" column="PAG_LOG_SNO"/>
-        <result property="CTRL_NM" column="CTRL_NM"/>
-        <result property="MTH_NM" column="MTH_NM"/>
-        <result property="CLI_IP_ADDR" column="CLI_IP_ADDR"/>
-        <result property="USR_CNC_ENV_INF" column="USR_CNC_ENV_INF"/>
-        <result property="REQ_URL_ADDR" column="REQ_URL_ADDR"/>
-        <result property="GNT_DTM" column="GNT_DTM"/>
-    </resultMap> -->
+
+    <!-- Result Map 정의-->
+    <resultMap id="viewLogMap" type="viewLogDTO">
+        <id property="seqId" column="PAG_LOG_SNO"/>
+        <result property="controllerName" column="CTRL_NM"/>
+        <result property="methodName" column="MTH_NM"/>
+        <result property="clientIp" column="CLI_IP_ADDR"/>
+        <result property="userAgent" column="USR_CNC_ENV_INF"/>
+        <result property="requestUrl" column="REQ_URL_ADDR"/>
+        <result property="deleteYn" column="DEL_YN"/>
+        <result property="guid" column="GUID"/>
+        <result property="guidPrgSno" column="GUID_PRG_SNO"/>
+        <result property="lstChgUsid" column="LST_CHG_USID"/>
+        <result property="updatedTime" column="LST_CHG_DTM"/>
+        <result property="createdTime" column="GNT_DTM"/>
+    </resultMap>
 
     <!-- 모든 데이터 조회 -->
-    <select id="findAll" resultType="viewLog">
+    <select id="findAll" resultMap="viewLogMap">
         SELECT * FROM THURXE_CVIEWL
-    </select>    
-    
-    <!-- 기본키 데이터 중복여부 조회 -->
-    <select id="countById" parameterType="Long" resultType="viewLog">
-        SELECT COUNT(*)
-        FROM THURXE_CVIEWL WHERE PAG_LOG_SNO=#{PAG_LOG_SNO}
     </select>
-    
-    <!-- 신규 데이터 추가 --> 
-    <insert id="insert" parameterType="viewLog">
-        INSERT INTO THURXE_CVIEWL
-        (
-            CTRL_NM, 
-            MTH_NM, 
-            CLI_IP_ADDR, 
-            USR_CNC_ENV_INF, 
-            REQ_URL_ADDR, 
+
+    <!-- 기본키 데이터 중복여부 조회 -->
+    <select id="countById" parameterType="Long" resultType="int">
+        SELECT COUNT(*)
+        FROM THURXE_CVIEWL
+        WHERE PAG_LOG_SNO = #{seqId}
+    </select>
+
+    <!-- 신규 데이터 추가 -->
+    <insert id="insert" parameterType="viewLogDTO">
+        <selectKey keyProperty="seqId" resultType="long" order="BEFORE">
+            SELECT "EHR"."PAG_LOG_SNO".nextval FROM dual
+        </selectKey>
+        INSERT INTO THURXE_CVIEWL (
+            PAG_LOG_SNO,
+            CTRL_NM,
+            MTH_NM,
+            CLI_IP_ADDR,
+            USR_CNC_ENV_INF,
+            REQ_URL_ADDR,
+            DEL_YN,
+            GUID,
+            GUID_PRG_SNO,
+            LST_CHG_USID,
+            LST_CHG_DTM,
             GNT_DTM
-        )            
-        VALUES
-        (
-            #{CTRL_NM}, 
-            #{MTH_NM},
-            #{CLI_IP_ADDR},
-            #{USR_CNC_ENV_INF},
-            #{REQ_URL_ADDR},
-            #{GNT_DTM}
         )
-    </insert>   
-    
+        VALUES (
+            #{seqId},
+            #{controllerName},
+            #{methodName},
+            #{clientIp},
+            #{userAgent},
+            #{requestUrl},
+            #{deleteYn},
+            #{guid},
+            #{guidPrgSno},
+            #{lstChgUsid},
+            SYSDATE,
+            SYSDATE
+        )
+    </insert>
+
 </mapper>

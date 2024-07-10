@@ -32,10 +32,9 @@ public class BoardSaveRepository {
 	 * @implNote 게시물 저장 후 ID 반환
 	 * @since 2024-06-09
 	 */
-    public Long save(final BoardDTO boardDTO) {    	
-		final BoardEntity entity = boardDTO.toEntity();
-		sql.insert("Board.save", entity);
-    	return entity.getBLB_SNO();
+    public Long save(final BoardDTO boardDTO) {
+		sql.insert("Board.save", boardDTO);
+    	return boardDTO.getSeqId();
     }
     
 	/***
@@ -44,7 +43,7 @@ public class BoardSaveRepository {
 	 * @since 2024-06-09
 	 */
     public Long saveFile(final BoardFileDTO boardFileDTO) {
-    	sql.insert("Board.saveFile", boardFileDTO.toEntity());
+    	sql.insert("Board.saveFile", boardFileDTO);
     	return boardFileDTO.getSeqId();
     }  
     

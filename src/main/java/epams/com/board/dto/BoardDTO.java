@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 @ToString
 @NoArgsConstructor // 기본생성자
 @AllArgsConstructor // 모든 필드를 매개변수로 하는 생성자
-public class BoardDTO {
+public class BoardDTO extends BaseDTO{
     /***
      * @author 140024
      * @implNote [Column] 게시판일련번호(BLB_SNO)
@@ -69,23 +69,7 @@ public class BoardDTO {
      * @implNote [Column] 파일첨부여부(FL_APG_YN)
      * @since 2024-06-09
      */
-    private int fileAttached; 
-
-    /***
-     * @author 140024
-     * @implNote [Column] 수정일시(AMN_DTM)
-     * @since 2024-06-09
-     */
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime updatedTime;
-
-    /***
-     * @author 140024
-     * @implNote [Column] 생성일시(GNT_DTM)
-     * @since 2024-06-09
-     */
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime createdTime;
+    private int fileAttached;
 
     /***
      * @author 140024
@@ -102,75 +86,14 @@ public class BoardDTO {
      */
     public BoardDTO(final Long seqId, final String boardWriter, final byte[] boardContents, final String boardTitle,
             final String category, final int boardHits, final LocalDateTime boardCreatedTime) {
+        super();
         this.seqId = seqId;
-        this.boardWriter = boardWriter;
-        this.boardContents = new String(boardContents, StandardCharsets.UTF_8);
         this.boardTitle = boardTitle;
-        this.boardHits = boardHits;
-        this.createdTime = boardCreatedTime;
+        this.boardContents = new String(boardContents, StandardCharsets.UTF_8);
+        this.boardWriter = boardWriter;
         this.category = category;
+        this.boardHits = boardHits;
+        this.fileAttached = 0;
+        this.setCreatedTime(boardCreatedTime);
     }
-
-    /***
-     * @author 140024
-     * @implNote Entity > DTO 변경 메소드
-     * @since 2024-06-09
-     */
-    public static BoardDTO toDTO(final BoardEntity boardEntity) {
-        final BoardDTO boardDTO = new BoardDTO();
-        if (boardEntity != null) {
-            boardDTO.setSeqId(boardEntity.getBLB_SNO());
-            boardDTO.setBoardWriter(boardEntity.getDUPR_ENO());
-            boardDTO.setBoardTitle(boardEntity.getBLB_NM());
-            boardDTO.setBoardContents(boardEntity.getBLB_CONE());
-            boardDTO.setCategory(boardEntity.getCTG_NM());
-            boardDTO.setBoardHits(boardEntity.getNAC_INQ_NBR());
-            boardDTO.setCreatedTime(boardEntity.getGNT_DTM());
-            boardDTO.setUpdatedTime(boardEntity.getAMN_DTM());
-            boardDTO.setFileAttached(boardEntity.getFL_APG_YN());
-        }
-        return boardDTO;
-    }
-
-    /***
-     * @author 140024
-     * @implNote DTO > Entity 변경 메소드
-     * @since 2024-06-09
-     */
-    public BoardEntity toEntity() {
-        final BoardEntity boardEntity = new BoardEntity();
-        boardEntity.setBLB_SNO(this.seqId);
-        boardEntity.setDUPR_ENO(this.boardWriter);
-        boardEntity.setBLB_NM(this.boardTitle);
-        boardEntity.setBLB_CONE(this.boardContents);
-        boardEntity.setFL_APG_YN(this.fileAttached);
-        boardEntity.setCTG_NM(this.category);
-        boardEntity.setNAC_INQ_NBR(this.boardHits);
-        boardEntity.setAMN_DTM(this.updatedTime);
-        boardEntity.setGNT_DTM(this.createdTime);
-        return boardEntity;
-    }
-
-    /***
-     * @author 140024
-     * @implNote List<Entity> > List<DTO> 변경 메소드
-     * @since 2024-06-09
-     */
-    public static List<BoardDTO> toDTOList(final List<BoardEntity> boardEntities) {
-        return boardEntities.stream()
-                .map(BoardDTO::toDTO)
-                .collect(Collectors.toList());
-    }
-
-    /***
-     * @author 140024
-     * @implNote List<HtmlDTO> > List<CodeEntity> 변경 메소드
-     * @since 2024-06-09
-     */
-    public static List<BoardEntity> toEntityList(final List<BoardDTO> boardDTOs) {
-        return boardDTOs.stream()
-                .map(BoardDTO::toEntity)
-                .collect(Collectors.toList());
-    }
-
 }

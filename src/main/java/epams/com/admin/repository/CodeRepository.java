@@ -32,8 +32,7 @@ public class CodeRepository {
 	 * @since 2024-06-09
 	 */
     public List<CodeDTO> findAll() {
-    	final List<CodeEntity> codeEntities = sql.selectList("Code.findAll");
-        return CodeDTO.toDTOList(codeEntities);
+        return sql.selectList("Code.findAll");
     }
     
 	/***
@@ -50,8 +49,8 @@ public class CodeRepository {
 	 * @implNote 기본키 검색
 	 * @since 2024-06-09
 	 */
-    public Long countById(final CodeDTO CodeDTO) {
-        return sql.selectOne("Code.countById", CodeDTO.toEntity());
+    public Long countById(final CodeDTO codeDTO) {
+        return sql.selectOne("Code.countById", codeDTO);
     }
     
 	/***
@@ -59,8 +58,8 @@ public class CodeRepository {
 	 * @implNote 신규 데이터 입력
 	 * @since 2024-06-09
 	 */
-    public void insert(final CodeDTO CodeDTO) {
-        sql.insert("Code.insert", CodeDTO.toEntity());
+    public void insert(final CodeDTO codeDTO) {
+        sql.insert("Code.insert", codeDTO);
     }
     
 	/***
@@ -68,8 +67,8 @@ public class CodeRepository {
 	 * @implNote 기존 데이터 삭제
 	 * @since 2024-06-09
 	 */
-    public void delete(final CodeDTO CodeDTO) {
-        sql.delete("Code.delete", CodeDTO.toEntity());
+    public void delete(final CodeDTO codeDTO) {
+        sql.delete("Code.delete", codeDTO);
     }
     
 	/***
@@ -77,8 +76,8 @@ public class CodeRepository {
 	 * @implNote 데이터 업데이트(기본키 제외)
 	 * @since 2024-06-09
 	 */
-    public void update(final CodeDTO CodeDTO) {
-        sql.update("Code.update", CodeDTO.toEntity());
+    public void update(final CodeDTO codeDTO) {
+        sql.update("Code.update", codeDTO);
     }
     
 }

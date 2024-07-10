@@ -3,7 +3,7 @@
 
 <mapper namespace="LoginOTP">
 
-    <!-- Result Map 정의 -->
+    <!-- Result Map 정의 --->
     <resultMap id="loginOTPMap" type="loginOTPDTO">
         <id property="seqId" column="OTP_ISN_SNO"/>
         <result property="username" column="ENO"/>

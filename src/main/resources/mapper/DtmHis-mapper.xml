@@ -86,7 +86,7 @@
         #{dtmHisId}, #{empId}, #{dtmKindCd}, #{dtmReasonCd}, #{staYmd}, #{staHm},
         #{endYmd}, #{endHm}, #{dtmReason}, #{destPlc}, #{telno}, #{childNo},
         #{applId}, #{statCd}, #{finalApprYmd}, #{modiType}, #{modiReason},
-        #{modiDtmHisId}, #{modUserId}, #{modDate}, #{tzCd}, #{tzDate},
+        #{modiDtmHisId}, #{modUserId}, SYSDATE, 'ko', SYSDATE,
         #{companyNm}, #{document}, #{adUseYn}, #{mailSendYn}, #{esbAskDt},
         #{childBirthYmd}, #{dtmStoreYn}, #{fileId}, #{sealMgrYn},
         #{secuMgrYn}, #{infoMgrYn}, #{safeMgrYn}, #{placeCd}

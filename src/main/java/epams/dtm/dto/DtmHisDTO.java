@@ -13,22 +13,22 @@ public class DtmHisDTO {
     private String dtmKindCd; // 근태종류코드 [DTM_KIND_CD]
     private String dtmReasonCd; // 근태사유코드 [DTM_REASON_CD]
     private LocalDateTime staYmd; // 시작일
-    private String staHm; // 시작시각
+    private String staHm = "0000"; // 시작시각
     private LocalDateTime endYmd; // 종료일
-    private String endHm; // 종료시각
+    private String endHm = "2400"; // 종료시각
     private String dtmReason; // 근태사유
     private String destPlc; // 행선지
     private String telno; // 연락처
     private String childNo; // 아이순번
-    private Long applId; // 신청서ID
-    private String statCd; // 신청서상태코드 [ELA_STAT_CD]
+    private Long applId = 0L; // 신청서ID
+    private String statCd = "131"; // 신청서상태코드 [ELA_STAT_CD]
     private LocalDateTime finalApprYmd; // 최종승인일
     private String modiType; // 수정구분(UPDATE:변경,DELETE:취소)
     private String modiReason; // 수정사유
     private Long modiDtmHisId; // 수정근태내역ID
     private Long modUserId; // 변경자
     private LocalDateTime modDate; // 변경일시
-    private String tzCd; // 타임존코드
+    private String tzCd = "KR"; // 타임존코드
     private LocalDateTime tzDate; // 타임존일시
     private String companyNm; // 회사명
     private String document; // 문서

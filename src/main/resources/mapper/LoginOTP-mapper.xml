@@ -3,7 +3,7 @@
 
 <mapper namespace="LoginOTP">
 
-    <!-- Result Map 정의 --->
+    <!-- Result Map 정의 -->
     <resultMap id="loginOTPMap" type="loginOTPDTO">
         <id property="seqId" column="OTP_ISN_SNO"/>
         <result property="username" column="ENO"/>
@@ -20,6 +20,19 @@
     <!-- 모든 데이터 조회 -->
     <select id="findAll" resultMap="loginOTPMap">
         SELECT * FROM THURXE_COTPIM
+    </select>
+
+    <!-- 모든 데이터 조회 -->
+    <select id="findValidOneByUsername" parameterType="loginOTPDTO" resultMap="loginOTPMap">
+        SELECT *
+        FROM (
+        SELECT *
+        FROM THURXE_COTPIM
+        WHERE ENO = #{username}
+            AND GNT_DTM > SYSDATE - INTERVAL '3' MINUTE
+            ORDER BY GNT_DTM DESC
+        )
+        WHERE ROWNUM = 1
     </select>
 
     <!-- 기본키 데이터 중복여부 조회 -->

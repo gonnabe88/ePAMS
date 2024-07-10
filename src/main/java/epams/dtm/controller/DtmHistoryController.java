@@ -112,5 +112,4 @@ public class DtmHistoryController<S extends Session> {
 
         return DTMLIST;
     }
-
 }

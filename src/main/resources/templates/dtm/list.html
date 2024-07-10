@@ -41,20 +41,20 @@
 								<section class="section" th:each="dtm: ${dtmHis}">
 									<div class="card">
 										<div class="card-body">
-											<span class="badge badge-sm mb-2 bg-primary" th:text="${dtm.DTM_KIND_CD}"></span>
+											<span class="badge badge-sm mb-2 bg-primary" th:text="${dtm.dtmKindCd}"></span>
 											<div class="d-flex flex-row align-items-center mt-3 mb-3 gap-3">
 												<div class="d-flex align-items-center gap-2">
 													<h6>
-														<span th:text="${#temporals.format(dtm.STA_YMD, 'yyyy-MM-dd')}"> </span>
+														<span th:text="${#temporals.format(dtm.staYmd, 'yyyy-MM-dd')}"> </span>
 														~
-														<span th:text="${#temporals.format(dtm.END_YMD, 'yyyy-MM-dd')}"> </span>
+														<span th:text="${#temporals.format(dtm.endYmd, 'yyyy-MM-dd')}"> </span>
 													</h6>
 												</div>
 											</div>
 											<div class="d-flex flex-row mb-3 gap-3">
 												<div>
 													<i class="bi bi-calendar-check"></i>
-													<h7 th:text="${#temporals.format(dtm.FINAL_APPR_YMD, 'yyyy-MM-dd')}"></h7>
+													<h7 th:text="${#temporals.format(dtm.finalApprYmd, 'yyyy-MM-dd')}"></h7>
 												</div>
 											</div>
 										</div>

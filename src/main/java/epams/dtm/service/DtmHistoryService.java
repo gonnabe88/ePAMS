@@ -40,8 +40,8 @@ public class DtmHistoryService {
     public Page<DtmHisDTO> findByEmpId(final Pageable pageable, final DtmHisDTO dto) {
     	final int page = pageable.getPageNumber() - 1; // 페이지 번호
     	final int pageSize = pageable.getPageSize(); // 페이지 크기
-		dto.setLimit(pageSize);
         final int offset = page * pageSize; // 오프셋 계산
+		dto.setLimit(pageSize);
 		dto.setOffset(offset);
         final List<DtmHisDTO> dtos = dtmHisRepo.findByEmpId(dto);
 		log.warn("dtos : {}", dtos);

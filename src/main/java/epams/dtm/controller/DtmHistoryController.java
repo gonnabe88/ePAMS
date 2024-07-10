@@ -87,7 +87,7 @@ public class DtmHistoryController<S extends Session> {
     @GetMapping("/list")
     public String dtmList(@PageableDefault(page = 1) final Pageable pageable, @ModelAttribute final DtmHisDTO dto, final Model model) {
         final String DTMLIST = "/dtm/list";
-        dto.setEMP_ID(Long.parseLong(authentication().getName().replace('K', '7')));
+        dto.setEmpId(Long.parseLong(authentication().getName().replace('K', '7')));
 
         // 코드
         final Map<String, String> codeList = codeDetailService.getCodeHtmlDetail(DTMLIST);
@@ -105,6 +105,7 @@ public class DtmHistoryController<S extends Session> {
             startPage = Math.max(1, endPage - maxPageBtn + 1);
         }
         log.warn(dtos.toString());
+
         model.addAttribute("dtmHis", dtos);
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);

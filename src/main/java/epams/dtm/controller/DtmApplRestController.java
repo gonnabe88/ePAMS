@@ -62,11 +62,16 @@ public class DtmApplRestController {
      * @since 2024-06-09
      */
     @PostMapping("/appl")
-    public ResponseEntity<String> applyDtm(@RequestBody final DtmHisDTO dto) throws IOException {
+    public ResponseEntity<Map<String, String>> applyDtm(@RequestBody final DtmHisDTO dto) throws IOException {
         dto.setEmpId(Long.parseLong(authentication().getName().replace('K', '7')));
         dto.setModUserId(Long.parseLong(authentication().getName().replace('K', '7')));
+
         dtmApplyService.insert(dto);
-        return new ResponseEntity<>("Data inserted successfully", HttpStatus.CREATED);
+
+        Map<String, String> response = new ConcurrentHashMap<>();
+        response.put("message", "SUCCESS");
+
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
 }

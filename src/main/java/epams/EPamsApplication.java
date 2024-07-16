@@ -13,10 +13,10 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import com.yubico.webauthn.RelyingParty;
 import com.yubico.webauthn.data.RelyingPartyIdentity;
 
-import epams.com.config.storage.StorageProperties;
-import epams.com.config.storage.StorageService;
-import epams.com.login.util.webauthn.RegistrationService;
-import epams.com.login.util.webauthn.configuration.WebAuthProperties;
+import epams.framework.storage.StorageProperties;
+import epams.framework.storage.StorageService;
+import epams.domain.com.login.util.webauthn.RegistrationService;
+import epams.domain.com.login.util.webauthn.configuration.WebAuthProperties;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 

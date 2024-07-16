@@ -8,13 +8,8 @@
 	<!-- (start) private script -->
 	<th:block layout:fragment="css">
 		<link rel="stylesheet" href="/extensions/awesomplete/awesomplete.css" />
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-		<style>
-			.swiper {
-				width: 100%;
-				height: 35%;
-			}
-		</style>
+		<link rel="stylesheet" href="/extensions/swiper/swiper-bundle.min.css" />
+		<link rel="stylesheet" href="/extensions/swiper/customSwiper.css" />
 	</th:block>
 	<!-- (end) private script -->
 </head>
@@ -69,22 +64,23 @@
 			<div class="swiper-pagination"></div>
 		</div>
 	</div>
-
 	<!-- end carousel (rolling image) -->
+
+	<!--빠른 근태신청-->
 	<div class="main-content">
 		<div class="container">
 			<div class="row d-flex justify-content-start mb-1">
 				<h5 class="text-start">
-					<i class="bi bi-stars"></i> <span th:text="${codeList['COM_BANNER1_CD']}"></span>
+					<i class="bi bi-stars"></i> <span th:text="${codeList['QUICK_APPL_TTL']}"></span>
 				</h5>
 				<div class="container">
 					<div class="row d-flex justify-content-end">
-
 						<h6 class="text-end">
-							<a href="/dtm/main" style="text-decoration: none; color: inherit;"> 직접 신청하러 가기 <i class="bi bi-arrow-right-circle-fill"></i>
+							<a href="/dtm/main" style="text-decoration: none; color: inherit;">
+								<span th:text="${codeList['QUICK_APPL_01_STMT']}"></span>
+								<i class="bi bi-arrow-right-circle-fill"></i>
 							</a>
 						</h6>
-
 					</div>
 				</div>
 			</div>
@@ -92,7 +88,7 @@
 			<div class="d-flex justify-content-center">
 				<div class="row col-lg-12 col-md-12 d-flex justify-content-center">
 					<div class="row col-lg-12 col-md-12 col-sm-12">
-						<div class="col-lg-4">
+						<div th:each="date : ${list}" class="col-lg-4">
 							<div data-aos="fade-up" data-aos-offset="50" data-aos-easing="ease-out-cubic" data-aos-duration="1000">
 								<section class="section">
 									<div class="shadow card" style="margin-bottom: 1.0rem;">
@@ -100,135 +96,24 @@
 											<div class="d-flex justify-content-center">
 												<div class="col-10 mb-0 align-content-center">
 													<h6 style="margin-bottom: 0;">
-														<span class="badge rounded-pill bg-primary me-1">오늘</span>연차휴가 1일
+														<span th:if="${date.applDateType == '오늘'}" class="badge rounded-pill bg-primary me-1">
+															<span th:text="${codeList['TDY_DTM_01_BTN']}"></span>
+														</span>
+														<span th:if="${date.applDateType == '내일'}" class="badge rounded-pill bg-info me-1">
+															<span th:text="${codeList['TMR_DTM_01_BTN']}"></span>
+														</span>
+														<span th:text="${date.dtmName}"></span>
 													</h6>
-													<h7>[[${nowDate}]]</h7>
+													<h7 th:text="${date.applDate}"></h7>
 												</div>
 												<div class="col-2 mb-0 align-content-center">
 													<div class="d-flex justify-content-end">
-														<div class="btn btn-primary btn-sm" style="--bs-btn-padding-y: 0.35rem;" th:date="${nowDate}" th:onclick="ApplAlert(this.getAttribute('date'))">신청</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</section>
-							</div>
-						</div>
-						<div class="col-lg-4">
-							<div data-aos="fade-up" data-aos-offset="50" data-aos-easing="ease-out-cubic" data-aos-duration="1000">
-								<section class="section">
-									<div class="shadow card" style="margin-bottom: 1.0rem;">
-										<div class="card-body align-content-center" style="padding: 0.8rem;">
-											<div class="d-flex justify-content-center ">
-												<div class="col-10 mb-0 align-content-center">
-													<h6 style="margin-bottom: 0;">
-														<span class="badge rounded-pill bg-primary me-1">오늘</span>연차휴가 오전 반차
-													</h6>
-													<h7>[[${nowDate}]]</h7>
-												</div>
-												<div class="col-2 mb-0 align-content-center">
-													<div class="d-flex justify-content-end">
-														<div class="btn btn-primary btn-sm" style="--bs-btn-padding-y: 0.35rem;" th:date="${nowDate}" th:onclick="ApplAlert(this.getAttribute('date'))">신청</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</section>
-							</div>
-						</div>
-						<div class="col-lg-4">
-							<div data-aos="fade-up" data-aos-offset="50" data-aos-easing="ease-out-cubic" data-aos-duration="1000">
-								<section class="section">
-									<div class="shadow card" style="margin-bottom: 1.0rem;">
-										<div class="card-body align-content-center" style="padding: 0.8rem;">
-											<div class="d-flex justify-content-center ">
-												<div class="col-10 mb-0 align-content-center">
-													<h6 style="margin-bottom: 0;">
-														<span class="badge rounded-pill bg-primary me-1">오늘</span>연차휴가 오전 반반차
-													</h6>
-													<h7>[[${nowDate}]]</h7>
-												</div>
-												<div class="col-2 mb-0 align-content-center">
-													<div class="d-flex justify-content-end">
-														<div class="btn btn-primary btn-sm" style="--bs-btn-padding-y: 0.35rem;" th:date="${nowDate}" th:onclick="ApplAlert(this.getAttribute('date'))">신청</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</section>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<div class="d-flex justify-content-center mt-4">
-				<div class="row col-lg-12 col-md-12 d-flex justify-content-center">
-					<div class="row col-lg-12 col-md-12 col-sm-12">
-						<div class="col-lg-4">
-							<div data-aos="fade-up" data-aos-offset="50" data-aos-easing="ease-out-cubic" data-aos-duration="1000">
-								<section class="section">
-									<div class="shadow card" style="margin-bottom: 1.0rem;">
-										<div class="card-body align-content-center" style="padding: 0.8rem;">
-											<div class="d-flex justify-content-center">
-												<div class="col-10 mb-0 align-content-center">
-													<h6 style="margin-bottom: 0;">
-														<span class="badge rounded-pill bg-info me-1">내일</span>연차휴가 1일
-													</h6>
-													<h7>[[${tomorrowDate}]]</h7>
-												</div>
-												<div class="col-2 mb-0 align-content-center">
-													<div class="d-flex justify-content-end">
-														<div class="btn btn-info btn-sm" style="--bs-btn-padding-y: 0.35rem;" th:date="${tomorrowDate}" th:onclick="ApplAlert(this.getAttribute('date'))">신청</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</section>
-							</div>
-						</div>
-						<div class="col-lg-4">
-							<div data-aos="fade-up" data-aos-offset="50" data-aos-easing="ease-out-cubic" data-aos-duration="1000">
-								<section class="section">
-									<div class="shadow card" style="margin-bottom: 1.0rem;">
-										<div class="card-body align-content-center" style="padding: 0.8rem;">
-											<div class="d-flex justify-content-center ">
-												<div class="col-10 mb-0 align-content-center">
-													<h6 style="margin-bottom: 0;">
-														<span class="badge rounded-pill bg-info me-1">내일</span>연차휴가 오전 반차
-													</h6>
-													<h7>[[${tomorrowDate}]]</h7>
-												</div>
-												<div class="col-2 mb-0 align-content-center">
-													<div class="d-flex justify-content-end">
-														<div class="btn btn-info btn-sm" style="--bs-btn-padding-y: 0.35rem;" th:date="${tomorrowDate}" th:onclick="ApplAlert(this.getAttribute('date'))">신청</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</section>
-							</div>
-						</div>
-						<div class="col-lg-4">
-							<div data-aos="fade-up" data-aos-offset="50" data-aos-easing="ease-out-cubic" data-aos-duration="1000">
-								<section class="section">
-									<div class="shadow card" style="margin-bottom: 1.0rem;">
-										<div class="card-body align-content-center" style="padding: 0.8rem;">
-											<div class="d-flex justify-content-center ">
-												<div class="col-10 mb-0 align-content-center">
-													<h6 style="margin-bottom: 0;">
-														<span class="badge rounded-pill bg-info me-1">내일</span>연차휴가 오전 반반차
-													</h6>
-													<h7>[[${tomorrowDate}]]</h7>
-												</div>
-												<div class="col-2 mb-0 align-content-center">
-													<div class="d-flex justify-content-end">
-														<div class="btn btn-info btn-sm" style="--bs-btn-padding-y: 0.35rem;" th:date="${tomorrowDate}" th:onclick="ApplAlert(this.getAttribute('date'))">신청</div>
+														<div th:if="${date.applDateType == '오늘'}" class="btn btn-primary btn-sm" style="--bs-btn-padding-y: 0.35rem;" th:onclick=ApplAlert('${date.applDate}')>
+															<span th:text="${codeList['APPL_DTM_01_BTN']}"></span>
+														</div>
+														<div th:if="${date.applDateType == '내일'}" class="btn btn-info btn-sm" style="--bs-btn-padding-y: 0.35rem;" th:onclick=ApplAlert('${date.applDate}')>
+															<span th:text="${codeList['APPL_DTM_01_BTN']}"></span>
+														</div>
 													</div>
 												</div>
 											</div>
@@ -242,6 +127,9 @@
 			</div>
 		</div>
 	</div>
+
+
+
 
 	<div class="divider">
 		<div class="divider-text" style="background-color: transparent;">
@@ -249,11 +137,12 @@
 		</div>
 	</div>
 
+	<!--최근 공지사항-->
 	<div class="main-content">
 		<div class="container">
 			<div class="row d-flex justify-content-start mb-2">
 				<h5 class="text-start">
-					<i class="bi bi-bell-fill"></i> 최근 공지사항
+					<i class="bi bi-bell-fill"></i> <span th:text="${codeList['RECENT_NOTICE_TTL']}"></span>
 				</h5>
 			</div>
 			<div class="row d-flex justify-content-center">
@@ -297,12 +186,13 @@
 		</div>
 	</div>
 
+	<!--직원검색-->
 	<div class="main-content">
 		<div id="searchDiv">
 			<div class="container">
 				<div class="row d-flex justify-content-start mb-2">
 					<h5 class="text-start">
-						<i class="bi bi-search"></i> 직원검색
+						<i class="bi bi-search"></i> <span th:text="${codeList['SEARCH_EMP_TTL']}"></span>
 					</h5>
 				</div>
 
@@ -311,11 +201,11 @@
 						<section class="section">
 							<div class="shadow card">
 								<div class="card-header">
-									<h4 class="card-title">담당자가 궁금하신가요?</h4>
+									<h4 class="card-title"><span th:text="${codeList['SEARCH_EMP_01_STMT']}"></span></h4>
 								</div>
 								<div class="card-content">
 									<div class="card-body">
-										<p>이름, 팀/부서, 업무명으로 검색하세요</p>
+										<p><span th:text="${codeList['SEARCH_EMP_02_STMT']}"></span></p>
 										<div class="row">
 											<div class="col-12 mb-1">
 												<div class="d-flex align-items-center mb-3">
@@ -330,7 +220,7 @@
 														   style="height: 38px;"/>
 													<button class="btn btn-primary d-flex align-items-center"
 															type="button" id="button-addon2" onclick="search()"
-															style="height: 38px; white-space: nowrap;">조회
+															style="height: 38px; white-space: nowrap;"><span th:text="${codeList['SEARCH_EMP_01_BTN']}"></span>
 													</button>
 												</div>
 
@@ -340,7 +230,7 @@
 								</div>
 								<div class="divider">
 									<div class="divider-text" style="background-color: transparent;">
-										<h5 class="card-title">조회결과</h5>
+										<h5 class="card-title"><span th:text="${codeList['SEARCH_EMP_03_STMT']}"></span></h5>
 									</div>
 								</div>
 								<div class="d-flex justify-content-center">
@@ -350,7 +240,7 @@
 												<div class="animate__animated animate__fadeIn animate__slow">
 													<div class="shadow card" style="background-color: #F2F7FF; margin:3rem;">
 														<div class="card-body d-flex justify-content-center align-items-center" style="height: 100px;">
-															<h6 class="m-0">No Result</h6>
+															<h6 class="m-0"><span th:text="${codeList['SEARCH_EMP_04_STMT']}"></span></h5></h6>
 														</div>
 													</div>
 												</div>
@@ -362,6 +252,7 @@
 						</section>
 					</div>
 				</div>
+
 			</div>
 		</div>
 	</div>
@@ -378,51 +269,15 @@
 	</div>
 	<script src="/extensions/webauthn/js/base64js.min.js"></script>
 	<script src="/extensions/webauthn/js/custom.js"></script>
-	<script src="/js/index.js"></script>
 	<script src="/extensions/awesomplete/awesomplete.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-	<script>
-		document.addEventListener("DOMContentLoaded", function() {
-			var input = document.getElementById("searchMember");
-			var awesomplete = new Awesomplete(input, {
-				minChars: 1,
-				maxItems: 5,
-				autoFirst: true,
-				tabSelect: true,
-			});
+	<script src="/extensions/swiper/swiper-bundle.min.js"></script>
+	<script src="/extensions/swiper/initSwiper.js"></script>
+	<script src="/js/quickDtmAppl.js"></script>
+	<script src="/js/scrollToTop.js"></script>
+	<script src="/js/memberSearch.js"></script>
+	<script src="/js/webauthnPopup.js"></script>
+	<script src="/js/commonPopup.js"></script>
 
-			fetch('/api/deptlist')
-					.then(response => response.json())
-					.then(data => {
-						// Assuming data is an array of objects with a 'username' property
-						var list = data.map(item => item.realname);
-						awesomplete.list = list;
-					})
-					.catch(error => console.error('Error fetching data:', error));
-		});
-	</script>
-
-	<script>
-		document.addEventListener("DOMContentLoaded", function() {
-			var swiper = new Swiper('.mySwiper', {
-				loop: true,
-				spaceBetween: 30,
-				effect: "fade",
-				pagination: {
-					el: '.swiper-pagination',
-					clickable: true,
-					dynamicBullets: true,
-				},
-				navigation: {
-					nextEl: '.swiper-button-next',
-					prevEl: '.swiper-button-prev',
-				},
-				autoplay: {
-					delay: 5000,
-				},
-			});
-		});
-	</script>
 </th:block>
 <!-- (end) private script -->
 </body>

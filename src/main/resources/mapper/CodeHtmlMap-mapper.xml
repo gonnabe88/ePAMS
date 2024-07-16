@@ -1,11 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE mapper SYSTEM "mybatis-3-mapper.dtd">
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="CodeHtmlMap">
 
     <!-- Result Map 정의 -->
     <resultMap id="codeHtmlMap" type="codeHtmlDTO">
-        <id property="html" column="HTML_PTH_NM"/>
+        <id property="html" column="HTML_FL_PTH"/>
         <id property="code" column="CDVA_ID"/>
         <result property="deleteYn" column="DEL_YN"/>
         <result property="guid" column="GUID"/>
@@ -24,37 +25,37 @@
     <select id="countById" parameterType="codeHtmlDTO" resultType="int">
         SELECT COUNT(*)
         FROM THURXE_CCDHTR
-        WHERE HTML_PTH_NM = #{html} AND CDVA_ID = #{code}
+        WHERE HTML_FL_PTH = #{html} AND CDVA_ID = #{code}
     </select>
 
     <!-- 신규 데이터 추가 -->
     <insert id="insert" parameterType="codeHtmlDTO">
         INSERT INTO THURXE_CCDHTR (
-        HTML_PTH_NM,
-        CDVA_ID,
-        DEL_YN,
-        GUID,
-        GUID_PRG_SNO,
-        LST_CHG_USID,
-        LST_CHG_DTM,
-        GNT_DTM
+            HTML_FL_PTH,
+            CDVA_ID,
+            DEL_YN,
+            GUID,
+            GUID_PRG_SNO,
+            LST_CHG_USID,
+            LST_CHG_DTM,
+            GNT_DTM
         )
         VALUES (
-        #{html},
-        #{code},
-        #{deleteYn},
-        #{guid},
-        #{guidPrgSno},
-        #{lstChgUsid},
-        SYSDATE,
-        SYSDATE
+            #{html},
+            #{code},
+            #{deleteYn},
+            #{guid},
+            #{guidPrgSno},
+            #{lstChgUsid},
+            SYSDATE,
+            SYSDATE
         )
     </insert>
 
     <!-- 기존 데이터 삭제 -->
     <delete id="delete" parameterType="codeHtmlDTO">
         DELETE FROM THURXE_CCDHTR
-        WHERE HTML_PTH_NM = #{html} AND CDVA_ID = #{code}
+        WHERE HTML_FL_PTH = #{html} AND CDVA_ID = #{code}
     </delete>
 
 </mapper>

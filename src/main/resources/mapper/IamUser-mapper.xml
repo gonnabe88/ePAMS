@@ -1,5 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE mapper SYSTEM "mybatis-3-mapper.dtd">
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="IamUser">
 
@@ -17,7 +18,7 @@
     </select>
 
     <!-- 모든 데이터 조회 -->
-    <select id="findAllDept" resultType="iamUserDTO">
+    <select id="findAllDept" resultMap="iamUserMap">
         SELECT DISTINCT(A.EMP_NM) FROM OHR.IF_IAM_USER A
     </select>
 

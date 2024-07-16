@@ -227,7 +227,7 @@ const normal = (e) => {
         if (data.result) {
             console.log("패스워드 로그인 성공:", data);
             // 패스워드 인증 성공 시
-            login()
+            login();
         } else {
             console.log("패스워드 로그인 실패:", data);
             // 패스워드 인증 실패 시
@@ -242,15 +242,17 @@ const normal = (e) => {
 
 // 로그인 처리
 const login = () => {
+
     const username = document.getElementById("username").value.toUpperCase();
     //const password = btoa(encodeURIComponent(document.getElementById("password").value));
     const password = document.getElementById("password").value;
     const MFA = $('input[name="MFA"]:checked').val();
+    console.log("2단계 로그인 함수 : ", MFA);
     const header = $("meta[name='_csrf_header']").attr('content');
     const token = $("meta[name='_csrf']").attr('content');    
 	switch (MFA) {
 	    case 'OTP':     
-	        otpAuthAlert(username, MFA, password, header, token); //OTP 인증
+	        otpAuthAlert(username, MFA, password, header, token); //otp 인증
 	        break; 
 	    case 'SMS':
 	        otpAuthAlert(username, MFA, password, header, token); //SMS 인증
@@ -283,9 +285,9 @@ const fidoAuthAlert = (username, MFA, password, header, token) => {
 	})
 }
 
-// OTP 유형(SMS, 카카오, mOTP) 인증화면
+// otp 유형(SMS, 카카오, mOTP) 인증화면
 const otpAuthAlert = (username, MFA, password, header, token) => {
-	
+    console.log("otpAuthAlert");
     Swal.fire({
         title: MFA+" 인증",
         html: MFA+" 인증번호 6자리 입력 후<br>제출을 눌러주세요(<b></b>초)",
@@ -318,7 +320,7 @@ const otpAuthAlert = (username, MFA, password, header, token) => {
         }
     })
 }
-    //Swal(OTP 인증)
+    //Swal(otp 인증)
 
 
 // 최종 인증
@@ -353,8 +355,8 @@ $(function(){
     if (key != "") 
 		$("input:radio[name=MFA]:radio[value='"+key+"']").prop("checked", true);
         
-    $('input[name="MFA"]').change(function() {
-		setCookie("MFAChk", $('input[name="MFA"]:checked').val(), 30);
+    $('input[name="mfa"]').change(function() {
+		setCookie("MFAChk", $('input[name="mfa"]:checked').val(), 30);
     });
 });
 

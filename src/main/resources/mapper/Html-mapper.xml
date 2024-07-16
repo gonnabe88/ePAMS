@@ -1,5 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE mapper SYSTEM "mybatis-3-mapper.dtd">
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="Html">
 
@@ -73,33 +74,45 @@
 
     <!-- 신규 데이터 추가 또는 기존 데이터 업데이트 -->
     <insert id="insertUpdate" parameterType="htmlDTO">
-        INSERT INTO THURXE_CHTMLM (
-            HTML_FL_PTH,
-            HTML_FL_NM,
-            DEL_YN,
-            GUID,
-            GUID_PRG_SNO,
-            LST_CHG_USID,
-            LST_CHG_DTM,
-            GNT_DTM
-        )
-        VALUES (
-            #{html},
-            #{htmlName},
-            #{deleteYn},
-            #{guid},
-            #{guidPrgSno},
-            #{lstChgUsid},
-        SYSDATE,
-            SYSDATE
-        )
-        ON DUPLICATE KEY UPDATE
-            HTML_FL_NM = VALUES(HTML_FL_NM),
-            DEL_YN = VALUES(DEL_YN),
-            GUID = VALUES(GUID),
-            GUID_PRG_SNO = VALUES(GUID_PRG_SNO),
-            LST_CHG_USID = VALUES(LST_CHG_USID),
-            LST_CHG_DTM = SYSDATE;
+        MERGE INTO THURXE_CHTMLM target
+        USING (
+            SELECT
+                #{html} AS HTML_FL_PTH,
+                #{htmlName} AS HTML_FL_NM,
+                #{deleteYn} AS DEL_YN,
+                #{guid} AS GUID,
+                #{guidPrgSno} AS GUID_PRG_SNO,
+                #{lstChgUsid} AS LST_CHG_USID
+            FROM dual
+        ) source
+        ON (target.GUID = source.GUID)
+        WHEN MATCHED THEN
+            UPDATE SET
+               target.HTML_FL_NM = source.HTML_FL_NM,
+               target.DEL_YN = source.DEL_YN,
+               target.GUID_PRG_SNO = source.GUID_PRG_SNO,
+               target.LST_CHG_USID = source.LST_CHG_USID,
+               target.LST_CHG_DTM = SYSDATE
+        WHEN NOT MATCHED THEN
+            INSERT (
+                HTML_FL_PTH,
+                HTML_FL_NM,
+                DEL_YN,
+                GUID,
+                GUID_PRG_SNO,
+                LST_CHG_USID,
+                LST_CHG_DTM,
+                GNT_DTM
+            ) VALUES (
+                 source.HTML_FL_PTH,
+                 source.HTML_FL_NM,
+                 source.DEL_YN,
+                 source.GUID,
+                 source.GUID_PRG_SNO,
+                 source.LST_CHG_USID,
+                 SYSDATE,
+                 SYSDATE
+             )
     </insert>
 
 </mapper>

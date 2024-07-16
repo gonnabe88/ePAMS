@@ -1,14 +1,15 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE mapper SYSTEM "mybatis-3-mapper.dtd">
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="LoginOTP">
+<mapper namespace="LoginOtp">
 
     <!-- Result Map 정의 -->
-    <resultMap id="loginOTPMap" type="loginOTPDTO">
+    <resultMap id="loginOtpMap" type="loginOtpDTO">
         <id property="seqId" column="OTP_ISN_SNO"/>
         <result property="username" column="ENO"/>
-        <result property="OTP" column="OTP_SMS_CER_NO"/>
-        <result property="MFA" column="CER_KD_NM"/>
+        <result property="otp" column="OTP_SMS_CER_NO"/>
+        <result property="mfa" column="CER_KD_NM"/>
         <result property="deleteYn" column="DEL_YN"/>
         <result property="guid" column="GUID"/>
         <result property="guidPrgSno" column="GUID_PRG_SNO"/>
@@ -18,12 +19,12 @@
     </resultMap>
 
     <!-- 모든 데이터 조회 -->
-    <select id="findAll" resultMap="loginOTPMap">
+    <select id="findAll" resultMap="loginOtpMap">
         SELECT * FROM THURXE_COTPIM
     </select>
 
     <!-- 모든 데이터 조회 -->
-    <select id="findValidOneByUsername" parameterType="loginOTPDTO" resultMap="loginOTPMap">
+    <select id="findValidOneByUsername" parameterType="loginOtpDTO" resultMap="loginOtpMap">
         SELECT *
         FROM (
         SELECT *
@@ -43,7 +44,7 @@
     </select>
 
     <!-- 신규 데이터 추가 -->
-    <insert id="insert" parameterType="loginOTPDTO">
+    <insert id="insert" parameterType="loginOtpDTO">
         <selectKey keyProperty="seqId" resultType="long" order="BEFORE">
             SELECT "EHR"."OTP_ISN_SNO".nextval FROM dual
         </selectKey>
@@ -62,8 +63,8 @@
             VALUES (
             #{seqId},
             #{username},
-            #{OTP},
-            #{MFA},
+            #{otp},
+            #{mfa},
             #{deleteYn},
             #{guid},
             #{guidPrgSno},
@@ -74,7 +75,7 @@
     </insert>
 
     <!-- 기존 데이터 삭제 -->
-    <delete id="delete" parameterType="loginOTPDTO">
+    <delete id="delete" parameterType="loginOtpDTO">
         DELETE FROM THURXE_COTPIM
         WHERE OTP_ISN_SNO = #{seqId}
     </delete>

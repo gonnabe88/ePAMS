@@ -7,31 +7,31 @@
     <typeAliases>
 
         <!-- Entity -->
-        <typeAlias type="epams.com.board.dto.BoardImageDTO" alias="boardImageDTO"></typeAlias>
-        <typeAlias type="epams.com.board.dto.BoardDTO" alias="boardDTO"></typeAlias>
-        <typeAlias type="epams.com.board.dto.BoardFileDTO" alias="boardFileDTO"></typeAlias>
+        <typeAlias type="epams.domain.com.board.dto.BoardImageDTO" alias="boardImageDTO"></typeAlias>
+        <typeAlias type="epams.domain.com.board.dto.BoardDTO" alias="boardDTO"></typeAlias>
+        <typeAlias type="epams.domain.com.board.dto.BoardFileDTO" alias="boardFileDTO"></typeAlias>
 
-        <typeAlias type="epams.com.admin.dto.LogLoginDTO" alias="logLoginDTO"></typeAlias>
+        <typeAlias type="epams.domain.com.admin.dto.LogLoginDTO" alias="logLoginVO"></typeAlias>
 
-        <typeAlias type="epams.com.admin.dto.CodeDTO" alias="codeDTO"></typeAlias>
+        <typeAlias type="epams.domain.com.admin.dto.CodeDTO" alias="codeDTO"></typeAlias>
 
-        <typeAlias type="epams.com.admin.dto.HtmlDTO" alias="htmlDTO"></typeAlias>
+        <typeAlias type="epams.domain.com.admin.dto.HtmlDTO" alias="htmlDTO"></typeAlias>
 
-        <typeAlias type="epams.com.admin.dto.CodeHtmlMapDTO" alias="codeHtmlDTO"></typeAlias>
+        <typeAlias type="epams.domain.com.admin.dto.CodeHtmlMapDTO" alias="codeHtmlDTO"></typeAlias>
 
-        <typeAlias type="epams.com.admin.dto.LogViewDTO" alias="viewLogDTO"></typeAlias>
+        <typeAlias type="epams.domain.com.admin.dto.LogViewDTO" alias="viewLogDTO"></typeAlias>
 
-        <typeAlias type="epams.com.admin.dto.CodeHtmlDetailDTO" alias="codeHtmlDetail"></typeAlias>
+        <typeAlias type="epams.domain.com.admin.dto.CodeHtmlDetailDTO" alias="codeHtmlDetail"></typeAlias>
 
-        <typeAlias type="epams.com.login.dto.LoginOTPDTO" alias="loginOTPDTO"></typeAlias>
+        <typeAlias type="epams.domain.com.login.dto.LoginOTPDTO" alias="loginOtpDTO"></typeAlias>
 
-        <typeAlias type="epams.com.member.dto.IamUserDTO" alias="iamUserDTO"></typeAlias>
-        <typeAlias type="epams.com.member.dto.RoleDTO" alias="roleDTO"></typeAlias>
+        <typeAlias type="epams.domain.com.member.dto.IamUserDTO" alias="iamUserDTO"></typeAlias>
+        <typeAlias type="epams.domain.com.member.dto.RoleDTO" alias="roleDTO"></typeAlias>
 
         <!-- DTO -->
-        <typeAlias type="epams.dtm.dto.BasePeriodDTO" alias="basePeriod"></typeAlias>
-        <typeAlias type="epams.dtm.dto.DtmApplDTO" alias="dtmAppl"></typeAlias>
-        <typeAlias type="epams.dtm.dto.DtmHisDTO" alias="dtmHis"></typeAlias>
+        <typeAlias type="epams.domain.dtm.dto.BasePeriodDTO" alias="basePeriod"></typeAlias>
+        <typeAlias type="epams.domain.dtm.dto.DtmApplDTO" alias="dtmAppl"></typeAlias>
+        <typeAlias type="epams.domain.dtm.dto.DtmHisDTO" alias="dtmHis"></typeAlias>
 
     </typeAliases>
 

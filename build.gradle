@@ -31,8 +31,8 @@ repositories {
 dependencies {
     providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 
-    // CSV
-    implementation 'com.opencsv:opencsv:5.5.2'
+    // springdoc
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0'
 
 	// jUnit
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.0'

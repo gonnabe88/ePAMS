@@ -1,11 +1,14 @@
 package epams.domain.com.index;
 
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.format.TextStyle;
-import java.util.*;
-
+import epams.domain.com.admin.service.CodeHtmlDetailService;
+import epams.domain.com.board.dto.BoardDTO;
+import epams.domain.com.board.service.BoardMainService;
 import epams.domain.com.index.dto.QuickApplDTO;
+import epams.domain.com.login.util.webauthn.RegistrationService;
+import epams.domain.com.login.util.webauthn.authenticator.Authenticator;
+import epams.domain.com.login.util.webauthn.user.AppUser;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,19 +21,14 @@ import org.springframework.session.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import epams.domain.com.admin.service.CodeHtmlDetailService;
-import epams.domain.com.board.dto.BoardDTO;
-import epams.domain.com.board.service.BoardMainService;
-import epams.domain.com.login.util.webauthn.RegistrationService;
-import epams.domain.com.login.util.webauthn.authenticator.Authenticator;
-import epams.domain.com.login.util.webauthn.user.AppUser;
-import epams.domain.com.member.dto.IamUserDTO;
-import epams.domain.com.member.service.MemberService;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.format.TextStyle;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * @author K140024
@@ -56,13 +54,6 @@ public class IndexController<S extends Session> {
      * @since 2024-06-11
      */
     private final BoardMainService boardService;
-
-    /**
-     * @author K140024
-     * @implNote 회원 서비스 주입
-     * @since 2024-06-11
-     */
-    private final MemberService memberservice2;
 
     /**
      * @author K140024

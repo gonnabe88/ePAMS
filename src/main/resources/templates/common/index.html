@@ -16,58 +16,32 @@
 
 <body>
 <div layout:fragment="contents">
+	<!-- start carousel (rolling image) -->
 	<div class="row no-drag">
-		<!-- Swiper -->
+		<!-- Swiper Banner -->
 		<div class="swiper mySwiper">
 			<div class="swiper-wrapper">
-				<div class="swiper-slide">
-					<div class="carousel-img-1">
-						<div class="container-md d-flex justify-content-start align-items-center" style="height: 100%;">
+				<div th:each="banner : ${bannerList}" class="swiper-slide">
+					<div th:class="'carousel-img-' + ${bannerStat.index + 1}">
+						<div class="container-md d-flex justify-content-start align-items-center">
 							<div class="col-1 ms-2"></div>
 							<div class="text-start">
-								<h5>최근 공지사항</h5>
-								<h3>시스템 점검 안내</h3>
-								<h3>'24. 7. 6(일) 18:00-19:00</h3>
-								<a href="/dtm/main"><span class="badge text-bg-primary">바로가기</span></a>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="swiper-slide">
-					<div class="carousel-img-2">
-						<div class="container-md d-flex justify-content-start align-items-center" style="height: 100%;">
-							<div class="col-1 ms-2"></div>
-							<div class="text-start">
-								<h5>연차 및 저축휴가</h5>
-								<h3>언제 어디서든</h3>
-								<h3>편리하게 신청하세요</h3>
-								<a href="/dtm/main"><span class="badge text-bg-primary">바로가기</span></a>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="swiper-slide">
-					<div class="carousel-img-3">
-						<div class="container-md d-flex justify-content-start align-items-center" style="height: 100%;">
-							<div class="col-1 ms-2"></div>
-							<div class="text-start">
-								<h5>직원조회</h5>
-								<h3>언제 어디서든</h3>
-								<h3>간편하게 검색하세요</h3>
-								<span class="badge text-bg-primary" onclick="scrollToDiv()">바로가기</span>
+								<h5 th:text="${banner.title}"></h5>
+								<h3 th:text="${banner.subtitle1}"></h3>
+								<h3 th:text="${banner.subtitle2}"></h3>
+								<div th:utext="${banner.button}"></div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<!-- Add Pagination -->
+			<!-- Swiper Pagination -->
 			<div class="swiper-pagination"></div>
 		</div>
-
 	</div>
 	<!-- end carousel (rolling image) -->
 
-	<!--빠른 근태신청-->
+	<!--start 빠른 근태신청-->
 	<div class="main-content">
 		<div class="container">
 			<div class="row d-flex justify-content-start mb-1">
@@ -128,17 +102,18 @@
 			</div>
 		</div>
 	</div>
+	<!--end 빠른 근태신청-->
 
 
-
-
+	<!--start divider-->
 	<div class="divider">
 		<div class="divider-text" style="background-color: transparent;">
 			<img class="divider-text" src="/images/kdb/epams_r_cw_action.gif" style="width: 50px; height: 50px; border-radius: 50%; padding: 0;" />
 		</div>
 	</div>
+	<!--end divider-->
 
-	<!--최근 공지사항-->
+	<!--start 최근 공지사항-->
 	<div class="main-content">
 		<div class="container">
 			<div class="row d-flex justify-content-start mb-2">
@@ -180,23 +155,29 @@
 			</div>
 		</div>
 	</div>
+	<!--end 최근 공지사항-->
 
+	<!--start divider-->
 	<div class="divider">
 		<div class="divider-text" style="background-color: transparent;">
 			<img class="divider-text" src="/images/kdb/epams_r_cw_action.gif" style="width: 50px; height: 50px; border-radius: 50%; padding: 0;" />
 		</div>
 	</div>
+	<!--end divider-->
 
-	<!--직원검색-->
+	<!--start 직원검색-->
 	<div class="main-content">
 		<div id="searchDiv">
 			<div class="container">
+
+				<!-- 직원검색 제목 -->
 				<div class="row d-flex justify-content-start mb-2">
 					<h5 class="text-start">
 						<i class="bi bi-search"></i> <span th:text="${codeList['SEARCH_EMP_TTL']}"></span>
 					</h5>
 				</div>
 
+				<!-- 직원검색 내용 -->
 				<div class="row d-flex justify-content-center">
 					<div class="row col-lg-12">
 						<section class="section">
@@ -213,15 +194,9 @@
 													<span class="input-group-text d-flex align-items-center justify-content-center" id="basic-addon1" style="height: 38px;">
 														<i class="bi bi-search m-0" style="line-height: 1;"></i>
 													</span>
-													<input type="text" id="searchMember"
-														   class="form-control awesomplete"
-														   placeholder="이름, 팀/부서, 업무명"
-														   aria-label="Recipient's username"
-														   aria-describedby="button-addon2"
-														   style="height: 38px;"/>
-													<button class="btn btn-primary d-flex align-items-center"
-															type="button" id="button-addon2" onclick="search()"
-															style="height: 38px; white-space: nowrap;"><span th:text="${codeList['SEARCH_EMP_01_BTN']}"></span>
+													<input type="text" id="searchMember" class="form-control awesomplete" placeholder="이름, 팀/부서, 업무명" aria-label="Recipient's username" aria-describedby="button-addon2" style="height: 38px;"/>
+													<button class="btn btn-primary d-flex align-items-center" type="button" id="button-addon2" onclick="search()" style="height: 38px; white-space: nowrap;">
+														<span th:text="${codeList['SEARCH_EMP_01_BTN']}"></span>
 													</button>
 												</div>
 
@@ -257,10 +232,16 @@
 			</div>
 		</div>
 	</div>
+	<!--end 직원검색-->
+
+	<!--start scrollToTop 버튼-->
 	<button class="animate__animated animate__fadeIn animate__slow" id="scrollToTopBtn" title="Go to top">
 		<i class="bi-chevron-up"></i>
 	</button>
+	<!--end scrollToTop 버튼-->
+
 </div>
+
 <!-- (start) private script -->
 <th:block layout:fragment="script">
 	<!--Forward Thymeleaf variable to Javascript-->

@@ -3,10 +3,13 @@ package epams.domain.com.index;
 import epams.domain.com.admin.service.CodeHtmlDetailService;
 import epams.domain.com.board.dto.BoardDTO;
 import epams.domain.com.board.service.BoardMainService;
+import epams.domain.com.index.dto.BannerDTO;
 import epams.domain.com.index.dto.QuickApplDTO;
 import epams.domain.com.login.util.webauthn.RegistrationService;
 import epams.domain.com.login.util.webauthn.authenticator.Authenticator;
 import epams.domain.com.login.util.webauthn.user.AppUser;
+import epams.domain.com.member.dto.IamUserDTO;
+import epams.domain.com.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,6 +24,8 @@ import org.springframework.session.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -54,6 +59,12 @@ public class IndexController<S extends Session> {
      * @since 2024-06-11
      */
     private final BoardMainService boardService;
+    /**
+     * @author K140024
+     * @implNote 회원 서비스 주입
+     * @since 2024-06-11
+     */
+    private final MemberService memberservice;
 
     /**
      * @author K140024
@@ -140,8 +151,7 @@ public class IndexController<S extends Session> {
         final String tomorrowDate = tomorrow + "(" + dayOfWeek2.getDisplayName(TextStyle.NARROW, Locale.KOREAN) + ")";
         model.addAttribute("tomorrowDate", tomorrowDate);
 
-        // 빠른 근태 신청 날짜 리스트
-        // DateCodeDTO 리스트 생성
+        // 빠른 근태 신청 리스트
         List<QuickApplDTO> dtmApplList = new ArrayList<>();
         dtmApplList.add(new QuickApplDTO("오늘", nowDate, "DTM01", "연차휴가 1일"));
         dtmApplList.add(new QuickApplDTO("오늘", nowDate, "DTM02", "연차휴가 오전 반차"));
@@ -149,9 +159,30 @@ public class IndexController<S extends Session> {
         dtmApplList.add(new QuickApplDTO("내일", tomorrowDate, "DTM01", "연차휴가 1일"));
         dtmApplList.add(new QuickApplDTO("내일", tomorrowDate, "DTM02", "연차휴가 오전 반차"));
         dtmApplList.add(new QuickApplDTO("내일", tomorrowDate, "DTM03", "연차휴가 오전 반반차"));
-
         model.addAttribute("list", dtmApplList);
-        
+
+        // 배너 리스트
+        List<BannerDTO> bannerList = new ArrayList<>();
+        bannerList.add(new BannerDTO("최근 공지사항", "시스템 점검 안내", "'24. 7. 6(일) 18:00-19:00", "<a href=\"/dtm/main\"><span class=\"badge text-bg-primary\">바로가기</span></a>"));
+        bannerList.add(new BannerDTO("연차 및 저축휴가", "언제 어디서든", "편하게 신청하세요", "<a href=\"/dtm/main\"><span class=\"badge text-bg-primary\">바로가기</span></a>"));
+        bannerList.add(new BannerDTO("직원조회", "언제 어디서든", "간편하게 검색하세요", "<a href=\"#\" onclick=\"scrollToDiv()\"><span class=\"badge text-bg-primary\">바로가기</span></a>"));
+        model.addAttribute("bannerList", bannerList);
+
         return INDEXMAIN;
+    }
+
+    /**
+     * @author K140024
+     * @implNote 검색 기능을 수행하는 메서드
+     * @since 2024-06-11
+     */
+    @PostMapping("/search")
+    public String search(final Model model, final @RequestParam("text") String text) {
+
+        // 메인화면 직원조회 출력
+        final List<IamUserDTO> memberList = memberservice.findBySearchValue(text);
+        model.addAttribute("memberList", memberList);
+
+        return "/common/memberlist";
     }
 }

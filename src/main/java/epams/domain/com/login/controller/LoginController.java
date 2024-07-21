@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import epams.framework.security.CustomGeneralRuntimeException;
 import epams.domain.com.login.service.LoginService;
 import epams.domain.com.login.service.MFALoginService;
-import epams.domain.com.login.util.webauthn.RegistrationService;
+import epams.domain.com.login.util.webauthn.service.RegistrationService;
 import epams.domain.com.login.util.webauthn.authenticator.Authenticator;
 import epams.domain.com.member.dto.IamUserDTO;
 import jakarta.servlet.http.HttpServletRequest;

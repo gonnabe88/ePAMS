@@ -79,14 +79,14 @@
 														</span>
 														<span th:text="${date.dtmName}"></span>
 													</h6>
-													<h7 th:text="${date.applDate}"></h7>
+													<h7 th:text="${date.strDateStr}"></h7>
 												</div>
 												<div class="col-2 mb-0 align-content-center">
 													<div class="d-flex justify-content-end">
-														<div th:if="${date.applDateType == '오늘'}" class="btn btn-primary btn-sm" style="--bs-btn-padding-y: 0.35rem;" th:onclick=ApplAlert('${date.applDate}')>
+														<div th:if="${date.applDateType == '오늘'}" class="btn btn-primary btn-sm" style="--bs-btn-padding-y: 0.35rem;" th:attr="data-date=${date}" onclick="ApplAlert(this)">
 															<span th:text="${codeList['APPL_DTM_01_BTN']}"></span>
 														</div>
-														<div th:if="${date.applDateType == '내일'}" class="btn btn-info btn-sm" style="--bs-btn-padding-y: 0.35rem;" th:onclick=ApplAlert('${date.applDate}')>
+														<div th:if="${date.applDateType == '내일'}" class="btn btn-info btn-sm" style="--bs-btn-padding-y: 0.35rem;" th:date="${date}" th:onclick="ApplAlert(this.getAttribute('date'))">
 															<span th:text="${codeList['APPL_DTM_01_BTN']}"></span>
 														</div>
 													</div>
@@ -245,10 +245,7 @@
 <!-- (start) private script -->
 <th:block layout:fragment="script">
 	<!--Forward Thymeleaf variable to Javascript-->
-	<div id="authData" th:attr="
-		data-simpleauth=${simpleauth},
-		data-username=${username}">
-	</div>
+	<div id="authData" th:attr="data-simpleauth=${simpleauth}, data-username=${username}"></div>
 	<script src="/extensions/webauthn/js/base64js.min.js"></script>
 	<script src="/extensions/webauthn/js/custom.js"></script>
 	<script src="/extensions/awesomplete/awesomplete.js"></script>

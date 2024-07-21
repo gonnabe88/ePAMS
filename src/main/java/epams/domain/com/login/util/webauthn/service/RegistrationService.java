@@ -1,4 +1,4 @@
-package epams.domain.com.login.util.webauthn;
+package epams.domain.com.login.util.webauthn.service;
 
 import java.util.List;
 import java.util.Optional;
@@ -6,9 +6,9 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import epams.domain.com.login.util.webauthn.authenticator.Authenticator;
-import epams.domain.com.login.util.webauthn.authenticator.AuthenticatorRepository;
+import epams.domain.com.login.util.webauthn.repository.AuthenticatorRepository;
 import epams.domain.com.login.util.webauthn.user.AppUser;
-import epams.domain.com.login.util.webauthn.user.UserRepository;
+import epams.domain.com.login.util.webauthn.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 

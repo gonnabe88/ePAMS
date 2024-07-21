@@ -1,5 +1,7 @@
-package epams.domain.com.login.util.webauthn;
+package epams.domain.com.login.util.webauthn.controller;
 
+import epams.domain.com.login.util.webauthn.service.AuthRegistService;
+import epams.domain.com.login.util.webauthn.service.AuthService;
 import org.owasp.encoder.Encode;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

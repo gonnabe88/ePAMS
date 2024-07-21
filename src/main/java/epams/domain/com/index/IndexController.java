@@ -5,7 +5,7 @@ import epams.domain.com.board.dto.BoardDTO;
 import epams.domain.com.board.service.BoardMainService;
 import epams.domain.com.index.dto.BannerDTO;
 import epams.domain.com.index.dto.QuickApplDTO;
-import epams.domain.com.login.util.webauthn.RegistrationService;
+import epams.domain.com.login.util.webauthn.service.RegistrationService;
 import epams.domain.com.login.util.webauthn.authenticator.Authenticator;
 import epams.domain.com.login.util.webauthn.user.AppUser;
 import epams.domain.com.member.dto.IamUserDTO;
@@ -143,23 +143,25 @@ public class IndexController<S extends Session> {
         // 메인화면 빠른근태신청 출력
         final LocalDate today = LocalDate.now();
         final DayOfWeek dayOfWeek = today.getDayOfWeek();
-        final String nowDate = today + "(" + dayOfWeek.getDisplayName(TextStyle.NARROW, Locale.KOREAN) + ")";
-        model.addAttribute("nowDate", nowDate);
+        final String nowDateStr = today + "(" + dayOfWeek.getDisplayName(TextStyle.NARROW, Locale.KOREAN) + ")";
+        model.addAttribute("nowDateStr", nowDateStr);
 
         final LocalDate tomorrow = LocalDate.now().plusDays(1);
         final DayOfWeek dayOfWeek2 = tomorrow.getDayOfWeek();
-        final String tomorrowDate = tomorrow + "(" + dayOfWeek2.getDisplayName(TextStyle.NARROW, Locale.KOREAN) + ")";
-        model.addAttribute("tomorrowDate", tomorrowDate);
+        final String tomorrowDateStr = tomorrow + "(" + dayOfWeek2.getDisplayName(TextStyle.NARROW, Locale.KOREAN) + ")";
+        model.addAttribute("tomorrowDateStr", tomorrowDateStr);
 
         // 빠른 근태 신청 리스트
-        List<QuickApplDTO> dtmApplList = new ArrayList<>();
-        dtmApplList.add(new QuickApplDTO("오늘", nowDate, "DTM01", "연차휴가 1일"));
-        dtmApplList.add(new QuickApplDTO("오늘", nowDate, "DTM02", "연차휴가 오전 반차"));
-        dtmApplList.add(new QuickApplDTO("오늘", nowDate, "DTM03", "연차휴가 오전 반반차"));
-        dtmApplList.add(new QuickApplDTO("내일", tomorrowDate, "DTM01", "연차휴가 1일"));
-        dtmApplList.add(new QuickApplDTO("내일", tomorrowDate, "DTM02", "연차휴가 오전 반차"));
-        dtmApplList.add(new QuickApplDTO("내일", tomorrowDate, "DTM03", "연차휴가 오전 반반차"));
+        List<QuickApplDTO> dtmApplList = List.of(
+            new QuickApplDTO("오늘", nowDateStr, nowDateStr, today, today,"DTM01", "연차휴가 1일"),
+            new QuickApplDTO("오늘", nowDateStr, nowDateStr, today, today, "DTM02", "연차휴가 오전 반차"),
+            new QuickApplDTO("오늘", nowDateStr, nowDateStr, today, today, "DTM03", "연차휴가 오전 반반차"),
+            new QuickApplDTO("내일", tomorrowDateStr, tomorrowDateStr, tomorrow, tomorrow, "DTM01", "연차휴가 1일"),
+            new QuickApplDTO("내일", tomorrowDateStr, tomorrowDateStr, tomorrow, tomorrow, "DTM02", "연차휴가 오전 반차"),
+            new QuickApplDTO("내일", tomorrowDateStr, tomorrowDateStr, tomorrow, tomorrow, "DTM03", "연차휴가 오전 반반차")
+        );
         model.addAttribute("list", dtmApplList);
+        log.info("dtmApplList : {}", dtmApplList);
 
         // 배너 리스트
         List<BannerDTO> bannerList = new ArrayList<>();

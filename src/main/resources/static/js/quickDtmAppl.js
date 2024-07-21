@@ -1,9 +1,12 @@
 // 빠른 근태 신청 팝업
-const ApplAlert = (date) => {
+const ApplAlert = (element) => {
+    const dateStr = element.getAttribute('data-date');
+    const date = JSON.parse(dateStr);
+
     Swal.fire({
         title: "신청하시겠습니까?",
         html: `
-            <p style="text-align:center">${date} 연차 1일</p>
+            <p style="text-align:center">${date.strDateStr} 연차 1일</p>
             <div class="accordion" id="accordionExample">
                 <div class="accordion-item">
                     <h2 class="accordion-header" style="--bs-accordion-btn-focus-box-shadow:;">
@@ -39,6 +42,7 @@ const ApplAlert = (date) => {
         cancelButtonText: "아니요",
     }).then((result) => {
         if (result.isConfirmed) {
+            console.log(date);
             // DtmHisDTO 객체 생성
             const dtmHisDTO = {
                 dtmKindCd: 'DTM01',

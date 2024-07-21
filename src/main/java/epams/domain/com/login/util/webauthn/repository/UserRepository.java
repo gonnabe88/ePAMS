@@ -1,6 +1,7 @@
-package epams.domain.com.login.util.webauthn.user;
+package epams.domain.com.login.util.webauthn.repository;
 
 import com.yubico.webauthn.data.ByteArray;
+import epams.domain.com.login.util.webauthn.user.AppUser;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -29,4 +30,11 @@ public interface UserRepository extends CrudRepository<AppUser, String> {
      * @since 2024-06-11
      */
     AppUser findByHandle(ByteArray handle);
+
+    /**
+     * 주어진 사용자 이름으로 AppUser를 삭제합니다.
+     * @param username 사용자 이름
+     * @since 2024-06-11
+     */
+    void deleteByUsername(String username);
 }

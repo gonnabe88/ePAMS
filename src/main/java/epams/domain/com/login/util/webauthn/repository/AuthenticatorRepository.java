@@ -1,8 +1,9 @@
-package epams.domain.com.login.util.webauthn.authenticator;
+package epams.domain.com.login.util.webauthn.repository;
 
 import java.util.List;
 import java.util.Optional;
 
+import epams.domain.com.login.util.webauthn.authenticator.Authenticator;
 import epams.domain.com.login.util.webauthn.user.AppUser;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;

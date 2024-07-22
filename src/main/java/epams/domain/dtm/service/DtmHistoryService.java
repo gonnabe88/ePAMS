@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /***
  * @author 140024
@@ -40,8 +41,48 @@ public class DtmHistoryService {
         final int offset = page * pageSize; // 오프셋 계산
 		dto.setLimit(pageSize);
 		dto.setOffset(offset);
-        final List<DtmHisDTO> dtos = dtmHisRepo.findByEmpId(dto);
-		log.warn("dtos : {}", dtos);
+        final List<DtmHisDTO> dtos = dtmHisRepo.findByEmpId(dto)
+				.stream()
+				.map(vo -> new DtmHisDTO(
+						vo.getDtmHisId(),
+						vo.getEmpId(),
+						vo.getDtmKindCd(),
+						vo.getDtmReasonCd(),
+						vo.getStaYmd(),
+						vo.getStaHm(),
+						vo.getEndYmd(),
+						vo.getEndHm(),
+						vo.getDtmReason(),
+						vo.getDestPlc(),
+						vo.getTelno(),
+						vo.getChildNo(),
+						vo.getApplId(),
+						vo.getStatCd(),
+						vo.getFinalApprYmd(),
+						vo.getModiType(),
+						vo.getModiReason(),
+						vo.getModiDtmHisId(),
+						vo.getModUserId(),
+						vo.getModDate(),
+						vo.getTzCd(),
+						vo.getTzDate(),
+						vo.getCompanyNm(),
+						vo.getDocument(),
+						vo.getAdUseYn(),
+						vo.getMailSendYn(),
+						vo.getEsbAskDt(),
+						vo.getChildBirthYmd(),
+						vo.getDtmStoreYn(),
+						vo.getFileId(),
+						vo.getSealMgrYn(),
+						vo.getSecuMgrYn(),
+						vo.getInfoMgrYn(),
+						vo.getSafeMgrYn(),
+						vo.getPlaceCd(),
+						dto.getLimit(),
+						dto.getOffset()
+				))
+				.collect(Collectors.toList());
         final long totalElements = dtmHisRepo.countById(dto); // 전체 데이터 개수를 조회하는 메소드 필요
         return new PageImpl<>(dtos, PageRequest.of(page, pageSize), totalElements);
     }  

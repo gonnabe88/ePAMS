@@ -45,7 +45,7 @@ public class AppUser extends BaseEntity {
      * @implNote Webauthn 출력명 컬럼
      * @since 2024-06-11
      */
-    @Column(name = "WEBAUTHN_DISP_NM", nullable = false, length = 32)
+    @Column(name = "WEBA_PRO_NM", nullable = false, length = 32)
     @Comment("Webauthn 출력명")
     private String displayName;
 
@@ -56,7 +56,7 @@ public class AppUser extends BaseEntity {
      * @since 2024-06-11
      */
     @Lob
-    @Column(name = "WEBAUTHN_USR_HANDLE", nullable = false, length = 64)
+    @Column(name = "WEBA_USR_HDLN_IMG", nullable = false, length = 64)
     @Comment("Webauthn 사용자 Handle")
     private ByteArray handle;
 

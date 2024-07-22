@@ -1,12 +1,14 @@
 // 빠른 근태 신청 팝업
 const ApplAlert = (element) => {
-    const dateStr = element.getAttribute('data-date');
-    const date = JSON.parse(dateStr);
+    const staDate = element.getAttribute('data-staDate');
+    const staDateStr = element.getAttribute('data-staDateStr');
+    const dtmCode = element.getAttribute('data-dtmCode');
+    const dtmReasonCode = element.getAttribute('data-dtmReasonCode');
 
     Swal.fire({
         title: "신청하시겠습니까?",
         html: `
-            <p style="text-align:center">${date.strDateStr} 연차 1일</p>
+            <p style="text-align:center">${staDateStr} 연차 1일</p>
             <div class="accordion" id="accordionExample">
                 <div class="accordion-item">
                     <h2 class="accordion-header" style="--bs-accordion-btn-focus-box-shadow:;">
@@ -42,13 +44,13 @@ const ApplAlert = (element) => {
         cancelButtonText: "아니요",
     }).then((result) => {
         if (result.isConfirmed) {
-            console.log(date);
+            console.log(staDate);
             // DtmHisDTO 객체 생성
             const dtmHisDTO = {
-                dtmKindCd: 'DTM01',
-                dtmReasonCd: 'RES01',
-                staYmd: new Date(date).toISOString(),
-                endYmd: new Date(date).toISOString()
+                dtmKindCd: dtmCode,
+                dtmReasonCd: dtmReasonCode,
+                staYmd: new Date(staDate).toISOString(),
+                endYmd: new Date(staDate).toISOString()
             };
 
             // POST 요청 함수 호출
@@ -56,7 +58,7 @@ const ApplAlert = (element) => {
 
             Swal.fire({
                 title: "신청되었습니다.",
-                html: `<p style="text-align:center">${date} 연차 1일</p>`,
+                html: `<p style="text-align:center">${staDateStr} 연차 1일</p>`,
                 icon: "success",
                 confirmButtonColor: "#3085d6",
                 confirmButtonText: "확인"

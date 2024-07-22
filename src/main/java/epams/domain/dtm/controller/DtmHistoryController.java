@@ -104,7 +104,6 @@ public class DtmHistoryController<S extends Session> {
         if (endPage - startPage < maxPageBtn - 1) {
             startPage = Math.max(1, endPage - maxPageBtn + 1);
         }
-        log.warn(dtos.toString());
 
         model.addAttribute("dtmHis", dtos);
         model.addAttribute("startPage", startPage);

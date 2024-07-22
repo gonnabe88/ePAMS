@@ -26,7 +26,6 @@
 			<div class="d-flex justify-content-center">
 				<div class="row col-lg-10 col-md-12 d-flex justify-content-center">
 					<div class="page-heading">
-
 						<div class="align-middle">
 							<h2>
 								<i class="bi bi-bell-fill"></i> 근태내역
@@ -41,7 +40,18 @@
 								<section class="section" th:each="dtm: ${dtmHis}">
 									<div class="card">
 										<div class="card-body">
-											<span class="badge badge-sm mb-2 bg-primary" th:text="${dtm.dtmKindCd}"></span>
+											<div th:switch="${dtm.status}">
+												<span th:case="'과거'" class="badge badge-sm mb-4 bg-secondary">
+													<span th:text="${dtm.status}"></span>
+												</span>
+												<span th:case="'예정'" class="badge badge-sm mb-4 bg-primary">
+													<span th:text="${dtm.status}"></span>
+												</span>
+												<span th:case="'진행'" class="badge badge-sm mb-4 bg-warning">
+													<span th:text="${dtm.status}"></span>
+												</span>
+											</div>
+											<h6><span th:text="${dtm.dtmKindCd}"></span></h6>
 											<div class="d-flex flex-row align-items-center mt-3 mb-3 gap-3">
 												<div class="d-flex align-items-center gap-2">
 													<h6>
@@ -54,7 +64,7 @@
 											<div class="d-flex flex-row mb-3 gap-3">
 												<div>
 													<i class="bi bi-calendar-check"></i>
-													<h7 th:text="${#temporals.format(dtm.finalApprYmd, 'yyyy-MM-dd')}"></h7>
+													<h7 th:text="${#temporals.format(dtm.tzDate, 'yyyy-MM-dd')}"></h7>
 												</div>
 											</div>
 										</div>

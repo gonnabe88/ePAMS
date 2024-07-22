@@ -1,23 +1,13 @@
 package epams.domain.com.login.util.webauthn.authenticator;
 
+import com.yubico.webauthn.data.ByteArray;
 import epams.domain.com.login.util.webauthn.user.AppUser;
 import epams.model.entity.BaseEntity;
-import org.hibernate.annotations.Comment;
-
-import com.yubico.webauthn.data.ByteArray;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.Lob;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Comment;
 
 /**
  * @author K140024
@@ -39,7 +29,7 @@ public class Authenticator extends BaseEntity {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment
-    @Column(name = "WEBAUTHN_SNO", columnDefinition = "NUMBER(10)")
+    @Column(name = "WEBA_SNO", columnDefinition = "NUMBER(10)")
     @Comment("Webauthn 일련번호")
     private Long seqId;
 
@@ -49,8 +39,8 @@ public class Authenticator extends BaseEntity {
      * @since 2024-06-11
      */
     @Lob
-    @Column(name = "WEBAUTHN_CRDT_ID", nullable = false)
-    @Comment("Webauthn 자격증명 ID")
+    @Column(name = "WEBA_CFA_IMG", nullable = false)
+    @Comment("Webauthn인증서이미지")
     private ByteArray credentialId;
 
     /**
@@ -59,8 +49,8 @@ public class Authenticator extends BaseEntity {
      * @since 2024-06-11
      */
     @Lob
-    @Column(name = "WEBAUTHN_PBLK_KEY", nullable = false)
-    @Comment("Webauthn 공개키")
+    @Column(name = "WEBA_OPNK_IMG", nullable = false)
+    @Comment("Webauthn공개키이미지")
     private ByteArray publicKey;
 
     /**
@@ -68,8 +58,8 @@ public class Authenticator extends BaseEntity {
      * @implNote Webauthn 자격증명수(WEBAUTHN_CNT)
      * @since 2024-06-11
      */
-    @Column(name = "WEBAUTHN_CNT", nullable = false, columnDefinition = "NUMBER(10)")
-    @Comment("Webauthn 자격증명수")
+    @Column(name = "WEBA_CER_CNT", nullable = false, columnDefinition = "NUMBER(10)")
+    @Comment("Webauthn인증건수")
     private Long count;
 
     /**
@@ -78,8 +68,8 @@ public class Authenticator extends BaseEntity {
      * @since 2024-06-11
      */
     @Lob
-    @Column(name = "WEBAUTHN_AAGUID", nullable = true)
-    @Comment("Webauthn Authenticator Attestation GUID")
+    @Column(name = "WEBA_CER_GUID_IMG", nullable = true)
+    @Comment("Webauthn인증GUID이미지")
     private ByteArray aaguid;
 
     /**

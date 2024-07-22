@@ -79,14 +79,24 @@
 														</span>
 														<span th:text="${date.dtmName}"></span>
 													</h6>
-													<h7 th:text="${date.strDateStr}"></h7>
+													<h7 th:text="${date.staDateStr}"></h7>
 												</div>
 												<div class="col-2 mb-0 align-content-center">
 													<div class="d-flex justify-content-end">
-														<div th:if="${date.applDateType == '오늘'}" class="btn btn-primary btn-sm" style="--bs-btn-padding-y: 0.35rem;" th:attr="data-date=${date}" onclick="ApplAlert(this)">
+														<div th:if="${date.applDateType == '오늘'}" class="btn btn-primary btn-sm"
+															 th:attr=
+																 "data-staDate=${date.staDate}
+																 ,data-staDateStr=${date.staDateStr}
+																 ,data-dtmCode=${date.dtmCode}
+																 ,data-dtmReasonCode='1A1'" onclick="ApplAlert(this)">
 															<span th:text="${codeList['APPL_DTM_01_BTN']}"></span>
 														</div>
-														<div th:if="${date.applDateType == '내일'}" class="btn btn-info btn-sm" style="--bs-btn-padding-y: 0.35rem;" th:date="${date}" th:onclick="ApplAlert(this.getAttribute('date'))">
+														<div th:if="${date.applDateType == '내일'}" class="btn btn-info btn-sm"
+															 th:attr=
+																 "data-staDate=${date.staDate}
+																 ,data-staDateStr=${date.staDateStr}
+																 ,data-dtmCode=${date.dtmCode}
+																 ,data-dtmReasonCode='1A1'" onclick="ApplAlert(this)">
 															<span th:text="${codeList['APPL_DTM_01_BTN']}"></span>
 														</div>
 													</div>

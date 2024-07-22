@@ -1,11 +1,10 @@
-package epams.domain.com.index.dto;
+package epams.domain.dtm.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 /***
  * @author 140024
@@ -15,7 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class QuickApplDTO {
+public class DtmListDTO {
 
     /***
      * @author 140024
@@ -29,28 +28,28 @@ public class QuickApplDTO {
      * @implNote 시작날짜 문자열
      * @since 2024-06-09
      */
-    private String staDateStr;
+    private String staYmdStr;
 
     /***
      * @author 140024
      * @implNote 종료날짜 문자열
      * @since 2024-06-09
      */
-    private String endDateStr;
+    private String endYmdStr;
 
     /***
      * @author 140024
      * @implNote 시작날짜
      * @since 2024-06-09
      */
-    private LocalDate staDate;
+    private LocalDate staYmd;
 
     /***
      * @author 140024
      * @implNote 종료날짜
      * @since 2024-06-09
      */
-    private LocalDate endDate;
+    private LocalDate endYmd;
 
     /***
      * @author 140024

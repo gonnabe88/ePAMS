@@ -24,6 +24,13 @@ public class DtmHisDTO extends DtmHisVO {
 
     /***
      * @author 140024
+     * @implNote 결재상태 (결재중/결재완료/반려)
+     * @since 2024-06-09
+     */
+    private String statCdNm = "결재완료";
+
+    /***
+     * @author 140024
      * @implNote 경과여부 (과거/진행중/예정)
      * @since 2024-06-09
      */

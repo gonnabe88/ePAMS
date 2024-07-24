@@ -45,14 +45,14 @@
 								<div class="d-flex align-items-center justify-content-between mb-2">
 									<h6>결재상태</h6>
 									<div class="btn-group btn-group-sm" role="group" aria-label="Basic radio toggle button group">
-										<input type="checkbox" class="btn-check" name="applStatus" id="applStatus1" autocomplete="off" checked>
-										<label class="btn btn-outline-primary" for="applStatus1">결재중</label>
+										<input type="checkbox" class="btn-check" name="statCdNm" id="ing" autocomplete="off" checked>
+										<label class="btn btn-outline-primary" for="statCdNm1">결재중</label>
 
-										<input type="checkbox" class="btn-check" name="applStatus" id="applStatus2" autocomplete="off" checked>
-										<label class="btn btn-outline-primary" for="applStatus2">결재완료</label>
+										<input type="checkbox" class="btn-check" name="statCdNm" id="done" autocomplete="off" checked>
+										<label class="btn btn-outline-primary" for="statCdNm2">결재완료</label>
 
-										<input type="checkbox" class="btn-check" name="applStatus" id="applStatus3" autocomplete="off" checked>
-										<label class="btn btn-outline-primary" for="applStatus3">반려</label>
+										<input type="checkbox" class="btn-check" name="statCdNm" id="reject" autocomplete="off" checked>
+										<label class="btn btn-outline-primary" for="statCdNm3">반려</label>
 									</div>
 								</div>
 							</div>
@@ -61,31 +61,31 @@
 								<div class="d-flex align-items-center justify-content-between mb-2">
 									<h6>근태종류</h6>
 									<div class="btn-group btn-group-sm" role="group" aria-label="Basic radio toggle button group">
-										<input type="radio" class="btn-check" name="dtmType" id="dtmType" autocomplete="off" checked>
-										<label class="btn btn-outline-primary" for="dtmType">전체</label>
+										<input type="radio" class="btn-check" name="dtmKindNm" id="dtmKindNm" autocomplete="off" checked>
+										<label class="btn btn-outline-primary" for="dtmKindNm">전체</label>
 
-										<input type="radio" class="btn-check" name="dtmType" id="dtmType1" autocomplete="off">
-										<label class="btn btn-outline-primary" for="dtmType1">연차</label>
+										<input type="radio" class="btn-check" name="dtmKindNm" id="dtmKindNm1" autocomplete="off">
+										<label class="btn btn-outline-primary" for="dtmKindNm1">연차</label>
 
-										<input type="radio" class="btn-check" name="dtmType" id="dtmType2" autocomplete="off">
-										<label class="btn btn-outline-primary" for="dtmType2">저축</label>
+										<input type="radio" class="btn-check" name="dtmKindNm" id="dtmKindNm2" autocomplete="off">
+										<label class="btn btn-outline-primary" for="dtmKindNm2">저축</label>
 
-										<input type="radio" class="btn-check" name="dtmType" id="dtmType3" autocomplete="off">
-										<label class="btn btn-outline-primary" for="dtmType3">보상</label>
+										<input type="radio" class="btn-check" name="dtmKindNm" id="dtmKindNm3" autocomplete="off">
+										<label class="btn btn-outline-primary" for="dtmKindNm3">보상</label>
 									</div>
 								</div>
-								<select class="form-select" aria-label="Default select example" name="dtmTypeSelect" id="dtmDetail">
+								<select class="form-select" aria-label="Default select example" name="dtmKindNmSelect" id="dtmDetail">
 									<option selected>선택</option>
-									<option value="1">연차휴가</option>
-									<option value="2">연차휴가 오전(반차)</option>
-									<option value="3">연차휴가 오전(반반차)</option>
-									<option value="4">연차휴가 오후(반차)</option>
-									<option value="5">연차휴가 오후(반반차)</option>
-									<option value="6">저축휴가</option>
-									<option value="7">저축휴가 오전(반차)</option>
-									<option value="8">저축휴가 오전(반반차)</option>
-									<option value="9">저축휴가 오후(반차)</option>
-									<option value="10">저축휴가 오후(반반차)</option>
+									<option value="DTM01">연차휴가</option>
+									<option value="DTM02">연차휴가 오전(반차)</option>
+									<option value="DTM03">연차휴가 오전(반반차)</option>
+									<option value="DTM04">연차휴가 오후(반차)</option>
+									<option value="DTM05">연차휴가 오후(반반차)</option>
+									<option value="DTM06">저축휴가</option>
+									<option value="DTM07">저축휴가 오전(반차)</option>
+									<option value="DTM08">저축휴가 오전(반반차)</option>
+									<option value="DTM09">저축휴가 오후(반차)</option>
+									<option value="DTM10">저축휴가 오후(반반차)</option>
 								</select>
 							</div>
 
@@ -191,12 +191,38 @@
 	<script src="/extensions/litepicker/bundle.js"></script>
 	<script src="/extensions/litepicker/mobilefriendly.js"></script>
 	<script>
+		 const updatePaginationLinks = () => {
+			// 폼의 값 가져오기
+			let statCdNm = [];
+			$('input[name="statCdNm"]:checked').each(function() {
+				statCdNm.push($(this).attr('id'));
+			});
+
+			let dtmKindNm = $('#dtmDetail option:selected').val();
+			let staYmdInput = $('#start-input').val();
+			let endYmdInput = $('#end-input').val();
+
+			// 페이지네이션 링크 업데이트
+			$('.page-link').each(function() {
+				let baseUrl = $(this).attr('href').split('?')[0];
+				let newUrl = `${baseUrl}?page=${$(this).text()}&statCdNm=${statCdNm.join(',')}&dtmKindNm=${dtmKindNm}&staYmdInput=${staYmdInput}&endYmdInput=${endYmdInput}`;
+				$(this).attr('href', newUrl);
+			});
+		}
+
+		// 페이지 로드 시 및 폼 값 변경 시 페이지네이션 링크 업데이트
+		$(document).ready(function() {
+			updatePaginationLinks();
+			$('input[name="statCdNm"], input[name="dtmKindNm"], #start-input, #end-input').on('change', updatePaginationLinks);
+		});
+
 		// 페이지네이션 화면 reload 비동기 처리
 		$(document).on('click', '.page-link', function(event) {
 			event.preventDefault();
 			let url = $(this).attr('href');
 			$.get(url, function(data) {
 				$('#dtmListContainer').html($(data).find('#dtmListContainer').html());
+				updatePaginationLinks(); // 페이지 업데이트 후 다시 링크 업데이트
 			});
 		});
 	</script>
@@ -207,10 +233,10 @@
 		// 화면 로드 시 달력 초기화
 		$(function() {
 			// Initialize calendar for new elements
-			const startInput = document.getElementById('start-input');
-			const endInput = document.getElementById('end-input');
+			const staYmdInput = document.getElementById('start-input');
+			const endYmdInput = document.getElementById('end-input');
 
-			initializePicker(startInput, endInput);
+			initializePicker(staYmdInput, endYmdInput);
 		});
 
 		// Function to validate and format date input
@@ -254,10 +280,10 @@
 		}
 
 		// 달력 생성 함수
-		const initializePicker = (startInput, endInput) => {
+		const initializePicker = (staYmdInput, endYmdInput) => {
 			const picker = new Litepicker({
-				element: startInput,
-				elementEnd: endInput,
+				element: staYmdInput,
+				elementEnd: endYmdInput,
 				switchingMonths: true,
 				singleMode: false,
 				allowRepick: true,
@@ -272,28 +298,28 @@
 				//plugins: ['mobilefriendly'],
 				setup: (picker) => {
 					picker.on('selected', (date1, date2) => {
-						startInput.value = date1.format('YYYY-MM-DD');
-						endInput.value = date2.format('YYYY-MM-DD');
+						staYmdInput.value = date1.format('YYYY-MM-DD');
+						endYmdInput.value = date2.format('YYYY-MM-DD');
 					});
 				}
 			});
 
 			// 날짜 지정 시 Form에 값 설정
 			const updatePicker = () => {
-				const startDateValue = startInput.value;
-				const endDateValue = endInput.value;
+				const startDateValue = staYmdInput.value;
+				const endDateValue = endYmdInput.value;
 				if (startDateValue && endDateValue) {
 					picker.setDateRange(startDateValue, endDateValue);
 				}
 			}
 
-			startInput.addEventListener('change', updatePicker);
-			endInput.addEventListener('change', updatePicker);
+			staYmdInput.addEventListener('change', updatePicker);
+			endYmdInput.addEventListener('change', updatePicker);
 
 			// Set initial values to today
 			const today = new Date().toISOString().split('T')[0];
-			startInput.value = today;
-			endInput.value = today;
+			staYmdInput.value = today;
+			endYmdInput.value = today;
 			picker.setDateRange(today, today);
 		}
 

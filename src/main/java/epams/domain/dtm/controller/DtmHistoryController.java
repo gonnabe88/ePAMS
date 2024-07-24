@@ -89,6 +89,8 @@ public class DtmHistoryController<S extends Session> {
         final String DTMLIST = "/dtm/list";
         dto.setEmpId(Long.parseLong(authentication().getName().replace('K', '7')));
 
+        log.info("dto : {}", dto);
+
         // 코드
         final Map<String, String> codeList = codeDetailService.getCodeHtmlDetail(DTMLIST);
         model.addAttribute("codeList", codeList);

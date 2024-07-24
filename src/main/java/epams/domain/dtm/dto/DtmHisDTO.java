@@ -38,6 +38,27 @@ public class DtmHisDTO extends DtmHisVO {
 
     /***
      * @author 140024
+     * @implNote 근태유형이름 (연차/반차..)
+     * @since 2024-06-09
+     */
+    private String dtmKindNm;
+
+    /***
+     * @author 140024
+     * @implNote 근태시작일 입력값
+     * @since 2024-06-09
+     */
+    private String staYmdInput;
+
+    /***
+     * @author 140024
+     * @implNote 근태종료일 입력값
+     * @since 2024-06-09
+     */
+    private String endYmdInput;
+
+    /***
+     * @author 140024
      * @implNote 종료일
      * @since 2024-06-09
      */

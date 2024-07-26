@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 /***
  * @author 140024
@@ -24,10 +25,24 @@ public class DtmHisDTO extends DtmHisVO {
 
     /***
      * @author 140024
+     * @implNote 페이지당 게시물 수
+     * @since 2024-06-09
+     */
+    private Integer itemsPerPage = 10;
+
+    /***
+     * @author 140024
      * @implNote 결재상태 (결재중/결재완료/반려)
      * @since 2024-06-09
      */
     private String statCdNm = "결재완료";
+
+    /***
+     * @author 140024
+     * @implNote 결재상태 리스트 (결재중/결재완료/반려)
+     * @since 2024-06-09
+     */
+    private List<String> statCdList;
 
     /***
      * @author 140024

@@ -60,15 +60,60 @@
         OFFSET #{offset} ROWS FETCH NEXT #{limit} ROWS ONLY
     </select>
 
+    <!-- 갯수 조회 -->
+    <select id="countById" parameterType="long" resultType="long">
+        SELECT COUNT(*) FROM OHR.DTM_HIS WHERE EMP_ID = #{empId}
+    </select>
+
+    <!-- 특정 데이터 조회 -->
+    <select id="findByCondition" parameterType="dtmHis" resultMap="dtmHisResultMap">
+        SELECT * FROM OHR.DTM_HIS
+        WHERE EMP_ID = #{empId}
+        <if test="statCdList != null and statCdList.size() > 0">
+            AND STAT_CD IN
+            <foreach item="item" index="index" collection="statCdList" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="dtmKindNm != null and dtmKindNm != ''">
+            AND DTM_KIND_CD = #{dtmKindNm}
+        </if>
+        <if test="staYmdInput != null and staYmdInput != ''">
+            AND STA_YMD &gt;= #{staYmdInput}
+        </if>
+        <if test="endYmdInput != null and endYmdInput != ''">
+            AND END_YMD &lt;= #{endYmdInput}
+        </if>
+        ORDER BY DTM_HIS_ID DESC
+        OFFSET #{offset} ROWS FETCH NEXT #{limit} ROWS ONLY
+    </select>
+
+    <!-- 특정 데이터 조회 -->
+    <select id="countByCondition" parameterType="dtmHis" resultType="long">
+        SELECT COUNT(*) FROM OHR.DTM_HIS
+        WHERE EMP_ID = #{empId}
+        <if test="statCdList != null and statCdList.size() > 0">
+            AND STAT_CD IN
+            <foreach item="item" index="index" collection="statCdList" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="dtmKindNm != null and dtmKindNm != ''">
+            AND DTM_KIND_CD = #{dtmKindNm}
+        </if>
+        <if test="staYmdInput != null and staYmdInput != ''">
+            AND STA_YMD &gt;= TO_DATE(#{staYmdInput}, 'YYYY-MM-DD')
+        </if>
+        <if test="endYmdInput != null and endYmdInput != ''">
+            AND END_YMD &lt;= TO_DATE(#{endYmdInput}, 'YYYY-MM-DD')
+        </if>
+    </select>
+
     <!-- 특정 데이터 조회 -->
     <select id="findByDtmKindCd" parameterType="string" resultMap="dtmHisResultMap">
         SELECT * FROM OHR.DTM_HIS WHERE DTM_KIND_CD = #{dtmKindCd}
     </select>
 
-    <!-- 갯수 조회 -->
-    <select id="countById" parameterType="long" resultType="long">
-        SELECT COUNT(*) FROM OHR.DTM_HIS WHERE EMP_ID = #{empId}
-    </select>
 
     <!-- 신규 데이터 추가 -->
     <insert id="insert" parameterType="DtmHis">

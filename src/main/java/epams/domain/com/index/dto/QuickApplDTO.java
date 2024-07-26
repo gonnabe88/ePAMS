@@ -61,6 +61,13 @@ public class QuickApplDTO {
 
     /***
      * @author 140024
+     * @implNote 근태종류
+     * @since 2024-06-09
+     */
+    private String dtmReasonCd;
+
+    /***
+     * @author 140024
      * @implNote 근태명
      * @since 2024-06-09
      */

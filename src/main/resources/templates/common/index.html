@@ -88,7 +88,7 @@
 																 "data-staDate=${date.staDate}
 																 ,data-staDateStr=${date.staDateStr}
 																 ,data-dtmCode=${date.dtmCode}
-																 ,data-dtmReasonCode='1A1'" onclick="ApplAlert(this)">
+																 ,data-dtmReasonCode=${date.dtmReasonCd}" onclick="ApplAlert(this)">
 															<span th:text="${codeList['APPL_DTM_01_BTN']}"></span>
 														</div>
 														<div th:if="${date.applDateType == '내일'}" class="btn btn-info btn-sm"
@@ -96,7 +96,7 @@
 																 "data-staDate=${date.staDate}
 																 ,data-staDateStr=${date.staDateStr}
 																 ,data-dtmCode=${date.dtmCode}
-																 ,data-dtmReasonCode='1A1'" onclick="ApplAlert(this)">
+																 ,data-dtmReasonCode=${date.dtmReasonCd}" onclick="ApplAlert(this)">
 															<span th:text="${codeList['APPL_DTM_01_BTN']}"></span>
 														</div>
 													</div>

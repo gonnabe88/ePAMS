@@ -27,22 +27,22 @@
 					<div class="page-heading">
 						<div class="align-middle">
 							<h2>
-								<i class="bi bi-bell-fill"></i> 근태내역
+								<i class="bi bi-bell-fill"></i> 근태조회
 							</h2>
 							<br>
 						</div>
 					</div>
-					<p class="d-inline-flex gap-1">
-						<button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="collapse" data-bs-target="#collapseSearch" aria-expanded="false" aria-controls="collapseSearch">
-							<i class="bi bi-search"></i>
-							검색
-						</button>
+					<p class="d-inline-flex justify-content-between">
 						<select id="itemsPerPage" class="form-select form-select-sm ms-2 w-auto" aria-label="Items per page">
 							<option value="5" selected>5개</option>
 							<option value="10">10개</option>
 							<option value="20">20개</option>
 							<option value="50">50개</option>
 						</select>
+						<button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="collapse" data-bs-target="#collapseSearch" aria-expanded="false" aria-controls="collapseSearch">
+							<i class="bi bi-search"></i>
+							검색
+						</button>
 					</p>
 					<div class="collapse" id="collapseSearch">
 						<div class="card card-body">
@@ -66,31 +66,31 @@
 								<div class="d-flex align-items-center justify-content-between mb-2">
 									<h6>근태종류</h6>
 									<div class="btn-group btn-group-sm" role="group" aria-label="Basic radio toggle button group">
-										<input type="radio" class="btn-check" name="dtmKindNm" id="dtmKindNm" autocomplete="off" checked>
-										<label class="btn btn-outline-primary" for="dtmKindNm">전체</label>
+										<input type="radio" class="btn-check" name="dtmReasonCd" id="dtmReasonCd" autocomplete="off" checked>
+										<label class="btn btn-outline-primary" for="dtmReasonCd">전체</label>
 
-										<input type="radio" class="btn-check" name="dtmKindNm" id="dtmKindNm1" autocomplete="off">
-										<label class="btn btn-outline-primary" for="dtmKindNm1">연차</label>
+										<input type="radio" class="btn-check" name="dtmReasonCd" id="dtmReasonCd1" autocomplete="off">
+										<label class="btn btn-outline-primary" for="dtmReasonCd1">연차</label>
 
-										<input type="radio" class="btn-check" name="dtmKindNm" id="dtmKindNm2" autocomplete="off">
-										<label class="btn btn-outline-primary" for="dtmKindNm2">저축</label>
+										<input type="radio" class="btn-check" name="dtmReasonCd" id="dtmReasonCd2" autocomplete="off">
+										<label class="btn btn-outline-primary" for="dtmReasonCd2">저축</label>
 
-										<input type="radio" class="btn-check" name="dtmKindNm" id="dtmKindNm3" autocomplete="off">
-										<label class="btn btn-outline-primary" for="dtmKindNm3">보상</label>
+										<input type="radio" class="btn-check" name="dtmReasonCd" id="dtmReasonCd3" autocomplete="off">
+										<label class="btn btn-outline-primary" for="dtmReasonCd3">보상</label>
 									</div>
 								</div>
-								<select class="form-select" aria-label="Default select example" name="dtmKindNmSelect" id="dtmDetail">
+								<select class="form-select" aria-label="Default select example" name="dtmReasonCdSelect" id="dtmReason">
 									<option value="" selected>전체</option>
-									<option value="DTM01">연차휴가</option>
-									<option value="DTM02">연차휴가 오전(반차)</option>
-									<option value="DTM03">연차휴가 오전(반반차)</option>
-									<option value="DTM04">연차휴가 오후(반차)</option>
-									<option value="DTM05">연차휴가 오후(반반차)</option>
-									<option value="DTM06">저축휴가</option>
-									<option value="DTM07">저축휴가 오전(반차)</option>
-									<option value="DTM08">저축휴가 오전(반반차)</option>
-									<option value="DTM09">저축휴가 오후(반차)</option>
-									<option value="DTM10">저축휴가 오후(반반차)</option>
+									<option value="1A1">연차휴가</option>
+									<option value="1A5">연차휴가 오전(반차)</option>
+									<option value="1AG">연차휴가 오전(반반차)</option>
+									<option value="1A6">연차휴가 오후(반차)</option>
+									<option value="1AH">연차휴가 오후(반반차)</option>
+									<option value="1AB">저축휴가</option>
+									<option value="1AC">저축휴가 오전(반차)</option>
+									<option value="1AI">저축휴가 오전(반반차)</option>
+									<option value="1AD">저축휴가 오후(반차)</option>
+									<option value="1AJ">저축휴가 오후(반반차)</option>
 								</select>
 							</div>
 
@@ -133,7 +133,7 @@
                                                         <span th:text="${dtm.status}"></span>
                                                     </span>
 												</div>
-												<h6><span th:text="${dtm.dtmKindCd}"></span></h6>
+												<h6><span th:text="${dtm.dtmReasonNm}"></span></h6>
 												<div class="d-flex flex-row align-items-center mt-3 mb-3 gap-3">
 													<div class="d-flex align-items-center gap-2">
 														<h6>
@@ -314,7 +314,7 @@
 			$('input[name="statCdList"]:checked').each(function() {
 				statCdList.push($(this).attr('id'));
 			});
-			let dtmKindNm = $('#dtmDetail option:selected').val();
+			let dtmReasonCd = $('#dtmReason option:selected').val();
 			let staYmdInput = $('#start-input').val();
 			let endYmdInput = $('#end-input').val();
 			let itemsPerPage = $('#itemsPerPage').val();
@@ -322,7 +322,7 @@
 			// 페이지네이션 링크 업데이트
 			$('.page-link').each(function() {
 				let baseUrl = $(this).attr('href').split('?')[0];
-				let newUrl = `${baseUrl}?page=${$(this).text()}&statCdList=${statCdList.join(',')}&dtmKindNm=${dtmKindNm}&staYmdInput=${staYmdInput}&endYmdInput=${endYmdInput}&itemsPerPage=${itemsPerPage}`;
+				let newUrl = `${baseUrl}?page=${$(this).text()}&statCdList=${statCdList.join(',')}&dtmReasonCd=${dtmReasonCd}&staYmdInput=${staYmdInput}&endYmdInput=${endYmdInput}&itemsPerPage=${itemsPerPage}`;
 				$(this).attr('href', newUrl);
 			});
 		}
@@ -345,9 +345,9 @@
 		// 초기화 버튼 클릭 시 폼 초기화 후 목록 갱신
 		$('#reset-button').on('click', function() {
 			$('input[name="statCdList"]').prop('checked', true); // 모든 체크박스 체크
-			$('input[name="dtmKindNm"]').prop('checked', false); // 모든 라디오버튼 해제
-			$('#dtmKindNm').prop('checked', true); // '전체' 라디오버튼 체크
-			$('#dtmDetail').val(''); // 셀렉트박스 초기화
+			$('input[name="dtmReasonCd"]').prop('checked', false); // 모든 라디오버튼 해제
+			$('#dtmReasonCd').prop('checked', true); // '전체' 라디오버튼 체크
+			$('#dtmReason').val(''); // 셀렉트박스 초기화
 			$('#itemsPerPage').val('5'); // 페이지네이션 갯수 초기화
 
 			// 시작 날짜 초기화
@@ -374,13 +374,13 @@
 			$('input[name="statCdList"]:checked').each(function() {
 				statCdList.push($(this).attr('id'));
 			});
-			let dtmKindNm = $('#dtmDetail option:selected').val();
+			let dtmReasonCd = $('#dtmReason option:selected').val();
 			let staYmdInput = $('#start-input').val();
 			let endYmdInput = $('#end-input').val();
 			let itemsPerPage = $('#itemsPerPage').val();
 
 			// 검색 조건에 맞는 데이터 조회
-			$.get(`/dtm/list?statCdList=${statCdList.join(',')}&dtmKindNm=${dtmKindNm}&staYmdInput=${staYmdInput}&endYmdInput=${endYmdInput}&itemsPerPage=${itemsPerPage}`, function(data) {
+			$.get(`/dtm/list?statCdList=${statCdList.join(',')}&dtmReasonCd=${dtmReasonCd}&staYmdInput=${staYmdInput}&endYmdInput=${endYmdInput}&itemsPerPage=${itemsPerPage}`, function(data) {
 				$('#dtmListContainer').html($(data).find('#dtmListContainer').html());
 				updatePaginationLinks(); // 페이지 업데이트 후 다시 링크 업데이트
 				$('#collapseSearch').collapse('hide'); // 검색 폼 접기

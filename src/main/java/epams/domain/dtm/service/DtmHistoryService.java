@@ -80,7 +80,9 @@ public class DtmHistoryService {
 						vo.getSafeMgrYn(),
 						vo.getPlaceCd(),
 						dto.getLimit(),
-						dto.getOffset()
+						dto.getOffset(),
+						dto.getDtmReasonNm(),
+						dto.getStatCdNm()
 				))
 				.collect(Collectors.toList());
         final long totalElements = dtmHisRepo.countById(dto); // 전체 데이터 개수를 조회하는 메소드 필요
@@ -99,48 +101,18 @@ public class DtmHistoryService {
 		final int offset = page * pageSize; // 오프셋 계산
 		dto.setLimit(pageSize);
 		dto.setOffset(offset);
-		final List<DtmHisDTO> dtos = dtmHisRepo.findByCondition(dto)
-				.stream()
-				.map(vo -> new DtmHisDTO(
-						vo.getDtmHisId(),
-						vo.getEmpId(),
-						vo.getDtmKindCd(),
-						vo.getDtmReasonCd(),
-						vo.getStaYmd(),
-						vo.getStaHm(),
-						vo.getEndYmd(),
-						vo.getEndHm(),
-						vo.getDtmReason(),
-						vo.getDestPlc(),
-						vo.getTelno(),
-						vo.getChildNo(),
-						vo.getApplId(),
-						vo.getStatCd(),
-						vo.getFinalApprYmd(),
-						vo.getModiType(),
-						vo.getModiReason(),
-						vo.getModiDtmHisId(),
-						vo.getModUserId(),
-						vo.getModDate(),
-						vo.getTzCd(),
-						vo.getTzDate(),
-						vo.getCompanyNm(),
-						vo.getDocument(),
-						vo.getAdUseYn(),
-						vo.getMailSendYn(),
-						vo.getEsbAskDt(),
-						vo.getChildBirthYmd(),
-						vo.getDtmStoreYn(),
-						vo.getFileId(),
-						vo.getSealMgrYn(),
-						vo.getSecuMgrYn(),
-						vo.getInfoMgrYn(),
-						vo.getSafeMgrYn(),
-						vo.getPlaceCd(),
-						dto.getLimit(),
-						dto.getOffset()
-				))
-				.collect(Collectors.toList());
+
+		// MyBatis 쿼리 결과를 받아옴
+		final List<DtmHisDTO> dtos = dtmHisRepo.findByCondition(dto);
+
+		// 각 DTO 객체에 대해 status를 갱신
+		dtos.forEach(vo -> {
+			String status = vo.calculateStatus(vo.getStaYmd(), vo.getStaHm(), vo.getEndYmd(), vo.getEndHm());
+			vo.setStatus(status);
+			// 로그 출력
+			log.info("this.dtmReasonNm : " + vo.getDtmReasonNm() + " this.statCdNm : " + vo.getStatCdNm() + " status: " + status);
+		});
+
 		final long totalElements = dtmHisRepo.countByCondition(dto); // 전체 데이터 개수를 조회하는 메소드 필요
 		return new PageImpl<>(dtos, PageRequest.of(page, pageSize), totalElements);
 	}

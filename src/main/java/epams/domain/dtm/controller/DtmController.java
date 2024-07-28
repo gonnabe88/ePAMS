@@ -15,6 +15,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import epams.domain.com.admin.service.CodeHtmlDetailService;
 import epams.domain.com.board.dto.BoardDTO;
@@ -105,6 +107,26 @@ public class DtmController<S extends Session> {
         final LocalDate tomorrow = LocalDate.now().plusDays(1);
         final DayOfWeek dayOfWeek2 = tomorrow.getDayOfWeek();
         model.addAttribute("tomorrowDate", tomorrow + "(" + dayOfWeek2.getDisplayName(TextStyle.NARROW, Locale.KOREAN) + ")");
+
+        return VIEW;
+    }
+    @GetMapping("/main2")
+    public String dtmMain2(@PageableDefault(page = 1) final Pageable pageable, final Model model) {
+        final String VIEW = "/dtm/main2";
+
+        return VIEW;
+    }
+
+    @GetMapping("/DtmRegister")
+    public String dtmRegister(
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
+            Model model
+    ) {
+        final String VIEW = "/dtm/DtmRegister";
+
+        if (date != null) {
+            model.addAttribute("selectedDate", date);
+        }
 
         return VIEW;
     }

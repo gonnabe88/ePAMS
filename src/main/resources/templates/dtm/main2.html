@@ -9,6 +9,11 @@
         <link rel="stylesheet" href="/extensions/animate/animate.min.css" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.2/main.min.css">
         <style>
+            .container {
+                max-width: 1000px;
+                margin: 0 auto;
+                padding: 0 20px;
+            }
             .fc-add-button {
                 background-color: #87CEFA;
                 border: none;
@@ -16,11 +21,29 @@
             .fc-add-button:hover {
                 background-color: #5F9EA0;
             }
-            #attendanceModal .modal-content {
-                padding: 20px;
+            .page-title {
+                font-size: 2.5rem;
+                font-weight: 700;
+                color: #333;
+                text-transform: uppercase;
+                letter-spacing: 2px;
+                margin-bottom: 30px;
+                text-align: center;
+                position: relative;
             }
-            #attendanceModal .form-group {
-                margin-bottom: 15px;
+            .page-title::after {
+                content: '';
+                display: block;
+                width: 50px;
+                height: 3px;
+                background-color: #87CEFA;
+                margin: 10px auto;
+            }
+            .fc-day-today {
+                background-color: rgba(135, 206, 250, 0.3) !important;
+            }
+            .selected-date {
+                background-color: rgba(95, 158, 160, 0.5) !important;
             }
         </style>
     </th:block>
@@ -29,64 +52,19 @@
 <body>
 <div layout:fragment="contents">
     <div class="container">
-        <h1 class="mb-4">근태신청</h1>
+        <h1 class="page-title">근태신청</h1>
 
         <div id="calendar"></div>
     </div>
 
-    <!-- 근태 신청 모달 -->
-    <div class="modal fade" id="attendanceModal" tabindex="-1" role="dialog" aria-labelledby="attendanceModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="attendanceModalLabel">근태 신청</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form id="attendanceForm">
-                        <div class="form-group">
-                            <label for="attendanceType">근태</label>
-                            <select class="form-control" id="attendanceType">
-                                <option>연차</option>
-                                <option>반차</option>
-                                <option>휴가</option>
-                                <option>출장</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="attendanceCategory">종류</label>
-                            <select class="form-control" id="attendanceCategory">
-                                <option>정기</option>
-                                <option>수시</option>
-                                <option>기타</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="startDate">시작일</label>
-                            <input type="date" class="form-control" id="startDate">
-                        </div>
-                        <div class="form-group">
-                            <label for="endDate">종료일</label>
-                            <input type="date" class="form-control" id="endDate">
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-                    <button type="button" class="btn btn-primary" id="submitAttendance">제출</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.2/main.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var calendarEl = document.getElementById('calendar');
+            var selectedDate = null;
+            var selectedDateStr = null;  // 선택된 날짜를 문자열로 저장
+
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'dayGridMonth',
                 headerToolbar: {
@@ -98,7 +76,13 @@
                     add: {
                         text: '+',
                         click: function() {
-                            $('#attendanceModal').modal('show');
+                            // 선택된 날짜가 있으면 URL 파라미터로 전달
+                            var url = '/dtm/DtmRegister';
+                            if (selectedDateStr) {
+                                url += '?date=' + selectedDateStr;
+                            }
+
+                            window.location.href = url;
                         }
                     }
                 },
@@ -110,25 +94,17 @@
                 firstDay: 0,
                 height: 'auto',
                 fixedWeekCount: false,
-                showNonCurrentDates: true
+                showNonCurrentDates: true,
+                dateClick: function(info) {
+                    if (selectedDate) {
+                        selectedDate.classList.remove('selected-date');
+                    }
+                    info.dayEl.classList.add('selected-date');
+                    selectedDate = info.dayEl;
+                    selectedDateStr = info.dateStr;  // YYYY-MM-DD 형식의 날짜 문자열
+                }
             });
             calendar.render();
-
-            // 근태 신청 제출 버튼 클릭 이벤트
-            $('#submitAttendance').click(function() {
-                var attendanceType = $('#attendanceType').val();
-                var attendanceCategory = $('#attendanceCategory').val();
-                var startDate = $('#startDate').val();
-                var endDate = $('#endDate').val();
-
-                // 여기에 서버로 데이터를 전송하는 코드를 추가할 수 있습니다.
-                console.log('근태:', attendanceType);
-                console.log('종류:', attendanceCategory);
-                console.log('시작일:', startDate);
-                console.log('종료일:', endDate);
-
-                $('#attendanceModal').modal('hide');
-            });
         });
     </script>
 </div>

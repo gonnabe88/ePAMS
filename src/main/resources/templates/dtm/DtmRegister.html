@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org" layout:decorate="~{common/layout/layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>근태신청</title>
+</head>
+<body>
+<div layout:fragment="contents">
+    <div class="container">
+        <h1 class="page-title">근태신청</h1>
+
+        <div id="calendar"></div>
+
+        <form th:action="@{/attendance/submit}" method="post">
+            <div class="form-group">
+                <label for="attendanceType">근태 종류:</label>
+                <select id="attendanceType" name="attendanceType" class="form-control" required>
+                    <option value="">선택해주세요</option>
+                    <option value="vacation">휴가</option>
+                    <option value="sick">병가</option>
+                    <option value="business">출장</option>
+                    <!-- 필요한 다른 근태 종류 옵션들을 추가하세요 -->
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="startDate">시작일:</label>
+                <input type="date" id="startDate" name="startDate" class="form-control" th:value="${param.startDate}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="endDate">종료일:</label>
+                <input type="date" id="endDate" name="endDate" class="form-control" th:value="${param.endDate}" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary">신청하기</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

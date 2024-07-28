@@ -1,47 +1,83 @@
 package epams.domain.dtm.dto;
 
+import epams.domain.dtm.vo.DtmHisVO;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 
+/***
+ * @author 140024
+ * @implNote 근태 이력 데이터 정의 DTO
+ * @since 2024-06-09
+ */
+@Slf4j
+@EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor
 @Data
-public class DtmHisDTO {
+public class DtmHisDTO extends DtmHisVO {
 
-    private Long dtmHisId; // 근태내역ID
-    private Long empId; // 직원ID
-    private String dtmKindCd; // 근태종류코드 [DTM_KIND_CD]
-    private String dtmReasonCd; // 근태사유코드 [DTM_REASON_CD]
-    private LocalDateTime staYmd; // 시작일
-    private String staHm = "0000"; // 시작시각
-    private LocalDateTime endYmd; // 종료일
-    private String endHm = "2400"; // 종료시각
-    private String dtmReason; // 근태사유
-    private String destPlc; // 행선지
-    private String telno; // 연락처
-    private String childNo; // 아이순번
-    private Long applId = 0L; // 신청서ID
-    private String statCd = "131"; // 신청서상태코드 [ELA_STAT_CD]
-    private LocalDateTime finalApprYmd; // 최종승인일
-    private String modiType; // 수정구분(UPDATE:변경,DELETE:취소)
-    private String modiReason; // 수정사유
-    private Long modiDtmHisId; // 수정근태내역ID
-    private Long modUserId; // 변경자
-    private LocalDateTime modDate; // 변경일시
-    private String tzCd = "KR"; // 타임존코드
-    private LocalDateTime tzDate; // 타임존일시
-    private String companyNm; // 회사명
-    private String document; // 문서
-    private String adUseYn; // 선연차사용여부
-    private String mailSendYn; // 메일발송여부
-    private String esbAskDt; // ESB요청일시
-    private LocalDateTime childBirthYmd; // 자녀출생일
-    private String dtmStoreYn; // 연차저축여부
-    private Long fileId; // 첨부파일ID
-    private String sealMgrYn; // 인장담당자여부
-    private String secuMgrYn; // 보안담당자여부
-    private String infoMgrYn; // 정보취급관리자
-    private String safeMgrYn; // 보안관리자
-    private String placeCd; // 스마트워크 장소코드 [DTM_SMART_PLACE_CD]
+    /***
+     * @author 140024
+     * @implNote 페이지당 게시물 수
+     * @since 2024-06-09
+     */
+    private Integer itemsPerPage = 5;
+
+    /***
+     * @author 140024
+     * @implNote 결재상태 (결재중/결재완료/반려)
+     * @since 2024-06-09
+     */
+    private String statCdNm;
+
+    /***
+     * @author 140024
+     * @implNote 결재상태코드 리스트 (121/132/131)
+     * @since 2024-06-09
+     */
+    private List<String> statCdList;
+
+    /***
+     * @author 140024
+     * @implNote 경과여부 (과거/진행중/예정)
+     * @since 2024-06-09
+     */
+    private String status;
+
+    /***
+     * @author 140024
+     * @implNote 근태유형이름 (연차/반차..)
+     * @since 2024-06-09
+     */
+    private String dtmReasonNm;
+
+    /***
+     * @author 140024
+     * @implNote 근태유형이름 (연차/반차..)
+     * @since 2024-06-09
+     */
+    private String dtmKindNm;
+
+    /***
+     * @author 140024
+     * @implNote 근태시작일 입력값
+     * @since 2024-06-09
+     */
+    private String staYmdInput;
+
+    /***
+     * @author 140024
+     * @implNote 근태종료일 입력값
+     * @since 2024-06-09
+     */
+    private String endYmdInput;
 
     /***
      * @author 140024
@@ -57,4 +93,44 @@ public class DtmHisDTO {
      */
     private int offset;
 
+    /***
+     * @author 140024
+     * @implNote 생성자
+     * @since 2024-06-09
+     */
+    public DtmHisDTO(Long dtmHisId, Long empId, String dtmKindCd, String dtmReasonCd, LocalDateTime staYmd, String staHm, LocalDateTime endYmd, String endHm, String dtmReason, String destPlc, String telno, String childNo, Long applId, String statCd, LocalDateTime finalApprYmd, String modiType, String modiReason, Long modiDtmHisId, Long modUserId, LocalDateTime modDate, String tzCd, LocalDateTime tzDate, String companyNm, String document, String adUseYn, String mailSendYn, String esbAskDt, LocalDateTime childBirthYmd, String dtmStoreYn, Long fileId, String sealMgrYn, String secuMgrYn, String infoMgrYn, String safeMgrYn, String placeCd, int limit, int offset, String dtmReasonNm, String statCdNm) {
+        super(dtmHisId, empId, dtmKindCd, dtmReasonCd, staYmd, staHm, endYmd, endHm, dtmReason, destPlc, telno, childNo, applId, statCd, finalApprYmd, modiType, modiReason, modiDtmHisId, modUserId, modDate, tzCd, tzDate, companyNm, document, adUseYn, mailSendYn, esbAskDt, childBirthYmd, dtmStoreYn, fileId, sealMgrYn, secuMgrYn, infoMgrYn, safeMgrYn, placeCd);
+        this.limit = limit;
+        this.offset = offset;
+        this.status = calculateStatus(staYmd, staHm, endYmd, endHm);
+        this.dtmReasonNm = dtmReasonNm;
+        this.statCdNm = statCdNm;
+        log.info("this.dtmKindNm : " + this.dtmReasonNm + "this.statCdNm : " + this.statCdNm);
+    }
+
+    /***
+     * @author 140024
+     * @implNote 경과여부 (과거/진행중/예정) 세팅
+     * @since 2024-06-09
+     */
+    public String calculateStatus(LocalDateTime staYmd, String staHm, LocalDateTime endYmd, String endHm) {
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime startDateTime = LocalDateTime.of(staYmd.toLocalDate(), LocalTime.parse(staHm, DateTimeFormatter.ofPattern("HHmm")));
+        LocalDateTime endDateTime;
+        if ("2400".equals(endHm)) {
+            // endHm이 2400이면 +1일 00시로 설정
+            endDateTime = LocalDateTime.of(endYmd.toLocalDate().plusDays(1), LocalTime.MIDNIGHT);
+        } else {
+            endDateTime = LocalDateTime.of(endYmd.toLocalDate(), LocalTime.parse(endHm, DateTimeFormatter.ofPattern("HHmm")));
+        }
+
+        if (now.isBefore(startDateTime)) {
+            return "예정";
+        } else if (now.isAfter(endDateTime)) {
+            return "과거";
+        } else {
+            return "진행";
+        }
+    }
+    
 }

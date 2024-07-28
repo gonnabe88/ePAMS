@@ -32,7 +32,7 @@ const scrollToDiv = () => {
 $(document).ready(() => {
     const input = $("#searchMember").get(0);
     const awesomplete = new Awesomplete(input, {
-        //minChars: 1,
+        minChars: 1,
         //maxItems: 5,
         autoFirst: true,
         tabSelect: true,

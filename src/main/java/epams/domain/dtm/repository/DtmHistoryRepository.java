@@ -30,8 +30,25 @@ public class DtmHistoryRepository {
      * @since 2024-06-09
      */
     public List<DtmHisDTO> findByEmpId(final DtmHisDTO dto) {
-        log.warn("dto : {}", dto);
     	return sql.selectList("DtmHis.findByEmpId", dto);
+    }
+
+    /***
+     * @author 140024
+     * @implNote 사용자 ID 기준 모든 근태 조회
+     * @since 2024-06-09
+     */
+    public List<DtmHisDTO> findByCondition(final DtmHisDTO dto) {
+        return sql.selectList("DtmHis.findByCondition", dto);
+    }
+
+    /***
+     * @author 140024
+     * @implNote 총 갯수
+     * @since 2024-06-09
+     */
+    public long countByCondition(final DtmHisDTO dto) {
+        return sql.selectOne("DtmHis.countByCondition", dto);
     }
 
      /***

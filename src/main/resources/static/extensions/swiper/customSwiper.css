@@ -2,3 +2,8 @@
     width: 100%;
     height: 35%;
 }
+
+/* Swiper wrapper specific styling */
+.swiper-wrapper .container-md {
+    height: 100%;
+}

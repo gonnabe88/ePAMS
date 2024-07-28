@@ -40,18 +40,18 @@ public class MemberRestController {
      * @since 2024-06-11
      */
     @GetMapping("/search")
-    public List<IamUserDTO> search(final Model model, @RequestParam("text") final String text) {
-        return memberservice.findBySearchValue(text);
+    public ResponseEntity<Map<String, Object>> search(final Model model, @RequestParam("text") final String text) {
+        final List<IamUserDTO> list = memberservice.findBySearchValue(text);
+        final Map<String, Object> response = new ConcurrentHashMap<>();
+        response.put("memberList", list);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/deptlist")
     public ResponseEntity<Map<String, Object>> searchAllDept(final Model model) {
         final List<IamUserDTO> deptlist = memberservice.findAllDept();
-
-        // 마지막 페이지 및 데이터 설정
         final Map<String, Object> response = new ConcurrentHashMap<>();
         response.put("response", deptlist);
-
         return ResponseEntity.ok(response);
     }
 }

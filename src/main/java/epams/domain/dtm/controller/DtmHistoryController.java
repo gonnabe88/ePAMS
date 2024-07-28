@@ -19,6 +19,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Map;
 
@@ -95,8 +96,8 @@ public class DtmHistoryController<S extends Session> {
 
         // 근태목록 출력
         final int currentPage = pageable.getPageNumber();
-        final Pageable updatedPageable = PageRequest.of(currentPage, listBrdCnt);
-        final Page<DtmHisDTO> dtos = dtmHisService.findByEmpId(updatedPageable, dto);
+        final Pageable updatedPageable = PageRequest.of(currentPage, dto.getItemsPerPage());
+        final Page<DtmHisDTO> dtos = dtmHisService.findByCondition(updatedPageable, dto);
         final int totalPages = dtos.getTotalPages();
         int startPage = Math.max(1, currentPage - (maxPageBtn / 2));
         final int endPage = Math.min(totalPages, startPage + maxPageBtn - 1);
@@ -104,11 +105,11 @@ public class DtmHistoryController<S extends Session> {
         if (endPage - startPage < maxPageBtn - 1) {
             startPage = Math.max(1, endPage - maxPageBtn + 1);
         }
-        log.warn(dtos.toString());
 
         model.addAttribute("dtmHis", dtos);
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
+        model.addAttribute("itemsPerPage", dto.getItemsPerPage());
 
         return DTMLIST;
     }

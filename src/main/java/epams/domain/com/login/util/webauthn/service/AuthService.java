@@ -1,4 +1,4 @@
-package epams.domain.com.login.util.webauthn;
+package epams.domain.com.login.util.webauthn.service;
 
 import java.io.IOException;
 import java.util.List;

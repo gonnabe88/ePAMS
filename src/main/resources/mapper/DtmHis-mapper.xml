@@ -6,6 +6,7 @@
 
     <!-- resultMap 정의 -->
     <resultMap id="dtmHisResultMap" type="DtmHis">
+        <!-- DTM_HIS 테이블 -->
         <id property="dtmHisId" column="DTM_HIS_ID" />
         <result property="empId" column="EMP_ID" />
         <result property="dtmKindCd" column="DTM_KIND_CD" />
@@ -41,6 +42,10 @@
         <result property="infoMgrYn" column="INFO_MGR_YN" />
         <result property="safeMgrYn" column="SAFE_MGR_YN" />
         <result property="placeCd" column="PLACE_CD" />
+        <!-- XFRMD2C 테이블 DTM_REASON_CD -->
+        <result property="dtmReasonNm" column="DTM_REASON_NM" />
+        <!-- XFRMD2C 테이블 ELA_STAT_CD -->
+        <result property="statCdNm" column="STAT_CD_NM" />
     </resultMap>
 
     <!-- 모든 데이터 조회 -->
@@ -60,15 +65,70 @@
         OFFSET #{offset} ROWS FETCH NEXT #{limit} ROWS ONLY
     </select>
 
+    <!-- 갯수 조회 -->
+    <select id="countById" parameterType="long" resultType="long">
+        SELECT COUNT(*) FROM OHR.DTM_HIS WHERE EMP_ID = #{empId}
+    </select>
+
+    <!-- 특정 데이터 조회 -->
+    <select id="findByCondition" parameterType="dtmHis" resultMap="dtmHisResultMap">
+        SELECT
+            d.*,
+            x1.CD_NM AS DTM_REASON_NM,
+            x2.CD_NM AS STAT_CD_NM
+        FROM
+            OHR.DTM_HIS d
+        LEFT JOIN OHR.XFRMD2C x1 ON d.DTM_REASON_CD = x1.CD
+              AND x1.CD_KIND = 'DTM_REASON_CD'
+        LEFT JOIN OHR.XFRMD2C x2 ON d.STAT_CD = x2.CD
+              AND x2.CD_KIND = 'ELA_STAT_CD'
+        WHERE
+            d.EMP_ID = #{empId}
+        <if test="statCdList != null and statCdList.size() > 0">
+            AND d.STAT_CD IN
+            <foreach item="item" index="index" collection="statCdList" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="dtmReasonCd != null and dtmReasonCd != ''">
+            AND d.DTM_REASON_CD = #{dtmReasonCd}
+        </if>
+        <if test="staYmdInput != null and staYmdInput != ''">
+            AND d.STA_YMD &gt;= #{staYmdInput}
+        </if>
+        <if test="endYmdInput != null and endYmdInput != ''">
+            AND d.END_YMD &lt;= #{endYmdInput}
+        </if>
+        ORDER BY d.DTM_HIS_ID DESC
+        OFFSET #{offset} ROWS FETCH NEXT #{limit} ROWS ONLY
+    </select>
+
+    <!-- 특정 데이터 건수 조회 -->
+    <select id="countByCondition" parameterType="dtmHis" resultType="long">
+        SELECT COUNT(*) FROM OHR.DTM_HIS
+        WHERE EMP_ID = #{empId}
+        <if test="statCdList != null and statCdList.size() > 0">
+            AND STAT_CD IN
+            <foreach item="item" index="index" collection="statCdList" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="dtmReasonCd != null and dtmReasonCd != ''">
+            AND DTM_REASON_CD = #{dtmReasonCd}
+        </if>
+        <if test="staYmdInput != null and staYmdInput != ''">
+            AND STA_YMD &gt;= TO_DATE(#{staYmdInput}, 'YYYY-MM-DD')
+        </if>
+        <if test="endYmdInput != null and endYmdInput != ''">
+            AND END_YMD &lt;= TO_DATE(#{endYmdInput}, 'YYYY-MM-DD')
+        </if>
+    </select>
+
     <!-- 특정 데이터 조회 -->
     <select id="findByDtmKindCd" parameterType="string" resultMap="dtmHisResultMap">
         SELECT * FROM OHR.DTM_HIS WHERE DTM_KIND_CD = #{dtmKindCd}
     </select>
 
-    <!-- 갯수 조회 -->
-    <select id="countById" parameterType="long" resultType="long">
-        SELECT COUNT(*) FROM OHR.DTM_HIS WHERE EMP_ID = #{empId}
-    </select>
 
     <!-- 신규 데이터 추가 -->
     <insert id="insert" parameterType="DtmHis">

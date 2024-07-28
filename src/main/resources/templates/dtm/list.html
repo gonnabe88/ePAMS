@@ -5,15 +5,7 @@
 	<!-- (start) private script -->
 	<th:block layout:fragment="css">
 		<link rel="stylesheet" href="/extensions/litepicker/litepicker.css"/>
-		<style>
-			.pagination .page-item {
-				margin: 0 2px; /* 좌우 마진을 동일하게 설정 */
-			}
-
-			.pagination .page-item .page-link {
-				padding: 7px 10px; /* 버튼 크기를 조정 */
-			}
-		</style>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" />
 	</th:block>
 	<!-- (end) private script -->
 </head>
@@ -65,21 +57,21 @@
 							<div class="card-body p-3">
 								<div class="d-flex align-items-center justify-content-between mb-2">
 									<h6>근태종류</h6>
-									<div class="btn-group btn-group-sm" role="group" aria-label="Basic radio toggle button group">
-										<input type="radio" class="btn-check" name="dtmReasonCd" id="dtmReasonCd" autocomplete="off" checked>
-										<label class="btn btn-outline-primary" for="dtmReasonCd">전체</label>
+									<div class="btn-group btn-group-sm" role="group" aria-label="DTM Kind Code Select">
+										<input type="radio" class="btn-check" name="dtmKindCdSelect" id="dtmKindCd" autocomplete="off" checked>
+										<label class="btn btn-outline-primary" for="dtmKindCd">전체</label>
 
-										<input type="radio" class="btn-check" name="dtmReasonCd" id="dtmReasonCd1" autocomplete="off">
-										<label class="btn btn-outline-primary" for="dtmReasonCd1">연차</label>
+										<input type="radio" class="btn-check" name="dtmKindCdSelect" id="dtmKindCd1" autocomplete="off">
+										<label class="btn btn-outline-primary" for="dtmKindCd1">연차</label>
 
-										<input type="radio" class="btn-check" name="dtmReasonCd" id="dtmReasonCd2" autocomplete="off">
-										<label class="btn btn-outline-primary" for="dtmReasonCd2">저축</label>
+										<input type="radio" class="btn-check" name="dtmKindCdSelect" id="dtmKindCd2" autocomplete="off">
+										<label class="btn btn-outline-primary" for="dtmKindCd2">저축</label>
 
-										<input type="radio" class="btn-check" name="dtmReasonCd" id="dtmReasonCd3" autocomplete="off">
-										<label class="btn btn-outline-primary" for="dtmReasonCd3">보상</label>
+										<input type="radio" class="btn-check" name="dtmKindCdSelect" id="dtmKindCd3" autocomplete="off">
+										<label class="btn btn-outline-primary" for="dtmKindCd3">보상</label>
 									</div>
 								</div>
-								<select class="form-select" aria-label="Default select example" name="dtmReasonCdSelect" id="dtmReason">
+								<select class="form-control select2" style="width: 100%;" aria-label="DTM Reason Code Select" name="dtmReasonCdSelect" id="dtmReasonCd">
 									<option value="" selected>전체</option>
 									<option value="1A1">연차휴가</option>
 									<option value="1A5">연차휴가 오전(반차)</option>
@@ -195,197 +187,47 @@
 <th:block layout:fragment="script">
 	<script src="/extensions/litepicker/bundle.js"></script>
 	<script src="/extensions/litepicker/mobilefriendly.js"></script>
+	<script src="/extensions/litepicker/initLitepicker.js"></script>
+	<script src="/js/dateInputValidation.js"></script>
+	<script src="/js/searchForm.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 	<script>
-		// 검색 폼 관련 스크립트
+		$(document).ready(function () {
+			// Select2 초기화
+			$('#dtmReasonCd').select2();
 
-		// 날짜 입력폼 이벤트 발생 시
-		document.addEventListener('input', function(event) {
-			if (event.target.classList.contains('start-input')) {
-				handleDateInput(event);
-			} else if (event.target.classList.contains('end-input')) {
-				handleDateInput(event);
-			}
-		});
+			// dtmKindCdSelect의 변화 감지
+			$('input[name="dtmKindCdSelect"]').on('change', function () {
+				const selectedValue = $(this).attr('id');
+				let url = "/api/commoncode/code/DTM_REASON_CD";
 
-		// 날짜 입력값 검증
-		const handleDateInput = (event) => {
-			const input = event.target;
-			const value = input.value;
-			const validChars = /^[0-9-]*$/;
-
-			// 숫자 또는 하이픈(-)만 입력 허용
-			if (!validChars.test(value)) {
-				// Remove invalid characters
-				input.value = value.replace(/[^0-9-]/g, '');
-			}
-
-			if (value && !isValidDate(input.value)) {
-				input.setCustomValidity('Please enter a valid date in YYYY-MM-DD format');
-			} else {
-				input.setCustomValidity('');
-			}
-		}
-
-		// 날짜 입력 형식 검증
-		const isValidDate = (dateString) => {
-			const regex = /^\d{4}-\d{2}-\d{2}$/;
-			if (!dateString.match(regex)) {
-				return false;
-			}
-
-			const date = new Date(dateString);
-			const timestamp = date.getTime();
-
-			if (typeof timestamp !== 'number' || Number.isNaN(timestamp)) return false;
-			return dateString === date.toISOString().split('T')[0];
-		}
-
-
-
-
-		// 달력 생성 함수
-		const initializePicker = (staYmdInput, endYmdInput) => {
-			const picker = new Litepicker({
-				element: staYmdInput,
-				elementEnd: endYmdInput,
-				switchingMonths: true,
-				singleMode: false,
-				allowRepick: false,
-				autoApply: false,
-				autoRefresh: true,
-				inlineMode: false,
-				resetButton: true,
-				lang: 'ko-KR',
-				buttonText: { "apply": "적용", "cancel": "취소"},
-				dropdowns: { "minYear": 2023, "maxYear": null, "months": false, "years": false },
-				format: 'YYYY-MM-DD',
-				setup: (picker) => {
-					picker.on('selected', (date1, date2) => {
-						staYmdInput.value = date1.format('YYYY-MM-DD');
-						endYmdInput.value = date2.format('YYYY-MM-DD');
-					})
+				if (selectedValue === 'dtmKindCd1') {
+					url += "/1A";
+				} else if (selectedValue === 'dtmKindCd2') {
+					url += "/1B";
+				} else if (selectedValue === 'dtmKindCd3') {
+					url += "/1Z";
 				}
-			});
 
-			// 날짜 지정 시 Form에 값 설정
-			const updatePicker = () => {
-				const startDateValue = staYmdInput.value;
-				const endDateValue = endYmdInput.value;
-				if (startDateValue && endDateValue) {
-					picker.setDateRange(startDateValue, endDateValue);
-				}
-			}
-
-			staYmdInput.addEventListener('change', updatePicker);
-			endYmdInput.addEventListener('change', updatePicker);
-
-			// 1년 전 날짜 설정
-			const oneYear = new Date();
-			oneYear.setFullYear(oneYear.getFullYear() - 1);
-			const lastYear = oneYear.toISOString().split('T')[0];
-			staYmdInput.value = lastYear;
-
-			// 오늘 날짜 설정
-			const today = new Date().toISOString().split('T')[0];
-			endYmdInput.value = today;
-
-			// 달력 날짜 설정 (1년전 ~ 오늘)
-			picker.setDateRange(lastYear, today);
-		}
-
-		// 화면 로드 시 달력 초기화
-		$(function () {
-			// Input Form 입력값을 가져와서 달력 초기화
-			const staYmdInput = document.getElementById('start-input');
-			const endYmdInput = document.getElementById('end-input');
-			initializePicker(staYmdInput, endYmdInput);
-		});
-
-
-
-
-
-
-
-		// 페이지네이션 링크 주소 업데이트
-		const updatePaginationLinks = () => {
-			// 폼의 값 가져오기
-			let statCdList = [];
-			$('input[name="statCdList"]:checked').each(function() {
-				statCdList.push($(this).attr('id'));
-			});
-			let dtmReasonCd = $('#dtmReason option:selected').val();
-			let staYmdInput = $('#start-input').val();
-			let endYmdInput = $('#end-input').val();
-			let itemsPerPage = $('#itemsPerPage').val();
-
-			// 페이지네이션 링크 업데이트
-			$('.page-link').each(function() {
-				let baseUrl = $(this).attr('href').split('?')[0];
-				let newUrl = `${baseUrl}?page=${$(this).text()}&statCdList=${statCdList.join(',')}&dtmReasonCd=${dtmReasonCd}&staYmdInput=${staYmdInput}&endYmdInput=${endYmdInput}&itemsPerPage=${itemsPerPage}`;
-				$(this).attr('href', newUrl);
-			});
-		}
-
-		// 페이지네이션 버튼 클릭 시 전체화면을 reload 하지 않도록 비동기 처리
-		$(document).on('click', '.page-link', function(event) {
-			event.preventDefault();
-			let url = $(this).attr('href');
-			$.get(url, function(data) {
-				$('#dtmListContainer').html($(data).find('#dtmListContainer').html());
-				updatePaginationLinks(); // 페이지 업데이트 후 다시 링크 업데이트
+				// AJAX 요청
+				$.ajax({
+					url: url,
+					method: 'GET',
+					success: function (data) {
+						console.log(data); // 받아온 데이터 출력
+						const $select = $('#dtmReasonCd');
+						$select.empty(); // 기존 옵션 삭제
+						data.forEach(item => {
+							$select.append(new Option(item.codeName, item.code)); // 새로운 옵션 추가
+						});
+						$select.trigger('change'); // 옵션 새로고침
+					},
+					error: function (xhr, status, error) {
+						console.error('Error fetching data: ', error);
+					}
+				});
 			});
 		});
-
-		// 조회 버튼 클릭 시
-		$('#search-button').on('click', function() {
-			search();
-		});
-
-		// 초기화 버튼 클릭 시 폼 초기화 후 목록 갱신
-		$('#reset-button').on('click', function() {
-			$('input[name="statCdList"]').prop('checked', true); // 모든 체크박스 체크
-			$('input[name="dtmReasonCd"]').prop('checked', false); // 모든 라디오버튼 해제
-			$('#dtmReasonCd').prop('checked', true); // '전체' 라디오버튼 체크
-			$('#dtmReason').val(''); // 셀렉트박스 초기화
-			$('#itemsPerPage').val('5'); // 페이지네이션 갯수 초기화
-
-			// 시작 날짜 초기화
-			const oneYear = new Date();
-			oneYear.setFullYear(oneYear.getFullYear() - 1);
-			const lastYear = oneYear.toISOString().split('T')[0];
-			$('#start-input').val(lastYear); // 시작 날짜 초기화
-
-			// 종료 날짜 초기화
-			const today = new Date().toISOString().split('T')[0];
-			$('#end-input').val(today);
-
-			search(); // 목록 갱신
-		});
-
-		// itemsPerPage Select Box 선택 시 목록 갱신
-		$('#itemsPerPage').on('change', function() {
-			search();
-		});
-
-		// 목록 갱신 함수
-		const search = () => {
-			let statCdList = [];
-			$('input[name="statCdList"]:checked').each(function() {
-				statCdList.push($(this).attr('id'));
-			});
-			let dtmReasonCd = $('#dtmReason option:selected').val();
-			let staYmdInput = $('#start-input').val();
-			let endYmdInput = $('#end-input').val();
-			let itemsPerPage = $('#itemsPerPage').val();
-
-			// 검색 조건에 맞는 데이터 조회
-			$.get(`/dtm/list?statCdList=${statCdList.join(',')}&dtmReasonCd=${dtmReasonCd}&staYmdInput=${staYmdInput}&endYmdInput=${endYmdInput}&itemsPerPage=${itemsPerPage}`, function(data) {
-				$('#dtmListContainer').html($(data).find('#dtmListContainer').html());
-				updatePaginationLinks(); // 페이지 업데이트 후 다시 링크 업데이트
-				$('#collapseSearch').collapse('hide'); // 검색 폼 접기
-			});
-		}
 	</script>
 </th:block>
 <!-- (end) private script -->

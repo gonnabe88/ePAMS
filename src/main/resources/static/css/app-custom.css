@@ -251,3 +251,12 @@ html, body {
         height: 263px;
     }
 }
+
+/** 페이지네이션 서식 수정 **/
+.pagination .page-item {
+    margin: 0 2px; /* 좌우 마진을 동일하게 설정 */
+}
+
+.pagination .page-item .page-link {
+    padding: 7px 10px; /* 버튼 크기를 조정 */
+}

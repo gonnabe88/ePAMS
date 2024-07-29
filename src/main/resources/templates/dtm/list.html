@@ -5,7 +5,7 @@
 	<!-- (start) private script -->
 	<th:block layout:fragment="css">
 		<link rel="stylesheet" href="/extensions/litepicker/litepicker.css"/>
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" />
+		<link rel="stylesheet" href="/extensions/select2/select2.css" />
 	</th:block>
 	<!-- (end) private script -->
 </head>
@@ -16,6 +16,8 @@
 		<div id="main-content">
 			<div class="d-flex justify-content-center">
 				<div class="row col-lg-10 col-md-12 d-flex justify-content-center">
+
+					<!-- 페이지 제목 시작 -->
 					<div class="page-heading">
 						<div class="align-middle">
 							<h2>
@@ -24,6 +26,62 @@
 							<br>
 						</div>
 					</div>
+					<!-- 페이지 제목 끝 -->
+
+					<!-- 사용가능 휴가 현황 시작 -->
+					<div id="dtmStatusContainer">
+						<div class="row col-lg-12 col-md-12 col-sm-12">
+							<div class="col-12">
+								<section class="section">
+									<div class="card">
+										<div class="card-body">
+											<h6>휴가 보유현황</h6>
+											<table class="table table-striped">
+												<thead>
+												<tr>
+													<th></th>
+													<th>사용</th>
+													<th>예정</th>
+													<th>잔여</th>
+												</tr>
+												</thead>
+												<tbody>
+												<tr>
+													<td>연차(기본)</td>
+													<td>20일</td>
+													<td>18일</td>
+													<td>2일</td>
+												</tr>
+												<tr>
+													<td>연차(저축)</td>
+													<td>-</td>
+													<td>-</td>
+													<td>-</td>
+												</tr>
+												<tr>
+													<td>보상휴가</td>
+													<td>-</td>
+													<td>-</td>
+													<td>-</td>
+												</tr>
+												<tr>
+													<td>합계</td>
+													<td>-</td>
+													<td>-</td>
+													<td>-</td>
+												</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</section>
+							</div>
+						</div>
+					</div>
+					<!-- 사용가능 휴가 현황 끝 -->
+
+
+					<!-- 페이지당 아이템 수 드롭다운 시작 -->
 					<p class="d-inline-flex justify-content-between">
 						<select id="itemsPerPage" class="form-select form-select-sm ms-2 w-auto" aria-label="Items per page">
 							<option value="5" selected>5개</option>
@@ -36,6 +94,9 @@
 							검색
 						</button>
 					</p>
+					<!-- 페이지당 아이템 수 드롭다운 끝 -->
+
+					<!-- 검색 드롭다운 시작 -->
 					<div class="collapse" id="collapseSearch">
 						<div class="card card-body">
 							<div class="card-body p-3">
@@ -58,31 +119,21 @@
 								<div class="d-flex align-items-center justify-content-between mb-2">
 									<h6>근태종류</h6>
 									<div class="btn-group btn-group-sm" role="group" aria-label="DTM Kind Code Select">
-										<input type="radio" class="btn-check" name="dtmKindCdSelect" id="dtmKindCd" autocomplete="off" checked>
-										<label class="btn btn-outline-primary" for="dtmKindCd">전체</label>
+										<input type="radio" class="btn-check" name="category" id="allCategory" autocomplete="off" checked>
+										<label class="btn btn-outline-primary" for="allCategory">전체</label>
 
-										<input type="radio" class="btn-check" name="dtmKindCdSelect" id="dtmKindCd1" autocomplete="off">
-										<label class="btn btn-outline-primary" for="dtmKindCd1">연차</label>
+										<input type="radio" class="btn-check" name="category" id="1A" autocomplete="off">
+										<label class="btn btn-outline-primary" for="1A">연차</label>
 
-										<input type="radio" class="btn-check" name="dtmKindCdSelect" id="dtmKindCd2" autocomplete="off">
-										<label class="btn btn-outline-primary" for="dtmKindCd2">저축</label>
+										<input type="radio" class="btn-check" name="category" id="1B" autocomplete="off">
+										<label class="btn btn-outline-primary" for="1B">저축</label>
 
-										<input type="radio" class="btn-check" name="dtmKindCdSelect" id="dtmKindCd3" autocomplete="off">
-										<label class="btn btn-outline-primary" for="dtmKindCd3">보상</label>
+										<input type="radio" class="btn-check" name="category" id="1Z" autocomplete="off">
+										<label class="btn btn-outline-primary" for="1Z">보상</label>
 									</div>
 								</div>
-								<select class="form-control select2" style="width: 100%;" aria-label="DTM Reason Code Select" name="dtmReasonCdSelect" id="dtmReasonCd">
+								<select class="form-control select2" style="width: 100%;" aria-label="DTM Reason Code Select" name="select" id="list">
 									<option value="" selected>전체</option>
-									<option value="1A1">연차휴가</option>
-									<option value="1A5">연차휴가 오전(반차)</option>
-									<option value="1AG">연차휴가 오전(반반차)</option>
-									<option value="1A6">연차휴가 오후(반차)</option>
-									<option value="1AH">연차휴가 오후(반반차)</option>
-									<option value="1AB">저축휴가</option>
-									<option value="1AC">저축휴가 오전(반차)</option>
-									<option value="1AI">저축휴가 오전(반반차)</option>
-									<option value="1AD">저축휴가 오후(반차)</option>
-									<option value="1AJ">저축휴가 오후(반반차)</option>
 								</select>
 							</div>
 
@@ -105,9 +156,12 @@
 							</div>
 						</div>
 					</div>
+					<!-- 검색 드롭다운 끝 -->
 
-					<!--컨텐츠 목록-->
+					<!-- 컨텐츠 목록 시작 -->
 					<div id="dtmListContainer">
+
+						<!-- 근태 목록 시작 -->
 						<div class="row col-lg-12 col-md-12 col-sm-12">
 							<div class="col-12">
 								<div class="animate__animated animate__fadeIn animate__slow">
@@ -151,6 +205,7 @@
 								</div>
 							</div>
 						</div>
+						<!-- 근태 목록 끝 -->
 
 						<!-- 페이징처리 시작 -->
 						<div th:if="${!dtmHis.isEmpty()}">
@@ -175,7 +230,9 @@
 							</ul>
 						</div>
 						<!-- 페이징처리 끝 -->
+
 					</div>
+					<!--컨텐츠 목록 끝-->
 
 				</div>
 			</div>
@@ -188,47 +245,10 @@
 	<script src="/extensions/litepicker/bundle.js"></script>
 	<script src="/extensions/litepicker/mobilefriendly.js"></script>
 	<script src="/extensions/litepicker/initLitepicker.js"></script>
+	<script src="/extensions/select2/select2.full.js"></script>
 	<script src="/js/dateInputValidation.js"></script>
 	<script src="/js/searchForm.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
-	<script>
-		$(document).ready(function () {
-			// Select2 초기화
-			$('#dtmReasonCd').select2();
-
-			// dtmKindCdSelect의 변화 감지
-			$('input[name="dtmKindCdSelect"]').on('change', function () {
-				const selectedValue = $(this).attr('id');
-				let url = "/api/commoncode/code/DTM_REASON_CD";
-
-				if (selectedValue === 'dtmKindCd1') {
-					url += "/1A";
-				} else if (selectedValue === 'dtmKindCd2') {
-					url += "/1B";
-				} else if (selectedValue === 'dtmKindCd3') {
-					url += "/1Z";
-				}
-
-				// AJAX 요청
-				$.ajax({
-					url: url,
-					method: 'GET',
-					success: function (data) {
-						console.log(data); // 받아온 데이터 출력
-						const $select = $('#dtmReasonCd');
-						$select.empty(); // 기존 옵션 삭제
-						data.forEach(item => {
-							$select.append(new Option(item.codeName, item.code)); // 새로운 옵션 추가
-						});
-						$select.trigger('change'); // 옵션 새로고침
-					},
-					error: function (xhr, status, error) {
-						console.error('Error fetching data: ', error);
-					}
-				});
-			});
-		});
-	</script>
+	<script src="/js/selectForm.js"></script>
 </th:block>
 <!-- (end) private script -->
 </body>

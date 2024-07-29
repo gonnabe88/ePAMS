@@ -17,7 +17,7 @@ const updatePaginationLinks = () => {
     $('input[name="statCdList"]:checked').each(function() {
         statCdList.push($(this).attr('id'));
     });
-    let dtmReasonCd = $('#dtmReasonCd option:selected').val();
+    let dtmReasonCd = $('#list option:selected').val();
     let staYmdInput = $('#start-input').val();
     let endYmdInput = $('#end-input').val();
     let itemsPerPage = $('#itemsPerPage').val();
@@ -48,9 +48,9 @@ $('#search-button').on('click', function() {
 // (검색폼) 초기화 버튼 클릭 시 폼 초기화 후 목록 갱신
 $('#reset-button').on('click', function() {
     $('input[name="statCdList"]').prop('checked', true); // 모든 체크박스 체크
-    $('input[name="dtmReasonCdSelect"]').prop('checked', false); // 모든 라디오버튼 해제
-    $('#dtmKindCd').prop('checked', true); // '전체' 라디오버튼 체크
-    $('#dtmReasonCd').val(''); // 셀렉트박스 초기화
+    $('input[name="select"]').prop('checked', false); // 모든 라디오버튼 해제
+    $('#allCategory').prop('checked', true); // '전체' 라디오버튼 체크
+    $('#list').val(''); // 셀렉트박스 초기화
     $('#itemsPerPage').val('5'); // 페이지네이션 갯수 초기화
 
     // 시작 날짜 초기화
@@ -77,7 +77,7 @@ const search = () => {
     $('input[name="statCdList"]:checked').each(function() {
         statCdList.push($(this).attr('id'));
     });
-    let dtmReasonCd = $('#dtmReasonCd option:selected').val();
+    let dtmReasonCd = $('#list option:selected').val();
     let staYmdInput = $('#start-input').val();
     let endYmdInput = $('#end-input').val();
     let itemsPerPage = $('#itemsPerPage').val();

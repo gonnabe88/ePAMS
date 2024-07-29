@@ -46,7 +46,7 @@ public class CommonCodeRestController {
      * @since 2024-06-09
      */
     @GetMapping("/code/{codeKind}")
-    public ResponseEntity<List<CommonCodeDTO>> findByCodeKind(@PathVariable String codeKind) throws IOException {
+    public ResponseEntity<List<CommonCodeDTO>> findByCodeKind(@PathVariable("codeKind") String codeKind) throws IOException {
         final List<CommonCodeDTO> dtos = commonCodeService.findByCodeKind(new CommonCodeDTO(codeKind));
         return ResponseEntity.ok(dtos);
     }
@@ -57,7 +57,7 @@ public class CommonCodeRestController {
      * @since 2024-06-09
      */
     @GetMapping("/code/{codeKind}/{code}")
-    public ResponseEntity<List<CommonCodeDTO>> findByCodeKindAndCode(@PathVariable String codeKind, @PathVariable String code) throws IOException {
+    public ResponseEntity<List<CommonCodeDTO>> findByCodeKindAndCode(@PathVariable("codeKind") String codeKind, @PathVariable("code") String code) throws IOException {
         final List<CommonCodeDTO> dtos = commonCodeService.findByCodeKindAndCode(new CommonCodeDTO(codeKind, code));
         return ResponseEntity.ok(dtos);
     }

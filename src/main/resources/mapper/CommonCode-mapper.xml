@@ -53,7 +53,7 @@
     <select id="findByCodeKindAndCode" resultMap="commonCodeMap" parameterType="CommonCodeDTO">
         SELECT * FROM OHR.XFRMD2C
         WHERE CD_KIND = #{codeKind}
-          AND CD = #{code}
+          AND CD LIKE #{code} || '%'
     </select>
 
 </mapper>

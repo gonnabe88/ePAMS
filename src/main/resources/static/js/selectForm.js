@@ -1,5 +1,5 @@
 /**
- * Select 드롭다운 폼 관련 스크립트
+ * Select 드롭다운 폼 관련 스크립트(/js/selectForm.js)
  * @author K140024
  * @implements Select 드롭다운 폼 관련 스크립트
  *  - 페이지 로딩 시 전체 목록 가져오기

@@ -1,5 +1,5 @@
 /**
- * 날짜 입력폼 유효성 검증
+ * 날짜 입력폼 유효성 검증(/js/dateInputValidation.js)
  * @author K140024
  * @implements 날짜 입력폼에 대한 유효성 검증 및 포맷팅
  * @since 2024-07-28

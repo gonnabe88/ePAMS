@@ -4,6 +4,9 @@
 cd "$(dirname "$0")"
 
 # 시간 기록 함수
+record_time() {
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] $1" >> ~/cron.log
+}
 
 # 환경 변수 설정
 export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-17.0.11.0.9-2.el8.x86_64

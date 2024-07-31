@@ -106,6 +106,7 @@ public class DtmHistoryController<S extends Session> {
             startPage = Math.max(1, endPage - maxPageBtn + 1);
         }
 
+        log.info("startPage : " + startPage + " endPage : " + endPage + " totalPages : " + totalPages + " currentPage : " + currentPage);
         model.addAttribute("dtmHis", dtos);
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);

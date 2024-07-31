@@ -3,7 +3,7 @@ package epams.domain.com.member.dto;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import pams.model.vo.RoleVO;
+import epams.model.vo.RoleVO;
 
 /***
  * @author 140024

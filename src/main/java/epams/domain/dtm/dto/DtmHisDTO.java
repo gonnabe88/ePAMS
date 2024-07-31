@@ -1,7 +1,6 @@
 package epams.domain.dtm.dto;
 
-import epams.domain.dtm.vo.DtmHisVO;
-import lombok.AllArgsConstructor;
+import pams.model.vo.DtmHisVO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;

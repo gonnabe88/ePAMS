@@ -1,6 +1,5 @@
-package pams.model.vo;
+package epams.model.vo;
 
-import epams.model.vo.BaseVO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

@@ -1,4 +1,4 @@
-package epams.domain.dtm.vo;
+package pams.model.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

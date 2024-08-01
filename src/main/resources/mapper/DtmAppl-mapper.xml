@@ -34,11 +34,5 @@
         WHERE rnum BETWEEN #{offset} + 1 AND #{offset} + #{limit}
         ORDER BY applDate DESC
     </select>
-
-    <select id="countAllByPeriod" parameterType="basePeriod" resultType="long">
-        SELECT COUNT(*)
-        FROM OHR.DTM_APPL A
-        WHERE A.TZ_DATE BETWEEN #{startDate} AND #{endDate}
-    </select>
         
 </mapper>

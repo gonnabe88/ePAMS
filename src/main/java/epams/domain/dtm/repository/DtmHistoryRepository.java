@@ -68,6 +68,7 @@ public class DtmHistoryRepository {
      */
     public void insert(final DtmHisDTO dto) {
     	sql.update("DtmHis.insert", dto);
+        log.info("APPL_ID : " + dto.getApplId());
     }    
     
 }

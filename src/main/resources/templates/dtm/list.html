@@ -103,102 +103,104 @@
                     <!-- 검색 드롭다운 시작 -->
                     <div id="collapseContainer" class="row col-lg-12 col-md-12 col-sm-12">
                         <div class="collapse" id="collapseSearch">
-                                    <div class="col-12">
-                                        <section class="section">
-                                            <div class="card">
-                                                <div class="card-body p-3">
-                                                    <div class="d-flex align-items-center justify-content-between mb-2">
-                                                        <h6>결재상태</h6>
-                                                        <div class="btn-group btn-group-sm" role="group"
-                                                             aria-label="Basic radio toggle button group">
-                                                            <input type="checkbox" class="btn-check" name="statCdList"
-                                                                   id="121"
-                                                                   autocomplete="off" checked>
-                                                            <label class="btn btn-outline-primary" for="121">결재중</label>
+                            <div class="col-12">
+                                <section class="section">
+                                    <div class="card">
+                                        <div class="card-body p-3">
+                                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                                <h6>결재상태</h6>
+                                                <div class="btn-group btn-group-sm" role="group"
+                                                     aria-label="Basic radio toggle button group">
+                                                    <input type="checkbox" class="btn-check" name="statCdList"
+                                                           id="121"
+                                                           autocomplete="off" checked>
+                                                    <label class="btn btn-outline-primary" for="121">결재중</label>
 
-                                                            <input type="checkbox" class="btn-check" name="statCdList"
-                                                                   id="132"
-                                                                   autocomplete="off" checked>
-                                                            <label class="btn btn-outline-primary"
-                                                                   for="132">결재완료</label>
+                                                    <input type="checkbox" class="btn-check" name="statCdList"
+                                                           id="132"
+                                                           autocomplete="off" checked>
+                                                    <label class="btn btn-outline-primary"
+                                                           for="132">결재완료</label>
 
-                                                            <input type="checkbox" class="btn-check" name="statCdList"
-                                                                   id="131"
-                                                                   autocomplete="off" checked>
-                                                            <label class="btn btn-outline-primary" for="131">반려</label>
-                                                        </div>
-                                                    </div>
+                                                    <input type="checkbox" class="btn-check" name="statCdList"
+                                                           id="131"
+                                                           autocomplete="off" checked>
+                                                    <label class="btn btn-outline-primary" for="131">반려</label>
                                                 </div>
-
-                                                <div class="card-body p-3">
-                                                    <div class="d-flex align-items-center justify-content-between mb-2">
-                                                        <h6>근태종류</h6>
-                                                        <div class="btn-group btn-group-sm" role="group"
-                                                             aria-label="DTM Kind Code Select">
-                                                            <input type="radio" class="btn-check" name="category"
-                                                                   id="allCategory" autocomplete="off" checked>
-                                                            <label class="btn btn-outline-primary"
-                                                                   for="allCategory">전체</label>
-
-                                                            <input type="radio" class="btn-check" name="category"
-                                                                   id="1A"
-                                                                   autocomplete="off">
-                                                            <label class="btn btn-outline-primary" for="1A">연차</label>
-
-                                                            <input type="radio" class="btn-check" name="category"
-                                                                   id="1B"
-                                                                   autocomplete="off">
-                                                            <label class="btn btn-outline-primary" for="1B">저축</label>
-
-                                                            <input type="radio" class="btn-check" name="category"
-                                                                   id="1Z"
-                                                                   autocomplete="off">
-                                                            <label class="btn btn-outline-primary" for="1Z">보상</label>
-                                                        </div>
-                                                    </div>
-                                                    <select class="form-control select2" style="width: 100%;"
-                                                            aria-label="DTM Reason Code Select" name="select" id="list">
-                                                        <option value="" selected>전체</option>
-                                                    </select>
-                                                </div>
-
-                                                <div class="card-body p-3">
-                                                    <h6>근태기간</h6>
-                                                    <div class="d-flex align-items-center justify-content-between mb-2">
-                                                        <input type="text" class="form-control me-1 start-input"
-                                                               name="start-input" id="start-input"
-                                                               placeholder="YYYY-MM-DD">
-                                                        <span>~</span>
-                                                        <input type="text" class="form-control ms-1 end-input"
-                                                               name="end-input"
-                                                               id="end-input" placeholder="YYYY-MM-DD">
-                                                    </div>
-                                                    <div class="d-flex justify-content-center">
-                                                        <input type="text" class="form-control start-date"
-                                                               id="start-date"
-                                                               style="display: none;">
-                                                        <input type="text" class="form-control end-date" id="end-date"
-                                                               style="display: none;">
-                                                    </div>
-                                                </div>
-
-												<div class="card-body p-3">
-                                                <div class="d-flex flex-wrap gap-2 justify-content-end align-items-center mb-2">
-                                                    <button class="btn btn-primary btn-sm" id="search-button">조회
-                                                    </button>
-                                                    <button class="btn btn-primary btn-sm" id="reset-button">초기화
-                                                    </button>
-                                                </div>
-												</div>
                                             </div>
-                                        </section>
+                                        </div>
+
+                                        <div class="card-body p-3">
+                                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                                <h6>근태종류</h6>
+                                                <div class="btn-group btn-group-sm" role="group"
+                                                     aria-label="DTM Kind Code Select">
+                                                    <input type="radio" class="btn-check" name="category"
+                                                           id="allCategory" autocomplete="off" checked>
+                                                    <label class="btn btn-outline-primary"
+                                                           for="allCategory">전체</label>
+
+                                                    <input type="radio" class="btn-check" name="category"
+                                                           id="1A"
+                                                           autocomplete="off">
+                                                    <label class="btn btn-outline-primary" for="1A">연차</label>
+
+                                                    <input type="radio" class="btn-check" name="category"
+                                                           id="1B"
+                                                           autocomplete="off">
+                                                    <label class="btn btn-outline-primary" for="1B">저축</label>
+
+                                                    <input type="radio" class="btn-check" name="category"
+                                                           id="1Z"
+                                                           autocomplete="off">
+                                                    <label class="btn btn-outline-primary" for="1Z">보상</label>
+                                                </div>
+                                            </div>
+                                            <select class="form-control select2" style="width: 100%;"
+                                                    aria-label="DTM Reason Code Select" name="select" id="list">
+                                                <option value="" selected>전체</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="card-body p-3">
+                                            <h6>근태기간</h6>
+                                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                                <input type="text" class="form-control me-1 start-input"
+                                                       name="start-input" id="start-input"
+                                                       placeholder="YYYY-MM-DD">
+                                                <span>~</span>
+                                                <input type="text" class="form-control ms-1 end-input"
+                                                       name="end-input"
+                                                       id="end-input" placeholder="YYYY-MM-DD">
+                                            </div>
+                                            <div class="d-flex justify-content-center">
+                                                <input type="text" class="form-control start-date"
+                                                       id="start-date"
+                                                       style="display: none;">
+                                                <input type="text" class="form-control end-date" id="end-date"
+                                                       style="display: none;">
+                                            </div>
+                                        </div>
+
+                                        <div class="card-body p-3">
+                                            <div class="d-flex flex-wrap gap-2 justify-content-end align-items-center mb-2">
+                                                <button class="btn btn-primary btn-sm" id="search-button">조회
+                                                </button>
+                                                <button class="btn btn-primary btn-sm" id="reset-button">초기화
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
+                                </section>
+                            </div>
                         </div>
                     </div>
                     <!-- 검색 드롭다운 끝 -->
 
-                    <!-- 근태 목록 시작 -->
+                    <!-- 근태 목록 + 페이지네이션 시작 -->
                     <div id="dtmListContainer" class="row col-lg-12 col-md-12 col-sm-12">
+
+                        <!-- 근태 목록 시작 -->
                         <div class="col-12">
                             <div class="animate__animated animate__fadeIn animate__slow">
                                 <section class="section" th:each="dtm: ${dtmHis}">
@@ -240,33 +242,35 @@
                                 </section>
                             </div>
                         </div>
-                    </div>
-                    <!-- 근태 목록 끝 -->
+                        <!-- 근태 목록 끝 -->
 
-                    <!-- 페이징처리 시작 -->
-                    <div th:if="${!dtmHis.isEmpty()}">
-                        <ul class="pagination justify-content-center align-items-center">
-                            <!-- Previous button -->
-                            <li class="page-item" th:classappend="${startPage == 1} ? 'disabled'">
-                                <a class="page-link" th:href="@{|?page=${startPage - 1}|}" th:if="${startPage > 1}">
-                                    <span><i class="bi bi-caret-left-fill"></i></span>
-                                </a>
-                            </li>
-                            <!-- Page numbers -->
-                            <li th:each="page : ${#numbers.sequence(startPage, endPage)}"
-                                th:classappend="${page == dtmHis.number + 1} ? 'active'" class="page-item mx-1">
-                                <a th:text="${page}" class="page-link" th:href="@{|?page=${page}|}"></a>
-                            </li>
-                            <!-- Next button -->
-                            <li class="page-item" th:classappend="${endPage == dtmHis.totalPages} ? 'disabled'"
-                                th:if="${endPage < dtmHis.totalPages}">
-                                <a class="page-link" th:href="@{|?page=${endPage + 1}|}">
-                                    <span><i class="bi bi-caret-right-fill"></i></span>
-                                </a>
-                            </li>
-                        </ul>
+                        <!-- 페이징처리 시작 -->
+                        <div th:if="${!dtmHis.isEmpty()}">
+                            <ul class="pagination justify-content-center align-items-center">
+                                <!-- Previous button -->
+                                <li class="page-item" th:classappend="${startPage == 1} ? 'disabled'">
+                                    <a class="page-link" th:href="@{|?page=${startPage - 1}|}" th:if="${startPage > 1}">
+                                        <span><i class="bi bi-caret-left-fill"></i></span>
+                                    </a>
+                                </li>
+                                <!-- Page numbers -->
+                                <li th:each="page : ${#numbers.sequence(startPage, endPage)}"
+                                    th:classappend="${page == dtmHis.number + 1} ? 'active'" class="page-item mx-1">
+                                    <a th:text="${page}" class="page-link" th:href="@{|?page=${page}|}"></a>
+                                </li>
+                                <!-- Next button -->
+                                <li class="page-item" th:classappend="${endPage == dtmHis.totalPages} ? 'disabled'"
+                                    th:if="${endPage < dtmHis.totalPages}">
+                                    <a class="page-link" th:href="@{|?page=${endPage + 1}|}">
+                                        <span><i class="bi bi-caret-right-fill"></i></span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- 페이징처리 끝 -->
+
                     </div>
-                    <!-- 페이징처리 끝 -->
+                    <!-- 근태 목록 + 페이지네이션 끝 -->
 
                 </div>
             </div>

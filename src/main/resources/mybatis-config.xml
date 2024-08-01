@@ -28,10 +28,8 @@
         <typeAlias type="epams.domain.com.member.dto.RoleDTO" alias="roleDTO"></typeAlias>
 
         <!-- DTO -->
-        <typeAlias type="epams.domain.dtm.dto.BasePeriodDTO" alias="basePeriod"></typeAlias>
         <typeAlias type="epams.domain.dtm.dto.DtmApplDTO" alias="dtmAppl"></typeAlias>
         <typeAlias type="epams.domain.dtm.dto.DtmHisDTO" alias="dtmHis"></typeAlias>
-
         <typeAlias type="epams.domain.com.commonCode.CommonCodeDTO" alias="commonCodeDTO"></typeAlias>
 
 

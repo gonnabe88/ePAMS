@@ -139,7 +139,8 @@ public class SecurityConfig {
 
 		    // 예외 처리 설정
 		    .exceptionHandling((exceptionHandling) -> exceptionHandling
-		        .accessDeniedPage("/error/403")  // 접근 거부 시 리디렉션 경로
+				.accessDeniedHandler(
+					(request, response, accessDeniedException) -> response.sendRedirect("/error/403")) // 접근 거부 시 리디렉션 경로 설정
 		        .authenticationEntryPoint(
 		            (request, response, authException) -> response.sendRedirect("/login"))  // 인증 필요 시 리디렉션 경로
 		        .defaultAuthenticationEntryPointFor(

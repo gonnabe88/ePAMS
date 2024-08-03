@@ -349,14 +349,14 @@ const authentication = (username, password, MFA, OTP, header, token) => {
     }); //ajax    
 }
 
-// 최근 선택한 2단계 인증방식 체크
+// 2단계 인증방식 기억하기
 $(function(){
     let key = getCookie("MFAChk"); 
     if (key != "") 
 		$("input:radio[name=MFA]:radio[value='"+key+"']").prop("checked", true);
         
-    $('input[name="mfa"]').change(function() {
-		setCookie("MFAChk", $('input[name="mfa"]:checked').val(), 30);
+    $('input[name="MFA"]').change(function() {
+		setCookie("MFAChk", $('input[name="MFA"]:checked').val(), 30);
     });
 });
 

@@ -94,10 +94,10 @@
             AND d.DTM_REASON_CD = #{dtmReasonCd}
         </if>
         <if test="staYmdInput != null and staYmdInput != ''">
-            AND d.STA_YMD &gt;= #{staYmdInput}
+            AND d.STA_YMD &gt;= TO_DATE(#{staYmdInput}, 'YYYY-MM-DD')
         </if>
         <if test="endYmdInput != null and endYmdInput != ''">
-            AND d.END_YMD &lt;= #{endYmdInput}
+            AND d.END_YMD &lt;= TO_DATE(#{endYmdInput}, 'YYYY-MM-DD')
         </if>
         ORDER BY d.DTM_HIS_ID DESC
         OFFSET #{offset} ROWS FETCH NEXT #{limit} ROWS ONLY

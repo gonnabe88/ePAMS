@@ -48,23 +48,6 @@
         <result property="statCdNm" column="STAT_CD_NM" />
     </resultMap>
 
-    <!-- 모든 데이터 조회 -->
-    <select id="findAll" resultMap="dtmHisResultMap">
-        SELECT * FROM OHR.DTM_HIS
-    </select>
-
-    <!-- 특정 데이터 조회 -->
-    <select id="findById" parameterType="dtmHis" resultMap="dtmHisResultMap">
-        SELECT * FROM OHR.DTM_HIS WHERE DTM_HIS_ID = #{dtmHisId}
-    </select>
-
-    <!-- 특정 데이터 조회 -->
-    <select id="findByEmpId" parameterType="dtmHis" resultMap="dtmHisResultMap">
-        SELECT * FROM OHR.DTM_HIS WHERE EMP_ID = #{empId}
-        ORDER BY DTM_HIS_ID DESC
-        OFFSET #{offset} ROWS FETCH NEXT #{limit} ROWS ONLY
-    </select>
-
     <!-- 갯수 조회 -->
     <select id="countById" parameterType="long" resultType="long">
         SELECT COUNT(*) FROM OHR.DTM_HIS WHERE EMP_ID = #{empId}
@@ -124,13 +107,6 @@
         </if>
     </select>
 
-    <!-- 특정 데이터 조회 -->
-    <select id="findByDtmKindCd" parameterType="string" resultMap="dtmHisResultMap">
-        SELECT * FROM OHR.DTM_HIS WHERE DTM_KIND_CD = #{dtmKindCd}
-    </select>
-
-
-    <!-- 신규 데이터 추가 -->
     <!-- 신규 데이터 추가 -->
     <insert id="insert" parameterType="DtmHis" useGeneratedKeys="true" keyProperty="dtmHisId">
         <selectKey keyProperty="dtmHisId" resultType="long" order="BEFORE">

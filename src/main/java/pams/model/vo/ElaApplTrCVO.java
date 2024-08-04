@@ -28,7 +28,7 @@ public class ElaApplTrCVO {
     private String note; // 비고
     private Long modUserId; // 변경자
     private LocalDateTime modDate; // 변경일시
-    private String tzCd; // 타임존코드
+    private String tzCd = "KO"; // 타임존코드
     private LocalDateTime tzDate; // 타임존일시
 
 }

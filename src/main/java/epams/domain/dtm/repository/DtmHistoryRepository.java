@@ -26,16 +26,7 @@ public class DtmHistoryRepository {
 
     /***
      * @author 140024
-     * @implNote 사용자 ID 기준 모든 근태 조회
-     * @since 2024-06-09
-     */
-    public List<DtmHisDTO> findByEmpId(final DtmHisDTO dto) {
-    	return sql.selectList("DtmHis.findByEmpId", dto);
-    }
-
-    /***
-     * @author 140024
-     * @implNote 사용자 ID 기준 모든 근태 조회
+     * @implNote 조건(ID, 기간 등)에 맞는 모든 근태 조회
      * @since 2024-06-09
      */
     public List<DtmHisDTO> findByCondition(final DtmHisDTO dto) {
@@ -44,7 +35,7 @@ public class DtmHistoryRepository {
 
     /***
      * @author 140024
-     * @implNote 총 갯수
+     * @implNote 조건(ID, 기간 등)에 맞는 모든 근태 수
      * @since 2024-06-09
      */
     public long countByCondition(final DtmHisDTO dto) {
@@ -53,7 +44,7 @@ public class DtmHistoryRepository {
 
      /***
      * @author 140024
-     * @implNote 총 갯수
+     * @implNote 해당 직원의 모든 근태 수
      * @since 2024-06-09
      */
     public long countById(final DtmHisDTO dto) {
@@ -68,7 +59,6 @@ public class DtmHistoryRepository {
      */
     public void insert(final DtmHisDTO dto) {
     	sql.update("DtmHis.insert", dto);
-        log.info("APPL_ID : " + dto.getApplId());
     }    
     
 }

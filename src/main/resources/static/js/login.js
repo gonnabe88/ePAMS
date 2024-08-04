@@ -350,64 +350,67 @@ const authentication = (username, password, MFA, OTP, header, token) => {
 }
 
 // 2단계 인증방식 기억하기
-$(function(){
-    let key = getCookie("MFAChk"); 
-    if (key != "") 
-		$("input:radio[name=MFA]:radio[value='"+key+"']").prop("checked", true);
-        
+$(function() {
+    let key = getCookie("MFAChk");
+    if (key !== "") {
+        // Check the radio button that matches the value stored in the cookie
+        $("input:radio[name='MFA'][value='" + key + "']").prop("checked", true);
+    }
+
+    // When the radio button changes, update the cookie
     $('input[name="MFA"]').change(function() {
-		setCookie("MFAChk", $('input[name="MFA"]:checked').val(), 30);
+        setCookie("MFAChk", $('input[name="MFA"]:checked').val(), 30);
     });
 });
 
 // ID 기억하기
 $(function(){
-    let key = getCookie("idChk"); 
-    
-    if (key != "") 
+    let key = getCookie("idChk");
+
+    if (key != "")
         $("#username").val(key);
 
-    if ($("#username").val() != "") 
+    if ($("#username").val() != "")
         $("#flexCheckDefault").attr("checked", true);
 
     $("#flexCheckDefault").change(function() {
-        if ($("#flexCheckDefault").is(":checked")) 
+        if ($("#flexCheckDefault").is(":checked"))
             setCookie("idChk", $("#username").val(), 30);
-        else 
-            deleteCookie("idChk");        
+        else
+            deleteCookie("idChk");
     });
 
     $("#username").keyup(function() {
-        if ($("#flexCheckDefault").is(":checked")) 
-            setCookie("idChk", $("#username").val(), 30);        
+        if ($("#flexCheckDefault").is(":checked"))
+            setCookie("idChk", $("#username").val(), 30);
     });
 });
 
-const setCookie=(cookieName, value, exdays) => {
+const setCookie = (cookieName, value, exdays) => {
     let exdate = new Date();
     exdate.setDate(exdate.getDate() + exdays);
-    let cookieValue = escape(value) + ((exdays == null) ? "" : "; expires=" + exdate.toGMTString());
-    document.cookie = cookieName + "=" + cookieValue;
+    let cookieValue = encodeURIComponent(value) + ((exdays == null) ? "" : "; expires=" + exdate.toUTCString());
+    document.cookie = cookieName + "=" + cookieValue + "; path=/"; // 경로를 추가하여 루트에서 사용할 수 있도록 설정
 }
 
-const deleteCookie=(cookieName) => {
+const deleteCookie = (cookieName) => {
     let expireDate = new Date();
     expireDate.setDate(expireDate.getDate() - 1);
-    document.cookie = cookieName + "= " + "; expires=" + expireDate.toGMTString();
+    document.cookie = cookieName + "=; expires=" + expireDate.toUTCString() + "; path=/"; // 경로 추가
 }
 
-const getCookie=(cookieName) => {
+const getCookie = (cookieName) => {
     cookieName = cookieName + '=';
     let cookieData = document.cookie;
     let start = cookieData.indexOf(cookieName);
     let cookieValue = '';
-    if (start != -1) {
+    if (start !== -1) {
         start += cookieName.length;
         let end = cookieData.indexOf(';', start);
-        if (end == -1) end = cookieData.length;
+        if (end === -1) end = cookieData.length;
         cookieValue = cookieData.substring(start, end);
     }
-    return unescape(cookieValue);
+    return decodeURIComponent(cookieValue);
 }
 
 const popupMsg = (e) => {	

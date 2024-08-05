@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class PreCheckProcDTO {
+public class DtmApplCheckProcDTO {
 
     /***
      * @author 140024

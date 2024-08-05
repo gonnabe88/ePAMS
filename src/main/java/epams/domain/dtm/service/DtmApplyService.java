@@ -5,7 +5,6 @@ import epams.domain.com.apply.dto.ElaApplTrCDTO;
 import epams.domain.com.apply.repository.ElaApplCRepository;
 import epams.domain.com.apply.repository.ElaApplTrCRepository;
 import epams.domain.dtm.dto.DtmHisDTO;
-import epams.domain.dtm.dto.PreCheckProcDTO;
 import epams.domain.dtm.repository.DtmHistoryRepository;
 import epams.domain.dtm.repository.PreCheckProcRepository;
 import lombok.RequiredArgsConstructor;
@@ -60,7 +59,7 @@ public class DtmApplyService {
     public void insert(final DtmHisDTO dtmHisDTO) {
 
 		// 사전검증 프로시저
-		//final PreCheckProcDTO preCheckProcDTO = new PreCheckProcDTO(dtmHisDTO.getEmpId(), dtmHisDTO.getStaYmd(), dtmHisDTO.getEndYmd(), null); // PreCheckProcDTO(사전검증) 객체 생성
+		//final DtmApplCheckProcDTO preCheckProcDTO = new DtmApplCheckProcDTO(dtmHisDTO.getEmpId(), dtmHisDTO.getStaYmd(), dtmHisDTO.getEndYmd(), null); // DtmApplCheckProcDTO(사전검증) 객체 생성
 		//proCheckProcRepo.callPreCheckProc(preCheckProcDTO); // 사전검증 프로시저 호출
 		//log.info("result: {}", preCheckProcDTO.getResult());
 

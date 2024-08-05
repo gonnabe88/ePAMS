@@ -1,6 +1,6 @@
 package epams.domain.dtm.repository;
 
-import epams.domain.dtm.dto.PreCheckProcDTO;
+import epams.domain.dtm.dto.DtmApplCheckProcDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -28,7 +28,7 @@ public class PreCheckProcRepository
      * @implNote 프로시저 호출
      * @since 2024-06-09
      */
-    public String callPreCheckProc(final PreCheckProcDTO dto){
+    public String callPreCheckProc(final DtmApplCheckProcDTO dto){
         return sql.selectOne("PreCheckProc.call", dto);
     }
 

@@ -34,7 +34,7 @@
         <typeAlias type="epams.domain.com.apply.dto.ElaApplCDTO" alias="ElaApplCDTO"></typeAlias>
         <typeAlias type="epams.domain.com.apply.dto.ElaApplTrCDTO" alias="ElaApplTrCDTO"></typeAlias>
 
-        <typeAlias type="epams.domain.dtm.dto.PreCheckProcDTO" alias="PreCheckProcDTO"></typeAlias>
+        <typeAlias type="epams.domain.dtm.dto.DtmApplCheckProcDTO" alias="PreCheckProcDTO"></typeAlias>
 
     </typeAliases>
 

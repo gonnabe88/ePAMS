@@ -61,22 +61,22 @@ const ApplAlert = (element) => {
 
 // 근태 신청
 const postDtmHisDTO = (dtmHisDTO) => {
-    const header = $('meta[name="_csrf_header"]').attr('content');
-    const token = $('meta[name="_csrf"]').attr('content');
+    const header = $('meta[name="_csrf_header"]').attr('content'); // CSRF 헤더
+    const token = $('meta[name="_csrf"]').attr('content'); // CSRF 토큰
 
     $.ajax({
-        url: '/api/dtm/appl',
-        method: 'POST',
+        url: '/api/dtm/appl', // 요청 URL
+        method: 'POST', // 요청 방식
         headers: {
             'Content-Type': 'application/json',
-            [header]: token
+            [header]: token // CSRF 토큰 헤더 설정
         },
-        data: JSON.stringify(dtmHisDTO),
-        success: (data) => {
+        data: JSON.stringify(dtmHisDTO), // 전송 DATA
+        success: (data) => { // 성공 (HTTP 상태코드 20X)
             popupHtmlMsg('신청되었습니다.', `<p style="text-align:center">${dtmHisDTO.staYmd} 연차 1일</p>`, 'success');
             console.log('Success:', data);
         },
-        error: (error) => {
+        error: (error) => { // 실패 (HTTP 상태코드 40X, 50X)
             popupHtmlMsg('신청 불가', error, 'error');
             console.error('Error:', error);
         }

@@ -55,14 +55,6 @@ const ApplAlert = (element) => {
 
             // POST 요청 함수 호출
             postDtmHisDTO(dtmHisDTO);
-
-            Swal.fire({
-                title: "신청되었습니다.",
-                html: `<p style="text-align:center">${staDateStr} 연차 1일</p>`,
-                icon: "success",
-                confirmButtonColor: "#3085d6",
-                confirmButtonText: "확인"
-            });
         }
     });
 };
@@ -81,9 +73,11 @@ const postDtmHisDTO = (dtmHisDTO) => {
         },
         data: JSON.stringify(dtmHisDTO),
         success: (data) => {
+            popupHtmlMsg('신청되었습니다.', `<p style="text-align:center">${dtmHisDTO.staYmd} 연차 1일</p>`, 'success');
             console.log('Success:', data);
         },
         error: (error) => {
+            popupHtmlMsg('신청 불가', error, 'error');
             console.error('Error:', error);
         }
     });

@@ -1,4 +1,4 @@
-package epams.framework.security;
+package epams.framework.exception;
 
 /**
  * @author K140024

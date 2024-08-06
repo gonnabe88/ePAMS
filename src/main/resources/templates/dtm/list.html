@@ -134,7 +134,7 @@
                                             <div class="d-flex align-items-center justify-content-between mb-2">
                                                 <h6>근태종류</h6>
                                                 <div class="btn-group btn-group-sm" role="group"
-                                                     aria-label="DTM Kind Code Select">
+                                                     aria-label="DTM Kind Code Select" id="openSelectModal">
                                                     <input type="radio" class="btn-check" name="category"
                                                            id="allCategory" autocomplete="off" checked>
                                                     <label class="btn btn-outline-primary"
@@ -156,10 +156,26 @@
                                                     <label class="btn btn-outline-primary" for="1Z">보상</label>
                                                 </div>
                                             </div>
-                                            <select class="form-control select2" style="width: 100%;"
-                                                    aria-label="DTM Reason Code Select" name="select" id="list">
-                                                <option value="" selected>전체</option>
-                                            </select>
+                                            <!-- 모달 구조 -->
+                                            <div class="modal fade" id="selectModal" tabindex="-1" aria-labelledby="selectModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="selectModalLabel">DTM Reason Code Select</h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <select class="form-control select2" style="width: 100%;" aria-label="DTM Reason Code Select" name="select" id="list">
+                                                                <option value="" selected>전체</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                            <button type="button" class="btn btn-primary" id="saveSelection">Save changes</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
 
                                         <div class="card-body p-3">

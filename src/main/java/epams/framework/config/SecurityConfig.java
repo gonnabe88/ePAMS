@@ -1,6 +1,6 @@
 package epams.framework.config;
 
-import epams.framework.security.CustomGeneralEncryptionException;
+import epams.framework.exception.CustomGeneralException;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationDetailsSource;
@@ -83,7 +83,7 @@ public class SecurityConfig {
      * 보안 필터 체인 설정
      * @param http HttpSecurity 인스턴스
      * @return SecurityFilterChain 인스턴스
-     * @throws CustomGeneralEncryptionException
+     * @throws CustomGeneralException
      * @throws Exception 설정 중 예외 발생 시
      */
     @SuppressWarnings("removal")

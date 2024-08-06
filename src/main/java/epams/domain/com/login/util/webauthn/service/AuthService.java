@@ -32,7 +32,7 @@ import com.yubico.webauthn.exception.AssertionFailedException;
 
 import epams.domain.com.admin.dto.LogLoginDTO;
 import epams.domain.com.admin.repository.LogRepository;
-import epams.framework.security.CustomGeneralRuntimeException;
+import epams.framework.exception.CustomGeneralRuntimeException;
 import epams.domain.com.login.repository.LoginRepository;
 import epams.domain.com.member.dto.IamUserDTO;
 import jakarta.servlet.http.HttpSession;

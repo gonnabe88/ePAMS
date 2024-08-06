@@ -77,8 +77,8 @@ const postDtmHisDTO = (dtmHisDTO) => {
             console.log('Success:', data);
         },
         error: (error) => { // 실패 (HTTP 상태코드 40X, 50X)
-            popupHtmlMsg('신청 불가', error, 'error');
-            console.error('Error:', error);
+            popupHtmlMsg('신청 불가', error.responseJSON.error, 'error');
+            console.error('Error:', error.status, error.responseJSON.error);
         }
     });
 };

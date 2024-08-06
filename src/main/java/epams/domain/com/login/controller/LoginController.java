@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import epams.framework.security.CustomGeneralRuntimeException;
+import epams.framework.exception.CustomGeneralRuntimeException;
 import epams.domain.com.login.service.LoginService;
 import epams.domain.com.login.service.MFALoginService;
 import epams.domain.com.login.util.webauthn.service.RegistrationService;

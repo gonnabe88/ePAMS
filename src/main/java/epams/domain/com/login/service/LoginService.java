@@ -4,8 +4,8 @@ import epams.domain.com.admin.dto.LogLoginDTO;
 import epams.domain.com.admin.repository.LogRepository;
 import org.springframework.stereotype.Service;
 
-import epams.framework.security.CustomGeneralEncryptionException;
-import epams.framework.security.CustomGeneralRuntimeException;
+import epams.framework.exception.CustomGeneralException;
+import epams.framework.exception.CustomGeneralRuntimeException;
 import epams.domain.com.login.dto.LoginOTPDTO;
 import epams.domain.com.login.repository.LoginOTPRepository;
 import epams.domain.com.login.repository.LoginRepository;
@@ -93,7 +93,7 @@ public class LoginService {
         try {
             // 사용자가 입력한 패스워드 HASH
             iamUserDTO.setPassword(encshaService.encrypt(iamUserDTO.getPassword()));
-        } catch (CustomGeneralEncryptionException e) {
+        } catch (CustomGeneralException e) {
             throw new CustomGeneralRuntimeException("Password encryption failed", e);
         }
         // username & password(hash)와 일치하는 사용자를 찾음

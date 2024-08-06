@@ -9,7 +9,7 @@ import java.util.Base64.Encoder;
 
 import org.springframework.stereotype.Service;
 
-import epams.framework.security.CustomGeneralEncryptionException;
+import epams.framework.exception.CustomGeneralException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -28,7 +28,7 @@ public class ShaEncryptService {
      * @implNote 주어진 평문 텍스트를 SHA-256으로 암호화하는 메서드
      * @since 2024-06-11
      */
-    public String encrypt(final String planText) throws CustomGeneralEncryptionException {
+    public String encrypt(final String planText) throws CustomGeneralException {
         try {
             final Decoder decoder = Base64.getDecoder();
             final byte[] decodedBytes = decoder.decode(planText);
@@ -40,7 +40,7 @@ public class ShaEncryptService {
             final byte[] digest = msg.digest(decodedStr.getBytes(StandardCharsets.UTF_8));
             return encoder.encodeToString(digest);
         } catch (final NoSuchAlgorithmException e) {
-            throw new CustomGeneralEncryptionException("Fail to encrypt SHA-256", e);
+            throw new CustomGeneralException("Fail to encrypt SHA-256", e);
         }
     }
 }

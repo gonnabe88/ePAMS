@@ -18,12 +18,15 @@ BEGIN
 
     -- 조회 결과에 따른 반환값 설정
     IF v_count > 0 THEN
-        av_ret_message := 'SUCCESS';
+        av_ret_code := 'SUCCESS';
+        av_ret_message := '성공적으로 검증되었습니다.';
     ELSE
+        av_ret_code := 'FAILURE';
         av_ret_message := '신청서 정보가 없습니다.';
     END IF;
 
 EXCEPTION
     WHEN OTHERS THEN
-        av_ret_message := 'FAILURE';
+        av_ret_code := 'FAILURE';
+        av_ret_message := '알 수 없는 이유로 실패하였습니다.';
 END P_DTM01_APPL_ELA_CHECK;

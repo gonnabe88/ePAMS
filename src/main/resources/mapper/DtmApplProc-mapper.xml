@@ -1,0 +1,39 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="DtmApplProc">
+
+    <select id="preCheck" statementType="CALLABLE" parameterType="dtmApplCheckProcDTO" resultType="string">
+        {CALL OHR.P_DTM_APPL_CHECK(
+                #{companyCd,    mode=IN,    jdbcType=VARCHAR},
+                #{localeCd,     mode=IN,    jdbcType=VARCHAR},
+                #{empId,        mode=IN,    jdbcType=NUMERIC},
+                #{reasonCd,     mode=IN,    jdbcType=VARCHAR},
+                #{staYmd,       mode=IN,    jdbcType=TIMESTAMP},
+                #{endYmd,       mode=IN,    jdbcType=TIMESTAMP},
+                #{hisOid,       mode=IN,    jdbcType=NUMERIC},
+                #{authType,     mode=IN,    jdbcType=VARCHAR},
+                #{dtmType,      mode=IN,    jdbcType=VARCHAR},
+                #{modUserId,    mode=IN,    jdbcType=VARCHAR},
+                #{tzCd,         mode=IN,    jdbcType=VARCHAR},
+                #{resultCode,   mode=OUT,   jdbcType=VARCHAR},
+                #{resultMsg,    mode=OUT,   jdbcType=VARCHAR}
+              )}
+    </select>
+
+    <select id="newCheck" statementType="CALLABLE" parameterType="dtmApplElaCheckProcDTO" resultType="string">
+        {CALL OHR.P_DTM01_APPL_ELA_CHECK(
+                #{applId,       mode=IN,    jdbcType=NUMERIC},
+                #{modUserId,    mode=IN,    jdbcType=VARCHAR},
+                #{companyCd,    mode=IN,    jdbcType=VARCHAR},
+                #{localeCd,     mode=IN,    jdbcType=VARCHAR},
+                #{tzCd,         mode=IN,    jdbcType=VARCHAR},
+                #{resultCode,   mode=OUT,   jdbcType=VARCHAR},
+                #{resultMsg,    mode=OUT,   jdbcType=VARCHAR}
+              )}
+    </select>
+
+
+
+</mapper>

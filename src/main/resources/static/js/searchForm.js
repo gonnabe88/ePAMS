@@ -63,6 +63,8 @@ $('#reset-button').on('click', function() {
     const today = new Date().toISOString().split('T')[0];
     $('#end-input').val(today);
 
+    window.resetPicker(); // Datepicker 초기화
+    resetSelect(); // Select2 초기화
     search(); // 목록 갱신
 });
 
@@ -77,7 +79,7 @@ const search = () => {
     $('input[name="statCdList"]:checked').each(function() {
         statCdList.push($(this).attr('id'));
     });
-    let dtmReasonCd = $('#list option:selected').val();
+    let dtmReasonCd = $('#list option:selected').val() || ''; // Handle undefined by defaulting to ''
     let staYmdInput = $('#start-input').val();
     let endYmdInput = $('#end-input').val();
     let itemsPerPage = $('#itemsPerPage').val();
@@ -87,5 +89,25 @@ const search = () => {
         $('#dtmListContainer').html($(data).find('#dtmListContainer').html());
         updatePaginationLinks(); // 페이지 업데이트 후 다시 링크 업데이트
         $('#collapseSearch').collapse('hide'); // 검색 폼 접기
+    });
+}
+
+// Function to reset Select2 component
+const resetSelect = () => {
+    $.ajax({
+        url: "/api/commoncode/code/DTM_REASON_CD",
+        method: 'GET',
+        success: function (data) {
+            const $select = $('#list');
+            $select.empty(); // 기존 옵션 삭제
+            $select.append(new Option("전체", "")); // 기본 옵션 추가
+            data.forEach(item => {
+                $select.append(new Option(item.codeName, item.code)); // 새로운 옵션 추가
+            });
+            $select.val('').trigger('change'); // Select2 UI 갱신 및 초기화
+        },
+        error: function (xhr, status, error) {
+            console.error('Error fetching data: ', error);
+        }
     });
 }

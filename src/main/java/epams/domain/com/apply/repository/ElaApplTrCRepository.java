@@ -32,4 +32,13 @@ public class ElaApplTrCRepository {
     public long insert(final ElaApplTrCDTO dto) {
         return sql.insert("ElaApplTrC.insert", dto);
     }
+
+    /***
+     * @author 140024
+     * @implNote 신청서 결재완료 업데이트
+     * @since 2024-08-07
+     */
+    public long updateByApplId(final ElaApplTrCDTO dto) {
+        return sql.insert("ElaApplTrC.updateByApplId", dto);
+    }
 }

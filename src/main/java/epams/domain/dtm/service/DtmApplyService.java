@@ -82,7 +82,7 @@ public class DtmApplyService {
 			final ElaApplCDTO elaApplCDTO = new ElaApplCDTO(dtmHisDTO.getEmpId(), "DTM01", "121"); // ElaApplCDTO(신청서) 객체 생성
 			final long applId = elaApplCRepo.insert(elaApplCDTO); // 신청서 추가 후 applId 반환
 
-			// 근태신청 추가
+			// 근태이력 추가
 			dtmHisDTO.setApplId(applId); // DtmHisDTO(근태신청) 객체에 신청서 ID 설정
 			dtmHisRepo.insert(dtmHisDTO); // 근태신청 추가
 
@@ -101,6 +101,18 @@ public class DtmApplyService {
 			if ("FAILURE".equals(postCheckProcDTO.getResultCode())) {
 				throw new CustomGeneralRuntimeException(postCheckProcDTO.getResultMsg());
 			}
+
+			// 신청서 업데이트
+			elaApplCDTO.setStatCd("132"); // 결재완료 상태 세팅
+			elaApplCRepo.update(elaApplCDTO); // 결재완료 상태로 업데이트
+			
+			// 근태이력 업데이트
+			dtmHisDTO.setStatCd("132"); // 결재완료 상태 세팅
+			dtmHisRepo.updateByApplId(dtmHisDTO); // 결재완료 상태로 업데이트
+			
+			// 신청서결재내역 업데이트
+			elaApplTrCDTO.setApprCd("132"); // 결재완료 상태 세팅
+			elaApplTrCRepo.updateByApplId(elaApplTrCDTO); // 결재완료 상태로 업데이트
 
 			return "신청이 성공적으로 처리되었습니다.";
 

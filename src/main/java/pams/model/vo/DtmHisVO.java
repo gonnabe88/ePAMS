@@ -29,14 +29,14 @@ public class DtmHisVO {
     private String telno; // 연락처
     private String childNo; // 아이순번
     private Long applId = 0L; // 신청서ID
-    private String statCd = "132"; // 신청서상태코드 [ELA_STAT_CD]
+    private String statCd = "121"; // 신청서상태코드 [ELA_STAT_CD]
     private LocalDateTime finalApprYmd; // 최종승인일
     private String modiType; // 수정구분(UPDATE:변경,DELETE:취소)
     private String modiReason; // 수정사유
     private Long modiDtmHisId; // 수정근태내역ID
     private Long modUserId; // 변경자
     private LocalDateTime modDate; // 변경일시
-    private String tzCd = "KR"; // 타임존코드
+    private String tzCd = "KST"; // 타임존코드
     private LocalDateTime tzDate; // 타임존일시
     private String companyNm; // 회사명
     private String document; // 문서

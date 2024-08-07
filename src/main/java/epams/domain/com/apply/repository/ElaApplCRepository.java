@@ -33,4 +33,13 @@ public class ElaApplCRepository {
         sql.insert("ElaApplC.insert", dto);
         return dto.getApplId();
     }
+
+    /***
+     * @author 140024
+     * @implNote 결재완료 업데이트
+     * @since 2024-06-09
+     */
+    public void update(final ElaApplCDTO dto) {
+        sql.update("ElaApplC.update", dto);
+    }
 }

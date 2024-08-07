@@ -52,26 +52,19 @@
             #{note},
             #{modUserId},
             SYSDATE,
-            #{tzCd},
+            'KST',
             SYSDATE
          )
     </insert>
 
     <!-- UPDATE 구문 -->
-    <update id="update" parameterType="ElaApplTrCDTO">
+    <update id="updateByApplId" parameterType="ElaApplTrCDTO">
         UPDATE OHR.ELA_APPL_TR_C
         SET
-            APPR_EMP_ID = #{apprEmpId},
-            APPR_USERGROUP_ID = #{apprUsergroupId},
             APPR_CD = #{apprCd},
-            APPR_DATE = #{apprDate},
-            APPR_INFO = #{apprInfo},
-            REFUSAL_REASON = #{refusalReason},
-            NOTE = #{note},
+            APPR_DATE = SYSDATE,
             MOD_USER_ID = #{modUserId},
-            MOD_DATE = #{modDate},
-            TZ_CD = #{tzCd},
-            TZ_DATE = #{tzDate}
+            MOD_DATE = SYSDATE
         WHERE
             APPR_KIND = #{apprKind} AND
             APPL_ID = #{applId} AND

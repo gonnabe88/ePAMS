@@ -49,7 +49,7 @@
             #{note},
             #{modUserId},
             SYSDATE,
-            #{tzCd},
+            'KST',
             SYSDATE
         )
     </insert>
@@ -58,17 +58,9 @@
     <update id="update" parameterType="ElaApplCDTO">
         UPDATE OHR.ELA_APPL_C
         SET
-            APPL_CD = #{applCd},
-            EMP_ID = #{empId},
-            APPL_DATE = #{applDate},
-            MAKE_EMP_ID = #{makeEmpId},
             STAT_CD = #{statCd},
-            FORCE_CANCEL_YN = #{forceCancelYn},
-            NOTE = #{note},
             MOD_USER_ID = #{modUserId},
-            MOD_DATE = #{modDate},
-            TZ_CD = #{tzCd},
-            TZ_DATE = #{tzDate}
+            MOD_DATE = SYSDATE
         WHERE
             APPL_ID = #{applId}
     </update>

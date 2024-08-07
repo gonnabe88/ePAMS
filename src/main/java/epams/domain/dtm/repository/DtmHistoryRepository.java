@@ -58,7 +58,17 @@ public class DtmHistoryRepository {
      * @since 2024-06-09 PMD MethodArgumentCouldBeFinal 취약점 조치 (140024) 
      */
     public void insert(final DtmHisDTO dto) {
-    	sql.update("DtmHis.insert", dto);
-    }    
-    
+    	sql.insert("DtmHis.insert", dto);
+    }
+
+    /***
+     * @author 140024
+     * @implNote 근태 승인 업데이트
+     * @since 2024-06-09
+     * @since 2024-06-09 PMD MethodArgumentCouldBeFinal 취약점 조치 (140024)
+     */
+    public void updateByApplId(final DtmHisDTO dto) {
+        sql.update("DtmHis.updateByApplId", dto);
+    }
+
 }

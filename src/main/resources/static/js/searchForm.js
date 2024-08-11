@@ -1,13 +1,14 @@
 /**
  * 검색 폼 관련 스크립트(/js/searchForm.js)
  * @author K140024
+ * @since 2024-07-28
  * @implements 검색 폼 관련 스크립트
  *  - 검색 시 페이지네이션 링크를 업데이트
  *  - 페이지네이션 버튼 클릭 시 전체화면을 reload 하지 않도록 비동기 처리
  *  - 검색 폼의 조회 버튼 클릭 시 검색 조건에 맞는 데이터 조회
  *  - 검색 폼의 초기화 버튼 클릭 시 검색 폼 초기화 후 목록 갱신
  *  - 목록수 Select Box 선택 시 목록 갱신
- * @since 2024-07-28
+ *  - 2024-08-11 CWE-79(XSS) 취약점 조치
  */
 
 // 페이지네이션 링크 주소 업데이트
@@ -92,6 +93,9 @@ const search = () => {
         let safeHTML = DOMPurify.sanitize($(data).find('#dtmListContainer').html());
         $('#dtmListContainer').html(safeHTML);
     });
+
+    // 검색 버튼 collapse 처리
+    $('#collapseSearch').collapse('hide');
 }
 
 // Function to reset Select2 component

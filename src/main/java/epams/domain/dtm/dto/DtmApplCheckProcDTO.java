@@ -108,7 +108,12 @@ public class DtmApplCheckProcDTO {
      */
     private String resultMsg;
 
-    public DtmApplCheckProcDTO(Long empId, String reasonCd, LocalDateTime staYmd, LocalDateTime endYmd, Long hisOid, String authType, String dtmType) {
+    /***
+     * @author 140024
+     * @implNote 생성자
+     * @since 2024-08-05
+     */
+    public DtmApplCheckProcDTO(final Long empId, final String reasonCd, final LocalDateTime staYmd, final LocalDateTime endYmd, final Long hisOid, final String authType, final String dtmType) {
         super();
         this.empId = empId;
         this.reasonCd = reasonCd;

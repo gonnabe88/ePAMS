@@ -4,8 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
 /***
  * @author 140024
  * @implNote 프로시저 호출용
@@ -65,6 +63,11 @@ public class DtmApplElaCheckProcDTO {
      */
     private String resultMsg;
 
+    /***
+     * @author 140024
+     * @implNote 생성자
+     * @since 2024-08-05
+     */
     public DtmApplElaCheckProcDTO(final Long applId, final String modUserId) {
         this.applId = applId;
         this.modUserId = modUserId;

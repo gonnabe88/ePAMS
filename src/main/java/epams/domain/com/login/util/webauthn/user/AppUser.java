@@ -67,6 +67,7 @@ public class AppUser extends BaseEntity {
      * @since 2024-06-11
      */
     public AppUser(final String username, final String displayName, final ByteArray handle) {
+    	super();
         this.username = username;
         this.displayName = displayName;
         this.handle = handle;

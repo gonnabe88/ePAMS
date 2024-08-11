@@ -147,11 +147,6 @@ public class SecurityConfig {
 		            (request, response, authException) -> response.sendRedirect("/error/404"),
 		            new AntPathRequestMatcher("/**"))  // 기본 인증 엔트리 포인트 설정
 		    )
-
-		    // CSRF 설정
-			//.csrf((csrf) -> csrf
-			//.ignoringRequestMatchers( "/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**")  // CSRF 보호 비활성화
-			//)
 		    
 		    // X-Frame-Options 설정
 		    .headers((headers) -> headers

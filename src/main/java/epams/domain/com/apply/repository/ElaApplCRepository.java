@@ -1,11 +1,11 @@
 package epams.domain.com.apply.repository;
 
-import epams.domain.com.apply.dto.ElaApplCDTO;
-import epams.domain.dtm.dto.DtmHisDTO;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
+
+import epams.domain.com.apply.dto.ElaApplCDTO;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 /***
  * @author 140024

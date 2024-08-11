@@ -27,7 +27,7 @@ public class DtmHisDTO extends DtmHisVO {
      * @implNote 페이지당 게시물 수
      * @since 2024-06-09
      */
-    private Integer itemsPerPage = 5;
+    private final static String midnight = "2400";
 
     /***
      * @author 140024
@@ -97,14 +97,13 @@ public class DtmHisDTO extends DtmHisVO {
      * @implNote 생성자
      * @since 2024-06-09
      */
-    public DtmHisDTO(Long dtmHisId, Long empId, String dtmKindCd, String dtmReasonCd, LocalDateTime staYmd, String staHm, LocalDateTime endYmd, String endHm, String dtmReason, String destPlc, String telno, String childNo, Long applId, String statCd, LocalDateTime finalApprYmd, String modiType, String modiReason, Long modiDtmHisId, Long modUserId, LocalDateTime modDate, String tzCd, LocalDateTime tzDate, String companyNm, String document, String adUseYn, String mailSendYn, String esbAskDt, LocalDateTime childBirthYmd, String dtmStoreYn, Long fileId, String sealMgrYn, String secuMgrYn, String infoMgrYn, String safeMgrYn, String placeCd, int limit, int offset, String dtmReasonNm, String statCdNm) {
+    public DtmHisDTO(final Long dtmHisId, final Long empId, final String dtmKindCd, final String dtmReasonCd, final LocalDateTime staYmd, final String staHm, final LocalDateTime endYmd, final String endHm, final String dtmReason, final String destPlc, final String telno, final String childNo, final Long applId, final String statCd, final LocalDateTime finalApprYmd, final String modiType, final String modiReason, final Long modiDtmHisId, final Long modUserId, final LocalDateTime modDate, final String tzCd, final LocalDateTime tzDate, final String companyNm, final String document, final String adUseYn, final String mailSendYn, final String esbAskDt, final LocalDateTime childBirthYmd, final String dtmStoreYn, final Long fileId, final String sealMgrYn, final String secuMgrYn, final String infoMgrYn, final String safeMgrYn, final String placeCd, final int limit, final int offset, final String dtmReasonNm, final String statCdNm) {
         super(dtmHisId, empId, dtmKindCd, dtmReasonCd, staYmd, staHm, endYmd, endHm, dtmReason, destPlc, telno, childNo, applId, statCd, finalApprYmd, modiType, modiReason, modiDtmHisId, modUserId, modDate, tzCd, tzDate, companyNm, document, adUseYn, mailSendYn, esbAskDt, childBirthYmd, dtmStoreYn, fileId, sealMgrYn, secuMgrYn, infoMgrYn, safeMgrYn, placeCd);
         this.limit = limit;
         this.offset = offset;
         this.status = calculateStatus(staYmd, staHm, endYmd, endHm);
         this.dtmReasonNm = dtmReasonNm;
         this.statCdNm = statCdNm;
-        log.info("this.dtmKindNm : " + this.dtmReasonNm + "this.statCdNm : " + this.statCdNm);
     }
 
     /***
@@ -112,11 +111,11 @@ public class DtmHisDTO extends DtmHisVO {
      * @implNote 경과여부 (과거/진행중/예정) 세팅
      * @since 2024-06-09
      */
-    public String calculateStatus(LocalDateTime staYmd, String staHm, LocalDateTime endYmd, String endHm) {
-        LocalDateTime now = LocalDateTime.now();
-        LocalDateTime startDateTime = LocalDateTime.of(staYmd.toLocalDate(), LocalTime.parse(staHm, DateTimeFormatter.ofPattern("HHmm")));
-        LocalDateTime endDateTime;
-        if ("2400".equals(endHm)) {
+    public final String calculateStatus(final LocalDateTime staYmd, final String staHm, final LocalDateTime endYmd, final String endHm) {
+        final LocalDateTime now = LocalDateTime.now();
+        final LocalDateTime startDateTime = LocalDateTime.of(staYmd.toLocalDate(), LocalTime.parse(staHm, DateTimeFormatter.ofPattern("HHmm")));
+        final LocalDateTime endDateTime;
+        if (midnight.equals(endHm)) {
             // endHm이 2400이면 +1일 00시로 설정
             endDateTime = LocalDateTime.of(endYmd.toLocalDate().plusDays(1), LocalTime.MIDNIGHT);
         } else {
@@ -124,12 +123,13 @@ public class DtmHisDTO extends DtmHisVO {
         }
 
         if (now.isBefore(startDateTime)) {
-            return "예정";
+            this.status = "예정";
         } else if (now.isAfter(endDateTime)) {
-            return "과거";
+        	this.status = "과거";
         } else {
-            return "진행";
+        	this.status = "진행";
         }
+        
+        return status;
     }
-    
 }

@@ -1,10 +1,10 @@
 package epams.domain.com.member.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import pams.model.vo.IamUserVO;
-
-import java.time.LocalDateTime;
 
 /***
  * 사용자 정보를 담는 DTO 클래스입니다.

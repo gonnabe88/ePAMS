@@ -85,7 +85,7 @@ public class CodeHtmlEntity extends BaseEntity implements Serializable {
      * @implNote setter for HTML_FL_NM
      * @since 2024-06-09
      */
-    public void setHTML_FL_NM(String html) {
+    public void setHTML_FL_NM(final String html) {
         if (this.htmlEntity == null) {
             this.htmlEntity = new HtmlEntity();
         }
@@ -97,7 +97,7 @@ public class CodeHtmlEntity extends BaseEntity implements Serializable {
      * @implNote setter for CDVA_ID
      * @since 2024-06-09
      */
-    public void setCDVA_ID(String code) {
+    public void setCDVA_ID(final String code) {
         if (this.codeEntity == null) {
             this.codeEntity = new CodeEntity();
         }

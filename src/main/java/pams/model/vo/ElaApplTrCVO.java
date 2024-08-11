@@ -16,19 +16,102 @@ import java.time.LocalDateTime;
 @Data
 public class ElaApplTrCVO {
 
-    private String apprKind; // 요청승인구분
-    private Long applId; // 신청서ID
-    private int ordNo; // 결재순번
-    private Long apprEmpId; // 결재직원ID
-    private String apprUsergroupId; // 결재자역할ID
-    private String apprCd; // 결재코드
-    private LocalDateTime apprDate; // 결재일시
-    private String apprInfo; // 결재자정보
-    private String refusalReason; // 반려사유
-    private String note; // 비고
-    private Long modUserId; // 변경자
-    private LocalDateTime modDate; // 변경일시
-    private String tzCd = "KST"; // 타임존코드
-    private LocalDateTime tzDate; // 타임존일시
+    /***
+     * @author 140024
+     * @implNote 요청승인구분
+     * @since 2024-08-11
+     */
+    private String apprKind;
+
+    /***
+     * @author 140024
+     * @implNote 신청서ID
+     * @since 2024-08-11
+     */
+    private Long applId;
+
+    /***
+     * @author 140024
+     * @implNote 결재순번
+     * @since 2024-08-11
+     */
+    private int ordNo;
+
+    /***
+     * @author 140024
+     * @implNote 결재직원ID
+     * @since 2024-08-11
+     */
+    private Long apprEmpId;
+
+    /***
+     * @author 140024
+     * @implNote 결재자역할ID
+     * @since 2024-08-11
+     */
+    private String apprUsergroupId;
+
+    /***
+     * @author 140024
+     * @implNote 결재코드
+     * @since 2024-08-11
+     */
+    private String apprCd;
+
+    /***
+     * @author 140024
+     * @implNote 결재일시
+     * @since 2024-08-11
+     */
+    private LocalDateTime apprDate;
+
+    /***
+     * @author 140024
+     * @implNote 결재자정보
+     * @since 2024-08-11
+     */
+    private String apprInfo;
+
+    /***
+     * @author 140024
+     * @implNote 반려사유
+     * @since 2024-08-11
+     */
+    private String refusalReason;
+
+    /***
+     * @author 140024
+     * @implNote 비고
+     * @since 2024-08-11
+     */
+    private String note;
+
+    /***
+     * @author 140024
+     * @implNote 변경자
+     * @since 2024-08-11
+     */
+    private Long modUserId;
+
+    /***
+     * @author 140024
+     * @implNote 변경일시
+     * @since 2024-08-11
+     */
+    private LocalDateTime modDate;
+
+    /***
+     * @author 140024
+     * @implNote 타임존코드
+     * @since 2024-08-11
+     */
+    private String tzCd = "KST";
+
+    /***
+     * @author 140024
+     * @implNote 타임존일시
+     * @since 2024-08-11
+     */
+    private LocalDateTime tzDate;
 
 }

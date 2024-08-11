@@ -31,11 +31,23 @@ const updatePaginationLinks = () => {
 }
 
 // 페이지네이션 버튼 클릭 시 전체화면을 reload 하지 않도록 비동기 처리
+// $(document).on('click', '.page-link', function(event) {
+//     event.preventDefault();
+//     let url = $(this).attr('href');
+//     $.get(url, function(data) {
+//         $('#dtmListContainer').html($(data).find('#dtmListContainer').html());
+//         updatePaginationLinks(); // 페이지 업데이트 후 다시 링크 업데이트
+//     });
+// });
+
+// 페이지네이션 버튼 클릭 시 전체화면을 reload 하지 않도록 비동기 처리
+// 2024-08-11 CWE-79(Cross-site Scripting (XSS)) 취약점 조치
 $(document).on('click', '.page-link', function(event) {
     event.preventDefault();
     let url = $(this).attr('href');
     $.get(url, function(data) {
-        $('#dtmListContainer').html($(data).find('#dtmListContainer').html());
+        let safeHTML = DOMPurify.sanitize($(data).find('#dtmListContainer').html());
+        $('#dtmListContainer').html(safeHTML);
         updatePaginationLinks(); // 페이지 업데이트 후 다시 링크 업데이트
     });
 });

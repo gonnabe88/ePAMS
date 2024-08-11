@@ -27,6 +27,13 @@ public class DtmHisDTO extends DtmHisVO {
      * @implNote 페이지당 게시물 수
      * @since 2024-06-09
      */
+    private Integer itemsPerPage = 5;
+
+    /***
+     * @author 140024
+     * @implNote 자정 시간
+     * @since 2024-06-09
+     */
     private final static String midnight = "2400";
 
     /***

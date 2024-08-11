@@ -13,6 +13,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -60,12 +62,18 @@ public class DtmApplRestController {
         dto.setEmpId(Long.parseLong(authentication().getName().replace('K', '7')));
         dto.setModUserId(Long.parseLong(authentication().getName().replace('K', '7')));
 
+        // 날짜를 YYYY-MM-DD 형식으로 포맷팅
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        // 응답 메시지 설정
         Map<String, String> response = new ConcurrentHashMap<>();
 
         try {
             // 서비스 호출 및 결과 메시지 설정
             String resultMessage = dtmApplyService.insert(dto);
             response.put("message", resultMessage);
+            response.put("staYmd",  dto.getStaYmd().toLocalDate().format(formatter));
+            response.put("endYmd",  dto.getEndYmd().toLocalDate().format(formatter));
             return new ResponseEntity<>(response, HttpStatus.CREATED);
 
         } catch (CustomGeneralRuntimeException e) {

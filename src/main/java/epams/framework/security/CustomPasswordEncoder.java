@@ -48,12 +48,12 @@ public class CustomPasswordEncoder implements PasswordEncoder {
 
     /**
      * @author K140024
-     * @implNote 인코딩된 비밀번호와 원본 비밀번호가 일치하는지 확인하는 메서드
+     * @implNote 사용자가 입력한 인코딩된 비밀번호와 DB에 저장된 원본 비밀번호가 일치하는지 확인하는 메서드
      * @since 2024-06-11
      */
     @Override
-    public boolean matches(final CharSequence rawPassword, final String encodedPassword) {
+    public boolean matches(final CharSequence storedPassword, final String encodedPassword) {
         // 2024-06-22 취약점 조치 (CWE-256 Unprotected Storage of Credentials)
-        return bCryptPwEncoder.matches(rawPassword, encodedPassword);
+        return bCryptPwEncoder.matches(storedPassword, encodedPassword);
     }
 }

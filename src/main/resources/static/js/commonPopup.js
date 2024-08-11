@@ -20,13 +20,19 @@ const popupHtmlMsg = (title, html, icon) => {
 }
 
 // 공통 팝업 URL Redirect
-const popupRedirectMsg = (title, text, icon, url) => {
+const popupReHtmlMsg = (title, html, icon, button_text, url) => {
     Swal.fire({
         title: title,
-        text: text,
+        html: html,
         icon: icon,
-        confirmButtonText: '확인'
-    }).then(() => {
-        window.location.href = url
+        showCancelButton: true,
+        cancelButtonColor: "#6c757d",
+        cancelButtonText: '닫기',
+        confirmButtonColor: "#3085d6",
+        confirmButtonText: button_text,
+    }).then((result) => {
+        if(result.isConfirmed) {
+            window.location.href = url
+        }
     });
 }

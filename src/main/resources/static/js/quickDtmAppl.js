@@ -73,7 +73,8 @@ const postDtmHisDTO = (dtmHisDTO) => {
         },
         data: JSON.stringify(dtmHisDTO), // 전송 DATA
         success: (data) => { // 성공 (HTTP 상태코드 20X)
-            popupHtmlMsg('신청되었습니다.', `<p style="text-align:center">${dtmHisDTO.staYmd} 연차 1일</p>`, 'success');
+            const staYmd = data.staYmd; // 서버에서 반환된 staYmd 값 사용
+            popupReHtmlMsg('신청되었습니다.', `<p style="text-align:center">${staYmd} 연차 1일</p>`, 'success', '근태조회', '/dtm/list');
             console.log('Success:', data);
         },
         error: (error) => { // 실패 (HTTP 상태코드 40X, 50X)
@@ -81,4 +82,14 @@ const postDtmHisDTO = (dtmHisDTO) => {
             console.error('Error:', error.status, error.responseJSON.error);
         }
     });
+};
+
+// JavaScript에서 날짜를 YYYY-MM-DD 형식으로 포맷팅하는 함수
+const formatDate = (date) => {
+    const d = new Date(date);
+    const month = '' + (d.getMonth() + 1);
+    const day = '' + d.getDate();
+    const year = d.getFullYear();
+
+    return [year, month.padStart(2, '0'), day.padStart(2, '0')].join('-');
 };

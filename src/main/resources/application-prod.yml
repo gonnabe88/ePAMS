@@ -33,8 +33,8 @@ spring:
   datasource:
     driver-class-name: oracle.jdbc.OracleDriver
     url: jdbc:oracle:thin:@192.168.0.10:1521:ORCLCDB
-    username: ehr
-    password: kdb1234!
+    username: EHR
+    password: ${DB_PASSWORD}  # 시스템 환경변수 kdb1234! 세팅
 
   # 나중에 실제로 운영에 배포할 떄는 꼭 지울것
   jpa:

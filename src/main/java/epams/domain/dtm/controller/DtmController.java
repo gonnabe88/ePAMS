@@ -2,10 +2,13 @@ package epams.domain.dtm.controller;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.TextStyle;
 import java.util.Locale;
 import java.util.Map;
 
+import epams.domain.com.commonCode.CommonCodeService;
+import epams.domain.dtm.dto.DtmHisDTO;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -73,6 +76,14 @@ public class DtmController<S extends Session> {
      */
     private final DtmService dtmService;
 
+
+    /**
+     * @author K140024
+     * @implNote 공통코드 서비스 주입
+     * @since 2024-06-11
+     */
+    private final CommonCodeService commonCodeService;
+
     /**
      * @author K140024
      * @implNote DTM 메인 화면을 반환하는 메서드
@@ -110,6 +121,37 @@ public class DtmController<S extends Session> {
 
         return VIEW;
     }
+
+    @GetMapping("/dtmApplPopup")
+    public String dtmApplPopup(
+            @RequestParam String dtmKindCd,
+            @RequestParam String dtmReasonCd,
+            @RequestParam String staYmd,
+            @RequestParam String endYmd,
+            @PageableDefault(page = 1) final Pageable pageable,
+            final Model model) {
+
+        final String VIEW = "/dtm/dtmApplPopup";
+
+        // DtmHisDTO 객체를 생성하여 필요한 로직에 활용 가능
+        DtmHisDTO dto = new DtmHisDTO();
+        dto.setDtmKindCd(dtmKindCd);
+        dto.setDtmReasonCd(dtmReasonCd);
+        dto.setStaYmd(LocalDateTime.parse(staYmd));
+        dto.setEndYmd(LocalDateTime.parse(endYmd));
+
+        // 필요한 로직 처리 후 모델에 추가
+        model.addAttribute("dtmHisDTO", dto);
+
+        // 기타 필요한 모델 속성 설정
+        final LocalDate today = LocalDate.now();
+        final DayOfWeek dayOfWeek = today.getDayOfWeek();
+        String formattedDate = today + "(" + dayOfWeek.getDisplayName(TextStyle.NARROW, Locale.KOREAN) + ")";
+        model.addAttribute("nowDate", formattedDate);
+
+        return VIEW; // View 이름 반환
+    }
+
     @GetMapping("/main2")
     public String dtmMain2(@PageableDefault(page = 1) final Pageable pageable, final Model model) {
         final String VIEW = "/dtm/main2";

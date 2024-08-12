@@ -56,4 +56,11 @@
           AND CD LIKE #{code} || '%'
     </select>
 
+    <!-- 코드유형 & 코드에 해당하는 코드 조회 -->
+    <select id="findOneByCodeKindAndCode" resultMap="commonCodeMap" parameterType="CommonCodeDTO">
+        SELECT * FROM OHR.XFRMD2C
+        WHERE CD_KIND = #{codeKind}
+          AND CD = #{code}
+    </select>
+
 </mapper>

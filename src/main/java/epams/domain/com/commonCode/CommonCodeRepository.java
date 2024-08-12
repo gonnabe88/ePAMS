@@ -48,5 +48,14 @@ public class CommonCodeRepository {
 	public List<CommonCodeDTO> findByCodeKindAndCode(CommonCodeDTO dto) {
 		return sql.selectList("CommonCode.findByCodeKindAndCode", dto);
 	}
+
+	/***
+	 * @author 140024
+	 * @implNote 코드유형 & 코드에 해당하는 코드 조회
+	 * @since 2024-06-09
+	 */
+	public CommonCodeDTO findOneByCodeKindAndCode(CommonCodeDTO dto) {
+		return sql.selectOne("CommonCode.findOneByCodeKindAndCode", dto);
+	}
     
 }

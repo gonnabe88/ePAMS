@@ -111,13 +111,26 @@ public class BoardImageController {
      */
     @GetMapping("/upload/image/{storedFileName}")
     public ResponseEntity<Resource> getBoardImageById(@PathVariable("storedFileName") final String storedFileName) {
-    	ResponseEntity<Resource> responseEntity =  ResponseEntity.status(500).body(null);
-        
+        ResponseEntity<Resource> responseEntity = ResponseEntity.status(500).body(null);
+
         try {
-            final Path filePath = Paths.get(filepath + storedFileName);
+            // 파일 이름 검증: 경로 탐색 패턴(../) 차단 및 허용된 문자만으로 구성되었는지 확인
+            // CWE-918 - Server-Side Request Forgery (SSRF)
+            if (storedFileName.contains("..") || !storedFileName.matches("[a-zA-Z0-9._-]+")) {
+                return ResponseEntity.badRequest().build();
+            }
+
+            // 파일 경로 생성 및 파일 존재 여부 확인
+            // CWE-918 - Server-Side Request Forgery (SSRF)
+            final Path filePath = Paths.get(filepath).resolve(storedFileName).normalize();
             final Resource resource = new UrlResource(filePath.toUri());
 
-            if (resource.exists() || resource.isReadable()) {
+            if (!filePath.startsWith(Paths.get(filepath).normalize())) {
+                // 파일 경로가 기본 디렉토리 경로를 벗어나는 경우 접근 차단
+                // CWE-918 - Server-Side Request Forgery (SSRF)
+                return ResponseEntity.badRequest().build();            }
+
+            if (resource.exists() && resource.isReadable()) {
                 responseEntity = ResponseEntity.ok()
                         .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + storedFileName + "\"")
                         .body(resource);

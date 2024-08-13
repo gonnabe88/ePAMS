@@ -75,9 +75,9 @@ public class CodeEntity extends BaseEntity implements Serializable {
      */
     @ManyToMany
     @JoinTable(
-        name = "THURXE_CCDHTR",
-        joinColumns = @JoinColumn(name = "CDVA_ID", foreignKey = @ForeignKey(name = "FK_THURXE_CCDHTR_CDVA_ID")),
-        inverseJoinColumns = @JoinColumn(name = "HTML_FL_PTH", foreignKey = @ForeignKey(name = "FK_THURXE_CCDHTR_HTML_FL_PTH"))
+        name = "THURXE_CCDHTA",
+        joinColumns = @JoinColumn(name = "CDVA_ID", foreignKey = @ForeignKey(name = "FK_THURXE_CCDHTA_CDVA_ID")),
+        inverseJoinColumns = @JoinColumn(name = "HTML_FL_PTH", foreignKey = @ForeignKey(name = "FK_THURXE_CCDHTA_HTML_FL_PTH"))
     )
     
     /***

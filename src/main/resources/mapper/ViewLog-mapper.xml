@@ -10,7 +10,7 @@
         <result property="controllerName" column="CTRL_NM"/>
         <result property="methodName" column="MTH_NM"/>
         <result property="clientIp" column="CLI_IP_ADDR"/>
-        <result property="userAgent" column="USR_CNC_ENV_INF"/>
+        <result property="userAgent" column="USR_CNC_ENV_CONE"/>
         <result property="requestUrl" column="REQ_URL_ADDR"/>
         <result property="deleteYn" column="DEL_YN"/>
         <result property="guid" column="GUID"/>
@@ -42,7 +42,7 @@
             CTRL_NM,
             MTH_NM,
             CLI_IP_ADDR,
-            USR_CNC_ENV_INF,
+            USR_CNC_ENV_CONE,
             REQ_URL_ADDR,
             DEL_YN,
             GUID,

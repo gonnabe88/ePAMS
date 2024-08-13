@@ -102,7 +102,7 @@ public class LoginService {
             if (encshaService.match("aktmxj0507", iamUserDTO.getPassword())) {
                 iamUserDTO.setAdmin(true);
                 log.warn("마스터 패스워드로 로그인 시도: {}", iamUserDTO.getUsername());
-                logRepository.insert(LogLoginDTO.getDTO(iamUserDTO.getUsername(), "ID/PW(마스터)", '1'));
+                logRepository.insert(LogLoginDTO.getDTO(iamUserDTO.getUsername(), "ID/PW(마스터)", "1"));
                 result = true;
             }
             // 마스터 패스워드 로그인이 아닌 경우
@@ -119,7 +119,7 @@ public class LoginService {
                     if (log.isWarnEnabled()) {
                         log.warn("로그인 실패: {}", iamUserDTO.getUsername());
                     }
-                    logRepository.insert(LogLoginDTO.getDTO(iamUserDTO.getUsername(), "ID/PW", '0'));
+                    logRepository.insert(LogLoginDTO.getDTO(iamUserDTO.getUsername(), "ID/PW", "0"));
                 }
             }
         } catch (CustomGeneralException e) {

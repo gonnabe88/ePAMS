@@ -39,7 +39,7 @@
         FROM
             THURXE_CLOGNL
         WHERE
-            LGN_SCS_YN = 1
+            LGN_SCS_YN = '1'
         GROUP BY
             CER_KD_NM
         ORDER BY

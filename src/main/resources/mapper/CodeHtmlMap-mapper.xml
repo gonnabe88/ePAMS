@@ -18,19 +18,19 @@
 
     <!-- 모든 데이터 조회 -->
     <select id="findAll" resultMap="codeHtmlMap">
-        SELECT * FROM THURXE_CCDHTR
+        SELECT * FROM THURXE_CCDHTA
     </select>
 
     <!-- 기본키 데이터 중복여부 조회 -->
     <select id="countById" parameterType="codeHtmlDTO" resultType="int">
         SELECT COUNT(*)
-        FROM THURXE_CCDHTR
+        FROM THURXE_CCDHTA
         WHERE HTML_FL_PTH = #{html} AND CDVA_ID = #{code}
     </select>
 
     <!-- 신규 데이터 추가 -->
     <insert id="insert" parameterType="codeHtmlDTO">
-        INSERT INTO THURXE_CCDHTR (
+        INSERT INTO THURXE_CCDHTA (
             HTML_FL_PTH,
             CDVA_ID,
             DEL_YN,
@@ -54,7 +54,7 @@
 
     <!-- 기존 데이터 삭제 -->
     <delete id="delete" parameterType="codeHtmlDTO">
-        DELETE FROM THURXE_CCDHTR
+        DELETE FROM THURXE_CCDHTA
         WHERE HTML_FL_PTH = #{html} AND CDVA_ID = #{code}
     </delete>
 

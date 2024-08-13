@@ -24,7 +24,7 @@ import jakarta.persistence.Table;
 @Setter
 @ToString
 @Builder
-@Table(name = "THURXE_CCDHTR")
+@Table(name = "THURXE_CCDHTA")
 @Comment("인사_외부근태 코드HTML관계")
 public class CodeHtmlEntity extends BaseEntity implements Serializable {
 
@@ -43,7 +43,7 @@ public class CodeHtmlEntity extends BaseEntity implements Serializable {
     @ManyToOne
     @JoinColumn(
             name = "HTML_FL_PTH",
-            foreignKey = @ForeignKey(name = "FK_THURXE_CCDHTR_HTML_FL_PTH", foreignKeyDefinition = "FOREIGN KEY (HTML_FL_PTH) REFERENCES THURXE_CHTMLM (HTML_FL_PTH) ON DELETE CASCADE")
+            foreignKey = @ForeignKey(name = "FK_THURXE_CCDHTA_HTML_FL_PTH", foreignKeyDefinition = "FOREIGN KEY (HTML_FL_PTH) REFERENCES THURXE_CHTMLM (HTML_FL_PTH) ON DELETE CASCADE")
         )
     @Comment("HTML경로명")
     private HtmlEntity htmlEntity;
@@ -57,7 +57,7 @@ public class CodeHtmlEntity extends BaseEntity implements Serializable {
     @ManyToOne
     @JoinColumn(
             name = "CDVA_ID",
-            foreignKey = @ForeignKey(name = "FK_THURXE_CCDHTR_CDVA_ID", foreignKeyDefinition = "FOREIGN KEY (CDVA_ID) REFERENCES THURXE_CCODEM (CDVA_ID) ON DELETE CASCADE")
+            foreignKey = @ForeignKey(name = "FK_THURXE_CCDHTA_CDVA_ID", foreignKeyDefinition = "FOREIGN KEY (CDVA_ID) REFERENCES THURXE_CCODEM (CDVA_ID) ON DELETE CASCADE")
     )
     @Comment("코드값ID")
     private CodeEntity codeEntity;

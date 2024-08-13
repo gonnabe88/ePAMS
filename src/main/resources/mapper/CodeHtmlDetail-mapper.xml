@@ -13,7 +13,7 @@
             CH.CDVA_ID     AS code, 
             C.CDVA_NM      AS codeName 
         FROM 
-            THURXE_CCDHTR CH, 
+            THURXE_CCDHTA CH, 
             THURXE_CCODEM C, 
             THURXE_CHTMLM H
         WHERE 

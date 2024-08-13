@@ -39,6 +39,6 @@ public class LogLoginVO extends BaseVO {
      * @implNote 로그인성공여부 (LGN_SCS_YN)
      * @since 2024-06-09
      */
-    private char loginResult;
+    private String loginResult;
     
 }

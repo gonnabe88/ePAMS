@@ -32,6 +32,7 @@ public class LogViewEntity extends BaseEntity {
      * @since 2024-06-09
      */
     @Id // 기본키
+    @Column(name = SEQUENCE, columnDefinition = "NUMBER(22)")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQUENCE)
     @SequenceGenerator(name = SEQUENCE, sequenceName = SEQUENCE, allocationSize = 1)
     @Comment("페이지로그일련번호")
@@ -42,7 +43,7 @@ public class LogViewEntity extends BaseEntity {
      * @implNote 호출 컨트롤러명
      * @since 2024-06-09
      */
-    @Column(name = "CTRL_NM", length = 400, nullable = false)
+    @Column(name = "CTRL_NM", length = 500, nullable = false)
     @Comment("컨트롤러명")
     private String CTRL_NM;
 
@@ -69,9 +70,9 @@ public class LogViewEntity extends BaseEntity {
      * @implNote 사용자접속환경내용
      * @since 2024-06-09
      */
-    @Column(name = "USR_CNC_ENV_INF", length = 2000, nullable = false) 
+    @Column(name = "USR_CNC_ENV_CONE", length = 2000, nullable = false)
     @Comment("사용자접속환경내용")
-    private String USR_CNC_ENV_INF;
+    private String USR_CNC_ENV_CONE;
     
     /***
      * @author 140024

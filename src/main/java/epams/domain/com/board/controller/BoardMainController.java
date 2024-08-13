@@ -3,6 +3,7 @@ package epams.domain.com.board.controller;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
@@ -122,7 +123,7 @@ public class BoardMainController {
     @GetMapping("/{seqId}")
     public String findById(@PathVariable("seqId") final Long seqId, final Model model,
                            @PageableDefault(page = 1) final Pageable pageable) {
-        final int FILE_ATTACHED = 1; // 상수로 리터럴 값을 추출
+        final String FILE_ATTACHED = "1"; // 상수로 리터럴 값을 추출
 
         boardService.updateHits(seqId);
         final BoardDTO boardDTO = boardService.findById(seqId);
@@ -130,8 +131,10 @@ public class BoardMainController {
         model.addAttribute("page", pageable.getPageNumber());
         
         // 파일이 첨부된 경우 첨부파일 리스트 반환
-        if (boardDTO.getFileAttached() == FILE_ATTACHED) {
+        if (FILE_ATTACHED.equals(boardDTO.getFileAttached())) {
+            log.warn("File attached");
             final List<BoardFileDTO> boardFileDTOList = boardService.findFile(seqId);
+            log.warn("File list: {}", boardFileDTOList);
             model.addAttribute("boardFileList", boardFileDTOList);
         }
 

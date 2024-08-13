@@ -40,7 +40,7 @@ public class BoardDTO extends BoardVO {
         this.setBoardTitle(boardTitle);
         this.setCategory(category);
         this.setBoardHits(boardHits);
-        this.setFileAttached(0);
+        this.setFileAttached("0");
         this.setCreatedTime(boardCreatedTime);
     }
 }

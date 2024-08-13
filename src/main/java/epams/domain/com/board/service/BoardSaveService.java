@@ -60,7 +60,7 @@ public class BoardSaveService {
      * @since 2024-04-26
      */
     public BoardDTO save(final BoardDTO newBoardDTO) throws IOException {
-        final int FILE_ATTACHED = 1; // 상수로 리터럴 값을 추출 (취약점 조치건)
+        final String FILE_ATTACHED = "1"; // 상수로 리터럴 값을 추출 (취약점 조치건)
 
         if (newBoardDTO.getBoardFile() != null) { // 새로운 첨부파일이 있는 경우
             newBoardDTO.setFileAttached(FILE_ATTACHED); // 첨부파일 여부 1 세팅

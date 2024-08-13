@@ -107,11 +107,11 @@ public class BoardUpdateController {
      */
     @GetMapping("/update/{seqId}")
     public String updateForm(@PathVariable("seqId") final Long seqId, final Model model) {
-        final int FILE_ATTACHED = 1; // 상수로 리터럴 값을 추출
+        final String FILE_ATTACHED = "1"; // 상수로 리터럴 값을 추출
         final BoardDTO boardDTO = boardMainServ.findById(seqId);
         model.addAttribute("board", boardDTO);
         
-        if (boardDTO.getFileAttached() == FILE_ATTACHED) {
+        if (FILE_ATTACHED.equals(boardDTO.getFileAttached())) {
             final List<BoardFileDTO> boardFileDTOList = boardMainServ.findFile(seqId);
             model.addAttribute("boardFileList", boardFileDTOList);
         }

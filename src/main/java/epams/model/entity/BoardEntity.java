@@ -104,7 +104,7 @@ public class BoardEntity extends BaseEntity {
      */
     @Column(name = "FL_APG_YN", length = 1)
     @Comment("파일첨부여부")
-    private int FL_APG_YN;
+    private String FL_APG_YN;
 
     /**
      * @author 140024

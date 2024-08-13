@@ -60,5 +60,5 @@ public class BoardVO extends BaseVO {
      * @implNote [Column] 파일첨부여부(FL_APG_YN)
      * @since 2024-06-09
      */
-    private int fileAttached;
+    private String fileAttached;
 }

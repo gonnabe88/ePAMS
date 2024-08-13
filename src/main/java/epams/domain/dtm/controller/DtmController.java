@@ -3,6 +3,8 @@ package epams.domain.dtm.controller;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.time.format.TextStyle;
 import java.util.Locale;
 import java.util.Map;
@@ -17,6 +19,7 @@ import org.springframework.session.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -124,21 +127,32 @@ public class DtmController<S extends Session> {
 
     @GetMapping("/dtmApplPopup")
     public String dtmApplPopup(
-            @RequestParam String dtmKindCd,
-            @RequestParam String dtmReasonCd,
-            @RequestParam String staYmd,
-            @RequestParam String endYmd,
+            @RequestParam("dtmKindCd") String dtmKindCd,
+            @RequestParam("dtmReasonCd") String dtmReasonCd,
+            @RequestParam("staYmd") String staYmd,
+            @RequestParam("endYmd") String endYmd,
             @PageableDefault(page = 1) final Pageable pageable,
             final Model model) {
 
         final String VIEW = "/dtm/dtmApplPopup";
 
+        // 날짜 형식이 ISO-8601 형식인 경우
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
+
         // DtmHisDTO 객체를 생성하여 필요한 로직에 활용 가능
         DtmHisDTO dto = new DtmHisDTO();
         dto.setDtmKindCd(dtmKindCd);
         dto.setDtmReasonCd(dtmReasonCd);
-        dto.setStaYmd(LocalDateTime.parse(staYmd));
-        dto.setEndYmd(LocalDateTime.parse(endYmd));
+
+        // 날짜 문자열을 LocalDateTime으로 변환
+        try {
+            dto.setStaYmd(LocalDateTime.parse(staYmd, formatter));
+            dto.setEndYmd(LocalDateTime.parse(endYmd, formatter));
+        } catch (DateTimeParseException e) {
+            // 날짜 파싱 실패 시 처리 (예: 기본값 설정 또는 예외 처리)
+            model.addAttribute("error", "Invalid date format");
+            return "errorView";
+        }
 
         // 필요한 로직 처리 후 모델에 추가
         model.addAttribute("dtmHisDTO", dto);

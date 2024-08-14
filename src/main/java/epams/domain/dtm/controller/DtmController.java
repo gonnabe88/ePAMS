@@ -125,47 +125,6 @@ public class DtmController<S extends Session> {
         return VIEW;
     }
 
-    @GetMapping("/dtmApplPopup")
-    public String dtmApplPopup(
-            @RequestParam("dtmKindCd") String dtmKindCd,
-            @RequestParam("dtmReasonCd") String dtmReasonCd,
-            @RequestParam("staYmd") String staYmd,
-            @RequestParam("endYmd") String endYmd,
-            @PageableDefault(page = 1) final Pageable pageable,
-            final Model model) {
-
-        final String VIEW = "/dtm/dtmApplPopup";
-
-        // 날짜 형식이 ISO-8601 형식인 경우
-        DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
-
-        // DtmHisDTO 객체를 생성하여 필요한 로직에 활용 가능
-        DtmHisDTO dto = new DtmHisDTO();
-        dto.setDtmKindCd(dtmKindCd);
-        dto.setDtmReasonCd(dtmReasonCd);
-
-        // 날짜 문자열을 LocalDateTime으로 변환
-        try {
-            dto.setStaYmd(LocalDateTime.parse(staYmd, formatter));
-            dto.setEndYmd(LocalDateTime.parse(endYmd, formatter));
-        } catch (DateTimeParseException e) {
-            // 날짜 파싱 실패 시 처리 (예: 기본값 설정 또는 예외 처리)
-            model.addAttribute("error", "Invalid date format");
-            return "errorView";
-        }
-
-        // 필요한 로직 처리 후 모델에 추가
-        model.addAttribute("dtmHisDTO", dto);
-
-        // 기타 필요한 모델 속성 설정
-        final LocalDate today = LocalDate.now();
-        final DayOfWeek dayOfWeek = today.getDayOfWeek();
-        String formattedDate = today + "(" + dayOfWeek.getDisplayName(TextStyle.NARROW, Locale.KOREAN) + ")";
-        model.addAttribute("nowDate", formattedDate);
-
-        return VIEW; // View 이름 반환
-    }
-
     @GetMapping("/main2")
     public String dtmMain2(@PageableDefault(page = 1) final Pageable pageable, final Model model) {
         final String VIEW = "/dtm/main2";

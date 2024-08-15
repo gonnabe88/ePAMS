@@ -1,4 +1,31 @@
-//Sidebar
+// (페이지 로딩 시) 관리자 페이지와 일반 사용자 페이지의 sidebar를 동적으로 변경하는 스크립트
+window.addEventListener('DOMContentLoaded', function() {
+    var isChecked = document.getElementById('flexSwitchCheckDefault').checked;
+    var url = isChecked ? '/common/layout/renderSidebarAdmin' : '/common/layout/renderSidebarNormal';
+    console.log("url: " + url);
+    fetch(url)
+        .then(response => response.text())
+        .then(html => {
+            document.querySelector('.menu').innerHTML = html;
+        })
+        .catch(error => console.error('Error loading sidebar:', error));
+});
+
+// (Switch 변경 시) 관리자 페이지와 일반 사용자 페이지의 sidebar를 동적으로 변경하는 스크립트
+document.getElementById('flexSwitchCheckDefault').addEventListener('change', function () {
+    var isChecked = this.checked;
+    var url = isChecked ? '/common/layout/renderSidebarAdmin' : '/common/layout/renderSidebarNormal';
+    console.log("url: " + url);
+    // 서버에 요청을 보내어 해당 템플릿을 받아옴
+    fetch(url)
+        .then(response => response.text())
+        .then(html => {
+            document.querySelector('.menu').innerHTML = html;
+        })
+        .catch(error => console.error('Error loading sidebar:', error));
+});
+
+// Sidebar 기본
 const DesktopSize = 1200;
 class Mr {
     constructor(k, s={}) {
@@ -162,30 +189,3 @@ const Bn = U=>{
 document.readyState !== "loading" ? Bn(Xe) : window.addEventListener("DOMContentLoaded", ()=>Bn(Xe)),
     window.Sidebar = Mr;
 Xe && new window.Sidebar(Xe);
-
-
-window.addEventListener('DOMContentLoaded', function() {
-    var isChecked = document.getElementById('flexSwitchCheckDefault').checked;
-    var url = isChecked ? '/common/layout/renderSidebarAdmin' : '/common/layout/renderSidebarNormal';
-    console.log("url: " + url);
-    fetch(url)
-        .then(response => response.text())
-        .then(html => {
-            document.querySelector('.menu').innerHTML = html;
-        })
-        .catch(error => console.error('Error loading sidebar:', error));
-});
-
-document.getElementById('flexSwitchCheckDefault').addEventListener('change', function () {
-    var isChecked = this.checked;
-    var url = isChecked ? '/common/layout/renderSidebarAdmin' : '/common/layout/renderSidebarNormal';
-    console.log("url: " + url);
-    // 서버에 요청을 보내어 해당 템플릿을 받아옴
-    fetch(url)
-        .then(response => response.text())
-        .then(html => {
-            document.querySelector('.menu').innerHTML = html;
-        })
-        .catch(error => console.error('Error loading sidebar:', error));
-});
-

@@ -4,6 +4,7 @@ import epams.model.vo.HtmlVO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 /***
  * @author 140024
@@ -13,6 +14,7 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @Data
+@ToString(callSuper = true) // 상위 클래스의 toString 포함
 public class HtmlDTO extends HtmlVO {
 
 }

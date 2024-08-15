@@ -1,6 +1,8 @@
 <!DOCTYPE html>
+<!--common/layout/sidebar.html-->
 <html
     xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org"
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
     
 <head></head>
@@ -13,11 +15,18 @@
 				<div class="sidebar-header position-relative">
 						<div class="logo mt-3">
 							<a href="/index"><img src="/images/kdb/H_KDB_CI.png" style="height:1.6rem;" alt="Logo" srcset=""></a>
-						</div>					
-				</div>			
+						</div>
+				</div>
+
+				<div class="d-flex justify-content-end me-3" sec:authorize="hasRole('ADMIN')">
+					<div class="form-check form-switch">
+						<input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+						<label class="form-check-label" for="flexSwitchCheckDefault">관리자</label>
+					</div>
+				</div>
 				
 				<div class="sidebar-menu">
-				
+
 					<div class="d-flex justify-content-end align-items-end me-3">
 						<div class="sidebar-toggler  x mt-3">
 							<a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x-circle-fill bi-middle"></i></a>
@@ -25,123 +34,26 @@
 					</div>
 				
 					<ul class="menu">
-					
-						<li class="sidebar-title">공통</li>
 
-						<li class="sidebar-item">
-							<a href="/board/list" class='sidebar-link'> 
-								<i class="bi bi-bell-fill"></i> 
-								<span>공지사항</span>
-							</a>
-						</li>
-						
-						<li class="sidebar-title">인사</li>	
-
-						<li class="sidebar-item">
-							<a href="/dtm/main" class='sidebar-link'> 
-								<i class="bi bi-stack"></i> 
-								<span>근태신청</span>
-							</a>
-						</li>
-
-						<li class="sidebar-item">
-							<a href="/dtm/main2" class='sidebar-link'>
-								<i class="bi bi-stack"></i>
-								<span>근태신청2</span>
-							</a>
-						</li>
-						
-						<li class="sidebar-item">
-							<a href="/dtm/list" class='sidebar-link'> 
-								<i class="bi bi-collection-fill"></i> 
-								<span>근태조회</span>
-							</a>
-						</li>				
-						
 						<div class="divider">
 							<div class="divider-text" style="background-color: transparent;">
 								<img class="divider-text" src="/images/kdb/epams_r_cw_action.gif"
 									style="width: 50px; height: 50px; border-radius: 50%; padding: 0;" />
 							</div>
 						</div>
-						
-						<li class="sidebar-title">관리자</li>
-						<li class="sidebar-item">
-							<a href="/admin/dashboard" class='sidebar-link' >
-								<i class="bi bi-dot"></i>
-								<span>대시보드</span>
-							</a>
-						</li>
-						<li class="sidebar-item">
-							<a href="/admin/code" class='sidebar-link' >
-								<i class="bi bi-dot"></i>						
-								<span>코드관리</span>
-							</a>
-						</li>
-						<li class="sidebar-item">
-							<a href="/admin/page" class='sidebar-link' >
-								<i class="bi bi-dot"></i>						
-								<span>화면관리</span>
-							</a>
-						</li>
-						<li class="sidebar-item">
-							<a href="/admin/codeHtmlMap" class='sidebar-link' >
-								<i class="bi bi-dot"></i>
-								<span>화면코드관리</span>
-							</a>
-						</li>
-						<li class="sidebar-item">
-							<a href="/admin/user" class='sidebar-link' >
-								<i class="bi bi-dot"></i>						
-								<span>사용자목록</span>
-							</a>
-						</li>
-						<li class="sidebar-item">
-							<a href="/admin/role" class='sidebar-link' >
-								<i class="bi bi-dot"></i>
-								<span>역할관리</span>
-							</a>
-						</li>
-						<li class="sidebar-item">
-							<a href="/admin/login" class='sidebar-link' >
-								<i class="bi bi-dot"></i>						
-								<span>로그인로그</span>
-							</a>
-						</li>
-						<li class="sidebar-item">
-							<a href="/admin/loginotp" class='sidebar-link' >
-								<i class="bi bi-dot"></i>						
-								<span>OTP발급로그</span>
-							</a>
-						</li>
-						<li class="sidebar-item">
-							<a href="/admin/viewlog" class='sidebar-link' >
-								<i class="bi bi-dot"></i>						
-								<span>VIEW로그</span>
-							</a>
-						</li>
-						<li class="sidebar-item">
-							<a href="/admin/health" class='sidebar-link' >
-								<i class="bi bi-dot"></i>						
-								<span>시스템현황</span>
-							</a>
-						</li>
-						
-						<li class="sidebar-title">기타</li>	
+
 						<li class="sidebar-item">
 							<a href="/logout" class='sidebar-link' >
-								<i class="bi bi-x-octagon-fill"></i>						
+								<i class="bi bi-x-octagon-fill"></i>
 								<span>로그아웃</span>
 							</a>
-						</li>												
-					</ul>					
+						</li>
+					</ul>
+
 				</div>	
 				
 			</div>
 		</div>
-	</div>	
-	<th:block layout:fragment="script">
-
-	</th:block>
+	</div>
 </body>
 </html>

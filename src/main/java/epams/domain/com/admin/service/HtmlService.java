@@ -45,16 +45,19 @@ public class HtmlService {
     public void save(final List<HtmlDTO> added, final List<HtmlDTO> changed, final List<HtmlDTO> deleted) {    	
         // Handle added members
         for (final HtmlDTO dto : added) {
+            log.warn("Added: {}", dto.toString());
         	htmlRepository.insertUpdate(dto);
         }
 
         // Handle changed members
         for (final HtmlDTO dto : changed) {
+            log.warn("update: {}", dto.toString());
         	htmlRepository.update(dto);
         }
 
         // Handle deleted members
         for (final HtmlDTO dto : deleted) {
+            log.warn("delete: {}", dto.toString());
         	htmlRepository.delete(dto);
         }
         

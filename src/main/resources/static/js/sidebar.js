@@ -162,3 +162,30 @@ const Bn = U=>{
 document.readyState !== "loading" ? Bn(Xe) : window.addEventListener("DOMContentLoaded", ()=>Bn(Xe)),
     window.Sidebar = Mr;
 Xe && new window.Sidebar(Xe);
+
+
+window.addEventListener('DOMContentLoaded', function() {
+    var isChecked = document.getElementById('flexSwitchCheckDefault').checked;
+    var url = isChecked ? '/common/layout/renderSidebarAdmin' : '/common/layout/renderSidebarNormal';
+    console.log("url: " + url);
+    fetch(url)
+        .then(response => response.text())
+        .then(html => {
+            document.querySelector('.menu').innerHTML = html;
+        })
+        .catch(error => console.error('Error loading sidebar:', error));
+});
+
+document.getElementById('flexSwitchCheckDefault').addEventListener('change', function () {
+    var isChecked = this.checked;
+    var url = isChecked ? '/common/layout/renderSidebarAdmin' : '/common/layout/renderSidebarNormal';
+    console.log("url: " + url);
+    // 서버에 요청을 보내어 해당 템플릿을 받아옴
+    fetch(url)
+        .then(response => response.text())
+        .then(html => {
+            document.querySelector('.menu').innerHTML = html;
+        })
+        .catch(error => console.error('Error loading sidebar:', error));
+});
+

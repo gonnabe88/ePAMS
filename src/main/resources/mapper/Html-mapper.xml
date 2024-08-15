@@ -85,7 +85,7 @@
                 #{lstChgUsid} AS LST_CHG_USID
             FROM dual
         ) source
-        ON (target.GUID = source.GUID)
+        ON (target.HTML_FL_PTH = source.HTML_FL_PTH)
         WHEN MATCHED THEN
             UPDATE SET
                target.HTML_FL_NM = source.HTML_FL_NM,

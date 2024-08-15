@@ -1,0 +1,74 @@
+<!--common/layout/sidebarAdmin.html-->
+
+<div th:fragment="menu">
+
+	<li class="sidebar-title">관리자</li>
+	<li class="sidebar-item">
+		<a href="/admin/dashboard" class='sidebar-link' >
+			<i class="bi bi-dot"></i>
+			<span>대시보드</span>
+		</a>
+	</li>
+	<li class="sidebar-item">
+		<a href="/admin/code" class='sidebar-link' >
+			<i class="bi bi-dot"></i>
+			<span>코드관리</span>
+		</a>
+	</li>
+	<li class="sidebar-item">
+		<a href="/admin/page" class='sidebar-link' >
+			<i class="bi bi-dot"></i>
+			<span>화면관리</span>
+		</a>
+	</li>
+	<li class="sidebar-item">
+		<a href="/admin/codeHtmlMap" class='sidebar-link' >
+			<i class="bi bi-dot"></i>
+			<span>화면코드관리</span>
+		</a>
+	</li>
+	<li class="sidebar-item">
+		<a href="/admin/user" class='sidebar-link' >
+			<i class="bi bi-dot"></i>
+			<span>사용자목록</span>
+		</a>
+	</li>
+	<li class="sidebar-item">
+		<a href="/admin/role" class='sidebar-link' >
+			<i class="bi bi-dot"></i>
+			<span>역할관리</span>
+		</a>
+	</li>
+	<li class="sidebar-item">
+		<a href="/admin/login" class='sidebar-link' >
+			<i class="bi bi-dot"></i>
+			<span>로그인로그</span>
+		</a>
+	</li>
+	<li class="sidebar-item">
+		<a href="/admin/loginotp" class='sidebar-link' >
+			<i class="bi bi-dot"></i>
+			<span>OTP발급로그</span>
+		</a>
+	</li>
+	<li class="sidebar-item">
+		<a href="/admin/viewlog" class='sidebar-link' >
+			<i class="bi bi-dot"></i>
+			<span>VIEW로그</span>
+		</a>
+	</li>
+	<li class="sidebar-item">
+		<a href="/admin/health" class='sidebar-link' >
+			<i class="bi bi-dot"></i>
+			<span>시스템현황</span>
+		</a>
+	</li>
+
+	<li class="sidebar-title">기타</li>
+	<li class="sidebar-item">
+		<a href="/logout" class='sidebar-link' >
+			<i class="bi bi-x-octagon-fill"></i>
+			<span>로그아웃</span>
+		</a>
+	</li>
+</div>

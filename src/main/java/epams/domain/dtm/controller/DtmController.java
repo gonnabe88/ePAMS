@@ -2,15 +2,11 @@ package epams.domain.dtm.controller;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.time.format.TextStyle;
 import java.util.Locale;
 import java.util.Map;
 
 import epams.domain.com.commonCode.CommonCodeService;
-import epams.domain.dtm.dto.DtmHisDTO;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,12 +15,11 @@ import org.springframework.session.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import epams.domain.com.admin.service.CodeHtmlDetailService;
+import epams.domain.com.admin.service.HtmlLangDetailService;
 import epams.domain.com.board.dto.BoardDTO;
 import epams.domain.com.board.service.BoardMainService;
 import epams.domain.dtm.service.DtmService;
@@ -70,7 +65,7 @@ public class DtmController<S extends Session> {
      * @implNote 코드 상세 서비스 주입
      * @since 2024-06-11
      */
-    private final CodeHtmlDetailService codeDetailService;
+    private final HtmlLangDetailService codeDetailService;
 
     /**
      * @author K140024

@@ -21,7 +21,7 @@
                     <div class="page-heading">
                         <div class="align-middle">
                             <h2>
-                                <i class="bi bi-bell-fill"></i> 근태조회 </h2><br>
+                                <i class="bi bi-bell-fill"></i> <span th:text="${langList['DTM_LIST']}"></span> </h2><br>
                         </div>
                     </div>
                     <!-- 페이지 제목 끝 -->
@@ -39,10 +39,10 @@
 
                             <!-- Button Group on the Right -->
                             <div class="ms-auto">
-                                <button type="button" class="btn btn-primary btn-sm" id="openDtmStatusModal">휴가 현황 보기
+                                <button type="button" class="btn btn-primary btn-sm" id="openDtmStatusModal"><span th:text="${langList['DTM_STATUS']}"></span>
                                 </button>
                                 <button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="collapse" data-bs-target="#collapseSearch" aria-expanded="false" aria-controls="collapseSearch">
-                                    <i class="bi bi-search"></i>검색
+                                    <i class="bi bi-search"></i><span th:text="${langList['RETRIEVE']}"></span>
                                 </button>
                             </div>
                         </div>
@@ -57,44 +57,44 @@
                                     <div class="card">
                                         <div class="card-body p-3">
                                             <div class="d-flex align-items-center justify-content-between mb-2">
-                                                <h6>결재상태</h6>
+                                                <h6><span th:text="${langList['ELA_STAT']}"></span></h6>
                                                 <div class="btn-group btn-group-sm" role="group" aria-label="Basic radio toggle button group">
                                                     <input type="checkbox" class="btn-check" name="statCdList" id="121" autocomplete="off" checked>
-                                                    <label class="btn btn-outline-primary" for="121">결재중</label>
+                                                    <label class="btn btn-outline-primary" for="121"><span th:text="${langList['ELA_STAT_CD_121_S']}"></span></label>
 
                                                     <input type="checkbox" class="btn-check" name="statCdList" id="132" autocomplete="off" checked>
-                                                    <label class="btn btn-outline-primary" for="132">결재완료</label>
+                                                    <label class="btn btn-outline-primary" for="132"><span th:text="${langList['ELA_STAT_CD_132_S']}"></span></label>
 
                                                     <input type="checkbox" class="btn-check" name="statCdList" id="131" autocomplete="off" checked>
-                                                    <label class="btn btn-outline-primary" for="131">반려</label>
+                                                    <label class="btn btn-outline-primary" for="131"><span th:text="${langList['ELA_STAT_CD_131_S']}"></span></label>
                                                 </div>
                                             </div>
                                         </div>
 
                                         <div class="card-body p-3">
                                             <div class="d-flex align-items-center justify-content-between mb-2">
-                                                <h6>근태종류</h6>
+                                                <h6><span th:text="${langList['DTM_KIND']}"></span></h6>
                                                 <div class="btn-group btn-group-sm" role="group" aria-label="DTM Kind Code Select">
                                                     <input type="radio" class="btn-check" name="category" id="allCategory" autocomplete="off" checked>
-                                                    <label class="btn btn-outline-primary" for="allCategory">전체</label>
+                                                    <label class="btn btn-outline-primary" for="allCategory"><span th:text="${langList['ENTIRE']}"></span></label>
 
                                                     <input type="radio" class="btn-check" name="category" id="1A" autocomplete="off">
-                                                    <label class="btn btn-outline-primary" for="1A">연차</label>
+                                                    <label class="btn btn-outline-primary" for="1A"><span th:text="${langList['DTM_KIND_CD_1A_S']}"></span></label>
 
                                                     <input type="radio" class="btn-check" name="category" id="1B" autocomplete="off">
-                                                    <label class="btn btn-outline-primary" for="1B">저축</label>
+                                                    <label class="btn btn-outline-primary" for="1B"><span th:text="${langList['DTM_KIND_CD_1B_S']}"></span></label>
 
                                                     <input type="radio" class="btn-check" name="category" id="1Z" autocomplete="off">
-                                                    <label class="btn btn-outline-primary" for="1Z">보상</label>
+                                                    <label class="btn btn-outline-primary" for="1Z"><span th:text="${langList['DTM_KIND_CD_1Z_S']}"></span></label>
                                                 </div>
                                             </div>
                                             <select class="form-control select2" style="width: 100%;" aria-label="DTM Reason Code Select" name="select" id="list">
-                                                <option value="" selected>전체</option>
+                                                <option value="" selected><span th:text="${langList['ENTIRE']}"></span></option>
                                             </select>
                                         </div>
 
                                         <div class="card-body p-3">
-                                            <h6>근태기간</h6>
+                                            <h6><span th:text="${langList['DTM_PERIOD']}"></span></h6>
                                             <div class="d-flex align-items-center justify-content-between mb-2">
                                                 <label for="start-input">
                                                     <input type="text" class="form-control me-1 start-input" name="start-input" id="start-input" placeholder="YYYY-MM-DD">
@@ -116,9 +116,9 @@
 
                                         <div class="card-body p-3">
                                             <div class="d-flex flex-wrap gap-2 justify-content-end align-items-center mb-2">
-                                                <button class="btn btn-primary btn-sm" id="search-button">조회
+                                                <button class="btn btn-primary btn-sm" id="search-button"><span th:text="${langList['SEARCH']}"></span>
                                                 </button>
-                                                <button class="btn btn-primary btn-sm" id="reset-button">초기화
+                                                <button class="btn btn-primary btn-sm" id="reset-button"><span th:text="${langList['RESET']}"></span>
                                                 </button>
                                             </div>
                                         </div>
@@ -134,7 +134,7 @@
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="dtmStatusModalLabel">휴가 보유현황</h5>
+                                    <h5 class="modal-title" id="dtmStatusModalLabel"><span th:text="${langList['DTM_STATUS']}"></span></h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
@@ -142,7 +142,7 @@
                                     <section class="section">
                                         <div class="card">
                                             <div class="card-body">
-                                                <h6>휴가 보유현황</h6>
+                                                <h6><span th:text="${langList['DTM_STATUS']}"></span></h6>
                                                 <table class="table table-striped">
                                                     <thead>
                                                     <tr>
@@ -185,7 +185,7 @@
                                     <!-- End of Original Content -->
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><span th:text="${langList['CLOSE']}"></span>
                                     </button>
                                 </div>
                             </div>
@@ -203,13 +203,13 @@
                                     <div class="card">
                                         <div class="card-body">
                                             <div th:switch="${dtm.status}">
-                                                    <span th:case="'과거'" class="badge badge-sm mb-4 bg-secondary">
+                                                    <span th:case="${langList['DTM_STATUS_PAST']}" class="badge badge-sm mb-4 bg-secondary">
                                                         <span th:text="${dtm.status}"></span>
                                                     </span>
-                                                <span th:case="'예정'" class="badge badge-sm mb-4 bg-primary">
+                                                <span th:case="${langList['DTM_STATUS_DUE']}" class="badge badge-sm mb-4 bg-primary">
                                                         <span th:text="${dtm.status}"></span>
                                                     </span>
-                                                <span th:case="'진행'" class="badge badge-sm mb-4 bg-warning">
+                                                <span th:case="${langList['DTM_STATUS_NOW']}" class="badge badge-sm mb-4 bg-warning">
                                                         <span th:text="${dtm.status}"></span>
                                                     </span>
                                             </div>

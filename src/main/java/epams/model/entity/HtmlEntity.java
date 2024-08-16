@@ -63,5 +63,5 @@ public class HtmlEntity extends BaseEntity implements Serializable {
      */
     @ManyToMany(mappedBy = "htmlEntities")
     @Builder.Default
-    private Set<CodeEntity> codeEntities = new HashSet<>();
+    private Set<LangEntity> codeEntities = new HashSet<>();
 }

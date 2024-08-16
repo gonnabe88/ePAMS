@@ -18,7 +18,7 @@ public class CommonCodeService {
 	
     /**
      * @author K140024
-     * @implNote CodeRepository 주입
+     * @implNote LangRepository 주입
      * @since 2024-04-26
      */
 	private final CommonCodeRepository commonCodeRepository;

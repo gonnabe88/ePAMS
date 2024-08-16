@@ -12,15 +12,15 @@
 
         <typeAlias type="epams.domain.com.admin.dto.LogLoginDTO" alias="logLoginVO"></typeAlias>
 
-        <typeAlias type="epams.domain.com.admin.dto.CodeDTO" alias="codeDTO"></typeAlias>
+        <typeAlias type="epams.domain.com.admin.dto.LangDTO" alias="langDTO"></typeAlias>
 
         <typeAlias type="epams.domain.com.admin.dto.HtmlDTO" alias="htmlDTO"></typeAlias>
 
-        <typeAlias type="epams.domain.com.admin.dto.CodeHtmlMapDTO" alias="codeHtmlDTO"></typeAlias>
+        <typeAlias type="epams.domain.com.admin.dto.HtmlLangLangMapDTO" alias="htmlLangDTO"></typeAlias>
 
         <typeAlias type="epams.domain.com.admin.dto.LogViewDTO" alias="viewLogDTO"></typeAlias>
 
-        <typeAlias type="epams.domain.com.admin.dto.CodeHtmlDetailDTO" alias="codeHtmlDetail"></typeAlias>
+        <typeAlias type="epams.domain.com.admin.dto.HtmlLangDetailDTO" alias="htmlLangDetail"></typeAlias>
 
         <typeAlias type="epams.domain.com.login.dto.LoginOTPDTO" alias="loginOtpDTO"></typeAlias>
 

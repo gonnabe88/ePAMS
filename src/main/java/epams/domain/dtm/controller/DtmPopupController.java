@@ -1,7 +1,6 @@
 package epams.domain.dtm.controller;
 
-import epams.domain.com.admin.service.CodeHtmlDetailService;
-import epams.domain.com.board.dto.BoardDTO;
+import epams.domain.com.admin.service.HtmlLangDetailService;
 import epams.domain.com.board.service.BoardMainService;
 import epams.domain.com.commonCode.CommonCodeService;
 import epams.domain.dtm.dto.DtmHisDTO;
@@ -9,10 +8,8 @@ import epams.domain.dtm.service.DtmService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.session.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,7 +24,6 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.format.TextStyle;
 import java.util.Locale;
-import java.util.Map;
 
 /**
  * @author K140024
@@ -68,7 +64,7 @@ public class DtmPopupController<S extends Session> {
      * @implNote 코드 상세 서비스 주입
      * @since 2024-06-11
      */
-    private final CodeHtmlDetailService codeDetailService;
+    private final HtmlLangDetailService codeDetailService;
 
     /**
      * @author K140024

@@ -1,6 +1,6 @@
 package epams.domain.com.index;
 
-import epams.domain.com.admin.service.CodeHtmlDetailService;
+import epams.domain.com.admin.service.HtmlLangDetailService;
 import epams.domain.com.board.dto.BoardDTO;
 import epams.domain.com.board.service.BoardMainService;
 import epams.domain.com.index.dto.BannerDTO;
@@ -78,7 +78,7 @@ public class IndexController<S extends Session> {
      * @implNote 코드 상세 서비스 주입
      * @since 2024-06-11
      */
-    private final CodeHtmlDetailService codeDetailService;
+    private final HtmlLangDetailService langDetailService;
 
     /**
      * @author K140024
@@ -131,9 +131,9 @@ public class IndexController<S extends Session> {
             log.info("simple auth user");
         }
 
-        // 코드
-        final Map<String, String> codeList = codeDetailService.getCodeHtmlDetail(INDEXMAIN);
-        model.addAttribute("codeList", codeList);
+        // 언어목록
+        final Map<String, String> langList = langDetailService.getCodeHtmlDetail(INDEXMAIN);
+        model.addAttribute("langList", langList);
 
         // 메인화면 공지사항 출력
         final int currentPage = pageable.getPageNumber(); // 현재 페이지 (1-based index)

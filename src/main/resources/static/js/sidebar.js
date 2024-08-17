@@ -1,37 +1,39 @@
 // (페이지 로딩 시) 관리자 페이지와 일반 사용자 페이지의 sidebar를 동적으로 변경하는 스크립트
 window.addEventListener('DOMContentLoaded', function() {
-    var isChecked = document.getElementById('flexSwitchCheckDefault').checked;
-    var url = isChecked ? '/common/layout/renderSidebarAdmin' : '/common/layout/renderSidebarNormal';
+    let isChecked = document.getElementById('flexSwitchCheckDefault').checked;
+    let url = isChecked ? '/common/layout/renderSidebarAdmin' : '/common/layout/renderSidebarNormal';
     console.log("url: " + url);
     fetch(url)
         .then(response => response.text())
         .then(html => {
-            const cleanHtml = DOMPurify.sanitize(html, {
-                ALLOWED_TAGS: ['h7', 'h6', 'div', 'span', 'section', 'i', 'ul', 'li', 'a'] // 필요시 추가
+            // 2024-08-17 CWE-79(Cross-site Scripting (XSS)) 취약점 조치
+            const safeHTML = DOMPurify.sanitize(html, {
+                ALLOWED_TAGS: ['h7', 'h6', 'h5', 'h4', 'h3', 'h2', 'h1', 'div', 'span', 'section', 'i', 'ul', 'li', 'a'] // 필요시 추가
             });
-            document.querySelector('.menu').innerHTML = cleanHtml;
+            $('#menu').html(safeHTML);
         })
         .catch(error => console.error('Error loading sidebar:', error));
 });
 
 // (Switch 변경 시) 관리자 페이지와 일반 사용자 페이지의 sidebar를 동적으로 변경하는 스크립트
 document.getElementById('flexSwitchCheckDefault').addEventListener('change', function () {
-    var isChecked = this.checked;
-    var url = isChecked ? '/common/layout/renderSidebarAdmin' : '/common/layout/renderSidebarNormal';
+    let isChecked = this.checked;
+    let url = isChecked ? '/common/layout/renderSidebarAdmin' : '/common/layout/renderSidebarNormal';
     console.log("url: " + url);
     // 서버에 요청을 보내어 해당 템플릿을 받아옴
     fetch(url)
         .then(response => response.text())
         .then(html => {
-            const cleanHtml = DOMPurify.sanitize(html, {
-                ALLOWED_TAGS: ['h7', 'h6', 'div', 'span', 'section', 'i', 'ul', 'li', 'a'] // 필요시 추가
+            // 2024-08-17 CWE-79(Cross-site Scripting (XSS)) 취약점 조치
+            const safeHTML = DOMPurify.sanitize(html, {
+                ALLOWED_TAGS: ['h7', 'h6', 'h5', 'h4', 'h3', 'h2', 'h1', 'div', 'span', 'section', 'i', 'ul', 'li', 'a'] // 필요시 추가
             });
-            document.querySelector('.menu').innerHTML = cleanHtml;
+            $('#menu').html(safeHTML);
         })
         .catch(error => console.error('Error loading sidebar:', error));
 });
 
-// Sidebar 기본
+// Sidebar 기본 동작
 const DesktopSize = 1200;
 class Mr {
     constructor(k, s={}) {

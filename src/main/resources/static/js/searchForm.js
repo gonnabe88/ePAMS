@@ -38,7 +38,7 @@ $(document).on('click', '.page-link', function(event) {
     let url = $(this).attr('href');
     $.get(url, function(data) {
         let safeHTML = DOMPurify.sanitize($(data).find('#dtmListContainer').html(), {
-            ALLOWED_TAGS: ['h7', 'h6', 'div', 'span', 'section', 'i', 'ul', 'li', 'a'] // 필요시 추가
+            ALLOWED_TAGS: ['h7', 'h6', 'h5', 'h4', 'h3', 'h2', 'h1', 'div', 'span', 'section', 'i', 'ul', 'li', 'a'] // 필요시 추가
         });
         $('#dtmListContainer').html(safeHTML);
         updatePaginationLinks(); // 페이지 업데이트 후 다시 링크 업데이트
@@ -93,7 +93,7 @@ const search = () => {
     // 2024-08-11 CWE-79(Cross-site Scripting (XSS)) 취약점 조치
     $.get(`/dtm/list?statCdList=${statCdList.join(',')}&dtmReasonCd=${dtmReasonCd}&staYmdInput=${staYmdInput}&endYmdInput=${endYmdInput}&itemsPerPage=${itemsPerPage}`, function(data) {
         let safeHTML = DOMPurify.sanitize($(data).find('#dtmListContainer').html(), {
-            ALLOWED_TAGS: ['h7', 'h6', 'div', 'span', 'section', 'i', 'ul', 'li', 'a'] // 필요시 추가
+            ALLOWED_TAGS: ['h7', 'h6', 'h5', 'h4', 'h3', 'h2', 'h1', 'div', 'span', 'section', 'i', 'ul', 'li', 'a'] // 필요시 추가
         });
         $('#dtmListContainer').html(safeHTML);
     });

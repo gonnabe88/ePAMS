@@ -54,11 +54,6 @@ dependencies {
     // CVE-2023-6378, CVE-2023-6481 조치 : logback을 최신 버전으로 명시적 업그레이드
     implementation 'ch.qos.logback:logback-classic:1.5.6'
     implementation 'ch.qos.logback:logback-core:1.5.6'
-    // Logback Dual license: EPL-1.0, LGPL-2.1 라이선스 이슈로 의존성 제거
-    //implementation 'org.apache.logging.log4j:log4j-core:2.20.0'
-    //implementation 'org.apache.logging.log4j:log4j-api:2.20.0'
-    // Spring Boot의 Log4j2 스타터 사용
-    //implementation 'org.springframework.boot:spring-boot-starter-log4j2'
 
     // CVE-2024-38809 조치: spring-web을 최신 버전으로 명시적 업그레이드
     // implementation 'org.springframework:spring-web:6.1.7'

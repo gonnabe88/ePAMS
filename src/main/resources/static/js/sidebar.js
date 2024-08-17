@@ -6,7 +6,10 @@ window.addEventListener('DOMContentLoaded', function() {
     fetch(url)
         .then(response => response.text())
         .then(html => {
-            document.querySelector('.menu').innerHTML = html;
+            const cleanHtml = DOMPurify.sanitize(html, {
+                ALLOWED_TAGS: ['h7', 'h6', 'div', 'span', 'section', 'i', 'ul', 'li', 'a'] // 필요시 추가
+            });
+            document.querySelector('.menu').innerHTML = cleanHtml;
         })
         .catch(error => console.error('Error loading sidebar:', error));
 });
@@ -20,7 +23,10 @@ document.getElementById('flexSwitchCheckDefault').addEventListener('change', fun
     fetch(url)
         .then(response => response.text())
         .then(html => {
-            document.querySelector('.menu').innerHTML = html;
+            const cleanHtml = DOMPurify.sanitize(html, {
+                ALLOWED_TAGS: ['h7', 'h6', 'div', 'span', 'section', 'i', 'ul', 'li', 'a'] // 필요시 추가
+            });
+            document.querySelector('.menu').innerHTML = cleanHtml;
         })
         .catch(error => console.error('Error loading sidebar:', error));
 });

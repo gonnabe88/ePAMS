@@ -1,0 +1,152 @@
+2024-08-17 11:41:08 INFO  [background-preinit] o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.1.Final
+2024-08-17 11:41:08 INFO  [restartedMain] o.s.b.d.restart.ChangeableUrls - The Class-Path manifest attribute in C:\Users\park\.gradle\caches\modules-2\files-2.1\com.oracle.database.jdbc\ojdbc11\21.9.0.0\1aad2e20684ee075bb9ebdca2d83f028e4fd35fa\ojdbc11-21.9.0.0.jar referenced one or more files that do not exist: file:/C:/Users/park/.gradle/caches/modules-2/files-2.1/com.oracle.database.jdbc/ojdbc11/21.9.0.0/1aad2e20684ee075bb9ebdca2d83f028e4fd35fa/oraclepki.jar
+2024-08-17 11:41:08 INFO  [restartedMain] o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2024-08-17 11:41:08 INFO  [restartedMain] o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2024-08-17 11:41:10 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-08-17 11:41:10 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 95 ms. Found 2 JPA repository interfaces.
+2024-08-17 11:41:10 WARN  [restartedMain] o.m.s.mapper.ClassPathMapperScanner - No MyBatis mapper was found in '[epams]' package. Please check your configuration.
+2024-08-17 11:41:12 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2024-08-17 11:41:12 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2024-08-17 11:41:12 INFO  [restartedMain] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-08-17 11:41:12 INFO  [restartedMain] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.20]
+2024-08-17 11:41:12 INFO  [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-08-17 11:41:12 INFO  [restartedMain] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 3547 ms
+2024-08-17 11:41:12 WARN  [restartedMain] com.zaxxer.hikari.HikariConfig - HikariPool-1 - idleTimeout has been set but has no effect because the pool is operating as a fixed size pool.
+2024-08-17 11:41:12 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2024-08-17 11:41:13 INFO  [restartedMain] com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection oracle.jdbc.driver.T4CConnection@2df78058
+2024-08-17 11:41:13 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2024-08-17 11:41:13 INFO  [restartedMain] o.s.b.a.h.H2ConsoleAutoConfiguration - H2 console available at '/h2-console'. Database available at 'jdbc:oracle:thin:@localhost:1521/XE'
+2024-08-17 11:41:13 INFO  [restartedMain] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-08-17 11:41:13 INFO  [restartedMain] org.hibernate.Version - HHH000412: Hibernate ORM core version 6.4.4.Final
+2024-08-17 11:41:13 INFO  [restartedMain] o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2024-08-17 11:41:14 INFO  [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-08-17 11:41:14 WARN  [restartedMain] org.hibernate.dialect.Dialect - HHH000511: The 18.0.0 version for [org.hibernate.dialect.OracleDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 19.0.0. Check the community dialects project for available legacy versions.
+2024-08-17 11:41:15 WARN  [restartedMain] org.hibernate.mapping.RootClass - HHH000038: Composite-id class does not override equals(): epams.model.entity.HtmlLangEntity
+2024-08-17 11:41:15 WARN  [restartedMain] org.hibernate.mapping.RootClass - HHH000039: Composite-id class does not override hashCode(): epams.model.entity.HtmlLangEntity
+2024-08-17 11:41:16 INFO  [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-08-17 11:41:28 INFO  [restartedMain] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-08-17 11:41:31 INFO  [restartedMain] o.s.b.a.e.web.EndpointLinksResolver - Exposing 15 endpoint(s) beneath base path '/actuator'
+2024-08-17 11:41:31 INFO  [restartedMain] o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@65a4fca5, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@71227563, org.springframework.security.web.context.SecurityContextHolderFilter@10521c4, org.springframework.security.web.header.HeaderWriterFilter@78df7112, org.springframework.web.filter.CorsFilter@75a9fbf4, org.springframework.security.web.csrf.CsrfFilter@349eae79, org.springframework.security.web.authentication.logout.LogoutFilter@30a0a92f, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@51c02148, org.springframework.security.web.session.ConcurrentSessionFilter@1607532f, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@3a354973, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@1cb1e62e, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@6085cfd8, org.springframework.security.web.session.SessionManagementFilter@723e1f0f, org.springframework.security.web.access.ExceptionTranslationFilter@295e4ad2, org.springframework.security.web.access.intercept.AuthorizationFilter@26523b72]
+2024-08-17 11:41:33 INFO  [restartedMain] o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2024-08-17 11:41:33 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2024-08-17 11:41:33 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2024-08-17 11:41:33 INFO  [RMI TCP Connection(4)-169.254.247.155] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-08-17 11:41:33 INFO  [RMI TCP Connection(4)-169.254.247.155] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-08-17 11:41:33 INFO  [RMI TCP Connection(4)-169.254.247.155] o.s.web.servlet.DispatcherServlet - Completed initialization in 3 ms
+2024-08-17 14:22:18 INFO  [SpringApplicationShutdownHook] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-08-17 14:22:18 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2024-08-17 14:22:18 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2024-08-17 14:24:30 INFO  [background-preinit] o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.1.Final
+2024-08-17 14:24:31 INFO  [restartedMain] o.s.b.d.restart.ChangeableUrls - The Class-Path manifest attribute in C:\Users\park\.gradle\caches\modules-2\files-2.1\com.oracle.database.jdbc\ojdbc11\21.9.0.0\1aad2e20684ee075bb9ebdca2d83f028e4fd35fa\ojdbc11-21.9.0.0.jar referenced one or more files that do not exist: file:/C:/Users/park/.gradle/caches/modules-2/files-2.1/com.oracle.database.jdbc/ojdbc11/21.9.0.0/1aad2e20684ee075bb9ebdca2d83f028e4fd35fa/oraclepki.jar
+2024-08-17 14:24:31 INFO  [restartedMain] o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2024-08-17 14:24:31 INFO  [restartedMain] o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2024-08-17 14:24:33 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-08-17 14:24:33 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 92 ms. Found 2 JPA repository interfaces.
+2024-08-17 14:24:33 WARN  [restartedMain] o.m.s.mapper.ClassPathMapperScanner - No MyBatis mapper was found in '[epams]' package. Please check your configuration.
+2024-08-17 14:24:34 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2024-08-17 14:24:34 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2024-08-17 14:24:34 INFO  [restartedMain] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-08-17 14:24:34 INFO  [restartedMain] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.20]
+2024-08-17 14:24:34 INFO  [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-08-17 14:24:34 INFO  [restartedMain] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 3570 ms
+2024-08-17 14:24:34 WARN  [restartedMain] com.zaxxer.hikari.HikariConfig - HikariPool-1 - idleTimeout has been set but has no effect because the pool is operating as a fixed size pool.
+2024-08-17 14:24:34 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2024-08-17 14:24:35 INFO  [restartedMain] com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection oracle.jdbc.driver.T4CConnection@79474e75
+2024-08-17 14:24:35 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2024-08-17 14:24:35 INFO  [restartedMain] o.s.b.a.h.H2ConsoleAutoConfiguration - H2 console available at '/h2-console'. Database available at 'jdbc:oracle:thin:@localhost:1521/XE'
+2024-08-17 14:24:35 INFO  [restartedMain] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-08-17 14:24:35 INFO  [restartedMain] org.hibernate.Version - HHH000412: Hibernate ORM core version 6.4.4.Final
+2024-08-17 14:24:35 INFO  [restartedMain] o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2024-08-17 14:24:36 INFO  [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-08-17 14:24:36 WARN  [restartedMain] org.hibernate.dialect.Dialect - HHH000511: The 18.0.0 version for [org.hibernate.dialect.OracleDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 19.0.0. Check the community dialects project for available legacy versions.
+2024-08-17 14:24:37 WARN  [restartedMain] org.hibernate.mapping.RootClass - HHH000038: Composite-id class does not override equals(): epams.model.entity.HtmlLangEntity
+2024-08-17 14:24:37 WARN  [restartedMain] org.hibernate.mapping.RootClass - HHH000039: Composite-id class does not override hashCode(): epams.model.entity.HtmlLangEntity
+2024-08-17 14:24:38 INFO  [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-08-17 14:24:45 INFO  [restartedMain] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-08-17 14:24:47 INFO  [restartedMain] o.s.b.a.e.web.EndpointLinksResolver - Exposing 15 endpoint(s) beneath base path '/actuator'
+2024-08-17 14:24:47 INFO  [restartedMain] o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@713f94ff, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@640432f2, org.springframework.security.web.context.SecurityContextHolderFilter@21911d32, org.springframework.security.web.header.HeaderWriterFilter@7f2e7419, org.springframework.web.filter.CorsFilter@3b1e5c50, org.springframework.security.web.csrf.CsrfFilter@5d9b46cd, org.springframework.security.web.authentication.logout.LogoutFilter@27954d33, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@560130f5, org.springframework.security.web.session.ConcurrentSessionFilter@45260a35, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@2bdd89c2, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@258075a8, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@3a42e4f7, org.springframework.security.web.session.SessionManagementFilter@5e1df10b, org.springframework.security.web.access.ExceptionTranslationFilter@5c5f1dd9, org.springframework.security.web.access.intercept.AuthorizationFilter@27ad758d]
+2024-08-17 14:24:48 INFO  [restartedMain] o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2024-08-17 14:24:48 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2024-08-17 14:24:48 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2024-08-17 14:24:49 INFO  [RMI TCP Connection(2)-169.254.247.155] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-08-17 14:24:49 INFO  [RMI TCP Connection(2)-169.254.247.155] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-08-17 14:24:49 INFO  [RMI TCP Connection(2)-169.254.247.155] o.s.web.servlet.DispatcherServlet - Completed initialization in 5 ms
+2024-08-17 14:27:50 INFO  [SpringApplicationShutdownHook] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-08-17 14:27:50 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2024-08-17 14:27:50 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2024-08-17 14:28:17 INFO  [background-preinit] o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.1.Final
+2024-08-17 14:28:17 INFO  [restartedMain] o.s.b.d.restart.ChangeableUrls - The Class-Path manifest attribute in C:\Users\park\.gradle\caches\modules-2\files-2.1\com.oracle.database.jdbc\ojdbc11\21.9.0.0\1aad2e20684ee075bb9ebdca2d83f028e4fd35fa\ojdbc11-21.9.0.0.jar referenced one or more files that do not exist: file:/C:/Users/park/.gradle/caches/modules-2/files-2.1/com.oracle.database.jdbc/ojdbc11/21.9.0.0/1aad2e20684ee075bb9ebdca2d83f028e4fd35fa/oraclepki.jar
+2024-08-17 14:28:17 INFO  [restartedMain] o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2024-08-17 14:28:17 INFO  [restartedMain] o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2024-08-17 14:28:19 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-08-17 14:28:19 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 66 ms. Found 2 JPA repository interfaces.
+2024-08-17 14:28:19 WARN  [restartedMain] o.m.s.mapper.ClassPathMapperScanner - No MyBatis mapper was found in '[epams]' package. Please check your configuration.
+2024-08-17 14:28:21 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2024-08-17 14:28:21 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2024-08-17 14:28:21 INFO  [restartedMain] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-08-17 14:28:21 INFO  [restartedMain] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.20]
+2024-08-17 14:28:21 INFO  [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-08-17 14:28:21 INFO  [restartedMain] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 3422 ms
+2024-08-17 14:28:21 WARN  [restartedMain] com.zaxxer.hikari.HikariConfig - HikariPool-1 - idleTimeout has been set but has no effect because the pool is operating as a fixed size pool.
+2024-08-17 14:28:21 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2024-08-17 14:28:21 INFO  [restartedMain] com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection oracle.jdbc.driver.T4CConnection@4214362b
+2024-08-17 14:28:21 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2024-08-17 14:28:21 INFO  [restartedMain] o.s.b.a.h.H2ConsoleAutoConfiguration - H2 console available at '/h2-console'. Database available at 'jdbc:oracle:thin:@localhost:1521/XE'
+2024-08-17 14:28:22 INFO  [restartedMain] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-08-17 14:28:22 INFO  [restartedMain] org.hibernate.Version - HHH000412: Hibernate ORM core version 6.4.4.Final
+2024-08-17 14:28:22 INFO  [restartedMain] o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2024-08-17 14:28:22 INFO  [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-08-17 14:28:22 WARN  [restartedMain] org.hibernate.dialect.Dialect - HHH000511: The 18.0.0 version for [org.hibernate.dialect.OracleDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 19.0.0. Check the community dialects project for available legacy versions.
+2024-08-17 14:28:23 WARN  [restartedMain] org.hibernate.mapping.RootClass - HHH000038: Composite-id class does not override equals(): epams.model.entity.HtmlLangEntity
+2024-08-17 14:28:23 WARN  [restartedMain] org.hibernate.mapping.RootClass - HHH000039: Composite-id class does not override hashCode(): epams.model.entity.HtmlLangEntity
+2024-08-17 14:28:24 INFO  [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-08-17 14:28:38 INFO  [restartedMain] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-08-17 14:28:40 INFO  [restartedMain] o.s.b.a.e.web.EndpointLinksResolver - Exposing 15 endpoint(s) beneath base path '/actuator'
+2024-08-17 14:28:40 INFO  [restartedMain] o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@13b59a4f, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@656da11d, org.springframework.security.web.context.SecurityContextHolderFilter@ee635af, org.springframework.security.web.header.HeaderWriterFilter@612da3f6, org.springframework.web.filter.CorsFilter@422f73de, org.springframework.security.web.csrf.CsrfFilter@2121efed, org.springframework.security.web.authentication.logout.LogoutFilter@431468a6, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@6afaa3af, org.springframework.security.web.session.ConcurrentSessionFilter@2586d8d5, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@296045e6, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@6b2c211b, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@4b14acec, org.springframework.security.web.session.SessionManagementFilter@1dc8d7f4, org.springframework.security.web.access.ExceptionTranslationFilter@58968bc3, org.springframework.security.web.access.intercept.AuthorizationFilter@3818272]
+2024-08-17 14:28:41 INFO  [restartedMain] o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2024-08-17 14:28:41 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2024-08-17 14:28:41 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2024-08-17 14:28:42 INFO  [RMI TCP Connection(5)-169.254.247.155] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-08-17 14:28:42 INFO  [RMI TCP Connection(5)-169.254.247.155] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-08-17 14:28:42 INFO  [RMI TCP Connection(5)-169.254.247.155] o.s.web.servlet.DispatcherServlet - Completed initialization in 4 ms
+2024-08-17 14:33:35 INFO  [SpringApplicationShutdownHook] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-08-17 14:33:35 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2024-08-17 14:33:36 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2024-08-17 14:34:18 INFO  [background-preinit] o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.1.Final
+2024-08-17 14:34:19 INFO  [restartedMain] o.s.b.d.restart.ChangeableUrls - The Class-Path manifest attribute in C:\Users\park\.gradle\caches\modules-2\files-2.1\com.oracle.database.jdbc\ojdbc11\21.9.0.0\1aad2e20684ee075bb9ebdca2d83f028e4fd35fa\ojdbc11-21.9.0.0.jar referenced one or more files that do not exist: file:/C:/Users/park/.gradle/caches/modules-2/files-2.1/com.oracle.database.jdbc/ojdbc11/21.9.0.0/1aad2e20684ee075bb9ebdca2d83f028e4fd35fa/oraclepki.jar
+2024-08-17 14:34:19 INFO  [restartedMain] o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2024-08-17 14:34:19 INFO  [restartedMain] o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2024-08-17 14:34:20 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-08-17 14:34:20 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 66 ms. Found 2 JPA repository interfaces.
+2024-08-17 14:34:21 WARN  [restartedMain] o.m.s.mapper.ClassPathMapperScanner - No MyBatis mapper was found in '[epams]' package. Please check your configuration.
+2024-08-17 14:34:22 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2024-08-17 14:34:22 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2024-08-17 14:34:22 INFO  [restartedMain] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-08-17 14:34:22 INFO  [restartedMain] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.20]
+2024-08-17 14:34:22 INFO  [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-08-17 14:34:22 INFO  [restartedMain] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 3292 ms
+2024-08-17 14:34:22 WARN  [restartedMain] com.zaxxer.hikari.HikariConfig - HikariPool-1 - idleTimeout has been set but has no effect because the pool is operating as a fixed size pool.
+2024-08-17 14:34:22 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2024-08-17 14:34:23 INFO  [restartedMain] com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection oracle.jdbc.driver.T4CConnection@208595e3
+2024-08-17 14:34:23 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2024-08-17 14:34:23 INFO  [restartedMain] o.s.b.a.h.H2ConsoleAutoConfiguration - H2 console available at '/h2-console'. Database available at 'jdbc:oracle:thin:@localhost:1521/XE'
+2024-08-17 14:34:23 INFO  [restartedMain] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-08-17 14:34:23 INFO  [restartedMain] org.hibernate.Version - HHH000412: Hibernate ORM core version 6.4.4.Final
+2024-08-17 14:34:23 INFO  [restartedMain] o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2024-08-17 14:34:24 INFO  [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-08-17 14:34:24 WARN  [restartedMain] org.hibernate.dialect.Dialect - HHH000511: The 18.0.0 version for [org.hibernate.dialect.OracleDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 19.0.0. Check the community dialects project for available legacy versions.
+2024-08-17 14:34:24 WARN  [restartedMain] org.hibernate.mapping.RootClass - HHH000038: Composite-id class does not override equals(): epams.model.entity.HtmlLangEntity
+2024-08-17 14:34:24 WARN  [restartedMain] org.hibernate.mapping.RootClass - HHH000039: Composite-id class does not override hashCode(): epams.model.entity.HtmlLangEntity
+2024-08-17 14:34:26 INFO  [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-08-17 14:34:29 INFO  [restartedMain] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-08-17 14:34:31 INFO  [restartedMain] o.s.b.a.e.web.EndpointLinksResolver - Exposing 15 endpoint(s) beneath base path '/actuator'
+2024-08-17 14:34:32 INFO  [restartedMain] o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@e4139ce, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@345b0113, org.springframework.security.web.context.SecurityContextHolderFilter@6e8620bd, org.springframework.security.web.header.HeaderWriterFilter@547cff5d, org.springframework.web.filter.CorsFilter@3c25eef7, org.springframework.security.web.csrf.CsrfFilter@46c673a7, org.springframework.security.web.authentication.logout.LogoutFilter@270d36a, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@78705ebc, org.springframework.security.web.session.ConcurrentSessionFilter@10bb8f9, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@6c049c1f, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@229c7ef1, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@3085c776, org.springframework.security.web.session.SessionManagementFilter@7e041e25, org.springframework.security.web.access.ExceptionTranslationFilter@2e35cbe2, org.springframework.security.web.access.intercept.AuthorizationFilter@1f547737]
+2024-08-17 14:34:33 INFO  [restartedMain] o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2024-08-17 14:34:33 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2024-08-17 14:34:33 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2024-08-17 14:34:33 INFO  [RMI TCP Connection(2)-169.254.247.155] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-08-17 14:34:33 INFO  [RMI TCP Connection(2)-169.254.247.155] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-08-17 14:34:33 INFO  [RMI TCP Connection(2)-169.254.247.155] o.s.web.servlet.DispatcherServlet - Completed initialization in 4 ms
+2024-08-17 15:03:09 INFO  [SpringApplicationShutdownHook] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-08-17 15:03:09 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2024-08-17 15:03:09 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.

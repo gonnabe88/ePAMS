@@ -12,6 +12,7 @@
  * 2024-06-16 (140024) 데스크탑 화면에서도 반응형으로 2개 달력이 표시되도록 "i({}, { breakpoint: 480 })" > "i({}, { breakpoint: 2000 })" 수정
  * 2024-06-16 (140024) re-render 시 부모 컴포넌트 너비를 초과하여 전체 화면 기준으로 확대되는 문제 해결을 위해 "--litepicker-day-width: 13.5vw" > "--litepicker-day-width: 40px" 수정
  * 2024-06-16 (140024) re-render 시 부모 컴포넌트 너비를 초과하여 전체 화면 기준으로 확대되는 문제 해결을 위해 "--litepicker-day-width: 5.5vw" > "--litepicker-day-width: 40px" 수정
+ * 2024-08-18 (140024) CSP 취약점 조치를 위해 모든 document.createElement("style") 하위에 setAttribute("nonce", "kdb"); 반영
  */
 var Litepicker = (function (t) {
   var e = {};
@@ -2215,6 +2216,7 @@ var Litepicker = (function (t) {
     }
     function c(t) {
       var e = document.createElement("style");
+      e.setAttribute("nonce", "kdb");
       if (void 0 === t.attributes.nonce) {
         var n = i.nc;
         n && (t.attributes.nonce = n);
@@ -2699,6 +2701,7 @@ var Litepicker = (function (t) {
     }
     function u(e) {
       var t = document.createElement("style");
+      t.setAttribute("nonce", "kdb");
       if (void 0 === e.attributes.nonce) {
         var r = n.nc;
         r && (e.attributes.nonce = r);
@@ -3229,6 +3232,7 @@ var Litepicker = (function (t) {
     }
     function s(e) {
       var t = document.createElement("style");
+      t.setAttribute("nonce", "kdb");
       if (void 0 === e.attributes.nonce) {
         var r = n.nc;
         r && (e.attributes.nonce = r);
@@ -3791,6 +3795,7 @@ var Litepicker = (function (t) {
     }
     function l(e) {
       var n = document.createElement("style");
+      n.setAttribute("nonce", "kdb");
       if (void 0 === e.attributes.nonce) {
         var r = t.nc;
         r && (e.attributes.nonce = r);
@@ -4251,6 +4256,7 @@ var Litepicker = (function (t) {
     }
     function s(e) {
       var t = document.createElement("style");
+      t.setAttribute("nonce", "kdb");
       if (void 0 === e.attributes.nonce) {
         var r = n.nc;
         r && (e.attributes.nonce = r);

@@ -8,7 +8,9 @@ window.addEventListener('DOMContentLoaded', function() {
         .then(html => {
             // 2024-08-17 CWE-79(Cross-site Scripting (XSS)) 취약점 조치
             const safeHTML = DOMPurify.sanitize(html, {
-                ALLOWED_TAGS: ['h7', 'h6', 'h5', 'h4', 'h3', 'h2', 'h1', 'div', 'span', 'section', 'i', 'ul', 'li', 'a'] // 필요시 추가
+                SAFE_FOR_TEMPLATES: true,
+                ALLOWED_TAGS: ['h7', 'h6', 'h5', 'h4', 'h3', 'h2', 'h1', 'div', 'span', 'section', 'i', 'ul', 'li', 'a'], // 필요시 추가
+                FORBID_ATTR: ['style']
             });
             $('#menu').html(safeHTML);
         })
@@ -26,7 +28,9 @@ document.getElementById('flexSwitchCheckDefault').addEventListener('change', fun
         .then(html => {
             // 2024-08-17 CWE-79(Cross-site Scripting (XSS)) 취약점 조치
             const safeHTML = DOMPurify.sanitize(html, {
-                ALLOWED_TAGS: ['h7', 'h6', 'h5', 'h4', 'h3', 'h2', 'h1', 'div', 'span', 'section', 'i', 'ul', 'li', 'a'] // 필요시 추가
+                SAFE_FOR_TEMPLATES: true,
+                ALLOWED_TAGS: ['h7', 'h6', 'h5', 'h4', 'h3', 'h2', 'h1', 'div', 'span', 'section', 'i', 'ul', 'li', 'a'], // 필요시 추가
+                FORBID_ATTR: ['style']
             });
             $('#menu').html(safeHTML);
         })
@@ -49,12 +53,13 @@ class Mr {
         // 특정 div 제외
         const excludedDiv = document.querySelector('.no-drag');
 
-        // PC 클릭 이벤트 (드래그)
+        // PC 클릭 시작 이벤트 (드래그)
         app.addEventListener("mousedown", (e) => {
             if (excludedDiv && excludedDiv.contains(e.target)) return;
             startPoint = e.pageX; // 마우스 드래그 시작 위치 저장
-        });
+        }, { passive: true });
 
+        // PC 클릭 종료 이벤트 (드래그)
         app.addEventListener("mouseup", (e) => {
             if (excludedDiv && excludedDiv.contains(e.target)) return;
             endPoint = e.pageX; // 마우스 드래그 끝 위치 저장
@@ -67,14 +72,15 @@ class Mr {
                 console.log("next move");
                 this.hide();
             }
-        });
+        }, { passive: true });
 
-        // 모바일 터치 이벤트 (스와이프)
+        // 모바일 터치 시작 이벤트 (스와이프)
         app.addEventListener("touchstart", (e) => {
             if (excludedDiv && excludedDiv.contains(e.target)) return;
             startPoint = e.touches[0].pageX; // 터치가 시작되는 위치 저장
-        });
+        }, { passive: true });
 
+        // 모바일 터치 종료 이벤트 (스와이프)
         app.addEventListener("touchend", (e) => {
             if (excludedDiv && excludedDiv.contains(e.target)) return;
             endPoint = e.changedTouches[0].pageX; // 터치가 끝나는 위치 저장
@@ -87,7 +93,7 @@ class Mr {
                 console.log("next move");
                 this.hide();
             }
-        });
+        }, { passive: true });
 
         document.querySelectorAll(".burger-btn").forEach(r=>r.addEventListener("click", this.toggle.bind(this))),
             document.querySelectorAll(".sidebar-hide").forEach(r=>r.addEventListener("click", this.toggle.bind(this))),

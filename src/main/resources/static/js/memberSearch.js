@@ -16,7 +16,7 @@ const search = () => {
             xhr.setRequestHeader(header, token);
         },
         complete: function(data) {
-            console.log("search reply: " + data.responseText);
+            //console.log("search reply: " + data.responseText);
             $("#memberList").html(data.responseText);
         }
     });
@@ -49,4 +49,7 @@ $(document).ready(() => {
             console.error('Error fetching data:', error);
         }
     });
+
+    // 직원 검색 조회 버튼 클릭 이벤트 핸들러 추가
+    $('#button-addon2').on('click', search);
 });

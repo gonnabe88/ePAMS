@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.thymeleaf.org" layout:decorate="~{common/layout/layout}">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org"
+      layout:decorate="~{common/layout/layout}">
 
 <head>
     <!-- (start) private script -->
@@ -50,7 +53,7 @@
                     <!-- 페이지당 아이템 수 드롭다운 끝 -->
 
                     <!-- 검색 드롭다운 시작 -->
-                    <div id="collapseContainer" class="row col-lg-12 col-md-12 col-sm-12">
+                    <div id="collapseContainer" class="collapseSearch row col-lg-12 col-md-12 col-sm-12">
                         <div class="collapse" id="collapseSearch">
                             <div class="col-12">
                                 <section class="section">
@@ -88,7 +91,7 @@
                                                     <label class="btn btn-outline-primary" for="1Z"><span th:text="${langList['DTM_KIND_CD_1Z_S']}"></span></label>
                                                 </div>
                                             </div>
-                                            <select class="form-control select2" style="width: 100%;" aria-label="DTM Reason Code Select" name="select" id="list">
+                                            <select class="form-control select2" aria-label="DTM Reason Code Select" name="select" id="list">
                                                 <option value="" selected><span th:text="${langList['ENTIRE']}"></span></option>
                                             </select>
                                         </div>
@@ -106,10 +109,10 @@
                                             </div>
                                             <div class="d-flex justify-content-center">
                                                 <label for="start-date">
-                                                    <input type="text" class="form-control start-date" id="start-date" style="display: none;">
+                                                    <input type="text" class="form-control start-date" id="start-date">
                                                 </label>
                                                 <label for="end-date">
-                                                    <input type="text" class="form-control end-date" id="end-date" style="display: none;">
+                                                    <input type="text" class="form-control end-date" id="end-date">
                                                 </label>
                                             </div>
                                         </div>

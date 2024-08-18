@@ -11,10 +11,10 @@
 	<!-- <script src="/js/initTheme.js"></script>	 -->
 	<div id="app">
 	<div id="sidebar" class="sidebar-desktop inactive" th:fragment="commonSidebar">
-			<div class="sidebar-wrapper" style="height:auto">
+			<div class="sidebar-wrapper">
 				<div class="sidebar-header position-relative">
 						<div class="logo mt-3">
-							<a href="/index"><img src="/images/kdb/H_KDB_CI.png" style="height:1.6rem;" alt="Logo" srcset=""></a>
+							<a href="/index"><img src="/images/kdb/H_KDB_CI.png" alt="Logo" srcset=""></a>
 						</div>
 				</div>
 
@@ -34,13 +34,17 @@
 					</div>
 				
 					<ul class="menu" id="menu">
+						<!--render html from sidebar.js-->
+					</ul>
 
+					<ul class="menu" id="common-menu">
+						<!--start divider-->
 						<div class="divider">
-							<div class="divider-text" style="background-color: transparent;">
-								<img class="divider-text" src="/images/kdb/epams_r_cw_action.gif"
-									style="width: 50px; height: 50px; border-radius: 50%; padding: 0;" />
+							<div class="divider-text">
+								<img class="divider-text" src="/images/kdb/epams_r_cw_action.gif"/>
 							</div>
 						</div>
+						<!--end divider-->
 
 						<li class="sidebar-item">
 							<a href="/logout" class='sidebar-link' >

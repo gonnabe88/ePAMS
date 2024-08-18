@@ -43,21 +43,17 @@
 
     <!--start 빠른 근태신청-->
     <div class="main-content">
-        <div class="container">
+        <div class="quickappl container">
             <div class="row d-flex justify-content-start mb-1">
                 <h5 class="text-start">
                     <i class="bi bi-stars"></i> <span th:text="${langList['QUICK_APPL_TTL']}"></span>
                 </h5>
-                <div class="container">
-                    <div class="row d-flex justify-content-end">
-                        <h6 class="text-end">
-                            <a href="/dtm/main" style="text-decoration: none; color: inherit;">
-                                <span th:text="${langList['QUICK_APPL_01_STMT']}"></span>
-                                <i class="bi bi-arrow-right-circle-fill"></i>
-                            </a>
-                        </h6>
-                    </div>
-                </div>
+            </div>
+            <div class="row d-flex justify-content-end mb-1">
+                <a href="/dtm/main" class="link d-flex justify-content-end align-items-top">
+                    <h6> <span th:text="${langList['QUICK_APPL_01_STMT']}"></span>
+                    <i class="bi bi-arrow-right-circle-fill ms-1"></i></h6>
+                </a>
             </div>
 
             <div class="d-flex justify-content-center">
@@ -67,11 +63,11 @@
                             <div data-aos="fade-up" data-aos-offset="50" data-aos-easing="ease-out-cubic"
                                  data-aos-duration="1000">
                                 <section class="section">
-                                    <div class="shadow card" style="margin-bottom: 1.0rem;">
-                                        <div class="card-body align-content-center" style="padding: 0.8rem;">
+                                    <div class="shadow card">
+                                        <div class="card-body align-content-center">
                                             <div class="d-flex justify-content-center">
                                                 <div class="col-10 mb-0 align-content-center">
-                                                    <h6 style="margin-bottom: 0;">
+                                                    <h6 class="mb-0">
 														<span th:if="${date.applDateType == '오늘'}"
                                                               class="badge rounded-pill bg-primary me-1">
 															<span th:text="${langList['TDY_DTM_01_BTN']}"></span>
@@ -122,16 +118,15 @@
 
     <!--start divider-->
     <div class="divider">
-        <div class="divider-text" style="background-color: transparent;">
-            <img class="divider-text" src="/images/kdb/epams_r_cw_action.gif"
-                 style="width: 50px; height: 50px; border-radius: 50%; padding: 0;"/>
+        <div class="divider-text">
+            <img class="divider-text" src="/images/kdb/epams_r_cw_action.gif"/>
         </div>
     </div>
     <!--end divider-->
 
     <!--start 최근 공지사항-->
     <div class="main-content">
-        <div class="container">
+        <div class="recent-notice container">
             <div class="row d-flex justify-content-start mb-2">
                 <h5 class="text-start">
                     <i class="bi bi-bell-fill"></i> <span th:text="${langList['RECENT_NOTICE_TTL']}"></span>
@@ -144,13 +139,12 @@
                             <div class="card-body">
                                 <span th:if="${board.category}"
                                       th:classappend="|badge badge-sm mb-2 ${(board.category == 'IT') ? 'bg-primary' : (board.category == '인사') ? 'bg-info' : ''}|"
-                                      style="--bs-badge-padding-x: .35rem" th:text="${board.category}"></span> <a
-                                    class="card-title" th:href="@{|/board/${board.seqId}|}">
-                                <h6 style="display: flex; align-items: center;">
-                                    <span th:text="${board.boardTitle}" style="margin-right: 0.5rem;"> </span> <span
-                                        th:if="${T(java.time.LocalDateTime).now().minusDays(7).isBefore(board.createdTime)}"
-                                        class="badge rounded-pill bg-warning text-dark"
-                                        style="--bs-badge-font-size: .80em;"> new </span>
+                                      th:text="${board.category}"></span>
+                                <a class="card-title" th:href="@{|/board/${board.seqId}|}">
+                                <h6 class="d-flex align-items-center">
+                                    <span th:text="${board.boardTitle}" class="me-3"> </span>
+                                    <span th:if="${T(java.time.LocalDateTime).now().minusDays(7).isBefore(board.createdTime)}"
+                                        class="badge rounded-pill bg-warning text-dark"> new </span>
                                 </h6>
                             </a>
                                 <div class="d-flex flex-row mb-3 gap-3">
@@ -181,9 +175,8 @@
 
     <!--start divider-->
     <div class="divider">
-        <div class="divider-text" style="background-color: transparent;">
-            <img class="divider-text" src="/images/kdb/epams_r_cw_action.gif"
-                 style="width: 50px; height: 50px; border-radius: 50%; padding: 0;"/>
+        <div class="divider-text" >
+            <img class="divider-text" src="/images/kdb/epams_r_cw_action.gif"/>
         </div>
     </div>
     <!--end divider-->
@@ -203,7 +196,7 @@
                 <!-- 직원검색 내용 -->
                 <div class="row d-flex justify-content-center">
                     <div class="row col-lg-12">
-                        <section class="section">
+                        <section class="awesomplete section">
                             <div class="shadow card">
                                 <div class="card-header">
                                     <h4 class="card-title"><span th:text="${langList['SEARCH_EMP_01_STMT']}"></span>
@@ -216,16 +209,15 @@
                                             <div class="col-12 mb-1">
                                                 <div class="d-flex align-items-center mb-3">
 													<span class="input-group-text d-flex align-items-center justify-content-center"
-                                                          id="basic-addon1" style="height: 38px;">
-														<i class="bi bi-search m-0" style="line-height: 1;"></i>
+                                                          id="basic-addon1">
+														<i class="bi bi-search m-0"></i>
 													</span>
                                                     <input type="text" id="searchMember"
-                                                           class="form-control awesomplete" placeholder="이름, 팀/부서, 업무명"
+                                                           class="form-control" placeholder="이름, 팀/부서, 업무명"
                                                            aria-label="Recipient's username"
-                                                           aria-describedby="button-addon2" style="height: 38px;"/>
+                                                           aria-describedby="button-addon2"/>
                                                     <button class="btn btn-primary d-flex align-items-center"
-                                                            type="button" id="button-addon2" onclick="search()"
-                                                            style="height: 38px; white-space: nowrap;">
+                                                            type="button" id="button-addon2">
                                                         <span th:text="${langList['SEARCH_EMP_01_BTN']}"></span>
                                                     </button>
                                                 </div>
@@ -235,22 +227,20 @@
                                     </div>
                                 </div>
                                 <div class="divider">
-                                    <div class="divider-text" style="background-color: transparent;">
+                                    <div class="divider-text">
                                         <h5 class="card-title"><span th:text="${langList['SEARCH_EMP_03_STMT']}"></span>
                                         </h5>
                                     </div>
                                 </div>
-                                <div class="d-flex justify-content-center">
+                                <div class="awesomplete-result d-flex justify-content-center">
                                     <div class="row col-12">
                                         <div class="col-12 justify-self-center">
                                             <div id="memberList">
                                                 <div class="animate__animated animate__fadeIn animate__slow">
-                                                    <div class="shadow card"
-                                                         style="background-color: #F2F7FF; margin:3rem;">
-                                                        <div class="card-body d-flex justify-content-center align-items-center"
-                                                             style="height: 100px;">
-                                                            <h6 class="m-0"><span
-                                                                    th:text="${langList['SEARCH_EMP_04_STMT']}"></span></h5>
+                                                    <div class="shadow card">
+                                                        <div class="card-body d-flex justify-content-center align-items-center">
+                                                            <h6 class="m-0">
+                                                                <span th:text="${langList['SEARCH_EMP_04_STMT']}"></span>
                                                             </h6>
                                                         </div>
                                                     </div>

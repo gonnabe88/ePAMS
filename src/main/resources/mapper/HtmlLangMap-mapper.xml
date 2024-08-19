@@ -7,13 +7,14 @@
     <!-- Result Map 정의 -->
     <resultMap id="htmlLangMap" type="htmlLangDTO">
         <id property="html" column="HTML_FL_PTH"/>
-        <id property="lang" column="LAN_ID"/>
+        <id property="lang" column="SRE_VCB_CDVA_ID"/>
         <result property="deleteYn" column="DEL_YN"/>
         <result property="guid" column="GUID"/>
         <result property="guidPrgSno" column="GUID_PRG_SNO"/>
         <result property="lstChgUsid" column="LST_CHG_USID"/>
         <result property="updatedTime" column="LST_CHG_DTM"/>
-        <result property="createdTime" column="GNT_DTM"/>
+        <result property="createdTime" column="FST_ENT_DTM"/>
+        <result property="createUsid" column="FST_ENT_USID"/>
     </resultMap>
 
     <!-- 모든 데이터 조회 -->
@@ -25,20 +26,21 @@
     <select id="countById" parameterType="htmlLangDTO" resultType="int">
         SELECT COUNT(*)
         FROM THURXE_CHTMLA
-        WHERE HTML_FL_PTH = #{html} AND LAN_ID = #{lang}
+        WHERE HTML_FL_PTH = #{html} AND SRE_VCB_CDVA_ID = #{lang}
     </select>
 
     <!-- 신규 데이터 추가 -->
     <insert id="insert" parameterType="htmlLangDTO">
         INSERT INTO THURXE_CHTMLA (
             HTML_FL_PTH,
-            LAN_ID,
+            SRE_VCB_CDVA_ID,
             DEL_YN,
             GUID,
             GUID_PRG_SNO,
             LST_CHG_USID,
             LST_CHG_DTM,
-            GNT_DTM
+            FST_ENT_DTM,
+            FST_ENT_USID
         )
         VALUES (
             #{html},
@@ -48,14 +50,15 @@
             #{guidPrgSno},
             #{lstChgUsid},
             SYSDATE,
-            SYSDATE
+            SYSDATE,
+            #{createUsid}
         )
     </insert>
 
     <!-- 기존 데이터 삭제 -->
     <delete id="delete" parameterType="htmlLangDTO">
         DELETE FROM THURXE_CHTMLA
-        WHERE HTML_FL_PTH = #{html} AND LAN_ID = #{lang}
+        WHERE HTML_FL_PTH = #{html} AND SRE_VCB_CDVA_ID = #{lang}
     </delete>
 
 </mapper>

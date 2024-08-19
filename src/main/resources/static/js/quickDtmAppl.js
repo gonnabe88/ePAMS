@@ -30,8 +30,6 @@ const ApplAlert = (element) => {
             cancelButtonText: "아니요",
         }).then((result) => {
             if (result.isConfirmed) {
-                console.log(staDate);
-
                 // POST 요청 함수 호출
                 postDtmHisDTO(dtmHisDTO);
             }
@@ -54,7 +52,7 @@ const postDtmHisDTO = (dtmHisDTO) => {
         data: JSON.stringify(dtmHisDTO), // 전송 DATA
         success: (data) => { // 성공 (HTTP 상태코드 20X)
             const staYmd = data.staYmd; // 서버에서 반환된 staYmd 값 사용
-            popupReHtmlMsg('신청되었습니다.', `<p style="text-align:center">${staYmd} 연차 1일</p>`, 'success', '근태조회', '/dtm/list');
+            popupReHtmlMsg('신청되었습니다.', `<span class="dtmApplSuccessPopup">${staYmd} 연차 1일</span>`, 'success', '근태조회', '/dtm/list');
             console.log('Success:', data);
         },
         error: (error) => { // 실패 (HTTP 상태코드 40X, 50X)

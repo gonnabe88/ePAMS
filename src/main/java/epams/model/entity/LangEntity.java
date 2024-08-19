@@ -46,27 +46,27 @@ public class LangEntity extends BaseEntity implements Serializable {
      * @since 2024-06-09
      */
     @Id // 기본키
-    @Column(name="LAN_ID", length = 40)
-    @Comment("언어ID")
-    private String LAN_ID;
+    @Column(name="SRE_VCB_CDVA_ID", length = 40)
+    @Comment("화면용어코드값ID")
+    private String SRE_VCB_CDVA_ID;
     
     /***
      * @author 140024
      * @implNote 코드값명
      * @since 2024-06-09
      */
-    @Column(name="LAN_NM", length = 200, nullable = false)
-    @Comment("언어명")
-    private String LAN_NM;
+    @Column(name="SRE_VCB_NM", length = 200, nullable = false)
+    @Comment("화면용어명")
+    private String SRE_VCB_NM;
 
     /***
      * @author 140024
      * @implNote 코드형식
      * @since 2024-06-09
      */
-    @Column(name="LAN_KD_NM", length = 200, nullable = false) // 크기 20, not null
-    @Comment("언어종류명")
-    private String LAN_KD_NM;
+    @Column(name="SRE_VCB_KD_NM", length = 200, nullable = false) // 크기 20, not null
+    @Comment("화면용어종류명")
+    private String SRE_VCB_KD_NM;
     
     /***
      * @author 140024
@@ -76,7 +76,7 @@ public class LangEntity extends BaseEntity implements Serializable {
     @ManyToMany
     @JoinTable(
         name = "THURXE_CHTMLA",
-        joinColumns = @JoinColumn(name = "LAN_ID", foreignKey = @ForeignKey(name = "FK_THURXE_CHTMLA_LAN_ID")),
+        joinColumns = @JoinColumn(name = "SRE_VCB_CDVA_ID", foreignKey = @ForeignKey(name = "FK_THURXE_CHTMLA_SRE_VCB_CDVA_ID")),
         inverseJoinColumns = @JoinColumn(name = "HTML_FL_PTH", foreignKey = @ForeignKey(name = "FK_THURXE_CHTMLA_HTML_FL_PTH"))
     )
     

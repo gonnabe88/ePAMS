@@ -1,41 +1,50 @@
 // (페이지 로딩 시) 관리자 페이지와 일반 사용자 페이지의 sidebar를 동적으로 변경하는 스크립트
-window.addEventListener('DOMContentLoaded', function() {
-    let isChecked = document.getElementById('flexSwitchCheckDefault').checked;
-    let url = isChecked ? '/common/layout/renderSidebarAdmin' : '/common/layout/renderSidebarNormal';
+$(document).ready(function() {
+    // 쿠키에서 관리자 모드 여부를 확인
+    let isChecked = getCookie("adminView");
+
+    // flexSwitchCheckAdmin의 체크 상태 설정
+    $('#flexSwitchCheckAdmin').prop('checked', isChecked === 'true');
+
+    // 적절한 URL을 선택하여 사이드바 로드
+    let url = isChecked === 'true' ? '/common/layout/renderSidebarAdmin' : '/common/layout/renderSidebarNormal';
     console.log("url: " + url);
-    fetch(url)
-        .then(response => response.text())
-        .then(html => {
-            // 2024-08-17 CWE-79(Cross-site Scripting (XSS)) 취약점 조치
-            const safeHTML = DOMPurify.sanitize(html, {
-                SAFE_FOR_TEMPLATES: true,
-                ALLOWED_TAGS: ['h7', 'h6', 'h5', 'h4', 'h3', 'h2', 'h1', 'div', 'span', 'section', 'i', 'ul', 'li', 'a'], // 필요시 추가
-                FORBID_ATTR: ['style']
-            });
-            $('#menu').html(safeHTML);
-        })
-        .catch(error => console.error('Error loading sidebar:', error));
+
+    $.get(url, function(html) {
+        // 2024-08-17 CWE-79(Cross-site Scripting (XSS)) 취약점 조치
+        const safeHTML = DOMPurify.sanitize(html, {
+            SAFE_FOR_TEMPLATES: true,
+            ALLOWED_TAGS: ['h7', 'h6', 'h5', 'h4', 'h3', 'h2', 'h1', 'div', 'span', 'section', 'i', 'ul', 'li', 'a'], // 필요시 추가
+            FORBID_ATTR: ['style']
+        });
+        $('#menu').html(safeHTML);
+    }).fail(function(error) {
+        console.error('Error loading sidebar:', error);
+    });
 });
 
+
 // (Switch 변경 시) 관리자 페이지와 일반 사용자 페이지의 sidebar를 동적으로 변경하는 스크립트
-document.getElementById('flexSwitchCheckDefault').addEventListener('change', function () {
-    let isChecked = this.checked;
+$('#flexSwitchCheckAdmin').on('change', function () {
+    let isChecked = $(this).prop('checked');
     let url = isChecked ? '/common/layout/renderSidebarAdmin' : '/common/layout/renderSidebarNormal';
+    setCookie("adminView", isChecked, 30);
     console.log("url: " + url);
+
     // 서버에 요청을 보내어 해당 템플릿을 받아옴
-    fetch(url)
-        .then(response => response.text())
-        .then(html => {
-            // 2024-08-17 CWE-79(Cross-site Scripting (XSS)) 취약점 조치
-            const safeHTML = DOMPurify.sanitize(html, {
-                SAFE_FOR_TEMPLATES: true,
-                ALLOWED_TAGS: ['h7', 'h6', 'h5', 'h4', 'h3', 'h2', 'h1', 'div', 'span', 'section', 'i', 'ul', 'li', 'a'], // 필요시 추가
-                FORBID_ATTR: ['style']
-            });
-            $('#menu').html(safeHTML);
-        })
-        .catch(error => console.error('Error loading sidebar:', error));
+    $.get(url, function(html) {
+        // 2024-08-17 CWE-79(Cross-site Scripting (XSS)) 취약점 조치
+        const safeHTML = DOMPurify.sanitize(html, {
+            SAFE_FOR_TEMPLATES: true,
+            ALLOWED_TAGS: ['h7', 'h6', 'h5', 'h4', 'h3', 'h2', 'h1', 'div', 'span', 'section', 'i', 'ul', 'li', 'a'], // 필요시 추가
+            FORBID_ATTR: ['style']
+        });
+        $('#menu').html(safeHTML);
+    }).fail(function(error) {
+        console.error('Error loading sidebar:', error);
+    });
 });
+
 
 // Sidebar 기본 동작
 const DesktopSize = 1200;

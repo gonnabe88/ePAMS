@@ -1,3 +1,41 @@
+.dtmApplPopup .title{
+    text-align:center;
+}
+
+.dtmApplPopup .accordion .badge {
+    width: 3rem;
+}
+
+.dtmApplPopup .accordion-body {
+    text-align:left;
+}
+
+.dtmApplPopup .accordion-body .bi {
+    color:#ffc107;
+}
+
+.dtmApplSuccessPopup {
+    text-align:center;
+}
+
+.board-category {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.board-category .form-check {
+    margin: 0;
+}
+
+.tinymce-editor {
+    width: 100%;
+}
+
+.tinymce-image {
+    width: 300px;
+}
+
 .dropzone {
     border: dashed 4px #ddd !important;
     background-color: #f2f6fc;

@@ -10,15 +10,15 @@
         SELECT 
             CH.HTML_FL_PTH AS html,
             H.HTML_FL_NM      AS htmlName,
-            CH.LAN_ID     AS lang,
-            C.LAN_NM      AS langName
+            CH.SRE_VCB_CDVA_ID     AS lang,
+            C.SRE_VCB_NM      AS langName
         FROM 
             THURXE_CHTMLA CH,
             THURXE_CLANGM C,
             THURXE_CHTMLM H
         WHERE 
             CH.HTML_FL_PTH = H.HTML_FL_PTH AND
-            CH.LAN_ID     = C.LAN_ID AND
+            CH.SRE_VCB_CDVA_ID     = C.SRE_VCB_CDVA_ID AND
             CH.HTML_FL_PTH = #{html}
     </select>    
     

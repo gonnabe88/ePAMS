@@ -7,13 +7,13 @@
     <!-- 일자별 로그인 건수 조회 -->
     <select id="findLoginCountsByDate" resultType="epams.domain.com.admin.dto.CountByDateDTO">
         SELECT
-            TO_CHAR(GNT_DTM, 'YYYY-MM-DD') AS createdDate,
+            TO_CHAR(FST_ENT_DTM, 'YYYY-MM-DD') AS createdDate,
             SUM(CASE WHEN LGN_SCS_YN = '1' THEN 1 ELSE 0 END) AS successCount,
             SUM(CASE WHEN LGN_SCS_YN = '0' THEN 1 ELSE 0 END) AS failureCount
         FROM
             THURXE_CLOGNL
         GROUP BY
-            TO_CHAR(GNT_DTM, 'YYYY-MM-DD')
+            TO_CHAR(FST_ENT_DTM, 'YYYY-MM-DD')
         ORDER BY
             createdDate
     </select>
@@ -21,12 +21,12 @@
     <!-- 일자별 페이지뷰 건수 조회 -->
     <select id="findViewCountsByDate" resultType="epams.domain.com.admin.dto.CountByDateDTO">
         SELECT
-            TO_CHAR(GNT_DTM, 'YYYY-MM-DD') AS createdDate,
+            TO_CHAR(FST_ENT_DTM, 'YYYY-MM-DD') AS createdDate,
             COUNT(*) AS totalCount
         FROM
             THURXE_CVIEWL
         GROUP BY
-            TO_CHAR(GNT_DTM, 'YYYY-MM-DD')
+            TO_CHAR(FST_ENT_DTM, 'YYYY-MM-DD')
         ORDER BY
             createdDate
     </select>

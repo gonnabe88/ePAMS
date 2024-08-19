@@ -83,21 +83,19 @@
                                                 <div class="col-2 mb-0 align-content-center">
                                                     <div class="d-flex justify-content-end">
                                                         <div th:if="${date.applDateType == '오늘'}"
-                                                             class="btn btn-primary btn-sm"
+                                                             class="btn btn-primary btn-sm appl-alert-button"
                                                              th:attr="data-staDate=${date.staDate}
 																 ,data-staDateStr=${date.staDateStr}
 																 ,data-dtmCode=${date.dtmCode}
-																 ,data-dtmReasonCode=${date.dtmReasonCd}"
-                                                             onclick="ApplAlert(this)">
+																 ,data-dtmReasonCode=${date.dtmReasonCd}">
                                                             <span th:text="${langList['APPL_DTM_01_BTN']}"></span>
                                                         </div>
                                                         <div th:if="${date.applDateType == '내일'}"
-                                                             class="btn btn-info btn-sm"
+                                                             class="btn btn-info btn-sm appl-alert-button"
                                                              th:attr="data-staDate=${date.staDate}
 																 ,data-staDateStr=${date.staDateStr}
 																 ,data-dtmCode=${date.dtmCode}
-																 ,data-dtmReasonCode=${date.dtmReasonCd}"
-                                                             onclick="ApplAlert(this)">
+																 ,data-dtmReasonCode=${date.dtmReasonCd}">
                                                             <span th:text="${langList['APPL_DTM_01_BTN']}"></span>
                                                         </div>
                                                     </div>
@@ -281,6 +279,7 @@
     <script src="/js/memberSearch.js"></script>
     <script src="/js/webauthnPopup.js"></script>
     <script src="/js/commonPopup.js"></script>
+    <script src="/js/index.js"></script>
 
 </th:block>
 <!-- (end) private script -->

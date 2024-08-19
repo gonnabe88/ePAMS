@@ -141,4 +141,11 @@ public class DtmController<S extends Session> {
         return VIEW;
     }
 
+    @GetMapping("/calendar2")
+    public String dtmcalendar2(@PageableDefault(page = 1) final Pageable pageable, final Model model) {
+        final String VIEW = "/dtm/calendar2";
+
+        return VIEW;
+    }
+
 }

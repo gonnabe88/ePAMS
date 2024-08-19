@@ -56,10 +56,10 @@ public class HtmlLangEntity extends BaseEntity implements Serializable {
     @Id
     @ManyToOne
     @JoinColumn(
-            name = "LAN_ID",
-            foreignKey = @ForeignKey(name = "FK_THURXE_CHTMLA_LAN_ID", foreignKeyDefinition = "FOREIGN KEY (LAN_ID) REFERENCES THURXE_CLANGM (LAN_ID) ON DELETE CASCADE")
+            name = "SRE_VCB_CDVA_ID",
+            foreignKey = @ForeignKey(name = "FK_THURXE_CHTMLA_SRE_VCB_CDVA_ID", foreignKeyDefinition = "FOREIGN KEY (SRE_VCB_CDVA_ID) REFERENCES THURXE_CLANGM (SRE_VCB_CDVA_ID) ON DELETE CASCADE")
     )
-    @Comment("코드값ID")
+    @Comment("화면용어코드값ID")
     private LangEntity langEntity;
 
     /***
@@ -76,8 +76,8 @@ public class HtmlLangEntity extends BaseEntity implements Serializable {
      * @implNote getter
      * @since 2024-06-09
      */
-    public String getLAN_ID() {
-        return this.langEntity != null ? this.langEntity.getLAN_ID() : null;
+    public String getSRE_VCB_CDVA_ID() {
+        return this.langEntity != null ? this.langEntity.getSRE_VCB_CDVA_ID() : null;
     }
 
     /***
@@ -94,13 +94,13 @@ public class HtmlLangEntity extends BaseEntity implements Serializable {
 
     /***
      * @author 140024
-     * @implNote setter for LAN_ID
+     * @implNote setter for SRE_VCB_CDVA_ID
      * @since 2024-06-09
      */
-    public void setLAN_ID(final String code) {
+    public void setSRE_VCB_CDVA_ID(final String code) {
         if (this.langEntity == null) {
             this.langEntity = new LangEntity();
         }
-        this.langEntity.setLAN_ID(code);
+        this.langEntity.setSRE_VCB_CDVA_ID(code);
     }
 }

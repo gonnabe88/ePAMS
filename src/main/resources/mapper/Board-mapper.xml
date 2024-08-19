@@ -18,7 +18,8 @@
         <result property="guidPrgSno" column="GUID_PRG_SNO"/>
         <result property="lstChgUsid" column="LST_CHG_USID"/>
         <result property="updatedTime" column="LST_CHG_DTM"/>
-        <result property="createdTime" column="GNT_DTM"/>
+        <result property="createdTime" column="FST_ENT_DTM"/>
+        <result property="createUsid" column="FST_ENT_USID"/>
     </resultMap>
 
     <!-- BoardEntity를 조회하는 메소드 정의 (for association) -->
@@ -41,12 +42,14 @@
         FL_APG_YN,
         CTG_NM,
         NAC_INQ_NBR,
-        GNT_DTM,
         DEL_YN,
         GUID,
         GUID_PRG_SNO,
         LST_CHG_USID,
-        LST_CHG_DTM)
+        LST_CHG_DTM,
+        FST_ENT_DTM,
+        FST_ENT_USID
+        )
         VALUES(
         #{seqId},
         #{boardTitle},
@@ -55,12 +58,13 @@
         #{fileAttached},
         #{category},
         0,
-        SYSDATE,
         #{deleteYn},
         #{guid},
         #{guidPrgSno},
         #{lstChgUsid},
-        #{updatedTime}
+        SYSDATE,
+        SYSDATE,
+        #{createUsid}
         )
     </insert>
 
@@ -96,7 +100,7 @@
             DUPR_ENO,
             BLB_CONE,
             NAC_INQ_NBR,
-            TO_CHAR(GNT_DTM, 'YYYY-MM-DD HH24:MI:SS') AS GNT_DTM,
+            TO_CHAR(FST_ENT_DTM, 'YYYY-MM-DD HH24:MI:SS') AS FST_ENT_DTM,
             FL_APG_YN,
             CTG_NM,
             DEL_YN,

@@ -15,7 +15,8 @@
         <result property="guidPrgSno" column="GUID_PRG_SNO"/>
         <result property="lstChgUsid" column="LST_CHG_USID"/>
         <result property="updatedTime" column="LST_CHG_DTM"/>
-        <result property="createdTime" column="GNT_DTM"/>
+        <result property="createdTime" column="FST_ENT_DTM"/>
+        <result property="createUsid" column="FST_ENT_USID"/>
         <association property="boardDTO" column="BLB_SNO" javaType="boardDTO" select="Board.selectBoardById"/>
     </resultMap>
 
@@ -35,7 +36,8 @@
         GUID_PRG_SNO,
         LST_CHG_USID,
         LST_CHG_DTM,
-        GNT_DTM
+        FST_ENT_DTM,
+        FST_ENT_USID
         )
         VALUES
         (
@@ -48,7 +50,8 @@
         #{guidPrgSno},
         #{lstChgUsid},
         SYSDATE,
-        SYSDATE
+        SYSDATE,
+        #{createUsid}
         )
     </insert>
 

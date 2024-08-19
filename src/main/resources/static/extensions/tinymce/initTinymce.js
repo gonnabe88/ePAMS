@@ -64,13 +64,13 @@ tinymce.init({
     setup: function(editor) {
         editor.on('init', function() {
             console.log("init");
-            editor.getBody().style.width = '100%';
+            editor.getBody().classList.add('tinymce-editor');
         });
 
         editor.on('NodeChange', function(e) {
             console.log("NodeChange");
             if (e && e.element.nodeName.toLowerCase() == 'img') {
-                e.element.style.width = '300px';
+                e.element.classList.add('tinymce-image');
             }
         });
     }

@@ -15,14 +15,14 @@ public class LangVO extends BaseVO {
 	
     /***
      * @author 140024
-     * @implNote 언어ID(LAN_ID)
+     * @implNote 화면용어코드값ID(SRE_VCB_CDVA_ID)
      * @since 2024-06-09
      */
     private String lang;
     
     /***
      * @author 140024
-     * @implNote 언어명(LAN_NM)
+     * @implNote 화면용어명(SRE_VCB_NM)
      * @since 2024-06-09
      */
     private String langName;

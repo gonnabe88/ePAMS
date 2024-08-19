@@ -60,7 +60,7 @@ public class BaseEntity {
 	 */
 	@Column(name = "LST_CHG_USID", length = 14, nullable = false)
 	@Comment("최종변경사용자ID")
-	private String LST_CHG_USID = new String(new char[14]).replace('\0', '0');
+	private String LST_CHG_USID = "SYSTEM";
 
 	/***
 	 * @author 140024
@@ -78,7 +78,16 @@ public class BaseEntity {
 	 * @since 2024-06-09
 	 */
     @CreationTimestamp
-    @Column(name = "GNT_DTM", columnDefinition = "DATE")
+    @Column(name = "FST_ENT_DTM", columnDefinition = "DATE")
     @Comment("생성일시")
-    private LocalDateTime GNT_DTM;
+    private LocalDateTime FST_ENT_DTM;
+
+	/***
+	 * @author 140024
+	 * @implNote 생성일시
+	 * @since 2024-06-09
+	 */
+	@Column(name = "FST_ENT_USID", length = 14, nullable = false)
+	@Comment("생성사용자ID")
+	private String FST_ENT_USID = "SYSTEM";
 }

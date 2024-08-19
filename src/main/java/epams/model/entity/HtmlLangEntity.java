@@ -31,7 +31,7 @@ public class HtmlLangEntity extends BaseEntity implements Serializable {
     /**
 	 * 
 	 */
-	private static final long serialVersionUID = 6855998655976669255L;
+	private static final long serialVersionUID = 1L;
 
 
     /***

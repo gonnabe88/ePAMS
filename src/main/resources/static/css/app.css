@@ -1,5 +1,4 @@
 @charset "UTF-8";
-
 /*!
  * Bootstrap  v5.3.2 (https://getbootstrap.com/)
  * Copyright 2011-2023 The Bootstrap Authors
@@ -367,15 +366,11 @@ h1,
     color: var(--bs-heading-color)
 }
 
-h1,
-.h1 {
+h1,.h1 {
     font-size: calc(1.375rem + 1.5vw)
 }
-
 @media (min-width: 1200px) {
-
-    h1,
-    .h1 {
+    h1,    .h1 {
         font-size: 2.5rem
     }
 }
@@ -495,13 +490,11 @@ strong {
     font-weight: bolder
 }
 
-small,
-.small {
+small,.small {
     font-size: .875em
 }
 
-mark,
-.mark {
+mark,.mark {
     padding: .2em;
     color: var(--bs-highlight-color);
     background-color: var(--bs-highlight-bg)
@@ -671,7 +664,6 @@ button,
 [type=submit] {
     -webkit-appearance: button
 }
-
 button:not(:disabled),
 [type=button]:not(:disabled),
 [type=reset]:not(:disabled),
@@ -703,13 +695,11 @@ legend {
     font-size: calc(1.275rem + .3vw);
     line-height: inherit
 }
-
 @media (min-width: 1200px) {
     legend {
         font-size: 1.5rem
     }
 }
-
 legend+* {
     clear: left
 }

@@ -1,5 +1,5 @@
 <configuration>
-    <property name="LOG_PATH" value="logs" />
+    <property name="LOG_PATH" value="c:\" />
     <property name="LOG_FILE" value="${LOG_PATH}/myapp.log" />
 
     <!-- 콘솔에 출력할 로그 설정 -->

@@ -22,7 +22,7 @@ public class HtmlService {
 	
     /**
      * @author K140024
-     * @implNote CodeRepository 주입
+     * @implNote LangRepository 주입
      * @since 2024-04-26
      */
 	private final HtmlRepository htmlRepository;
@@ -45,16 +45,19 @@ public class HtmlService {
     public void save(final List<HtmlDTO> added, final List<HtmlDTO> changed, final List<HtmlDTO> deleted) {    	
         // Handle added members
         for (final HtmlDTO dto : added) {
+            log.warn("Added: {}", dto.toString());
         	htmlRepository.insertUpdate(dto);
         }
 
         // Handle changed members
         for (final HtmlDTO dto : changed) {
+            log.warn("update: {}", dto.toString());
         	htmlRepository.update(dto);
         }
 
         // Handle deleted members
         for (final HtmlDTO dto : deleted) {
+            log.warn("delete: {}", dto.toString());
         	htmlRepository.delete(dto);
         }
         

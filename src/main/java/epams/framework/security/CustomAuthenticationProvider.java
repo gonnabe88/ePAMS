@@ -98,14 +98,14 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         // 1차 인증(ID/PW) 실패
         if (!pwLoginResult) {
             log.warn("1차 인증 실패");
-            logRepository.insert(LogLoginDTO.getDTO(iamUserDTO.getUsername(), "ID/PW(사후)", '0'));
+            logRepository.insert(LogLoginDTO.getDTO(iamUserDTO.getUsername(), "ID/PW(사후)", "0"));
             throw new AuthenticationException("Invalid credentials") {};
         }
 
         // 2차 인증(SMS, 카카오, otp, FIDO) 실패
         if (!loginResult) {
             log.warn("2차 인증 실패");
-            logRepository.insert(LogLoginDTO.getDTO(iamUserDTO.getUsername(), MFA, '0'));
+            logRepository.insert(LogLoginDTO.getDTO(iamUserDTO.getUsername(), MFA, "0"));
             throw new AuthenticationException("Invalid mfa credentials") {};
         }
 
@@ -116,7 +116,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
             log.warn("로그인 사용자 정보: {}, {}", iamUserDTO.getUsername(), role.getRoleId());
         }
         // 로그인 성공 로깅
-        logRepository.insert(LogLoginDTO.getDTO(iamUserDTO.getUsername(), MFA, '1'));
+        logRepository.insert(LogLoginDTO.getDTO(iamUserDTO.getUsername(), MFA, "1"));
 
         return authenticated;
     }

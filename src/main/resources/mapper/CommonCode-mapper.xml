@@ -1,0 +1,66 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="CommonCode">
+
+    <!-- Result Map 정의 -->
+    <resultMap id="commonCodeMap" type="CommonCodeDTO">
+        <id property="codeId" column="CD_ID" />
+        <result property="code" column="CD" />
+        <result property="codeName" column="CD_NM" />
+        <result property="systemCode" column="SYSTEM_CD" />
+        <result property="shortName" column="SHORT_NM" />
+        <result property="localeCode" column="LOCALE_CD" />
+        <result property="companyCode" column="COMPANY_CD" />
+        <result property="codeKind" column="CD_KIND" />
+        <result property="startYmd" column="STA_YMD" />
+        <result property="endYmd" column="END_YMD" />
+        <result property="foreignName" column="FOR_NM" />
+        <result property="foreignFullName" column="FOR_FULL_NM" />
+        <result property="printName" column="PRINT_NM" />
+        <result property="orderNo" column="ORD_NO" />
+        <result property="convertCode" column="CONV_CD" />
+        <result property="etcCode1" column="ETC_CD1" />
+        <result property="etcCode2" column="ETC_CD2" />
+        <result property="etcCode3" column="ETC_CD3" />
+        <result property="etcCode4" column="ETC_CD4" />
+        <result property="etcCode5" column="ETC_CD5" />
+        <result property="etcCode6" column="ETC_CD6" />
+        <result property="etcCode7" column="ETC_CD7" />
+        <result property="etcCode8" column="ETC_CD8" />
+        <result property="etcCode9" column="ETC_CD9" />
+        <result property="etcCode10" column="ETC_CD10" />
+        <result property="note" column="NOTE" />
+        <result property="modUserId" column="MOD_USER_ID" />
+        <result property="modDate" column="MOD_DATE" />
+        <result property="timezoneCode" column="TZ_CD" />
+        <result property="timezoneDate" column="TZ_DATE" />
+        <result property="etcCode11" column="ETC_CD11" />
+    </resultMap>
+
+    <!-- 모든 내용 조회 -->
+    <select id="findAll" resultMap="commonCodeMap">
+        SELECT * FROM OHR.XFRMD2C
+    </select>
+
+    <!-- 코드유형에 해당하는 코드 목록 조회 -->
+    <select id="findByCodeKind" resultMap="commonCodeMap" parameterType="CommonCodeDTO">
+        SELECT * FROM OHR.XFRMD2C WHERE CD_KIND = #{codeKind}
+    </select>
+
+    <!-- 코드유형 & 코드에 해당하는 코드 목록 조회 -->
+    <select id="findByCodeKindAndCode" resultMap="commonCodeMap" parameterType="CommonCodeDTO">
+        SELECT * FROM OHR.XFRMD2C
+        WHERE CD_KIND = #{codeKind}
+          AND CD LIKE #{code} || '%'
+    </select>
+
+    <!-- 코드유형 & 코드에 해당하는 코드 조회 -->
+    <select id="findOneByCodeKindAndCode" resultMap="commonCodeMap" parameterType="CommonCodeDTO">
+        SELECT * FROM OHR.XFRMD2C
+        WHERE CD_KIND = #{codeKind}
+          AND CD = #{code}
+    </select>
+
+</mapper>

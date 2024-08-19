@@ -2,11 +2,11 @@ package epams.domain.com.member.repository;
 
 import java.util.List;
 
-import epams.domain.com.member.dto.RoleDTO;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import epams.domain.com.member.dto.IamUserDTO;
+import epams.domain.com.member.dto.RoleDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -81,29 +81,30 @@ public class MemberRepository {
     }
 
     /**
-     * *
      * @author 140024
      * @implNote 사용자의 역할 조회
      * @since 2024-06-10
      */
     public RoleDTO findOneRoleByUsername(final IamUserDTO iamUserDTO) {
-        RoleDTO roleDTO;
-        try {
-            if(log.isWarnEnabled()){
-                log.warn("{} 사용자의 역할을 조회합니다.", iamUserDTO.getUsername());
-            }
-            roleDTO = sql.selectOne("Role.findOneRoleByUsername", iamUserDTO);
-            if(log.isWarnEnabled()){
-                log.warn("{} 사용자의 역할은 {}입니다.", roleDTO.getUsername(), roleDTO.getRoleId());
-            }
-        } catch (Exception e) {
-            if(log.isWarnEnabled()){
+        if (log.isWarnEnabled()) {
+            log.warn("{} 사용자의 역할을 조회합니다.", iamUserDTO.getUsername());
+        }
+        
+        RoleDTO roleDTO = sql.selectOne("Role.findOneRoleByUsername", iamUserDTO);
+        
+        if (roleDTO == null) {
+            if (log.isWarnEnabled()) {
                 log.warn("{} 사용자의 역할이 존재하지 않습니다. 기본 역할을 부여합니다.", iamUserDTO.getUsername());
             }
             roleDTO = new RoleDTO();
             roleDTO.setRoleId("ROLE_NORMAL");
             roleDTO.setUsername(iamUserDTO.getUsername());
-        } 
+        } else {
+            if (log.isWarnEnabled()) {
+                log.warn("{} 사용자의 역할은 {}입니다.", roleDTO.getUsername(), roleDTO.getRoleId());
+            }
+        }
+        
         return roleDTO;
     }
 

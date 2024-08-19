@@ -3,6 +3,7 @@ package epams.framework.error;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.error.ErrorAttributeOptions;
 import org.springframework.boot.web.servlet.error.ErrorAttributes;
 import org.springframework.stereotype.Component;
@@ -15,6 +16,7 @@ import lombok.NoArgsConstructor;
  * @implNote CustomErrorAttributes 클래스는 에러 속성을 커스터마이징하기 위해 사용됩니다.
  * @since 2024-06-11
  */
+@Slf4j
 @NoArgsConstructor
 @Component
 public class CustomErrorAttributes implements ErrorAttributes {
@@ -29,6 +31,7 @@ public class CustomErrorAttributes implements ErrorAttributes {
      */
     @Override
     public Map<String, Object> getErrorAttributes(final WebRequest webRequest, final ErrorAttributeOptions options) {
+        log.warn("ErrorAttributes: {}", webRequest);
         final Map<String, Object> errorAttributes = new ConcurrentHashMap<>();
         putIfNotNull(errorAttributes, "status", getAttribute(webRequest, "javax.servlet.error.status_code"));
         putIfNotNull(errorAttributes, "error", getAttribute(webRequest, "javax.servlet.error.message"));
@@ -45,6 +48,7 @@ public class CustomErrorAttributes implements ErrorAttributes {
      * @since 2024-06-11
      */
     private Object getAttribute(final WebRequest webRequest, final String name) {
+        log.warn("Attribute: {}", webRequest.getAttribute(name, WebRequest.SCOPE_REQUEST));
         return webRequest.getAttribute(name, WebRequest.SCOPE_REQUEST);
     }
 
@@ -57,6 +61,7 @@ public class CustomErrorAttributes implements ErrorAttributes {
      */
     @Override
     public Throwable getError(final WebRequest webRequest) {
+        log.warn("Error: {}", webRequest.getAttribute("javax.servlet.error.exception", WebRequest.SCOPE_REQUEST));
         return (Throwable) webRequest.getAttribute("javax.servlet.error.exception", WebRequest.SCOPE_REQUEST);
     }
 
@@ -69,6 +74,7 @@ public class CustomErrorAttributes implements ErrorAttributes {
      * @since 2024-06-11
      */
     private void putIfNotNull(final Map<String, Object> map, final String key, final Object value) {
+        log.warn("PutIfNotNull: {}", map);
         if (value != null) {
             map.put(key, value);
         }

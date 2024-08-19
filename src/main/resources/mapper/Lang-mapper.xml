@@ -1,0 +1,119 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Lang">
+
+    <!-- Result Map 정의 -->
+    <resultMap id="langMap" type="langDTO">
+        <id property="lang" column="LAN_ID"/>
+        <result property="langName" column="LAN_NM"/>
+        <result property="langType" column="LAN_KD_NM"/>
+        <result property="deleteYn" column="DEL_YN"/>
+        <result property="guid" column="GUID"/>
+        <result property="guidPrgSno" column="GUID_PRG_SNO"/>
+        <result property="lstChgUsid" column="LST_CHG_USID"/>
+        <result property="updatedTime" column="LST_CHG_DTM"/>
+        <result property="createdTime" column="GNT_DTM"/>
+    </resultMap>
+
+    <!-- 모든 데이터 조회 -->
+    <select id="findAll" resultMap="langMap">
+        SELECT * FROM THURXE_CLANGM
+    </select>
+
+    <!-- 특정 ID 데이터 조회 -->
+    <select id="findById" parameterType="String" resultMap="langMap">
+        SELECT * FROM THURXE_CLANGM
+        WHERE LAN_ID = #{LAN_ID}
+    </select>
+
+    <!-- 기본키 데이터 중복여부 조회 -->
+    <select id="countById" parameterType="String" resultType="int">
+        SELECT COUNT(*)
+        FROM THURXE_CLANGM WHERE LAN_ID = #{LAN_ID}
+    </select>
+
+    <!-- 신규 데이터 추가 -->
+    <insert id="insert" parameterType="langDTO">
+        INSERT INTO THURXE_CLANGM (
+            LAN_ID,
+            LAN_NM,
+            LAN_KD_NM,
+            DEL_YN,
+            GUID,
+            GUID_PRG_SNO,
+            LST_CHG_USID,
+            LST_CHG_DTM,
+            GNT_DTM
+        )
+        VALUES (
+            #{lang},
+            #{langName},
+            #{langType},
+            #{deleteYn},
+            #{guid},
+            #{guidPrgSno},
+            #{lstChgUsid},
+            SYSDATE,
+            SYSDATE
+        )
+    </insert>
+
+    <!-- 기존 데이터 삭제 -->
+    <delete id="delete" parameterType="langDTO">
+        DELETE FROM THURXE_CLANGM
+        WHERE
+            LAN_ID = #{lang}
+    </delete>
+
+    <!-- 기존 데이터 업데이트 -->
+    <update id="update" parameterType="langDTO">
+        UPDATE THURXE_CLANGM
+        SET
+            LAN_NM = #{langName},
+            LAN_KD_NM = #{langType},
+            DEL_YN = #{deleteYn},
+            GUID = #{guid},
+            GUID_PRG_SNO = #{guidPrgSno},
+            LST_CHG_USID = #{lstChgUsid},
+            LST_CHG_DTM = SYSDATE
+        WHERE
+            LAN_ID = #{lang}
+    </update>
+
+    <!-- 신규 데이터 추가 또는 기존 데이터 업데이트 -->
+    <insert id="insertUpdate" parameterType="langDTO">
+        INSERT INTO THURXE_CLANGM (
+            LAN_ID,
+            LAN_NM,
+            LAN_KD_NM,
+            DEL_YN,
+            GUID,
+            GUID_PRG_SNO,
+            LST_CHG_USID,
+            LST_CHG_DTM,
+            GNT_DTM
+        )
+        VALUES (
+            #{lang},
+            #{langName},
+            #{langType},
+            #{deleteYn},
+            #{guid},
+            #{guidPrgSno},
+            #{lstChgUsid},
+            SYSDATE,
+            SYSDATE
+        )
+        ON DUPLICATE KEY UPDATE
+            LAN_NM = VALUES(LAN_NM),
+            LAN_KD_NM = VALUES(LAN_KD_NM),
+            DEL_YN = VALUES(DEL_YN),
+            GUID = VALUES(GUID),
+            GUID_PRG_SNO = VALUES(GUID_PRG_SNO),
+            LST_CHG_USID = VALUES(LST_CHG_USID),
+            LST_CHG_DTM = SYSDATE;
+    </insert>
+
+</mapper>

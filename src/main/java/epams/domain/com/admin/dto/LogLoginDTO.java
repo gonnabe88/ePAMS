@@ -20,7 +20,7 @@ public class LogLoginDTO extends LogLoginVO {
      * @implNote DTO 생성 메소드
      * @since 2024-06-09
      */
-    public static LogLoginDTO getDTO(final String empNo, final String loginType, final char loginResult) {
+    public static LogLoginDTO getDTO(final String empNo, final String loginType, final String loginResult) {
     	final LogLoginDTO logLoginDTO = new LogLoginDTO();
     	logLoginDTO.setEmpNo(empNo);
     	logLoginDTO.setLoginType(loginType);

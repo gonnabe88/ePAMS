@@ -1,6 +1,6 @@
 package epams.domain.com.index;
 
-import epams.domain.com.admin.service.CodeHtmlDetailService;
+import epams.domain.com.admin.service.HtmlLangDetailService;
 import epams.domain.com.board.dto.BoardDTO;
 import epams.domain.com.board.service.BoardMainService;
 import epams.domain.com.index.dto.BannerDTO;
@@ -78,7 +78,7 @@ public class IndexController<S extends Session> {
      * @implNote 코드 상세 서비스 주입
      * @since 2024-06-11
      */
-    private final CodeHtmlDetailService codeDetailService;
+    private final HtmlLangDetailService langDetailService;
 
     /**
      * @author K140024
@@ -131,9 +131,9 @@ public class IndexController<S extends Session> {
             log.info("simple auth user");
         }
 
-        // 코드
-        final Map<String, String> codeList = codeDetailService.getCodeHtmlDetail(INDEXMAIN);
-        model.addAttribute("codeList", codeList);
+        // 언어목록
+        final Map<String, String> langList = langDetailService.getCodeHtmlDetail(INDEXMAIN);
+        model.addAttribute("langList", langList);
 
         // 메인화면 공지사항 출력
         final int currentPage = pageable.getPageNumber(); // 현재 페이지 (1-based index)
@@ -165,6 +165,7 @@ public class IndexController<S extends Session> {
 
         // 배너 리스트
         List<BannerDTO> bannerList = new ArrayList<>();
+        bannerList.add(new BannerDTO("", "", "", ""));
         bannerList.add(new BannerDTO("최근 공지사항", "시스템 점검 안내", "'24. 7. 6(일) 18:00-19:00", "<a href=\"/dtm/main\"><span class=\"badge text-bg-primary\">바로가기</span></a>"));
         bannerList.add(new BannerDTO("연차 및 저축휴가", "언제 어디서든", "편하게 신청하세요", "<a href=\"/dtm/main\"><span class=\"badge text-bg-primary\">바로가기</span></a>"));
         bannerList.add(new BannerDTO("직원조회", "언제 어디서든", "간편하게 검색하세요", "<a href=\"#\" onclick=\"scrollToDiv()\"><span class=\"badge text-bg-primary\">바로가기</span></a>"));

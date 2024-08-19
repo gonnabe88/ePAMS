@@ -32,7 +32,7 @@ import com.yubico.webauthn.exception.AssertionFailedException;
 
 import epams.domain.com.admin.dto.LogLoginDTO;
 import epams.domain.com.admin.repository.LogRepository;
-import epams.framework.security.CustomGeneralRuntimeException;
+import epams.framework.exception.CustomGeneralRuntimeException;
 import epams.domain.com.login.repository.LoginRepository;
 import epams.domain.com.member.dto.IamUserDTO;
 import jakarta.servlet.http.HttpSession;
@@ -146,25 +146,25 @@ public class AuthService {
                 context.setAuthentication(authentication);
                 SecurityContextHolder.setContext(context);
                 session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, context);
-                logRepository.insert(LogLoginDTO.getDTO(iamUserDTO.getUsername(), SIMPLEAUTH_STR, '1'));
+                logRepository.insert(LogLoginDTO.getDTO(iamUserDTO.getUsername(), SIMPLEAUTH_STR, "1"));
                 response.put("status", "OK");
                 response.put("redirectUrl", "/index");
             } else {
-                logRepository.insert(LogLoginDTO.getDTO(iamUserDTO.getUsername(), SIMPLEAUTH_STR, '0'));
+                logRepository.insert(LogLoginDTO.getDTO(iamUserDTO.getUsername(), SIMPLEAUTH_STR, "0"));
                 response.put("status", "BAD_REQUEST");
                 response.put("redirectUrl", "/login");
                 status = HttpStatus.BAD_REQUEST;
             }
         } catch (JsonProcessingException e) {
-            logRepository.insert(LogLoginDTO.getDTO(iamUserDTO.getUsername(), SIMPLEAUTH_STR, '0'));
+            logRepository.insert(LogLoginDTO.getDTO(iamUserDTO.getUsername(), SIMPLEAUTH_STR, "0"));
             log.error("Error processing JSON: ", e);
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error processing JSON.", e);
         } catch (AssertionFailedException e) {
-            logRepository.insert(LogLoginDTO.getDTO(iamUserDTO.getUsername(), SIMPLEAUTH_STR, '0'));
+            logRepository.insert(LogLoginDTO.getDTO(iamUserDTO.getUsername(), SIMPLEAUTH_STR, "0"));
             log.error("Assertion failed: ", e);
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Authentication failed", e);
         } catch (IOException e) {
-            logRepository.insert(LogLoginDTO.getDTO(iamUserDTO.getUsername(), SIMPLEAUTH_STR, '0'));
+            logRepository.insert(LogLoginDTO.getDTO(iamUserDTO.getUsername(), SIMPLEAUTH_STR, "0"));
             log.error("Failed to save credential: ", e);
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Failed to save credential, please try again!", e);
         }

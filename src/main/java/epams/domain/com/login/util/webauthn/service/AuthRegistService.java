@@ -34,7 +34,7 @@ import com.yubico.webauthn.data.UserIdentity;
 import com.yubico.webauthn.data.UserVerificationRequirement;
 import com.yubico.webauthn.exception.RegistrationFailedException;
 
-import epams.framework.security.CustomGeneralRuntimeException;
+import epams.framework.exception.CustomGeneralRuntimeException;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -62,7 +62,7 @@ public class BoardUpdateService {
      */
     public BoardDTO update(final BoardDTO newBoardDTO) throws IOException {
         final BoardDTO oldBoardDTO = boardMainRepo.findById(newBoardDTO.getSeqId()); // 이전 게시물 세팅
-        final int FILE_ATTACHED = 1; // 상수로 리터럴 값을 추출 (취약점 조치건)
+        final String FILE_ATTACHED = "1"; // 상수로 리터럴 값을 추출 (취약점 조치건)
 
         if (newBoardDTO.getBoardFile() != null) {
             // 새로운 첨부파일이 있는 경우
@@ -79,7 +79,7 @@ public class BoardUpdateService {
                 boardFileRepo.saveFile(boardFileDTO); // DBMS에 파일 정보 저장
             }
         }
-        if (oldBoardDTO.getFileAttached() == FILE_ATTACHED) {
+        if (FILE_ATTACHED.equals(oldBoardDTO.getFileAttached())) {
             // 기존 첨부파일이 있는 경우
             newBoardDTO.setFileAttached(FILE_ATTACHED); // 첨부파일 여부 1 세팅
             newBoardDTO.setSeqId(boardUpdateRepo.update(newBoardDTO)); // 게시물 업데이트

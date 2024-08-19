@@ -7,156 +7,14 @@
 	<link rel="stylesheet" href="/extensions/tinymce/tinymce.css">
 	<script src="/extensions/tinymce/tinymce.min.js"></script>
 	<script src="/js/pages/tinymce.js"></script>
-      <script>
-      
-        tinymce.init({
-            selector: '#open',
-            plugins: [
-                "advlist", "accordion", "anchor", "autolink", "autoresize", "charmap", "code", 
-                "fullscreen",
-                "help", "image", "insertdatetime", "link", "lists", "media",
-                "nonbreaking", "pagebreak", "preview", "quickbars", "save", "searchreplace", "table", "visualblocks", "wordcount"
-            ],
-            branding: false,
-            promotion: false,   
-            images_upload_url: 'image',
-            images_upload_base_path: '/board/upload/',
-            automatic_uploads: true,
-            images_reuse_filename: true,
-            relative_urls: false,
-            remove_script_host: false,
-            document_base_url: window.location.origin,
-            images_upload_handler : (blobInfo, progress) => new Promise((resolve, reject) => {
-                var xhr, formData;
-                // CSRF 토큰 설정
-                var csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
-                var csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
-                
-                xhr = new XMLHttpRequest();
-                xhr.withCredentials = false;
-                xhr.open('POST', '/board/upload/image'); // 서버 업로드 엔드포인트    
-                xhr.setRequestHeader(csrfHeader, csrfToken);
-
-                xhr.upload.onprogress = (e) => {
-                    progress(e.loaded / e.total * 100);
-                  };
-                  
-                xhr.onload = function() {
-                    var json;
-                    try {
-                        if (xhr.status != 200) {
-                            console.error('HTTP Error: ' + xhr.status);
-                            failure('HTTP Error: ' + xhr.status);
-                            return;
-                        }
-                        json = JSON.parse(xhr.responseText);
-                        if (!json || typeof json.location != 'string') {
-                            console.error('Invalid JSON: ' + xhr.responseText);
-                            failure('Invalid JSON: ' + xhr.responseText);
-                            return;
-                        }
-                        console.log('Image uploaded successfully:', json.location); // 업로드된 이미지 URL을 로그로 출력
-                        resolve(json.location);
-                    } catch (e) {
-                        console.error('Error parsing JSON: ', e);
-                        failure('Error parsing JSON: ' + e.message);
-                    }
-                };
-
-                xhr.onerror = () => {
-                    console.error('Error during the request.');
-                    reject('Image upload failed due to a XHR Transport error. Code: ' + xhr.status);
-                };
-
-                formData = new FormData();
-                console.log('blobInfo.filename():', blobInfo.filename()); // 업로드된 이미지 URL을 로그로 출력
-                formData.append('file', blobInfo.blob(), blobInfo.filename());
-                xhr.send(formData);
-            }),
-            setup: function(editor) {
-                editor.on('init', function() {
-                	console.log("init");
-                    editor.getBody().style.width = '100%';
-                });
-
-                editor.on('NodeChange', function(e) {
-					console.log("NodeChange");
-                    if (e && e.element.nodeName.toLowerCase() == 'img') {
-                        e.element.style.width = '300px';
-                    }
-                });
-            }
-        });
-        
-    </script>
+	<script src="/extensions/tinymce/initTinymce.js"></script>
 	<script src="/extensions/dropzone/dropzone.js"></script>
 	<link rel="stylesheet" href="/extensions/dropzone/dropzone.min.css" type="text/css" />
-
-
-	<style>
-.dropzone {
-	border: dashed 4px #ddd !important;
-	background-color: #f2f6fc;
-	border-radius: 15px;
-	min-height: 0;
-	padding: 0;
-}
-
-.dropzone .dz-message {
-	margin: 0.5em;
-}
-
-.dropzone .dropzone-container {
-	padding: 2rem 0;
-	width: 100%;
-	height: 100%;
-	position: relative;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	color: #8c96a8;
-	z-index: 20;
-}
-
-.dropzone .file-input {
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	top: 0;
-	left: 0;
-	opacity: 0;
-	visibility: hidden;
-	cursor: pointer;
-}
-
-.file-icon {
-	font-size: 60px;
-}
-
-.hr-sect {
-	display: flex;
-	flex-basis: 100%;
-	align-items: center;
-	margin: 8px 0px;
-}
-
-.hr-sect:before, .hr-sect:after {
-	content: "";
-	flex-grow: 1;
-	background: #ddd;
-	height: 1px;
-	font-size: 0px;
-	line-height: 0px;
-	margin: 0px 8px;
-}
-</style>
 </th:block>
 <!-- (end) private script -->
 </head>
 
 <body>
-
 	<div layout:fragment="contents">
 		<div id="main-content">
 			<div class="page-heading">
@@ -230,7 +88,7 @@
 
 				<div class="d-flex gap-2 flex-row-reverse">
 					<button class="btn btn-primary mt-3" type="submit" id="submit" onclick="save2()">등록</button>
-					<a class="btn btn-secondary mt-3" type="submit" id="submit" th:href="@{/board/list}">목록</a>
+					<a class="btn btn-secondary mt-3" type="submit" id="list" th:href="@{/board/list}">목록</a>
 				</div>
 				<br>
 			</div>

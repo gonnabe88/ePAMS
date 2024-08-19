@@ -63,16 +63,15 @@
 	<!-- (start) private script -->
 	<th:block layout:fragment="script">
 	<script src="/extensions/tabulator/tabulator.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/luxon@3.4.4/build/global/luxon.min.js"></script>
+	<script src="/extensions/papaparse/papaparse.min.js"></script>
+	<script src="/extensions/luxon/luxon.js"></script>
 	<script src="/extensions/tabulator/kdb_tabulator.js"></script>
 	<script>
-
-		window.url = "/api/admin/code"
+		window.url = "/api/admin/lang"
 		window.columns = [
-			{ title: "코드", field: "code", sorter: "string", minWidth: 100 },
-	        { title: "코드명", field: "codeName", sorter: "string", editor: "input", minWidth: 100 },
-	        { title: "코드타입", field: "codeType", sorter: "string", editor: "input" },
+			{ title: "코드", field: "lang", sorter: "string", editor: "input", minWidth: 100 },
+	        { title: "코드명", field: "langName", sorter: "string", editor: "input", minWidth: 100 },
+	        { title: "코드타입", field: "langType", sorter: "string", editor: "input" },
 	        { title: "변경일자", field: "updatedTime", sorter: "datetime", sorterParams:{format:"yyyy-MM-dd HH:mm:ss"}},
 	        { title: "등록일자", field: "createdTime", sorter: "datetime", sorterParams:{format:"yyyy-MM-dd HH:mm:ss"}}
 		]

@@ -2,6 +2,7 @@ package epams.domain.dtm.controller;
 
 import epams.domain.dtm.service.DtmApplyService;
 import epams.domain.dtm.dto.DtmHisDTO;
+import epams.framework.exception.CustomGeneralRuntimeException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -12,6 +13,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -55,15 +58,34 @@ public class DtmApplRestController {
      */
     @PostMapping("/appl")
     public ResponseEntity<Map<String, String>> applyDtm(@RequestBody final DtmHisDTO dto) throws IOException {
+        // 사용자 ID 설정
         dto.setEmpId(Long.parseLong(authentication().getName().replace('K', '7')));
         dto.setModUserId(Long.parseLong(authentication().getName().replace('K', '7')));
 
-        dtmApplyService.insert(dto);
+        // 날짜를 YYYY-MM-DD 형식으로 포맷팅
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
+        // 응답 메시지 설정
         Map<String, String> response = new ConcurrentHashMap<>();
-        response.put("message", "SUCCESS");
 
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
+        try {
+            // 서비스 호출 및 결과 메시지 설정
+            String resultMessage = dtmApplyService.insert(dto);
+            response.put("message", resultMessage);
+            response.put("staYmd",  dto.getStaYmd().toLocalDate().format(formatter));
+            response.put("endYmd",  dto.getEndYmd().toLocalDate().format(formatter));
+            return new ResponseEntity<>(response, HttpStatus.CREATED);
+
+        } catch (CustomGeneralRuntimeException e) {
+            // 비즈니스 로직 오류 처리
+            response.put("error", e.getMessage());
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+
+        } catch (Exception e) {
+            // 일반 예외 처리
+            response.put("error", "서버 내부 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.");
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 }

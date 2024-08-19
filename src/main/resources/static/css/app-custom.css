@@ -1,7 +1,227 @@
+.dropzone {
+    border: dashed 4px #ddd !important;
+    background-color: #f2f6fc;
+    border-radius: 15px;
+    min-height: 0;
+    padding: 0;
+}
+
+.dropzone .dz-message {
+    margin: 0.5em;
+}
+
+.dropzone .dropzone-container {
+    padding: 2rem 0;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #8c96a8;
+    z-index: 20;
+}
+
+.dropzone .file-input {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    visibility: hidden;
+    cursor: pointer;
+}
+
+.file-icon {
+    font-size: 60px;
+}
+
+.hr-sect {
+    display: flex;
+    flex-basis: 100%;
+    align-items: center;
+    margin: 8px 0px;
+}
+
+.hr-sect:before, .hr-sect:after {
+    content: "";
+    flex-grow: 1;
+    background: #ddd;
+    height: 1px;
+    font-size: 0px;
+    line-height: 0px;
+    margin: 0px 8px;
+}
+
+
+/*검색폼 select2 스타일 조정*/
+.collapseSearch .select2 {
+    width: 100%;
+}
+
+/*검색폼 litepicker 시작일 숨김*/
+.collapseSearch .start-date {
+    display: none;
+}
+
+/*검색폼 litepicker 종료일 숨김*/
+.collapseSearch .end-date {
+    display: none;
+}
+
+/*페이지네이션 스타일 조정*/
+.pagination .page-item {
+    margin: 0 2px; /* 좌우 마진을 동일하게 설정 */
+}
+
+/*페이지네이션 버튼 크기 스타일 조정*/
+.pagination .page-item .page-link {
+    padding: 7px 10px; /* 버튼 크기를 조정 */
+}
+
+/*상단 navbar 타이틀 텍스트 스타일*/
+.navbar .auth-title{
+    font-family: Nunito, serif;
+    font-size: 2.0rem;
+}
+
+/*상단 navbar 간편인증 설치 아이콘 스타일*/
+.navbar .bi {
+    color:#435ebe;
+}
+
+/*사이드바 스타일 조정*/
+.sidebar-desktop .sidebar-wrapper {
+    height:auto;
+}
+
+/*사이드바 로고 스타일 조정*/
+.sidebar-desktop .sidebar-header .logo {
+    height:1.6rem;
+}
+
+/*footer 배경 스타일 조정*/
+.footer {
+    background-color:#4477C5;
+}
+
+/*footer 글자 스타일 조정*/
+.footer .text-center {
+    color:white;
+    font-family: Nunito, serif;
+    font-size:15px;
+    line-height:80px;
+}
+
+/*최근공지사항*/
+.recent-notice .badge {
+    --bs-badge-padding-x: .35rem;
+    --bs-badge-font-size: .80em;
+}
+
+/*빠른신청 직접 신청하러 가기, 화살표 버튼 수직 정렬*/
+.quickappl .bi:before {
+    vertical-align: text-top;
+}
+
+.quickappl .link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.quickappl .shadow {
+    margin-bottom: 1.0rem;
+}
+
+.quickappl .card-body {
+    padding: 0.8rem;
+}
+
+
+/*직원검색 입력 폼 높이 조정*/
+.awesomplete .form-control {
+    height: 38px;
+}
+
+/*직원검색 검색 버튼 높이 조정*/
+.awesomplete .btn {
+    height: 38px;
+    white-space: nowrap;
+}
+
+/*직원검색 인풋 그룹 높이 조정*/
+.awesomplete .input-group-text {
+    height: 38px;
+}
+
+/*직원검색 아이콘 높이 조정*/
+.awesomplete .bi {
+    line-height: 1;
+}
+
+/*직원검색 결과 card 스타일 조정*/
+.awesomplete-result .card-body {
+    background-color: #f2f7ff;
+}
+
+.auth-container {
+    width: 375px;
+    height: 670px;
+}
+
+/*로그인 폼 크기 조정*/
+.container-login {
+    max-width: 400px;
+    min-width: 300px;
+    width: 100%;
+}
+
+/*로그인 화면 타이틀 텍스트*/
+.auth-title {
+    color: #25396f;
+    font-weight: bolder;
+    font-size: 20px;
+    font-family: Nunito, serif;
+}
+
+/*로그인 계정 입력 시 무조건 대문자로 입력*/
+.uppercase-text {
+    text-transform: uppercase;
+}
+
+/*디바이더 스타일 조정(투명)*/
+.divider .divider-text {
+    background-color: transparent;
+}
+
+.divider .divider-text .divider-text{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    padding: 0;
+}
+
+.small-text {
+    font-size: 15px;
+}
+
+.small-badge {
+    --bs-badge-padding-x: 0.85rem;
+}
+
+.fieldset {
+    padding: 0;
+}
+
+.mfa-radio-text {
+    font-size: 15px;
+}
 
 /* 반응형 웹 우측 여백 제거*/
 html, body {
-    margin: 0px;
+    margin: 0;
     overflow-x: hidden;
 }
 
@@ -25,7 +245,7 @@ html, body {
     body::-webkit-scrollbar-track {
         background-color: rgba(255, 255, 255, 0.5); /* 흐린 색상 */
         border-radius: 10px;
-        box-shadow: inset 0px 0px 5px rgba(255, 255, 255, 0.5); /* 흐린 색상 */
+        box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.5); /* 흐린 색상 */
         transition: background-color 1.0s ease, box-shadow 1.0s ease; /* 색상 전환에 대한 부드러운 트랜지션 */
     }
     body:hover::-webkit-scrollbar-thumb {
@@ -33,7 +253,7 @@ html, body {
     }
     body:hover::-webkit-scrollbar-track {
         background-color: #fff; /* 현재 색상 */
-        box-shadow: inset 0px 0px 5px white; /* 현재 색상 */
+        box-shadow: inset 0 0 5px white; /* 현재 색상 */
     }
 
     .sidebar-wrapper::-webkit-scrollbar {
@@ -48,7 +268,7 @@ html, body {
     .sidebar-wrapper::-webkit-scrollbar-track {
         background-color: rgba(255, 255, 255, 0.5); /* 흐린 색상 */
         border-radius: 10px;
-        box-shadow: inset 0px 0px 5px rgba(255, 255, 255, 0.5); /* 흐린 색상 */
+        box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.5); /* 흐린 색상 */
         transition: background-color 1.0s ease, box-shadow 1.0s ease; /* 색상 전환에 대한 부드러운 트랜지션 */
     }
     .sidebar-wrapper:hover::-webkit-scrollbar-thumb {
@@ -56,7 +276,7 @@ html, body {
     }
     .sidebar-wrapper:hover::-webkit-scrollbar-track {
         background-color: #fff; /* 현재 색상 */
-        box-shadow: inset 0px 0px 5px white; /* 현재 색상 */
+        box-shadow: inset 0 0 5px white; /* 현재 색상 */
     }
 
     .scroll-multiline::-webkit-scrollbar {
@@ -71,7 +291,7 @@ html, body {
     .scroll-multiline::-webkit-scrollbar-track {
         background-color: rgba(255, 255, 255, 0.5); /* 흐린 색상 */
         border-radius: 10px;
-        box-shadow: inset 0px 0px 5px rgba(255, 255, 255, 0.5); /* 흐린 색상 */
+        box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.5); /* 흐린 색상 */
         transition: background-color 1.0s ease, box-shadow 1.0s ease; /* 색상 전환에 대한 부드러운 트랜지션 */
     }
     .scroll-multiline:hover::-webkit-scrollbar-thumb {
@@ -81,7 +301,6 @@ html, body {
         background-color: #fff; /* 현재 색상 */
         box-shadow: inset 0px 0px 5px white; /* 현재 색상 */
     }
-
 
     .truncate-multiline::-webkit-scrollbar {
         /* width: 5px; 기본 상태에서 스크롤바 보임*/
@@ -96,7 +315,7 @@ html, body {
     .truncate-multiline::-webkit-scrollbar-track {
         background-color: rgba(255, 255, 255, 0.5); /* 흐린 색상 */
         border-radius: 10px;
-        box-shadow: inset 0px 0px 5px rgba(255, 255, 255, 0.5); /* 흐린 색상 */
+        box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.5); /* 흐린 색상 */
         transition: background-color 1.0s ease, box-shadow 1.0s ease; /* 색상 전환에 대한 부드러운 트랜지션 */
     }
     .truncate-multiline:hover::-webkit-scrollbar-thumb {
@@ -104,7 +323,7 @@ html, body {
     }
     .truncate-multiline:hover::-webkit-scrollbar-track {
         background-color: #fff; /* 현재 색상 */
-        box-shadow: inset 0px 0px 5px white; /* 현재 색상 */
+        box-shadow: inset 0 0 5px white; /* 현재 색상 */
     }
 
 
@@ -223,31 +442,11 @@ html, body {
 }
 /* 우측하단 Scroll To Top 버튼 */
 
-.custom-shape-divider-top-1711120872 {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    overflow: hidden;
-    line-height: 0;
+/** 페이지네이션 서식 수정 **/
+.pagination .page-item {
+    margin: 0 2px; /* 좌우 마진을 동일하게 설정 */
 }
 
-.custom-shape-divider-top-1711120872 svg {
-    position: relative;
-    display: block;
-    width: calc(274% + 1.3px);
-    height: 322px;
-    transform: rotateY(180deg);
-}
-
-.custom-shape-divider-top-1711120872 .shape-fill {
-    fill: #4477C5;
-}
-
-/** For mobile devices **/
-@media (max-width: 767px) {
-    .custom-shape-divider-top-1711120872 svg {
-        width: calc(299% + 1.3px);
-        height: 263px;
-    }
+.pagination .page-item .page-link {
+    padding: 7px 10px; /* 버튼 크기를 조정 */
 }

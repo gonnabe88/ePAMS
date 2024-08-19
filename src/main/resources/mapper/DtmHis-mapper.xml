@@ -48,23 +48,6 @@
         <result property="statCdNm" column="STAT_CD_NM" />
     </resultMap>
 
-    <!-- 모든 데이터 조회 -->
-    <select id="findAll" resultMap="dtmHisResultMap">
-        SELECT * FROM OHR.DTM_HIS
-    </select>
-
-    <!-- 특정 데이터 조회 -->
-    <select id="findById" parameterType="dtmHis" resultMap="dtmHisResultMap">
-        SELECT * FROM OHR.DTM_HIS WHERE DTM_HIS_ID = #{dtmHisId}
-    </select>
-
-    <!-- 특정 데이터 조회 -->
-    <select id="findByEmpId" parameterType="dtmHis" resultMap="dtmHisResultMap">
-        SELECT * FROM OHR.DTM_HIS WHERE EMP_ID = #{empId}
-        ORDER BY DTM_HIS_ID DESC
-        OFFSET #{offset} ROWS FETCH NEXT #{limit} ROWS ONLY
-    </select>
-
     <!-- 갯수 조회 -->
     <select id="countById" parameterType="long" resultType="long">
         SELECT COUNT(*) FROM OHR.DTM_HIS WHERE EMP_ID = #{empId}
@@ -94,10 +77,10 @@
             AND d.DTM_REASON_CD = #{dtmReasonCd}
         </if>
         <if test="staYmdInput != null and staYmdInput != ''">
-            AND d.STA_YMD &gt;= #{staYmdInput}
+            AND d.STA_YMD &gt;= TO_DATE(#{staYmdInput}, 'YYYY-MM-DD')
         </if>
         <if test="endYmdInput != null and endYmdInput != ''">
-            AND d.END_YMD &lt;= #{endYmdInput}
+            AND d.END_YMD &lt;= TO_DATE(#{endYmdInput}, 'YYYY-MM-DD')
         </if>
         ORDER BY d.DTM_HIS_ID DESC
         OFFSET #{offset} ROWS FETCH NEXT #{limit} ROWS ONLY
@@ -124,14 +107,8 @@
         </if>
     </select>
 
-    <!-- 특정 데이터 조회 -->
-    <select id="findByDtmKindCd" parameterType="string" resultMap="dtmHisResultMap">
-        SELECT * FROM OHR.DTM_HIS WHERE DTM_KIND_CD = #{dtmKindCd}
-    </select>
-
-
     <!-- 신규 데이터 추가 -->
-    <insert id="insert" parameterType="DtmHis">
+    <insert id="insert" parameterType="DtmHis" useGeneratedKeys="true" keyProperty="dtmHisId">
         <selectKey keyProperty="dtmHisId" resultType="long" order="BEFORE">
             SELECT "OHR"."S_DTM_SEQUENCE".nextval FROM dual
         </selectKey>
@@ -147,7 +124,7 @@
         #{dtmHisId}, #{empId}, #{dtmKindCd}, #{dtmReasonCd}, #{staYmd}, #{staHm},
         #{endYmd}, #{endHm}, #{dtmReason}, #{destPlc}, #{telno}, #{childNo},
         #{applId}, #{statCd}, #{finalApprYmd}, #{modiType}, #{modiReason},
-        #{modiDtmHisId}, #{modUserId}, SYSDATE, 'ko', SYSDATE,
+        #{modiDtmHisId}, #{modUserId}, SYSDATE, 'KST', SYSDATE,
         #{companyNm}, #{document}, #{adUseYn}, #{mailSendYn}, #{esbAskDt},
         #{childBirthYmd}, #{dtmStoreYn}, #{fileId}, #{sealMgrYn},
         #{secuMgrYn}, #{infoMgrYn}, #{safeMgrYn}, #{placeCd}
@@ -160,43 +137,13 @@
     </delete>
 
     <!-- 기존 데이터 업데이트 -->
-    <update id="updateById" parameterType="DtmHis">
+    <update id="updateByApplId" parameterType="DtmHis">
         UPDATE OHR.DTM_HIS SET
-                               EMP_ID = #{empId},
-                               DTM_KIND_CD = #{dtmKindCd},
-                               DTM_REASON_CD = #{dtmReasonCd},
-                               STA_YMD = #{staYmd},
-                               STA_HM = #{staHm},
-                               END_YMD = #{endYmd},
-                               END_HM = #{endHm},
-                               DTM_REASON = #{dtmReason},
-                               DEST_PLC = #{destPlc},
-                               TELNO = #{telno},
-                               CHILD_NO = #{childNo},
-                               APPL_ID = #{applId},
-                               STAT_CD = #{statCd},
-                               FINAL_APPR_YMD = #{finalApprYmd},
-                               MODI_TYPE = #{modiType},
-                               MODI_REASON = #{modiReason},
-                               MODI_DTM_HIS_ID = #{modiDtmHisId},
-                               MOD_USER_ID = #{modUserId},
-                               MOD_DATE = #{modDate},
-                               TZ_CD = #{tzCd},
-                               TZ_DATE = #{tzDate},
-                               COMPANY_NM = #{companyNm},
-                               DOCUMENT = #{document},
-                               AD_USE_YN = #{adUseYn},
-                               MAIL_SEND_YN = #{mailSendYn},
-                               ESB_ASK_DT = #{esbAskDt},
-                               CHILD_BIRTH_YMD = #{childBirthYmd},
-                               DTM_STORE_YN = #{dtmStoreYn},
-                               FILE_ID = #{fileId},
-                               SEAL_MGR_YN = #{sealMgrYn},
-                               SECU_MGR_YN = #{secuMgrYn},
-                               INFO_MGR_YN = #{infoMgrYn},
-                               SAFE_MGR_YN = #{safeMgrYn},
-                               PLACE_CD = #{placeCd}
-        WHERE DTM_HIS_ID = #{dtmHisId}
+           STAT_CD = #{statCd},
+           FINAL_APPR_YMD = SYSDATE,
+           MOD_USER_ID = #{modUserId},
+           MOD_DATE = SYSDATE
+        WHERE APPL_ID = #{applId}
     </update>
 
 </mapper>

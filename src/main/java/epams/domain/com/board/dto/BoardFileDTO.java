@@ -2,12 +2,14 @@ package epams.domain.com.board.dto;
 
 import epams.model.vo.BoardFileVO;
 import lombok.*;
+import lombok.extern.slf4j.Slf4j;
 
 /***
  * @author 140024
  * @implNote 게시판 첨부파일 테이블 데이터 정의 DTO
  * @since 2024-06-09
  */
+@Slf4j
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor

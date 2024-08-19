@@ -1,4 +1,4 @@
-plugins {
+                                   plugins {
     id 'java'
     id 'org.springframework.boot' version '3.2.5'
     id 'io.spring.dependency-management' version '1.1.4'
@@ -34,7 +34,7 @@ dependencies {
     // springdoc
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0'
 
-	// jUnit
+    // jUnit
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.0'
     testImplementation 'org.junit.platform:junit-platform-suite-engine:1.10.0' // JUnit Platform Suite 추가
@@ -47,31 +47,38 @@ dependencies {
     implementation 'org.springframework.session:spring-session-core'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-    implementation 'org.springframework.boot:spring-boot-starter-web'    
+    implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
-    
-    // org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3에 포함된 logback 취약점 조치
-    // CVE-2023-6378, CVE-2023-6481 
-    implementation 'ch.qos.logback:logback-classic:1.4.14'
-    implementation 'ch.qos.logback:logback-core:1.4.14'
+
+    // CVE-2023-6378, CVE-2023-6481 조치 : logback을 최신 버전으로 명시적 업그레이드
+    implementation 'ch.qos.logback:logback-classic:1.5.6'
+    implementation 'ch.qos.logback:logback-core:1.5.6'
+
+    // CVE-2024-38809 조치: spring-web을 최신 버전으로 명시적 업그레이드
+    // implementation 'org.springframework:spring-web:6.1.7'
+    implementation 'org.springframework:spring-web:6.1.12'
+
+    // CVE-2018-14335 조치: h2 데이터베이스를 최신 버전으로 업그레이드
+    // runtimeOnly 'com.h2database:h2:2.2.220'
+    // runtimeOnly 'com.h2database:h2:2.3.232'
+    // 업그레이드를 해도 잔존 취약점이 있어서 그냥 삭제
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
     testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.3'
 
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
-    
+
     implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
     implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
-    
-    compileOnly 'org.projectlombok:lombok'    
+
+    compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
-    
+
     runtimeOnly 'com.mysql:mysql-connector-j'
-    runtimeOnly 'com.oracle.database.jdbc:ojdbc11'    
-    runtimeOnly 'com.h2database:h2'
-    
+    runtimeOnly 'com.oracle.database.jdbc:ojdbc11'
+
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'io.micrometer:micrometer-registry-prometheus'
     implementation 'io.micrometer:micrometer-core'
@@ -80,10 +87,6 @@ dependencies {
     implementation 'com.fasterxml.jackson.core:jackson-databind'
     implementation 'org.owasp.encoder:encoder:1.2.3'
 }
-
-//tasks.named('test') {
-//    useJUnitPlatform()
-//}
 
 tasks.cyclonedxBom {
     includeConfigs = ["runtimeClasspath"]

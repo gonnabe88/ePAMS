@@ -1,5 +1,6 @@
 package epams.domain.dtm.service;
 
+import epams.domain.com.apply.repository.ElaApplCRepository;
 import epams.domain.dtm.dto.DtmHisDTO;
 import epams.domain.dtm.repository.DtmHistoryRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,96 +26,36 @@ public class DtmHistoryService {
 
     /***
 	 * @author 140024
-	 * @implNote logRepository 객체 생성
+	 * @implNote Repository 객체 생성
 	 * @since 2024-06-09
 	 */
 	private final DtmHistoryRepository dtmHisRepo;
-    
-	/***
-	 * @author 140024
-	 * @implNote logRepository 객체의 findLoginLogAll 호출하여 LogLoginEntity 리스트 반환
-	 * @since 2024-06-09
-	 */
-    public Page<DtmHisDTO> findByEmpId(final Pageable pageable, final DtmHisDTO dto) {
-    	final int page = pageable.getPageNumber() - 1; // 페이지 번호
-    	final int pageSize = pageable.getPageSize(); // 페이지 크기
-        final int offset = page * pageSize; // 오프셋 계산
-		dto.setLimit(pageSize);
-		dto.setOffset(offset);
-        final List<DtmHisDTO> dtos = dtmHisRepo.findByEmpId(dto)
-				.stream()
-				.map(vo -> new DtmHisDTO(
-						vo.getDtmHisId(),
-						vo.getEmpId(),
-						vo.getDtmKindCd(),
-						vo.getDtmReasonCd(),
-						vo.getStaYmd(),
-						vo.getStaHm(),
-						vo.getEndYmd(),
-						vo.getEndHm(),
-						vo.getDtmReason(),
-						vo.getDestPlc(),
-						vo.getTelno(),
-						vo.getChildNo(),
-						vo.getApplId(),
-						vo.getStatCd(),
-						vo.getFinalApprYmd(),
-						vo.getModiType(),
-						vo.getModiReason(),
-						vo.getModiDtmHisId(),
-						vo.getModUserId(),
-						vo.getModDate(),
-						vo.getTzCd(),
-						vo.getTzDate(),
-						vo.getCompanyNm(),
-						vo.getDocument(),
-						vo.getAdUseYn(),
-						vo.getMailSendYn(),
-						vo.getEsbAskDt(),
-						vo.getChildBirthYmd(),
-						vo.getDtmStoreYn(),
-						vo.getFileId(),
-						vo.getSealMgrYn(),
-						vo.getSecuMgrYn(),
-						vo.getInfoMgrYn(),
-						vo.getSafeMgrYn(),
-						vo.getPlaceCd(),
-						dto.getLimit(),
-						dto.getOffset(),
-						dto.getDtmReasonNm(),
-						dto.getStatCdNm()
-				))
-				.collect(Collectors.toList());
-        final long totalElements = dtmHisRepo.countById(dto); // 전체 데이터 개수를 조회하는 메소드 필요
-        return new PageImpl<>(dtos, PageRequest.of(page, pageSize), totalElements);
-    }
-
 
 	/***
 	 * @author 140024
 	 * @implNote logRepository 객체의 findLoginLogAll 호출하여 LogLoginEntity 리스트 반환
 	 * @since 2024-06-09
 	 */
-	public Page<DtmHisDTO> findByCondition(final Pageable pageable, final DtmHisDTO dto) {
+	public Page<DtmHisDTO> findByCondition(final Pageable pageable, final DtmHisDTO dtmHisDTO) {
+
+		// 페이지네이션을 위한 페이지 번호, 페이지 크기, 오프셋 계산
 		final int page = pageable.getPageNumber() - 1; // 페이지 번호
 		final int pageSize = pageable.getPageSize(); // 페이지 크기
 		final int offset = page * pageSize; // 오프셋 계산
-		dto.setLimit(pageSize);
-		dto.setOffset(offset);
+		dtmHisDTO.setLimit(pageSize);
+		dtmHisDTO.setOffset(offset);
 
-		// MyBatis 쿼리 결과를 받아옴
-		final List<DtmHisDTO> dtos = dtmHisRepo.findByCondition(dto);
+		// MyBatis 쿼리를 통해 데이터 조회
+		final List<DtmHisDTO> dtmHisDTOs = dtmHisRepo.findByCondition(dtmHisDTO);
 
 		// 각 DTO 객체에 대해 status를 갱신
-		dtos.forEach(vo -> {
-			String status = vo.calculateStatus(vo.getStaYmd(), vo.getStaHm(), vo.getEndYmd(), vo.getEndHm());
-			vo.setStatus(status);
-			// 로그 출력
-			log.info("this.dtmReasonNm : " + vo.getDtmReasonNm() + " this.statCdNm : " + vo.getStatCdNm() + " status: " + status);
+		dtmHisDTOs.forEach(dto -> {
+			String status = dto.calculateStatus(dto.getStaYmd(), dto.getStaHm(), dto.getEndYmd(), dto.getEndHm());
+			dto.setStatus(status);
+			// log.info("this.dtmReasonNm : " + dto.getDtmReasonNm() + " this.statCdNm : " + dto.getStatCdNm() + " status: " + status);
 		});
 
-		final long totalElements = dtmHisRepo.countByCondition(dto); // 전체 데이터 개수를 조회하는 메소드 필요
-		return new PageImpl<>(dtos, PageRequest.of(page, pageSize), totalElements);
+		final long totalElements = dtmHisRepo.countByCondition(dtmHisDTO); // 전체 데이터 개수를 조회하는 메소드 필요
+		return new PageImpl<>(dtmHisDTOs, PageRequest.of(page, pageSize), totalElements);
 	}
-
 }

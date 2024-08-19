@@ -43,7 +43,7 @@ public class LogViewVO extends BaseVO {
 
     /***
      * @author 140024
-     * @implNote 사용자접속환경내용(USR_CNC_ENV_INF)
+     * @implNote 사용자접속환경내용(USR_CNC_ENV_CONE)
      * @since 2024-06-09
      */
     private String userAgent;

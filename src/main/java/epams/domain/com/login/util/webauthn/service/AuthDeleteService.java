@@ -1,34 +1,14 @@
 package epams.domain.com.login.util.webauthn.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.yubico.webauthn.FinishRegistrationOptions;
-import com.yubico.webauthn.RegistrationResult;
 import com.yubico.webauthn.RelyingParty;
-import com.yubico.webauthn.StartRegistrationOptions;
-import com.yubico.webauthn.data.*;
-import com.yubico.webauthn.exception.RegistrationFailedException;
-import epams.domain.com.login.util.webauthn.authenticator.Authenticator;
-import epams.domain.com.login.util.webauthn.user.AppUser;
-import epams.domain.com.login.util.webauthn.utility.Utility;
-import epams.framework.security.CustomGeneralRuntimeException;
-import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.server.ResponseStatusException;
-
-import java.io.IOException;
-import java.util.List;
 
 /**
  * 간편인증 서비스

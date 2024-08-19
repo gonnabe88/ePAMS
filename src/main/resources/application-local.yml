@@ -29,7 +29,7 @@ spring:
     driver-class-name: oracle.jdbc.OracleDriver
     url: jdbc:oracle:thin:@localhost:1521/XE
     username: EHR
-    password: kdb1234!
+    password: ${DB_PASSWORD}  # 시스템 환경변수 kdb1234! 세팅
     hikari:
       connection-timeout: 60000
       idle-timeout: 300000
@@ -55,7 +55,7 @@ spring:
       ddl-auto: update
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl      
-    show-sql: true
+    show-sql: false
     properties:
       dialect: org.hibernate.dialect.MySQL8InnoDBDialect
       hibernate:

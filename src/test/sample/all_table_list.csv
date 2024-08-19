@@ -1,0 +1,131 @@
+﻿"TABLE_NAME","TABLE_COMMENT","COLUMN_NAME","COLUMN_TYPE","COLUMN_LENGTH","IS_NULLABLE","COLUMN_COMMENT"
+THURXE_CBRDFM,인사_외부근태 공지사항게시판파일기본,BLB_APG_FL_SNO,NUMBER,"22(0)",N,게시판첨부파일일련번호
+THURXE_CBRDFM,인사_외부근태 공지사항게시판파일기본,DEL_YN,VARCHAR2,"1",N,삭제여부
+THURXE_CBRDFM,인사_외부근태 공지사항게시판파일기본,GNT_DTM,DATE,"7",Y,생성일시
+THURXE_CBRDFM,인사_외부근태 공지사항게시판파일기본,GUID,VARCHAR2,"38",N,GUID
+THURXE_CBRDFM,인사_외부근태 공지사항게시판파일기본,GUID_PRG_SNO,NUMBER,"4(0)",N,GUID진행일련번호
+THURXE_CBRDFM,인사_외부근태 공지사항게시판파일기본,LST_CHG_DTM,DATE,"7",Y,최종변경일시
+THURXE_CBRDFM,인사_외부근태 공지사항게시판파일기본,LST_CHG_USID,VARCHAR2,"14",N,최종변경사용자ID
+THURXE_CBRDFM,인사_외부근태 공지사항게시판파일기본,FL_KPN_PTH,VARCHAR2,"255",Y,파일저장경로
+THURXE_CBRDFM,인사_외부근태 공지사항게시판파일기본,ORC_FL_NM,VARCHAR2,"255",Y,원본파일명
+THURXE_CBRDFM,인사_외부근태 공지사항게시판파일기본,SVR_FL_NM,VARCHAR2,"255",Y,서버파일명
+THURXE_CBRDFM,인사_외부근태 공지사항게시판파일기본,BLB_SNO,NUMBER,"22(0)",Y,게시판일련번호
+THURXE_CBRDIM,인사_외부근태 공지사항게시판이미지기본,BLB_IMG_SNO,NUMBER,"22(0)",N,게시판이미지일련번호
+THURXE_CBRDIM,인사_외부근태 공지사항게시판이미지기본,DEL_YN,VARCHAR2,"1",N,삭제여부
+THURXE_CBRDIM,인사_외부근태 공지사항게시판이미지기본,GNT_DTM,DATE,"7",Y,생성일시
+THURXE_CBRDIM,인사_외부근태 공지사항게시판이미지기본,GUID,VARCHAR2,"38",N,GUID
+THURXE_CBRDIM,인사_외부근태 공지사항게시판이미지기본,GUID_PRG_SNO,NUMBER,"4(0)",N,GUID진행일련번호
+THURXE_CBRDIM,인사_외부근태 공지사항게시판이미지기본,LST_CHG_DTM,DATE,"7",Y,최종변경일시
+THURXE_CBRDIM,인사_외부근태 공지사항게시판이미지기본,LST_CHG_USID,VARCHAR2,"14",N,최종변경사용자ID
+THURXE_CBRDIM,인사_외부근태 공지사항게시판이미지기본,ORC_FL_NM,VARCHAR2,"255",N,원본파일명
+THURXE_CBRDIM,인사_외부근태 공지사항게시판이미지기본,SVR_FL_NM,VARCHAR2,"100",N,서버파일명
+THURXE_CBRDIM,인사_외부근태 공지사항게시판이미지기본,BLB_SNO,NUMBER,"22(0)",Y,게시판일련번호
+THURXE_CBRDMM,인사_외부근태 공지사항게시판메인기본,BLB_SNO,NUMBER,"22(0)",N,게시판일련번호
+THURXE_CBRDMM,인사_외부근태 공지사항게시판메인기본,DEL_YN,VARCHAR2,"1",N,삭제여부
+THURXE_CBRDMM,인사_외부근태 공지사항게시판메인기본,GNT_DTM,DATE,"7",Y,생성일시
+THURXE_CBRDMM,인사_외부근태 공지사항게시판메인기본,GUID,VARCHAR2,"38",N,GUID
+THURXE_CBRDMM,인사_외부근태 공지사항게시판메인기본,GUID_PRG_SNO,NUMBER,"4(0)",N,GUID진행일련번호
+THURXE_CBRDMM,인사_외부근태 공지사항게시판메인기본,LST_CHG_DTM,DATE,"7",Y,최종변경일시
+THURXE_CBRDMM,인사_외부근태 공지사항게시판메인기본,LST_CHG_USID,VARCHAR2,"14",N,최종변경사용자ID
+THURXE_CBRDMM,인사_외부근태 공지사항게시판메인기본,BLB_CONE,VARCHAR2,"4000",N,게시판내용
+THURXE_CBRDMM,인사_외부근태 공지사항게시판메인기본,BLB_NM,VARCHAR2,"300",N,게시판명
+THURXE_CBRDMM,인사_외부근태 공지사항게시판메인기본,CTG_NM,VARCHAR2,"60",N,카테고리명
+THURXE_CBRDMM,인사_외부근태 공지사항게시판메인기본,DUPR_ENO,VARCHAR2,"32",N,작성자사원번호
+THURXE_CBRDMM,인사_외부근태 공지사항게시판메인기본,FL_APG_YN,NUMBER,"10(0)",Y,파일첨부여부
+THURXE_CBRDMM,인사_외부근태 공지사항게시판메인기본,NAC_INQ_NBR,NUMBER,"10(0)",Y,게시물조회수
+THURXE_CCDHTA,인사_외부근태 코드HTML관계,DEL_YN,VARCHAR2,"1",N,삭제여부
+THURXE_CCDHTA,인사_외부근태 코드HTML관계,GNT_DTM,DATE,"7",Y,생성일시
+THURXE_CCDHTA,인사_외부근태 코드HTML관계,GUID,VARCHAR2,"38",N,GUID
+THURXE_CCDHTA,인사_외부근태 코드HTML관계,GUID_PRG_SNO,NUMBER,"4(0)",N,GUID진행일련번호
+THURXE_CCDHTA,인사_외부근태 코드HTML관계,LST_CHG_DTM,DATE,"7",Y,최종변경일시
+THURXE_CCDHTA,인사_외부근태 코드HTML관계,LST_CHG_USID,VARCHAR2,"14",N,최종변경사용자ID
+THURXE_CCDHTA,인사_외부근태 코드HTML관계,CDVA_ID,VARCHAR2,"40",N,코드값ID
+THURXE_CCDHTA,인사_외부근태 코드HTML관계,HTML_FL_PTH,VARCHAR2,"500",N,HTML경로명
+THURXE_CCODEM,인사_외부근태 공통코드기본,CDVA_ID,VARCHAR2,"40",N,코드값ID
+THURXE_CCODEM,인사_외부근태 공통코드기본,DEL_YN,VARCHAR2,"1",N,삭제여부
+THURXE_CCODEM,인사_외부근태 공통코드기본,GNT_DTM,DATE,"7",Y,생성일시
+THURXE_CCODEM,인사_외부근태 공통코드기본,GUID,VARCHAR2,"38",N,GUID
+THURXE_CCODEM,인사_외부근태 공통코드기본,GUID_PRG_SNO,NUMBER,"4(0)",N,GUID진행일련번호
+THURXE_CCODEM,인사_외부근태 공통코드기본,LST_CHG_DTM,DATE,"7",Y,최종변경일시
+THURXE_CCODEM,인사_외부근태 공통코드기본,LST_CHG_USID,VARCHAR2,"14",N,최종변경사용자ID
+THURXE_CCODEM,인사_외부근태 공통코드기본,CDVA_KD_NM,VARCHAR2,"200",N,코드값종류명
+THURXE_CCODEM,인사_외부근태 공통코드기본,CDVA_NM,VARCHAR2,"200",N,코드값명
+THURXE_CHTMLM,인사_외부근태 HTML화면기본,HTML_FL_PTH,VARCHAR2,"500",N,HTML파일경로
+THURXE_CHTMLM,인사_외부근태 HTML화면기본,DEL_YN,VARCHAR2,"1",N,삭제여부
+THURXE_CHTMLM,인사_외부근태 HTML화면기본,GNT_DTM,DATE,"7",Y,생성일시
+THURXE_CHTMLM,인사_외부근태 HTML화면기본,GUID,VARCHAR2,"38",N,GUID
+THURXE_CHTMLM,인사_외부근태 HTML화면기본,GUID_PRG_SNO,NUMBER,"4(0)",N,GUID진행일련번호
+THURXE_CHTMLM,인사_외부근태 HTML화면기본,LST_CHG_DTM,DATE,"7",Y,최종변경일시
+THURXE_CHTMLM,인사_외부근태 HTML화면기본,LST_CHG_USID,VARCHAR2,"14",N,최종변경사용자ID
+THURXE_CHTMLM,인사_외부근태 HTML화면기본,HTML_FL_NM,VARCHAR2,"200",N,HTML파일명
+THURXE_CLOGNL,인사_외부근태 로그인로그,LGN_LOG_SNO,NUMBER,"22(0)",N,로그인로그일련번호
+THURXE_CLOGNL,인사_외부근태 로그인로그,DEL_YN,VARCHAR2,"1",N,삭제여부
+THURXE_CLOGNL,인사_외부근태 로그인로그,GNT_DTM,DATE,"7",Y,생성일시
+THURXE_CLOGNL,인사_외부근태 로그인로그,GUID,VARCHAR2,"38",N,GUID
+THURXE_CLOGNL,인사_외부근태 로그인로그,GUID_PRG_SNO,NUMBER,"4(0)",N,GUID진행일련번호
+THURXE_CLOGNL,인사_외부근태 로그인로그,LST_CHG_DTM,DATE,"7",Y,최종변경일시
+THURXE_CLOGNL,인사_외부근태 로그인로그,LST_CHG_USID,VARCHAR2,"14",N,최종변경사용자ID
+THURXE_CLOGNL,인사_외부근태 로그인로그,CER_KD_NM,VARCHAR2,"200",N,로그인종류명
+THURXE_CLOGNL,인사_외부근태 로그인로그,ENO,VARCHAR2,"32",N,사원번호
+THURXE_CLOGNL,인사_외부근태 로그인로그,LGN_SCS_YN,CHAR,"1",N,로그인성공여부
+THURXE_COTPIM,인사_외부근태 OTP발급이력기본,OTP_ISN_SNO,NUMBER,"22(0)",N,OTP발급일련번호
+THURXE_COTPIM,인사_외부근태 OTP발급이력기본,DEL_YN,VARCHAR2,"1",N,삭제여부
+THURXE_COTPIM,인사_외부근태 OTP발급이력기본,GNT_DTM,DATE,"7",Y,생성일시
+THURXE_COTPIM,인사_외부근태 OTP발급이력기본,GUID,VARCHAR2,"38",N,GUID
+THURXE_COTPIM,인사_외부근태 OTP발급이력기본,GUID_PRG_SNO,NUMBER,"4(0)",N,GUID진행일련번호
+THURXE_COTPIM,인사_외부근태 OTP발급이력기본,LST_CHG_DTM,DATE,"7",Y,최종변경일시
+THURXE_COTPIM,인사_외부근태 OTP발급이력기본,LST_CHG_USID,VARCHAR2,"14",N,최종변경사용자ID
+THURXE_COTPIM,인사_외부근태 OTP발급이력기본,CER_KD_NM,VARCHAR2,"100",Y,인증종류명
+THURXE_COTPIM,인사_외부근태 OTP발급이력기본,ENO,VARCHAR2,"32",N,사원번호
+THURXE_COTPIM,인사_외부근태 OTP발급이력기본,OTP_SMS_CER_NO,VARCHAR2,"8",Y,OTPSMS인증번호
+THURXE_CROLEM,인사_외부근태 역할메인기본,ENO,VARCHAR2,"32",N,사원번호
+THURXE_CROLEM,인사_외부근태 역할메인기본,DEL_YN,VARCHAR2,"1",N,삭제여부
+THURXE_CROLEM,인사_외부근태 역할메인기본,GNT_DTM,DATE,"7",Y,생성일시
+THURXE_CROLEM,인사_외부근태 역할메인기본,GUID,VARCHAR2,"38",N,GUID
+THURXE_CROLEM,인사_외부근태 역할메인기본,GUID_PRG_SNO,NUMBER,"4(0)",N,GUID진행일련번호
+THURXE_CROLEM,인사_외부근태 역할메인기본,LST_CHG_DTM,DATE,"7",Y,최종변경일시
+THURXE_CROLEM,인사_외부근태 역할메인기본,LST_CHG_USID,VARCHAR2,"14",N,최종변경사용자ID
+THURXE_CROLEM,인사_외부근태 역할메인기본,ATH_ID,VARCHAR2,"32",N,권한ID
+THURXE_CVIEWL,인사_외부근태 페이지뷰로그,PAG_LOG_SNO,NUMBER,"19(0)",N,페이지로그일련번호
+THURXE_CVIEWL,인사_외부근태 페이지뷰로그,DEL_YN,VARCHAR2,"1",N,삭제여부
+THURXE_CVIEWL,인사_외부근태 페이지뷰로그,GNT_DTM,DATE,"7",Y,생성일시
+THURXE_CVIEWL,인사_외부근태 페이지뷰로그,GUID,VARCHAR2,"38",N,GUID
+THURXE_CVIEWL,인사_외부근태 페이지뷰로그,GUID_PRG_SNO,NUMBER,"4(0)",N,GUID진행일련번호
+THURXE_CVIEWL,인사_외부근태 페이지뷰로그,LST_CHG_DTM,DATE,"7",Y,최종변경일시
+THURXE_CVIEWL,인사_외부근태 페이지뷰로그,LST_CHG_USID,VARCHAR2,"14",N,최종변경사용자ID
+THURXE_CVIEWL,인사_외부근태 페이지뷰로그,CLI_IP_ADDR,VARCHAR2,"300",N,클라이언트IP주소
+THURXE_CVIEWL,인사_외부근태 페이지뷰로그,CTRL_NM,VARCHAR2,"400",N,컨트롤러명
+THURXE_CVIEWL,인사_외부근태 페이지뷰로그,MTH_NM,VARCHAR2,"100",N,메소드명
+THURXE_CVIEWL,인사_외부근태 페이지뷰로그,REQ_URL_ADDR,VARCHAR2,"500",N,요청URL주소
+THURXE_CVIEWL,인사_외부근태 페이지뷰로그,USR_CNC_ENV_INF,VARCHAR2,"2000",N,사용자접속환경내용
+THURXE_CWCRDM,인사_외부근태 Webauthn자격증명기본,WEBA_SNO,NUMBER,"10(0)",N,Webauthn 일련번호
+THURXE_CWCRDM,인사_외부근태 Webauthn자격증명기본,DEL_YN,VARCHAR2,"1",N,삭제여부
+THURXE_CWCRDM,인사_외부근태 Webauthn자격증명기본,GNT_DTM,DATE,"7",Y,생성일시
+THURXE_CWCRDM,인사_외부근태 Webauthn자격증명기본,GUID,VARCHAR2,"38",N,GUID
+THURXE_CWCRDM,인사_외부근태 Webauthn자격증명기본,GUID_PRG_SNO,NUMBER,"4(0)",N,GUID진행일련번호
+THURXE_CWCRDM,인사_외부근태 Webauthn자격증명기본,LST_CHG_DTM,DATE,"7",Y,최종변경일시
+THURXE_CWCRDM,인사_외부근태 Webauthn자격증명기본,LST_CHG_USID,VARCHAR2,"14",N,최종변경사용자ID
+THURXE_CWCRDM,인사_외부근태 Webauthn자격증명기본,WEBA_CER_GUID_IMG,BLOB,"4000",Y,Webauthn인증GUID이미지
+THURXE_CWCRDM,인사_외부근태 Webauthn자격증명기본,WEBA_CER_CNT,NUMBER,"10(0)",N,Webauthn인증건수
+THURXE_CWCRDM,인사_외부근태 Webauthn자격증명기본,WEBA_CFA_IMG,BLOB,"4000",N,Webauthn인증서이미지
+THURXE_CWCRDM,인사_외부근태 Webauthn자격증명기본,WEBA_OPNK_IMG,BLOB,"4000",N,Webauthn공개키이미지
+THURXE_CWCRDM,인사_외부근태 Webauthn자격증명기본,ENO,VARCHAR2,"32",N,직원번호
+THURXE_CWUSRM,인사_외부근태 Webauthn사용자기본,ENO,VARCHAR2,"32",N,직원번호
+THURXE_CWUSRM,인사_외부근태 Webauthn사용자기본,DEL_YN,VARCHAR2,"1",N,삭제여부
+THURXE_CWUSRM,인사_외부근태 Webauthn사용자기본,GNT_DTM,DATE,"7",Y,생성일시
+THURXE_CWUSRM,인사_외부근태 Webauthn사용자기본,GUID,VARCHAR2,"38",N,GUID
+THURXE_CWUSRM,인사_외부근태 Webauthn사용자기본,GUID_PRG_SNO,NUMBER,"4(0)",N,GUID진행일련번호
+THURXE_CWUSRM,인사_외부근태 Webauthn사용자기본,LST_CHG_DTM,DATE,"7",Y,최종변경일시
+THURXE_CWUSRM,인사_외부근태 Webauthn사용자기본,LST_CHG_USID,VARCHAR2,"14",N,최종변경사용자ID
+THURXE_CWUSRM,인사_외부근태 Webauthn사용자기본,WEBA_PRO_NM,VARCHAR2,"32",N,Webauthn 출력명
+THURXE_CWUSRM,인사_외부근태 Webauthn사용자기본,WEBA_USR_HDLN_IMG,BLOB,"4000",N,Webauthn 사용자 Handle
+THURXE_SESSION,인사_외부근태 세션정보테이블,PRIMARY_ID,CHAR,"36",N,기본 ID
+THURXE_SESSION,인사_외부근태 세션정보테이블,SESSION_ID,CHAR,"36",N,세션 ID
+THURXE_SESSION,인사_외부근태 세션정보테이블,CREATION_TIME,NUMBER,,N,세션 생성 시간
+THURXE_SESSION,인사_외부근태 세션정보테이블,LAST_ACCESS_TIME,NUMBER,,N,마지막 접근 시간
+THURXE_SESSION,인사_외부근태 세션정보테이블,MAX_INACTIVE_INTERVAL,NUMBER,(0),N,최대 비활성화 간격
+THURXE_SESSION,인사_외부근태 세션정보테이블,EXPIRY_TIME,NUMBER,,N,세션 만료 시간
+THURXE_SESSION,인사_외부근태 세션정보테이블,PRINCIPAL_NAME,VARCHAR2,"100",Y,주체 이름
+THURXE_SESSION_ATTRIBUTES,인사_외부근태 세션속성테이블,SESSION_PRIMARY_ID,CHAR,"36",N,세션 기본 ID
+THURXE_SESSION_ATTRIBUTES,인사_외부근태 세션속성테이블,ATTRIBUTE_NAME,VARCHAR2,"200",N,속성 이름
+THURXE_SESSION_ATTRIBUTES,인사_외부근태 세션속성테이블,ATTRIBUTE_BYTES,BLOB,"4000",N,속성 데이터

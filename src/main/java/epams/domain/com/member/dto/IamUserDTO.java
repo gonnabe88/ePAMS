@@ -1,10 +1,10 @@
 package epams.domain.com.member.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import pams.model.vo.IamUserVO;
-
-import java.time.LocalDateTime;
 
 /***
  * 사용자 정보를 담는 DTO 클래스입니다.
@@ -20,10 +20,19 @@ import java.time.LocalDateTime;
 public class IamUserDTO extends IamUserVO {
 
     /***
-     * 로그인 유형
+     * 2차인증 유형
      * 
      * @author 140024
      * @since 2024-06-30
      */
     private String MFA;
+
+    /***
+     * 로그인 유형
+     *
+     * @author 140024
+     * @since 2024-08-11
+     */
+    private boolean isAdmin = false;
+
 }

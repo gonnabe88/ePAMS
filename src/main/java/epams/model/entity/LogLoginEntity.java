@@ -52,7 +52,7 @@ public class LogLoginEntity extends BaseEntity {
      * @implNote 인증방식
      * @since 2024-06-09
      */
-    @Column(name = "CER_KD_NM", nullable = false, length = 200)
+    @Column(name = "CER_KD_NM", nullable = false, length = 100)
     @Comment("로그인종류명")
     private String CER_KD_NM;
     
@@ -63,6 +63,6 @@ public class LogLoginEntity extends BaseEntity {
      */
     @Column(name = "LGN_SCS_YN", nullable = false, length = 1)
     @Comment("로그인성공여부")
-    private char LGN_SCS_YN;
+    private String LGN_SCS_YN;
 
 }

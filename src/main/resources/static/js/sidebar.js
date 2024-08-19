@@ -1,4 +1,43 @@
-//Sidebar
+// (페이지 로딩 시) 관리자 페이지와 일반 사용자 페이지의 sidebar를 동적으로 변경하는 스크립트
+window.addEventListener('DOMContentLoaded', function() {
+    let isChecked = document.getElementById('flexSwitchCheckDefault').checked;
+    let url = isChecked ? '/common/layout/renderSidebarAdmin' : '/common/layout/renderSidebarNormal';
+    console.log("url: " + url);
+    fetch(url)
+        .then(response => response.text())
+        .then(html => {
+            // 2024-08-17 CWE-79(Cross-site Scripting (XSS)) 취약점 조치
+            const safeHTML = DOMPurify.sanitize(html, {
+                SAFE_FOR_TEMPLATES: true,
+                ALLOWED_TAGS: ['h7', 'h6', 'h5', 'h4', 'h3', 'h2', 'h1', 'div', 'span', 'section', 'i', 'ul', 'li', 'a'], // 필요시 추가
+                FORBID_ATTR: ['style']
+            });
+            $('#menu').html(safeHTML);
+        })
+        .catch(error => console.error('Error loading sidebar:', error));
+});
+
+// (Switch 변경 시) 관리자 페이지와 일반 사용자 페이지의 sidebar를 동적으로 변경하는 스크립트
+document.getElementById('flexSwitchCheckDefault').addEventListener('change', function () {
+    let isChecked = this.checked;
+    let url = isChecked ? '/common/layout/renderSidebarAdmin' : '/common/layout/renderSidebarNormal';
+    console.log("url: " + url);
+    // 서버에 요청을 보내어 해당 템플릿을 받아옴
+    fetch(url)
+        .then(response => response.text())
+        .then(html => {
+            // 2024-08-17 CWE-79(Cross-site Scripting (XSS)) 취약점 조치
+            const safeHTML = DOMPurify.sanitize(html, {
+                SAFE_FOR_TEMPLATES: true,
+                ALLOWED_TAGS: ['h7', 'h6', 'h5', 'h4', 'h3', 'h2', 'h1', 'div', 'span', 'section', 'i', 'ul', 'li', 'a'], // 필요시 추가
+                FORBID_ATTR: ['style']
+            });
+            $('#menu').html(safeHTML);
+        })
+        .catch(error => console.error('Error loading sidebar:', error));
+});
+
+// Sidebar 기본 동작
 const DesktopSize = 1200;
 class Mr {
     constructor(k, s={}) {
@@ -14,12 +53,13 @@ class Mr {
         // 특정 div 제외
         const excludedDiv = document.querySelector('.no-drag');
 
-        // PC 클릭 이벤트 (드래그)
+        // PC 클릭 시작 이벤트 (드래그)
         app.addEventListener("mousedown", (e) => {
             if (excludedDiv && excludedDiv.contains(e.target)) return;
             startPoint = e.pageX; // 마우스 드래그 시작 위치 저장
-        });
+        }, { passive: true });
 
+        // PC 클릭 종료 이벤트 (드래그)
         app.addEventListener("mouseup", (e) => {
             if (excludedDiv && excludedDiv.contains(e.target)) return;
             endPoint = e.pageX; // 마우스 드래그 끝 위치 저장
@@ -32,14 +72,15 @@ class Mr {
                 console.log("next move");
                 this.hide();
             }
-        });
+        }, { passive: true });
 
-        // 모바일 터치 이벤트 (스와이프)
+        // 모바일 터치 시작 이벤트 (스와이프)
         app.addEventListener("touchstart", (e) => {
             if (excludedDiv && excludedDiv.contains(e.target)) return;
             startPoint = e.touches[0].pageX; // 터치가 시작되는 위치 저장
-        });
+        }, { passive: true });
 
+        // 모바일 터치 종료 이벤트 (스와이프)
         app.addEventListener("touchend", (e) => {
             if (excludedDiv && excludedDiv.contains(e.target)) return;
             endPoint = e.changedTouches[0].pageX; // 터치가 끝나는 위치 저장
@@ -52,7 +93,7 @@ class Mr {
                 console.log("next move");
                 this.hide();
             }
-        });
+        }, { passive: true });
 
         document.querySelectorAll(".burger-btn").forEach(r=>r.addEventListener("click", this.toggle.bind(this))),
             document.querySelectorAll(".sidebar-hide").forEach(r=>r.addEventListener("click", this.toggle.bind(this))),

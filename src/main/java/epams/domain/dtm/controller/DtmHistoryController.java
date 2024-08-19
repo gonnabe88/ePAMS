@@ -1,6 +1,6 @@
 package epams.domain.dtm.controller;
 
-import epams.domain.com.admin.service.CodeHtmlDetailService;
+import epams.domain.com.admin.service.HtmlLangDetailService;
 import epams.domain.dtm.dto.DtmHisDTO;
 import epams.domain.dtm.service.DtmHistoryService;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +19,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Map;
 
@@ -55,7 +54,7 @@ public class DtmHistoryController<S extends Session> {
      * @implNote 코드 상세 서비스 주입
      * @since 2024-06-11
      */
-    private final CodeHtmlDetailService codeDetailService;
+    private final HtmlLangDetailService langDetailService;
 
     /**
      * @author K140024
@@ -63,6 +62,7 @@ public class DtmHistoryController<S extends Session> {
      * @since 2024-06-11
      */
     private final DtmHistoryService dtmHisService;
+
 
     /**
      * @author K140024
@@ -90,9 +90,9 @@ public class DtmHistoryController<S extends Session> {
         final String DTMLIST = "/dtm/list";
         dto.setEmpId(Long.parseLong(authentication().getName().replace('K', '7')));
 
-        // 코드
-        final Map<String, String> codeList = codeDetailService.getCodeHtmlDetail(DTMLIST);
-        model.addAttribute("codeList", codeList);
+        // 언어목록
+        final Map<String, String> langList = langDetailService.getCodeHtmlDetail(DTMLIST);
+        model.addAttribute("langList", langList);
 
         // 근태목록 출력
         final int currentPage = pageable.getPageNumber();
@@ -106,6 +106,9 @@ public class DtmHistoryController<S extends Session> {
             startPage = Math.max(1, endPage - maxPageBtn + 1);
         }
 
+
+        log.warn(dtos.toString());
+        //log.info("startPage : " + startPage + " endPage : " + endPage + " totalPages : " + totalPages + " currentPage : " + currentPage);
         model.addAttribute("dtmHis", dtos);
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);

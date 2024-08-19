@@ -1,0 +1,83 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ElaApplTrC">
+
+    <!-- ResultMap 정의 -->
+    <resultMap id="elaApplTrCResultMap" type="ElaApplTrCDTO">
+        <id     column="APPR_KIND"          property="apprKind"/>
+        <id     column="APPL_ID"            property="applId"/>
+        <id     column="ORD_NO"             property="ordNo"/>
+        <result column="APPR_EMP_ID"        property="apprEmpId"/>
+        <result column="APPR_USERGROUP_ID"  property="apprUsergroupId"/>
+        <result column="APPR_CD"            property="apprCd"/>
+        <result column="APPR_DATE"          property="apprDate"/>
+        <result column="APPR_INFO"          property="apprInfo"/>
+        <result column="REFUSAL_REASON"     property="refusalReason"/>
+        <result column="NOTE"               property="note"/>
+        <result column="MOD_USER_ID"        property="modUserId"/>
+        <result column="MOD_DATE"           property="modDate"/>
+        <result column="TZ_CD"              property="tzCd"/>
+        <result column="TZ_DATE"            property="tzDate"/>
+    </resultMap>
+
+    <!-- INSERT 구문 -->
+    <insert id="insert" parameterType="ElaApplTrCDTO">
+        INSERT INTO OHR.ELA_APPL_TR_C (
+            APPR_KIND,
+            APPL_ID,
+            ORD_NO,
+            APPR_EMP_ID,
+            APPR_USERGROUP_ID,
+            APPR_CD,
+            APPR_DATE,
+            APPR_INFO,
+            REFUSAL_REASON,
+            NOTE,
+            MOD_USER_ID,
+            MOD_DATE,
+            TZ_CD,
+            TZ_DATE
+        ) VALUES (
+            #{apprKind},
+            #{applId},
+            #{ordNo},
+            #{apprEmpId},
+            #{apprUsergroupId},
+            #{apprCd},
+            #{apprDate},
+            #{apprInfo},
+            #{refusalReason},
+            #{note},
+            #{modUserId},
+            SYSDATE,
+            'KST',
+            SYSDATE
+         )
+    </insert>
+
+    <!-- UPDATE 구문 -->
+    <update id="updateByApplId" parameterType="ElaApplTrCDTO">
+        UPDATE OHR.ELA_APPL_TR_C
+        SET
+            APPR_CD = #{apprCd},
+            APPR_DATE = SYSDATE,
+            MOD_USER_ID = #{modUserId},
+            MOD_DATE = SYSDATE
+        WHERE
+            APPR_KIND = #{apprKind} AND
+            APPL_ID = #{applId} AND
+            ORD_NO = #{ordNo}
+    </update>
+
+    <!-- DELETE 구문 -->
+    <delete id="delete" parameterType="ElaApplTrCDTO">
+        DELETE FROM OHR.ELA_APPL_TR_C
+        WHERE
+            APPR_KIND = #{apprKind} AND
+            APPL_ID = #{applId} AND
+            ORD_NO = #{ordNo}
+    </delete>
+
+</mapper>

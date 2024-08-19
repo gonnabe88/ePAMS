@@ -69,10 +69,11 @@ public class BoardDeleteService {
     public void delete(final Long seqId) {
         final BoardDTO boardDTO = boardMainRepo.findById(seqId); // 게시글 정보 반환
         final List<BoardFileDTO> boardFiles = boardFileRepo.findFile(seqId); // 첨부파일 정보 반환
-        final int FILE_ATTACHED = 1; // 상수로 리터럴 값을 추출
+        final String FILE_ATTACHED = "1"; // 상수로 리터럴 값을 추출
+
         boardDeleteRepo.delete(seqId); // 게시글 삭제
         // 첨부파일이 있는 경우 첨부파일 테이블 및 파일 삭제
-        if (boardDTO.getFileAttached() == FILE_ATTACHED) {
+        if (FILE_ATTACHED.equals(boardDTO.getFileAttached())) {
             boardFileRepo.deleteFile(seqId); // 첨부파일 테이블 삭제
             for (final BoardFileDTO boardFile : boardFiles) {
                 final File file = new File(boardFile.getStoredPath() + boardFile.getStoredFileName());
@@ -91,12 +92,14 @@ public class BoardDeleteService {
         final BoardFileDTO delBoardFile = boardFileRepo.findByFileId(seqId); // 삭제 대상첨부파일 정보 반환
         final File file = new File(delBoardFile.getStoredPath() + delBoardFile.getStoredFileName());
         final String fileName = delBoardFile.getOriginalFileName();
+        final String FILE_NOT_ATTACHED = "0"; // 상수로 리터럴 값을 추출
+
         boardFileRepo.deleteFile(seqId); // 첨부파일 테이블 삭제
         file.delete(); // 파일 삭제
 
         final List<BoardFileDTO> boardFiles = boardFileRepo.findFile(boardId); // 첨부파일 정보 반환
         if (boardFiles.isEmpty()) { // 삭제 대상 첨부파일 삭제 후 남은 첨부파일이 없으면
-            boardDTO.setFileAttached(0); // 첨부파일 없는 게시물로 객체 세팅 후
+            boardDTO.setFileAttached(FILE_NOT_ATTACHED); // 첨부파일 없는 게시물로 객체 세팅 후
             boardUpdateRepo.update(boardDTO); // 업데이트 FileAttached = 0(첨부없음)
         }
 

@@ -11,6 +11,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@ToString(callSuper = true) // 상위 클래스의 toString 포함
 public class HtmlVO extends BaseVO {
 
     /***

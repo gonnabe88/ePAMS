@@ -45,7 +45,7 @@
 							</div>
 							<!-- 기존 첨부파일 목록 -->
 							<ul class="list-unstyled mb-3">
-								<li th:if="${board.fileAttached == 1}" th:each="boardFile: ${boardFileList}">
+								<li th:if="${board.fileAttached == '1'}" th:each="boardFile: ${boardFileList}">
 									<div class="d-flex align-items-center p-2 truncate-multiline">
 										<div class="col-11 d-flex align-items-center gap-2">
 											<span class="badge text-bg-primary" style="font-weight: 400;"> 첨부 </span>

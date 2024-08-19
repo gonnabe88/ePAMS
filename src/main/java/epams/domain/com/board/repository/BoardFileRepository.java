@@ -2,6 +2,7 @@ package epams.domain.com.board.repository;
 
 import java.util.List;
 
+import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -13,6 +14,7 @@ import lombok.RequiredArgsConstructor;
  * @implNote 
  * @since 2024-06-09
  */
+@Slf4j
 @Repository
 @RequiredArgsConstructor
 public class BoardFileRepository {
@@ -40,7 +42,10 @@ public class BoardFileRepository {
 	 * @since 2024-06-09
 	 */
     public List<BoardFileDTO> findFile(final Long boardId) {
-        return sql.selectList("BoardFile.findFile", boardId);
+		log.warn("boardId : " + boardId);
+		List<BoardFileDTO> list = sql.selectList("BoardFile.findFile", boardId);
+		log.warn("list : " + list);
+        return list;
     }
     
 	/***

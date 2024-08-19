@@ -6,6 +6,7 @@ import java.time.format.TextStyle;
 import java.util.Locale;
 import java.util.Map;
 
+import epams.domain.com.commonCode.CommonCodeService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import epams.domain.com.admin.service.CodeHtmlDetailService;
+import epams.domain.com.admin.service.HtmlLangDetailService;
 import epams.domain.com.board.dto.BoardDTO;
 import epams.domain.com.board.service.BoardMainService;
 import epams.domain.dtm.service.DtmService;
@@ -64,7 +65,7 @@ public class DtmController<S extends Session> {
      * @implNote 코드 상세 서비스 주입
      * @since 2024-06-11
      */
-    private final CodeHtmlDetailService codeDetailService;
+    private final HtmlLangDetailService codeDetailService;
 
     /**
      * @author K140024
@@ -72,6 +73,14 @@ public class DtmController<S extends Session> {
      * @since 2024-06-11
      */
     private final DtmService dtmService;
+
+
+    /**
+     * @author K140024
+     * @implNote 공통코드 서비스 주입
+     * @since 2024-06-11
+     */
+    private final CommonCodeService commonCodeService;
 
     /**
      * @author K140024
@@ -110,6 +119,7 @@ public class DtmController<S extends Session> {
 
         return VIEW;
     }
+
     @GetMapping("/main2")
     public String dtmMain2(@PageableDefault(page = 1) final Pageable pageable, final Model model) {
         final String VIEW = "/dtm/main2";

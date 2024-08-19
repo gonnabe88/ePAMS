@@ -1,0 +1,222 @@
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--  <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.10.2/main.min.css' rel='stylesheet' />-->
+<!--  <style>-->
+<!--    /*#calendar {*/-->
+<!--    /*  background-color: #fff;*/-->
+<!--    /*  border-radius: 15px;*/-->
+<!--    /*  box-shadow: 0 10px 20px rgba(0,0,0,0.1);*/-->
+<!--    /*  overflow: hidden;*/-->
+<!--    /*  padding: 20px;*/-->
+<!--    /*}*/-->
+<!--    body {-->
+<!--      background-color: #f0f2f5;-->
+<!--    }-->
+<!--    .container {-->
+<!--      max-width: 1000px;-->
+<!--      margin: 0 auto;-->
+<!--      padding: 2rem;-->
+<!--    }-->
+<!--    .page-title {-->
+<!--      font-size: clamp(1.5rem, 5vw, 2.5rem);-->
+<!--      font-weight: 700;-->
+<!--      color: #333;-->
+<!--      text-align: center;-->
+<!--      margin-bottom: 2rem;-->
+<!--    }-->
+<!--    #calendar {-->
+<!--      background-color: #fff;-->
+<!--      border-radius: 15px;-->
+<!--      box-shadow: 0 10px 20px rgba(0,0,0,0.1);-->
+<!--      overflow: hidden;-->
+<!--      padding: 20px;-->
+<!--    }-->
+<!--    .fc-theme-standard td, .fc-theme-standard th {-->
+<!--      border: none;-->
+<!--    }-->
+<!--    .fc-scrollgrid {-->
+<!--      border: none !important;-->
+<!--    }-->
+<!--    .fc-col-header-cell {-->
+<!--      background-color: #f8f9fa;-->
+<!--      padding: 10px 0;-->
+<!--    }-->
+<!--    .fc-daygrid-day {-->
+<!--      transition: all 0.3s ease;-->
+<!--    }-->
+<!--    .fc-daygrid-day:hover {-->
+<!--      background-color: #f0f0f0;-->
+<!--    }-->
+<!--    .fc-toolbar-title {-->
+<!--      font-size: clamp(1rem, 4vw, 1.5rem) !important;-->
+<!--      font-weight: 600;-->
+<!--      color: #333;-->
+<!--    }-->
+<!--    .fc-button-primary {-->
+<!--      background-color: #4CAF50 !important;-->
+<!--      border-color: #4CAF50 !important;-->
+<!--      border-radius: 20px !important;-->
+<!--      padding: 8px 15px !important;-->
+<!--      transition: all 0.3s ease;-->
+<!--    }-->
+<!--    .fc-button-primary:hover {-->
+<!--      background-color: #45a049 !important;-->
+<!--      border-color: #45a049 !important;-->
+<!--      transform: translateY(-2px);-->
+<!--      box-shadow: 0 4px 6px rgba(0,0,0,0.1);-->
+<!--    }-->
+<!--    .fc-day-today {-->
+<!--      background-color: transparent !important;-->
+<!--    }-->
+<!--    .fc-daygrid-day-frame {-->
+<!--      min-height: 100px !important;-->
+<!--      height: 0;-->
+<!--      padding-bottom: 100% !important;-->
+<!--      position: relative;-->
+<!--    }-->
+<!--    @media screen and (max-width: 768px) {-->
+<!--      #calendar {-->
+<!--        font-size: 0.8em;-->
+<!--      }-->
+
+<!--      .fc-daygrid-day-frame {-->
+<!--        padding-bottom: 100% !important;-->
+<!--      }-->
+
+<!--      .fc-daygrid-day-events {-->
+<!--        display: none;-->
+<!--      }-->
+
+<!--      .fc-daygrid-day-number {-->
+<!--        font-size: 1em;-->
+<!--        width: 25px;-->
+<!--        height: 25px;-->
+<!--      }-->
+
+<!--      .fc-col-header-cell-cushion {-->
+<!--        font-size: 0.9em;-->
+<!--      }-->
+
+<!--      .fc-toolbar-title {-->
+<!--        font-size: 1.2em !important;-->
+<!--      }-->
+
+<!--      .fc-button {-->
+<!--        font-size: 0.8em !important;-->
+<!--        padding: 0.3em 0.5em !important;-->
+<!--      }-->
+<!--    }-->
+<!--    .fc-daygrid-day-top {-->
+<!--      position: absolute;-->
+<!--      top: 0;-->
+<!--      left: 0;-->
+<!--      right: 0;-->
+<!--      bottom: 0;-->
+<!--      display: flex;-->
+<!--      justify-content: center;-->
+<!--      align-items: center;-->
+<!--    }-->
+<!--    .fc-daygrid-day-number {-->
+<!--      font-size: clamp(1.2rem, 3vw, 1.8rem);-->
+<!--      font-weight: 600;-->
+<!--      color: #333;-->
+<!--      display: flex;-->
+<!--      justify-content: center;-->
+<!--      align-items: center;-->
+<!--      width: 40px;-->
+<!--      height: 40px;-->
+<!--      border-radius: 50%;-->
+<!--    }-->
+<!--    .fc-col-header-cell-cushion {-->
+<!--      font-size: clamp(0.9rem, 2vw, 1.1rem);-->
+<!--      color: #333;-->
+<!--    }-->
+<!--    .fc-day-sat .fc-daygrid-day-number {-->
+<!--      color: #1e90ff;-->
+<!--    }-->
+<!--    .fc-day-sun .fc-daygrid-day-number,-->
+<!--    .holiday .fc-daygrid-day-number {-->
+<!--      color: #ff4500;-->
+<!--    }-->
+<!--    .fc-daygrid-day.selected-date {-->
+<!--      background-color: transparent !important;-->
+<!--    }-->
+<!--    .fc-daygrid-day.selected-date .fc-daygrid-day-number {-->
+<!--      background-color: #4CAF50;-->
+<!--      color: white;-->
+<!--    }-->
+<!--    @media screen and (max-width: 768px) {-->
+<!--      .fc-toolbar.fc-header-toolbar {-->
+<!--        flex-direction: column;-->
+<!--      }-->
+<!--      .fc-toolbar-chunk {-->
+<!--        margin-bottom: 0.5rem;-->
+<!--      }-->
+<!--      .fc-toolbar-title {-->
+<!--        font-size: clamp(1rem, 3vw, 1.2rem) !important;-->
+<!--      }-->
+<!--    }-->
+<!--  </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--<div th:fragment="calendar">-->
+<!--  <div id="calendar"></div>-->
+
+<!--<script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.10.2/main.min.js'></script>-->
+<!--<script th:inline="javascript">-->
+<!--  document.addEventListener('DOMContentLoaded', function() {-->
+<!--    var calendarEl = document.getElementById('calendar');-->
+<!--    var selectedDate = null;-->
+<!--    var selectedDateStr = null;-->
+
+<!--    var calendar = new FullCalendar.Calendar(calendarEl, {-->
+<!--      initialView: 'dayGridMonth',-->
+<!--      headerToolbar: {-->
+<!--        left: 'prev,next today',-->
+<!--        center: 'title',-->
+<!--        right: 'add'-->
+<!--      },-->
+<!--      customButtons: {-->
+<!--        add: {-->
+<!--          text: '신청하기',-->
+<!--          click: function() {-->
+<!--            var url = '/dtm/DtmRegister';-->
+<!--            if (selectedDateStr) {-->
+<!--              url += '?date=' + selectedDateStr;-->
+<!--            }-->
+<!--            window.location.href = url;-->
+<!--          }-->
+<!--        }-->
+<!--      },-->
+<!--      titleFormat: { year: 'numeric', month: 'long' },-->
+<!--      locale: 'ko',-->
+<!--      buttonText: {-->
+<!--        today: '오늘'-->
+<!--      },-->
+<!--      firstDay: 0,-->
+<!--      height: 'auto',-->
+<!--      aspectRatio: 1,-->
+<!--      fixedWeekCount: false,-->
+<!--      dayCellContent: function(arg) {-->
+<!--        return { html: '<div class="fc-daygrid-day-number">' + arg.dayNumberText.replace('일', '') + '</div>' };-->
+<!--      },-->
+<!--      dateClick: function(info) {-->
+<!--        if (selectedDate) {-->
+<!--          selectedDate.classList.remove('selected-date');-->
+<!--        }-->
+<!--        info.dayEl.classList.add('selected-date');-->
+<!--        selectedDate = info.dayEl;-->
+<!--        selectedDateStr = info.dateStr;-->
+<!--      }-->
+<!--    });-->
+<!--    calendar.render();-->
+
+<!--    window.addEventListener('resize', function() {-->
+<!--      calendar.updateSize();-->
+<!--    });-->
+<!--  });-->
+<!--</script>-->
+<!--</div>-->
+<!--</body>-->
+<!--</html>-->

@@ -1,7 +1,7 @@
 #!/bin/bash
 
-BUILD_LOG_FILE = ~/cron.log
-WAS_LOG_FILE = ~/app.log
+BUILD_LOG_FILE="~/cron.log"
+WAS_LOG_FILE="~/app.log"
 
 # 프로젝트 루트 디렉토리로 이동
 cd "$(dirname "$0")"

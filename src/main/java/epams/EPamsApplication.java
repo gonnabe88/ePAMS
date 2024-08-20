@@ -20,6 +20,11 @@ import epams.domain.com.login.util.webauthn.configuration.WebAuthProperties;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import java.lang.reflect.Method;
+import java.util.Set;
+
+import org.reflections.Reflections;
+
 /**
  * @author 140024
  * @since 2024-03-02
@@ -38,7 +43,10 @@ public class EPamsApplication  extends SpringBootServletInitializer {
 	 * @implNote 메인 메서드. 애플리케이션 실행 진입점
 	 */
 	public static void main(final String[] args) {
+
+
 		SpringApplication.run(EPamsApplication.class, args);
+
 	}
 
 	/**

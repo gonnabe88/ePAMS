@@ -38,6 +38,13 @@ public class DtmHisDTO extends DtmHisVO {
 
     /***
      * @author 140024
+     * @implNote 화면에 표시할 근태명
+     * @since 2024-06-09
+     */
+    private String dtmDispName;
+
+    /***
+     * @author 140024
      * @implNote 결재상태 (결재중/결재완료/반려)
      * @since 2024-06-09
      */

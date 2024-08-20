@@ -72,6 +72,7 @@ public class DtmApplRestController {
             // 서비스 호출 및 결과 메시지 설정
             String resultMessage = dtmApplyService.insert(dto);
             response.put("message", resultMessage);
+            response.put("dtmDispName", dto.getDtmDispName());
             response.put("staYmd",  dto.getStaYmd().toLocalDate().format(formatter));
             response.put("endYmd",  dto.getEndYmd().toLocalDate().format(formatter));
             return new ResponseEntity<>(response, HttpStatus.CREATED);

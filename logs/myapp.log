@@ -18152,6 +18152,9 @@ oracle.jdbc.OracleDatabaseException: ORA-00957: 열명이 중복되었습니다
 2024-08-19 22:07:00 INFO  [RMI TCP Connection(1)-169.254.247.155] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
 2024-08-19 22:07:00 INFO  [RMI TCP Connection(1)-169.254.247.155] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
 2024-08-19 22:07:00 INFO  [RMI TCP Connection(1)-169.254.247.155] o.s.web.servlet.DispatcherServlet - Completed initialization in 3 ms
+2024-08-19 22:11:27 INFO  [SpringApplicationShutdownHook] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-08-19 22:11:27 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2024-08-19 22:11:27 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
 2024-08-20 00:27:05 INFO  [background-preinit] o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.1.Final
 2024-08-20 00:27:05 INFO  [background-preinit] o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.1.Final
 2024-08-20 00:27:05 INFO  [restartedMain] o.s.b.d.restart.ChangeableUrls - The Class-Path manifest attribute in D:\intellij\IntelliJ IDEA 2024.1.4\jbr\bin\.gradle\caches\modules-2\files-2.1\com.oracle.database.jdbc\ojdbc11\21.9.0.0\1aad2e20684ee075bb9ebdca2d83f028e4fd35fa\ojdbc11-21.9.0.0.jar referenced one or more files that do not exist: file:/D:/intellij/IntelliJ%20IDEA%202024.1.4/jbr/bin/.gradle/caches/modules-2/files-2.1/com.oracle.database.jdbc/ojdbc11/21.9.0.0/1aad2e20684ee075bb9ebdca2d83f028e4fd35fa/oraclepki.jar

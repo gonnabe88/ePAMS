@@ -71,5 +71,5 @@ public class QuickApplDTO {
      * @implNote 근태명
      * @since 2024-06-09
      */
-    private String dtmName;
+    private String dtmDispName;
 }

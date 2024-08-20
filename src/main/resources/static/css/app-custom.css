@@ -811,7 +811,7 @@ h6, .h6, h5, .h5, h4, .h4, h3, .h3, h2, .h2, h1, .h1 {
 
 h1, .auth-subtitle {
     font-family: "Nunito";
-    font-size: calc(1.5rem + 2.5vw);
+    font-size: calc(1.5rem + 1.5vh);
 }
 
 mark,.mark {
@@ -3559,6 +3559,11 @@ textarea.form-control.is-invalid {
 .navbar .user-menu img {
     width: 39px;
     height: 39px
+}
+
+.navbar .navbar-header {
+    height: 100%;
+    box-sizing: border-box;
 }
 
 .navbar.navbar-header li {

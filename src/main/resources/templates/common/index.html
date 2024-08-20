@@ -76,7 +76,7 @@
                                                               class="badge rounded-pill bg-info me-1">
 															<span th:text="${langList['TMR_DTM_01_BTN']}"></span>
 														</span>
-                                                        <span th:text="${date.dtmName}"></span>
+                                                        <span th:text="${date.dtmDispName}"></span>
                                                     </h6>
                                                     <h7 th:text="${date.staDateStr}"></h7>
                                                 </div>
@@ -87,7 +87,8 @@
                                                              th:attr="data-staDate=${date.staDate}
 																 ,data-staDateStr=${date.staDateStr}
 																 ,data-dtmCode=${date.dtmCode}
-																 ,data-dtmReasonCode=${date.dtmReasonCd}">
+																 ,data-dtmReasonCode=${date.dtmReasonCd}
+                                                                 ,data-dtmDispName=${date.dtmDispName}">
                                                             <span th:text="${langList['APPL_DTM_01_BTN']}"></span>
                                                         </div>
                                                         <div th:if="${date.applDateType == '내일'}"
@@ -95,7 +96,8 @@
                                                              th:attr="data-staDate=${date.staDate}
 																 ,data-staDateStr=${date.staDateStr}
 																 ,data-dtmCode=${date.dtmCode}
-																 ,data-dtmReasonCode=${date.dtmReasonCd}">
+																 ,data-dtmReasonCode=${date.dtmReasonCd}
+                                                                 ,data-dtmDispName=${date.dtmDispName}">
                                                             <span th:text="${langList['APPL_DTM_01_BTN']}"></span>
                                                         </div>
                                                     </div>

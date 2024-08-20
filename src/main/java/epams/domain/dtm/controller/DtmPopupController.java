@@ -92,6 +92,7 @@ public class DtmPopupController<S extends Session> {
             @RequestParam("dtmReasonCd") String dtmReasonCd,
             @RequestParam("staYmd") String staYmd,
             @RequestParam("endYmd") String endYmd,
+            @RequestParam("dtmDispName") String dtmDispName,
             @PageableDefault(page = 1) final Pageable pageable,
             final Model model) {
 
@@ -104,6 +105,7 @@ public class DtmPopupController<S extends Session> {
         DtmHisDTO dto = new DtmHisDTO();
         dto.setDtmKindCd(dtmKindCd);
         dto.setDtmReasonCd(dtmReasonCd);
+        dto.setDtmDispName(dtmDispName);
 
         // 날짜 문자열을 LocalDateTime으로 변환
         try {
@@ -119,10 +121,12 @@ public class DtmPopupController<S extends Session> {
         model.addAttribute("dtmHisDTO", dto);
 
         // 기타 필요한 모델 속성 설정
-        final LocalDate today = LocalDate.now();
+        final LocalDateTime today = dto.getStaYmd();
         final DayOfWeek dayOfWeek = today.getDayOfWeek();
-        String formattedDate = today + "(" + dayOfWeek.getDisplayName(TextStyle.NARROW, Locale.KOREAN) + ")";
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String formattedDate = today.format(dateFormatter) + "(" + dayOfWeek.getDisplayName(TextStyle.NARROW, Locale.KOREAN) + ")";
         model.addAttribute("nowDate", formattedDate);
+        model.addAttribute("dtmDispName", dtmDispName);
 
         return VIEW; // View 이름 반환
     }

@@ -7,7 +7,7 @@ $(document).ready(function() {
     $('#flexSwitchCheckAdmin').prop('checked', isChecked === 'true');
 
     // 적절한 URL을 선택하여 사이드바 로드
-    let url = isChecked === 'true' ? 'common/layout/renderSidebarAdmin' : 'common/layout/renderSidebarNormal';
+    let url = isChecked === 'true' ? '/common/layout/renderSidebarAdmin' : '/common/layout/renderSidebarNormal';
     console.log("url: " + url);
 
     $.get(url, function(html) {
@@ -27,7 +27,7 @@ $(document).ready(function() {
 // (Switch 변경 시) 관리자 페이지와 일반 사용자 페이지의 sidebar를 동적으로 변경하는 스크립트
 $('#flexSwitchCheckAdmin').on('change', function () {
     let isChecked = $(this).prop('checked');
-    let url = isChecked ? 'common/layout/renderSidebarAdmin' : 'common/layout/renderSidebarNormal';
+    let url = isChecked ? '/common/layout/renderSidebarAdmin' : '/common/layout/renderSidebarNormal';
     setCookie("adminView", isChecked, 30);
     console.log("url: " + url);
 

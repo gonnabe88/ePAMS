@@ -54,17 +54,17 @@ if [ $? -eq 0 ]; then
     fi
 
     # JAR 파일 실행
+    # Java 난수 생성 시 빠르고 효율적인 /dev/urandom 사용하도록 설정
+    # JVM 초기 힙 메모리 크기 2GB
+    # JVM 최대 힙 메모리 크기 4GB
+    # G1 가비지 컬렉터 사용
+    # 문자열 중복 제거 기능 활성화 (메모리 사용량 감소)
     record_time "JAR 파일을 실행하는 중..."
         nohup java \
-           # Java 난수 생성 시 빠르고 효율적인 /dev/urandom 사용하도록 설정
            -Djava.security.egd=file:/dev/./urandom \
-           # JVM 초기 힙 메모리 크기 2GB
            -Xms2G \
-           # JVM 최대 힙 메모리 크기 4GB
            -Xmx4G \
-           # G1 가비지 컬렉터 사용
            -XX:+UseG1GC \
-           # 문자열 중복 제거 기능 활성화 (메모리 사용량 감소)
            -XX:+UseStringDeduplication \
            -jar "$JAR_FILE" > "$WAS_LOG_FILE" 2>&1 &
 

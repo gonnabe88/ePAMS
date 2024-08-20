@@ -39,7 +39,7 @@ $(document).ready(() => {
     });
     $.ajax({
         type: "get",
-        url: "/api/deptlist",
+        url: "api/deptlist",
         dataType: "json",
         success: function(data) {
             // Assuming data is an object with a 'realname' property

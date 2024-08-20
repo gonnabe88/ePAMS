@@ -38,19 +38,6 @@ spring:
       max-lifetime: 1800000
       maximum-pool-size: 10
 
-  # datasource:
-  #   driver-class-name: org.h2.Driver
-  #   url: jdbc:h2:file:C:/h2data/ehr;MODE=Oracle;DB_CLOSE_ON_EXIT=FALSE;
-  #   username: ehr
-  #   password: password
-  # sql:
-  #   init:
-  #     schema-locations: classpath:schema.sql
-  #     mode: always
-  # h2:
-  #   console:
-  #     enabled: true
-
   jpa:
     open-in-view: true
     hibernate:

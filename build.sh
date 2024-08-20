@@ -51,7 +51,7 @@ if [ $? -eq 0 ]; then
 
     # JAR 파일 실행
     record_time "JAR 파일을 실행하는 중..."
-    nohup java -jar "$JAR_FILE" > "$WAS_LOG_FILE" 2>&1 &
+    nohup java -Djava.security.egd=file:/dev/./urandom -jar "$JAR_FILE" > ~/app.log 2>&1 &
 
     # 성공 메시지
     record_time "배포 및 실행 성공"

@@ -103,7 +103,7 @@ public class IndexController<S extends Session> {
      */
     @GetMapping("/popup")
     public String popup() {
-        return "/common/popup";
+        return "common/popup";
     }
 
     /**
@@ -114,7 +114,7 @@ public class IndexController<S extends Session> {
     @GetMapping("/index")
     public String indexMain(@PageableDefault(page = 1) final Pageable pageable, final Model model) {
 
-        final String INDEXMAIN = "/common/index";
+        final String INDEXMAIN = "common/index";
 
         // 현재 로그인한 사용자 정보
         final Authentication auth = authentication();
@@ -186,6 +186,6 @@ public class IndexController<S extends Session> {
         final List<IamUserDTO> memberList = memberservice.findBySearchValue(text);
         model.addAttribute("memberList", memberList);
 
-        return "/common/memberlist";
+        return "common/memberlist";
     }
 }

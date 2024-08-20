@@ -32,7 +32,7 @@ spring:
       maxRequestSize: 512MB  # 한 번에 최대 업로드 가능 용량
 
   thymeleaf:
-    prefix: classpath:/templates
+    prefix: classpath:/templates/
     suffix: .html
     cache: false
     mode: HTML
@@ -46,7 +46,7 @@ spring:
 
   web:
     resources:
-      static-locations: classpath:/templates
+      static-locations: classpath:/templates/
 
 # mybatis
 mybatis:

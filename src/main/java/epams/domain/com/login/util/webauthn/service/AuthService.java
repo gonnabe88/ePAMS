@@ -148,11 +148,11 @@ public class AuthService {
                 session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, context);
                 logRepository.insert(LogLoginDTO.getDTO(iamUserDTO.getUsername(), SIMPLEAUTH_STR, "1"));
                 response.put("status", "OK");
-                response.put("redirectUrl", "/index");
+                response.put("redirectUrl", "index");
             } else {
                 logRepository.insert(LogLoginDTO.getDTO(iamUserDTO.getUsername(), SIMPLEAUTH_STR, "0"));
                 response.put("status", "BAD_REQUEST");
-                response.put("redirectUrl", "/login");
+                response.put("redirectUrl", "login");
                 status = HttpStatus.BAD_REQUEST;
             }
         } catch (JsonProcessingException e) {

@@ -87,7 +87,7 @@ public class DtmHistoryController<S extends Session> {
      */
     @GetMapping("/list")
     public String dtmList(@PageableDefault(page = 1) final Pageable pageable, @ModelAttribute final DtmHisDTO dto, final Model model) {
-        final String DTMLIST = "/dtm/list";
+        final String DTMLIST = "dtm/list";
         dto.setEmpId(Long.parseLong(authentication().getName().replace('K', '7')));
 
         // 언어목록

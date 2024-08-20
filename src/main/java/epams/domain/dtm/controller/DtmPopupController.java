@@ -96,7 +96,7 @@ public class DtmPopupController<S extends Session> {
             @PageableDefault(page = 1) final Pageable pageable,
             final Model model) {
 
-        final String VIEW = "/dtm/dtmApplPopup";
+        final String VIEW = "dtm/dtmApplPopup";
 
         // 날짜 형식이 ISO-8601 형식인 경우
         DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;

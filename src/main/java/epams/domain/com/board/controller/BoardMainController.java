@@ -90,7 +90,7 @@ public class BoardMainController {
         model.addAttribute("boardList", boardList);
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
-        return "/common/list";
+        return "common/list";
     }
 
     /**
@@ -101,7 +101,7 @@ public class BoardMainController {
     @GetMapping("/editor")
     public String editor(final Model model) {    
     	model.addAttribute("board", new BoardDTO());
-        return "/common/editor";
+        return "common/editor";
     }
     
     /**
@@ -138,7 +138,7 @@ public class BoardMainController {
             model.addAttribute("boardFileList", boardFileDTOList);
         }
 
-        return "/common/detail";
+        return "common/detail";
     }
 
     /**

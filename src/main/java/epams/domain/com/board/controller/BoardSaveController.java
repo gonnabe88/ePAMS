@@ -83,7 +83,7 @@ public class BoardSaveController {
      */
     @GetMapping("/save")
     public String saveForm() {
-        return "/common/save";
+        return "common/save";
     }
 
     /**
@@ -95,7 +95,7 @@ public class BoardSaveController {
     public ResponseEntity<String> save(@ModelAttribute final BoardDTO boardDTO) throws IOException {
         boardDTO.setBoardWriter(authentication().getName());        
         final Long seqId = boardSaveService.save(boardDTO).getSeqId();
-        final String redirectUrl = "/board/" + seqId;
+        final String redirectUrl = "board/" + seqId;
         return ResponseEntity.ok(redirectUrl);
     }
 

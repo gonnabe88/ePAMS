@@ -35,7 +35,7 @@ public class SidebarController {
     @GetMapping("/renderSidebarAdmin")
     public String sidebarAdmin(Model model) {
         log.warn("sidebarAdmin");
-        return "/common/layout/sidebarAdmin :: menu";
+        return "common/layout/sidebarAdmin :: menu";
     }
 
     /***
@@ -46,7 +46,7 @@ public class SidebarController {
     @GetMapping("/renderSidebarNormal")
     public String sidebarNormal(Model model) {
         log.warn("sidebarNormal");
-        return "/common/layout/sidebarNormal :: menu";
+        return "common/layout/sidebarNormal :: menu";
     }
 
 }

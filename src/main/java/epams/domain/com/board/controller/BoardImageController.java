@@ -93,7 +93,7 @@ public class BoardImageController {
                 boardImageDTO.setStoredFileName(storedFilename);
                 boardImgService.saveBoardImage(boardImageDTO);
 
-                final String fileUrl = "/board/upload/image/" + storedFilename;
+                final String fileUrl = "board/upload/image/" + storedFilename;
 
                 responseEntity = ResponseEntity.ok().body("{\"location\":\"" + fileUrl + "\"}");           
             }

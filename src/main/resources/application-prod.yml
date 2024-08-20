@@ -20,6 +20,59 @@ server:
         max-age: -1 # infinite
         secure: true # https only allowed
         sameSite: strict
+  tomcat:
+    max-connections: 20000 # 총 최대 연결 수를 늘림
+    threads:
+      max: 1000 # 최대 스레드 수를 늘림 (동시 사용자 수에 따라 조정)
+      min-spare: 50 # 최소 유휴 스레드 수를 늘림 (예상되는 동시 사용자 수에 따라 조정)
+    connection-timeout: 30000 # 연결 타임아웃을 30초로 증가 (지연 시간 증가에 대비)
+    accept-count: 2000 # 대기 큐의 최대 크기 (최대 동시 사용자 수에 맞춰 조정)
+    accesslog:
+      buffered: true # 로그 버퍼링을 활성화하여 I/O 성능 향상
+      check-exists: false # 로그 파일 존재 확인 비활성화
+      condition-if: 'write' # 로그 파일 쓰기 조건 설정
+      condition-unless: 'requestAttributes' # 로그 파일 쓰기 조건 설정
+      directory: ${kdb.logpath} # 로그 파일 저장 경로
+      enabled: true # 로그 활성화
+      encoding: UTF-8 # 로그 파일 인코딩 설정
+      file-date-format: .yyyy-MM-dd # 로그 파일 날짜 형식 설정
+      ipv6-canonical: false # IPv6 캐노니컬 설정 비활성화
+      locale: ko_KR # 로그 파일 로케일 설정
+      max-days: 30 # 로그 파일 보관 기간 30일로 설정
+      pattern: common # 로그 파일 패턴 설정
+      prefix: access_log # 로그 파일 접두사 설정
+      rename-on-rotate: true # 로그 파일 로테이션 시 파일 이름 변경
+      request-attributes-enabled: true # 요청 속성 로깅 활성화
+      rotate: true # 로그 파일 로테이션 활성화
+      suffix: .log # 로그 파일 확장자 설정
+    keep-alive-timeout: 30000 # Keep-alive 타임아웃을 30초로 증가 (지속적인 연결 유지)
+    max-http-form-post-size: 10485760 # 최대 POST 데이터 크기 10MB로 증가 (필요에 따라 조정)
+    max-swallow-size: 10485760 # 최대 Swallow 데이터 크기 10MB로 증가
+    max-http-response-header-size: 16384 # 최대 HTTP 응답 헤더 크기 16KB로 증가 (큰 헤더 응답 처리)
+    max-keep-alive-requests: 200 # Keep-alive 요청 최대 수 200으로 증가
+    processor-cache: 1000 # 프로세서 캐시 크기 조정 (트래픽에 따라 조정)
+    resource:
+      allow-caching: true # 자원 캐싱 허용
+      cache-ttl: 60000 # 캐시 TTL을 60초로 설정
+    uri-encoding: UTF-8 # URI 인코딩 설정
+    remoteip:
+      protocol-header-https-value: https # 프로토콜 헤더 HTTPS 값 설정
+      host-header: X-Forwarded-Host # 호스트 헤더 설정
+      internal-proxies:
+      port-header: X-Forwarded-Port # 포트 헤더 설정
+      protocol-header: X-Forwarded-Proto # 프로토콜 헤더 설정
+      remote-ip-header: X-Forwarded-For # 원격 IP 헤더 설정
+      trusted-proxies:
+    additional-tld-skip-patterns: # 추가 TLD 스킵 패턴 설정
+    background-processor-delay: 10 # 백그라운드 프로세서 지연 시간 설정
+    basedir: /tmp/tomcat # 기본 디렉토리 설정
+    mbeanregistry:
+      enabled: true # MBean 레지스트리 활성화
+    redirect-context-root: true # 컨텍스트 루트 리다이렉트 활성화
+    relaxed-path-chars:  # 경로 문자 제한 풀기
+    use-relative-redirects: true # 상대 리다이렉트 사용
+    relaxed-query-chars:  # 쿼리 문자 제한 풀기
+
 
 # webauthn & passkey
 authn:

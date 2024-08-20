@@ -10,7 +10,7 @@ public class CustomGeneralRuntimeException extends RuntimeException {
     /**
      * serialVersionUID
      */
-    private static final long serialVersionUID = -3078530608175015209L;
+    private static final long serialVersionUID = 1L;
 
     /**
      * 메시지로 초기화하는 생성자

@@ -89,7 +89,7 @@ public class DtmController<S extends Session> {
      */
     @GetMapping("/main")
     public String dtmMain(@PageableDefault(page = 1) final Pageable pageable, final Model model) {
-        final String VIEW = "/dtm/main";
+        final String VIEW = "dtm/main";
 
         // 코드
         final Map<String, String> codeList = codeDetailService.getCodeHtmlDetail(VIEW);
@@ -122,7 +122,7 @@ public class DtmController<S extends Session> {
 
     @GetMapping("/main2")
     public String dtmMain2(@PageableDefault(page = 1) final Pageable pageable, final Model model) {
-        final String VIEW = "/dtm/main2";
+        final String VIEW = "dtm/main2";
 
         return VIEW;
     }
@@ -132,7 +132,7 @@ public class DtmController<S extends Session> {
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
             Model model
     ) {
-        final String VIEW = "/dtm/DtmRegister";
+        final String VIEW = "dtm/DtmRegister";
 
         if (date != null) {
             model.addAttribute("selectedDate", date);
@@ -143,7 +143,7 @@ public class DtmController<S extends Session> {
 
     @GetMapping("/calendar2")
     public String dtmcalendar2(@PageableDefault(page = 1) final Pageable pageable, final Model model) {
-        final String VIEW = "/dtm/calendar2";
+        final String VIEW = "dtm/calendar2";
 
         return VIEW;
     }

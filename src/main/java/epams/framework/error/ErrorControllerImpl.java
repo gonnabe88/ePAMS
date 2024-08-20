@@ -24,7 +24,7 @@ public class ErrorControllerImpl implements ErrorController {
     @RequestMapping("/error")
     public String handleError() {
         // 사용자 정의 오류 페이지 템플릿을 반환합니다
-        return "/error/404";
+        return "error/404";
     }
 
 }

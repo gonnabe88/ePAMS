@@ -84,7 +84,7 @@ public class LoginController {
     public String logout(final HttpServletRequest request) {
         final HttpSession session = request.getSession(false);
         session.invalidate();
-        return "redirect:/login";
+        return "redirect:login";
     }
 
     /**
@@ -96,7 +96,7 @@ public class LoginController {
     @GetMapping({ "/", "/login" })
     public String login(final HttpServletResponse response, @CookieValue(value = "idChk", required = false) final String username,
             @RequestParam(value = "isChecked", defaultValue = "false") final boolean isChecked, final Model model) {
-    	String VIEW = "/common/login";
+    	String VIEW = "common/login";
         final Authentication auth = authentication();
         final AppUser existingUser = service.getUserRepo().findByUsername(username);
         final Authenticator existingAuthUser = service.getAuthRepository().findByUser(existingUser);
@@ -110,7 +110,7 @@ public class LoginController {
         }
 
         if (auth != null && auth.isAuthenticated()) {
-        	VIEW = "redirect:/index";
+        	VIEW = "redirect:index";
         	
         }
         return VIEW;

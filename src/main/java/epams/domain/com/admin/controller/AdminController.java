@@ -73,7 +73,7 @@ public class AdminController {
      */
     @GetMapping("/code")
     public String code(HttpServletRequest request) {
-        return "/admin/code";
+        return "admin/code";
     }
 
     /***
@@ -83,7 +83,7 @@ public class AdminController {
      */
     @GetMapping("/page")
     public String html(HttpServletRequest request) {
-        return "/admin/page";
+        return "admin/page";
     }
 
     /***
@@ -93,7 +93,7 @@ public class AdminController {
      */
     @GetMapping("/user")
     public String user(HttpServletRequest request) {
-        return "/admin/member";
+        return "admin/member";
     }
 
     /***
@@ -103,7 +103,7 @@ public class AdminController {
      */
     @GetMapping("/login")
     public String login(HttpServletRequest request) {
-        return "/admin/login";
+        return "admin/login";
     }
 
     /***
@@ -124,7 +124,7 @@ public class AdminController {
         final LoggersEndpoint.LoggersDescriptor loggersDescriptor = loggersEndpoint.loggers();
         model.addAttribute("loggers", loggersDescriptor.getLoggers());
 
-        return "/admin/actuator";
+        return "admin/actuator";
     }
 
     /***
@@ -134,7 +134,7 @@ public class AdminController {
      */
     @GetMapping("/loginotp")
     public String loginotp(HttpServletRequest request) {
-        return "/admin/loginotp";
+        return "admin/loginotp";
     }
 
         /***
@@ -144,7 +144,7 @@ public class AdminController {
      */
     @GetMapping("/viewlog")
     public String viewLogPage(HttpServletRequest request) {
-        return "/admin/viewlog";
+        return "admin/viewlog";
     }
 
     /***
@@ -154,7 +154,7 @@ public class AdminController {
      */
     @GetMapping("/role")
     public String role(HttpServletRequest request) {
-        return "/admin/role";
+        return "admin/role";
     }
 
     /***
@@ -164,7 +164,7 @@ public class AdminController {
      */
     @GetMapping("/dashboard")
     public String dashboard(HttpServletRequest request) {
-        return "/admin/dashboard";
+        return "admin/dashboard";
     }
     /***
      * @author 140024
@@ -173,6 +173,6 @@ public class AdminController {
      */
     @GetMapping("/codeHtmlMap")
     public String codeHtmlMap(HttpServletRequest request) {
-        return "/admin/codeHtmlMap";
+        return "admin/codeHtmlMap";
     }
 }

@@ -2,20 +2,20 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
 <head>
-<th:block th:replace="~{/common/layout/head :: commonHead}"></th:block>
+<th:block th:replace="~{common/layout/head :: commonHead}"></th:block>
 </head>
 
 <body class="light">
 	<div id="app" class="app">
-		<div th:replace="~{/common/layout/sidebar :: commonSidebar}"></div>
+		<div th:replace="~{common/layout/sidebar :: commonSidebar}"></div>
 		<div id="main" class='layout-navbar navbar-fixed'>
 			<header>
-				<th:block th:replace="~{/common/layout/header :: commonHeader}"></th:block>
+				<th:block th:replace="~{common/layout/header :: commonHeader}"></th:block>
 			</header>
 			<th:block layout:fragment="contents"></th:block>
 		</div>
 		<footer>
-			<th:block th:replace="~{/common/layout/footer :: commonFooter}"></th:block>
+			<th:block th:replace="~{common/layout/footer :: commonFooter}"></th:block>
 		</footer>
 	</div>
 </body>

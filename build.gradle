@@ -1,9 +1,9 @@
-                                   plugins {
+plugins {
     id 'java'
     id 'org.springframework.boot' version '3.2.5'
     id 'io.spring.dependency-management' version '1.1.4'
     id 'org.cyclonedx.bom' version '1.7.2'
-    id 'war'
+    //id 'war'
 }
 
 group = 'epams'
@@ -107,12 +107,12 @@ tasks.withType(JavaCompile) {
 }
 
 tasks.named('bootJar') {
-    enabled = false
-}
-
-tasks.named('bootWar') {
     enabled = true
 }
+
+//tasks.named('bootWar') {
+//    enabled = true
+//}
 
 springBoot {
     mainClass = 'epams.EPamsApplication'

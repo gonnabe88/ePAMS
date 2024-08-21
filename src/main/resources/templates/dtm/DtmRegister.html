@@ -5,74 +5,6 @@
 
 <head>
     <th:block layout:fragment="css">
-        <style>
-            body {
-                background-color: #f0f2f5;
-            }
-            .container {
-                max-width: 600px;
-                margin: 0 auto;
-                padding: 2rem;
-                background-color: #fff;
-                border-radius: 15px;
-                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-            }
-            .page-title {
-                font-size: clamp(1.5rem, 5vw, 2.5rem);
-                font-weight: 700;
-                color: #333;
-                text-align: center;
-                margin-bottom: 2rem;
-            }
-            .form-group {
-                margin-bottom: 1.5rem;
-            }
-            .date-group {
-                display: flex;
-                justify-content: space-between;
-            }
-            .date-input {
-                width: 48%;
-            }
-            label {
-                font-weight: 600;
-                color: #333;
-                display: block;
-                margin-bottom: 0.5rem;
-            }
-            select, input[type="date"] {
-                width: 100%;
-                padding: 0.5rem;
-                border: 1px solid #ccc;
-                border-radius: 5px;
-                font-size: 1rem;
-            }
-            .button-group {
-                display: flex;
-                justify-content: space-between;
-                margin-top: 2rem;
-            }
-            .btn {
-                padding: 0.5rem 1rem;
-                border: none;
-                border-radius: 5px;
-                font-size: 1rem;
-                cursor: pointer;
-                transition: all 0.3s ease;
-            }
-            .btn-back {
-                background-color: #f0f0f0;
-                color: #333;
-            }
-            .btn-submit {
-                background-color: #4CAF50;
-                color: white;
-            }
-            .btn:hover {
-                transform: translateY(-2px);
-                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            }
-        </style>
     </th:block>
 </head>
 
@@ -102,21 +34,11 @@
                 </div>
             </div>
             <div class="button-group">
-                <button type="button" class="btn btn-back" onclick="history.back()">돌아가기</button>
+                <button type="button" class="btn btn-back" onclick="window.history.length > 1 ? history.back() : window.location.href='default-page.html';">돌아가기</button>
                 <button type="submit" class="btn btn-submit">신청하기</button>
             </div>
         </form>
     </div>
-
-    <script th:inline="javascript">
-        document.addEventListener('DOMContentLoaded', function() {
-            var selectedDate = /*[[${param.date}]]*/ null;
-            if (selectedDate) {
-                document.getElementById('startDate').value = selectedDate;
-                document.getElementById('endDate').value = selectedDate;
-            }
-        });
-    </script>
 </div>
 </body>
 </html>

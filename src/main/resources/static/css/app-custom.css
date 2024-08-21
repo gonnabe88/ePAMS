@@ -150,11 +150,12 @@
     padding: 20px;
 }
 .fc-theme-standard td, .fc-theme-standard th {
-    border: none;
+    border: none !important;
 }
 .fc-scrollgrid {
     border: none !important;
 }
+
 .fc-col-header-cell {
     background-color: #f8f9fa;
     padding: 10px 0;
@@ -187,7 +188,7 @@
     background-color: transparent !important;
 }
 .fc-daygrid-day-frame {
-    min-height: 100px !important;
+    min-height: 50px !important;
     height: 0;
     padding-bottom: 100% !important;
     position: relative;
@@ -197,18 +198,8 @@
         font-size: 0.8em;
     }
 
-    .fc-daygrid-day-frame {
-        padding-bottom: 100% !important;
-    }
-
     .fc-daygrid-day-events {
         display: none;
-    }
-
-    .fc-daygrid-day-number {
-        font-size: 1em;
-        width: 25px;
-        height: 25px;
     }
 
     .fc-col-header-cell-cushion {
@@ -263,21 +254,65 @@
     background-color: #4CAF50;
     color: white;
 }
-@media screen and (max-width: 768px) {
-    .fc-toolbar.fc-header-toolbar {
-        flex-direction: column;
-    }
-    .fc-toolbar-chunk {
-        margin-bottom: 0.5rem;
-    }
-    .fc-toolbar-title {
-        font-size: clamp(1rem, 3vw, 1.2rem) !important;
-    }
+/*근태신청 캘린더*/
+
+/*근태신청화면 콤보*/
+.page-title {
+    font-size: clamp(1.5rem, 5vw, 2.5rem);
+    font-weight: 700;
+    color: #333;
+    text-align: center;
+    margin-bottom: 2rem;
 }
-
-/*근태신청 캘린더 끝*/
-
-
+.form-group {
+    margin-bottom: 1.5rem;
+}
+.date-group {
+    display: flex;
+    justify-content: space-between;
+}
+.date-input {
+    width: 48%;
+}
+label {
+    font-weight: 600;
+    color: #333;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+select, input[type="date"] {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2rem;
+}
+.btn {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.btn-back {
+    background-color: #f0f0f0;
+    color: #333;
+}
+.btn-submit {
+    background-color: #4CAF50;
+    color: white;
+}
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+/*근태신청화면 콤보*/
 
 .dtmApplPopup .title{
     text-align:center;
@@ -321,7 +356,7 @@
     border: dashed 4px #ddd !important;
     background-color: #f2f6fc;
     border-radius: 15px;
-    min-height: 0;
+    min-height: 0 ;
     padding: 0;
 }
 
@@ -331,8 +366,8 @@
 
 .dropzone .dropzone-container {
     padding: 2rem 0;
-    width: 100%;
-    height: 100%;
+    width: 25vw;  /* 화면의 25% */
+    height: 25vw; /* 화면의 25% */
     position: relative;
     display: flex;
     flex-direction: column;

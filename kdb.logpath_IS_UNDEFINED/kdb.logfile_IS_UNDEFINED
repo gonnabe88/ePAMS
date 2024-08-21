@@ -1172,3 +1172,287 @@ org.thymeleaf.exceptions.TemplateInputException: Error resolving template [commo
 2024-08-21 00:18:27 INFO  [SpringApplicationShutdownHook] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
 2024-08-21 00:18:27 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
 2024-08-21 00:18:27 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2024-08-21 19:06:01 INFO  [background-preinit] o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.1.Final
+2024-08-21 19:06:01 INFO  [restartedMain] o.s.b.d.restart.ChangeableUrls - The Class-Path manifest attribute in C:\Users\suji8\.gradle\caches\modules-2\files-2.1\com.oracle.database.jdbc\ojdbc11\21.9.0.0\1aad2e20684ee075bb9ebdca2d83f028e4fd35fa\ojdbc11-21.9.0.0.jar referenced one or more files that do not exist: file:/C:/Users/suji8/.gradle/caches/modules-2/files-2.1/com.oracle.database.jdbc/ojdbc11/21.9.0.0/1aad2e20684ee075bb9ebdca2d83f028e4fd35fa/oraclepki.jar
+2024-08-21 19:06:01 INFO  [restartedMain] o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2024-08-21 19:06:01 INFO  [restartedMain] o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2024-08-21 19:06:02 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-08-21 19:06:02 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 35 ms. Found 2 JPA repository interfaces.
+2024-08-21 19:06:02 WARN  [restartedMain] o.m.s.mapper.ClassPathMapperScanner - No MyBatis mapper was found in '[epams]' package. Please check your configuration.
+2024-08-21 19:06:03 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2024-08-21 19:06:03 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2024-08-21 19:06:03 INFO  [restartedMain] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-08-21 19:06:03 INFO  [restartedMain] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.20]
+2024-08-21 19:06:03 INFO  [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-08-21 19:06:03 INFO  [restartedMain] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1527 ms
+2024-08-21 19:06:03 WARN  [restartedMain] com.zaxxer.hikari.HikariConfig - HikariPool-1 - idleTimeout has been set but has no effect because the pool is operating as a fixed size pool.
+2024-08-21 19:06:03 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2024-08-21 19:06:03 INFO  [restartedMain] com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection oracle.jdbc.driver.T4CConnection@421fd88c
+2024-08-21 19:06:03 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2024-08-21 19:06:04 INFO  [restartedMain] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-08-21 19:06:04 INFO  [restartedMain] org.hibernate.Version - HHH000412: Hibernate ORM core version 6.4.4.Final
+2024-08-21 19:06:04 INFO  [restartedMain] o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2024-08-21 19:06:04 INFO  [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-08-21 19:06:05 WARN  [restartedMain] org.hibernate.mapping.RootClass - HHH000038: Composite-id class does not override equals(): epams.model.entity.HtmlLangEntity
+2024-08-21 19:06:05 WARN  [restartedMain] org.hibernate.mapping.RootClass - HHH000039: Composite-id class does not override hashCode(): epams.model.entity.HtmlLangEntity
+2024-08-21 19:06:05 WARN  [restartedMain] org.hibernate.mapping.RootClass - HHH000038: Composite-id class does not override equals(): epams.model.entity.IamUserAuthEntity
+2024-08-21 19:06:05 WARN  [restartedMain] org.hibernate.mapping.RootClass - HHH000039: Composite-id class does not override hashCode(): epams.model.entity.IamUserAuthEntity
+2024-08-21 19:06:06 INFO  [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-08-21 19:06:06 INFO  [restartedMain] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-08-21 19:06:08 INFO  [restartedMain] o.s.b.a.e.web.EndpointLinksResolver - Exposing 15 endpoint(s) beneath base path '/actuator'
+2024-08-21 19:06:08 INFO  [restartedMain] o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@501b2434, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@1b7fe4dc, org.springframework.security.web.context.SecurityContextHolderFilter@1f248828, org.springframework.security.web.header.HeaderWriterFilter@1be0544a, org.springframework.web.filter.CorsFilter@17e7d66b, org.springframework.security.web.csrf.CsrfFilter@4c4c35c6, org.springframework.security.web.authentication.logout.LogoutFilter@7c9ca497, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@275d9a03, org.springframework.security.web.session.ConcurrentSessionFilter@4c3ec219, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@7cb7c219, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@4b6f412e, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@564787c0, org.springframework.security.web.session.SessionManagementFilter@77395be1, org.springframework.security.web.access.ExceptionTranslationFilter@31e88a08, org.springframework.security.web.access.intercept.AuthorizationFilter@270bf346]
+2024-08-21 19:06:09 INFO  [restartedMain] o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2024-08-21 19:06:09 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2024-08-21 19:06:09 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2024-08-21 19:06:10 INFO  [RMI TCP Connection(2)-192.168.1.27] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-08-21 19:06:10 INFO  [RMI TCP Connection(2)-192.168.1.27] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-08-21 19:06:10 INFO  [RMI TCP Connection(2)-192.168.1.27] o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2024-08-21 19:10:29 INFO  [File Watcher] o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1282 class path changes (0 additions, 0 deletions, 1282 modifications)
+2024-08-21 19:10:29 INFO  [Thread-10] o.a.coyote.http11.Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8080"]
+2024-08-21 19:10:29 INFO  [Thread-10] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-08-21 19:10:29 INFO  [Thread-10] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2024-08-21 19:10:29 INFO  [Thread-10] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2024-08-21 19:10:30 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-08-21 19:10:30 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 20 ms. Found 2 JPA repository interfaces.
+2024-08-21 19:10:30 WARN  [restartedMain] o.m.s.mapper.ClassPathMapperScanner - No MyBatis mapper was found in '[epams]' package. Please check your configuration.
+2024-08-21 19:10:30 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2024-08-21 19:10:30 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2024-08-21 19:10:30 INFO  [restartedMain] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-08-21 19:10:30 INFO  [restartedMain] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.20]
+2024-08-21 19:10:30 INFO  [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-08-21 19:10:30 INFO  [restartedMain] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 557 ms
+2024-08-21 19:10:30 WARN  [restartedMain] com.zaxxer.hikari.HikariConfig - HikariPool-2 - idleTimeout has been set but has no effect because the pool is operating as a fixed size pool.
+2024-08-21 19:10:30 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-2 - Starting...
+2024-08-21 19:10:30 INFO  [restartedMain] com.zaxxer.hikari.pool.HikariPool - HikariPool-2 - Added connection oracle.jdbc.driver.T4CConnection@29361fe4
+2024-08-21 19:10:30 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-2 - Start completed.
+2024-08-21 19:10:30 INFO  [restartedMain] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-08-21 19:10:30 INFO  [restartedMain] o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2024-08-21 19:10:30 INFO  [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-08-21 19:10:30 WARN  [restartedMain] org.hibernate.mapping.RootClass - HHH000038: Composite-id class does not override equals(): epams.model.entity.HtmlLangEntity
+2024-08-21 19:10:30 WARN  [restartedMain] org.hibernate.mapping.RootClass - HHH000039: Composite-id class does not override hashCode(): epams.model.entity.HtmlLangEntity
+2024-08-21 19:10:30 WARN  [restartedMain] org.hibernate.mapping.RootClass - HHH000038: Composite-id class does not override equals(): epams.model.entity.IamUserAuthEntity
+2024-08-21 19:10:30 WARN  [restartedMain] org.hibernate.mapping.RootClass - HHH000039: Composite-id class does not override hashCode(): epams.model.entity.IamUserAuthEntity
+2024-08-21 19:10:31 INFO  [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-08-21 19:10:31 INFO  [restartedMain] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-08-21 19:10:31 INFO  [restartedMain] o.s.b.a.e.web.EndpointLinksResolver - Exposing 15 endpoint(s) beneath base path '/actuator'
+2024-08-21 19:10:31 INFO  [restartedMain] o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@616112a9, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@67ca2489, org.springframework.security.web.context.SecurityContextHolderFilter@e463085, org.springframework.security.web.header.HeaderWriterFilter@1c05b077, org.springframework.web.filter.CorsFilter@4f0db0bd, org.springframework.security.web.csrf.CsrfFilter@7feaf249, org.springframework.security.web.authentication.logout.LogoutFilter@48449730, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@4cfb2624, org.springframework.security.web.session.ConcurrentSessionFilter@42397a5d, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@69d2b438, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@71a7d441, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@715697d8, org.springframework.security.web.session.SessionManagementFilter@67dcac30, org.springframework.security.web.access.ExceptionTranslationFilter@54621001, org.springframework.security.web.access.intercept.AuthorizationFilter@586e6eaa]
+2024-08-21 19:10:32 INFO  [restartedMain] o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2024-08-21 19:10:32 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2024-08-21 19:10:32 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2024-08-21 19:10:32 INFO  [restartedMain] o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2024-08-21 19:15:58 INFO  [File Watcher] o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1283 class path changes (1 addition, 0 deletions, 1282 modifications)
+2024-08-21 19:15:58 INFO  [Thread-73] o.a.coyote.http11.Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8080"]
+2024-08-21 19:15:58 INFO  [Thread-73] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-08-21 19:15:58 INFO  [Thread-73] com.zaxxer.hikari.HikariDataSource - HikariPool-2 - Shutdown initiated...
+2024-08-21 19:15:58 INFO  [Thread-73] com.zaxxer.hikari.HikariDataSource - HikariPool-2 - Shutdown completed.
+2024-08-21 19:15:58 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-08-21 19:15:58 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 13 ms. Found 2 JPA repository interfaces.
+2024-08-21 19:15:58 WARN  [restartedMain] o.m.s.mapper.ClassPathMapperScanner - No MyBatis mapper was found in '[epams]' package. Please check your configuration.
+2024-08-21 19:15:58 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2024-08-21 19:15:58 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2024-08-21 19:15:58 INFO  [restartedMain] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-08-21 19:15:58 INFO  [restartedMain] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.20]
+2024-08-21 19:15:58 INFO  [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-08-21 19:15:58 INFO  [restartedMain] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 514 ms
+2024-08-21 19:15:58 WARN  [restartedMain] com.zaxxer.hikari.HikariConfig - HikariPool-3 - idleTimeout has been set but has no effect because the pool is operating as a fixed size pool.
+2024-08-21 19:15:58 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-3 - Starting...
+2024-08-21 19:15:58 INFO  [restartedMain] com.zaxxer.hikari.pool.HikariPool - HikariPool-3 - Added connection oracle.jdbc.driver.T4CConnection@6613564
+2024-08-21 19:15:58 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-3 - Start completed.
+2024-08-21 19:15:58 INFO  [restartedMain] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-08-21 19:15:58 INFO  [restartedMain] o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2024-08-21 19:15:58 INFO  [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-08-21 19:15:59 WARN  [restartedMain] org.hibernate.mapping.RootClass - HHH000038: Composite-id class does not override equals(): epams.model.entity.HtmlLangEntity
+2024-08-21 19:15:59 WARN  [restartedMain] org.hibernate.mapping.RootClass - HHH000039: Composite-id class does not override hashCode(): epams.model.entity.HtmlLangEntity
+2024-08-21 19:15:59 WARN  [restartedMain] org.hibernate.mapping.RootClass - HHH000038: Composite-id class does not override equals(): epams.model.entity.IamUserAuthEntity
+2024-08-21 19:15:59 WARN  [restartedMain] org.hibernate.mapping.RootClass - HHH000039: Composite-id class does not override hashCode(): epams.model.entity.IamUserAuthEntity
+2024-08-21 19:15:59 INFO  [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-08-21 19:15:59 INFO  [restartedMain] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-08-21 19:15:59 INFO  [restartedMain] o.s.b.a.e.web.EndpointLinksResolver - Exposing 15 endpoint(s) beneath base path '/actuator'
+2024-08-21 19:15:59 INFO  [restartedMain] o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@2a58b3f6, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@ad5146e, org.springframework.security.web.context.SecurityContextHolderFilter@5a67fcf9, org.springframework.security.web.header.HeaderWriterFilter@391ba703, org.springframework.web.filter.CorsFilter@6bdad7a9, org.springframework.security.web.csrf.CsrfFilter@40a636ce, org.springframework.security.web.authentication.logout.LogoutFilter@68d5f1e3, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@128148ec, org.springframework.security.web.session.ConcurrentSessionFilter@60318223, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@6fc4245b, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@102134bc, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@3ad622c6, org.springframework.security.web.session.SessionManagementFilter@17211daa, org.springframework.security.web.access.ExceptionTranslationFilter@44be6d49, org.springframework.security.web.access.intercept.AuthorizationFilter@79e79b79]
+2024-08-21 19:16:00 INFO  [restartedMain] o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2024-08-21 19:16:00 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2024-08-21 19:16:00 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2024-08-21 19:16:00 INFO  [restartedMain] o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2024-08-21 19:17:32 INFO  [File Watcher] o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1284 class path changes (1 addition, 0 deletions, 1283 modifications)
+2024-08-21 19:17:32 INFO  [Thread-84] o.a.coyote.http11.Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8080"]
+2024-08-21 19:17:32 INFO  [Thread-84] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-08-21 19:17:32 INFO  [Thread-84] com.zaxxer.hikari.HikariDataSource - HikariPool-3 - Shutdown initiated...
+2024-08-21 19:17:32 INFO  [Thread-84] com.zaxxer.hikari.HikariDataSource - HikariPool-3 - Shutdown completed.
+2024-08-21 19:17:32 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-08-21 19:17:32 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 12 ms. Found 2 JPA repository interfaces.
+2024-08-21 19:17:32 WARN  [restartedMain] o.m.s.mapper.ClassPathMapperScanner - No MyBatis mapper was found in '[epams]' package. Please check your configuration.
+2024-08-21 19:17:32 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2024-08-21 19:17:32 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2024-08-21 19:17:32 INFO  [restartedMain] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-08-21 19:17:32 INFO  [restartedMain] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.20]
+2024-08-21 19:17:32 INFO  [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-08-21 19:17:32 INFO  [restartedMain] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 454 ms
+2024-08-21 19:17:33 WARN  [restartedMain] com.zaxxer.hikari.HikariConfig - HikariPool-4 - idleTimeout has been set but has no effect because the pool is operating as a fixed size pool.
+2024-08-21 19:17:33 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-4 - Starting...
+2024-08-21 19:17:33 INFO  [restartedMain] com.zaxxer.hikari.pool.HikariPool - HikariPool-4 - Added connection oracle.jdbc.driver.T4CConnection@5fea1de9
+2024-08-21 19:17:33 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-4 - Start completed.
+2024-08-21 19:17:33 INFO  [restartedMain] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-08-21 19:17:33 INFO  [restartedMain] o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2024-08-21 19:17:33 INFO  [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-08-21 19:17:33 WARN  [restartedMain] org.hibernate.mapping.RootClass - HHH000038: Composite-id class does not override equals(): epams.model.entity.HtmlLangEntity
+2024-08-21 19:17:33 WARN  [restartedMain] org.hibernate.mapping.RootClass - HHH000039: Composite-id class does not override hashCode(): epams.model.entity.HtmlLangEntity
+2024-08-21 19:17:33 WARN  [restartedMain] org.hibernate.mapping.RootClass - HHH000038: Composite-id class does not override equals(): epams.model.entity.IamUserAuthEntity
+2024-08-21 19:17:33 WARN  [restartedMain] org.hibernate.mapping.RootClass - HHH000039: Composite-id class does not override hashCode(): epams.model.entity.IamUserAuthEntity
+2024-08-21 19:17:33 INFO  [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-08-21 19:17:33 INFO  [restartedMain] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-08-21 19:17:33 INFO  [restartedMain] o.s.b.a.e.web.EndpointLinksResolver - Exposing 15 endpoint(s) beneath base path '/actuator'
+2024-08-21 19:17:33 INFO  [restartedMain] o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@460f4cf, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@43f0f89f, org.springframework.security.web.context.SecurityContextHolderFilter@7e29c4da, org.springframework.security.web.header.HeaderWriterFilter@1e9b568, org.springframework.web.filter.CorsFilter@448f4154, org.springframework.security.web.csrf.CsrfFilter@235eab07, org.springframework.security.web.authentication.logout.LogoutFilter@539e98a3, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@61fda317, org.springframework.security.web.session.ConcurrentSessionFilter@5d2ef476, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@236477d8, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@6cf15cdc, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@468c8f9, org.springframework.security.web.session.SessionManagementFilter@50baa39, org.springframework.security.web.access.ExceptionTranslationFilter@548f6bde, org.springframework.security.web.access.intercept.AuthorizationFilter@2b2ced43]
+2024-08-21 19:17:34 INFO  [restartedMain] o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2024-08-21 19:17:34 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2024-08-21 19:17:34 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2024-08-21 19:17:34 INFO  [restartedMain] o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2024-08-21 19:20:49 INFO  [SpringApplicationShutdownHook] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-08-21 19:20:49 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-4 - Shutdown initiated...
+2024-08-21 19:20:49 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-4 - Shutdown completed.
+2024-08-21 19:20:52 INFO  [background-preinit] o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.1.Final
+2024-08-21 19:20:52 INFO  [restartedMain] o.s.b.d.restart.ChangeableUrls - The Class-Path manifest attribute in C:\Users\suji8\.gradle\caches\modules-2\files-2.1\com.oracle.database.jdbc\ojdbc11\21.9.0.0\1aad2e20684ee075bb9ebdca2d83f028e4fd35fa\ojdbc11-21.9.0.0.jar referenced one or more files that do not exist: file:/C:/Users/suji8/.gradle/caches/modules-2/files-2.1/com.oracle.database.jdbc/ojdbc11/21.9.0.0/1aad2e20684ee075bb9ebdca2d83f028e4fd35fa/oraclepki.jar
+2024-08-21 19:20:52 INFO  [restartedMain] o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2024-08-21 19:20:52 INFO  [restartedMain] o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2024-08-21 19:20:53 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-08-21 19:20:53 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 37 ms. Found 2 JPA repository interfaces.
+2024-08-21 19:20:53 WARN  [restartedMain] o.m.s.mapper.ClassPathMapperScanner - No MyBatis mapper was found in '[epams]' package. Please check your configuration.
+2024-08-21 19:20:54 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2024-08-21 19:20:54 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2024-08-21 19:20:54 INFO  [restartedMain] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-08-21 19:20:54 INFO  [restartedMain] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.20]
+2024-08-21 19:20:54 INFO  [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-08-21 19:20:54 INFO  [restartedMain] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1557 ms
+2024-08-21 19:20:54 WARN  [restartedMain] com.zaxxer.hikari.HikariConfig - HikariPool-1 - idleTimeout has been set but has no effect because the pool is operating as a fixed size pool.
+2024-08-21 19:20:54 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2024-08-21 19:20:54 INFO  [restartedMain] com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection oracle.jdbc.driver.T4CConnection@3f0b16df
+2024-08-21 19:20:54 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2024-08-21 19:20:55 INFO  [restartedMain] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-08-21 19:20:55 INFO  [restartedMain] org.hibernate.Version - HHH000412: Hibernate ORM core version 6.4.4.Final
+2024-08-21 19:20:55 INFO  [restartedMain] o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2024-08-21 19:20:55 INFO  [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-08-21 19:20:56 WARN  [restartedMain] org.hibernate.mapping.RootClass - HHH000038: Composite-id class does not override equals(): epams.model.entity.HtmlLangEntity
+2024-08-21 19:20:56 WARN  [restartedMain] org.hibernate.mapping.RootClass - HHH000039: Composite-id class does not override hashCode(): epams.model.entity.HtmlLangEntity
+2024-08-21 19:20:56 WARN  [restartedMain] org.hibernate.mapping.RootClass - HHH000038: Composite-id class does not override equals(): epams.model.entity.IamUserAuthEntity
+2024-08-21 19:20:56 WARN  [restartedMain] org.hibernate.mapping.RootClass - HHH000039: Composite-id class does not override hashCode(): epams.model.entity.IamUserAuthEntity
+2024-08-21 19:20:57 INFO  [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-08-21 19:20:57 INFO  [restartedMain] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-08-21 19:20:59 INFO  [restartedMain] o.s.b.a.e.web.EndpointLinksResolver - Exposing 15 endpoint(s) beneath base path '/actuator'
+2024-08-21 19:20:59 INFO  [restartedMain] o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@7b8c0a38, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@287c4715, org.springframework.security.web.context.SecurityContextHolderFilter@19f39b1f, org.springframework.security.web.header.HeaderWriterFilter@39e6b884, org.springframework.web.filter.CorsFilter@1f4942ec, org.springframework.security.web.csrf.CsrfFilter@44ee9888, org.springframework.security.web.authentication.logout.LogoutFilter@18339e3c, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@d640ebd, org.springframework.security.web.session.ConcurrentSessionFilter@15ccc500, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@2f10e3bc, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@681d0c74, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@58356bee, org.springframework.security.web.session.SessionManagementFilter@8751fb9, org.springframework.security.web.access.ExceptionTranslationFilter@5aa5daa1, org.springframework.security.web.access.intercept.AuthorizationFilter@69287966]
+2024-08-21 19:21:00 INFO  [restartedMain] o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2024-08-21 19:21:00 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2024-08-21 19:21:00 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2024-08-21 19:21:01 INFO  [RMI TCP Connection(1)-192.168.1.27] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-08-21 19:21:01 INFO  [RMI TCP Connection(1)-192.168.1.27] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-08-21 19:21:01 INFO  [RMI TCP Connection(1)-192.168.1.27] o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+2024-08-21 19:22:33 INFO  [SpringApplicationShutdownHook] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-08-21 19:22:33 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2024-08-21 19:22:33 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2024-08-21 19:22:36 INFO  [background-preinit] o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.1.Final
+2024-08-21 19:22:36 INFO  [restartedMain] o.s.b.d.restart.ChangeableUrls - The Class-Path manifest attribute in C:\Users\suji8\.gradle\caches\modules-2\files-2.1\com.oracle.database.jdbc\ojdbc11\21.9.0.0\1aad2e20684ee075bb9ebdca2d83f028e4fd35fa\ojdbc11-21.9.0.0.jar referenced one or more files that do not exist: file:/C:/Users/suji8/.gradle/caches/modules-2/files-2.1/com.oracle.database.jdbc/ojdbc11/21.9.0.0/1aad2e20684ee075bb9ebdca2d83f028e4fd35fa/oraclepki.jar
+2024-08-21 19:22:36 INFO  [restartedMain] o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2024-08-21 19:22:36 INFO  [restartedMain] o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2024-08-21 19:22:37 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-08-21 19:22:37 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 41 ms. Found 2 JPA repository interfaces.
+2024-08-21 19:22:37 WARN  [restartedMain] o.m.s.mapper.ClassPathMapperScanner - No MyBatis mapper was found in '[epams]' package. Please check your configuration.
+2024-08-21 19:22:38 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2024-08-21 19:22:38 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2024-08-21 19:22:38 INFO  [restartedMain] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-08-21 19:22:38 INFO  [restartedMain] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.20]
+2024-08-21 19:22:38 INFO  [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-08-21 19:22:38 INFO  [restartedMain] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1619 ms
+2024-08-21 19:22:38 WARN  [restartedMain] com.zaxxer.hikari.HikariConfig - HikariPool-1 - idleTimeout has been set but has no effect because the pool is operating as a fixed size pool.
+2024-08-21 19:22:38 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2024-08-21 19:22:38 INFO  [restartedMain] com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection oracle.jdbc.driver.T4CConnection@34735e85
+2024-08-21 19:22:38 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2024-08-21 19:22:39 INFO  [restartedMain] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-08-21 19:22:39 INFO  [restartedMain] org.hibernate.Version - HHH000412: Hibernate ORM core version 6.4.4.Final
+2024-08-21 19:22:39 INFO  [restartedMain] o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2024-08-21 19:22:39 INFO  [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-08-21 19:22:40 WARN  [restartedMain] org.hibernate.mapping.RootClass - HHH000038: Composite-id class does not override equals(): epams.model.entity.HtmlLangEntity
+2024-08-21 19:22:40 WARN  [restartedMain] org.hibernate.mapping.RootClass - HHH000039: Composite-id class does not override hashCode(): epams.model.entity.HtmlLangEntity
+2024-08-21 19:22:40 WARN  [restartedMain] org.hibernate.mapping.RootClass - HHH000038: Composite-id class does not override equals(): epams.model.entity.IamUserAuthEntity
+2024-08-21 19:22:40 WARN  [restartedMain] org.hibernate.mapping.RootClass - HHH000039: Composite-id class does not override hashCode(): epams.model.entity.IamUserAuthEntity
+2024-08-21 19:22:41 INFO  [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-08-21 19:22:41 INFO  [restartedMain] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-08-21 19:22:43 INFO  [restartedMain] o.s.b.a.e.web.EndpointLinksResolver - Exposing 15 endpoint(s) beneath base path '/actuator'
+2024-08-21 19:22:43 INFO  [restartedMain] o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@3459a0b7, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@5af6e43a, org.springframework.security.web.context.SecurityContextHolderFilter@340a0c1, org.springframework.security.web.header.HeaderWriterFilter@3dd5ab24, org.springframework.web.filter.CorsFilter@5b62b5e5, org.springframework.security.web.csrf.CsrfFilter@698e1a48, org.springframework.security.web.authentication.logout.LogoutFilter@21d4a28, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@17e7d66b, org.springframework.security.web.session.ConcurrentSessionFilter@4b02b118, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@7963a512, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@6fc1b590, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@57bb8540, org.springframework.security.web.session.SessionManagementFilter@386f7a9c, org.springframework.security.web.access.ExceptionTranslationFilter@610f865, org.springframework.security.web.access.intercept.AuthorizationFilter@5783859e]
+2024-08-21 19:22:44 INFO  [restartedMain] o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2024-08-21 19:22:44 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2024-08-21 19:22:44 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2024-08-21 19:22:45 INFO  [RMI TCP Connection(2)-192.168.1.27] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-08-21 19:22:45 INFO  [RMI TCP Connection(2)-192.168.1.27] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-08-21 19:22:45 INFO  [RMI TCP Connection(2)-192.168.1.27] o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2024-08-21 19:25:48 INFO  [SpringApplicationShutdownHook] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-08-21 19:25:48 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2024-08-21 19:25:48 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2024-08-21 19:25:51 INFO  [background-preinit] o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.1.Final
+2024-08-21 19:25:52 INFO  [restartedMain] o.s.b.d.restart.ChangeableUrls - The Class-Path manifest attribute in C:\Users\suji8\.gradle\caches\modules-2\files-2.1\com.oracle.database.jdbc\ojdbc11\21.9.0.0\1aad2e20684ee075bb9ebdca2d83f028e4fd35fa\ojdbc11-21.9.0.0.jar referenced one or more files that do not exist: file:/C:/Users/suji8/.gradle/caches/modules-2/files-2.1/com.oracle.database.jdbc/ojdbc11/21.9.0.0/1aad2e20684ee075bb9ebdca2d83f028e4fd35fa/oraclepki.jar
+2024-08-21 19:25:52 INFO  [restartedMain] o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2024-08-21 19:25:52 INFO  [restartedMain] o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2024-08-21 19:25:53 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-08-21 19:25:53 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 43 ms. Found 2 JPA repository interfaces.
+2024-08-21 19:25:53 WARN  [restartedMain] o.m.s.mapper.ClassPathMapperScanner - No MyBatis mapper was found in '[epams]' package. Please check your configuration.
+2024-08-21 19:25:53 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2024-08-21 19:25:53 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2024-08-21 19:25:53 INFO  [restartedMain] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-08-21 19:25:53 INFO  [restartedMain] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.20]
+2024-08-21 19:25:53 INFO  [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-08-21 19:25:53 INFO  [restartedMain] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1801 ms
+2024-08-21 19:25:54 WARN  [restartedMain] com.zaxxer.hikari.HikariConfig - HikariPool-1 - idleTimeout has been set but has no effect because the pool is operating as a fixed size pool.
+2024-08-21 19:25:54 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2024-08-21 19:25:54 INFO  [restartedMain] com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection oracle.jdbc.driver.T4CConnection@56d6de9c
+2024-08-21 19:25:54 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2024-08-21 19:25:54 INFO  [restartedMain] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-08-21 19:25:54 INFO  [restartedMain] org.hibernate.Version - HHH000412: Hibernate ORM core version 6.4.4.Final
+2024-08-21 19:25:54 INFO  [restartedMain] o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2024-08-21 19:25:55 INFO  [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-08-21 19:25:55 WARN  [restartedMain] org.hibernate.mapping.RootClass - HHH000038: Composite-id class does not override equals(): epams.model.entity.HtmlLangEntity
+2024-08-21 19:25:55 WARN  [restartedMain] org.hibernate.mapping.RootClass - HHH000039: Composite-id class does not override hashCode(): epams.model.entity.HtmlLangEntity
+2024-08-21 19:25:55 WARN  [restartedMain] org.hibernate.mapping.RootClass - HHH000038: Composite-id class does not override equals(): epams.model.entity.IamUserAuthEntity
+2024-08-21 19:25:55 WARN  [restartedMain] org.hibernate.mapping.RootClass - HHH000039: Composite-id class does not override hashCode(): epams.model.entity.IamUserAuthEntity
+2024-08-21 19:25:57 INFO  [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-08-21 19:25:57 INFO  [restartedMain] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-08-21 19:25:59 INFO  [restartedMain] o.s.b.a.e.web.EndpointLinksResolver - Exposing 15 endpoint(s) beneath base path '/actuator'
+2024-08-21 19:25:59 INFO  [restartedMain] o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@2632d8f, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@7a0a6f46, org.springframework.security.web.context.SecurityContextHolderFilter@2c17f252, org.springframework.security.web.header.HeaderWriterFilter@42a55b2e, org.springframework.web.filter.CorsFilter@275d9a03, org.springframework.security.web.csrf.CsrfFilter@75284a5a, org.springframework.security.web.authentication.logout.LogoutFilter@72a8a2e, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@162d55c4, org.springframework.security.web.session.ConcurrentSessionFilter@3bd9f4ff, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@48e2da30, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@bba872f, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@3d535972, org.springframework.security.web.session.SessionManagementFilter@667d923d, org.springframework.security.web.access.ExceptionTranslationFilter@15fa9100, org.springframework.security.web.access.intercept.AuthorizationFilter@3b6f0463]
+2024-08-21 19:26:00 INFO  [restartedMain] o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2024-08-21 19:26:00 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2024-08-21 19:26:00 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2024-08-21 19:26:01 INFO  [RMI TCP Connection(1)-192.168.1.27] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-08-21 19:26:01 INFO  [RMI TCP Connection(1)-192.168.1.27] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-08-21 19:26:01 INFO  [RMI TCP Connection(1)-192.168.1.27] o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+2024-08-21 19:31:11 INFO  [File Watcher] o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1285 class path changes (0 additions, 0 deletions, 1285 modifications)
+2024-08-21 19:31:11 INFO  [Thread-11] o.a.coyote.http11.Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8080"]
+2024-08-21 19:31:11 INFO  [Thread-11] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-08-21 19:31:11 INFO  [Thread-11] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2024-08-21 19:31:11 INFO  [Thread-11] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2024-08-21 19:31:12 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-08-21 19:31:12 INFO  [restartedMain] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 15 ms. Found 2 JPA repository interfaces.
+2024-08-21 19:31:12 WARN  [restartedMain] o.m.s.mapper.ClassPathMapperScanner - No MyBatis mapper was found in '[epams]' package. Please check your configuration.
+2024-08-21 19:31:12 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2024-08-21 19:31:12 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2024-08-21 19:31:12 INFO  [restartedMain] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2024-08-21 19:31:12 INFO  [restartedMain] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.20]
+2024-08-21 19:31:12 INFO  [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2024-08-21 19:31:12 INFO  [restartedMain] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 482 ms
+2024-08-21 19:31:12 WARN  [restartedMain] com.zaxxer.hikari.HikariConfig - HikariPool-2 - idleTimeout has been set but has no effect because the pool is operating as a fixed size pool.
+2024-08-21 19:31:12 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-2 - Starting...
+2024-08-21 19:31:12 INFO  [restartedMain] com.zaxxer.hikari.pool.HikariPool - HikariPool-2 - Added connection oracle.jdbc.driver.T4CConnection@3ea26baf
+2024-08-21 19:31:12 INFO  [restartedMain] com.zaxxer.hikari.HikariDataSource - HikariPool-2 - Start completed.
+2024-08-21 19:31:12 INFO  [restartedMain] o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-08-21 19:31:12 INFO  [restartedMain] o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2024-08-21 19:31:12 INFO  [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-08-21 19:31:12 WARN  [restartedMain] org.hibernate.mapping.RootClass - HHH000038: Composite-id class does not override equals(): epams.model.entity.HtmlLangEntity
+2024-08-21 19:31:12 WARN  [restartedMain] org.hibernate.mapping.RootClass - HHH000039: Composite-id class does not override hashCode(): epams.model.entity.HtmlLangEntity
+2024-08-21 19:31:12 WARN  [restartedMain] org.hibernate.mapping.RootClass - HHH000038: Composite-id class does not override equals(): epams.model.entity.IamUserAuthEntity
+2024-08-21 19:31:12 WARN  [restartedMain] org.hibernate.mapping.RootClass - HHH000039: Composite-id class does not override hashCode(): epams.model.entity.IamUserAuthEntity
+2024-08-21 19:31:12 INFO  [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-08-21 19:31:12 INFO  [restartedMain] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-08-21 19:31:13 INFO  [restartedMain] o.s.b.a.e.web.EndpointLinksResolver - Exposing 15 endpoint(s) beneath base path '/actuator'
+2024-08-21 19:31:13 INFO  [restartedMain] o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@364cc1ee, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@1ab76981, org.springframework.security.web.context.SecurityContextHolderFilter@223d6476, org.springframework.security.web.header.HeaderWriterFilter@304b6524, org.springframework.web.filter.CorsFilter@f5dd722, org.springframework.security.web.csrf.CsrfFilter@5bd4b332, org.springframework.security.web.authentication.logout.LogoutFilter@77767551, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@3867452b, org.springframework.security.web.session.ConcurrentSessionFilter@5f0dd2e5, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@53acb586, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@34ebc145, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@3b4a6768, org.springframework.security.web.session.SessionManagementFilter@759d3605, org.springframework.security.web.access.ExceptionTranslationFilter@37fc27ef, org.springframework.security.web.access.intercept.AuthorizationFilter@5e7cfd95]
+2024-08-21 19:31:13 INFO  [restartedMain] o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2024-08-21 19:31:13 INFO  [restartedMain] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2024-08-21 19:31:13 INFO  [restartedMain] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2024-08-21 19:31:13 INFO  [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-08-21 19:31:13 INFO  [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-08-21 19:31:13 INFO  [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2024-08-21 19:31:14 INFO  [restartedMain] o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged

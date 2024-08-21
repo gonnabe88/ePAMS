@@ -287,12 +287,14 @@ select, input[type="date"] {
     border-radius: 5px;
     font-size: 1rem;
 }
-.button-group {
+
+
+.dtmRegister .button-group {
     display: flex;
     justify-content: space-between;
     margin-top: 2rem;
 }
-.btn {
+.dtmRegister .btn {
     padding: 0.5rem 1rem;
     border: none;
     border-radius: 5px;
@@ -300,18 +302,21 @@ select, input[type="date"] {
     cursor: pointer;
     transition: all 0.3s ease;
 }
-.btn-back {
+.dtmRegister .btn-back {
     background-color: #f0f0f0;
     color: #333;
 }
-.btn-submit {
+.dtmRegister .btn-submit {
     background-color: #4CAF50;
     color: white;
 }
-.btn:hover {
+.dtmRegister .btn:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
+
+
+
 /*근태신청화면 콤보*/
 
 .dtmApplPopup .title{

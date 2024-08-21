@@ -2,13 +2,16 @@
 // Disable AutoDiscover
 Dropzone.autoDiscover = false;
 
-var dropzonePreviewNode = document.querySelector('#dropzone-preview-list'); // <li class="mt-2" id="dropzone-preview-list"> 부분을 가져와서
+
+let dropzonePreviewNode = document.querySelector('#dropzone-preview-list'); // <li class="mt-2" id="dropzone-preview-list"> 부분을 가져와서
 dropzonePreviewNode.id = ''; // 중복 회피를 위해 id 없애고
-var previewTemplate = dropzonePreviewNode.parentNode.innerHTML; // 엘리먼트 전체를 저장 (템플릿)
+let previewTemplate = dropzonePreviewNode.parentNode.innerHTML; // 엘리먼트 전체를 저장 (템플릿)
 dropzonePreviewNode.parentNode.removeChild(dropzonePreviewNode); // 그리고 삭제
+
 
 // Set Dropzone Options
 Dropzone.options.myAwesomeDropzone = {
+    autoDiscover: false,
     autoProcessQueue: false,
     uploadMultiple: true,
     parallelUploads: 20,
@@ -25,4 +28,4 @@ Dropzone.options.myAwesomeDropzone = {
 }
 
 // Initialize Dropzone
-var myDropzone = new Dropzone("#my-awesome-dropzone", {url: "/store-item"});
+let myDropzone = new Dropzone("#my-awesome-dropzone", {url: "/store-item"});

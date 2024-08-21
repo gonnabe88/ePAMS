@@ -1,139 +1,126 @@
-
-@font-face {
-    font-family: "Dongle";
-    font-weight: 300;
-    font-style: light;
-    src: url(./fonts/DongleLight.woff2) format("woff2"), url(./fonts/DongleLight.woff) format("woff");
-    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD
-}
-
-@font-face {
-    font-family: "Dongle";
+.boardUpdate .badge {
     font-weight: 400;
-    font-style: normal;
-    src: url(./fonts/DongleRegular.woff2) format("woff2"), url(./fonts/DongleRegular.woff) format("woff");
-    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD
 }
 
-@font-face {
-    font-family: "Dongle";
-    font-weight: 600;
-    font-style: semi bold;
-    src: url(./fonts/DongleBold.woff2) format("woff2"), url(./fonts/DongleBold.woff) format("woff");
-    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD
+.boardUpdate .h6 {
+    width: auto;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-@font-face {
-    font-family: "Dongle";
-    font-weight: 700;
-    font-style: bold;
-    src: url(./fonts/DongleBold.woff2) format("woff2"), url(./fonts/DongleBold.woff) format("woff");
-    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD
-}
-
-@font-face {
-    font-family: "Dongle";
-    font-weight: 800;
-    font-style: bold;
-    src: url(./fonts/DongleBold.woff2) format("woff2"), url(./fonts/DongleBold.woff) format("woff");
-    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD, U+AC00-U+D7AF;
+.boardUpdate .categoryRadioBtn {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
 }
 
 
-@font-face {
-    font-family: "Nanum Gothic";
-    font-weight: 300;
-    font-style: light;
-    src: url(./fonts/NanumGothicLight.woff2) format("woff2"),url(./fonts/NanumGothicLight.woff) format("woff");
-    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD, U+AC00-U+D7AF;
+/*로그인 화면 CSS*/
+#auth {
+    height: 100vh;
+    overflow-x: hidden;
+    overflow-y: hidden
 }
 
-@font-face {
-    font-family: "Nanum Gothic";
+#auth .auth-container {
+    width: 375px;
+    height: 670px;
+}
+
+/*로그인 폼 크기 조정*/
+#auth .container-login {
+    max-width: 400px;
+    min-width: 300px;
+    width: 100%;
+}
+
+/*로그인 화면 타이틀 텍스트*/
+#auth .auth-title {
+    color: #25396f;
+    font-weight: bolder;
+    font-size: 20px;
+    font-family: Nunito;
+}
+
+/*로그인 계정 입력 시 무조건 대문자로 입력*/
+#auth .uppercase-text {
+    text-transform: uppercase;
+}
+
+/*로그인 인증방법 라디오 버튼 모음*/
+#auth .fieldset {
+    padding: 0;
+}
+
+/*로그인 인증방법 라디오 버튼 텍스트*/
+#auth .mfa-radio-text {
+    font-size: 15px;
+}
+
+#auth #auth-right {
+    height: 100%;
+    background: linear-gradient(90deg, #2d499d, #3f5491)
+}
+
+#auth #auth-left {
+    padding: 5rem
+}
+
+#auth #auth-left .auth-title {
+    font-size: 4rem;
+    margin-bottom: 1rem
+}
+
+#auth #auth-left .auth-subtitle {
+    font-size: 1.7rem;
+    line-height: 2.5rem;
+    color: #a8aebb
+}
+
+#auth #auth-left .auth-logo {
+    margin-bottom: 7rem
+}
+
+#auth #auth-left .auth-logo img {
+    height: 2rem
+}
+
+@media screen and (max-width: 1399.9px) {
+    #auth #auth-left {
+        padding: 3rem
+    }
+}
+
+@media screen and (max-width: 767px) {
+    #auth #auth-left {
+        padding: 3rem
+    }
+}
+
+@media screen and (max-width: 576px) {
+    #auth #auth-left {
+        padding: 3rem 3rem
+    }
+}
+
+
+/* 게시판 상세화면 */
+.boardDetail .card {
+    min-height: 400px;
+}
+
+.boardDetail .badge {
+    --bs-badge-padding-x:.35rem;
     font-weight: 400;
-    font-style: normal;
-    src: url(./fonts/NanumGothic.woff2) format("woff2"),url(./fonts/NanumGothic.woff) format("woff");
-    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD, U+AC00-U+D7AF;
 }
 
-@font-face {
-    font-family: "Nanum Gothic";
-    font-weight: 600;
-    font-style: Semi Bold;
-    src: url(./fonts/NanumGothicBold.woff2) format("woff2"),url(./fonts/NanumGothicBold.woff) format("woff");
-    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD, U+AC00-U+D7AF;
+.boardDetail .h6 {
+    width: auto;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
-
-@font-face {
-    font-family: "Nanum Gothic";
-    font-weight: 700;
-    font-style: Bold;
-    src: url(./fonts/NanumGothicExtraBold.woff2) format("woff2"),url(./fonts/NanumGothicExtraBold.woff) format("woff");
-    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD, U+AC00-U+D7AF;
-}
-
-@font-face {
-    font-family: "Nanum Gothic";
-    font-weight: 800;
-    font-style: Bold;
-    src: url(./fonts/NanumGothicExtraBold.woff2) format("woff2"),url(./fonts/NanumGothicExtraBold.woff) format("woff");
-    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD, U+AC00-U+D7AF;
-}
-
-@font-face {
-    font-family: Nunito;
-    font-style: normal;
-    font-display: swap;
-    font-weight: 300;
-    src: url(./fonts/nunito-latin-300-normal.woff2) format("woff2"), url(./fonts/nunito-latin-300-normal.woff) format("woff");
-    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD, U+AC00-U+D7AF;
-}
-
-@font-face {
-    font-family: Nunito;
-    font-style: normal;
-    font-display: swap;
-    font-weight: 300;
-    src: url(./fonts/nunito-latin-300-normal.woff2) format("woff2"), url(./fonts/nunito-latin-300-normal.woff) format("woff");
-    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD, U+AC00-U+D7AF;
-}
-
-@font-face {
-    font-family: Nunito;
-    font-style: normal;
-    font-display: swap;
-    font-weight: 400;
-    src: url(./fonts/nunito-latin-400-normal.woff2) format("woff2"), url(./fonts/nunito-latin-400-normal.woff) format("woff");
-    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD, U+AC00-U+D7AF;
-}
-
-@font-face {
-    font-family: Nunito;
-    font-style: normal;
-    font-display: swap;
-    font-weight: 600;
-    src: url(./fonts/nunito-latin-600-normal.woff2) format("woff2"), url(./fonts/nunito-latin-600-normal.woff) format("woff");
-    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD, U+AC00-U+D7AF;
-}
-
-@font-face {
-    font-family: Nunito;
-    font-style: normal;
-    font-display: swap;
-    font-weight: 700;
-    src: url(./fonts/nunito-latin-700-normal.woff2) format("woff2"), url(./fonts/nunito-latin-700-normal.woff) format("woff");
-    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD, U+AC00-U+D7AF;
-}
-
-@font-face {
-    font-family: Nunito;
-    font-style: normal;
-    font-display: swap;
-    font-weight: 800;
-    src: url(./fonts/nunito-latin-800-normal.woff2) format("woff2"), url(./fonts/nunito-latin-800-normal.woff) format("woff");
-    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD, U+AC00-U+D7AF;
-}
-
 
 /*근태신청 캘린더 시작*/
 .fc .container {
@@ -142,7 +129,7 @@
     padding: 2rem;
 }
 
-#calendar {
+.fc #calendar {
     background-color: #fff;
     border-radius: 15px;
     box-shadow: 0 10px 20px rgba(0,0,0,0.1);
@@ -442,7 +429,7 @@ select, input[type="date"] {
 
 /*상단 navbar 타이틀 텍스트 스타일*/
 .navbar .auth-title{
-    font-family: Nunito, serif;
+    font-family: Nunito;
     font-size: 2.0rem;
 }
 
@@ -525,31 +512,6 @@ select, input[type="date"] {
     background-color: #f2f7ff;
 }
 
-.auth-container {
-    width: 375px;
-    height: 670px;
-}
-
-/*로그인 폼 크기 조정*/
-.container-login {
-    max-width: 400px;
-    min-width: 300px;
-    width: 100%;
-}
-
-/*로그인 화면 타이틀 텍스트*/
-.auth-title {
-    color: #25396f;
-    font-weight: bolder;
-    font-size: 20px;
-    font-family: Nunito, serif;
-}
-
-/*로그인 계정 입력 시 무조건 대문자로 입력*/
-.uppercase-text {
-    text-transform: uppercase;
-}
-
 
 .small-text {
     font-size: 15px;
@@ -559,13 +521,6 @@ select, input[type="date"] {
     --bs-badge-padding-x: 0.85rem;
 }
 
-.fieldset {
-    padding: 0;
-}
-
-.mfa-radio-text {
-    font-size: 15px;
-}
 
 /* 반응형 웹 우측 여백 제거*/
 html, body {

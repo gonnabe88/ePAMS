@@ -16,14 +16,14 @@
 	<link rel="apple-touch-icon" href="/images/kdb/epams_r_512.png" />
 	<link rel="manifest" href="manifest.webmanifest" />
 
-	<link rel="stylesheet" href="/css/auth.css">
-	<link rel="stylesheet" href="/css/bootstrap.css">
-	<link rel="stylesheet" href="/css/app-custom.css">
+	<link rel="stylesheet" href="/css/kdb-font.css">
+	<link rel="stylesheet" href="/extensions/bootstrap/bootstrap.css">
+	<link rel="stylesheet" href="/css/kdb-custom.css">
 	<link rel="stylesheet" href="/extensions/bootstrapicons/bootstrap-icons.min.css">
 </head>
 
 <body>
-	<div id="auth">
+	<div class="login" id="auth">
 		<div class="row h-100">
 			<div class="col-lg-5 col-12 align-self-center">
 				<div id="auth-left" class="d-flex justify-content-center">
@@ -40,7 +40,7 @@
 							<div class="d-flex align-items-center justify-content-end me-2 mb-2">
 								<div class="form-check form-switch d-flex align-items-center">
 									<input class="form-check-input me-2" type="checkbox" role="switch" id="flexSwitchCheckChecked" th:checked="${isChecked}">
-									<label class="form-check-label" id="switchLabel" for="flexSwitchCheckChecked">
+									<label class="form-check-label m-0" id="switchLabel" for="flexSwitchCheckChecked">
 										<h6 class="m-0">간편인증</h6>
 									</label>
 								</div>
@@ -61,7 +61,8 @@
 										</div>
 									</div>
 									<div class="form-check form-check-lg d-flex align-items-end">
-										<input class="form-check-input me-2 mt-1" type="checkbox" value="checked" id="flexCheckDefault" name="remember"> <label class="form-check-label text-gray-600" for="flexCheckDefault"> ID 기억하기 </label>
+										<input class="form-check-input me-2 mt-1" type="checkbox" value="checked" id="flexCheckDefault" name="remember">
+										<label class="form-check-label m-0 text-gray-600" for="flexCheckDefault"> ID 기억하기 </label>
 									</div>
 								</div>
 							</div>

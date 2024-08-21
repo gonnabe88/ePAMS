@@ -129,7 +129,7 @@ public class DtmController<S extends Session> {
 
     @GetMapping("/DtmRegister")
     public String dtmRegister(
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
+            @RequestParam("date") String date,
             Model model
     ) {
         final String VIEW = "dtm/DtmRegister";

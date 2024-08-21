@@ -10,7 +10,7 @@
 
 <body>
 <div layout:fragment="contents">
-    <div class="container">
+    <div class="dtmRegister container">
         <h1 class="page-title">근태 신청</h1>
         <form th:action="@{/dtm/register}" method="post">
             <div class="form-group">
@@ -34,7 +34,7 @@
                 </div>
             </div>
             <div class="button-group">
-                <button type="button" class="btn btn-back" onclick="window.history.length > 1 ? history.back() : window.location.href='default-page.html';">돌아가기</button>
+                <button type="button" class="btn btn-back">돌아가기</button>
                 <button type="submit" class="btn btn-submit">신청하기</button>
             </div>
         </form>

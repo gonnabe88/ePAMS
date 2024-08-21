@@ -13830,7 +13830,8 @@
       key: "appendToForeignObject",
       value: function appendToForeignObject() {
         var gl = this.w.globals;
-        gl.dom.elLegendForeign.appendChild(this.getLegendStyles());
+        //gl.dom.elLegendForeign.appendChild(this.getLegendStyles()); 취약점 조치
+        gl.dom.elLegendForeign.classList.add('foreign-legend-style');
       }
     }, {
       key: "toggleDataSeries",
@@ -32683,10 +32684,12 @@
 
                 if (inShadowRoot) {
                   // We are in Shadow DOM, add to shadow root
-                  rootNode.prepend(_this.css);
+                  //rootNode.prepend(_this.css); 취약점 조치
+                  rootNode.classList.add('shadow-style');
                 } else {
                   // Add to <head> of element's document
-                  doc.head.appendChild(_this.css);
+                  //doc.head.appendChild(_this.css); 취약점 조치
+                  doc.head.classList.add('head-style');
                 }
               }
             }

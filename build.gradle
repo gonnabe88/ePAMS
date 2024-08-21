@@ -3,7 +3,6 @@ plugins {
     id 'org.springframework.boot' version '3.2.5'
     id 'io.spring.dependency-management' version '1.1.4'
     id 'org.cyclonedx.bom' version '1.7.2'
-    //id 'war'
 }
 
 group = 'epams'
@@ -61,11 +60,6 @@ dependencies {
     // CVE-2024-38809 조치: spring-web을 최신 버전으로 명시적 업그레이드
     // implementation 'org.springframework:spring-web:6.1.7'
     implementation 'org.springframework:spring-web:6.1.12'
-
-    // CVE-2018-14335 조치: h2 데이터베이스를 최신 버전으로 업그레이드
-    // runtimeOnly 'com.h2database:h2:2.2.220'
-    // runtimeOnly 'com.h2database:h2:2.3.232'
-    // 업그레이드를 해도 잔존 취약점이 있어서 그냥 삭제
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'

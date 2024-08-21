@@ -1,6 +1,6 @@
 <configuration>
-    <property name="LOG_PATH" value="${kdb.logpath}" />
-    <property name="LOG_FILE" value="${LOG_PATH}/${kdb.logfile}" />
+    <springProperty name="LOG_PATH" source="kdb.logpath" />
+    <springProperty name="LOG_FILE" source="kdb.logfile" />
 
     <!-- 콘솔에 출력할 로그 설정 -->
     <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
@@ -11,7 +11,7 @@
 
     <!-- 파일에 로그를 기록할 설정 -->
     <appender name="File" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${LOG_FILE}</file>
+        <file>${LOG_PATH}/${LOG_FILE}</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <fileNamePattern>${LOG_PATH}/myapp.%d{yyyy-MM-dd}.log</fileNamePattern>
             <maxHistory>30</maxHistory>

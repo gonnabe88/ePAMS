@@ -118,7 +118,7 @@ public class SecurityConfig{
 		        authorizeRequests
 		            .requestMatchers(
 		                "/h2-console/**",
-		                "/actuator/prometheus",
+		                "/actuator/prometheus", "/metrics/**",
 		                "/manifest.webmanifest", "/login/**", "/logout", "/register",
 		                "/api/**", 
 		                "/css/**",

@@ -15,13 +15,15 @@ management:
         #include: prometheus
 
   endpoint:
+    prometheus:
+      enabled: true
     health:
       show-details: always
 
 # spring
 spring:
   profiles:
-    active: local # 기본 활성 프로파일을 local로 설정 (운영: prod / 개발 : dev / 로컬 : local)
+    active: local # 기본 프로파일을 local로 설정하지만 환경변수 설정에 따라 바뀜 (운영: prod / 개발 : dev / 로컬 : local)
 
   application:
     name: ePAMS

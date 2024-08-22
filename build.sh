@@ -1,6 +1,6 @@
 #!/bin/bash
 
-BUILD_LOG_FILE="/log/build_shell.log"
+BUILD_LOG_FILE="/log/ehr/build_shell.log"
 
 # 프로젝트 루트 디렉토리로 이동
 cd "$(dirname "$0")"

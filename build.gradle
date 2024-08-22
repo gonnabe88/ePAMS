@@ -30,9 +30,6 @@ repositories {
 dependencies {
     providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 
-
-    implementation 'com.github.jnr:jnr-unixsocket:0.38.9'
-
     // reflections (메소드 수 카운트)
     implementation 'org.reflections:reflections:0.10.2'
 

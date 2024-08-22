@@ -3,18 +3,18 @@ Description=ePAMS Spring Boot Application
 After=network.target
 
 [Service]
+Type=simple
 User=kdbadmin
 Group=kdbadmin
-EnvironmentFile=/home/kdbadmin/ePAMS.env
-ExecStart=/usr/bin/java -Xms1G -Xmx2G -XX:+UseG1GC -XX:+UseStringDeduplication -Djava.security.egd=file:/dev/./urandom -jar /opt/ePAMS/build/libs/ePAMS-0.0.2-SNAPSHOT.jar
-WorkingDirectory=/opt/ePAMS/
+EnvironmentFile=/sw/ehr/ePAMS.env
+ExecStart=java -Xms1G -Xmx2G -XX:+UseG1GC -XX:+UseStringDeduplication -Djava.security.egd=file:/dev/./urandom -jar /sw/ehr/ePAMS/build/libs/ePAMS-1.0.0-RELEASE.jar
+WorkingDirectory=/sw/ehr/ePAMS/
 SuccessExitStatus=143
 StandardOutput=journal
 StandardError=journal
 Restart=on-failure
 RestartSec=10
 TimeoutSec=300
-WatchdogSec=60
 
 [Install]
 WantedBy=multi-user.target

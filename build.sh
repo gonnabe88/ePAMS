@@ -12,7 +12,7 @@ record_time() {
 }
 
 # 환경 변수 설정 (cron으로 실행할 경우에만 필요)
-export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-17.0.11.0.9-2.el8.x86_64
+export JAVA_HOME=/sw/ehr/java-17-openjdk
 export PATH=$JAVA_HOME/bin:$PATH
 export GRADLE_USER_HOME=$(pwd)/.gradle
 
@@ -47,7 +47,7 @@ if [ $? -eq 0 ]; then
     pkill -f 'ePAMS' || true  # 프로세스 종료 시 실패해도 계속 진행
 
     # JAR 파일 위치
-    JAR_FILE=$(find build/libs -name "*-SNAPSHOT.jar" -o -name "*.jar" | head -n 1)
+    JAR_FILE=$(find build/libs -name "*-RELEASE.jar" -o -name "*.jar" | head -n 1)
     if [ -z "$JAR_FILE" ]; then
         record_time "JAR 파일을 찾을 수 없습니다. 빌드가 성공했는지 확인하세요."
         exit 1

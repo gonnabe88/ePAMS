@@ -1,7 +1,9 @@
+# 로컬 개발용 설정
+
 kdb:
   filepath: C:/epams/ # 첨부파일, 이미지 등 저장할 filesystem 경로
   logpath: C:/epams/ # 로그 파일 저장 경로
-  logfile: epams_logback.log
+  logfile: ePAMS_logback.log
 
 # server port
 server:

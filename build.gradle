@@ -1,122 +1,187 @@
+// Gradle 플러그인 설정
 plugins {
+    // Java 플러그인 추가
     id 'java'
+
+    // Spring Boot 플러그인 추가, 버전 3.2.5 사용
     id 'org.springframework.boot' version '3.2.5'
+
+    // Spring의 의존성 관리 플러그인 추가, 버전 1.1.4 사용
     id 'io.spring.dependency-management' version '1.1.4'
+
+    // CycloneDX BOM 플러그인 추가, 버전 1.7.2 사용 (SBOM json 명세서 생성 플러그인)
     id 'org.cyclonedx.bom' version '1.7.2'
 }
 
+// 프로젝트 그룹 및 버전 설정 (jar 파일명)
 group = 'epams'
 version = '1.0.0-RELEASE'
 
+// Java 버전 설정, 프로젝트 호환성을 Java 17로 설정
 java {
     sourceCompatibility = '17'
 }
 
+// 의존성 구성 설정
 configurations {
+    // 컴파일 시만 필요한 의존성
     compileOnly {
         extendsFrom annotationProcessor
     }
+
+    // 개발 전용 의존성
     developmentOnly
+
+    // 런타임에만 필요한 의존성
     providedRuntime
+
+    // 런타임 클래스패스에 제공된 런타임 의존성 포함
     runtimeClasspath {
         extendsFrom providedRuntime
     }
 }
 
+// 의존성 저장소 설정, Maven Central 사용
 repositories {
     mavenCentral()
 }
 
+// 프로젝트 의존성 설정
 dependencies {
+    // Spring Boot에서 제공하는 Tomcat 스타터, 제공된 런타임으로 설정
     providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 
-    // reflections (메소드 수 카운트)
+    // Reflection 라이브러리, 메소드 수 카운트 용
     implementation 'org.reflections:reflections:0.10.2'
 
-    // springdoc
+    // SpringDoc OpenAPI 스타터, Spring MVC와 UI 통합
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0'
 
-    // jUnit
+    // JUnit 5 API, 단위 테스트용
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.0'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.0'
-    testImplementation 'org.junit.platform:junit-platform-suite-engine:1.10.0' // JUnit Platform Suite 추가
 
-    // webauthn
+    // JUnit 5 엔진, 테스트 실행용
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.0'
+
+    // JUnit Platform Suite 엔진, 스위트 테스트 추가
+    testImplementation 'org.junit.platform:junit-platform-suite-engine:1.10.0'
+
+    // WebAuthn 서버 코어 라이브러리
     implementation 'com.yubico:webauthn-server-core:2.5.2'
 
-    // Session DBMS 관리
+    // Spring Session DBMS 관리, 컴파일 전용
     compileOnly 'org.springframework.session:spring-session-jdbc:3.2.2'
+
+    // Spring Session Core, 기본 세션 관리 기능
     implementation 'org.springframework.session:spring-session-core'
+
+    // Spring Security 스타터, 보안 기능 추가
     implementation 'org.springframework.boot:spring-boot-starter-security'
+
+    // Thymeleaf 템플릿 엔진 스타터
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+
+    // Spring Web 스타터, 웹 애플리케이션 기능 추가
     implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    // Spring Validation 스타터, 유효성 검사 추가
     implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    // MyBatis Spring Boot 스타터
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
 
-    // CVE-2023-6378, CVE-2023-6481 조치 : logback을 최신 버전으로 명시적 업그레이드
+    // Logback 클래식 라이브러리, 로깅 프레임워크 (보안 취약점 해결)
     implementation 'ch.qos.logback:logback-classic:1.5.6'
     implementation 'ch.qos.logback:logback-core:1.5.6'
 
-    // CVE-2024-38809 조치: spring-web을 최신 버전으로 명시적 업그레이드
-    // implementation 'org.springframework:spring-web:6.1.7'
+    // Spring Web 최신 버전 (보안 취약점 해결)
     implementation 'org.springframework:spring-web:6.1.12'
 
+    // Spring Boot 테스트 스타터, 통합 테스트용
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    // Spring Security 테스트 라이브러리
     testImplementation 'org.springframework.security:spring-security-test'
+
+    // MyBatis Spring Boot 테스트 라이브러리
     testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.3'
 
+    // Spring Boot DevTools, 개발 시 유용한 도구
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
+    // Thymeleaf 보안 기능 추가 라이브러리
     implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
+
+    // Thymeleaf 레이아웃 다이얼렉트
     implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
 
+    // Lombok 라이브러리, 코드의 boilerplate 줄이기
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
 
+    // MySQL JDBC 커넥터
     runtimeOnly 'com.mysql:mysql-connector-j'
+
+    // Oracle JDBC 드라이버
     runtimeOnly 'com.oracle.database.jdbc:ojdbc11'
 
+    // Spring Boot Actuator, 애플리케이션 모니터링 및 관리 기능 추가
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+    // Micrometer Prometheus 레지스트리, Prometheus와 통합
     implementation 'io.micrometer:micrometer-registry-prometheus'
+
+    // Micrometer 코어 라이브러리
     implementation 'io.micrometer:micrometer-core'
 
+    // Spring Data JPA, JPA 기반 데이터 접근
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    // Jackson Databind, JSON 직렬화/역직렬화
     implementation 'com.fasterxml.jackson.core:jackson-databind'
+
+    // OWASP Encoder 라이브러리, 인코딩 관련 보안 라이브러리
     implementation 'org.owasp.encoder:encoder:1.2.3'
 }
 
+// CycloneDX BOM 태스크 설정 (SBOM json 생성)
 tasks.cyclonedxBom {
-    includeConfigs = ["runtimeClasspath"]
-    projectType = "application"
-    schemaVersion = "1.5"
-    destination = file("build/reports")
-    outputName = "bom"
-    outputFormat = "json"
-    includeBomSerialNumber = false
-    componentVersion = "2.0.0"
+    includeConfigs = ["runtimeClasspath"] // BOM에 포함할 구성 설정
+    projectType = "application" // 프로젝트 타입 설정
+    schemaVersion = "1.5" // BOM 스키마 버전
+    destination = file("build/reports") // BOM 파일 저장 위치
+    outputName = "bom" // BOM 파일 이름
+    outputFormat = "json" // BOM 파일 포맷
+    includeBomSerialNumber = false // BOM 시리얼 번호 포함 여부
+    componentVersion = "2.0.0" // BOM 구성 요소 버전
 }
 
+// Java 컴파일러 설정
 tasks.withType(JavaCompile) {
-    options.compilerArgs << "-Xlint:unchecked"
+    options.compilerArgs << "-Xlint:unchecked" // 경고 메시지 출력 설정
 }
 
+// Spring Boot JAR 태스크 활성화 (내장 Tomcat 사용)
 tasks.named('bootJar') {
     enabled = true
 }
 
+// Spring Boot WAR 태스크는 주석 처리됨, 필요 시 활성화 가능 (Jeus 등의 WAS에 배포 시 WAR 파일로 빌드)
 //tasks.named('bootWar') {
 //    enabled = true
 //}
 
+// Spring Boot 설정
 springBoot {
-    mainClass = 'epams.EPamsApplication'
+    mainClass = 'epams.EPamsApplication' // 애플리케이션의 메인 클래스 설정
 }
 
+// `bootRun` 태스크 설정, 프로덕션 프로파일 사용 시 devtools 제외
 bootRun {
     if (project.hasProperty('spring.profiles.active') && project.property('spring.profiles.active') == 'prod') {
         configurations {
             runtimeClasspath {
-                exclude group: 'org.springframework.boot', module: 'spring-boot-devtools'
+                exclude group: 'org.springframework.boot', module: 'spring-boot-devtools' // devtools 제외
             }
         }
     }

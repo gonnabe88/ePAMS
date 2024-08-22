@@ -1,9 +1,9 @@
-# 운영 서버용 설정 (java -jar epams.jar --spring.profiles.active=prod)
+# 개발 서버용 설정 (java -jar epams.jar --spring.profiles.active=dev)
 
 kdb:
-  filepath: /epams/ # 첨부파일, 이미지 등 저장할 filesystem 경로
-  logpath: /epams/ # 로그 파일 저장 경로
-  logfile: epams_logback.log
+  filepath: /dat/ehr/attachments # 첨부파일, 이미지 등 저장할 filesystem 경로
+  logpath: /log/ehr/ # 로그 파일 저장 경로
+  logfile: ePAMS_logback.log
 
 # server port
 server:
@@ -21,17 +21,17 @@ server:
         secure: true # https only allowed
         sameSite: strict
   tomcat:
-    max-connections: 20000 # 총 최대 연결 수를 늘림
+    max-connections: 20000 # 총 최대 연결 수
     threads:
-      max: 1000 # 최대 스레드 수를 늘림 (동시 사용자 수에 따라 조정)
-      min-spare: 50 # 최소 유휴 스레드 수를 늘림 (예상되는 동시 사용자 수에 따라 조정)
-    connection-timeout: 30000 # 연결 타임아웃을 30초로 증가 (지연 시간 증가에 대비)
+      max: 1000 # 최대 스레드 수 (동시 사용자 수에 따라 조정)
+      min-spare: 50 # 최소 유휴 스레드 수 (예상되는 동시 사용자 수에 따라 조정)
+    connection-timeout: 30000 # 연결 타임아웃을 30초 (지연 시간 증가에 대비)
     accept-count: 2000 # 대기 큐의 최대 크기 (최대 동시 사용자 수에 맞춰 조정)
-    keep-alive-timeout: 30000 # Keep-alive 타임아웃을 30초로 증가 (지속적인 연결 유지)
-    max-http-form-post-size: 10485760 # 최대 POST 데이터 크기 10MB로 증가 (필요에 따라 조정)
-    max-swallow-size: 10485760 # 최대 Swallow 데이터 크기 10MB로 증가
-    max-http-response-header-size: 16384 # 최대 HTTP 응답 헤더 크기 16KB로 증가 (큰 헤더 응답 처리)
-    max-keep-alive-requests: 200 # Keep-alive 요청 최대 수 200으로 증가
+    keep-alive-timeout: 30000 # Keep-alive 타임아웃을 30초 (지속적인 연결 유지)
+    max-http-form-post-size: 10485760 # 최대 POST 데이터 크기 10MB (필요에 따라 조정)
+    max-swallow-size: 10485760 # 최대 Swallow 데이터 크기 10MB
+    max-http-response-header-size: 16384 # 최대 HTTP 응답 헤더 크기 16KB (큰 헤더 응답 처리)
+    max-keep-alive-requests: 200 # Keep-alive 요청 최대 수 200
     processor-cache: 1000 # 프로세서 캐시 크기 조정 (트래픽에 따라 조정)
     resource:
       allow-caching: true # 자원 캐싱 허용

@@ -65,7 +65,7 @@ if [ $? -eq 0 ]; then
            -Xmx2G \
            -XX:+UseG1GC \
            -XX:+UseStringDeduplication \
-           -jar "$JAR_FILE"
+           -jar "$JAR_FILE" > "$BUILD_LOG_FILE" 2>&1 &  # JAR 파일 실행 및 로그 파일에 출력 리디렉션
 
     # [삭제] 성공 메시지
     record_time "배포 및 실행 성공"

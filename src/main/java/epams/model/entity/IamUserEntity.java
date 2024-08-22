@@ -18,7 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-@Table(name = "THURXE_CUSRLM")
+@Table(name = "THURXE_CUSRLI")
 @Comment("인사_외부근태 공통사용자기본")
 public class IamUserEntity extends BaseEntity {
 

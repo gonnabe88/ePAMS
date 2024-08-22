@@ -18,7 +18,7 @@ import org.hibernate.annotations.Comment;
 @NoArgsConstructor
 @Getter
 @Setter
-@Table(name = "THURXE_CUSATM")
+@Table(name = "THURXE_CUSATI")
 @Comment("인사_외부근태 공통사용자자격등급기본")
 public class IamUserAuthEntity extends BaseEntity {
 

@@ -18,7 +18,7 @@ import org.hibernate.annotations.Comment;
 @NoArgsConstructor
 @Getter
 @Setter
-@Table(name = "THURXE_CORGLM")
+@Table(name = "THURXE_CORGLI")
 @Comment("인사_외부근태 공통조직기본")
 public class IamOrgEntity extends BaseEntity {
 

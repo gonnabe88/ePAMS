@@ -62,8 +62,8 @@ if [ $? -eq 0 ]; then
     record_time "JAR 파일을 실행하는 중..."
         nohup java \
            -Djava.security.egd=file:/dev/./urandom \
-           -Xms2G \
-           -Xmx4G \
+           -Xms1G \
+           -Xmx2G \
            -XX:+UseG1GC \
            -XX:+UseStringDeduplication \
            -jar "$JAR_FILE" > "$WAS_LOG_FILE" 2>&1 &

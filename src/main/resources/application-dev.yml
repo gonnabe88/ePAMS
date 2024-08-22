@@ -1,0 +1,81 @@
+# 운영 서버용 설정 (java -jar epams.jar --spring.profiles.active=prod)
+
+kdb:
+  filepath: /epams/ # 첨부파일, 이미지 등 저장할 filesystem 경로
+  logpath: /epams/ # 로그 파일 저장 경로
+  logfile: epams_logback.log
+
+# server port
+server:
+  port: 8080
+  servlet:
+    session:
+      timeout: 15m
+      persistent: true
+      tracking-modes: cookie
+      cookie:
+        domain: depams.kdb.co.kr
+        http-only: true
+        path: /
+        max-age: -1 # infinite
+        secure: true # https only allowed
+        sameSite: strict
+  tomcat:
+    max-connections: 20000 # 총 최대 연결 수를 늘림
+    threads:
+      max: 1000 # 최대 스레드 수를 늘림 (동시 사용자 수에 따라 조정)
+      min-spare: 50 # 최소 유휴 스레드 수를 늘림 (예상되는 동시 사용자 수에 따라 조정)
+    connection-timeout: 30000 # 연결 타임아웃을 30초로 증가 (지연 시간 증가에 대비)
+    accept-count: 2000 # 대기 큐의 최대 크기 (최대 동시 사용자 수에 맞춰 조정)
+    keep-alive-timeout: 30000 # Keep-alive 타임아웃을 30초로 증가 (지속적인 연결 유지)
+    max-http-form-post-size: 10485760 # 최대 POST 데이터 크기 10MB로 증가 (필요에 따라 조정)
+    max-swallow-size: 10485760 # 최대 Swallow 데이터 크기 10MB로 증가
+    max-http-response-header-size: 16384 # 최대 HTTP 응답 헤더 크기 16KB로 증가 (큰 헤더 응답 처리)
+    max-keep-alive-requests: 200 # Keep-alive 요청 최대 수 200으로 증가
+    processor-cache: 1000 # 프로세서 캐시 크기 조정 (트래픽에 따라 조정)
+    resource:
+      allow-caching: true # 자원 캐싱 허용
+      cache-ttl: 60000 # 캐시 TTL을 60초로 설정
+    uri-encoding: UTF-8 # URI 인코딩 설정
+    additional-tld-skip-patterns: # 추가 TLD 스킵 패턴 설정
+    background-processor-delay: 10 # 백그라운드 프로세서 지연 시간 설정
+    basedir: /tmp/tomcat # 기본 디렉토리 설정
+    mbeanregistry:
+      enabled: true # MBean 레지스트리 활성화
+    redirect-context-root: true # 컨텍스트 루트 리다이렉트 활성화
+    relaxed-path-chars:  # 경로 문자 제한 풀기
+    use-relative-redirects: true # 상대 리다이렉트 사용
+    relaxed-query-chars:  # 쿼리 문자 제한 풀기
+
+
+# webauthn & passkey
+authn:
+  display: ePAMS
+  hostname: ${server.servlet.session.cookie.domain}
+  origin: https://${server.servlet.session.cookie.domain}
+
+# spring
+spring:  
+  datasource:
+    driver-class-name: oracle.jdbc.OracleDriver
+    url: jdbc:oracle:thin:@192.168.0.10:1521:ORCLCDB
+    username: EHR
+    password: ${DB_PASSWORD}  # 시스템 환경변수 kdb1234! 세팅
+    hikari:
+      connection-timeout: 60000
+      idle-timeout: 300000
+      max-lifetime: 1800000
+      maximum-pool-size: 10
+
+  # 나중에 실제로 운영에 배포할 떄는 꼭 지울것
+  jpa:
+    open-in-view: true
+    hibernate:
+      ddl-auto: update
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    show-sql: false
+    properties:
+      dialect: org.hibernate.dialect.MySQL8InnoDBDialect
+      hibernate:
+        "[format_sql]": true

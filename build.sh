@@ -40,35 +40,6 @@ record_time "프로젝트를 빌드하는 중..."
 # 결과 확인
 if [ $? -eq 0 ]; then
     record_time "빌드 성공"
-
-    # [삭제] 기존 프로세스 종료
-    record_time "기존 ePAMS 프로세스 종료 중..."
-    pkill -f 'ePAMS' || true  # 프로세스 종료 시 실패해도 계속 진행
-
-    # [삭제] JAR 파일 위치
-    JAR_FILE=$(find build/libs -name "*-RELEASE.jar" -o -name "*.jar" | head -n 1)
-    if [ -z "$JAR_FILE" ]; then
-        record_time "JAR 파일을 찾을 수 없습니다. 빌드가 성공했는지 확인하세요."
-        exit 1
-    fi
-
-    # [삭제] JAR 파일 실행
-    # Java 난수 생성 시 빠르고 효율적인 /dev/urandom 사용하도록 설정
-    # JVM 초기 힙 메모리 크기 2GB
-    # JVM 최대 힙 메모리 크기 4GB
-    # G1 가비지 컬렉터 사용
-    # 문자열 중복 제거 기능 활성화 (메모리 사용량 감소)
-    record_time "JAR 파일을 실행하는 중..."
-        nohup java \
-           -Djava.security.egd=file:/dev/./urandom \
-           -Xms1G \
-           -Xmx2G \
-           -XX:+UseG1GC \
-           -XX:+UseStringDeduplication \
-           -jar "$JAR_FILE" > "$BUILD_LOG_FILE" 2>&1 &  # JAR 파일 실행 및 로그 파일에 출력 리디렉션
-
-    # [삭제] 성공 메시지
-    record_time "배포 및 실행 성공"
 else
     record_time "빌드 중 오류 발생"
     exit 1

@@ -71,7 +71,6 @@ public class IamUserVO extends BaseEntity {
      */
     private String positionCode;
 
-
     /**
      * @author 140024
      * @implNote 직위코드명
@@ -98,14 +97,14 @@ public class IamUserVO extends BaseEntity {
      * @implNote 내선번호
      * @since 2024-08-19
      */
-    private String InlineNumber;
+    private String inlineNumber;
 
     /**
      * @author 140024
      * @implNote 연락처전화번호
      * @since 2024-08-19
      */
-    private String PhoneNumber;
+    private String phoneNumber;
 
     /**
      * @author 140024

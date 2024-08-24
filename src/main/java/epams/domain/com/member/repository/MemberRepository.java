@@ -58,7 +58,7 @@ public class MemberRepository {
      * @since 2024-06-09
      */
     public List<TeamSearchDTO> findAllTeam() {
-        return sql.selectList("IamUser.findAllTeam");
+        return sql.selectList("IamUser.findAllMember");
     }
 
     /**

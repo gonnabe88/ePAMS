@@ -44,12 +44,12 @@ public class IndexRestController {
     @GetMapping("/getDeptList")
     public ResponseEntity<Map<String, Object>> getDeptAndTeamLists() {
         // 부서와 팀 목록을 가져옴
-        final List<DeptSearchDTO> deptDtos = memberService.findAllDept();
+        //final List<DeptSearchDTO> deptDtos = memberService.findAllDept();
         final List<TeamSearchDTO> teamDtos = memberService.findAllTeam();
 
         // Map을 생성하여 두 리스트를 담음
         Map<String, Object> response = new ConcurrentHashMap<>();
-        response.put("deptList", deptDtos);
+        //response.put("deptList", deptDtos);
         response.put("teamList", teamDtos);
 
         // Map을 응답으로 반환

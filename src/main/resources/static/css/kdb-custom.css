@@ -1,3 +1,43 @@
+.awesomplete ul {
+    max-height: 300px; /* 드롭다운 목록의 최대 높이 설정 */
+    overflow-y: auto; /* 수직 스크롤바 추가 */
+    overflow-x: hidden; /* 수평 스크롤바 숨김 */
+    border: 1px solid #ddd; /* 목록 테두리 추가 */
+    padding: 0; /* 기본 패딩 제거 */
+    margin: 0; /* 기본 마진 제거 */
+    list-style: none; /* 기본 목록 스타일 제거 */
+}
+
+.searchItemHead {
+    font-size: 1.0rem;
+    font-family: "Nanum Gothic";
+    font-weight: 700;
+}
+
+.searchItemBody {
+    font-size: 0.8rem;
+    font-family: "Nanum Gothic";
+    font-weight: 400;
+}
+
+.searchItemFooter {
+    font-size: 0.8rem;
+    font-family: "Nanum Gothic";
+    font-weight: 400;
+}
+
+mark {
+    background-color: yellow; /* 하이라이트 색상 */
+    font-weight: bold; /* 하이라이트 글꼴 굵게 */
+}
+
+.awesomplete > input {
+    height: 38px;
+    border: 1px solid #dce7f1;
+
+}
+
+
 .boardUpdate .badge {
     font-weight: 400;
 }

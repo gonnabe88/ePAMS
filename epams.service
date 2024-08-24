@@ -6,9 +6,9 @@ After=network.target
 Type=simple
 User=kdbadmin
 Group=kdbadmin
-EnvironmentFile=/sw/ehr/ePAMS.env
-ExecStart=java -Xms1G -Xmx2G -XX:+UseG1GC -XX:+UseStringDeduplication -Djava.security.egd=file:/dev/./urandom -jar /sw/ehr/ePAMS/build/libs/ePAMS-1.0.0-RELEASE.jar
-WorkingDirectory=/sw/ehr/ePAMS/
+EnvironmentFile=/app/ehr/ePAMS.env
+ExecStart=java -Xms1G -Xmx2G -XX:+UseG1GC -XX:+UseStringDeduplication -Djava.security.egd=file:/dev/./urandom -jar /app/ehr/ePAMS/build/libs/ePAMS-1.0.0-RELEASE.jar
+WorkingDirectory=/app/ehr/ePAMS/
 SuccessExitStatus=143
 StandardOutput=journal
 StandardError=journal

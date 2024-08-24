@@ -30,25 +30,54 @@ const scrollToDiv = () => {
 
 // 직원 검색 시 자동완성을 위한 데이터 가져오기
 $(document).ready(() => {
-    const input = $("#searchMember").get(0);
-    const awesomplete = new Awesomplete(input, {
-        minChars: 1,
-        //maxItems: 5,
-        autoFirst: true,
-        tabSelect: true,
+
+    $('#searchMember').select2({
+        placeholder: 'Select an option',
+        minimumInputLength: 2,
+        allowClear: true
     });
+
     $.ajax({
-        type: "get",
-        url: "api/deptlist",
+        url: "api/index/getDeptList",
+        method: 'GET',
         dataType: "json",
         success: function(data) {
-            // Assuming data is an object with a 'realname' property
-            awesomplete.list = data.response.map(item => item.realname);
+            const $select = $('#searchMember');
+            $select.empty(); // 기존 옵션 삭제
+
+            // 부서 목록 그룹 생성
+            const deptGroupLabel = "부서/지점명";
+            const $deptOptgroup = $('<optgroup/>', { label: deptGroupLabel });
+
+            // 팀 목록 그룹 생성
+            const teamGroupLabel = "팀명";
+            const $teamOptgroup = $('<optgroup/>', { label: teamGroupLabel });
+
+            // 부서 목록 추가
+            if (data.deptList) {
+                data.deptList.forEach(item => {
+                    $deptOptgroup.append(new Option(item.deptName, item.deptCode)); // 새로운 옵션 추가
+                });
+            }
+
+            // 팀 목록 추가
+            if (data.teamList) {
+                data.teamList.forEach(item => {
+                    $teamOptgroup.append(new Option(item.teamName, item.teamCode)); // 새로운 옵션 추가
+                });
+            }
+
+            // Select 요소에 그룹 추가
+            $select.append($deptOptgroup);
+            $select.append($teamOptgroup);
+
+            $select.trigger('change'); // 옵션 새로고침
         },
         error: function(error) {
             console.error('Error fetching data:', error);
         }
     });
+
 
     // 직원 검색 조회 버튼 클릭 이벤트 핸들러 추가
     $('#button-addon2').on('click', search);

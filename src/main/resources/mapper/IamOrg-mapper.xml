@@ -1,0 +1,18 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="IamOrg">
+
+    <!-- Result Map 정의 -->
+    <resultMap id="iamOrgMap" type="deptSearchDTO">
+        <id property="deptCode" column="PRLM_OGZ_C_CONE"/>
+        <result property="deptName" column="BBR_NM"/>
+    </resultMap>
+
+    <!-- 모든 데이터 조회 -->
+    <select id="findAllDept" resultMap="iamOrgMap">
+        SELECT DISTINCT(A.PRLM_OGZ_C_CONE), A.BBR_NM FROM EHR.THURXE_CORGLI A
+    </select>
+
+</mapper>

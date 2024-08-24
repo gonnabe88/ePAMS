@@ -27,6 +27,9 @@
         <typeAlias type="epams.domain.com.member.dto.IamUserDTO" alias="iamUserDTO"></typeAlias>
         <typeAlias type="epams.domain.com.member.dto.RoleDTO" alias="roleDTO"></typeAlias>
 
+        <typeAlias type="epams.domain.com.index.dto.DeptSearchDTO" alias="deptSearchDTO"></typeAlias>
+        <typeAlias type="epams.domain.com.index.dto.TeamSearchDTO" alias="teamSearchDTO"></typeAlias>
+
         <!-- DTO -->
         <typeAlias type="epams.domain.dtm.dto.DtmApplDTO" alias="dtmAppl"></typeAlias>
         <typeAlias type="epams.domain.dtm.dto.DtmHisDTO" alias="dtmHis"></typeAlias>

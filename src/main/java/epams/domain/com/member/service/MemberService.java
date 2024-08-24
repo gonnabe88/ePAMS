@@ -2,6 +2,8 @@ package epams.domain.com.member.service;
 
 import java.util.List;
 
+import epams.domain.com.index.dto.DeptSearchDTO;
+import epams.domain.com.index.dto.TeamSearchDTO;
 import epams.domain.com.member.dto.RoleDTO;
 import epams.domain.com.member.dto.IamUserDTO;
 import epams.domain.com.member.repository.MemberRepository;
@@ -41,8 +43,18 @@ public class MemberService {
      * @param searchValue 검색 값
      * @return 검색된 회원 목록
      */
-    public List<IamUserDTO> findAllDept() {
+    public List<DeptSearchDTO> findAllDept() {
         return memberRepository.findAllDept();
+    }
+
+    /**
+     * 부서/팀 목록을 리턴하는 메소드
+     *
+     * @param searchValue 검색 값
+     * @return 검색된 회원 목록
+     */
+    public List<TeamSearchDTO> findAllTeam() {
+        return memberRepository.findAllTeam();
     }
 
     /**

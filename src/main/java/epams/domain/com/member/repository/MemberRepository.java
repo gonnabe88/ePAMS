@@ -2,6 +2,8 @@ package epams.domain.com.member.repository;
 
 import java.util.List;
 
+import epams.domain.com.index.dto.DeptSearchDTO;
+import epams.domain.com.index.dto.TeamSearchDTO;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -45,8 +47,18 @@ public class MemberRepository {
      * @implNote 모든 부서/팀 조회
      * @since 2024-06-09
      */
-    public List<IamUserDTO> findAllDept() {
-        return sql.selectList("IamUser.findAllDept");
+    public List<DeptSearchDTO> findAllDept() {
+        return sql.selectList("IamOrg.findAllDept");
+    }
+
+    /**
+     * *
+     * @author 140024
+     * @implNote 모든 부서/팀 조회
+     * @since 2024-06-09
+     */
+    public List<TeamSearchDTO> findAllTeam() {
+        return sql.selectList("IamUser.findAllTeam");
     }
 
     /**
@@ -58,8 +70,6 @@ public class MemberRepository {
     public List<IamUserDTO> findBySearchValue(final String searchValue) {
         return sql.selectList("IamUser.findBySearchValue", searchValue);
     }
-    
-    
 
     /**
      * *

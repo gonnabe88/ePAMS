@@ -10,6 +10,7 @@
         <link rel="stylesheet" href="/extensions/awesomplete/awesomplete.css"/>
         <link rel="stylesheet" href="/extensions/swiper/swiper-bundle.min.css"/>
         <link rel="stylesheet" href="/extensions/swiper/customSwiper.css"/>
+        <link rel="stylesheet" href="/extensions/select2/select2.css"/>
     </th:block>
     <!-- (end) private script -->
 </head>
@@ -212,10 +213,9 @@
                                                           id="basic-addon1">
 														<i class="bi bi-search m-0"></i>
 													</span>
-                                                    <input type="text" id="searchMember"
-                                                           class="form-control" placeholder="이름, 팀/부서, 업무명"
-                                                           aria-label="Recipient's username"
-                                                           aria-describedby="button-addon2"/>
+                                                    <select class="js-example-basic-multiple" aria-label="MemberSearch Multi Select" name="states[]" multiple="multiple" id="searchMember">
+
+                                                    </select>
                                                     <button class="btn btn-primary d-flex align-items-center"
                                                             type="button" id="button-addon2">
                                                         <span th:text="${langList['SEARCH_EMP_01_BTN']}"></span>
@@ -274,6 +274,7 @@
     <script src="/extensions/webauthn/js/base64js.min.js"></script>
     <script src="/extensions/webauthn/js/custom.js"></script>
     <script src="/extensions/awesomplete/awesomplete.js"></script>
+    <script src="/extensions/select2/select2.full.js"></script>
     <script src="/extensions/swiper/swiper-bundle.min.js"></script>
     <script src="/extensions/swiper/initSwiper.js"></script>
     <script src="/js/quickDtmAppl.js"></script>

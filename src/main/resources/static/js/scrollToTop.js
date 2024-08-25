@@ -7,8 +7,9 @@ window.onscroll = function() {scrollFunction()};
 
 function scrollFunction() {
     var scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
-    var scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-    var scrollPercent = (scrollTop / scrollHeight) * 100;
+    var scrollHeight = document.documentElement.scrollHeight;
+    var clientHeight = window.innerHeight;
+    var scrollPercent = (scrollTop / (scrollHeight - clientHeight)) * 100;
 
     if (scrollTop > 20) {
         mybutton.style.display = "flex";
@@ -25,5 +26,3 @@ mybutton.onclick = function() {
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
 }
-
-

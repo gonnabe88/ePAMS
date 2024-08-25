@@ -67,7 +67,7 @@ $(document).ready(() => {
                 data.teamList.forEach(item => {
                     // 팀명, 사용자명 등을 포함한 데이터 추가
                     const itemText = `
-                        <span class="searchItemHead">${item.userName} ${item.positionName}(${item.inlineNumber})</span><br> 
+                        <span class="searchItemHead">${item.userName} ${item.positionName}</span><br> 
                         <span class="searchItemBody">${item.deptName} ${item.teamName}</span><br>
                         <span class="searchItemFooter">${item.jobDetail}</span>
                     `;

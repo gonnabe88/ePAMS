@@ -36,13 +36,16 @@ $(document).ready(() => {
         minChars: 2,
         autoFirst: true,
         list: [], // 초기 리스트 비워두기
-        //maxItems: 30, // 최대 표시할 항목 수를 설정하여 스크롤을 유도
+        // maxItems: 30, // 최대 표시할 항목 수를 설정하여 스크롤을 유도
         item: function(text, input) {
-            // 검색어에 일치하는 부분을 하이라이트하기 위해 item 함수 수정
-            const html = text.label.replace(
-                new RegExp(input.trim(), "gi"),
-                (match) => `<mark>${match}</mark>`
-            );
+            // 검색어에 일치하는 모든 부분을 하이라이트하기 위해 item 함수 수정
+            let html = text.label;
+            const terms = input.trim().toLowerCase().split(/\s+/);
+
+            terms.forEach(term => {
+                const regex = new RegExp(`(${term})`, 'gi');
+                html = html.replace(regex, '<mark>$1</mark>');
+            });
 
             const itemElement = document.createElement("li");
             itemElement.innerHTML = html; // HTML 포함
@@ -51,6 +54,12 @@ $(document).ready(() => {
         replace: function(text) {
             // 선택된 항목을 input에 입력하는 방식 수정
             this.input.value = text.value;
+        },
+        filter: function(text, input) {
+            // 입력된 검색어를 띄어쓰기로 분리하여 배열로 만듭니다.
+            const terms = input.trim().toLowerCase().split(/\s+/);
+            // 모든 검색어(term)가 text에 포함되어 있는지 확인합니다.
+            return terms.every(term => text.label.toLowerCase().includes(term));
         }
     });
 

@@ -8,7 +8,7 @@ window.onscroll = function() {scrollFunction()};
 function scrollFunction() {
     var scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
     var scrollHeight = document.documentElement.scrollHeight;
-    var clientHeight = window.innerHeight;
+    var clientHeight = window.visualViewport ? window.visualViewport.height : window.innerHeight;
     var scrollPercent = (scrollTop / (scrollHeight - clientHeight)) * 100;
 
     if (scrollTop > 20) {

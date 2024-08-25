@@ -2,7 +2,7 @@
 
 <div th:fragment="menu">
 
-	<li class="sidebar-title">관리자</li>
+	<li class="sidebar-title">모니터링</li>
 	<li class="sidebar-item">
 		<a href="/admin/dashboard" class='sidebar-link' >
 			<i class="bi bi-dot"></i>
@@ -10,9 +10,17 @@
 		</a>
 	</li>
 	<li class="sidebar-item">
+		<a href="/admin/health" class='sidebar-link' >
+			<i class="bi bi-dot"></i>
+			<span>시스템현황</span>
+		</a>
+	</li>
+
+	<li class="sidebar-title">화면/어휘</li>
+	<li class="sidebar-item">
 		<a href="/admin/code" class='sidebar-link' >
 			<i class="bi bi-dot"></i>
-			<span>코드관리</span>
+			<span>어휘관리</span>
 		</a>
 	</li>
 	<li class="sidebar-item">
@@ -24,9 +32,11 @@
 	<li class="sidebar-item">
 		<a href="/admin/codeHtmlMap" class='sidebar-link' >
 			<i class="bi bi-dot"></i>
-			<span>화면코드관리</span>
+			<span>화면어휘관리</span>
 		</a>
 	</li>
+
+	<li class="sidebar-title">계정권한</li>
 	<li class="sidebar-item">
 		<a href="/admin/user" class='sidebar-link' >
 			<i class="bi bi-dot"></i>
@@ -39,6 +49,8 @@
 			<span>역할관리</span>
 		</a>
 	</li>
+
+	<li class="sidebar-title">로그</li>
 	<li class="sidebar-item">
 		<a href="/admin/login" class='sidebar-link' >
 			<i class="bi bi-dot"></i>
@@ -55,20 +67,6 @@
 		<a href="/admin/viewlog" class='sidebar-link' >
 			<i class="bi bi-dot"></i>
 			<span>VIEW로그</span>
-		</a>
-	</li>
-	<li class="sidebar-item">
-		<a href="/admin/health" class='sidebar-link' >
-			<i class="bi bi-dot"></i>
-			<span>시스템현황</span>
-		</a>
-	</li>
-
-	<li class="sidebar-title">기타</li>
-	<li class="sidebar-item">
-		<a href="/logout" class='sidebar-link' >
-			<i class="bi bi-x-octagon-fill"></i>
-			<span>로그아웃</span>
 		</a>
 	</li>
 </div>

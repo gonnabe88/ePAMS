@@ -29,7 +29,7 @@ public class SidebarController {
 
     /***
      * @author 140024
-     * @implNote 코드관리 (admin/code.html)
+     * @implNote 코드관리 (admin/language.html)
      * @since 2024-06-09
      */
     @GetMapping("/renderSidebarAdmin")

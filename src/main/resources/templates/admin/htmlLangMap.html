@@ -6,6 +6,7 @@
 <th:block layout:fragment="css">
 	<link rel="stylesheet" href="/extensions/tabulator/tabulator_modern.min.css">
 	<link rel="stylesheet" href="/extensions/tabulator/kdb_tabulator.css">
+</style>
 </th:block>
 <!-- (end) private script -->
 </head>
@@ -18,7 +19,7 @@
 					<div class="page-heading">
 						<div class="align-middle">
 							<h2>
-								<i class="bi bi-bell-fill"></i> 화면관리
+								<i class="bi bi-bell-fill"></i> 화면어휘관리
 							</h2>
 							<br>
 							<div class="d-flex flex-wrap gap-2 justify-content-start align-items-center mb-3">
@@ -72,12 +73,14 @@
 
 	<!-- (start) private script -->
 	<th:block layout:fragment="script">
-		<script src="/extensions/tabulator/tabulator.min.js"></script>
-		<script src="/extensions/papaparse/papaparse.min.js"></script>
-		<script src="/extensions/luxon/luxon.js"></script>
-		<script src="/extensions/tabulator/kdb_tabulator.js"></script>
-		<script src="/js/page.js"></script>
+	<script src="/extensions/tabulator/tabulator.min.js"></script>
+	<script src="/extensions/papaparse/papaparse.min.js"></script>
+	<script src="/extensions/luxon/luxon.js"></script>
+	<script src="/extensions/tabulator/kdb_tabulator.js"></script>
+	<script src="/extensions/tabulator/kdb_tabulator_search.js"></script>
+	<script src="/js/htmlLangMap.js"></script>
 	</th:block>
+
 	<!-- (end) private script -->
 </body>
 

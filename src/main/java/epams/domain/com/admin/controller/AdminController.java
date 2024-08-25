@@ -68,12 +68,12 @@ public class AdminController {
 
     /***
      * @author 140024
-     * @implNote 코드관리 (admin/code.html)
+     * @implNote 코드관리 (admin/language.html)
      * @since 2024-06-09
      */
     @GetMapping("/code")
     public String code(HttpServletRequest request) {
-        return "admin/code";
+        return "admin/language";
     }
 
     /***
@@ -93,17 +93,17 @@ public class AdminController {
      */
     @GetMapping("/user")
     public String user(HttpServletRequest request) {
-        return "admin/member";
+        return "admin/memberInfo";
     }
 
     /***
      * @author 140024
-     * @implNote 로그인 이력 (admin/login.html)
+     * @implNote 로그인 이력 (admin/loginLog.html)
      * @since 2024-06-09
      */
     @GetMapping("/login")
     public String login(HttpServletRequest request) {
-        return "admin/login";
+        return "admin/loginLog";
     }
 
     /***
@@ -129,22 +129,22 @@ public class AdminController {
 
     /***
      * @author 140024
-     * @implNote 로그인 이력 (admin/loginotp.html)
+     * @implNote 로그인 이력 (admin/otpHistory.html)
      * @since 2024-06-09
      */
     @GetMapping("/loginotp")
     public String loginotp(HttpServletRequest request) {
-        return "admin/loginotp";
+        return "admin/otpHistory";
     }
 
         /***
      * @author 140024
-     * @implNote 뷰 이력 (admin/viewlog.html)
+     * @implNote 뷰 이력 (admin/viewLog.html)
      * @since 2024-06-09
      */
     @GetMapping("/viewlog")
     public String viewLogPage(HttpServletRequest request) {
-        return "admin/viewlog";
+        return "admin/viewLog";
     }
 
     /***
@@ -168,11 +168,11 @@ public class AdminController {
     }
     /***
      * @author 140024
-     * @implNote 화면코드관리 (admin/codeHtmlMap.html)
+     * @implNote 화면코드관리 (admin/htmlLangMap.html)
      * @since 2024-06-09
      */
     @GetMapping("/codeHtmlMap")
     public String codeHtmlMap(HttpServletRequest request) {
-        return "admin/codeHtmlMap";
+        return "admin/htmlLangMap";
     }
 }

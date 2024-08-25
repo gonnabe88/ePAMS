@@ -24,6 +24,13 @@ public class TeamSearchDTO {
 
     /**
      * @author 140024
+     * @implNote 사원번호
+     * @since 2024-06-09
+     */
+    private String userNo;
+
+    /**
+     * @author 140024
      * @implNote 인사조직코드내용
      * @since 2024-08-19
      */

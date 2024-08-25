@@ -17,13 +17,13 @@
         <div class="animate__animated animate__fadeIn animate__slow">
             <div class="shadow card" style="background-color: #F2F7FF; margin: 1rem;">
                 <div class="card-body">
-                    <p class="card-text" th:utext="${member.username}"></p>
+                    <p class="card-text" th:utext="${member.userName}+' '+${member.positionName}"></p>
                     <div class="row">
                         <div class="col-2">
                             <i class="bi bi-building"></i>
                         </div>
                         <div class="col-10">
-                            <small class="text-body-secondary" th:text="${member.realname}"></small>
+                            <small class="text-body-secondary" th:text="${member.deptName}+' '+${member.teamName}"></small>
                         </div>
                     </div>
                     <div class="row">
@@ -31,7 +31,7 @@
                             <i class="bi bi-diagram-2"></i>
                         </div>
                         <div class="col-10">
-                            <small class="text-body-secondary" th:text="${member.realname}"></small>
+                            <small class="text-body-secondary" th:text="${member.inlineNumber}"></small>
                         </div>
                     </div>
                     <div class="row">
@@ -39,7 +39,7 @@
                             <i class="bi bi-briefcase-fill"></i>
                         </div>
                         <div class="col-10">
-                            <small class="text-body-secondary" th:text="${member.realname}"></small>
+                            <small class="text-body-secondary" th:text="${member.jobDetail}"></small>
                         </div>
                     </div>
                 </div>

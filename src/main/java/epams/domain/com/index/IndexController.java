@@ -168,7 +168,7 @@ public class IndexController<S extends Session> {
         bannerList.add(new BannerDTO("", "", "", ""));
         bannerList.add(new BannerDTO("최근 공지사항", "시스템 점검 안내", "'24. 7. 6(일) 18:00-19:00", "<a href=\"/dtm/main\"><span class=\"badge text-bg-primary\">바로가기</span></a>"));
         bannerList.add(new BannerDTO("연차 및 저축휴가", "언제 어디서든", "편하게 신청하세요", "<a href=\"/dtm/main\"><span class=\"badge text-bg-primary\">바로가기</span></a>"));
-        bannerList.add(new BannerDTO("직원조회", "언제 어디서든", "간편하게 검색하세요", "<a href=\"#\" onclick=\"scrollToDiv()\"><span class=\"badge text-bg-primary\">바로가기</span></a>"));
+        bannerList.add(new BannerDTO("직원조회", "언제 어디서든", "간편하게 검색하세요", "<a href=\"#\" id=\"scrollToSearchDiv\"><span class=\"badge text-bg-primary\">바로가기</span></a>"));
         model.addAttribute("bannerList", bannerList);
 
         return INDEXMAIN;

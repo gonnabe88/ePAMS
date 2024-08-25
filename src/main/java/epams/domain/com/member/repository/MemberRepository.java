@@ -68,7 +68,7 @@ public class MemberRepository {
      * @since 2024-06-09
      */
     public List<IamUserDTO> findBySearchValue(final String searchValue) {
-        return sql.selectList("IamUser.findBySearchValue", searchValue);
+        return sql.selectList("IamUser.findByUserNo", searchValue);
     }
 
     /**

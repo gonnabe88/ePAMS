@@ -15,6 +15,7 @@
     <!-- Result Map 정의 -->
     <resultMap id="teamSearchMap" type="teamSearchDTO">
         <result property="userName" column="USR_NM"/>
+        <result property="userNo" column="ENO"/>
         <result property="teamCode" column="TEM_C"/>
         <result property="teamName" column="TEM_NM"/>
         <result property="deptCode" column="BBR_C"/>
@@ -37,6 +38,7 @@
     <!-- 모든 데이터 조회 -->
     <select id="findAllMember" resultMap="teamSearchMap">
         SELECT A.USR_NM,
+               A.ENO,
                A.BBR_C,
                B.BBR_NM,
                A.TEM_C,
@@ -74,6 +76,23 @@
         WHERE
         A.EMP_NO LIKE '%' || #{searchValue} || '%' OR
         A.EMP_NM LIKE '%' || #{searchValue} || '%'
+    </select>
+
+    <!-- 특정 사용자 조회 -->
+    <select id="findByUserNo" parameterType="String" resultMap="teamSearchMap">
+        SELECT A.USR_NM,
+               A.ENO,
+               A.BBR_C,
+               B.BBR_NM,
+               A.TEM_C,
+               A.TEM_NM,
+               A.PT_C_NM,
+               A.DTS_DTL_CONE,
+               A.INLE_NO
+        FROM EHR.THURXE_CUSRLI A
+                 INNER JOIN EHR.THURXE_CORGLI B ON A.BBR_C = B.PRLM_OGZ_C_CONE
+        WHERE
+            A.ENO = #{searchValue}
     </select>
 
 </mapper>

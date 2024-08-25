@@ -13,13 +13,13 @@
 
 <body>
 	<div layout:fragment="contents">
-		<div id="main-content">
+		<div class="adminPage" id="main-content">
 			<div class="d-flex justify-content-center">
 				<div class="row col-lg-10 col-md-12 d-flex justify-content-center">
 					<div class="page-heading">
 						<div class="align-middle">
 							<h2>
-								<i class="bi bi-bell-fill"></i> 코드관리
+								<i class="bi bi-bell-fill"></i> 어휘관리
 							</h2>
 							<br>
 							<div class="d-flex flex-wrap gap-2 justify-content-start align-items-center mb-3">
@@ -28,11 +28,8 @@
 								</div>
 								<button class="btn btn-primary btn-sm" id="search-button">조회</button>
 								<button class="btn btn-primary btn-sm" id="reset-button">초기화</button>
-								<div class="form-check form-switch">
-									<input class="form-check-input" type="checkbox" role="switch" id="toggle-selectable"> <label class="form-check-label" for="flexSwitchCheckDefault">범위선택</label>
-								</div>
 							</div>
-							
+
 							<div class="d-flex flex-wrap justify-content-end gap-2 mb-3">
 								<div class="custom-file-input-wrapper">
 									<input class="form-control form-control-sm" id="formFileSm" type="file">
@@ -40,12 +37,28 @@
 								<button class="btn btn-primary btn-sm" id="upload-csv">업로드</button>
 								<button class="btn btn-primary btn-sm" id="download-csv">다운로드</button>
 							</div>
-							
-							<div class="d-flex flex-wrap justify-content-end gap-2 mb-3">
-								<button class="btn btn-primary btn-sm" id="reload">새로고침</button>
-								<button class="btn btn-primary btn-sm" id="add-row">행추가</button>
-								<button class="btn btn-primary btn-sm" id="del-row">삭제</button>
-								<button class="btn btn-primary btn-sm" id="save">저장</button>
+							<div class="d-flex align-items-center justify-content-between mb-3">
+								<!-- 왼쪽 정렬 요소 (작은 화면에서는 아래쪽) -->
+								<div class="form-check form-switch d-flex align-items-center">
+									<input class="form-check-input ms-0 me-2" type="checkbox" role="switch" id="toggle-selectable">
+									<label class="form-check-label m-0" for="toggle-selectable">범위선택</label>
+								</div>
+
+								<!-- 오른쪽 정렬 요소 (작은 화면에서는 위쪽) -->
+								<div class="d-flex flex-wrap justify-content-end gap-2">
+									<button class="btn btn-secondary btn-sm" id="reload">
+										<i class="bi bi-arrow-clockwise"></i> <!-- 새로고침 아이콘 -->
+									</button>
+									<button class="btn btn-secondary btn-sm" id="add-row">
+										<i class="bi bi-plus"></i> <!-- 행 추가 아이콘 -->
+									</button>
+									<button class="btn btn-secondary btn-sm" id="del-row">
+										<i class="bi bi-trash"></i> <!-- 삭제 아이콘 -->
+									</button>
+									<button class="btn btn-primary btn-sm" id="save">
+										<i class="bi bi-floppy"></i> <!-- 저장 아이콘 -->
+									</button>
+								</div>
 							</div>
 							<div class="d-flex justify-content-center">
 								<div class="no-drag" id="example-table"></div>
@@ -66,20 +79,7 @@
 	<script src="/extensions/papaparse/papaparse.min.js"></script>
 	<script src="/extensions/luxon/luxon.js"></script>
 	<script src="/extensions/tabulator/kdb_tabulator.js"></script>
-	<script>
-		window.url = "/api/admin/lang"
-		window.columns = [
-			{ title: "코드", field: "lang", sorter: "string", editor: "input", minWidth: 100 },
-	        { title: "코드명", field: "langName", sorter: "string", editor: "input", minWidth: 100 },
-	        { title: "코드타입", field: "langType", sorter: "string", editor: "input" },
-	        { title: "변경일자", field: "updatedTime", sorter: "datetime", sorterParams:{format:"yyyy-MM-dd HH:mm:ss"}},
-	        { title: "등록일자", field: "createdTime", sorter: "datetime", sorterParams:{format:"yyyy-MM-dd HH:mm:ss"}}
-		]
-			
-	    document.addEventListener("DOMContentLoaded", function() {
-	        createTable(false, window.columns, window.url);
-	    });
-	</script>
+	<script src="/js/language.js"></script>
 	</th:block>
 
 	<!-- (end) private script -->

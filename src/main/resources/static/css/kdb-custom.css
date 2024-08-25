@@ -1,3 +1,11 @@
+
+.adminPage .form-check {
+    display: block;
+    min-height: 1.5rem;
+    padding-left: 0;
+    margin-bottom: .125rem;
+}
+
 .awesomplete {
     width: 100%;
 }
@@ -360,20 +368,6 @@ mark {
 .date-input {
     width: 48%;
 }
-label {
-    font-weight: 600;
-    color: #333;
-    display: block;
-    margin-bottom: 0.5rem;
-}
-select, input[type="date"] {
-    width: 100%;
-    padding: 0.5rem;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 1rem;
-}
-
 
 .dtmRegister .button-group {
     display: flex;

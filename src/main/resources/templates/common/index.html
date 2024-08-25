@@ -1,8 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:sec="http://www.thymeleaf.org"
-      layout:decorate="~{common/layout/layout}">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" layout:decorate="~{common/layout/layout}">
 
 <head>
     <!-- (start) private script -->
@@ -207,21 +204,18 @@
                                     <div class="card-body">
                                         <p><span th:text="${langList['SEARCH_EMP_02_STMT']}"></span></p>
                                         <div class="row">
-                                            <div class="col-12 mb-1">
-                                                <div class="d-flex align-items-center mb-3">
-													<span class="input-group-text d-flex align-items-center justify-content-center"
-                                                          id="basic-addon1">
-														<i class="bi bi-search m-0"></i>
-													</span>
-                                                    <input id="searchMember" class="awesomplete" placeholder="Select an option" autocomplete="off">
+                                            <div class="col-12 mb-0">
+                                                <div class="input-with-icon d-flex align-items-center mb-3">
+                                                    <i class="bi bi-search m-0"></i>
+                                                    <input id="searchMember" class="awesomplete" placeholder="이름, 팀/부서, 업무" autocomplete="off">
                                                 </div>
 
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-12 mb-1">
+                                            <div class="col-12 mb-0">
                                                 <div class="d-flex justify-content-end align-items-center mb-3">
-                                                    <button class="btn btn-primary d-flex align-items-center"
+                                                    <button class="btn btn-primary btn-sm d-flex align-items-center"
                                                             type="button" id="button-addon2">
                                                         <span th:text="${langList['SEARCH_EMP_01_BTN']}"></span>
                                                     </button>

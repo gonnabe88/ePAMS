@@ -30,15 +30,36 @@ const scrollToDiv = () => {
 
 // 직원 검색 시 자동완성을 위한 데이터 가져오기
 $(document).ready(() => {
-    // Awesomplete 초기화
     const inputElement = document.getElementById('searchMember');
+    const placeholders = ["디지털금융 업무지원", "인사부 통할", "단신부임", "연수"];
+    let placeholderIndex = 0;
+    let charIndex = 0;
+    let typingInterval;
+
+    function typePlaceholder() {
+        if (charIndex < placeholders[placeholderIndex].length) {
+            inputElement.setAttribute("placeholder", placeholders[placeholderIndex].substring(0, charIndex + 1));
+            charIndex++;
+        } else {
+            clearInterval(typingInterval);
+            setTimeout(startTypingEffect, 2000); // 2초 동안 전체 텍스트를 유지한 후 다음 placeholder로 넘어감
+        }
+    }
+
+    function startTypingEffect() {
+        placeholderIndex = (placeholderIndex + 1) % placeholders.length;
+        charIndex = 0;
+        inputElement.setAttribute("placeholder", ""); // 타이핑 효과 전에 placeholder 초기화
+        typingInterval = setInterval(typePlaceholder, 150); // 150ms 간격으로 타이핑 효과 적용
+    }
+
+    startTypingEffect(); // 초기 타이핑 효과 시작
+
     const awesomplete = new Awesomplete(inputElement, {
         minChars: 2,
         autoFirst: true,
-        list: [], // 초기 리스트 비워두기
-        // maxItems: 30, // 최대 표시할 항목 수를 설정하여 스크롤을 유도
+        list: [],
         item: function(text, input) {
-            // 검색어에 일치하는 모든 부분을 하이라이트하기 위해 item 함수 수정
             let html = text.label;
             const terms = input.trim().toLowerCase().split(/\s+/);
 
@@ -48,17 +69,14 @@ $(document).ready(() => {
             });
 
             const itemElement = document.createElement("li");
-            itemElement.innerHTML = html; // HTML 포함
+            itemElement.innerHTML = html;
             return itemElement;
         },
         replace: function(text) {
-            // 선택된 항목을 input에 입력하는 방식 수정
             this.input.value = text.value;
         },
         filter: function(text, input) {
-            // 입력된 검색어를 띄어쓰기로 분리하여 배열로 만듭니다.
             const terms = input.trim().toLowerCase().split(/\s+/);
-            // 모든 검색어(term)가 text에 포함되어 있는지 확인합니다.
             return terms.every(term => text.label.toLowerCase().includes(term));
         }
     });
@@ -68,13 +86,10 @@ $(document).ready(() => {
         method: 'GET',
         dataType: "json",
         success: function(data) {
-            // 자동 완성 리스트를 비워두기
             const list = [];
 
-            // 팀 목록 추가
             if (data.teamList) {
                 data.teamList.forEach(item => {
-                    // 팀명, 사용자명 등을 포함한 데이터 추가
                     const itemText = `
                         <span class="searchItemHead">${item.userName} ${item.positionName}</span><br> 
                         <span class="searchItemBody">${item.deptName} ${item.teamName}</span><br>
@@ -84,7 +99,6 @@ $(document).ready(() => {
                 });
             }
 
-            // Awesomplete 리스트 업데이트
             awesomplete.list = list;
         },
         error: function(error) {

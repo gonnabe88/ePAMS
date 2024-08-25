@@ -1026,6 +1026,11 @@ h6, .h6, h5, .h5, h4, .h4, h3, .h3, h2, .h2, h1, .h1 {
 h1, .auth-subtitle {
     font-family: "Nunito";
     font-size: calc(1.5rem + 1.5vh);
+}
+
+.navbar-header h1, .auth-subtitle {
+    font-family: "Nunito";
+    font-size: calc(1.5rem + 1.5vh);
     position: absolute;
     left: 50%; /* 부모 요소의 왼쪽에서 50%로 설정 */
     top: 50%; /* 부모 요소의 위쪽에서 50%로 설정 */

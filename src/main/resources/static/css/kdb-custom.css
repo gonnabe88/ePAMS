@@ -402,7 +402,32 @@ mark {
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
+/*근태 신청화면 컨테이너*/
+.dtmRegister .container {
+    background-color: white;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 30px;
+    padding-right: 30px;
+}
 
+#dtmType {
+    width: 100%;
+}
+.date-group {
+    display: flex;
+    justify-content: space-between;
+    height: 38px;
+}
+
+.date-input {
+    height: 38px;
+    width: 45%;
+}
+
+.date-input input[type="date"] {
+    width: 100%;
+}
 
 /*근태신청화면 콤보*/
 

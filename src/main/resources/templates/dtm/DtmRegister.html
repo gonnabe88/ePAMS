@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:sec="http://www.thymeleaf.org" layout:decorate="~{common/layout/layout}">
+      xmlns:sec="http://www.thymeleaf.org"
+      layout:decorate="~{common/layout/layout}">
 
 <head>
     <th:block layout:fragment="css">
@@ -13,30 +14,38 @@
     <div class="dtmRegister container">
         <h1 class="page-title">근태 신청</h1>
         <form th:action="@{/dtm/register}" method="post">
-            <div class="form-group">
-                <label for="dtmType">근태 종류</label>
-                <select id="dtmType" name="dtmType" required>
-                    <option value="">선택하세요</option>
-                    <option value="vacation">휴가</option>
-                    <option value="sick">병가</option>
-                    <option value="overtime">연장근무</option>
-                    <!-- 추가 옵션들... -->
-                </select>
-            </div>
-            <div class="form-group date-group">
-                <div class="date-input">
-                    <label for="startDate">시작일</label>
-                    <input type="date" id="startDate" name="startDate" th:value="${param.date}" required>
+            <div class="main-content">
+                <div id="searchDiv">
+                    <div class="container">
+                        <div class="form-group">
+                            <label for="dtmType">근태 종류</label>
+                            <br>
+                            <select id="dtmType" name="dtmType" required>
+                                <option value="">선택하세요</option>
+                                <option value="vacation">휴가</option>
+                                <option value="sick">병가</option>
+                                <option value="overtime">연장근무</option>
+                                <!-- 추가 옵션들... -->
+                            </select>
+                        </div>
+                        <div class="form-group date-group">
+                            <div class="date-input">
+                                <label for="startDate">시작일</label>
+                                <input type="date" id="startDate" name="startDate" th:value="${param.date}" required>
+                            </div>
+                            <div class="date-input">
+                                <label for="endDate">종료일</label>
+                                <input type="date" id="endDate" name="endDate" th:value="${param.date}" required>
+                            </div>
+                        </div>
+                        <div class="button-group">
+                            <button type="button" class="btn btn-back">돌아가기</button>
+                            <button type="submit" class="btn btn-submit">신청하기</button>
+                        </div>
+                    </div>
                 </div>
-                <div class="date-input">
-                    <label for="endDate">종료일</label>
-                    <input type="date" id="endDate" name="endDate" th:value="${param.date}" required>
-                </div>
             </div>
-            <div class="button-group">
-                <button type="button" class="btn btn-back">돌아가기</button>
-                <button type="submit" class="btn btn-submit">신청하기</button>
-            </div>
+
         </form>
     </div>
 </div>

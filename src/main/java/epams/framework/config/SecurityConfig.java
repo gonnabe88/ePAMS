@@ -115,6 +115,16 @@ public class SecurityConfig{
 		        .maxSessionsPreventsLogin(false)  // 세션 초과 시 새로운 세션을 허용
 		    )
 
+			// 보안 헤더 설정 (HTTPS 미사용 시 해제)
+			.headers(headers -> headers
+					.httpStrictTransportSecurity(hsts -> hsts
+							.includeSubDomains(true)
+							.maxAgeInSeconds(31536000) // 1년
+					)
+					.defaultsDisabled()
+					.contentTypeOptions()
+			)
+
 		    // URL별 접근 권한 설정
 		    .authorizeHttpRequests((authorizeRequests) ->
 		        authorizeRequests

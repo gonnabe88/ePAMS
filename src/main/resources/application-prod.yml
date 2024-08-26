@@ -8,6 +8,7 @@ kdb:
 # server port
 server:
   port: 8080
+  server-header: "" # 빈 값으로 설정하여 서버 헤더 제거
   servlet:
     session:
       timeout: 15m

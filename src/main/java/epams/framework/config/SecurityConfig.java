@@ -125,9 +125,6 @@ public class SecurityConfig{
 					.defaultsDisabled()
 					.contentTypeOptions()
 			)
-			.requiresChannel(requiresChannel -> requiresChannel
-					.anyRequest().requiresSecure()
-			)
 
 		    // URL별 접근 권한 설정
 		    .authorizeHttpRequests((authorizeRequests) ->

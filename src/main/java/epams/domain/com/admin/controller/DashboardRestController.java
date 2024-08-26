@@ -45,6 +45,17 @@ public class DashboardRestController {
      * @implNote 모든 로그인 로그 데이터를 검색
      * @since 2024-06-09
      */
+    @GetMapping("/loginUserCount")
+    public ResponseEntity<List<CountByDateDTO>> getLoginUserCountsByDate(final Model model) throws IOException {
+        final List<CountByDateDTO> countByDateDTO = dashboardService.getLoginUserCountsByDate();
+        return ResponseEntity.ok(countByDateDTO);
+    }
+
+    /***
+     * @author 140024
+     * @implNote 모든 로그인 로그 데이터를 검색
+     * @since 2024-06-09
+     */
     @GetMapping("/logincount")
     public ResponseEntity<List<CountByDateDTO>> getLoginCountsByDate(final Model model) throws IOException {
         final List<CountByDateDTO> countByDateDTO = dashboardService.getLoginCountsByDate();

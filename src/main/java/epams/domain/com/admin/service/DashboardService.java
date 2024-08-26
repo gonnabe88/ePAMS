@@ -31,6 +31,15 @@ public class DashboardService {
 	 * @implNote dashboardRepository 객체의 getLoginCountsByDate 호출하여 CountByDateDTO 리스트 반환
 	 * @since 2024-06-09
 	 */
+	public List<CountByDateDTO> getLoginUserCountsByDate() {
+		return dashboardRepository.getLoginUserCountsByDate();
+	}
+
+	/***
+	 * @author 140024
+	 * @implNote dashboardRepository 객체의 getLoginCountsByDate 호출하여 CountByDateDTO 리스트 반환
+	 * @since 2024-06-09
+	 */
 	public List<CountByDateDTO> getLoginCountsByDate() {
 		return dashboardRepository.getLoginCountsByDate();
 	}

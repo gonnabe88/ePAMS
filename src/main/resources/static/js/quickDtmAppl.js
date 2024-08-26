@@ -18,6 +18,8 @@ const ApplAlert = (element) => {
     // 객체를 쿼리 스트링으로 변환
     const queryString = $.param(dtmHisDTO);
 
+    checkSession(); // 세션 체크
+
     // HTML 파일을 불러오기 (쿼리 스트링과 함께 GET 요청)
     $.get(`/dtm/dtmApplPopup?${queryString}`, function(htmlContent) {
         Swal.fire({

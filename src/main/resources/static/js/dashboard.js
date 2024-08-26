@@ -1,5 +1,73 @@
 $(document).ready(function () {
     // 로그인 성공/실패 이력 데이터를 가져와서 그래프를 그리기
+    $.getJSON('/api/admin/loginUserCount', function (data) {
+        let categories = data.map(function (item) {
+            return item.createdDate;
+        });
+        let successData = data.map(function (item) {
+            return item.successCount;
+        });
+        let failureData = data.map(function (item) {
+            return item.failureCount;
+        });
+
+        let loginData = { categories: categories, successData: successData, failureData: failureData };
+
+        let options = {
+            series: [
+                {
+                    name: "성공",
+                    data: loginData.successData
+                },
+                {
+                    name: "실패",
+                    data: loginData.failureData
+                }
+            ],
+            chart: {
+                id: 'loginUser-chart',
+                type: 'line',
+                height: 350,
+                dropShadow: {
+                    enabled: true,
+                    color: '#000',
+                    top: 18,
+                    left: 7,
+                    blur: 10,
+                    opacity: 0.2
+                },
+                toolbar: {
+                    show: false
+                }
+            },
+            colors: ['#2d8cda', '#c96363'],
+            dataLabels: {
+                enabled: true,
+            },
+            stroke: {
+                curve: 'smooth'
+            },
+            markers: {
+                size: 1
+            },
+            xaxis: {
+                categories: loginData.categories,
+                title: {
+                    text: '날짜'
+                }
+            },
+            yaxis: {
+                title: {
+                    text: '건수'
+                }
+            }
+        };
+
+        let chart = new ApexCharts(document.querySelector('#loginUser-chart'), options);
+        chart.render();
+    });
+
+    // 로그인 성공/실패 이력 데이터를 가져와서 그래프를 그리기
     $.getJSON('/api/admin/logincount', function (data) {
         let categories = data.map(function (item) {
             return item.createdDate;

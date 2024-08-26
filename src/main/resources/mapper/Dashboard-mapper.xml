@@ -4,6 +4,22 @@
 
 <mapper namespace="Dashboard">
 
+    <!-- 일자별 로그인 사용자수 조회 -->
+    <select id="findLoginUserCountsByDate" resultType="epams.domain.com.admin.dto.CountByDateDTO">
+        SELECT
+            t.createdDate,
+            SUM(CASE WHEN t.LGN_SCS_YN = '1' THEN 1 ELSE 0 END) AS successCount,
+            SUM(CASE WHEN t.LGN_SCS_YN = '0' THEN 1 ELSE 0 END) AS failureCount
+        FROM (
+                 SELECT DISTINCT ENO, TO_CHAR(FST_ENT_DTM, 'YYYY-MM-DD') AS createdDate, LGN_SCS_YN
+                 FROM THURXE_CLOGNL
+             ) t
+        GROUP BY
+            t.createdDate
+        ORDER BY
+            t.createdDate
+    </select>
+
     <!-- 일자별 로그인 건수 조회 -->
     <select id="findLoginCountsByDate" resultType="epams.domain.com.admin.dto.CountByDateDTO">
         SELECT

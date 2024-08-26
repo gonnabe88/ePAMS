@@ -22,6 +22,7 @@ function throwError(response) {
 }
 function checkStatus(response) {
     if (response.status !== 200) {
+        console.log("checkStatus : ", response.status, response)
         throwError(response);
     } else {
         return response;
@@ -29,10 +30,12 @@ function checkStatus(response) {
 }
 function initialCheckStatus(response) {
     checkStatus(response);
+    console.log("initialCheckStatus : ", response.status, response.url);
     return response.json();
 }
 function followRedirect(response) {
-    if (response.status == 200) {
+    if (response.status === 200 || response.status === 302) {
+        console.log("followRedirect : ", response.status, response.url);
         window.location.href = response.url;
     } else {
         throwError(response);

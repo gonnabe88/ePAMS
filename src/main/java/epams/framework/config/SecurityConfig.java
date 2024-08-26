@@ -8,6 +8,7 @@ import epams.framework.security.CustomAuthenticationSuccessHandler;
 import epams.framework.security.CustomPasswordEncoder;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,6 +27,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
  * @implNote Spring Security 설정
  * @since 2024-06-11
  */
+@Slf4j
 @Configuration
 @RequiredArgsConstructor
 @EnableWebSecurity
@@ -118,7 +120,7 @@ public class SecurityConfig{
 		        authorizeRequests
 		            .requestMatchers(
 		                "/actuator/prometheus",
-		                "/manifest.webmanifest", "/login/**", "/logout", "/register",
+		                "/manifest.webmanifest", "/login", "/logout", "/register",
 		                "/api/**", 
 		                "/css/**",
 		                "/js/**",
@@ -157,7 +159,13 @@ public class SecurityConfig{
 				.accessDeniedHandler(
 					(request, response, accessDeniedException) -> response.sendRedirect("/error/403")) // 접근 거부 시 리디렉션 경로 설정
 		        .authenticationEntryPoint(
-		            (request, response, authException) -> response.sendRedirect("/login"))  // 인증 필요 시 리디렉션 경로
+		            (request, response, authException) -> {
+						// 인증되지 않은 요청에 대해 /login 페이지로 리다이렉트
+						String requestURI = request.getRequestURI();
+						if (!requestURI.startsWith("/login")) {
+							response.sendRedirect("/login");
+						}
+					})	// 인증되지 않은 요청 시 리디렉션 경로 설정
 		        .defaultAuthenticationEntryPointFor(
 		            (request, response, authException) -> response.sendRedirect("/error/404"),
 		            new AntPathRequestMatcher("/**"))  // 기본 인증 엔트리 포인트 설정

@@ -1,4 +1,3 @@
-
 document.getElementById('username').addEventListener('input', function(event) {
     event.target.value = event.target.value.toUpperCase();
 });
@@ -43,18 +42,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
     form.addEventListener("submit", (e) => {
         e.preventDefault(); // Prevent form's default submission
-
         const password = passwordInput.value;
         const encodedPassword = btoa(encodeURIComponent(password));
         passwordInput.value = encodedPassword;
 
-		
         if (checkbox.checked) {
             webauthn(e); // Call webauthn function
         } else {
             normal(e); // Call normal function
         }
     });
+
 
     checkbox.addEventListener('change', () => {
         updateLabel();
@@ -63,7 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 	// Initialize label
-    updateLabel(); 
+    updateLabel();
     toggleChange();
     togglePasswordVisibility();
 });
@@ -82,7 +80,7 @@ const showSpinnerButton = () => {
 
 const webauthn = (e) => {
     const header = document.querySelector('meta[name="_csrf_header"]').content;
-    const token = document.querySelector('meta[name="_csrf"]').content;
+    let token = document.querySelector('meta[name="_csrf"]').content;
     e.preventDefault();
     const formData = new FormData(e.target);
 
@@ -165,20 +163,20 @@ const webauthn = (e) => {
         console.timeEnd("response.json");
         if (data.status === 'OK') {
             console.timeEnd("total");
-            
+
             // URL 검증 로직 추가 (2024-06-22 CWE-601 Open Redirect)
             const allowedUrls = ['/index', '/login'];
             const redirectUrl = data.redirectUrl;
-        
+
             try {
                 // URL 객체를 생성하여 유효성을 검증
                 const url = new URL(redirectUrl, window.location.origin);
-        
+
                 // URL이 허용된 목록에 있는지 확인
                 if (allowedUrls.includes(url.pathname)) {
                     // Sanitize the URL by encoding potential unsafe characters
                     const sanitizedPath = encodeURI(url.pathname);
-                    window.location.href = sanitizedPath; 
+                    window.location.href = sanitizedPath;
                 } else {
                     console.error('Redirect URL is not allowed:', redirectUrl);
                     errorAlert('Invalid redirect URL.');
@@ -190,13 +188,10 @@ const webauthn = (e) => {
         } else {
             errorAlert();
         }
-        
-        
+
     })
     .catch(error => {
-        console.timeEnd("total");
-        console.error('Error:', error);
-        popupMsg(error);
+        popupReHtmlMsg("인증 오류", "인증을 다시 시도해주시기 바랍니다.", "error", "돌아가기", "/login");
     });
 }
 
@@ -231,12 +226,12 @@ const normal = (e) => {
         } else {
             console.log("패스워드 로그인 실패:", data);
             // 패스워드 인증 실패 시
-            popupMsg(data.message);
+            popupMsg("인증 실패", data.message, "error");
         }
     })
     .catch(error => {
         console.error('로그인 중 오류 발생:', error);
-        popupMsg(error); // 오류 처리 함수 호출
+        popupMsg("인증 오류", "인증을 다시 시도해주시기 바랍니다.", "error"); // 오류 처리 함수 호출
     });
 }
 
@@ -341,7 +336,7 @@ const authentication = (username, password, MFA, OTP, header, token) => {
         },
         //success로 진입이 안되는 이슈로 complete 사용
         complete: function(data) {
-            if(data.status == 200)
+            if(data.status === 200)
             	window.location.href = '/index'
         	else
         		errorAlert();
@@ -386,16 +381,6 @@ $(function(){
     });
 });
 
-const popupMsg = (e) => {	
-	Swal.fire({
-            title: '인증 오류',
-            text: e,
-            icon: 'error',
-            confirmButtonText: '확인'
-        }).then(() => {
-			window.location.href = '/login'
-		});
-}
 
 const errorAlert = () => {	
 	Swal.fire({

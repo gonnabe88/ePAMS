@@ -30,6 +30,16 @@ public class DashboardRepository {
 	 * @implNote 차트 생성용 일자별 건수 조회
 	 * @since 2024-04-26
 	 */
+	public List<CountByDateDTO> getLoginUserCountsByDate() {
+		return sql.selectList("Dashboard.findLoginUserCountsByDate");
+	}
+
+
+	/**
+	 * @author K140024
+	 * @implNote 차트 생성용 일자별 건수 조회
+	 * @since 2024-04-26
+	 */
 	public List<CountByDateDTO> getLoginCountsByDate() {
 		return sql.selectList("Dashboard.findLoginCountsByDate");
 	}

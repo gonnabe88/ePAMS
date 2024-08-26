@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	xmlns:sec="http://www.thymeleaf.org">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org">
 
-	<div id="memberList">
+<div id="memberList">
     <div th:if="${memberList == null or memberList.isEmpty()}">
-		<div class="animate__animated animate__fadeIn animate__slow">
-		    <div class="shadow card" style="background-color: #F2F7FF; margin: 3rem;">
-		        <div class="card-body d-flex justify-content-center align-items-center" style="height: 100px;">
-		            <h5>No Result</h5>
-		        </div>
-		    </div>
-		</div>
+        <div class="animate__animated animate__fadeIn animate__slow">
+            <div class="shadow card">
+                <div class="card-body d-flex justify-content-center align-items-center">
+                    <h5>No Result</h5>
+                </div>
+            </div>
+        </div>
     </div>
     <section class="section" th:each="member: ${memberList}">
         <div class="animate__animated animate__fadeIn animate__slow">
-            <div class="shadow card" style="background-color: #F2F7FF; margin: 1rem;">
+            <div class="shadow card">
                 <div class="card-body">
                     <p class="card-text" th:utext="${member.userName}+' '+${member.positionName}"></p>
                     <div class="row">
@@ -23,7 +23,8 @@
                             <i class="bi bi-building"></i>
                         </div>
                         <div class="col-10">
-                            <small class="text-body-secondary" th:text="${member.deptName}+' '+${member.teamName}"></small>
+                            <small class="text-body-secondary"
+                                   th:text="${member.deptName}+' '+${member.teamName}"></small>
                         </div>
                     </div>
                     <div class="row">

@@ -1,4 +1,11 @@
 
+/*직원검색 card 스타일 조정*/
+#memberList .card {
+    background-color: #F2F7FF;
+    margin: 1rem;
+}
+
+/*Admin 페이지 공통 스타일 조정*/
 .adminPage .form-check {
     display: block;
     min-height: 1.5rem;

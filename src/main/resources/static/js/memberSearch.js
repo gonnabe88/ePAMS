@@ -1,17 +1,21 @@
-// 선택된 항목 데이터를 저장할 전역 변수
+// awesomplete에서 선택된 항목 데이터를 저장할 전역 변수
 let selectedItem = null; // 선택된 항목을 저장할 변수
 
 // 직원 검색 조회 버튼 클릭 시 이벤트
 const search = () => {
-    const text = $("#searchMember").val();
     const header = $("meta[name='_csrf_header']").attr('content');
     const token = $("meta[name='_csrf']").attr('content');
+
+    if(!selectedItem) {
+        popupMsg("입력 오류", "검색할 직원을 선택하여 입력해주세요.", "error");
+        return;
+    }
+
     $.ajax({
         type: "post",
         url: "/search",
-        dataType: "json",
         data: {
-            "text": selectedItem ? selectedItem.realvalue : "" // 선택된 항목의 실제 값을 사용
+            "text": selectedItem ? selectedItem.userNo : "" // 선택된 항목의 실제 값을 사용
         },
         // CSRF Token
         beforeSend: function (xhr) {
@@ -20,6 +24,9 @@ const search = () => {
         complete: function(data) {
             //console.log("search reply: " + data.responseText);
             $("#memberList").html(data.responseText);
+        },
+        error: function(error) {
+            popupMsg("입력 오류", 'Error fetching data : '+error, "error");
         }
     });
 };
@@ -75,18 +82,13 @@ $(document).ready(() => {
             return itemElement;
         },
         replace: function(text) {
-            this.input.value = text.value;
-            // 선택된 항목을 저장한 후 이를 전역 변수에 설정
-            console.log("searchText: " + (selectedItem ? selectedItem.realvalue : "No selection")); // 선택된 항목 확인
+            this.input.value = text.value.userName; // 입력폼에 선택된 항목의 이름을 표시
+            selectedItem = text.value;  // 전체 객체를 전역변수 selectedItem에 저장
         },
         filter: function(text, input) {
             const terms = input.trim().toLowerCase().split(/\s+/);
             return terms.every(term => text.label.toLowerCase().includes(term));
         }
-    });
-
-    inputElement.addEventListener("awesomplete-select", function(event) {
-        selectedItem = awesomplete._list.find(item => item.value === event.text.value);
     });
 
     $.ajax({
@@ -105,8 +107,7 @@ $(document).ready(() => {
                     `;
                     list.push({
                         label: itemText,
-                        value: item.userName,
-                        realvalue : item.userNo
+                        value: item
                     });
                 });
             }

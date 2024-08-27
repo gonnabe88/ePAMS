@@ -6,48 +6,54 @@
 
 <head>
     <th:block layout:fragment="css">
+        <link rel="stylesheet" href="/extensions/litepicker/litepicker.css"/>
+        <link rel="stylesheet" href="/extensions/select2/select2.css"/>
+        <link rel="stylesheet" href="/extensions/fullcalendar/main.min.css">
     </th:block>
 </head>
 
 <body>
 <div layout:fragment="contents">
-    <div class="dtmRegister container">
+    <div class="dtmRegDetail container">
         <h1 class="page-title">근태 신청</h1>
-        <form th:action="@{/dtm/register}" method="post">
-            <div class="main-content">
-                <div id="searchDiv">
-                    <div class="container">
-                        <div class="form-group">
-                            <label for="dtmType">근태 종류</label>
-                            <br>
-                            <select id="dtmType" name="dtmType" required>
-                                <option value="">선택하세요</option>
-                                <option value="vacation">휴가</option>
-                                <option value="sick">병가</option>
-                                <option value="overtime">연장근무</option>
-                                <!-- 추가 옵션들... -->
-                            </select>
-                        </div>
-                        <div class="form-group date-group">
-                            <div class="date-input">
-                                <label for="startDate">시작일</label>
-                                <input type="date" id="startDate" name="startDate" th:value="${param.date}" required>
-                            </div>
-                            <div class="date-input">
-                                <label for="endDate">종료일</label>
-                                <input type="date" id="endDate" name="endDate" th:value="${param.date}" required>
-                            </div>
-                        </div>
-                        <div class="button-group">
-                            <button type="button" class="btn btn-back">돌아가기</button>
-                            <button type="submit" class="btn btn-submit">신청하기</button>
-                        </div>
+        <div class="container">
+            <div class="card-body p-3">
+                <h6><span th:text="${langList['DTM_KIND']}"></span></h6>
+                <select class="form-control select2" aria-label="DTM Reason Code register" name="select" id="list">
+                    <option value="" selected><span th:text="${langList['ENTIRE']}"></span></option>
+                </select>
+            </div>
+            <div class="card-body p-3">
+                <h6><span th:text="${langList['DTM_PERIOD']}"></span></h6>
+                <div class="date-input-container">
+                    <div class="date-input">
+                        <input type="date" id="startDate" name="startDate" th:value="${param.date}" required>
+                    </div>
+                    <div class="date-input">
+                        <input type="date" id="endDate" name="endDate" th:value="${param.date}" required>
                     </div>
                 </div>
             </div>
-
-        </form>
+<!--            <div class="card-body p-3">-->
+<!--                <div id="calendar"></div>-->
+<!--            </div>-->
+            <div class="button-group">
+                <button type="button" class="btn btn-back">돌아가기</button>
+                <button type="submit" class="btn btn-submit">신청하기</button>
+            </div>
+        </div>
     </div>
 </div>
+
+<th:block layout:fragment="script">
+    <script src="/js/moveBack.js"></script>
+    <script src='/extensions/fullcalendar/main.min.js'></script>
+    <script src='/extensions/fullcalendar/initFc.js'></script>
+    <script src="/extensions/select2/select2.full.js"></script>
+    <script src="/js/searchForm.js"></script>
+    <script src="/js/selectForm.js"></script>
+<!--    <script src="/js/index.js"></script>-->
+    <script src="/js/dtmAppl.js"></script>
+</th:block>
 </body>
 </html>

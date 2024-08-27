@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
             add: {
                 text: '신청하기',
                 click: function() {
-                    var url = '/dtm/DtmRegister';
+                    var url = '/dtm/dtmRegDetail';
                     if (selectedDateStr) {
                         url += '?date=' + selectedDateStr;
                     }

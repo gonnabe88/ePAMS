@@ -7,6 +7,3 @@ pluginManagement {
 }
 
 rootProject.name = 'ePAMS'
-
-// 의존성 레포지토리 캐시를 프로젝트 폴더 내부로 설정
-gradle.ext.gradleUserHome = "${rootDir}/.gradle"

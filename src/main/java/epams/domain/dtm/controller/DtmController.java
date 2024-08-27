@@ -17,7 +17,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import epams.domain.com.admin.service.HtmlLangDetailService;
 import epams.domain.com.board.dto.BoardDTO;
@@ -120,30 +119,23 @@ public class DtmController<S extends Session> {
         return VIEW;
     }
 
-    @GetMapping("/main2")
+    @GetMapping("/dtmReg")
     public String dtmMain2(@PageableDefault(page = 1) final Pageable pageable, final Model model) {
-        final String VIEW = "dtm/main2";
+        final String VIEW = "dtm/dtmReg";
 
         return VIEW;
     }
 
-    @GetMapping("/DtmRegister")
+    @GetMapping("/dtmRegDetail")
     public String dtmRegister(
             @RequestParam("date") String date,
             Model model
     ) {
-        final String VIEW = "dtm/DtmRegister";
+        final String VIEW = "dtm/dtmRegDetail";
 
         if (date != null) {
             model.addAttribute("selectedDate", date);
         }
-
-        return VIEW;
-    }
-
-    @GetMapping("/calendar2")
-    public String dtmcalendar2(@PageableDefault(page = 1) final Pageable pageable, final Model model) {
-        final String VIEW = "dtm/calendar2";
 
         return VIEW;
     }

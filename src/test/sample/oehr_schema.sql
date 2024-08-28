@@ -494,7 +494,7 @@ CREATE TABLE OEHR.THURXE_CWUSRM (
 -- DROP TABLE OEHR.THURXE_CWCRDM;
 
 CREATE TABLE OEHR.THURXE_CWCRDM (
-                                    WEBA_SNO NUMBER(10,0) DEFAULT "EHR"."ISEQ$$_106666".nextval,
+                                    WEBA_SNO NUMBER(10,0) DEFAULT "OEHR"."ISEQ$$_106666".nextval,
                                     DEL_YN VARCHAR2(1),
                                     FST_ENT_DTM DATE,
                                     FST_ENT_USID VARCHAR2(14),

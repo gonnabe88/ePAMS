@@ -20,6 +20,7 @@
 	<link rel="stylesheet" href="/extensions/bootstrap/bootstrap.css">
 	<link rel="stylesheet" href="/css/kdb-custom.css">
 	<link rel="stylesheet" href="/extensions/bootstrapicons/bootstrap-icons.min.css">
+
 </head>
 
 <body>
@@ -105,6 +106,31 @@
 							<p>
 								<a class="font-bold" data-bs-toggle="modal" data-bs-target="#exampleModalScrollable">도움이 필요하신가요?</a>
 							</p>
+						</div>
+
+						<!-- 링크 -->
+						<div class="text-center mt-2 text-sm fs-8">
+							<p>
+								<a class="ossNotice font-bold" data-bs-toggle="modal" data-bs-target="#ossNoticeModal">OSS Notice</a>
+							</p>
+						</div>
+						<!-- 모달 -->
+						<div class="modal fade" id="ossNoticeModal" tabindex="-1" aria-labelledby="ossNoticeModal" aria-hidden="true">
+							<div class="modal-dialog modal-dialog-scrollable">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title" id="ossNoticeModalTitle">OSS Notice | ePAMS</h5>
+										<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+									</div>
+									<div class="modal-body p-0">
+										<!-- iframe을 사용하여 외부 HTML 파일을 로드 -->
+										<iframe src="/ossNotice"></iframe>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">닫기</button>
+									</div>
+								</div>
+							</div>
 						</div>
 
 						<!--scrolling content Modal -->

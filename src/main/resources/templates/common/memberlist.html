@@ -4,15 +4,24 @@
       xmlns:sec="http://www.thymeleaf.org">
 
 <div id="memberList">
-    <div th:if="${memberList == null or memberList.isEmpty()}">
-        <div class="animate__animated animate__fadeIn animate__slow">
-            <div class="shadow card">
-                <div class="card-body d-flex justify-content-center align-items-center">
-                    <h5>No Result</h5>
-                </div>
-            </div>
+    <div class="divider">
+        <div class="divider-text">
+            <h5 class="card-title">
+                <span>조회결과</span>
+<!--                <span th:text="${langList['SEARCH_EMP_03_STMT']}"></span>-->
+            </h5>
         </div>
     </div>
+
+<!--    <div th:if="${memberList == null or memberList.isEmpty()}">-->
+<!--        <div class="animate__animated animate__fadeIn animate__slow">-->
+<!--            <div class="shadow card">-->
+<!--                <div class="card-body d-flex justify-content-center align-items-center">-->
+<!--                    <h5>No Result</h5>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
     <section class="section" th:each="member: ${memberList}">
         <div class="animate__animated animate__fadeIn animate__slow">
             <div class="shadow card">

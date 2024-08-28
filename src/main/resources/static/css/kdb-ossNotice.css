@@ -1,0 +1,103 @@
+#ossNoticeModal .modal-body{
+    height: 80vh;
+}
+
+#ossNoticeModal iframe{
+    height: 100%;
+    width: 100%;
+}
+
+.legalNotice {
+    margin: 0;
+    color: #888;
+    font: 13px/1.25 sans-serif;
+    -webkit-text-size-adjust: 100%;
+}
+
+.title {
+    font-size: 1.25em;
+    padding: 1.25em 1em 1em;
+    margin: 0;
+    background: #000;
+    color: #fff;
+    position: relative;
+}
+
+.notice, .oss, .compliance, .licenses div {
+    padding: 10px;
+}
+
+.oss dl dt {
+    font-size: 14px;
+    font-weight: bold;
+    color: #000;
+    margin-top: 1em;
+}
+
+.oss dl dd {
+    margin-left: 20px;
+    word-break: break-all;
+}
+
+.oss a, .compliance a {
+    color: -webkit-link;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.oss i {
+    color: #333;
+}
+
+.oss, .compliance, .licenses div {
+    border-top: 1px solid #ccc;
+    padding-top: 1em;
+}
+
+.compliance h3, .licenses h1, h3 {
+    color: #000;
+}
+
+.licenses div {
+    display: block;
+    word-wrap: break-word;
+}
+
+.licenses pre {
+    display: block;
+    word-wrap: break-word;
+    font-family: monospace;
+    margin: 1em 0px;
+    white-space: pre-wrap;
+}
+
+.license pre {
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    max-height: 200px;
+    border: 1px solid #ccc;
+}
+
+.license {
+    color: black;
+}
+
+.license a {
+    text-decoration: none;
+}
+
+details > summary::-webkit-details-marker {
+    display: none
+}
+
+.noti_kakao {
+    border: #fae000 solid 2px;
+    background: #fffded;
+    border-radius: 4px;
+    padding: 24px;
+    line-height: 20px;
+    font-size: 12px;
+    margin: 12px 0;
+    color: #222;
+}

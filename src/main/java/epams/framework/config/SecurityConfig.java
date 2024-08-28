@@ -130,7 +130,7 @@ public class SecurityConfig{
 		        authorizeRequests
 		            .requestMatchers(
 		                "/actuator/prometheus",
-		                "/manifest.webmanifest", "/login", "/logout", "/register",
+		                "/manifest.webmanifest", "/login", "/logout", "/ossNotice",
 		                "/api/**", 
 		                "/css/**",
 		                "/js/**",

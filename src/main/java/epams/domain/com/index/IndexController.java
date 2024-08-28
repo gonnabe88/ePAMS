@@ -188,4 +188,15 @@ public class IndexController<S extends Session> {
 
         return "common/memberlist";
     }
+
+    /**
+     * @author K140024
+     * @implNote 검색 기능을 수행하는 메서드
+     * @since 2024-06-11
+     */
+    @GetMapping("/ossNotice")
+    public String ossNotice(final Model model) {
+
+        return "common/ossNotice";
+    }
 }

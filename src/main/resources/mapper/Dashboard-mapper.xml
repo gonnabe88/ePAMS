@@ -12,7 +12,7 @@
             SUM(CASE WHEN t.LGN_SCS_YN = '0' THEN 1 ELSE 0 END) AS failureCount
         FROM (
                  SELECT DISTINCT ENO, TO_CHAR(FST_ENT_DTM, 'YYYY-MM-DD') AS createdDate, LGN_SCS_YN
-                 FROM THURXE_CLOGNL
+                 FROM OEHR.THURXE_CLOGNL
              ) t
         GROUP BY
             t.createdDate
@@ -27,7 +27,7 @@
             SUM(CASE WHEN LGN_SCS_YN = '1' THEN 1 ELSE 0 END) AS successCount,
             SUM(CASE WHEN LGN_SCS_YN = '0' THEN 1 ELSE 0 END) AS failureCount
         FROM
-            THURXE_CLOGNL
+            OEHR.THURXE_CLOGNL
         GROUP BY
             TO_CHAR(FST_ENT_DTM, 'YYYY-MM-DD')
         ORDER BY
@@ -40,7 +40,7 @@
             TO_CHAR(FST_ENT_DTM, 'YYYY-MM-DD') AS createdDate,
             COUNT(*) AS totalCount
         FROM
-            THURXE_CVIEWL
+            OEHR.THURXE_CVIEWL
         GROUP BY
             TO_CHAR(FST_ENT_DTM, 'YYYY-MM-DD')
         ORDER BY
@@ -53,7 +53,7 @@
             CER_KD_NM AS category,
             COUNT(*) AS totalCount
         FROM
-            THURXE_CLOGNL
+            OEHR.THURXE_CLOGNL
         WHERE
             LGN_SCS_YN = '1'
         GROUP BY

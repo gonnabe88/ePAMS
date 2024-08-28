@@ -19,26 +19,26 @@
 
     <!-- 특정 계정에 대한 역할 1건 데이터 조회 -->
     <select id="findOneRoleByUsername" parameterType="iamUserDTO" resultMap="roleMap">
-        SELECT * FROM THURXE_CROLEM
+        SELECT * FROM OEHR.THURXE_CROLEM
         WHERE
         ENO = #{username}
     </select>
 
     <!-- 모든 데이터 조회 -->
     <select id="findAll" resultMap="roleMap">
-        SELECT * FROM THURXE_CROLEM
+        SELECT * FROM OEHR.THURXE_CROLEM
     </select>
 
     <!-- 기본키 데이터 중복여부 조회 -->
     <select id="countById" parameterType="String" resultType="int">
         SELECT COUNT(*)
-        FROM THURXE_CROLEM
+        FROM OEHR.THURXE_CROLEM
         WHERE ENO = #{username}
     </select>
 
     <!-- 신규 데이터 추가 -->
     <insert id="insert" parameterType="roleDTO">
-        INSERT INTO THURXE_CROLEM(
+        INSERT INTO OEHR.THURXE_CROLEM(
         ENO,
         ATH_ID,
         DEL_YN,
@@ -64,13 +64,13 @@
 
     <!-- 기존 데이터 삭제 -->
     <delete id="delete" parameterType="roleDTO">
-        DELETE FROM THURXE_CROLEM
+        DELETE FROM OEHR.THURXE_CROLEM
         WHERE ENO = #{username}
     </delete>
 
     <!-- 기존 데이터 업데이트 -->
     <update id="update" parameterType="roleDTO">
-        UPDATE THURXE_CROLEM
+        UPDATE OEHR.THURXE_CROLEM
         SET
         ATH_ID = #{roleId},
         DEL_YN = #{deleteYn},

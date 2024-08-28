@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const toggleChange = () => {
         const isChecked = checkbox.checked;
-        passwordInput.disabled = isChecked;
+        //passwordInput.disabled = isChecked;
         smsInput.disabled = isChecked;
         kakaoInput.disabled = isChecked;
         otpInput.disabled = isChecked;
@@ -44,12 +44,12 @@ document.addEventListener("DOMContentLoaded", () => {
         e.preventDefault(); // Prevent form's default submission
         const password = passwordInput.value;
         const encodedPassword = btoa(encodeURIComponent(password));
-        passwordInput.value = encodedPassword;
+        //passwordInput.value = encodedPassword;
 
         if (checkbox.checked) {
             webauthn(e); // Call webauthn function
         } else {
-            normal(e); // Call normal function
+            normal(e, encodedPassword); // Call normal function
         }
     });
 
@@ -198,12 +198,15 @@ const webauthn = (e) => {
 
 
 // 일반인증 호출(2단계)
-const normal = (e) => {
+const normal = (e, encodedPassword) => {
     
     const header = document.querySelector('meta[name="_csrf_header"]').content;
     const token = document.querySelector('meta[name="_csrf"]').content;
     e.preventDefault();
     const formData = new FormData(e.target);
+    // 인코딩된 패스워드를 폼 데이터에 추가
+    formData.set("password", encodedPassword);
+
     fetch('/login', {
         method: 'POST',
         headers: {
@@ -222,7 +225,7 @@ const normal = (e) => {
         if (data.result) {
             console.log("패스워드 로그인 성공:", data);
             // 패스워드 인증 성공 시
-            login();
+            login(encodedPassword);
         } else {
             console.log("패스워드 로그인 실패:", data);
             // 패스워드 인증 실패 시
@@ -236,11 +239,11 @@ const normal = (e) => {
 }
 
 // 로그인 처리
-const login = () => {
+const login = (encodedPassword) => {
 
     const username = document.getElementById("username").value.toUpperCase();
     //const password = btoa(encodeURIComponent(document.getElementById("password").value));
-    const password = document.getElementById("password").value;
+    const password = encodedPassword;
     const MFA = $('input[name="MFA"]:checked').val();
     console.log("2단계 로그인 함수 : ", MFA);
     const header = $("meta[name='_csrf_header']").attr('content');

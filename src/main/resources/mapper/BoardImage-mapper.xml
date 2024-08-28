@@ -25,7 +25,7 @@
         <selectKey keyProperty="seqId" resultType="long" order="BEFORE">
             SELECT "EHR"."BLB_IMG_SNO".nextval FROM dual
         </selectKey>
-        INSERT INTO THURXE_CBRDIM
+        INSERT INTO OEHR.THURXE_CBRDIM
         (
         BLB_IMG_SNO,
         ORC_FL_NM,
@@ -56,7 +56,7 @@
     </insert>
 
     <select id="selectBoardImage" parameterType="String" resultMap="boardImageMap">
-        SELECT * FROM THURXE_CBRDIM
+        SELECT * FROM OEHR.THURXE_CBRDIM
         WHERE
         SVR_FL_NM = #{storedFileName}
     </select>

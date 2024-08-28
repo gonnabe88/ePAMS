@@ -71,7 +71,7 @@ spring:
   jpa:
     open-in-view: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     show-sql: false
@@ -79,3 +79,4 @@ spring:
       dialect: org.hibernate.dialect.MySQL8InnoDBDialect
       hibernate:
         "[format_sql]": true
+        default_schema: OEHR

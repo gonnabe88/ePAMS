@@ -1,3 +1,18 @@
+.ossNotice {
+    color : #6C757D;
+}
+#ossNoticeModal .modal-dialog-scrollable .modal-body{
+    height: 80vh;
+    overflow-y: hidden;
+}
+#ossNoticeModal iframe{
+    height: 100%;
+    width: 100%;
+}
+
+#searchDiv .mainCard {
+    min-height: 400px;
+}
 
 /*직원검색 card 스타일 조정*/
 #memberList .card {

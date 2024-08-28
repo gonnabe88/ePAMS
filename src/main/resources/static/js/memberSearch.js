@@ -44,25 +44,47 @@ $(document).ready(() => {
     let placeholderIndex = 0;
     let charIndex = 0;
     let typingInterval;
+    let isFocused = false; // input이 포커스되었는지 여부를 저장하는 변수
 
     function typePlaceholder() {
-        if (charIndex < placeholders[placeholderIndex].length) {
+        if (!isFocused && charIndex < placeholders[placeholderIndex].length) {
             inputElement.setAttribute("placeholder", placeholders[placeholderIndex].substring(0, charIndex + 1));
             charIndex++;
         } else {
             clearInterval(typingInterval);
-            setTimeout(startTypingEffect, 2000); // 2초 동안 전체 텍스트를 유지한 후 다음 placeholder로 넘어감
+            typingInterval = null; // 타이핑이 완료되면 interval 변수 초기화
+            if (!isFocused) { // focus 상태가 아닐 때만 타이핑 재개
+                setTimeout(startTypingEffect, 2000); // 2초 동안 전체 텍스트를 유지한 후 다음 placeholder로 넘어감
+            }
         }
     }
 
     function startTypingEffect() {
-        placeholderIndex = (placeholderIndex + 1) % placeholders.length;
-        charIndex = 0;
-        inputElement.setAttribute("placeholder", ""); // 타이핑 효과 전에 placeholder 초기화
-        typingInterval = setInterval(typePlaceholder, 150); // 150ms 간격으로 타이핑 효과 적용
+        if (!isFocused) { // isFocused가 false일 때만 시작
+            placeholderIndex = (placeholderIndex + 1) % placeholders.length;
+            charIndex = 0;
+            inputElement.setAttribute("placeholder", ""); // 타이핑 효과 전에 placeholder 초기화
+            typingInterval = setInterval(typePlaceholder, 150); // 150ms 간격으로 타이핑 효과 적용
+        }
     }
 
     startTypingEffect(); // 초기 타이핑 효과 시작
+
+    // searchMember 입력 필드가 클릭되었을 때 placeholder 숨기고 애니메이션 중지
+    inputElement.addEventListener('focus', () => {
+        clearInterval(typingInterval);  // 애니메이션 중지
+        typingInterval = null; // interval 변수 초기화
+        inputElement.setAttribute("placeholder", "");
+        isFocused = true;  // 포커스 상태를 true로 설정
+    });
+
+    // searchMember 입력 필드가 포커스를 잃었을 때 애니메이션 재개
+    inputElement.addEventListener('blur', () => {
+        isFocused = false;  // 포커스 상태를 false로 설정
+        if (!inputElement.value) {  // 필드가 비어 있을 때만 애니메이션 재개
+            startTypingEffect();
+        }
+    });
 
     const awesomplete = new Awesomplete(inputElement, {
         minChars: 2,
@@ -84,6 +106,7 @@ $(document).ready(() => {
         replace: function(text) {
             this.input.value = text.value.userName; // 입력폼에 선택된 항목의 이름을 표시
             selectedItem = text.value;  // 전체 객체를 전역변수 selectedItem에 저장
+            search();
         },
         filter: function(text, input) {
             const terms = input.trim().toLowerCase().split(/\s+/);

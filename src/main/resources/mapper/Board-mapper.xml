@@ -24,7 +24,7 @@
 
     <!-- BoardEntity를 조회하는 메소드 정의 (for association) -->
     <select id="selectBoardById" parameterType="Long" resultMap="boardMap">
-        SELECT * FROM THURXE_CBRDMM
+        SELECT * FROM OEHR.THURXE_CBRDMM
         WHERE
         BLB_SNO = #{boardId}
     </select>
@@ -34,7 +34,7 @@
         <selectKey keyProperty="seqId" resultType="long" order="BEFORE">
             SELECT "EHR"."BLB_SNO".nextval FROM dual
         </selectKey>
-        INSERT INTO THURXE_CBRDMM(
+        INSERT INTO OEHR.THURXE_CBRDMM(
         BLB_SNO,
         BLB_NM,
         DUPR_ENO,
@@ -70,7 +70,7 @@
 
     <!-- 특정 게시물 업데이트 -->
     <update id="update" parameterType="boardDTO">
-        UPDATE THURXE_CBRDMM
+        UPDATE OEHR.THURXE_CBRDMM
         SET BLB_NM=#{boardTitle},
         BLB_CONE=#{boardContents},
         FL_APG_YN=#{fileAttached},
@@ -82,14 +82,14 @@
     <!-- Paging 규칙에 따라 전체 게시물 조회 -->
     <select id="findAll" resultMap="boardMap">
         SELECT *
-        FROM THURXE_CBRDMM
+        FROM OEHR.THURXE_CBRDMM
         ORDER BY BLB_SNO ${sortDirection}
         OFFSET #{offset} ROWS FETCH NEXT #{limit} ROWS ONLY
     </select>
 
     <!-- 전체 데이터 개수 조회 -->
     <select id="count" resultType="long">
-        SELECT COUNT(*) FROM THURXE_CBRDMM
+        SELECT COUNT(*) FROM OEHR.THURXE_CBRDMM
     </select>
 
     <!-- 특정 게시물 조회 -->
@@ -108,17 +108,17 @@
             GUID_PRG_SNO,
             LST_CHG_USID,
             LST_CHG_DTM
-        FROM THURXE_CBRDMM WHERE BLB_SNO=#{seqId}
+        FROM OEHR.THURXE_CBRDMM WHERE BLB_SNO=#{seqId}
     </select>
 
     <!-- 특정 게시물 조회 시 HIT+1 -->
     <update id="updateHits" parameterType="Long">
-        UPDATE THURXE_CBRDMM SET NAC_INQ_NBR=NAC_INQ_NBR+1 WHERE BLB_SNO=#{seqId}
+        UPDATE OEHR.THURXE_CBRDMM SET NAC_INQ_NBR=NAC_INQ_NBR+1 WHERE BLB_SNO=#{seqId}
     </update>
 
     <!-- 특정 게시물 삭제 -->
     <delete id="delete" parameterType="Long">
-        DELETE FROM THURXE_CBRDMM WHERE BLB_SNO=#{seqId}
+        DELETE FROM OEHR.THURXE_CBRDMM WHERE BLB_SNO=#{seqId}
     </delete>
 
 </mapper>

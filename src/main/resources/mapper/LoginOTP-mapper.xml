@@ -21,7 +21,7 @@
 
     <!-- 모든 데이터 조회 -->
     <select id="findAll" resultMap="loginOtpMap">
-        SELECT * FROM THURXE_COTPIM
+        SELECT * FROM OEHR.THURXE_COTPIM
     </select>
 
     <!-- 모든 데이터 조회 -->
@@ -29,7 +29,7 @@
         SELECT *
         FROM (
         SELECT *
-        FROM THURXE_COTPIM
+        FROM OEHR.THURXE_COTPIM
         WHERE ENO = #{username}
             AND FST_ENT_DTM > SYSDATE - INTERVAL '3' MINUTE
             ORDER BY FST_ENT_DTM DESC
@@ -40,7 +40,7 @@
     <!-- 기본키 데이터 중복여부 조회 -->
     <select id="countById" parameterType="Long" resultType="int">
         SELECT COUNT(*)
-        FROM THURXE_COTPIM
+        FROM OEHR.THURXE_COTPIM
         WHERE OTP_ISN_SNO = #{seqId}
     </select>
 
@@ -49,7 +49,7 @@
         <selectKey keyProperty="seqId" resultType="long" order="BEFORE">
             SELECT "EHR"."OTP_ISN_SNO".nextval FROM dual
         </selectKey>
-        INSERT INTO THURXE_COTPIM (
+        INSERT INTO OEHR.THURXE_COTPIM (
             OTP_ISN_SNO,
             ENO,
             OTP_SMS_CER_NO,
@@ -79,7 +79,7 @@
 
     <!-- 기존 데이터 삭제 -->
     <delete id="delete" parameterType="loginOtpDTO">
-        DELETE FROM THURXE_COTPIM
+        DELETE FROM OEHR.THURXE_COTPIM
         WHERE OTP_ISN_SNO = #{seqId}
     </delete>
 

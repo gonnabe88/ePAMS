@@ -19,19 +19,19 @@
 
     <!-- 모든 데이터 조회 -->
     <select id="findAll" resultMap="htmlMap">
-        SELECT * FROM THURXE_CHTMLM
+        SELECT * FROM OEHR.THURXE_CHTMLM
     </select>
 
     <!-- 기본키 데이터 중복여부 조회 -->
     <select id="countById" parameterType="String" resultType="int">
         SELECT COUNT(*)
-        FROM THURXE_CHTMLM
+        FROM OEHR.THURXE_CHTMLM
         WHERE HTML_FL_PTH = #{html}
     </select>
 
     <!-- 신규 데이터 추가 -->
     <insert id="insert" parameterType="htmlDTO">
-        INSERT INTO THURXE_CHTMLM (
+        INSERT INTO OEHR.THURXE_CHTMLM (
             HTML_FL_PTH,
             HTML_FL_NM,
             DEL_YN,
@@ -57,13 +57,13 @@
 
     <!-- 기존 데이터 삭제 -->
     <delete id="delete" parameterType="htmlDTO">
-        DELETE FROM THURXE_CHTMLM
+        DELETE FROM OEHR.THURXE_CHTMLM
         WHERE HTML_FL_PTH = #{html}
     </delete>
 
     <!-- 기존 데이터 업데이트(기본키 제외) -->
     <update id="update" parameterType="htmlDTO">
-        UPDATE THURXE_CHTMLM
+        UPDATE OEHR.THURXE_CHTMLM
         SET
             HTML_FL_NM = #{htmlName},
             DEL_YN = #{deleteYn},
@@ -77,7 +77,7 @@
 
     <!-- 신규 데이터 추가 또는 기존 데이터 업데이트 -->
     <insert id="insertUpdate" parameterType="htmlDTO">
-        MERGE INTO THURXE_CHTMLM target
+        MERGE INTO OEHR.THURXE_CHTMLM target
         USING (
             SELECT
                 #{html} AS HTML_FL_PTH,

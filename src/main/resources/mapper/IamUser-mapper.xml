@@ -32,7 +32,7 @@
 
     <!-- 모든 데이터 조회 -->
     <select id="findAllTeam" resultMap="teamSearchMap">
-        SELECT DISTINCT(A.TEM_C), A.TEM_NM FROM EHR.THURXE_CUSRLI A
+        SELECT DISTINCT(A.TEM_C), A.TEM_NM FROM OEHR.THURXE_CUSRLI A
     </select>
 
     <!-- 모든 데이터 조회 -->
@@ -46,8 +46,8 @@
                A.PT_C_NM,
                A.DTS_DTL_CONE,
                A.INLE_NO
-        FROM EHR.THURXE_CUSRLI A
-        INNER JOIN EHR.THURXE_CORGLI B ON A.BBR_C = B.PRLM_OGZ_C_CONE
+        FROM OEHR.THURXE_CUSRLI A
+        INNER JOIN OEHR.THURXE_CORGLI B ON A.BBR_C = B.PRLM_OGZ_C_CONE
     </select>
 
     <!-- ID/PW 일치 사용자 조회 -->
@@ -89,8 +89,8 @@
                A.PT_C_NM,
                A.DTS_DTL_CONE,
                A.INLE_NO
-        FROM EHR.THURXE_CUSRLI A
-                 INNER JOIN EHR.THURXE_CORGLI B ON A.BBR_C = B.PRLM_OGZ_C_CONE
+        FROM OEHR.THURXE_CUSRLI A
+                 INNER JOIN OEHR.THURXE_CORGLI B ON A.BBR_C = B.PRLM_OGZ_C_CONE
         WHERE
             A.ENO = #{searchValue}
     </select>

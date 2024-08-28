@@ -19,19 +19,19 @@
 
     <!-- 모든 데이터 조회 -->
     <select id="findAll" resultMap="htmlLangMap">
-        SELECT * FROM THURXE_CHTMLA
+        SELECT * FROM OEHR.THURXE_CHTMLA
     </select>
 
     <!-- 기본키 데이터 중복여부 조회 -->
     <select id="countById" parameterType="htmlLangDTO" resultType="int">
         SELECT COUNT(*)
-        FROM THURXE_CHTMLA
+        FROM OEHR.THURXE_CHTMLA
         WHERE HTML_FL_PTH = #{html} AND SRE_VCB_CDVA_ID = #{lang}
     </select>
 
     <!-- 신규 데이터 추가 -->
     <insert id="insert" parameterType="htmlLangDTO">
-        INSERT INTO THURXE_CHTMLA (
+        INSERT INTO OEHR.THURXE_CHTMLA (
             HTML_FL_PTH,
             SRE_VCB_CDVA_ID,
             DEL_YN,
@@ -57,7 +57,7 @@
 
     <!-- 기존 데이터 삭제 -->
     <delete id="delete" parameterType="htmlLangDTO">
-        DELETE FROM THURXE_CHTMLA
+        DELETE FROM OEHR.THURXE_CHTMLA
         WHERE HTML_FL_PTH = #{html} AND SRE_VCB_CDVA_ID = #{lang}
     </delete>
 

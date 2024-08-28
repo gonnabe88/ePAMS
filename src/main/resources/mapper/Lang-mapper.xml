@@ -20,24 +20,24 @@
 
     <!-- 모든 데이터 조회 -->
     <select id="findAll" resultMap="langMap">
-        SELECT * FROM THURXE_CLANGM
+        SELECT * FROM OEHR.THURXE_CLANGM
     </select>
 
     <!-- 특정 ID 데이터 조회 -->
     <select id="findById" parameterType="String" resultMap="langMap">
-        SELECT * FROM THURXE_CLANGM
+        SELECT * FROM OEHR.THURXE_CLANGM
         WHERE SRE_VCB_CDVA_ID = #{SRE_VCB_CDVA_ID}
     </select>
 
     <!-- 기본키 데이터 중복여부 조회 -->
     <select id="countById" parameterType="String" resultType="int">
         SELECT COUNT(*)
-        FROM THURXE_CLANGM WHERE SRE_VCB_CDVA_ID = #{SRE_VCB_CDVA_ID}
+        FROM OEHR.THURXE_CLANGM WHERE SRE_VCB_CDVA_ID = #{SRE_VCB_CDVA_ID}
     </select>
 
     <!-- 신규 데이터 추가 -->
     <insert id="insert" parameterType="langDTO">
-        INSERT INTO THURXE_CLANGM (
+        INSERT INTO OEHR.THURXE_CLANGM (
             SRE_VCB_CDVA_ID,
             SRE_VCB_NM,
             SRE_VCB_KD_NM,
@@ -65,14 +65,14 @@
 
     <!-- 기존 데이터 삭제 -->
     <delete id="delete" parameterType="langDTO">
-        DELETE FROM THURXE_CLANGM
+        DELETE FROM OEHR.THURXE_CLANGM
         WHERE
             SRE_VCB_CDVA_ID = #{lang}
     </delete>
 
     <!-- 기존 데이터 업데이트 -->
     <update id="update" parameterType="langDTO">
-        UPDATE THURXE_CLANGM
+        UPDATE OEHR.THURXE_CLANGM
         SET
             SRE_VCB_NM = #{langName},
             SRE_VCB_KD_NM = #{langType},
@@ -87,7 +87,7 @@
 
     <!-- 신규 데이터 추가 또는 기존 데이터 업데이트 -->
     <insert id="insertUpdate" parameterType="langDTO">
-        INSERT INTO THURXE_CLANGM (
+        INSERT INTO OEHR.THURXE_CLANGM (
             SRE_VCB_CDVA_ID,
             SRE_VCB_NM,
             SRE_VCB_KD_NM,

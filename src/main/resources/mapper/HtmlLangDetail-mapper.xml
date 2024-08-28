@@ -13,9 +13,9 @@
             CH.SRE_VCB_CDVA_ID     AS lang,
             C.SRE_VCB_NM      AS langName
         FROM 
-            THURXE_CHTMLA CH,
-            THURXE_CLANGM C,
-            THURXE_CHTMLM H
+            OEHR.THURXE_CHTMLA CH,
+            OEHR.THURXE_CLANGM C,
+            OEHR.THURXE_CHTMLM H
         WHERE 
             CH.HTML_FL_PTH = H.HTML_FL_PTH AND
             CH.SRE_VCB_CDVA_ID     = C.SRE_VCB_CDVA_ID AND

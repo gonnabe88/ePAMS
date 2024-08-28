@@ -26,7 +26,7 @@
         <selectKey keyProperty="seqId" resultType="long" order="BEFORE">
             SELECT "EHR"."BLB_APG_FL_SNO".nextval FROM dual
         </selectKey>
-        INSERT INTO THURXE_CBRDFM
+        INSERT INTO OEHR.THURXE_CBRDFM
         (
         BLB_APG_FL_SNO,
         ORC_FL_NM,
@@ -58,19 +58,19 @@
     </insert>
 
     <select id="findFile" parameterType="Long" resultMap="boardFileMap">
-        SELECT * FROM THURXE_CBRDFM
+        SELECT * FROM OEHR.THURXE_CBRDFM
         WHERE
         BLB_SNO = #{boardId}
     </select>
 
     <delete id="deleteFile" parameterType="Long">
-        DELETE FROM THURXE_CBRDFM
+        DELETE FROM OEHR.THURXE_CBRDFM
         WHERE
         BLB_APG_FL_SNO = #{seqId}
     </delete>
 
     <select id="findByFileId" parameterType="Long" resultMap="boardFileMap">
-        SELECT * FROM THURXE_CBRDFM
+        SELECT * FROM OEHR.THURXE_CBRDFM
         WHERE
         BLB_APG_FL_SNO = #{seqId}
     </select>

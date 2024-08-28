@@ -23,13 +23,13 @@
 
     <!-- 모든 데이터 조회 -->
     <select id="findAll" resultMap="viewLogMap">
-        SELECT * FROM THURXE_CVIEWL
+        SELECT * FROM OEHR.THURXE_CVIEWL
     </select>
 
     <!-- 기본키 데이터 중복여부 조회 -->
     <select id="countById" parameterType="Long" resultType="int">
         SELECT COUNT(*)
-        FROM THURXE_CVIEWL
+        FROM OEHR.THURXE_CVIEWL
         WHERE PAG_LOG_SNO = #{seqId}
     </select>
 
@@ -38,7 +38,7 @@
         <selectKey keyProperty="seqId" resultType="long" order="BEFORE">
             SELECT "EHR"."PAG_LOG_SNO".nextval FROM dual
         </selectKey>
-        INSERT INTO THURXE_CVIEWL (
+        INSERT INTO OEHR.THURXE_CVIEWL (
             PAG_LOG_SNO,
             CTRL_NM,
             MTH_NM,

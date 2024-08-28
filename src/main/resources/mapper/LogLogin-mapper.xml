@@ -21,13 +21,13 @@
 
     <!-- 모든 데이터 조회 -->
     <select id="findAll" resultMap="logLoginMap">
-        SELECT * FROM THURXE_CLOGNL
+        SELECT * FROM OEHR.THURXE_CLOGNL
     </select>
 
     <!-- 기본키 데이터 중복여부 조회 -->
     <select id="countById" parameterType="Long" resultType="int">
         SELECT COUNT(*)
-        FROM THURXE_CLOGNL
+        FROM OEHR.THURXE_CLOGNL
         WHERE LGN_LOG_SNO = #{seqId}
     </select>
 
@@ -36,7 +36,7 @@
         <selectKey keyProperty="seqId" resultType="long" order="BEFORE">
             SELECT "EHR"."LGN_LOG_SNO".nextval FROM dual
         </selectKey>
-        INSERT INTO THURXE_CLOGNL (
+        INSERT INTO OEHR.THURXE_CLOGNL (
             LGN_LOG_SNO,
             ENO,
             CER_KD_NM,

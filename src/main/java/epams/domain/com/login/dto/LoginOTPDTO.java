@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 /***
  * @author 140024
- * @implNote THURXE_COTPIM (otp 발급내역)
+ * @implNote OEHR.THURXE_COTPIM (otp 발급내역)
  * @since 2024-06-09
  */
 @EqualsAndHashCode(callSuper = true)

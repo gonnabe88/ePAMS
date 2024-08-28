@@ -75,7 +75,7 @@ public class LangEntity extends BaseEntity implements Serializable {
      */
     @ManyToMany
     @JoinTable(
-        name = "THURXE_CHTMLA",
+        name = "OEHR.THURXE_CHTMLA",
         joinColumns = @JoinColumn(name = "SRE_VCB_CDVA_ID", foreignKey = @ForeignKey(name = "FK_THURXE_CHTMLA_SRE_VCB_CDVA_ID")),
         inverseJoinColumns = @JoinColumn(name = "HTML_FL_PTH", foreignKey = @ForeignKey(name = "FK_THURXE_CHTMLA_HTML_FL_PTH"))
     )

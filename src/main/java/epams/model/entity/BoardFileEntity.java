@@ -81,7 +81,7 @@ public class BoardFileEntity extends BaseEntity {
      * @since 2024-06-10
      */
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "BLB_SNO", foreignKey = @ForeignKey(name = "FK_THURXE_CBRDFM_BLB_SNO", foreignKeyDefinition = "FOREIGN KEY (BLB_SNO) REFERENCES THURXE_CBRDMM (BLB_SNO) ON DELETE CASCADE"))
+    @JoinColumn(name = "BLB_SNO", foreignKey = @ForeignKey(name = "FK_THURXE_CBRDFM_BLB_SNO", foreignKeyDefinition = "FOREIGN KEY (BLB_SNO) REFERENCES OEHR.THURXE_CBRDMM (BLB_SNO) ON DELETE CASCADE"))
     @Comment("게시판일련번호")
     private BoardEntity boardEntity;
     

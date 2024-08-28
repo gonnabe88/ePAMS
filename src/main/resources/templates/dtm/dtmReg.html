@@ -2,28 +2,70 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:sec="http://www.thymeleaf.org" layout:decorate="~{common/layout/layout}">
-
 <head>
-    <th:block layout:fragment="css">
-        <link rel="stylesheet" href="/extensions/fullcalendar/main.min.css">
-    </th:block>
 </head>
-
 <body>
 <div layout:fragment="contents">
-    <div class="fc">
+    <div class="dtmReg">
+        <h1 class="page-title">근태신청</h1>
         <div class="container">
-            <h1 class="page-title">근태신청</h1>
-            <div id="calendar"></div>
+            <div class="card">
+                <div class="card-body">
+                    <div id="calendar"></div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
-<!-- (start) private script -->
+
 <th:block layout:fragment="script">
-    <script src='/extensions/fullcalendar/main.min.js'></script>
-    <script src='/extensions/fullcalendar/initFc.js'></script>
+    <script src="/extensions/fullcalendar/index.global.js"></script>
+    <script src="/extensions/fullcalendar/initfullCalendar.js"></script>
 </th:block>
-<!-- (end) private script -->
+
 </body>
 </html>
+<!--<head>-->
+<!--    <style>-->
+<!--        /* .card */-->
+<!--        .card {-->
+<!--            width: 100%;-->
+<!--            max-width: 600px;-->
+<!--            margin: 0 auto;-->
+<!--            background-color: #fff;-->
+<!--            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);-->
+<!--            border-radius: 8px;-->
+<!--        }-->
+
+<!--        /* .card-body */-->
+<!--        .card-body {-->
+<!--            display: flex;-->
+<!--            justify-content: center;-->
+<!--            padding: 20px;-->
+<!--        }-->
+
+<!--        /* .card-body 내부의 #calendar */-->
+<!--        #calendar {-->
+<!--            /* 필요에 따라 너비 조정 */-->
+<!--            width: 100%;-->
+<!--            max-width: 400px;-->
+<!--            text-align: center; /* 텍스트 가운데 정렬 (선택 사항) */-->
+<!--        }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--<div layout:fragment="contents">-->
+<!--    <div class="dtmReg">-->
+<!--        <div class="container">-->
+<!--            <h1 class="page-title">근태신청</h1>-->
+<!--            <div class="card">-->
+<!--                <div class="card-body">-->
+<!--                    <div id="calendar">Calendar Content</div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+<!--</body>-->
+<!--</html>-->

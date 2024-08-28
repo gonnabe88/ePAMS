@@ -236,126 +236,82 @@ mark {
     text-overflow: ellipsis;
 }
 
-/*근태신청 캘린더 시작*/
-.fc .container {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 2rem;
+/*근태 신청화면 card*/
+.dtmReg .container{
+    display: flex;
+    justify-content: center;
 }
 
-.fc #calendar {
-    background-color: #fff;
-    border-radius: 15px;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-    overflow: hidden;
-    padding: 20px;
-}
-.fc-theme-standard td, .fc-theme-standard th {
-    border: none !important;
-}
-.fc-scrollgrid {
-    border: none !important;
+.dtmReg .card {
+    width: 90%;
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
 }
 
-.fc-col-header-cell {
-    background-color: #f8f9fa;
-    padding: 10px 0;
+/* full calender 시작*/
+.fc {
+    font-size: clamp(0.8em, 2vw, 5em); /* 최소 0.8em, 최대 5em, 기본 값은 2vw로 설정 */
+    text-align: center;
 }
-.fc-daygrid-day {
-    transition: all 0.3s ease;
-}
-.fc-daygrid-day:hover {
-    background-color: #f0f0f0;
-}
-.fc-toolbar-title {
-    font-size: clamp(1rem, 4vw, 1.5rem) !important;
-    font-weight: 600;
-    color: #333;
-}
-.fc-button-primary {
-    background-color: #4CAF50 !important;
-    border-color: #4CAF50 !important;
-    border-radius: 20px !important;
-    padding: 8px 15px !important;
-    transition: all 0.3s ease;
-}
-.fc-button-primary:hover {
-    background-color: #45a049 !important;
-    border-color: #45a049 !important;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-}
-.fc-day-today {
-    background-color: transparent !important;
-}
-.fc-daygrid-day-frame {
-    min-height: 50px !important;
-    height: 0;
-    padding-bottom: 100% !important;
-    position: relative;
-}
-@media screen and (max-width: 768px) {
-    #calendar {
-        font-size: 0.8em;
-    }
 
-    .fc-daygrid-day-events {
-        display: none;
-    }
-
-    .fc-col-header-cell-cushion {
-        font-size: 0.9em;
-    }
-
-    .fc-toolbar-title {
-        font-size: 1.2em !important;
-    }
-
-    .fc-button {
-        font-size: 0.8em !important;
-        padding: 0.3em 0.5em !important;
-    }
+/* 제목 크기 및 날짜 및 이벤트 제목 크기도 동적으로 조절 */
+.fc .fc-toolbar h2 {
+    font-size: clamp(1em, 3vw, 1.5em); /* 제목 크기 조정 */
 }
+
+.fc .fc-event-title {
+    font-size: clamp(0.6em, 1.5vw, 1em); /* 날짜 및 이벤트 제목 크기 조정 */
+}
+.fc .fc-daygrid-day-number {
+    font-size: clamp(1em, 2vw, 2em); /* 최소 1em, 최대 1.5em, 기본 값은 2vw로 설정 */
+}
+
+/* 날짜 셀 스타일 조정 */
 .fc-daygrid-day-top {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 100%;
 }
-.fc-daygrid-day-number {
-    font-size: clamp(1.2rem, 3vw, 1.8rem);
-    font-weight: 600;
-    color: #333;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
+
+/* 카드 안에 있는 FullCalendar에서 세로선 제거 */
+/* 날짜 셀의 세로선을 카드 배경색과 동일하게 설정하여 보이지 않게 하기 */
+.card .fc .fc-daygrid-day {
+    border-right: 1px solid transparent; /* 세로선을 투명하게 설정 */
+    border-bottom: 1px solid var(--bs-gray-400); /* 가로선 색상, 필요에 따라 조정 */
 }
-.fc-col-header-cell-cushion {
-    font-size: clamp(0.9rem, 2vw, 1.1rem);
-    color: #333;
+
+/* 카드의 배경색에 맞게 세로선이 카드 배경색과 같도록 설정 (투명으로 설정하여 보이지 않도록) */
+.card .fc .fc-col-header-cell,
+.card .fc .fc-daygrid-day-frame {
+    border-right: 1px solid transparent; /* 세로선을 투명하게 설정 */
 }
-.fc-day-sat .fc-daygrid-day-number {
-    color: #1e90ff;
+/*fullcalendar 선택하면 강조표시*/
+.fc-daygrid-day {
+    position: relative; /* 자식 요소의 절대 위치를 위한 상대 위치 지정 */
 }
-.fc-day-sun .fc-daygrid-day-number,
-.holiday .fc-daygrid-day-number {
-    color: #ff4500;
-}
-.fc-daygrid-day.selected-date {
-    background-color: transparent !important;
-}
-.fc-daygrid-day.selected-date .fc-daygrid-day-number {
-    background-color: #4CAF50;
+
+/* 선택된 날짜에 동그라미 추가 */
+.fc-day.selected-date .fc-daygrid-day-number {
+    background-color: #435ebe;
     color: white;
+    border-radius: 50%;
+    width: clamp(30px, 4vw, 40px);  /* 최소 20px, 최대 40px, 기본 값은 4vw로 설정 */
+    height: clamp(30px, 4vw, 40px); /* 최소 20px, 최대 40px, 기본 값은 4vw로 설정 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    /*margin: auto; !* 중앙 정렬을 위해 추가 *!*/
 }
-/*근태신청 캘린더*/
+/*fullcalendar 오늘 강조 표시*/
+.fc-day-today.fc-daygrid-day {
+    background-color: #f2f7ff !important; /* 원하는 색상으로 변경 */
+    font-weight: bold;
+
+}
+/* full calender 끝*/
 
 /*근태신청화면 콤보*/
 .page-title {
@@ -376,7 +332,6 @@ mark {
 label {
     margin-bottom: 5px;
 }
-
 
 .dtmRegDetail .button-group {
     display: flex;
@@ -403,14 +358,24 @@ label {
     transform: translateY(-2px);
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
-
-/*근태 신청화면 컨테이너*/
 .dtmRegDetail .container {
-    background-color: white;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    padding-left: 30px;
-    padding-right: 30px;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.dtmRegDetail .card.card-custom {
+    background-color: red !important;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.dtmRegDetail .card-body {
+    padding: 20px;
+}
+
+.dtmRegDetail .form-group {
+    margin-bottom: 20px;
 }
 
 #dtmType {

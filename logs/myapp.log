@@ -11352,7 +11352,7 @@ Caused by: oracle.jdbc.OracleDatabaseException: ORA-00001: 무결성 제약 조�
 2024-08-18 12:43:19 ERROR [http-nio-8080-exec-60] o.a.c.c.C.[.[.[.[dispatcherServlet] - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception
 org.springframework.jdbc.UncategorizedSQLException: PreparedStatementCallback; uncategorized SQLException for SQL [INSERT INTO THURXE_SESSION_ATTRIBUTES (SESSION_PRIMARY_ID, ATTRIBUTE_NAME, ATTRIBUTE_BYTES)
 VALUES (?, ?, ?)
-]; SQL state [72000]; error code [12899]; ORA-12899: "EHR"."THURXE_SESSION_ATTRIBUTES"."ATTRIBUTE_NAME" 열에 대한 값이 너무 큼(실제: 2100, 최대값: 200)
+]; SQL state [72000]; error code [12899]; ORA-12899: "OEHR"."THURXE_SESSION_ATTRIBUTES"."ATTRIBUTE_NAME" 열에 대한 값이 너무 큼(실제: 2100, 최대값: 200)
 
 	at org.springframework.jdbc.core.JdbcTemplate.translateException(JdbcTemplate.java:1549)
 	at org.springframework.jdbc.core.JdbcTemplate.execute(JdbcTemplate.java:677)
@@ -11397,7 +11397,7 @@ VALUES (?, ?, ?)
 	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
 	at java.base/java.lang.Thread.run(Thread.java:842)
-Caused by: java.sql.SQLException: ORA-12899: "EHR"."THURXE_SESSION_ATTRIBUTES"."ATTRIBUTE_NAME" 열에 대한 값이 너무 큼(실제: 2100, 최대값: 200)
+Caused by: java.sql.SQLException: ORA-12899: "OEHR"."THURXE_SESSION_ATTRIBUTES"."ATTRIBUTE_NAME" 열에 대한 값이 너무 큼(실제: 2100, 최대값: 200)
 
 	at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:629)
 	at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:563)
@@ -11418,17 +11418,17 @@ Caused by: java.sql.SQLException: ORA-12899: "EHR"."THURXE_SESSION_ATTRIBUTES"."
 	at org.springframework.jdbc.core.JdbcTemplate.lambda$update$2(JdbcTemplate.java:975)
 	at org.springframework.jdbc.core.JdbcTemplate.execute(JdbcTemplate.java:658)
 	... 41 common frames omitted
-Caused by: oracle.jdbc.OracleDatabaseException: ORA-12899: "EHR"."THURXE_SESSION_ATTRIBUTES"."ATTRIBUTE_NAME" 열에 대한 값이 너무 큼(실제: 2100, 최대값: 200)
+Caused by: oracle.jdbc.OracleDatabaseException: ORA-12899: "OEHR"."THURXE_SESSION_ATTRIBUTES"."ATTRIBUTE_NAME" 열에 대한 값이 너무 큼(실제: 2100, 최대값: 200)
 
 	at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:636)
 	... 58 common frames omitted
 2024-08-18 12:43:19 ERROR [http-nio-8080-exec-60] org.thymeleaf.TemplateEngine - [THYMELEAF][http-nio-8080-exec-60] Exception processing template "/error/404": PreparedStatementCallback; uncategorized SQLException for SQL [INSERT INTO THURXE_SESSION_ATTRIBUTES (SESSION_PRIMARY_ID, ATTRIBUTE_NAME, ATTRIBUTE_BYTES)
 VALUES (?, ?, ?)
-]; SQL state [72000]; error code [12899]; ORA-12899: "EHR"."THURXE_SESSION_ATTRIBUTES"."ATTRIBUTE_NAME" 열에 대한 값이 너무 큼(실제: 2100, 최대값: 200)
+]; SQL state [72000]; error code [12899]; ORA-12899: "OEHR"."THURXE_SESSION_ATTRIBUTES"."ATTRIBUTE_NAME" 열에 대한 값이 너무 큼(실제: 2100, 최대값: 200)
 
 org.springframework.jdbc.UncategorizedSQLException: PreparedStatementCallback; uncategorized SQLException for SQL [INSERT INTO THURXE_SESSION_ATTRIBUTES (SESSION_PRIMARY_ID, ATTRIBUTE_NAME, ATTRIBUTE_BYTES)
 VALUES (?, ?, ?)
-]; SQL state [72000]; error code [12899]; ORA-12899: "EHR"."THURXE_SESSION_ATTRIBUTES"."ATTRIBUTE_NAME" 열에 대한 값이 너무 큼(실제: 2100, 최대값: 200)
+]; SQL state [72000]; error code [12899]; ORA-12899: "OEHR"."THURXE_SESSION_ATTRIBUTES"."ATTRIBUTE_NAME" 열에 대한 값이 너무 큼(실제: 2100, 최대값: 200)
 
 	at org.springframework.jdbc.core.JdbcTemplate.translateException(JdbcTemplate.java:1549)
 	at org.springframework.jdbc.core.JdbcTemplate.execute(JdbcTemplate.java:677)
@@ -11581,7 +11581,7 @@ VALUES (?, ?, ?)
 	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
 	at java.base/java.lang.Thread.run(Thread.java:842)
-Caused by: java.sql.SQLException: ORA-12899: "EHR"."THURXE_SESSION_ATTRIBUTES"."ATTRIBUTE_NAME" 열에 대한 값이 너무 큼(실제: 2100, 최대값: 200)
+Caused by: java.sql.SQLException: ORA-12899: "OEHR"."THURXE_SESSION_ATTRIBUTES"."ATTRIBUTE_NAME" 열에 대한 값이 너무 큼(실제: 2100, 최대값: 200)
 
 	at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:629)
 	at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:563)
@@ -11602,14 +11602,14 @@ Caused by: java.sql.SQLException: ORA-12899: "EHR"."THURXE_SESSION_ATTRIBUTES"."
 	at org.springframework.jdbc.core.JdbcTemplate.lambda$update$2(JdbcTemplate.java:975)
 	at org.springframework.jdbc.core.JdbcTemplate.execute(JdbcTemplate.java:658)
 	... 149 common frames omitted
-Caused by: oracle.jdbc.OracleDatabaseException: ORA-12899: "EHR"."THURXE_SESSION_ATTRIBUTES"."ATTRIBUTE_NAME" 열에 대한 값이 너무 큼(실제: 2100, 최대값: 200)
+Caused by: oracle.jdbc.OracleDatabaseException: ORA-12899: "OEHR"."THURXE_SESSION_ATTRIBUTES"."ATTRIBUTE_NAME" 열에 대한 값이 너무 큼(실제: 2100, 최대값: 200)
 
 	at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:636)
 	... 166 common frames omitted
 2024-08-18 12:43:19 ERROR [http-nio-8080-exec-60] o.a.c.c.C.[.[.[.[dispatcherServlet] - Servlet.service() for servlet [dispatcherServlet] threw exception
 org.springframework.jdbc.UncategorizedSQLException: PreparedStatementCallback; uncategorized SQLException for SQL [INSERT INTO THURXE_SESSION_ATTRIBUTES (SESSION_PRIMARY_ID, ATTRIBUTE_NAME, ATTRIBUTE_BYTES)
 VALUES (?, ?, ?)
-]; SQL state [72000]; error code [12899]; ORA-12899: "EHR"."THURXE_SESSION_ATTRIBUTES"."ATTRIBUTE_NAME" 열에 대한 값이 너무 큼(실제: 2100, 최대값: 200)
+]; SQL state [72000]; error code [12899]; ORA-12899: "OEHR"."THURXE_SESSION_ATTRIBUTES"."ATTRIBUTE_NAME" 열에 대한 값이 너무 큼(실제: 2100, 최대값: 200)
 
 	at org.springframework.jdbc.core.JdbcTemplate.translateException(JdbcTemplate.java:1549)
 	at org.springframework.jdbc.core.JdbcTemplate.execute(JdbcTemplate.java:677)
@@ -11653,7 +11653,7 @@ VALUES (?, ?, ?)
 	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
 	at java.base/java.lang.Thread.run(Thread.java:842)
-Caused by: java.sql.SQLException: ORA-12899: "EHR"."THURXE_SESSION_ATTRIBUTES"."ATTRIBUTE_NAME" 열에 대한 값이 너무 큼(실제: 2100, 최대값: 200)
+Caused by: java.sql.SQLException: ORA-12899: "OEHR"."THURXE_SESSION_ATTRIBUTES"."ATTRIBUTE_NAME" 열에 대한 값이 너무 큼(실제: 2100, 최대값: 200)
 
 	at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:629)
 	at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:563)
@@ -11674,14 +11674,14 @@ Caused by: java.sql.SQLException: ORA-12899: "EHR"."THURXE_SESSION_ATTRIBUTES"."
 	at org.springframework.jdbc.core.JdbcTemplate.lambda$update$2(JdbcTemplate.java:975)
 	at org.springframework.jdbc.core.JdbcTemplate.execute(JdbcTemplate.java:658)
 	... 40 common frames omitted
-Caused by: oracle.jdbc.OracleDatabaseException: ORA-12899: "EHR"."THURXE_SESSION_ATTRIBUTES"."ATTRIBUTE_NAME" 열에 대한 값이 너무 큼(실제: 2100, 최대값: 200)
+Caused by: oracle.jdbc.OracleDatabaseException: ORA-12899: "OEHR"."THURXE_SESSION_ATTRIBUTES"."ATTRIBUTE_NAME" 열에 대한 값이 너무 큼(실제: 2100, 최대값: 200)
 
 	at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:636)
 	... 57 common frames omitted
 2024-08-18 12:43:19 ERROR [http-nio-8080-exec-60] o.a.c.c.C.[Tomcat].[localhost] - Exception Processing [ErrorPage[errorCode=0, location=/error]]
 org.springframework.jdbc.UncategorizedSQLException: PreparedStatementCallback; uncategorized SQLException for SQL [INSERT INTO THURXE_SESSION_ATTRIBUTES (SESSION_PRIMARY_ID, ATTRIBUTE_NAME, ATTRIBUTE_BYTES)
 VALUES (?, ?, ?)
-]; SQL state [72000]; error code [12899]; ORA-12899: "EHR"."THURXE_SESSION_ATTRIBUTES"."ATTRIBUTE_NAME" 열에 대한 값이 너무 큼(실제: 2100, 최대값: 200)
+]; SQL state [72000]; error code [12899]; ORA-12899: "OEHR"."THURXE_SESSION_ATTRIBUTES"."ATTRIBUTE_NAME" 열에 대한 값이 너무 큼(실제: 2100, 최대값: 200)
 
 	at org.springframework.jdbc.core.JdbcTemplate.translateException(JdbcTemplate.java:1549)
 	at org.springframework.jdbc.core.JdbcTemplate.execute(JdbcTemplate.java:677)
@@ -11725,7 +11725,7 @@ VALUES (?, ?, ?)
 	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
 	at java.base/java.lang.Thread.run(Thread.java:842)
-Caused by: java.sql.SQLException: ORA-12899: "EHR"."THURXE_SESSION_ATTRIBUTES"."ATTRIBUTE_NAME" 열에 대한 값이 너무 큼(실제: 2100, 최대값: 200)
+Caused by: java.sql.SQLException: ORA-12899: "OEHR"."THURXE_SESSION_ATTRIBUTES"."ATTRIBUTE_NAME" 열에 대한 값이 너무 큼(실제: 2100, 최대값: 200)
 
 	at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:629)
 	at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:563)
@@ -11746,7 +11746,7 @@ Caused by: java.sql.SQLException: ORA-12899: "EHR"."THURXE_SESSION_ATTRIBUTES"."
 	at org.springframework.jdbc.core.JdbcTemplate.lambda$update$2(JdbcTemplate.java:975)
 	at org.springframework.jdbc.core.JdbcTemplate.execute(JdbcTemplate.java:658)
 	... 40 common frames omitted
-Caused by: oracle.jdbc.OracleDatabaseException: ORA-12899: "EHR"."THURXE_SESSION_ATTRIBUTES"."ATTRIBUTE_NAME" 열에 대한 값이 너무 큼(실제: 2100, 최대값: 200)
+Caused by: oracle.jdbc.OracleDatabaseException: ORA-12899: "OEHR"."THURXE_SESSION_ATTRIBUTES"."ATTRIBUTE_NAME" 열에 대한 값이 너무 큼(실제: 2100, 최대값: 200)
 
 	at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:636)
 	... 57 common frames omitted
@@ -17321,11 +17321,11 @@ Caused by: org.thymeleaf.exceptions.TemplateInputException: Error resolving temp
 2024-08-19 19:58:52 INFO  [RMI TCP Connection(2)-169.254.247.155] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
 2024-08-19 19:58:52 INFO  [RMI TCP Connection(2)-169.254.247.155] o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
 2024-08-19 20:03:23 WARN  [http-nio-8080-exec-7] o.h.e.jdbc.spi.SqlExceptionHelper - SQL Error: 12899, SQLState: 72000
-2024-08-19 20:03:23 ERROR [http-nio-8080-exec-7] o.h.e.jdbc.spi.SqlExceptionHelper - ORA-12899: "EHR"."THURXE_CWUSRM"."FST_ENT_USID" 열에 대한 값이 너무 큼(실제: 35, 최대값: 14)
+2024-08-19 20:03:23 ERROR [http-nio-8080-exec-7] o.h.e.jdbc.spi.SqlExceptionHelper - ORA-12899: "OEHR"."THURXE_CWUSRM"."FST_ENT_USID" 열에 대한 값이 너무 큼(실제: 35, 최대값: 14)
 
-2024-08-19 20:03:23 ERROR [http-nio-8080-exec-7] o.a.c.c.C.[.[.[.[dispatcherServlet] - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: org.springframework.orm.jpa.JpaSystemException: could not execute statement [ORA-12899: "EHR"."THURXE_CWUSRM"."FST_ENT_USID" 열에 대한 값이 너무 큼(실제: 35, 최대값: 14)
+2024-08-19 20:03:23 ERROR [http-nio-8080-exec-7] o.a.c.c.C.[.[.[.[dispatcherServlet] - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: org.springframework.orm.jpa.JpaSystemException: could not execute statement [ORA-12899: "OEHR"."THURXE_CWUSRM"."FST_ENT_USID" 열에 대한 값이 너무 큼(실제: 35, 최대값: 14)
 ] [insert into THURXE_CWUSRM (DEL_YN,FST_ENT_DTM,FST_ENT_USID,GUID,GUID_PRG_SNO,LST_CHG_DTM,LST_CHG_USID,WEBA_PRO_NM,ENO,WEBA_USR_HDLN_IMG) values (?,?,current_timestamp,?,?,?,?,?,?,?)]] with root cause
-oracle.jdbc.OracleDatabaseException: ORA-12899: "EHR"."THURXE_CWUSRM"."FST_ENT_USID" 열에 대한 값이 너무 큼(실제: 35, 최대값: 14)
+oracle.jdbc.OracleDatabaseException: ORA-12899: "OEHR"."THURXE_CWUSRM"."FST_ENT_USID" 열에 대한 값이 너무 큼(실제: 35, 최대값: 14)
 
 	at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:636)
 	at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:563)
@@ -17532,11 +17532,11 @@ oracle.jdbc.OracleDatabaseException: ORA-12899: "EHR"."THURXE_CWUSRM"."FST_ENT_U
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
 	at java.base/java.lang.Thread.run(Thread.java:842)
 2024-08-19 20:10:56 WARN  [http-nio-8080-exec-3] o.h.e.jdbc.spi.SqlExceptionHelper - SQL Error: 12899, SQLState: 72000
-2024-08-19 20:10:56 ERROR [http-nio-8080-exec-3] o.h.e.jdbc.spi.SqlExceptionHelper - ORA-12899: "EHR"."THURXE_CWUSRM"."FST_ENT_USID" 열에 대한 값이 너무 큼(실제: 35, 최대값: 14)
+2024-08-19 20:10:56 ERROR [http-nio-8080-exec-3] o.h.e.jdbc.spi.SqlExceptionHelper - ORA-12899: "OEHR"."THURXE_CWUSRM"."FST_ENT_USID" 열에 대한 값이 너무 큼(실제: 35, 최대값: 14)
 
-2024-08-19 20:10:56 ERROR [http-nio-8080-exec-3] o.a.c.c.C.[.[.[.[dispatcherServlet] - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: org.springframework.orm.jpa.JpaSystemException: could not execute statement [ORA-12899: "EHR"."THURXE_CWUSRM"."FST_ENT_USID" 열에 대한 값이 너무 큼(실제: 35, 최대값: 14)
+2024-08-19 20:10:56 ERROR [http-nio-8080-exec-3] o.a.c.c.C.[.[.[.[dispatcherServlet] - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: org.springframework.orm.jpa.JpaSystemException: could not execute statement [ORA-12899: "OEHR"."THURXE_CWUSRM"."FST_ENT_USID" 열에 대한 값이 너무 큼(실제: 35, 최대값: 14)
 ] [insert into THURXE_CWUSRM (DEL_YN,FST_ENT_DTM,FST_ENT_USID,GUID,GUID_PRG_SNO,LST_CHG_DTM,LST_CHG_USID,WEBA_PRO_NM,ENO,WEBA_USR_HDLN_IMG) values (?,?,current_timestamp,?,?,?,?,?,?,?)]] with root cause
-oracle.jdbc.OracleDatabaseException: ORA-12899: "EHR"."THURXE_CWUSRM"."FST_ENT_USID" 열에 대한 값이 너무 큼(실제: 35, 최대값: 14)
+oracle.jdbc.OracleDatabaseException: ORA-12899: "OEHR"."THURXE_CWUSRM"."FST_ENT_USID" 열에 대한 값이 너무 큼(실제: 35, 최대값: 14)
 
 	at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:636)
 	at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:563)

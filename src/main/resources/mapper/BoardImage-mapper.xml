@@ -23,7 +23,7 @@
     <!-- 이미지 저장 -->
     <insert id="insertBoardImage" parameterType="boardImageDTO">
         <selectKey keyProperty="seqId" resultType="long" order="BEFORE">
-            SELECT "EHR"."BLB_IMG_SNO".nextval FROM dual
+            SELECT "OEHR"."BLB_IMG_SNO".nextval FROM dual
         </selectKey>
         INSERT INTO OEHR.THURXE_CBRDIM
         (

@@ -5,28 +5,43 @@
 	xmlns:sec="http://www.thymeleaf.org"
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
     
-<head></head>
+<head>
+
+</head>
  
 <body>
 	<!-- <script src="/js/initTheme.js"></script>	 -->
 	<div id="app">
 	<div id="sidebar" class="sidebar-desktop inactive" th:fragment="commonSidebar">
 			<div class="sidebar-wrapper">
-				<div class="sidebar-header position-relative">
-						<div class="logo mt-3">
-							<a href="/index"><img src="/images/kdb/H_KDB_CI.png" alt="Logo" srcset=""></a>
+				<div class="sidebar-header">
+					<div class="d-flex align-items-center justify-content-between position-relative">
+						<div class="d-flex align-items-center logo mb-2">
+							<a href="/index"><img src="/images/kdb/H_KDB_CI.png" alt="Logo"></a>
 						</div>
+						
+					</div>
+					<section class="section mt-2">
+						<div class="card m-0 p-1">
+							<div class="card-body p-1">
+								<p class="h6 mt-3 me-2">박종훈 차장</p>
+								<p class="h7">디지털금융부</p>
+								<p class="h7">휴가중 (08-29 ~ 08-29)</p>
+							</div>
+						</div>
+					</section>
 				</div>
-
+				
 				<div class="d-flex justify-content-end me-3" sec:authorize="hasRole('ADMIN')">
 					<div class="form-check form-switch">
 						<input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckAdmin">
-						<label class="form-check-label" for="flexSwitchCheckAdmin">관리자</label>
+						<label class="form-check-label" for="flexSwitchCheckAdmin">
+							<span class="h7 me-2">관리자</span>
+						</label>
 					</div>
 				</div>
-				
-				<div class="sidebar-menu">
 
+				<div class="sidebar-menu">
 					<div class="d-flex justify-content-end align-items-end me-3">
 						<div class="sidebar-toggler  x mt-3">
 							<a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x-circle-fill bi-middle"></i></a>

@@ -24,7 +24,7 @@
     <!-- 첨부파일 저장 -->
     <insert id="saveFile" parameterType="boardFileDTO">
         <selectKey keyProperty="seqId" resultType="long" order="BEFORE">
-            SELECT "EHR"."BLB_APG_FL_SNO".nextval FROM dual
+            SELECT "OEHR"."BLB_APG_FL_SNO".nextval FROM dual
         </selectKey>
         INSERT INTO OEHR.THURXE_CBRDFM
         (

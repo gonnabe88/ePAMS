@@ -3,9 +3,10 @@ $(document).ready(() => {
     const authData = $('#authData');
     const simpleauth = authData.data('simpleauth');
     const username = authData.data('username');
+    const simpleAuthPopup = getCookie("SIMPLE_AUTH_POPUP_YN");
     console.log(`WebAuthn: ${simpleauth} ${username}`);
 
-    if (!simpleauth) {
+    if (!simpleauth && simpleAuthPopup !== "FALSE") {
         Swal.fire({
             title: "간편인증",
             html: "편리한 로그인을 위해 휴대폰 간편인증을 등록합니다.",
@@ -23,6 +24,10 @@ $(document).ready(() => {
         }).then((result) => {
             if (result.isConfirmed) {
                 webauthnReg(username);
+            }
+            else {
+                // 1일간 팝업을 보여주지 않기 위해 쿠키 설정
+                setCookie("SIMPLE_AUTH_POPUP_YN", "FALSE", 1);
             }
         });
     }

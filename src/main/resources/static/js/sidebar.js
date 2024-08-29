@@ -1,5 +1,10 @@
 // (페이지 로딩 시) 관리자 페이지와 일반 사용자 페이지의 sidebar를 동적으로 변경하는 스크립트
 $(document).ready(function() {
+
+    // 사용자 정보
+    getUserInfo();
+
+
     // 쿠키에서 관리자 모드 여부를 확인
     let isChecked = getCookie("adminView");
 
@@ -209,6 +214,27 @@ const Bn = U=>{
         const r = f.parentElement;
     }
 };
+
 document.readyState !== "loading" ? Bn(Xe) : window.addEventListener("DOMContentLoaded", ()=>Bn(Xe)),
     window.Sidebar = Mr;
 Xe && new window.Sidebar(Xe);
+
+// Ajax 요청을 사용하여 사용자 데이터를 가져오는 함수 정의
+const getUserInfo = () => {
+
+    $.ajax({
+        url: '/api/sidebar/getUserInfo', // 요청할 URL
+        method: 'GET', // HTTP 메서드
+        dataType: 'json', // 서버에서 반환될 데이터 형식
+        success: function(data) { // 요청이 성공했을 때 실행되는 함수
+            const userInfo = data.userInfo;
+            // JSON 응답에서 사용자 이름과 부서를 가져와서 HTML에 삽입
+            $('#userName').text(userInfo.userName);
+            $('#deptName').text(userInfo.deptName);
+            $('#workHours').text(`출근 ${userInfo.staTime} / 퇴근 ${userInfo.endTime}`);
+        },
+        error: function(jqXHR, textStatus, errorThrown) { // 요청이 실패했을 때 실행되는 함수
+            console.error('Error fetching user info:', textStatus, errorThrown);
+        }
+    });
+};

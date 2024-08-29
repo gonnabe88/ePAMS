@@ -26,7 +26,7 @@ public class LoginOTPEntity extends BaseEntity {
      * @implNote 시퀀스 이름 상수
      * @since 2024-06-09
      */
-    private static final String SEQUENCE = "OTP_ISN_SNO";
+    private static final String SEQUENCE = "SQ_THURXE_COTPIM_1";
 
     /***
      * @author 140024
@@ -34,7 +34,7 @@ public class LoginOTPEntity extends BaseEntity {
      * @since 2024-06-09
      */
     @Id
-    @Column(name = SEQUENCE, columnDefinition = "NUMBER(22)")
+    @Column(name = "OTP_ISN_SNO", columnDefinition = "NUMBER(22)")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQUENCE)
     @SequenceGenerator(name = SEQUENCE, sequenceName = SEQUENCE, allocationSize = 1)
     @Comment("OTP발급일련번호")

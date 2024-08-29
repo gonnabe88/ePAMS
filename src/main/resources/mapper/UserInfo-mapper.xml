@@ -1,0 +1,31 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="UserInfo">
+
+    <!-- Result Map 정의 -->
+    <resultMap id="userInfoMap" type="userInfoDTO">
+        <result property="userNo" column="ENO"/>
+        <result property="userName" column="USR_NM"/>
+        <result property="deptName" column="BBR_NM"/>
+        <result property="positionName" column="PT_C_NM"/>
+        <result property="staTime" column="STA_TIME"/>
+        <result property="endTime" column="END_TIME"/>
+    </resultMap>
+
+    <!-- 특정 사용자ID 기준 조회 -->
+    <select id="findByUserNo" parameterType="String" resultMap="userInfoMap">
+        SELECT
+            A.USR_NM,
+            B.BBR_NM,
+            A.PT_C_NM,
+            '10:00' AS STA_TIME,
+            '19:00' AS END_TIME
+        FROM OEHR.THURXE_CUSRLI A
+        INNER JOIN OEHR.THURXE_CORGLI B
+            ON A.BBR_C = B.PRLM_OGZ_C_CONE
+        WHERE A.ENO = #{userNo}
+    </select>
+
+</mapper>

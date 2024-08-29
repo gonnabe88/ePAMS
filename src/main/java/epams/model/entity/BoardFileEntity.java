@@ -34,7 +34,7 @@ public class BoardFileEntity extends BaseEntity {
      * @implNote 시퀀스 이름 상수
      * @since 2024-06-09
      */
-    private static final String SEQUENCE = "BLB_APG_FL_SNO";
+    private static final String SEQUENCE = "SQ_THURXE_CBRDFM_1";
 	
     /***
      * @author 140024
@@ -42,7 +42,7 @@ public class BoardFileEntity extends BaseEntity {
      * @since 2024-06-10
      */
     @Id
-    @Column(name = SEQUENCE, columnDefinition = "NUMBER(22)")
+    @Column(name = "BLB_APG_FL_SNO", columnDefinition = "NUMBER(22)")
     @Comment("게시판첨부파일일련번호")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQUENCE)
     @SequenceGenerator(name = SEQUENCE, sequenceName = SEQUENCE, allocationSize = 1)

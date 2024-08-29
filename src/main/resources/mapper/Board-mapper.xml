@@ -32,7 +32,7 @@
     <!-- 게시물 저장 후 ID 반환 -->
     <insert id="save" parameterType="boardDTO">
         <selectKey keyProperty="seqId" resultType="long" order="BEFORE">
-            SELECT "OEHR"."BLB_SNO".nextval FROM dual
+            SELECT "OEHR"."SQ_THURXE_CBRDMM_1".nextval FROM dual
         </selectKey>
         INSERT INTO OEHR.THURXE_CBRDMM(
         BLB_SNO,

@@ -1,89 +1,66 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:sec="http://www.thymeleaf.org"
-      layout:decorate="~{common/layout/layout}">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    xmlns:sec="http://www.thymeleaf.org" layout:decorate="~{common/layout/layout}">
 
 <head>
     <th:block layout:fragment="css">
-        <link rel="stylesheet" href="/extensions/select2/select2.css"/>
+        <link rel="stylesheet" href="/extensions/select2/select2.css" />
     </th:block>
 </head>
 
 <body>
-<div layout:fragment="contents">
-    <!--    <div class="dtmRegDetail container">-->
-    <!--        <h1 class="page-title">근태 신청</h1>-->
-    <!--        <div class="container">-->
-    <!--            <div class="card-body p-3">-->
-    <!--                <h6><span th:text="${langList['DTM_KIND']}"></span></h6>-->
-    <!--                <select class="form-control select2" aria-label="DTM Reason Code register" name="select"-->
-    <!--                        id="list">-->
-    <!--                    <option value="" selected><span th:text="${langList['ENTIRE']}"></span></option>-->
-    <!--                </select>-->
-    <!--            </div>-->
-    <!--            <div class="card-body p-3">-->
-    <!--                <h6><span th:text="${langList['DTM_PERIOD']}"></span></h6>-->
-    <!--                <div class="date-input-container">-->
-    <!--                    <div class="date-input">-->
-    <!--                        <input type="date" id="startDate" name="startDate" th:value="${param.date}" required>-->
-    <!--                    </div>-->
-    <!--                    <div class="date-input">-->
-    <!--                        <input type="date" id="endDate" name="endDate" th:value="${param.date}" required>-->
-    <!--                    </div>-->
-    <!--                </div>-->
-    <!--            </div>-->
-    <!--            &lt;!&ndash;            <div class="card-body p-3">&ndash;&gt;-->
-    <!--            &lt;!&ndash;                <div id="calendar"></div>&ndash;&gt;-->
-    <!--            &lt;!&ndash;            </div>&ndash;&gt;-->
-    <!--            <div class="button-group">-->
-    <!--                <button type="button" class="btn btn-back">돌아가기</button>-->
-    <!--                <button type="submit" class="btn btn-submit">신청하기</button>-->
-    <!--            </div>-->
-    <!--        </div>-->
-    <!--    </div>-->
-    <div class="dtmRegDetail">
-        <h1 class="page-title">근태 신청</h1>
-        <div class="container">
-            <div class="card">
-                <div class="card-body">
-                    <div class="form-group">
-                        <h6><span th:text="${langList['DTM_KIND']}"></span></h6>
-                        <select class="form-control select2" aria-label="DTM Reason Code register" name="select"
-                                id="list">
-                            <option value="" selected><span th:text="${langList['ENTIRE']}"></span></option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <h6><span th:text="${langList['DTM_PERIOD']}"></span></h6>
-                        <div class="date-input-container">
-                            <div class="date-input">
-                                <input type="date" id="startDate" name="startDate" th:value="${param.date}" required>
-                            </div>
-                            <div class="date-input">
-                                <input type="date" id="endDate" name="endDate" th:value="${param.date}" required>
+    <div layout:fragment="contents">
+        <div class="dtmRegDetail">
+            <h1 class="page-title">근태 신청</h1>
+            <div class="container">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <div class="col">
+                                <h6><span th:text="${langList['DTM_KIND']}"></span></h6>
+                                <select class="form-control select2" aria-label="DTM Reason Code register" name="select"
+                                    id="list">
+                                    <option value="" selected><span th:text="${langList['ENTIRE']}"></span></option>
+                                </select>
                             </div>
                         </div>
-                    </div>
-                    <div class="button-group">
-                        <button type="button" class="btn btn-back">돌아가기</button>
-                        <button type="submit" class="btn btn-submit">신청하기</button>
+                        <div class="row mb-3">
+                            <div class="col">
+                                <h6><span th:text="${langList['DTM_PERIOD']}"></span></h6>
+                                <div class="date-input-container">
+                                    <div class="date-input">
+                                        <input type="date" id="startDate" name="startDate" th:value="${param.date}"
+                                            required>
+                                    </div>
+                                    <div class="date-input">
+                                        <input type="date" id="endDate" name="endDate" th:value="${param.date}"
+                                            required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col">
+                                <div class="button-group">
+                                    <button type="button" class="btn btn-back">돌아가기</button>
+                                    <button type="submit" class="btn btn-submit">신청하기</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<th:block layout:fragment="script">
-    <script src="/js/moveBack.js"></script>
-    <script src='/extensions/fullcalendar/main.min.js'></script>
-    <script src='/extensions/fullcalendar/initFc.js'></script>
-    <script src="/extensions/select2/select2.full.js"></script>
-    <script src="/js/searchForm.js"></script>
-    <script src="/js/selectForm.js"></script>
-    <!--    <script src="/js/index.js"></script>-->
-    <script src="/js/dtmAppl.js"></script>
-</th:block>
+            <th:block layout:fragment="script">
+                <script src="/extensions/select2/select2.full.js"></script>
+                <script src="/js/selectForm.js"></script>
+                <script src="/js/moveBack.js"></script>
+                <script src="/js/index.js"></script>
+                <script src="/js/dtmAppl.js"></script>
+            </th:block>
+        </div>
 </body>
+
 </html>

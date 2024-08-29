@@ -1,5 +1,5 @@
 .ossNotice {
-    color : #6C757D;
+    color : #767d82;
 }
 #ossNoticeModal .modal-dialog-scrollable .modal-body{
     height: 80vh;
@@ -555,6 +555,17 @@ label {
     height:1.6rem;
 }
 
+/*사이드바 로고 스타일 조정*/
+.sidebar-desktop .sidebar-header .form-check-input {
+    height:1.2rem;
+    width: 2.0rem;
+}
+/*사이드바 로고 스타일 조정*/
+.sidebar-desktop .sidebar-header .form-check-label {
+    height:1.2rem;
+    width: 3.5rem;
+}
+
 /*footer 배경 스타일 조정*/
 .footer {
     background-color:#4477C5;
@@ -1048,7 +1059,7 @@ h7,.h7{
     font-weight: 700;
     line-height: 1.2;
     color: grey;
-    font-size: 0.75rem
+    font-size: 0.85rem
 }
 
 h6, .h6, h5, .h5, h4, .h4, h3, .h3, h2, .h2, h1, .h1 {
@@ -3508,6 +3519,11 @@ textarea.form-control.is-invalid {
     left: -300px
 }
 
+#sidebar .sidebar-wrapper .name-card {
+    font-size : 1rem;
+    color:#435ebe;
+}
+
 #sidebar~#main {
     margin-left: 0
 }
@@ -3546,8 +3562,12 @@ textarea.form-control.is-invalid {
     transition: left .7s cubic-bezier(.22, 1, .36, 1)
 }
 
+.sidebar-wrapper .card {
+    background-color: #f1f3f4;
+}
+
 .sidebar-wrapper .sidebar-header {
-    padding: 2rem 2rem 1rem;
+    padding: 1rem 2rem 1rem;
     font-size: 2rem;
     font-weight: 700
 }
@@ -3565,14 +3585,14 @@ textarea.form-control.is-invalid {
 
 .sidebar-wrapper .menu {
     padding-left: 0;
-    margin-top: 2rem;
+    margin-top: 1rem;
     padding: 0 2rem;
     font-weight: 600
 }
 
 .sidebar-wrapper .menu .sidebar-title {
     padding: 0 1rem;
-    margin: 1.5rem 0 1rem;
+    margin: 1.0rem 0 1rem;
     font-size: 1rem;
     list-style: none;
     font-weight: 600;

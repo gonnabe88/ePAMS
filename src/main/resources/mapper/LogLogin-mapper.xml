@@ -34,7 +34,7 @@
     <!-- 신규 데이터 추가 -->
     <insert id="insert" parameterType="logLoginVO">
         <selectKey keyProperty="seqId" resultType="long" order="BEFORE">
-            SELECT "OEHR"."LGN_LOG_SNO".nextval FROM dual
+            SELECT "OEHR"."SQ_THURXE_CLOGNL_1".nextval FROM dual
         </selectKey>
         INSERT INTO OEHR.THURXE_CLOGNL (
             LGN_LOG_SNO,

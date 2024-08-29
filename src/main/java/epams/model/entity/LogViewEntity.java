@@ -24,7 +24,7 @@ public class LogViewEntity extends BaseEntity {
      * @implNote BLB_SNO 시퀀스 이름 상수
      * @since 2024-06-09
      */
-    private static final String SEQUENCE = "PAG_LOG_SNO";
+    private static final String SEQUENCE = "SQ_THURXE_CVIEWL_1";
 
     /***
      * @author 140024
@@ -32,7 +32,7 @@ public class LogViewEntity extends BaseEntity {
      * @since 2024-06-09
      */
     @Id // 기본키
-    @Column(name = SEQUENCE, columnDefinition = "NUMBER(22)")
+    @Column(name = "PAG_LOG_SNO", columnDefinition = "NUMBER(22)")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQUENCE)
     @SequenceGenerator(name = SEQUENCE, sequenceName = SEQUENCE, allocationSize = 1)
     @Comment("페이지로그일련번호")

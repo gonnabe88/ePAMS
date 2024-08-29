@@ -37,7 +37,7 @@ public class BoardEntity extends BaseEntity {
      * @implNote BLB_SNO 시퀀스 이름 상수
      * @since 2024-06-09
      */
-    private static final String SEQUENCE = "BLB_SNO";
+    private static final String SEQUENCE = "SQ_THURXE_CBRDMM_1";
 
     /**
      * @author 140024
@@ -45,7 +45,7 @@ public class BoardEntity extends BaseEntity {
      * @since 2024-06-09
      */
     @Id 
-    @Column(name = SEQUENCE, columnDefinition = "NUMBER(22)")
+    @Column(name = "BLB_SNO", columnDefinition = "NUMBER(22)")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQUENCE)
     @SequenceGenerator(name = SEQUENCE, sequenceName = SEQUENCE, allocationSize = 1)
     @Comment("게시판일련번호")

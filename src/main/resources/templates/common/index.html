@@ -58,8 +58,7 @@
                 <div class="row col-lg-12 col-md-12 d-flex justify-content-center">
                     <div class="row col-lg-12 col-md-12 col-sm-12">
                         <div th:each="date : ${list}" class="col-lg-4">
-                            <div data-aos="fade-up" data-aos-offset="50" data-aos-easing="ease-out-cubic"
-                                 data-aos-duration="1000">
+                            <div data-aos="fade-up" data-aos-offset="50" data-aos-easing="ease-out-cubic" data-aos-duration="1000">
                                 <section class="section">
                                     <div class="shadow card">
                                         <div class="card-body align-content-center">
@@ -202,7 +201,7 @@
                                 </div>
                                 <div class="card-content">
                                     <div class="card-body">
-                                        <p><span th:text="${langList['SEARCH_EMP_02_STMT']}"></span></p>
+                                        
                                         <div class="row">
                                             <div class="col-12 mb-0">
                                                 <div class="input-with-icon d-flex align-items-center mb-3">
@@ -219,7 +218,27 @@
                                     <div class="row col-12">
                                         <div class="col-12 justify-self-center">
                                             <div id="memberList">
+                                                <p><span th:text="${langList['SEARCH_EMP_02_STMT']}"></span></p>
 
+                                                <!--start divider-->
+                                                <div class="divider">
+                                                    <div class="divider-text p-0" ></div>
+                                                </div>
+                                                <!--end divider-->
+
+                                                <p class="h6"> 단일 검색 </p>
+                                                <p class="h7"> 예시) "홍길동" 입력 후 선택</p>
+                                                <p class="h7"> 예시) "단신부임" 입력 후 선택</p>
+
+                                                <!--start divider-->
+                                                <div class="divider">
+                                                    <div class="divider-text p-0" ></div>
+                                                </div>
+                                                <!--end divider-->
+
+                                                <p class="h6"> 복합 검색 </p>
+                                                <p class="h7"> 예시) "디지털" + "업무지원" 입력 후 선택</p>
+                                                <p class="h7"> 예시) "인사부" + "근태" 입력 후 선택</p>
                                             </div>
                                         </div>
                                     </div>

@@ -13,25 +13,25 @@
         <result property="guidPrgSno" column="GUID_PRG_SNO"/>
         <result property="lstChgUsid" column="LST_CHG_USID"/>
         <result property="updatedTime" column="LST_CHG_DTM"/>
-        <result property="createdTime" column="FST_ENT_DTM"/>
-        <result property="createUsid" column="FST_ENT_USID"/>
+        <result property="createdTime" column="FST_ENR_DTM"/>
+        <result property="createUsid" column="FST_ENR_USID"/>
     </resultMap>
 
     <!-- 모든 데이터 조회 -->
     <select id="findAll" resultMap="htmlLangMap">
-        SELECT * FROM OEHR.THURXE_CHTMLA
+        SELECT * FROM OEHR.THURXE_CCDHTA
     </select>
 
     <!-- 기본키 데이터 중복여부 조회 -->
     <select id="countById" parameterType="htmlLangDTO" resultType="int">
         SELECT COUNT(*)
-        FROM OEHR.THURXE_CHTMLA
+        FROM OEHR.THURXE_CCDHTA
         WHERE HTML_FL_PTH = #{html} AND SRE_VCB_CDVA_ID = #{lang}
     </select>
 
     <!-- 신규 데이터 추가 -->
     <insert id="insert" parameterType="htmlLangDTO">
-        INSERT INTO OEHR.THURXE_CHTMLA (
+        INSERT INTO OEHR.THURXE_CCDHTA (
             HTML_FL_PTH,
             SRE_VCB_CDVA_ID,
             DEL_YN,
@@ -39,8 +39,8 @@
             GUID_PRG_SNO,
             LST_CHG_USID,
             LST_CHG_DTM,
-            FST_ENT_DTM,
-            FST_ENT_USID
+            FST_ENR_DTM,
+            FST_ENR_USID
         )
         VALUES (
             #{html},
@@ -57,7 +57,7 @@
 
     <!-- 기존 데이터 삭제 -->
     <delete id="delete" parameterType="htmlLangDTO">
-        DELETE FROM OEHR.THURXE_CHTMLA
+        DELETE FROM OEHR.THURXE_CCDHTA
         WHERE HTML_FL_PTH = #{html} AND SRE_VCB_CDVA_ID = #{lang}
     </delete>
 

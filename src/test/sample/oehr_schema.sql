@@ -37,8 +37,8 @@ CREATE SEQUENCE OEHR.SQ_THURXE_CVIEWL_1 INCREMENT BY 1 MINVALUE 1 MAXVALUE 99999
 CREATE TABLE OEHR.THURXE_CATHLI (
                                     ATH_ID VARCHAR2(32),
                                     DEL_YN VARCHAR2(1),
-                                    FST_ENT_DTM DATE,
-                                    FST_ENT_USID VARCHAR2(14),
+                                    FST_ENR_DTM DATE,
+                                    FST_ENR_USID VARCHAR2(14),
                                     GUID VARCHAR2(38),
                                     GUID_PRG_SNO NUMBER(4,0),
                                     LST_CHG_DTM DATE,
@@ -48,7 +48,7 @@ CREATE TABLE OEHR.THURXE_CATHLI (
                                     USE_YN VARCHAR2(1),
                                     CONSTRAINT SYS_C0011066 CHECK ("ATH_ID" IS NOT NULL),
                                     CONSTRAINT SYS_C0011067 CHECK ("DEL_YN" IS NOT NULL),
-                                    CONSTRAINT SYS_C0011068 CHECK ("FST_ENT_USID" IS NOT NULL),
+                                    CONSTRAINT SYS_C0011068 CHECK ("FST_ENR_USID" IS NOT NULL),
                                     CONSTRAINT SYS_C0011069 CHECK ("GUID" IS NOT NULL),
                                     CONSTRAINT SYS_C0011070 CHECK ("GUID_PRG_SNO" IS NOT NULL),
                                     CONSTRAINT SYS_C0011071 CHECK ("LST_CHG_USID" IS NOT NULL),
@@ -66,8 +66,8 @@ CREATE TABLE OEHR.THURXE_CATHLI (
 CREATE TABLE OEHR.THURXE_CBRDMM (
                                     BLB_SNO NUMBER(22,0),
                                     DEL_YN VARCHAR2(1),
-                                    FST_ENT_DTM DATE,
-                                    FST_ENT_USID VARCHAR2(14),
+                                    FST_ENR_DTM DATE,
+                                    FST_ENR_USID VARCHAR2(14),
                                     GUID VARCHAR2(38),
                                     GUID_PRG_SNO NUMBER(4,0),
                                     LST_CHG_DTM DATE,
@@ -80,7 +80,7 @@ CREATE TABLE OEHR.THURXE_CBRDMM (
                                     NAC_INQ_NBR NUMBER(10,0),
                                     CONSTRAINT SYS_C0011089 CHECK ("BLB_SNO" IS NOT NULL),
                                     CONSTRAINT SYS_C0011090 CHECK ("DEL_YN" IS NOT NULL),
-                                    CONSTRAINT SYS_C0011091 CHECK ("FST_ENT_USID" IS NOT NULL),
+                                    CONSTRAINT SYS_C0011091 CHECK ("FST_ENR_USID" IS NOT NULL),
                                     CONSTRAINT SYS_C0011092 CHECK ("GUID" IS NOT NULL),
                                     CONSTRAINT SYS_C0011093 CHECK ("GUID_PRG_SNO" IS NOT NULL),
                                     CONSTRAINT SYS_C0011094 CHECK ("LST_CHG_USID" IS NOT NULL),
@@ -101,8 +101,8 @@ CREATE TABLE OEHR.THURXE_CBRDMM (
 CREATE TABLE OEHR.THURXE_CBRDFM (
                                     BLB_APG_FL_SNO NUMBER(22,0),
                                     DEL_YN VARCHAR2(1),
-                                    FST_ENT_DTM DATE,
-                                    FST_ENT_USID VARCHAR2(14),
+                                    FST_ENR_DTM DATE,
+                                    FST_ENR_USID VARCHAR2(14),
                                     GUID VARCHAR2(38),
                                     GUID_PRG_SNO NUMBER(4,0),
                                     LST_CHG_DTM DATE,
@@ -113,7 +113,7 @@ CREATE TABLE OEHR.THURXE_CBRDFM (
                                     BLB_SNO NUMBER(22,0),
                                     CONSTRAINT SYS_C0011073 CHECK ("BLB_APG_FL_SNO" IS NOT NULL),
                                     CONSTRAINT SYS_C0011074 CHECK ("DEL_YN" IS NOT NULL),
-                                    CONSTRAINT SYS_C0011075 CHECK ("FST_ENT_USID" IS NOT NULL),
+                                    CONSTRAINT SYS_C0011075 CHECK ("FST_ENR_USID" IS NOT NULL),
                                     CONSTRAINT SYS_C0011076 CHECK ("GUID" IS NOT NULL),
                                     CONSTRAINT SYS_C0011077 CHECK ("GUID_PRG_SNO" IS NOT NULL),
                                     CONSTRAINT SYS_C0011078 CHECK ("LST_CHG_USID" IS NOT NULL),
@@ -131,8 +131,8 @@ CREATE TABLE OEHR.THURXE_CBRDFM (
 CREATE TABLE OEHR.THURXE_CBRDIM (
                                     BLB_IMG_SNO NUMBER(22,0),
                                     DEL_YN VARCHAR2(1),
-                                    FST_ENT_DTM DATE,
-                                    FST_ENT_USID VARCHAR2(14),
+                                    FST_ENR_DTM DATE,
+                                    FST_ENR_USID VARCHAR2(14),
                                     GUID VARCHAR2(38),
                                     GUID_PRG_SNO NUMBER(4,0),
                                     LST_CHG_DTM DATE,
@@ -142,7 +142,7 @@ CREATE TABLE OEHR.THURXE_CBRDIM (
                                     BLB_SNO NUMBER(22,0),
                                     CONSTRAINT SYS_C0011080 CHECK ("BLB_IMG_SNO" IS NOT NULL),
                                     CONSTRAINT SYS_C0011081 CHECK ("DEL_YN" IS NOT NULL),
-                                    CONSTRAINT SYS_C0011082 CHECK ("FST_ENT_USID" IS NOT NULL),
+                                    CONSTRAINT SYS_C0011082 CHECK ("FST_ENR_USID" IS NOT NULL),
                                     CONSTRAINT SYS_C0011083 CHECK ("GUID" IS NOT NULL),
                                     CONSTRAINT SYS_C0011084 CHECK ("GUID_PRG_SNO" IS NOT NULL),
                                     CONSTRAINT SYS_C0011085 CHECK ("LST_CHG_USID" IS NOT NULL),
@@ -157,12 +157,12 @@ CREATE TABLE OEHR.THURXE_CBRDIM (
 
 -- Drop table
 
--- DROP TABLE OEHR.THURXE_CHTMLA;
+-- DROP TABLE OEHR.THURXE_CCDHTA;
 
-CREATE TABLE OEHR.THURXE_CHTMLA (
+CREATE TABLE OEHR.THURXE_CCDHTA (
                                     DEL_YN VARCHAR2(1),
-                                    FST_ENT_DTM DATE,
-                                    FST_ENT_USID VARCHAR2(14),
+                                    FST_ENR_DTM DATE,
+                                    FST_ENR_USID VARCHAR2(14),
                                     GUID VARCHAR2(38),
                                     GUID_PRG_SNO NUMBER(4,0),
                                     LST_CHG_DTM DATE,
@@ -170,7 +170,7 @@ CREATE TABLE OEHR.THURXE_CHTMLA (
                                     SRE_VCB_CDVA_ID VARCHAR2(40),
                                     HTML_FL_PTH VARCHAR2(2000),
                                     CONSTRAINT SYS_C0011100 CHECK ("DEL_YN" IS NOT NULL),
-                                    CONSTRAINT SYS_C0011101 CHECK ("FST_ENT_USID" IS NOT NULL),
+                                    CONSTRAINT SYS_C0011101 CHECK ("FST_ENR_USID" IS NOT NULL),
                                     CONSTRAINT SYS_C0011102 CHECK ("GUID" IS NOT NULL),
                                     CONSTRAINT SYS_C0011103 CHECK ("GUID_PRG_SNO" IS NOT NULL),
                                     CONSTRAINT SYS_C0011104 CHECK ("LST_CHG_USID" IS NOT NULL),
@@ -189,8 +189,8 @@ CREATE TABLE OEHR.THURXE_CHTMLA (
 CREATE TABLE OEHR.THURXE_CHTMLM (
                                     HTML_FL_PTH VARCHAR2(2000),
                                     DEL_YN VARCHAR2(1),
-                                    FST_ENT_DTM DATE,
-                                    FST_ENT_USID VARCHAR2(14),
+                                    FST_ENR_DTM DATE,
+                                    FST_ENR_USID VARCHAR2(14),
                                     GUID VARCHAR2(38),
                                     GUID_PRG_SNO NUMBER(4,0),
                                     LST_CHG_DTM DATE,
@@ -198,7 +198,7 @@ CREATE TABLE OEHR.THURXE_CHTMLM (
                                     HTML_FL_NM VARCHAR2(100),
                                     CONSTRAINT SYS_C0011108 CHECK ("HTML_FL_PTH" IS NOT NULL),
                                     CONSTRAINT SYS_C0011109 CHECK ("DEL_YN" IS NOT NULL),
-                                    CONSTRAINT SYS_C0011110 CHECK ("FST_ENT_USID" IS NOT NULL),
+                                    CONSTRAINT SYS_C0011110 CHECK ("FST_ENR_USID" IS NOT NULL),
                                     CONSTRAINT SYS_C0011111 CHECK ("GUID" IS NOT NULL),
                                     CONSTRAINT SYS_C0011112 CHECK ("GUID_PRG_SNO" IS NOT NULL),
                                     CONSTRAINT SYS_C0011113 CHECK ("LST_CHG_USID" IS NOT NULL),
@@ -211,13 +211,13 @@ CREATE TABLE OEHR.THURXE_CHTMLM (
 
 -- Drop table
 
--- DROP TABLE OEHR.THURXE_CLANGM;
+-- DROP TABLE OEHR.THURXE_CCODEM;
 
-CREATE TABLE OEHR.THURXE_CLANGM (
+CREATE TABLE OEHR.THURXE_CCODEM (
                                     SRE_VCB_CDVA_ID VARCHAR2(40),
                                     DEL_YN VARCHAR2(1),
-                                    FST_ENT_DTM DATE,
-                                    FST_ENT_USID VARCHAR2(14),
+                                    FST_ENR_DTM DATE,
+                                    FST_ENR_USID VARCHAR2(14),
                                     GUID VARCHAR2(38),
                                     GUID_PRG_SNO NUMBER(4,0),
                                     LST_CHG_DTM DATE,
@@ -226,7 +226,7 @@ CREATE TABLE OEHR.THURXE_CLANGM (
                                     SRE_VCB_NM VARCHAR2(200),
                                     CONSTRAINT SYS_C0011116 CHECK ("SRE_VCB_CDVA_ID" IS NOT NULL),
                                     CONSTRAINT SYS_C0011117 CHECK ("DEL_YN" IS NOT NULL),
-                                    CONSTRAINT SYS_C0011118 CHECK ("FST_ENT_USID" IS NOT NULL),
+                                    CONSTRAINT SYS_C0011118 CHECK ("FST_ENR_USID" IS NOT NULL),
                                     CONSTRAINT SYS_C0011119 CHECK ("GUID" IS NOT NULL),
                                     CONSTRAINT SYS_C0011120 CHECK ("GUID_PRG_SNO" IS NOT NULL),
                                     CONSTRAINT SYS_C0011121 CHECK ("LST_CHG_USID" IS NOT NULL),
@@ -245,8 +245,8 @@ CREATE TABLE OEHR.THURXE_CLANGM (
 CREATE TABLE OEHR.THURXE_CLOGNL (
                                     LGN_LOG_SNO NUMBER(22,0),
                                     DEL_YN VARCHAR2(1),
-                                    FST_ENT_DTM DATE,
-                                    FST_ENT_USID VARCHAR2(14),
+                                    FST_ENR_DTM DATE,
+                                    FST_ENR_USID VARCHAR2(14),
                                     GUID VARCHAR2(38),
                                     GUID_PRG_SNO NUMBER(4,0),
                                     LST_CHG_DTM DATE,
@@ -256,7 +256,7 @@ CREATE TABLE OEHR.THURXE_CLOGNL (
                                     LGN_SCS_YN VARCHAR2(1),
                                     CONSTRAINT SYS_C0011125 CHECK ("LGN_LOG_SNO" IS NOT NULL),
                                     CONSTRAINT SYS_C0011126 CHECK ("DEL_YN" IS NOT NULL),
-                                    CONSTRAINT SYS_C0011127 CHECK ("FST_ENT_USID" IS NOT NULL),
+                                    CONSTRAINT SYS_C0011127 CHECK ("FST_ENR_USID" IS NOT NULL),
                                     CONSTRAINT SYS_C0011128 CHECK ("GUID" IS NOT NULL),
                                     CONSTRAINT SYS_C0011129 CHECK ("GUID_PRG_SNO" IS NOT NULL),
                                     CONSTRAINT SYS_C0011130 CHECK ("LST_CHG_USID" IS NOT NULL),
@@ -275,8 +275,8 @@ CREATE TABLE OEHR.THURXE_CLOGNL (
 CREATE TABLE OEHR.THURXE_CORGLI (
                                     PRLM_OGZ_C_CONE VARCHAR2(100),
                                     DEL_YN VARCHAR2(1),
-                                    FST_ENT_DTM DATE,
-                                    FST_ENT_USID VARCHAR2(14),
+                                    FST_ENR_DTM DATE,
+                                    FST_ENR_USID VARCHAR2(14),
                                     GUID VARCHAR2(38),
                                     GUID_PRG_SNO NUMBER(4,0),
                                     LST_CHG_DTM DATE,
@@ -288,7 +288,7 @@ CREATE TABLE OEHR.THURXE_CORGLI (
                                     USE_YN VARCHAR2(1),
                                     CONSTRAINT SYS_C0011135 CHECK ("PRLM_OGZ_C_CONE" IS NOT NULL),
                                     CONSTRAINT SYS_C0011136 CHECK ("DEL_YN" IS NOT NULL),
-                                    CONSTRAINT SYS_C0011137 CHECK ("FST_ENT_USID" IS NOT NULL),
+                                    CONSTRAINT SYS_C0011137 CHECK ("FST_ENR_USID" IS NOT NULL),
                                     CONSTRAINT SYS_C0011138 CHECK ("GUID" IS NOT NULL),
                                     CONSTRAINT SYS_C0011139 CHECK ("GUID_PRG_SNO" IS NOT NULL),
                                     CONSTRAINT SYS_C0011140 CHECK ("LST_CHG_USID" IS NOT NULL),
@@ -304,8 +304,8 @@ CREATE TABLE OEHR.THURXE_CORGLI (
 CREATE TABLE OEHR.THURXE_COTPIM (
                                     OTP_ISN_SNO NUMBER(22,0),
                                     DEL_YN VARCHAR2(1),
-                                    FST_ENT_DTM DATE,
-                                    FST_ENT_USID VARCHAR2(14),
+                                    FST_ENR_DTM DATE,
+                                    FST_ENR_USID VARCHAR2(14),
                                     GUID VARCHAR2(38),
                                     GUID_PRG_SNO NUMBER(4,0),
                                     LST_CHG_DTM DATE,
@@ -315,7 +315,7 @@ CREATE TABLE OEHR.THURXE_COTPIM (
                                     OTP_SMS_CER_NO VARCHAR2(8),
                                     CONSTRAINT SYS_C0011142 CHECK ("OTP_ISN_SNO" IS NOT NULL),
                                     CONSTRAINT SYS_C0011143 CHECK ("DEL_YN" IS NOT NULL),
-                                    CONSTRAINT SYS_C0011144 CHECK ("FST_ENT_USID" IS NOT NULL),
+                                    CONSTRAINT SYS_C0011144 CHECK ("FST_ENR_USID" IS NOT NULL),
                                     CONSTRAINT SYS_C0011145 CHECK ("GUID" IS NOT NULL),
                                     CONSTRAINT SYS_C0011146 CHECK ("GUID_PRG_SNO" IS NOT NULL),
                                     CONSTRAINT SYS_C0011147 CHECK ("LST_CHG_USID" IS NOT NULL),
@@ -333,8 +333,8 @@ CREATE TABLE OEHR.THURXE_COTPIM (
 CREATE TABLE OEHR.THURXE_CROLEM (
                                     ENO VARCHAR2(32),
                                     DEL_YN VARCHAR2(1),
-                                    FST_ENT_DTM DATE,
-                                    FST_ENT_USID VARCHAR2(14),
+                                    FST_ENR_DTM DATE,
+                                    FST_ENR_USID VARCHAR2(14),
                                     GUID VARCHAR2(38),
                                     GUID_PRG_SNO NUMBER(4,0),
                                     LST_CHG_DTM DATE,
@@ -342,7 +342,7 @@ CREATE TABLE OEHR.THURXE_CROLEM (
                                     ATH_ID VARCHAR2(32),
                                     CONSTRAINT SYS_C0011150 CHECK ("ENO" IS NOT NULL),
                                     CONSTRAINT SYS_C0011151 CHECK ("DEL_YN" IS NOT NULL),
-                                    CONSTRAINT SYS_C0011152 CHECK ("FST_ENT_USID" IS NOT NULL),
+                                    CONSTRAINT SYS_C0011152 CHECK ("FST_ENR_USID" IS NOT NULL),
                                     CONSTRAINT SYS_C0011153 CHECK ("GUID" IS NOT NULL),
                                     CONSTRAINT SYS_C0011154 CHECK ("GUID_PRG_SNO" IS NOT NULL),
                                     CONSTRAINT SYS_C0011155 CHECK ("LST_CHG_USID" IS NOT NULL),
@@ -361,8 +361,8 @@ CREATE TABLE OEHR.THURXE_CUSATI (
                                     ENO VARCHAR2(32),
                                     ATH_ID VARCHAR2(32),
                                     DEL_YN VARCHAR2(1),
-                                    FST_ENT_DTM DATE,
-                                    FST_ENT_USID VARCHAR2(14),
+                                    FST_ENR_DTM DATE,
+                                    FST_ENR_USID VARCHAR2(14),
                                     GUID VARCHAR2(38),
                                     GUID_PRG_SNO NUMBER(4,0),
                                     LST_CHG_DTM DATE,
@@ -371,7 +371,7 @@ CREATE TABLE OEHR.THURXE_CUSATI (
                                     CONSTRAINT SYS_C0011158 CHECK ("ENO" IS NOT NULL),
                                     CONSTRAINT SYS_C0011159 CHECK ("ATH_ID" IS NOT NULL),
                                     CONSTRAINT SYS_C0011160 CHECK ("DEL_YN" IS NOT NULL),
-                                    CONSTRAINT SYS_C0011161 CHECK ("FST_ENT_USID" IS NOT NULL),
+                                    CONSTRAINT SYS_C0011161 CHECK ("FST_ENR_USID" IS NOT NULL),
                                     CONSTRAINT SYS_C0011162 CHECK ("GUID" IS NOT NULL),
                                     CONSTRAINT SYS_C0011163 CHECK ("GUID_PRG_SNO" IS NOT NULL),
                                     CONSTRAINT SYS_C0011164 CHECK ("LST_CHG_USID" IS NOT NULL),
@@ -388,8 +388,8 @@ CREATE TABLE OEHR.THURXE_CUSATI (
 CREATE TABLE OEHR.THURXE_CUSRLI (
                                     ENO VARCHAR2(32),
                                     DEL_YN VARCHAR2(1),
-                                    FST_ENT_DTM DATE,
-                                    FST_ENT_USID VARCHAR2(14),
+                                    FST_ENR_DTM DATE,
+                                    FST_ENR_USID VARCHAR2(14),
                                     GUID VARCHAR2(38),
                                     GUID_PRG_SNO NUMBER(4,0),
                                     LST_CHG_DTM DATE,
@@ -409,7 +409,7 @@ CREATE TABLE OEHR.THURXE_CUSRLI (
                                     USR_WREN_NM VARCHAR2(100),
                                     CONSTRAINT SYS_C0011166 CHECK ("ENO" IS NOT NULL),
                                     CONSTRAINT SYS_C0011167 CHECK ("DEL_YN" IS NOT NULL),
-                                    CONSTRAINT SYS_C0011168 CHECK ("FST_ENT_USID" IS NOT NULL),
+                                    CONSTRAINT SYS_C0011168 CHECK ("FST_ENR_USID" IS NOT NULL),
                                     CONSTRAINT SYS_C0011169 CHECK ("GUID" IS NOT NULL),
                                     CONSTRAINT SYS_C0011170 CHECK ("GUID_PRG_SNO" IS NOT NULL),
                                     CONSTRAINT SYS_C0011171 CHECK ("LST_CHG_USID" IS NOT NULL),
@@ -425,8 +425,8 @@ CREATE TABLE OEHR.THURXE_CUSRLI (
 CREATE TABLE OEHR.THURXE_CVIEWL (
                                     PAG_LOG_SNO NUMBER(22,0),
                                     DEL_YN VARCHAR2(1),
-                                    FST_ENT_DTM DATE,
-                                    FST_ENT_USID VARCHAR2(14),
+                                    FST_ENR_DTM DATE,
+                                    FST_ENR_USID VARCHAR2(14),
                                     GUID VARCHAR2(38),
                                     GUID_PRG_SNO NUMBER(4,0),
                                     LST_CHG_DTM DATE,
@@ -438,7 +438,7 @@ CREATE TABLE OEHR.THURXE_CVIEWL (
                                     USR_CNC_ENV_CONE VARCHAR2(2000),
                                     CONSTRAINT SYS_C0011173 CHECK ("PAG_LOG_SNO" IS NOT NULL),
                                     CONSTRAINT SYS_C0011174 CHECK ("DEL_YN" IS NOT NULL),
-                                    CONSTRAINT SYS_C0011175 CHECK ("FST_ENT_USID" IS NOT NULL),
+                                    CONSTRAINT SYS_C0011175 CHECK ("FST_ENR_USID" IS NOT NULL),
                                     CONSTRAINT SYS_C0011176 CHECK ("GUID" IS NOT NULL),
                                     CONSTRAINT SYS_C0011177 CHECK ("GUID_PRG_SNO" IS NOT NULL),
                                     CONSTRAINT SYS_C0011178 CHECK ("LST_CHG_USID" IS NOT NULL),
@@ -461,8 +461,8 @@ CREATE TABLE OEHR.THURXE_CVIEWL (
 CREATE TABLE OEHR.THURXE_CWUSRM (
                                     ENO VARCHAR2(32),
                                     DEL_YN VARCHAR2(1),
-                                    FST_ENT_DTM DATE,
-                                    FST_ENT_USID VARCHAR2(14),
+                                    FST_ENR_DTM DATE,
+                                    FST_ENR_USID VARCHAR2(14),
                                     GUID VARCHAR2(38),
                                     GUID_PRG_SNO NUMBER(4,0),
                                     LST_CHG_DTM DATE,
@@ -471,7 +471,7 @@ CREATE TABLE OEHR.THURXE_CWUSRM (
                                     WEBA_USR_HDLN_IMG BLOB,
                                     CONSTRAINT SYS_C0011196 CHECK ("ENO" IS NOT NULL),
                                     CONSTRAINT SYS_C0011197 CHECK ("DEL_YN" IS NOT NULL),
-                                    CONSTRAINT SYS_C0011198 CHECK ("FST_ENT_USID" IS NOT NULL),
+                                    CONSTRAINT SYS_C0011198 CHECK ("FST_ENR_USID" IS NOT NULL),
                                     CONSTRAINT SYS_C0011199 CHECK ("GUID" IS NOT NULL),
                                     CONSTRAINT SYS_C0011200 CHECK ("GUID_PRG_SNO" IS NOT NULL),
                                     CONSTRAINT SYS_C0011201 CHECK ("LST_CHG_USID" IS NOT NULL),
@@ -492,8 +492,8 @@ CREATE TABLE OEHR.THURXE_CWUSRM (
 CREATE TABLE OEHR.THURXE_CWCRDM (
                                     WEBA_SNO NUMBER(10,0) DEFAULT "OEHR"."SQ_THURXE_CWCRDM_1".nextval,
                                     DEL_YN VARCHAR2(1),
-                                    FST_ENT_DTM DATE,
-                                    FST_ENT_USID VARCHAR2(14),
+                                    FST_ENR_DTM DATE,
+                                    FST_ENR_USID VARCHAR2(14),
                                     GUID VARCHAR2(38),
                                     GUID_PRG_SNO NUMBER(4,0),
                                     LST_CHG_DTM DATE,
@@ -505,7 +505,7 @@ CREATE TABLE OEHR.THURXE_CWCRDM (
                                     ENO VARCHAR2(32),
                                     CONSTRAINT SYS_C0011185 CHECK ("WEBA_SNO" IS NOT NULL),
                                     CONSTRAINT SYS_C0011186 CHECK ("DEL_YN" IS NOT NULL),
-                                    CONSTRAINT SYS_C0011187 CHECK ("FST_ENT_USID" IS NOT NULL),
+                                    CONSTRAINT SYS_C0011187 CHECK ("FST_ENR_USID" IS NOT NULL),
                                     CONSTRAINT SYS_C0011188 CHECK ("GUID" IS NOT NULL),
                                     CONSTRAINT SYS_C0011189 CHECK ("GUID_PRG_SNO" IS NOT NULL),
                                     CONSTRAINT SYS_C0011190 CHECK ("LST_CHG_USID" IS NOT NULL),
@@ -561,8 +561,8 @@ COMMENT ON COLUMN OEHR.THURXE_SESSION_ATTRIBUTES.ATTRIBUTE_BYTES IS '속성 데�
 COMMENT ON TABLE OEHR.THURXE_CATHLI IS '인사_외부근태 공통자격등급기본';
 COMMENT ON COLUMN OEHR.THURXE_CATHLI.ATH_ID IS '권한ID';
 COMMENT ON COLUMN OEHR.THURXE_CATHLI.DEL_YN IS '삭제여부';
-COMMENT ON COLUMN OEHR.THURXE_CATHLI.FST_ENT_DTM IS '생성일시';
-COMMENT ON COLUMN OEHR.THURXE_CATHLI.FST_ENT_USID IS '생성사용자ID';
+COMMENT ON COLUMN OEHR.THURXE_CATHLI.FST_ENR_DTM IS '생성일시';
+COMMENT ON COLUMN OEHR.THURXE_CATHLI.FST_ENR_USID IS '생성사용자ID';
 COMMENT ON COLUMN OEHR.THURXE_CATHLI.GUID IS 'GUID';
 COMMENT ON COLUMN OEHR.THURXE_CATHLI.GUID_PRG_SNO IS 'GUID진행일련번호';
 COMMENT ON COLUMN OEHR.THURXE_CATHLI.LST_CHG_DTM IS '최종변경일시';
@@ -574,8 +574,8 @@ COMMENT ON COLUMN OEHR.THURXE_CATHLI.USE_YN IS '사용여부';
 COMMENT ON TABLE OEHR.THURXE_CBRDFM IS '인사_외부근태 공지사항게시판파일기본';
 COMMENT ON COLUMN OEHR.THURXE_CBRDFM.BLB_APG_FL_SNO IS '게시판첨부파일일련번호';
 COMMENT ON COLUMN OEHR.THURXE_CBRDFM.DEL_YN IS '삭제여부';
-COMMENT ON COLUMN OEHR.THURXE_CBRDFM.FST_ENT_DTM IS '생성일시';
-COMMENT ON COLUMN OEHR.THURXE_CBRDFM.FST_ENT_USID IS '생성사용자ID';
+COMMENT ON COLUMN OEHR.THURXE_CBRDFM.FST_ENR_DTM IS '생성일시';
+COMMENT ON COLUMN OEHR.THURXE_CBRDFM.FST_ENR_USID IS '생성사용자ID';
 COMMENT ON COLUMN OEHR.THURXE_CBRDFM.GUID IS 'GUID';
 COMMENT ON COLUMN OEHR.THURXE_CBRDFM.GUID_PRG_SNO IS 'GUID진행일련번호';
 COMMENT ON COLUMN OEHR.THURXE_CBRDFM.LST_CHG_DTM IS '최종변경일시';
@@ -588,8 +588,8 @@ COMMENT ON COLUMN OEHR.THURXE_CBRDFM.BLB_SNO IS '게시판일련번호';
 COMMENT ON TABLE OEHR.THURXE_CBRDIM IS '인사_외부근태 공지사항게시판이미지기본';
 COMMENT ON COLUMN OEHR.THURXE_CBRDIM.BLB_IMG_SNO IS '게시판이미지일련번호';
 COMMENT ON COLUMN OEHR.THURXE_CBRDIM.DEL_YN IS '삭제여부';
-COMMENT ON COLUMN OEHR.THURXE_CBRDIM.FST_ENT_DTM IS '생성일시';
-COMMENT ON COLUMN OEHR.THURXE_CBRDIM.FST_ENT_USID IS '생성사용자ID';
+COMMENT ON COLUMN OEHR.THURXE_CBRDIM.FST_ENR_DTM IS '생성일시';
+COMMENT ON COLUMN OEHR.THURXE_CBRDIM.FST_ENR_USID IS '생성사용자ID';
 COMMENT ON COLUMN OEHR.THURXE_CBRDIM.GUID IS 'GUID';
 COMMENT ON COLUMN OEHR.THURXE_CBRDIM.GUID_PRG_SNO IS 'GUID진행일련번호';
 COMMENT ON COLUMN OEHR.THURXE_CBRDIM.LST_CHG_DTM IS '최종변경일시';
@@ -601,8 +601,8 @@ COMMENT ON COLUMN OEHR.THURXE_CBRDIM.BLB_SNO IS '게시판일련번호';
 COMMENT ON TABLE OEHR.THURXE_CBRDMM IS '인사_외부근태 공지사항게시판메인기본';
 COMMENT ON COLUMN OEHR.THURXE_CBRDMM.BLB_SNO IS '게시판일련번호';
 COMMENT ON COLUMN OEHR.THURXE_CBRDMM.DEL_YN IS '삭제여부';
-COMMENT ON COLUMN OEHR.THURXE_CBRDMM.FST_ENT_DTM IS '생성일시';
-COMMENT ON COLUMN OEHR.THURXE_CBRDMM.FST_ENT_USID IS '생성사용자ID';
+COMMENT ON COLUMN OEHR.THURXE_CBRDMM.FST_ENR_DTM IS '생성일시';
+COMMENT ON COLUMN OEHR.THURXE_CBRDMM.FST_ENR_USID IS '생성사용자ID';
 COMMENT ON COLUMN OEHR.THURXE_CBRDMM.GUID IS 'GUID';
 COMMENT ON COLUMN OEHR.THURXE_CBRDMM.GUID_PRG_SNO IS 'GUID진행일련번호';
 COMMENT ON COLUMN OEHR.THURXE_CBRDMM.LST_CHG_DTM IS '최종변경일시';
@@ -614,45 +614,45 @@ COMMENT ON COLUMN OEHR.THURXE_CBRDMM.DUPR_ENO IS '작성자사원번호';
 COMMENT ON COLUMN OEHR.THURXE_CBRDMM.FL_APG_YN IS '파일첨부여부';
 COMMENT ON COLUMN OEHR.THURXE_CBRDMM.NAC_INQ_NBR IS '게시물조회수';
 
-COMMENT ON TABLE OEHR.THURXE_CHTMLA IS '인사_외부근태 HTML관계';
-COMMENT ON COLUMN OEHR.THURXE_CHTMLA.DEL_YN IS '삭제여부';
-COMMENT ON COLUMN OEHR.THURXE_CHTMLA.FST_ENT_DTM IS '생성일시';
-COMMENT ON COLUMN OEHR.THURXE_CHTMLA.FST_ENT_USID IS '생성사용자ID';
-COMMENT ON COLUMN OEHR.THURXE_CHTMLA.GUID IS 'GUID';
-COMMENT ON COLUMN OEHR.THURXE_CHTMLA.GUID_PRG_SNO IS 'GUID진행일련번호';
-COMMENT ON COLUMN OEHR.THURXE_CHTMLA.LST_CHG_DTM IS '최종변경일시';
-COMMENT ON COLUMN OEHR.THURXE_CHTMLA.LST_CHG_USID IS '최종변경사용자ID';
-COMMENT ON COLUMN OEHR.THURXE_CHTMLA.SRE_VCB_CDVA_ID IS '화면용어코드값ID';
-COMMENT ON COLUMN OEHR.THURXE_CHTMLA.HTML_FL_PTH IS 'HTML경로명';
+COMMENT ON TABLE OEHR.THURXE_CCDHTA IS '인사_외부근태 HTML관계';
+COMMENT ON COLUMN OEHR.THURXE_CCDHTA.DEL_YN IS '삭제여부';
+COMMENT ON COLUMN OEHR.THURXE_CCDHTA.FST_ENR_DTM IS '생성일시';
+COMMENT ON COLUMN OEHR.THURXE_CCDHTA.FST_ENR_USID IS '생성사용자ID';
+COMMENT ON COLUMN OEHR.THURXE_CCDHTA.GUID IS 'GUID';
+COMMENT ON COLUMN OEHR.THURXE_CCDHTA.GUID_PRG_SNO IS 'GUID진행일련번호';
+COMMENT ON COLUMN OEHR.THURXE_CCDHTA.LST_CHG_DTM IS '최종변경일시';
+COMMENT ON COLUMN OEHR.THURXE_CCDHTA.LST_CHG_USID IS '최종변경사용자ID';
+COMMENT ON COLUMN OEHR.THURXE_CCDHTA.SRE_VCB_CDVA_ID IS '화면용어코드값ID';
+COMMENT ON COLUMN OEHR.THURXE_CCDHTA.HTML_FL_PTH IS 'HTML경로명';
 
 COMMENT ON TABLE OEHR.THURXE_CHTMLM IS '인사_외부근태 HTML화면기본';
 COMMENT ON COLUMN OEHR.THURXE_CHTMLM.HTML_FL_PTH IS 'HTML파일경로';
 COMMENT ON COLUMN OEHR.THURXE_CHTMLM.DEL_YN IS '삭제여부';
-COMMENT ON COLUMN OEHR.THURXE_CHTMLM.FST_ENT_DTM IS '생성일시';
-COMMENT ON COLUMN OEHR.THURXE_CHTMLM.FST_ENT_USID IS '생성사용자ID';
+COMMENT ON COLUMN OEHR.THURXE_CHTMLM.FST_ENR_DTM IS '생성일시';
+COMMENT ON COLUMN OEHR.THURXE_CHTMLM.FST_ENR_USID IS '생성사용자ID';
 COMMENT ON COLUMN OEHR.THURXE_CHTMLM.GUID IS 'GUID';
 COMMENT ON COLUMN OEHR.THURXE_CHTMLM.GUID_PRG_SNO IS 'GUID진행일련번호';
 COMMENT ON COLUMN OEHR.THURXE_CHTMLM.LST_CHG_DTM IS '최종변경일시';
 COMMENT ON COLUMN OEHR.THURXE_CHTMLM.LST_CHG_USID IS '최종변경사용자ID';
 COMMENT ON COLUMN OEHR.THURXE_CHTMLM.HTML_FL_NM IS 'HTML파일명';
 
-COMMENT ON TABLE OEHR.THURXE_CLANGM IS '인사_외부근태 언어기본';
-COMMENT ON COLUMN OEHR.THURXE_CLANGM.SRE_VCB_CDVA_ID IS '화면용어코드값ID';
-COMMENT ON COLUMN OEHR.THURXE_CLANGM.DEL_YN IS '삭제여부';
-COMMENT ON COLUMN OEHR.THURXE_CLANGM.FST_ENT_DTM IS '생성일시';
-COMMENT ON COLUMN OEHR.THURXE_CLANGM.FST_ENT_USID IS '생성사용자ID';
-COMMENT ON COLUMN OEHR.THURXE_CLANGM.GUID IS 'GUID';
-COMMENT ON COLUMN OEHR.THURXE_CLANGM.GUID_PRG_SNO IS 'GUID진행일련번호';
-COMMENT ON COLUMN OEHR.THURXE_CLANGM.LST_CHG_DTM IS '최종변경일시';
-COMMENT ON COLUMN OEHR.THURXE_CLANGM.LST_CHG_USID IS '최종변경사용자ID';
-COMMENT ON COLUMN OEHR.THURXE_CLANGM.SRE_VCB_KD_NM IS '화면용어종류명';
-COMMENT ON COLUMN OEHR.THURXE_CLANGM.SRE_VCB_NM IS '화면용어명';
+COMMENT ON TABLE OEHR.THURXE_CCODEM IS '인사_외부근태 언어기본';
+COMMENT ON COLUMN OEHR.THURXE_CCODEM.SRE_VCB_CDVA_ID IS '화면용어코드값ID';
+COMMENT ON COLUMN OEHR.THURXE_CCODEM.DEL_YN IS '삭제여부';
+COMMENT ON COLUMN OEHR.THURXE_CCODEM.FST_ENR_DTM IS '생성일시';
+COMMENT ON COLUMN OEHR.THURXE_CCODEM.FST_ENR_USID IS '생성사용자ID';
+COMMENT ON COLUMN OEHR.THURXE_CCODEM.GUID IS 'GUID';
+COMMENT ON COLUMN OEHR.THURXE_CCODEM.GUID_PRG_SNO IS 'GUID진행일련번호';
+COMMENT ON COLUMN OEHR.THURXE_CCODEM.LST_CHG_DTM IS '최종변경일시';
+COMMENT ON COLUMN OEHR.THURXE_CCODEM.LST_CHG_USID IS '최종변경사용자ID';
+COMMENT ON COLUMN OEHR.THURXE_CCODEM.SRE_VCB_KD_NM IS '화면용어종류명';
+COMMENT ON COLUMN OEHR.THURXE_CCODEM.SRE_VCB_NM IS '화면용어명';
 
 COMMENT ON TABLE OEHR.THURXE_CLOGNL IS '인사_외부근태 로그인로그';
 COMMENT ON COLUMN OEHR.THURXE_CLOGNL.LGN_LOG_SNO IS '로그인로그일련번호';
 COMMENT ON COLUMN OEHR.THURXE_CLOGNL.DEL_YN IS '삭제여부';
-COMMENT ON COLUMN OEHR.THURXE_CLOGNL.FST_ENT_DTM IS '생성일시';
-COMMENT ON COLUMN OEHR.THURXE_CLOGNL.FST_ENT_USID IS '생성사용자ID';
+COMMENT ON COLUMN OEHR.THURXE_CLOGNL.FST_ENR_DTM IS '생성일시';
+COMMENT ON COLUMN OEHR.THURXE_CLOGNL.FST_ENR_USID IS '생성사용자ID';
 COMMENT ON COLUMN OEHR.THURXE_CLOGNL.GUID IS 'GUID';
 COMMENT ON COLUMN OEHR.THURXE_CLOGNL.GUID_PRG_SNO IS 'GUID진행일련번호';
 COMMENT ON COLUMN OEHR.THURXE_CLOGNL.LST_CHG_DTM IS '최종변경일시';
@@ -664,8 +664,8 @@ COMMENT ON COLUMN OEHR.THURXE_CLOGNL.LGN_SCS_YN IS '로그인성공여부';
 COMMENT ON TABLE OEHR.THURXE_CORGLI IS '인사_외부근태 공통조직기본';
 COMMENT ON COLUMN OEHR.THURXE_CORGLI.PRLM_OGZ_C_CONE IS '인사조직코드내용';
 COMMENT ON COLUMN OEHR.THURXE_CORGLI.DEL_YN IS '삭제여부';
-COMMENT ON COLUMN OEHR.THURXE_CORGLI.FST_ENT_DTM IS '생성일시';
-COMMENT ON COLUMN OEHR.THURXE_CORGLI.FST_ENT_USID IS '생성사용자ID';
+COMMENT ON COLUMN OEHR.THURXE_CORGLI.FST_ENR_DTM IS '생성일시';
+COMMENT ON COLUMN OEHR.THURXE_CORGLI.FST_ENR_USID IS '생성사용자ID';
 COMMENT ON COLUMN OEHR.THURXE_CORGLI.GUID IS 'GUID';
 COMMENT ON COLUMN OEHR.THURXE_CORGLI.GUID_PRG_SNO IS 'GUID진행일련번호';
 COMMENT ON COLUMN OEHR.THURXE_CORGLI.LST_CHG_DTM IS '최종변경일시';
@@ -680,8 +680,8 @@ COMMENT ON COLUMN OEHR.THURXE_CORGLI.USE_YN IS '사용여부';
 COMMENT ON TABLE OEHR.THURXE_COTPIM IS '인사_외부근태 OTP발급이력기본';
 COMMENT ON COLUMN OEHR.THURXE_COTPIM.OTP_ISN_SNO IS 'OTP발급일련번호';
 COMMENT ON COLUMN OEHR.THURXE_COTPIM.DEL_YN IS '삭제여부';
-COMMENT ON COLUMN OEHR.THURXE_COTPIM.FST_ENT_DTM IS '생성일시';
-COMMENT ON COLUMN OEHR.THURXE_COTPIM.FST_ENT_USID IS '생성사용자ID';
+COMMENT ON COLUMN OEHR.THURXE_COTPIM.FST_ENR_DTM IS '생성일시';
+COMMENT ON COLUMN OEHR.THURXE_COTPIM.FST_ENR_USID IS '생성사용자ID';
 COMMENT ON COLUMN OEHR.THURXE_COTPIM.GUID IS 'GUID';
 COMMENT ON COLUMN OEHR.THURXE_COTPIM.GUID_PRG_SNO IS 'GUID진행일련번호';
 COMMENT ON COLUMN OEHR.THURXE_COTPIM.LST_CHG_DTM IS '최종변경일시';
@@ -693,8 +693,8 @@ COMMENT ON COLUMN OEHR.THURXE_COTPIM.OTP_SMS_CER_NO IS 'OTPSMS인증번호';
 COMMENT ON TABLE OEHR.THURXE_CROLEM IS '인사_외부근태 역할메인기본';
 COMMENT ON COLUMN OEHR.THURXE_CROLEM.ENO IS '사원번호';
 COMMENT ON COLUMN OEHR.THURXE_CROLEM.DEL_YN IS '삭제여부';
-COMMENT ON COLUMN OEHR.THURXE_CROLEM.FST_ENT_DTM IS '생성일시';
-COMMENT ON COLUMN OEHR.THURXE_CROLEM.FST_ENT_USID IS '생성사용자ID';
+COMMENT ON COLUMN OEHR.THURXE_CROLEM.FST_ENR_DTM IS '생성일시';
+COMMENT ON COLUMN OEHR.THURXE_CROLEM.FST_ENR_USID IS '생성사용자ID';
 COMMENT ON COLUMN OEHR.THURXE_CROLEM.GUID IS 'GUID';
 COMMENT ON COLUMN OEHR.THURXE_CROLEM.GUID_PRG_SNO IS 'GUID진행일련번호';
 COMMENT ON COLUMN OEHR.THURXE_CROLEM.LST_CHG_DTM IS '최종변경일시';
@@ -705,8 +705,8 @@ COMMENT ON TABLE OEHR.THURXE_CUSATI IS '인사_외부근태 공통사용자자�
 COMMENT ON COLUMN OEHR.THURXE_CUSATI.ENO IS '사원번호';
 COMMENT ON COLUMN OEHR.THURXE_CUSATI.ATH_ID IS '권한ID';
 COMMENT ON COLUMN OEHR.THURXE_CUSATI.DEL_YN IS '삭제여부';
-COMMENT ON COLUMN OEHR.THURXE_CUSATI.FST_ENT_DTM IS '생성일시';
-COMMENT ON COLUMN OEHR.THURXE_CUSATI.FST_ENT_USID IS '생성사용자ID';
+COMMENT ON COLUMN OEHR.THURXE_CUSATI.FST_ENR_DTM IS '생성일시';
+COMMENT ON COLUMN OEHR.THURXE_CUSATI.FST_ENR_USID IS '생성사용자ID';
 COMMENT ON COLUMN OEHR.THURXE_CUSATI.GUID IS 'GUID';
 COMMENT ON COLUMN OEHR.THURXE_CUSATI.GUID_PRG_SNO IS 'GUID진행일련번호';
 COMMENT ON COLUMN OEHR.THURXE_CUSATI.LST_CHG_DTM IS '최종변경일시';
@@ -716,8 +716,8 @@ COMMENT ON COLUMN OEHR.THURXE_CUSATI.USE_YN IS '사용여부';
 COMMENT ON TABLE OEHR.THURXE_CUSRLI IS '인사_외부근태 공통사용자기본';
 COMMENT ON COLUMN OEHR.THURXE_CUSRLI.ENO IS '사원번호';
 COMMENT ON COLUMN OEHR.THURXE_CUSRLI.DEL_YN IS '삭제여부';
-COMMENT ON COLUMN OEHR.THURXE_CUSRLI.FST_ENT_DTM IS '생성일시';
-COMMENT ON COLUMN OEHR.THURXE_CUSRLI.FST_ENT_USID IS '생성사용자ID';
+COMMENT ON COLUMN OEHR.THURXE_CUSRLI.FST_ENR_DTM IS '생성일시';
+COMMENT ON COLUMN OEHR.THURXE_CUSRLI.FST_ENR_USID IS '생성사용자ID';
 COMMENT ON COLUMN OEHR.THURXE_CUSRLI.GUID IS 'GUID';
 COMMENT ON COLUMN OEHR.THURXE_CUSRLI.GUID_PRG_SNO IS 'GUID진행일련번호';
 COMMENT ON COLUMN OEHR.THURXE_CUSRLI.LST_CHG_DTM IS '최종변경일시';
@@ -740,8 +740,8 @@ COMMENT ON COLUMN OEHR.THURXE_CUSRLI.USR_WREN_NM IS '사용자영문명';
 COMMENT ON TABLE OEHR.THURXE_CVIEWL IS '인사_외부근태 페이지뷰로그';
 COMMENT ON COLUMN OEHR.THURXE_CVIEWL.PAG_LOG_SNO IS '페이지로그일련번호';
 COMMENT ON COLUMN OEHR.THURXE_CVIEWL.DEL_YN IS '삭제여부';
-COMMENT ON COLUMN OEHR.THURXE_CVIEWL.FST_ENT_DTM IS '생성일시';
-COMMENT ON COLUMN OEHR.THURXE_CVIEWL.FST_ENT_USID IS '생성사용자ID';
+COMMENT ON COLUMN OEHR.THURXE_CVIEWL.FST_ENR_DTM IS '생성일시';
+COMMENT ON COLUMN OEHR.THURXE_CVIEWL.FST_ENR_USID IS '생성사용자ID';
 COMMENT ON COLUMN OEHR.THURXE_CVIEWL.GUID IS 'GUID';
 COMMENT ON COLUMN OEHR.THURXE_CVIEWL.GUID_PRG_SNO IS 'GUID진행일련번호';
 COMMENT ON COLUMN OEHR.THURXE_CVIEWL.LST_CHG_DTM IS '최종변경일시';
@@ -755,8 +755,8 @@ COMMENT ON COLUMN OEHR.THURXE_CVIEWL.USR_CNC_ENV_CONE IS '사용자접속환경�
 COMMENT ON TABLE OEHR.THURXE_CWCRDM IS '인사_외부근태 Webauthn자격증명기본';
 COMMENT ON COLUMN OEHR.THURXE_CWCRDM.WEBA_SNO IS 'Webauthn 일련번호';
 COMMENT ON COLUMN OEHR.THURXE_CWCRDM.DEL_YN IS '삭제여부';
-COMMENT ON COLUMN OEHR.THURXE_CWCRDM.FST_ENT_DTM IS '생성일시';
-COMMENT ON COLUMN OEHR.THURXE_CWCRDM.FST_ENT_USID IS '생성사용자ID';
+COMMENT ON COLUMN OEHR.THURXE_CWCRDM.FST_ENR_DTM IS '생성일시';
+COMMENT ON COLUMN OEHR.THURXE_CWCRDM.FST_ENR_USID IS '생성사용자ID';
 COMMENT ON COLUMN OEHR.THURXE_CWCRDM.GUID IS 'GUID';
 COMMENT ON COLUMN OEHR.THURXE_CWCRDM.GUID_PRG_SNO IS 'GUID진행일련번호';
 COMMENT ON COLUMN OEHR.THURXE_CWCRDM.LST_CHG_DTM IS '최종변경일시';
@@ -770,8 +770,8 @@ COMMENT ON COLUMN OEHR.THURXE_CWCRDM.ENO IS '직원번호';
 COMMENT ON TABLE OEHR.THURXE_CWUSRM IS '인사_외부근태 Webauthn사용자기본';
 COMMENT ON COLUMN OEHR.THURXE_CWUSRM.ENO IS '직원번호';
 COMMENT ON COLUMN OEHR.THURXE_CWUSRM.DEL_YN IS '삭제여부';
-COMMENT ON COLUMN OEHR.THURXE_CWUSRM.FST_ENT_DTM IS '생성일시';
-COMMENT ON COLUMN OEHR.THURXE_CWUSRM.FST_ENT_USID IS '생성사용자ID';
+COMMENT ON COLUMN OEHR.THURXE_CWUSRM.FST_ENR_DTM IS '생성일시';
+COMMENT ON COLUMN OEHR.THURXE_CWUSRM.FST_ENR_USID IS '생성사용자ID';
 COMMENT ON COLUMN OEHR.THURXE_CWUSRM.GUID IS 'GUID';
 COMMENT ON COLUMN OEHR.THURXE_CWUSRM.GUID_PRG_SNO IS 'GUID진행일련번호';
 COMMENT ON COLUMN OEHR.THURXE_CWUSRM.LST_CHG_DTM IS '최종변경일시';

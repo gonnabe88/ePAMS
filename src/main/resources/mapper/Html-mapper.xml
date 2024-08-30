@@ -13,8 +13,8 @@
         <result property="guidPrgSno" column="GUID_PRG_SNO"/>
         <result property="lstChgUsid" column="LST_CHG_USID"/>
         <result property="updatedTime" column="LST_CHG_DTM"/>
-        <result property="createdTime" column="FST_ENT_DTM"/>
-        <result property="createUsid" column="FST_ENT_USID"/>
+        <result property="createdTime" column="FST_ENR_DTM"/>
+        <result property="createUsid" column="FST_ENR_USID"/>
     </resultMap>
 
     <!-- 모든 데이터 조회 -->
@@ -39,8 +39,8 @@
             GUID_PRG_SNO,
             LST_CHG_USID,
             LST_CHG_DTM,
-            FST_ENT_DTM,
-            FST_ENT_USID
+            FST_ENR_DTM,
+            FST_ENR_USID
         )
         VALUES (
             #{html},
@@ -86,7 +86,7 @@
                 #{guid} AS GUID,
                 #{guidPrgSno} AS GUID_PRG_SNO,
                 #{lstChgUsid} AS LST_CHG_USID,
-                #{createUsid} AS FST_ENT_USID
+                #{createUsid} AS FST_ENR_USID
             FROM dual
         ) source
         ON (target.HTML_FL_PTH = source.HTML_FL_PTH)
@@ -106,8 +106,8 @@
                 GUID_PRG_SNO,
                 LST_CHG_USID,
                 LST_CHG_DTM,
-                FST_ENT_DTM,
-                FST_ENT_USID
+                FST_ENR_DTM,
+                FST_ENR_USID
             ) VALUES (
                  source.HTML_FL_PTH,
                  source.HTML_FL_NM,
@@ -117,7 +117,7 @@
                  source.LST_CHG_USID,
                  SYSDATE,
                  SYSDATE,
-                 source.FST_ENT_USID
+                 source.FST_ENR_USID
              )
     </insert>
 

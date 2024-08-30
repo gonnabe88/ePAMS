@@ -51,7 +51,7 @@ public class BaseVO {
 
     /***
      * @author 140024
-     * @implNote [Column] 생성일시(FST_ENT_DTM)
+     * @implNote [Column] 생성일시(FST_ENR_DTM)
      * @since 2024-06-09
      */
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")

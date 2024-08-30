@@ -4,8 +4,8 @@ After=network.target
 
 [Service]
 Type=simple
-User=kdbadmin
-Group=kdbadmin
+User=ehr
+Group=appgrp
 EnvironmentFile=/app/ehr/ePAMS.env
 ExecStart=java -Xms1G -Xmx2G -XX:+UseG1GC -XX:+UseStringDeduplication -Djava.security.egd=file:/dev/./urandom -jar /app/ehr/ePAMS/build/libs/ePAMS-1.0.0-RELEASE.jar
 WorkingDirectory=/app/ehr/ePAMS/

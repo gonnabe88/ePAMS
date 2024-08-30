@@ -48,6 +48,10 @@ repositories {
 
 // 프로젝트 의존성 설정
 dependencies {
+
+    // Oracle JDBC 드라이버
+    implementation files('libs/orai18n.jar')
+
     // Spring Boot에서 제공하는 Tomcat 스타터, 제공된 런타임으로 설정
     providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 

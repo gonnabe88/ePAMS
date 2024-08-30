@@ -24,7 +24,7 @@ import jakarta.persistence.Table;
 @Setter
 @ToString
 @Builder
-@Table(name = "THURXE_CHTMLA")
+@Table(name = "THURXE_CCDHTA")
 @Comment("인사_외부근태 HTML관계")
 public class HtmlLangEntity extends BaseEntity implements Serializable {
 
@@ -43,7 +43,7 @@ public class HtmlLangEntity extends BaseEntity implements Serializable {
     @ManyToOne
     @JoinColumn(
             name = "HTML_FL_PTH",
-            foreignKey = @ForeignKey(name = "FK_THURXE_CHTMLA_HTML_FL_PTH", foreignKeyDefinition = "FOREIGN KEY (HTML_FL_PTH) REFERENCES OEHR.THURXE_CHTMLM (HTML_FL_PTH) ON DELETE CASCADE")
+            foreignKey = @ForeignKey(name = "FK_THURXE_CCDHTA_HTML_FL_PTH", foreignKeyDefinition = "FOREIGN KEY (HTML_FL_PTH) REFERENCES OEHR.THURXE_CHTMLM (HTML_FL_PTH) ON DELETE CASCADE")
         )
     @Comment("HTML경로명")
     private HtmlEntity htmlEntity;
@@ -57,7 +57,7 @@ public class HtmlLangEntity extends BaseEntity implements Serializable {
     @ManyToOne
     @JoinColumn(
             name = "SRE_VCB_CDVA_ID",
-            foreignKey = @ForeignKey(name = "FK_THURXE_CHTMLA_SRE_VCB_CDVA_ID", foreignKeyDefinition = "FOREIGN KEY (SRE_VCB_CDVA_ID) REFERENCES OEHR.THURXE_CLANGM (SRE_VCB_CDVA_ID) ON DELETE CASCADE")
+            foreignKey = @ForeignKey(name = "FK_THURXE_CCDHTA_SRE_VCB_CDVA_ID", foreignKeyDefinition = "FOREIGN KEY (SRE_VCB_CDVA_ID) REFERENCES OEHR.THURXE_CCODEM (SRE_VCB_CDVA_ID) ON DELETE CASCADE")
     )
     @Comment("화면용어코드값ID")
     private LangEntity langEntity;

@@ -2,7 +2,9 @@
 const ApplAlert = () => {
     const startDateInput = document.getElementById('startDate');
     const staDate = startDateInput.value;
-    const dtmCode = document.querySelector('.btn.btn-submit').getAttribute('data-dtmCode');
+    const endDateInput = document.getElementById('endDate');
+    const endDate = endDateInput.value;
+    const dtmCode = document.querySelector('.btn.btn-submit').getAttribute('dtm-kind');
     const dtmReasonCode = document.querySelector('.btn.btn-submit').getAttribute('data-dtmReasonCode');
     const dtmDispName = document.querySelector('.btn.btn-submit').getAttribute('data-dtmDispName');
 
@@ -12,7 +14,7 @@ const ApplAlert = () => {
         dtmReasonCd: dtmReasonCode,
         dtmDispName: dtmDispName,
         staYmd: new Date(staDate).toISOString(),
-        endYmd: new Date(staDate).toISOString()
+        endYmd: new Date(endDate).toISOString()
     };
 
     // 객체를 쿼리 스트링으로 변환
@@ -56,8 +58,9 @@ const postDtmHisDTO = (dtmHisDTO) => {
         data: JSON.stringify(dtmHisDTO), // 전송 DATA
         success: (data) => { // 성공 (HTTP 상태코드 20X)
             const staYmd = data.staYmd; // 서버에서 반환된 staYmd 값 사용
+            const endYmd = data.endYmd; // 서버에서 반환된 endYmd 값 사용
             const dtmDispName = data.dtmDispName;
-            popupReHtmlMsg('신청되었습니다.', `<span class="dtmApplSuccessPopup">${staYmd} ${dtmDispName}</span>`, 'success', '근태조회', '/dtm/list');
+            popupReHtmlMsg('신청되었습니다.', `<span class="dtmApplSuccessPopup">${staYmd} ${endYmd} ${dtmDispName}</span>`, 'success', '근태조회', '/dtm/list');
             console.log('Success:', data);
         },
         error: (error) => { // 실패 (HTTP 상태코드 40X, 50X)

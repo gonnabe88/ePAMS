@@ -353,6 +353,8 @@ mark {
 .btn-back{
     background-color: #f2f7ff;
     color: #435ebe;
+    float: left;
+    margin-right: auto;
 }
 
 .btn-submit{

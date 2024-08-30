@@ -60,7 +60,8 @@ public class DtmRegController<S extends Session> {
      * @since 2024-08-27
      */
     @GetMapping("/dtmRegDetail")
-    public String dtmRegDetail(@RequestParam("date") String date, Model model) {
+    public String dtmRegDetail(@RequestParam("date") String date,
+                               Model model) {
         final String DTMREGDET = "dtm/dtmRegDetail";
 
         // 언어목록
@@ -70,6 +71,12 @@ public class DtmRegController<S extends Session> {
         if (date != null) {
             model.addAttribute("selectedDate", date);
         }
+
+//        // DTO 생성 및 값 설정
+//        DtmRegDTO dtmRegDTO = new DtmRegDTO();
+//        dtmRegDTO.setDtmCode(dtmKind);  // 선택한 값을 설정
+//
+//        model.addAttribute("dtmRegDTO", dtmRegDTO); // 모델에 추가하여 뷰에서 사용 가능
 
         return DTMREGDET;
     }

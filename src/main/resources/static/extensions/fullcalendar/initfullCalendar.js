@@ -15,9 +15,20 @@ document.addEventListener('DOMContentLoaded', function() {
                 text: '신청하기',
                 click: function() {
                     var url = '/dtm/dtmRegDetail';
+                    var date;
+
                     if (selectedDateStr) {
-                        url += '?date=' + selectedDateStr;
+                        date = selectedDateStr;
+                    } else {
+                        // 오늘 날짜를 YYYY-MM-DD 형식으로 가져옵니다.dkswlgjs
+                        var today = new Date();
+                        var dd = String(today.getDate()).padStart(2, '0');
+                        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+                        var yyyy = today.getFullYear();
+                        date = yyyy + '-' + mm + '-' + dd;
                     }
+
+                    url += '?date=' + date;
                     window.location.href = url;
                 }
             }

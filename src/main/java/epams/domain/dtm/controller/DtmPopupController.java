@@ -17,12 +17,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.time.DayOfWeek;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.time.format.TextStyle;
 import java.util.Locale;
 
 /**
@@ -121,11 +118,24 @@ public class DtmPopupController<S extends Session> {
         model.addAttribute("dtmHisDTO", dto);
 
         // 기타 필요한 모델 속성 설정
-        final LocalDateTime today = dto.getStaYmd();
-        final DayOfWeek dayOfWeek = today.getDayOfWeek();
+        final LocalDateTime staDay = dto.getStaYmd();
+        final LocalDateTime endDay = dto.getEndYmd();
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        String formattedDate = today.format(dateFormatter) + "(" + dayOfWeek.getDisplayName(TextStyle.NARROW, Locale.KOREAN) + ")";
-        model.addAttribute("nowDate", formattedDate);
+        DateTimeFormatter dayOfWeekFormatter = DateTimeFormatter.ofPattern("E", Locale.KOREAN);
+
+        String dateRange;
+
+        if (staDay.isEqual(endDay)) {
+            // 시작일과 종료일이 같은 경우
+            dateRange = staDay.format(dateFormatter) + "(" + staDay.format(dayOfWeekFormatter) + ")";
+        } else {
+            // 시작일과 종료일이 다른 경우
+            String formattedStaYmd = staDay.format(dateFormatter) + "(" + staDay.format(dayOfWeekFormatter) + ")";
+            String formattedEndYmd = endDay.format(dateFormatter) + "(" + endDay.format(dayOfWeekFormatter) + ")";
+            dateRange = formattedStaYmd + " ~ " + formattedEndYmd;
+        }
+
+        model.addAttribute("nowDate", dateRange);
         model.addAttribute("dtmDispName", dtmDispName);
 
         return VIEW; // View 이름 반환

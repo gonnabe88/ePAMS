@@ -384,7 +384,7 @@ CREATE TABLE OEHR.THURXE_CUSRLI (
                                     DEL_YN VARCHAR2(1),
                                     FST_ENR_DTM DATE,
                                     FST_ENR_USID VARCHAR2(14),
-                                    USR_ECY_PWD VARCHAR2(100),
+                                    USR_ECY_PWD VARCHAR2(64),
                                     GUID VARCHAR2(38),
                                     GUID_PRG_SNO NUMBER(4,0),
                                     LST_CHG_DTM DATE,

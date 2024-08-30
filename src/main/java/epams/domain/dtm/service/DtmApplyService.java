@@ -74,7 +74,7 @@ public class DtmApplyService {
 			proCheckProcRepo.callPreCheckProc(preCheckProcDTO); // 사전검증 프로시저 호출
 
 			// 사전검증 실패 시 예외 처리
-			if ("FAILURE".equals(preCheckProcDTO.getResultCode())) {
+			if ("FAILURE!".equals(preCheckProcDTO.getResultCode())) {
 				throw new CustomGeneralRuntimeException(preCheckProcDTO.getResultMsg());
 			}
 
@@ -98,7 +98,7 @@ public class DtmApplyService {
 			proCheckProcRepo.callNewCheckProc(postCheckProcDTO); // 사후검증 프로시저 호출
 
 			// 사후검증 실패 시 예외 처리
-			if ("FAILURE".equals(postCheckProcDTO.getResultCode())) {
+			if ("FAILURE!".equals(postCheckProcDTO.getResultCode())) {
 				throw new CustomGeneralRuntimeException(postCheckProcDTO.getResultMsg());
 			}
 

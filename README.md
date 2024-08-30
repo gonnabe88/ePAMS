@@ -1,3 +1,26 @@
+# VSCode 설정
+## 환경변수
+VSCode는 GRADLE_USER_HOME을 절대경로로 지정해줘야 함 
+ex) D:\workspace\ePAMS
+
+## 심볼릭 링크
+Ctrl+클릭 이동 시 경로 이슈 해결을 위해 심볼릭 링크 설정
+ex) 프로젝트가 D:\workspace\ePAMS\ 경로에 있는 경우
+
+```bash
+C:\Windows\System32>mklink /D "D:\workspace\ePAMS\js" "D:\workspace\ePAMS\src\main\resources\static\js"
+D:\workspace\ePAMS\js <<===>> D:\workspace\ePAMS\src\main\resources\static\js에 대한 기호화된 링크를 만들었습니다.
+
+C:\Windows\System32>mklink /D "D:\workspace\ePAMS\extentions" "D:\workspace\ePAMS\src\main\resources\static\extensions"
+D:\workspace\ePAMS\extentions <<===>> D:\workspace\ePAMS\src\main\resources\static\extensions에 대한 기호화된 링크를 만들었습니다.
+
+C:\Windows\System32>mklink /D "D:\workspace\ePAMS\css" "D:\workspace\ePAMS\src\main\resources\static\css"
+D:\workspace\ePAMS\css <<===>> D:\workspace\ePAMS\src\main\resources\static\css에 대한 기호화된 링크를 만들었습니다.
+
+C:\Windows\System32>mklink /D "D:\workspace\ePAMS\images" "D:\workspace\ePAMS\src\main\resources\static\images"
+D:\workspace\ePAMS\images <<===>> D:\workspace\ePAMS\src\main\resources\static\images에 대한 기호화된 링크를 만들었습니다.
+```
+
 # DATABASE
 ### Local : Oracle XE 18c
 ### Production : Oracle 19c

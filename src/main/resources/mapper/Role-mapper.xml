@@ -13,8 +13,8 @@
         <result property="guidPrgSno" column="GUID_PRG_SNO"/>
         <result property="lstChgUsid" column="LST_CHG_USID"/>
         <result property="updatedTime" column="LST_CHG_DTM"/>
-        <result property="createdTime" column="FST_ENT_DTM"/>
-        <result property="createUsid" column="FST_ENT_USID"/>
+        <result property="createdTime" column="FST_ENR_DTM"/>
+        <result property="createUsid" column="FST_ENR_USID"/>
     </resultMap>
 
     <!-- 특정 계정에 대한 역할 1건 데이터 조회 -->
@@ -46,8 +46,8 @@
         GUID_PRG_SNO,
         LST_CHG_USID,
         LST_CHG_DTM,
-        FST_ENT_DTM,
-        FST_ENT_USID
+        FST_ENR_DTM,
+        FST_ENR_USID
         )
         VALUES(
         #{username},

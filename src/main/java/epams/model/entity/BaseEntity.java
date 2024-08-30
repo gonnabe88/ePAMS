@@ -78,16 +78,16 @@ public class BaseEntity {
 	 * @since 2024-06-09
 	 */
     @CreationTimestamp
-    @Column(name = "FST_ENT_DTM", columnDefinition = "DATE")
+    @Column(name = "FST_ENR_DTM", columnDefinition = "DATE")
     @Comment("생성일시")
-    private LocalDateTime FST_ENT_DTM;
+    private LocalDateTime FST_ENR_DTM;
 
 	/***
 	 * @author 140024
 	 * @implNote 생성일시
 	 * @since 2024-06-09
 	 */
-	@Column(name = "FST_ENT_USID", length = 14, nullable = false)
+	@Column(name = "FST_ENR_USID", length = 14, nullable = false)
 	@Comment("생성사용자ID")
-	private String FST_ENT_USID = "SYSTEM";
+	private String FST_ENR_USID = "SYSTEM";
 }

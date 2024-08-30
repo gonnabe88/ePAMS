@@ -31,7 +31,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-@Table(name = "THURXE_CLANGM")
+@Table(name = "THURXE_CCODEM")
 @Comment("인사_외부근태 언어기본")
 public class LangEntity extends BaseEntity implements Serializable {
 	
@@ -75,9 +75,9 @@ public class LangEntity extends BaseEntity implements Serializable {
      */
     @ManyToMany
     @JoinTable(
-        name = "OEHR.THURXE_CHTMLA",
-        joinColumns = @JoinColumn(name = "SRE_VCB_CDVA_ID", foreignKey = @ForeignKey(name = "FK_THURXE_CHTMLA_SRE_VCB_CDVA_ID")),
-        inverseJoinColumns = @JoinColumn(name = "HTML_FL_PTH", foreignKey = @ForeignKey(name = "FK_THURXE_CHTMLA_HTML_FL_PTH"))
+        name = "OEHR.THURXE_CCDHTA",
+        joinColumns = @JoinColumn(name = "SRE_VCB_CDVA_ID", foreignKey = @ForeignKey(name = "FK_THURXE_CCDHTA_SRE_VCB_CDVA_ID")),
+        inverseJoinColumns = @JoinColumn(name = "HTML_FL_PTH", foreignKey = @ForeignKey(name = "FK_THURXE_CCDHTA_HTML_FL_PTH"))
     )
     
     /***

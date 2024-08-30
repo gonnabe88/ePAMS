@@ -15,8 +15,8 @@
         <result property="guidPrgSno" column="GUID_PRG_SNO"/>
         <result property="lstChgUsid" column="LST_CHG_USID"/>
         <result property="updatedTime" column="LST_CHG_DTM"/>
-        <result property="createdTime" column="FST_ENT_DTM"/>
-        <result property="createUsid" column="FST_ENT_USID"/>
+        <result property="createdTime" column="FST_ENR_DTM"/>
+        <result property="createUsid" column="FST_ENR_USID"/>
     </resultMap>
 
     <!-- 모든 데이터 조회 -->
@@ -31,8 +31,8 @@
         SELECT *
         FROM OEHR.THURXE_COTPIM
         WHERE ENO = #{username}
-            AND FST_ENT_DTM > SYSDATE - INTERVAL '3' MINUTE
-            ORDER BY FST_ENT_DTM DESC
+            AND FST_ENR_DTM > SYSDATE - INTERVAL '3' MINUTE
+            ORDER BY FST_ENR_DTM DESC
         )
         WHERE ROWNUM = 1
     </select>
@@ -59,8 +59,8 @@
             GUID_PRG_SNO,
             LST_CHG_USID,
             LST_CHG_DTM,
-            FST_ENT_DTM,
-            FST_ENT_USID
+            FST_ENR_DTM,
+            FST_ENR_USID
         )
             VALUES (
             #{seqId},

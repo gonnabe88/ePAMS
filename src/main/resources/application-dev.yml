@@ -8,6 +8,7 @@ kdb:
 # server port
 server:
   port: 8080
+  server-header: "" # 빈 값으로 설정하여 서버 헤더 제거
   servlet:
     session:
       timeout: 15m
@@ -58,7 +59,7 @@ authn:
 spring:  
   datasource:
     driver-class-name: oracle.jdbc.OracleDriver
-    url: jdbc:oracle:thin:@192.168.0.10:1521:ORCLCDB
+    url: jdbc:oracle:thin:@{개발계}
     username: EHR
     password: ${DB_PASSWORD}  # 시스템 환경변수 kdb1234! 세팅
     hikari:

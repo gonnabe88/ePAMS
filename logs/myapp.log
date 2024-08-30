@@ -17321,11 +17321,11 @@ Caused by: org.thymeleaf.exceptions.TemplateInputException: Error resolving temp
 2024-08-19 19:58:52 INFO  [RMI TCP Connection(2)-169.254.247.155] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
 2024-08-19 19:58:52 INFO  [RMI TCP Connection(2)-169.254.247.155] o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
 2024-08-19 20:03:23 WARN  [http-nio-8080-exec-7] o.h.e.jdbc.spi.SqlExceptionHelper - SQL Error: 12899, SQLState: 72000
-2024-08-19 20:03:23 ERROR [http-nio-8080-exec-7] o.h.e.jdbc.spi.SqlExceptionHelper - ORA-12899: "OEHR"."THURXE_CWUSRM"."FST_ENT_USID" 열에 대한 값이 너무 큼(실제: 35, 최대값: 14)
+2024-08-19 20:03:23 ERROR [http-nio-8080-exec-7] o.h.e.jdbc.spi.SqlExceptionHelper - ORA-12899: "OEHR"."THURXE_CWUSRM"."FST_ENR_USID" 열에 대한 값이 너무 큼(실제: 35, 최대값: 14)
 
-2024-08-19 20:03:23 ERROR [http-nio-8080-exec-7] o.a.c.c.C.[.[.[.[dispatcherServlet] - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: org.springframework.orm.jpa.JpaSystemException: could not execute statement [ORA-12899: "OEHR"."THURXE_CWUSRM"."FST_ENT_USID" 열에 대한 값이 너무 큼(실제: 35, 최대값: 14)
-] [insert into THURXE_CWUSRM (DEL_YN,FST_ENT_DTM,FST_ENT_USID,GUID,GUID_PRG_SNO,LST_CHG_DTM,LST_CHG_USID,WEBA_PRO_NM,ENO,WEBA_USR_HDLN_IMG) values (?,?,current_timestamp,?,?,?,?,?,?,?)]] with root cause
-oracle.jdbc.OracleDatabaseException: ORA-12899: "OEHR"."THURXE_CWUSRM"."FST_ENT_USID" 열에 대한 값이 너무 큼(실제: 35, 최대값: 14)
+2024-08-19 20:03:23 ERROR [http-nio-8080-exec-7] o.a.c.c.C.[.[.[.[dispatcherServlet] - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: org.springframework.orm.jpa.JpaSystemException: could not execute statement [ORA-12899: "OEHR"."THURXE_CWUSRM"."FST_ENR_USID" 열에 대한 값이 너무 큼(실제: 35, 최대값: 14)
+] [insert into THURXE_CWUSRM (DEL_YN,FST_ENR_DTM,FST_ENR_USID,GUID,GUID_PRG_SNO,LST_CHG_DTM,LST_CHG_USID,WEBA_PRO_NM,ENO,WEBA_USR_HDLN_IMG) values (?,?,current_timestamp,?,?,?,?,?,?,?)]] with root cause
+oracle.jdbc.OracleDatabaseException: ORA-12899: "OEHR"."THURXE_CWUSRM"."FST_ENR_USID" 열에 대한 값이 너무 큼(실제: 35, 최대값: 14)
 
 	at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:636)
 	at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:563)
@@ -17532,11 +17532,11 @@ oracle.jdbc.OracleDatabaseException: ORA-12899: "OEHR"."THURXE_CWUSRM"."FST_ENT_
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
 	at java.base/java.lang.Thread.run(Thread.java:842)
 2024-08-19 20:10:56 WARN  [http-nio-8080-exec-3] o.h.e.jdbc.spi.SqlExceptionHelper - SQL Error: 12899, SQLState: 72000
-2024-08-19 20:10:56 ERROR [http-nio-8080-exec-3] o.h.e.jdbc.spi.SqlExceptionHelper - ORA-12899: "OEHR"."THURXE_CWUSRM"."FST_ENT_USID" 열에 대한 값이 너무 큼(실제: 35, 최대값: 14)
+2024-08-19 20:10:56 ERROR [http-nio-8080-exec-3] o.h.e.jdbc.spi.SqlExceptionHelper - ORA-12899: "OEHR"."THURXE_CWUSRM"."FST_ENR_USID" 열에 대한 값이 너무 큼(실제: 35, 최대값: 14)
 
-2024-08-19 20:10:56 ERROR [http-nio-8080-exec-3] o.a.c.c.C.[.[.[.[dispatcherServlet] - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: org.springframework.orm.jpa.JpaSystemException: could not execute statement [ORA-12899: "OEHR"."THURXE_CWUSRM"."FST_ENT_USID" 열에 대한 값이 너무 큼(실제: 35, 최대값: 14)
-] [insert into THURXE_CWUSRM (DEL_YN,FST_ENT_DTM,FST_ENT_USID,GUID,GUID_PRG_SNO,LST_CHG_DTM,LST_CHG_USID,WEBA_PRO_NM,ENO,WEBA_USR_HDLN_IMG) values (?,?,current_timestamp,?,?,?,?,?,?,?)]] with root cause
-oracle.jdbc.OracleDatabaseException: ORA-12899: "OEHR"."THURXE_CWUSRM"."FST_ENT_USID" 열에 대한 값이 너무 큼(실제: 35, 최대값: 14)
+2024-08-19 20:10:56 ERROR [http-nio-8080-exec-3] o.a.c.c.C.[.[.[.[dispatcherServlet] - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: org.springframework.orm.jpa.JpaSystemException: could not execute statement [ORA-12899: "OEHR"."THURXE_CWUSRM"."FST_ENR_USID" 열에 대한 값이 너무 큼(실제: 35, 최대값: 14)
+] [insert into THURXE_CWUSRM (DEL_YN,FST_ENR_DTM,FST_ENR_USID,GUID,GUID_PRG_SNO,LST_CHG_DTM,LST_CHG_USID,WEBA_PRO_NM,ENO,WEBA_USR_HDLN_IMG) values (?,?,current_timestamp,?,?,?,?,?,?,?)]] with root cause
+oracle.jdbc.OracleDatabaseException: ORA-12899: "OEHR"."THURXE_CWUSRM"."FST_ENR_USID" 열에 대한 값이 너무 큼(실제: 35, 최대값: 14)
 
 	at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:636)
 	at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:563)
@@ -17859,7 +17859,7 @@ oracle.jdbc.OracleDatabaseException: ORA-12899: "OEHR"."THURXE_CWUSRM"."FST_ENT_
 ### The error may exist in file [D:\workspace\ePAMS\out\production\resources\mapper\Board-mapper.xml]
 ### The error may involve Board.save-Inline
 ### The error occurred while setting parameters
-### SQL: INSERT INTO THURXE_CBRDMM(         BLB_SNO,         BLB_NM,         DUPR_ENO,         BLB_CONE,         FL_APG_YN,         CTG_NM,         NAC_INQ_NBR,         FST_ENT_DTM,         DEL_YN,         GUID,         GUID_PRG_SNO,         LST_CHG_USID,         LST_CHG_DTM,         FST_ENT_DTM,         FST_ENT_USID         )         VALUES(         ?,         ?,         ?,         ?,         ?,         ?,         0,         SYSDATE,         ?,         ?,         ?,         ?,         SYSDATE,         SYSDATE,         ?         )
+### SQL: INSERT INTO THURXE_CBRDMM(         BLB_SNO,         BLB_NM,         DUPR_ENO,         BLB_CONE,         FL_APG_YN,         CTG_NM,         NAC_INQ_NBR,         FST_ENR_DTM,         DEL_YN,         GUID,         GUID_PRG_SNO,         LST_CHG_USID,         LST_CHG_DTM,         FST_ENR_DTM,         FST_ENR_USID         )         VALUES(         ?,         ?,         ?,         ?,         ?,         ?,         0,         SYSDATE,         ?,         ?,         ?,         ?,         SYSDATE,         SYSDATE,         ?         )
 ### Cause: java.sql.SQLSyntaxErrorException: ORA-00957: 열명이 중복되었습니다
 
 ; bad SQL grammar []] with root cause
@@ -18180,11 +18180,11 @@ oracle.jdbc.OracleDatabaseException: ORA-00957: 열명이 중복되었습니다
 2024-08-21 18:36:05 INFO  [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
 2024-08-21 18:36:05 WARN  [restartedMain] o.h.t.s.i.ExceptionHandlerLoggedImpl - GenerationTarget encountered exception accepting command : Error executing DDL "
     alter table THURXE_CLOGNL 
-       add FST_ENT_USID varchar2(14 char) not null" via JDBC [ORA-01758: 테이블은 필수 열을 추가하기 위해 (NOT NULL) 비어 있어야 합니다.
+       add FST_ENR_USID varchar2(14 char) not null" via JDBC [ORA-01758: 테이블은 필수 열을 추가하기 위해 (NOT NULL) 비어 있어야 합니다.
 ]
 org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "
     alter table THURXE_CLOGNL 
-       add FST_ENT_USID varchar2(14 char) not null" via JDBC [ORA-01758: 테이블은 필수 열을 추가하기 위해 (NOT NULL) 비어 있어야 합니다.
+       add FST_ENR_USID varchar2(14 char) not null" via JDBC [ORA-01758: 테이블은 필수 열을 추가하기 위해 (NOT NULL) 비어 있어야 합니다.
 ]
 	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:94)
 	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applySqlString(AbstractSchemaMigrator.java:574)
@@ -18255,11 +18255,11 @@ Caused by: oracle.jdbc.OracleDatabaseException: ORA-01758: 테이블은 필수 �
 	... 58 common frames omitted
 2024-08-21 18:36:05 WARN  [restartedMain] o.h.t.s.i.ExceptionHandlerLoggedImpl - GenerationTarget encountered exception accepting command : Error executing DDL "
     alter table THURXE_COTPIM 
-       add FST_ENT_USID varchar2(14 char) not null" via JDBC [ORA-01758: 테이블은 필수 열을 추가하기 위해 (NOT NULL) 비어 있어야 합니다.
+       add FST_ENR_USID varchar2(14 char) not null" via JDBC [ORA-01758: 테이블은 필수 열을 추가하기 위해 (NOT NULL) 비어 있어야 합니다.
 ]
 org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "
     alter table THURXE_COTPIM 
-       add FST_ENT_USID varchar2(14 char) not null" via JDBC [ORA-01758: 테이블은 필수 열을 추가하기 위해 (NOT NULL) 비어 있어야 합니다.
+       add FST_ENR_USID varchar2(14 char) not null" via JDBC [ORA-01758: 테이블은 필수 열을 추가하기 위해 (NOT NULL) 비어 있어야 합니다.
 ]
 	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:94)
 	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applySqlString(AbstractSchemaMigrator.java:574)
@@ -18330,11 +18330,11 @@ Caused by: oracle.jdbc.OracleDatabaseException: ORA-01758: 테이블은 필수 �
 	... 58 common frames omitted
 2024-08-21 18:36:05 WARN  [restartedMain] o.h.t.s.i.ExceptionHandlerLoggedImpl - GenerationTarget encountered exception accepting command : Error executing DDL "
     alter table THURXE_CVIEWL 
-       add FST_ENT_USID varchar2(14 char) not null" via JDBC [ORA-01758: 테이블은 필수 열을 추가하기 위해 (NOT NULL) 비어 있어야 합니다.
+       add FST_ENR_USID varchar2(14 char) not null" via JDBC [ORA-01758: 테이블은 필수 열을 추가하기 위해 (NOT NULL) 비어 있어야 합니다.
 ]
 org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "
     alter table THURXE_CVIEWL 
-       add FST_ENT_USID varchar2(14 char) not null" via JDBC [ORA-01758: 테이블은 필수 열을 추가하기 위해 (NOT NULL) 비어 있어야 합니다.
+       add FST_ENR_USID varchar2(14 char) not null" via JDBC [ORA-01758: 테이블은 필수 열을 추가하기 위해 (NOT NULL) 비어 있어야 합니다.
 ]
 	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:94)
 	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applySqlString(AbstractSchemaMigrator.java:574)
@@ -18405,11 +18405,11 @@ Caused by: oracle.jdbc.OracleDatabaseException: ORA-01758: 테이블은 필수 �
 	... 58 common frames omitted
 2024-08-21 18:36:05 WARN  [restartedMain] o.h.t.s.i.ExceptionHandlerLoggedImpl - GenerationTarget encountered exception accepting command : Error executing DDL "
     alter table THURXE_CWCRDM 
-       add FST_ENT_USID varchar2(14 char) not null" via JDBC [ORA-01758: 테이블은 필수 열을 추가하기 위해 (NOT NULL) 비어 있어야 합니다.
+       add FST_ENR_USID varchar2(14 char) not null" via JDBC [ORA-01758: 테이블은 필수 열을 추가하기 위해 (NOT NULL) 비어 있어야 합니다.
 ]
 org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "
     alter table THURXE_CWCRDM 
-       add FST_ENT_USID varchar2(14 char) not null" via JDBC [ORA-01758: 테이블은 필수 열을 추가하기 위해 (NOT NULL) 비어 있어야 합니다.
+       add FST_ENR_USID varchar2(14 char) not null" via JDBC [ORA-01758: 테이블은 필수 열을 추가하기 위해 (NOT NULL) 비어 있어야 합니다.
 ]
 	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:94)
 	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applySqlString(AbstractSchemaMigrator.java:574)
@@ -18480,11 +18480,11 @@ Caused by: oracle.jdbc.OracleDatabaseException: ORA-01758: 테이블은 필수 �
 	... 58 common frames omitted
 2024-08-21 18:36:05 WARN  [restartedMain] o.h.t.s.i.ExceptionHandlerLoggedImpl - GenerationTarget encountered exception accepting command : Error executing DDL "
     alter table THURXE_CWUSRM 
-       add FST_ENT_USID varchar2(14 char) not null" via JDBC [ORA-01758: 테이블은 필수 열을 추가하기 위해 (NOT NULL) 비어 있어야 합니다.
+       add FST_ENR_USID varchar2(14 char) not null" via JDBC [ORA-01758: 테이블은 필수 열을 추가하기 위해 (NOT NULL) 비어 있어야 합니다.
 ]
 org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "
     alter table THURXE_CWUSRM 
-       add FST_ENT_USID varchar2(14 char) not null" via JDBC [ORA-01758: 테이블은 필수 열을 추가하기 위해 (NOT NULL) 비어 있어야 합니다.
+       add FST_ENR_USID varchar2(14 char) not null" via JDBC [ORA-01758: 테이블은 필수 열을 추가하기 위해 (NOT NULL) 비어 있어야 합니다.
 ]
 	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:94)
 	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applySqlString(AbstractSchemaMigrator.java:574)
@@ -18554,12 +18554,12 @@ Caused by: oracle.jdbc.OracleDatabaseException: ORA-01758: 테이블은 필수 �
 	at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:636)
 	... 58 common frames omitted
 2024-08-21 18:36:05 WARN  [restartedMain] o.h.t.s.i.ExceptionHandlerLoggedImpl - GenerationTarget encountered exception accepting command : Error executing DDL "
-    alter table THURXE_CHTMLA 
-       add constraint FK_THURXE_CHTMLA_SRE_VCB_CDVA_ID FOREIGN KEY (SRE_VCB_CDVA_ID) REFERENCES THURXE_CLANGM (SRE_VCB_CDVA_ID) ON DELETE CASCADE" via JDBC [ORA-02270: 이 열목록에 대해 일치하는 고유 또는 기본 키가 없습니다.
+    alter table THURXE_CCDHTA
+       add constraint FK_THURXE_CCDHTA_SRE_VCB_CDVA_ID FOREIGN KEY (SRE_VCB_CDVA_ID) REFERENCES THURXE_CCODEM (SRE_VCB_CDVA_ID) ON DELETE CASCADE" via JDBC [ORA-02270: 이 열목록에 대해 일치하는 고유 또는 기본 키가 없습니다.
 ]
 org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "
-    alter table THURXE_CHTMLA 
-       add constraint FK_THURXE_CHTMLA_SRE_VCB_CDVA_ID FOREIGN KEY (SRE_VCB_CDVA_ID) REFERENCES THURXE_CLANGM (SRE_VCB_CDVA_ID) ON DELETE CASCADE" via JDBC [ORA-02270: 이 열목록에 대해 일치하는 고유 또는 기본 키가 없습니다.
+    alter table THURXE_CCDHTA
+       add constraint FK_THURXE_CCDHTA_SRE_VCB_CDVA_ID FOREIGN KEY (SRE_VCB_CDVA_ID) REFERENCES THURXE_CCODEM (SRE_VCB_CDVA_ID) ON DELETE CASCADE" via JDBC [ORA-02270: 이 열목록에 대해 일치하는 고유 또는 기본 키가 없습니다.
 ]
 	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:94)
 	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applySqlString(AbstractSchemaMigrator.java:574)
@@ -18637,11 +18637,11 @@ Caused by: oracle.jdbc.OracleDatabaseException: ORA-02270: 이 열목록에 대�
 2024-08-21 18:36:09 INFO  [RMI TCP Connection(2)-192.168.1.27] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
 2024-08-21 18:36:09 INFO  [RMI TCP Connection(2)-192.168.1.27] o.s.web.servlet.DispatcherServlet - Completed initialization in 4 ms
 2024-08-21 18:36:13 WARN  [http-nio-8080-exec-1] o.h.e.jdbc.spi.SqlExceptionHelper - SQL Error: 904, SQLState: 42000
-2024-08-21 18:36:13 ERROR [http-nio-8080-exec-1] o.h.e.jdbc.spi.SqlExceptionHelper - ORA-00904: "AU1_0"."FST_ENT_USID": 부적합한 식별자
+2024-08-21 18:36:13 ERROR [http-nio-8080-exec-1] o.h.e.jdbc.spi.SqlExceptionHelper - ORA-00904: "AU1_0"."FST_ENR_USID": 부적합한 식별자
 
-2024-08-21 18:36:13 ERROR [http-nio-8080-exec-1] o.a.c.c.C.[.[.[.[dispatcherServlet] - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: org.springframework.dao.InvalidDataAccessResourceUsageException: JDBC exception executing SQL [select au1_0.ENO,au1_0.DEL_YN,au1_0.FST_ENT_DTM,au1_0.FST_ENT_USID,au1_0.GUID,au1_0.GUID_PRG_SNO,au1_0.LST_CHG_DTM,au1_0.LST_CHG_USID,au1_0.WEBA_PRO_NM,au1_0.WEBA_USR_HDLN_IMG from THURXE_CWUSRM au1_0 where au1_0.ENO=?] [ORA-00904: "AU1_0"."FST_ENT_USID": 부적합한 식별자
+2024-08-21 18:36:13 ERROR [http-nio-8080-exec-1] o.a.c.c.C.[.[.[.[dispatcherServlet] - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: org.springframework.dao.InvalidDataAccessResourceUsageException: JDBC exception executing SQL [select au1_0.ENO,au1_0.DEL_YN,au1_0.FST_ENR_DTM,au1_0.FST_ENR_USID,au1_0.GUID,au1_0.GUID_PRG_SNO,au1_0.LST_CHG_DTM,au1_0.LST_CHG_USID,au1_0.WEBA_PRO_NM,au1_0.WEBA_USR_HDLN_IMG from THURXE_CWUSRM au1_0 where au1_0.ENO=?] [ORA-00904: "AU1_0"."FST_ENR_USID": 부적합한 식별자
 ] [n/a]; SQL [n/a]] with root cause
-oracle.jdbc.OracleDatabaseException: ORA-00904: "AU1_0"."FST_ENT_USID": 부적합한 식별자
+oracle.jdbc.OracleDatabaseException: ORA-00904: "AU1_0"."FST_ENR_USID": 부적합한 식별자
 
 	at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:636)
 	at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:563)
@@ -18867,7 +18867,7 @@ oracle.jdbc.OracleDatabaseException: ORA-00904: "AU1_0"."FST_ENT_USID": 부적�
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
 	at java.base/java.lang.Thread.run(Thread.java:842)
 2024-08-21 18:36:13 ERROR [http-nio-8080-exec-1] o.a.c.c.C.[.[.[.[dispatcherServlet] - Servlet.service() for servlet [dispatcherServlet] threw exception
-oracle.jdbc.OracleDatabaseException: ORA-00904: "FST_ENT_USID": 부적합한 식별자
+oracle.jdbc.OracleDatabaseException: ORA-00904: "FST_ENR_USID": 부적합한 식별자
 
 	at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:636)
 	at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:563)
@@ -19068,13 +19068,13 @@ oracle.jdbc.OracleDatabaseException: ORA-00904: "FST_ENT_USID": 부적합한 식
 	at java.base/java.lang.Thread.run(Thread.java:842)
 2024-08-21 18:36:13 ERROR [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost] - Exception Processing [ErrorPage[errorCode=0, location=/error]]
 jakarta.servlet.ServletException: Request processing failed: org.springframework.jdbc.BadSqlGrammarException: 
-### Error updating database.  Cause: java.sql.SQLSyntaxErrorException: ORA-00904: "FST_ENT_USID": 부적합한 식별자
+### Error updating database.  Cause: java.sql.SQLSyntaxErrorException: ORA-00904: "FST_ENR_USID": 부적합한 식별자
 
 ### The error may exist in file [C:\Users\suji8\ePAMS\build\resources\main\mapper\ViewLog-mapper.xml]
 ### The error may involve ViewLog.insert-Inline
 ### The error occurred while setting parameters
-### SQL: INSERT INTO THURXE_CVIEWL (             PAG_LOG_SNO,             CTRL_NM,             MTH_NM,             CLI_IP_ADDR,             USR_CNC_ENV_CONE,             REQ_URL_ADDR,             DEL_YN,             GUID,             GUID_PRG_SNO,             LST_CHG_USID,             LST_CHG_DTM,             FST_ENT_DTM,             FST_ENT_USID         )         VALUES (             ?,             ?,             ?,             ?,             ?,             ?,             ?,             ?,             ?,             ?,             SYSDATE,             SYSDATE,             ?         )
-### Cause: java.sql.SQLSyntaxErrorException: ORA-00904: "FST_ENT_USID": 부적합한 식별자
+### SQL: INSERT INTO THURXE_CVIEWL (             PAG_LOG_SNO,             CTRL_NM,             MTH_NM,             CLI_IP_ADDR,             USR_CNC_ENV_CONE,             REQ_URL_ADDR,             DEL_YN,             GUID,             GUID_PRG_SNO,             LST_CHG_USID,             LST_CHG_DTM,             FST_ENR_DTM,             FST_ENR_USID         )         VALUES (             ?,             ?,             ?,             ?,             ?,             ?,             ?,             ?,             ?,             ?,             SYSDATE,             SYSDATE,             ?         )
+### Cause: java.sql.SQLSyntaxErrorException: ORA-00904: "FST_ENR_USID": 부적합한 식별자
 
 ; bad SQL grammar []
 	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1022)
@@ -19205,13 +19205,13 @@ jakarta.servlet.ServletException: Request processing failed: org.springframework
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
 	at java.base/java.lang.Thread.run(Thread.java:842)
 Caused by: org.springframework.jdbc.BadSqlGrammarException: 
-### Error updating database.  Cause: java.sql.SQLSyntaxErrorException: ORA-00904: "FST_ENT_USID": 부적합한 식별자
+### Error updating database.  Cause: java.sql.SQLSyntaxErrorException: ORA-00904: "FST_ENR_USID": 부적합한 식별자
 
 ### The error may exist in file [C:\Users\suji8\ePAMS\build\resources\main\mapper\ViewLog-mapper.xml]
 ### The error may involve ViewLog.insert-Inline
 ### The error occurred while setting parameters
-### SQL: INSERT INTO THURXE_CVIEWL (             PAG_LOG_SNO,             CTRL_NM,             MTH_NM,             CLI_IP_ADDR,             USR_CNC_ENV_CONE,             REQ_URL_ADDR,             DEL_YN,             GUID,             GUID_PRG_SNO,             LST_CHG_USID,             LST_CHG_DTM,             FST_ENT_DTM,             FST_ENT_USID         )         VALUES (             ?,             ?,             ?,             ?,             ?,             ?,             ?,             ?,             ?,             ?,             SYSDATE,             SYSDATE,             ?         )
-### Cause: java.sql.SQLSyntaxErrorException: ORA-00904: "FST_ENT_USID": 부적합한 식별자
+### SQL: INSERT INTO THURXE_CVIEWL (             PAG_LOG_SNO,             CTRL_NM,             MTH_NM,             CLI_IP_ADDR,             USR_CNC_ENV_CONE,             REQ_URL_ADDR,             DEL_YN,             GUID,             GUID_PRG_SNO,             LST_CHG_USID,             LST_CHG_DTM,             FST_ENR_DTM,             FST_ENR_USID         )         VALUES (             ?,             ?,             ?,             ?,             ?,             ?,             ?,             ?,             ?,             ?,             SYSDATE,             SYSDATE,             ?         )
+### Cause: java.sql.SQLSyntaxErrorException: ORA-00904: "FST_ENR_USID": 부적합한 식별자
 
 ; bad SQL grammar []
 	at org.springframework.jdbc.support.SQLErrorCodeSQLExceptionTranslator.doTranslate(SQLErrorCodeSQLExceptionTranslator.java:246)
@@ -19264,7 +19264,7 @@ Caused by: org.springframework.jdbc.BadSqlGrammarException:
 	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979)
 	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014)
 	... 126 common frames omitted
-Caused by: java.sql.SQLSyntaxErrorException: ORA-00904: "FST_ENT_USID": 부적합한 식별자
+Caused by: java.sql.SQLSyntaxErrorException: ORA-00904: "FST_ENR_USID": 부적합한 식별자
 
 	at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:629)
 	at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:563)
@@ -19293,16 +19293,16 @@ Caused by: java.sql.SQLSyntaxErrorException: ORA-00904: "FST_ENT_USID": 부적�
 	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
 	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:425)
 	... 171 common frames omitted
-Caused by: oracle.jdbc.OracleDatabaseException: ORA-00904: "FST_ENT_USID": 부적합한 식별자
+Caused by: oracle.jdbc.OracleDatabaseException: ORA-00904: "FST_ENR_USID": 부적합한 식별자
 
 	at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:636)
 	... 196 common frames omitted
 2024-08-21 18:36:13 WARN  [http-nio-8080-exec-3] o.h.e.jdbc.spi.SqlExceptionHelper - SQL Error: 904, SQLState: 42000
-2024-08-21 18:36:13 ERROR [http-nio-8080-exec-3] o.h.e.jdbc.spi.SqlExceptionHelper - ORA-00904: "AU1_0"."FST_ENT_USID": 부적합한 식별자
+2024-08-21 18:36:13 ERROR [http-nio-8080-exec-3] o.h.e.jdbc.spi.SqlExceptionHelper - ORA-00904: "AU1_0"."FST_ENR_USID": 부적합한 식별자
 
-2024-08-21 18:36:13 ERROR [http-nio-8080-exec-3] o.a.c.c.C.[.[.[.[dispatcherServlet] - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: org.springframework.dao.InvalidDataAccessResourceUsageException: JDBC exception executing SQL [select au1_0.ENO,au1_0.DEL_YN,au1_0.FST_ENT_DTM,au1_0.FST_ENT_USID,au1_0.GUID,au1_0.GUID_PRG_SNO,au1_0.LST_CHG_DTM,au1_0.LST_CHG_USID,au1_0.WEBA_PRO_NM,au1_0.WEBA_USR_HDLN_IMG from THURXE_CWUSRM au1_0 where au1_0.ENO=?] [ORA-00904: "AU1_0"."FST_ENT_USID": 부적합한 식별자
+2024-08-21 18:36:13 ERROR [http-nio-8080-exec-3] o.a.c.c.C.[.[.[.[dispatcherServlet] - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: org.springframework.dao.InvalidDataAccessResourceUsageException: JDBC exception executing SQL [select au1_0.ENO,au1_0.DEL_YN,au1_0.FST_ENR_DTM,au1_0.FST_ENR_USID,au1_0.GUID,au1_0.GUID_PRG_SNO,au1_0.LST_CHG_DTM,au1_0.LST_CHG_USID,au1_0.WEBA_PRO_NM,au1_0.WEBA_USR_HDLN_IMG from THURXE_CWUSRM au1_0 where au1_0.ENO=?] [ORA-00904: "AU1_0"."FST_ENR_USID": 부적합한 식별자
 ] [n/a]; SQL [n/a]] with root cause
-oracle.jdbc.OracleDatabaseException: ORA-00904: "AU1_0"."FST_ENT_USID": 부적합한 식별자
+oracle.jdbc.OracleDatabaseException: ORA-00904: "AU1_0"."FST_ENR_USID": 부적합한 식별자
 
 	at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:636)
 	at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:563)
@@ -19528,7 +19528,7 @@ oracle.jdbc.OracleDatabaseException: ORA-00904: "AU1_0"."FST_ENT_USID": 부적�
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
 	at java.base/java.lang.Thread.run(Thread.java:842)
 2024-08-21 18:36:13 ERROR [http-nio-8080-exec-3] o.a.c.c.C.[.[.[.[dispatcherServlet] - Servlet.service() for servlet [dispatcherServlet] threw exception
-oracle.jdbc.OracleDatabaseException: ORA-00904: "FST_ENT_USID": 부적합한 식별자
+oracle.jdbc.OracleDatabaseException: ORA-00904: "FST_ENR_USID": 부적합한 식별자
 
 	at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:636)
 	at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:563)
@@ -19729,13 +19729,13 @@ oracle.jdbc.OracleDatabaseException: ORA-00904: "FST_ENT_USID": 부적합한 식
 	at java.base/java.lang.Thread.run(Thread.java:842)
 2024-08-21 18:36:13 ERROR [http-nio-8080-exec-3] o.a.c.c.C.[Tomcat].[localhost] - Exception Processing [ErrorPage[errorCode=0, location=/error]]
 jakarta.servlet.ServletException: Request processing failed: org.springframework.jdbc.BadSqlGrammarException: 
-### Error updating database.  Cause: java.sql.SQLSyntaxErrorException: ORA-00904: "FST_ENT_USID": 부적합한 식별자
+### Error updating database.  Cause: java.sql.SQLSyntaxErrorException: ORA-00904: "FST_ENR_USID": 부적합한 식별자
 
 ### The error may exist in file [C:\Users\suji8\ePAMS\build\resources\main\mapper\ViewLog-mapper.xml]
 ### The error may involve ViewLog.insert-Inline
 ### The error occurred while setting parameters
-### SQL: INSERT INTO THURXE_CVIEWL (             PAG_LOG_SNO,             CTRL_NM,             MTH_NM,             CLI_IP_ADDR,             USR_CNC_ENV_CONE,             REQ_URL_ADDR,             DEL_YN,             GUID,             GUID_PRG_SNO,             LST_CHG_USID,             LST_CHG_DTM,             FST_ENT_DTM,             FST_ENT_USID         )         VALUES (             ?,             ?,             ?,             ?,             ?,             ?,             ?,             ?,             ?,             ?,             SYSDATE,             SYSDATE,             ?         )
-### Cause: java.sql.SQLSyntaxErrorException: ORA-00904: "FST_ENT_USID": 부적합한 식별자
+### SQL: INSERT INTO THURXE_CVIEWL (             PAG_LOG_SNO,             CTRL_NM,             MTH_NM,             CLI_IP_ADDR,             USR_CNC_ENV_CONE,             REQ_URL_ADDR,             DEL_YN,             GUID,             GUID_PRG_SNO,             LST_CHG_USID,             LST_CHG_DTM,             FST_ENR_DTM,             FST_ENR_USID         )         VALUES (             ?,             ?,             ?,             ?,             ?,             ?,             ?,             ?,             ?,             ?,             SYSDATE,             SYSDATE,             ?         )
+### Cause: java.sql.SQLSyntaxErrorException: ORA-00904: "FST_ENR_USID": 부적합한 식별자
 
 ; bad SQL grammar []
 	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1022)
@@ -19866,13 +19866,13 @@ jakarta.servlet.ServletException: Request processing failed: org.springframework
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63)
 	at java.base/java.lang.Thread.run(Thread.java:842)
 Caused by: org.springframework.jdbc.BadSqlGrammarException: 
-### Error updating database.  Cause: java.sql.SQLSyntaxErrorException: ORA-00904: "FST_ENT_USID": 부적합한 식별자
+### Error updating database.  Cause: java.sql.SQLSyntaxErrorException: ORA-00904: "FST_ENR_USID": 부적합한 식별자
 
 ### The error may exist in file [C:\Users\suji8\ePAMS\build\resources\main\mapper\ViewLog-mapper.xml]
 ### The error may involve ViewLog.insert-Inline
 ### The error occurred while setting parameters
-### SQL: INSERT INTO THURXE_CVIEWL (             PAG_LOG_SNO,             CTRL_NM,             MTH_NM,             CLI_IP_ADDR,             USR_CNC_ENV_CONE,             REQ_URL_ADDR,             DEL_YN,             GUID,             GUID_PRG_SNO,             LST_CHG_USID,             LST_CHG_DTM,             FST_ENT_DTM,             FST_ENT_USID         )         VALUES (             ?,             ?,             ?,             ?,             ?,             ?,             ?,             ?,             ?,             ?,             SYSDATE,             SYSDATE,             ?         )
-### Cause: java.sql.SQLSyntaxErrorException: ORA-00904: "FST_ENT_USID": 부적합한 식별자
+### SQL: INSERT INTO THURXE_CVIEWL (             PAG_LOG_SNO,             CTRL_NM,             MTH_NM,             CLI_IP_ADDR,             USR_CNC_ENV_CONE,             REQ_URL_ADDR,             DEL_YN,             GUID,             GUID_PRG_SNO,             LST_CHG_USID,             LST_CHG_DTM,             FST_ENR_DTM,             FST_ENR_USID         )         VALUES (             ?,             ?,             ?,             ?,             ?,             ?,             ?,             ?,             ?,             ?,             SYSDATE,             SYSDATE,             ?         )
+### Cause: java.sql.SQLSyntaxErrorException: ORA-00904: "FST_ENR_USID": 부적합한 식별자
 
 ; bad SQL grammar []
 	at org.springframework.jdbc.support.SQLErrorCodeSQLExceptionTranslator.doTranslate(SQLErrorCodeSQLExceptionTranslator.java:246)
@@ -19925,7 +19925,7 @@ Caused by: org.springframework.jdbc.BadSqlGrammarException:
 	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979)
 	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014)
 	... 126 common frames omitted
-Caused by: java.sql.SQLSyntaxErrorException: ORA-00904: "FST_ENT_USID": 부적합한 식별자
+Caused by: java.sql.SQLSyntaxErrorException: ORA-00904: "FST_ENR_USID": 부적합한 식별자
 
 	at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:629)
 	at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:563)
@@ -19954,7 +19954,7 @@ Caused by: java.sql.SQLSyntaxErrorException: ORA-00904: "FST_ENT_USID": 부적�
 	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
 	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:425)
 	... 171 common frames omitted
-Caused by: oracle.jdbc.OracleDatabaseException: ORA-00904: "FST_ENT_USID": 부적합한 식별자
+Caused by: oracle.jdbc.OracleDatabaseException: ORA-00904: "FST_ENR_USID": 부적합한 식별자
 
 	at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:636)
 	... 196 common frames omitted

@@ -23,7 +23,7 @@ record_time "Git 원격 저장소에서 최신 변경 사항을 가져오는 중
 # [삭제] gradlew와 build.sh 파일에 실행 권한 부여 (Git을 사용하는 외부 운영서버에서만 필요)
 record_time "gradlew와 build.sh 파일에 실행 권한을 부여하는 중..."
 chmod +x ./gradlew
-chmod +x ./build.sh
+chmod +x ./build_git.sh
 
 # Gradle 버전 확인
 record_time "Gradle 버전 확인 중..."

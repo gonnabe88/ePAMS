@@ -129,6 +129,14 @@ mark {
     border-radius: 25rem;
 }
 
+/* 인풋 요소가 포커스될 때의 스타일 */
+.awesomplete > input:focus {
+    background-color: #f0f8ff; /* 배경색을 연한 파란색으로 변경 */
+    color: #333; /* 텍스트 색상을 진한 회색으로 변경 */
+    border: 1px solid #435ebe; /* 테두리 색상을 파란색으로 변경 */
+    outline: none; /* 기본 outline 제거 */
+}
+
 .boardUpdate .badge {
     font-weight: 400;
 }

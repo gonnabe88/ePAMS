@@ -45,6 +45,7 @@ $(document).ready(() => {
     let charIndex = 0;
     let typingInterval;
     let isFocused = false; // input이 포커스되었는지 여부를 저장하는 변수
+    let isTyping = false;  // 타이핑 애니메이션이 실행 중인지 여부를 저장하는 변수
 
     function typePlaceholder() {
         if (!isFocused && charIndex < placeholders[placeholderIndex].length) {
@@ -53,6 +54,7 @@ $(document).ready(() => {
         } else {
             clearInterval(typingInterval);
             typingInterval = null; // 타이핑이 완료되면 interval 변수 초기화
+            isTyping = false; // 타이핑 상태를 false로 설정
             if (!isFocused) { // focus 상태가 아닐 때만 타이핑 재개
                 setTimeout(startTypingEffect, 2000); // 2초 동안 전체 텍스트를 유지한 후 다음 placeholder로 넘어감
             }
@@ -60,7 +62,8 @@ $(document).ready(() => {
     }
 
     function startTypingEffect() {
-        if (!isFocused) { // isFocused가 false일 때만 시작
+        if (!isFocused && !isTyping) { // isFocused가 false이고 isTyping이 false일 때만 시작
+            isTyping = true; // 타이핑 상태를 true로 설정
             placeholderIndex = (placeholderIndex + 1) % placeholders.length;
             charIndex = 0;
             inputElement.setAttribute("placeholder", ""); // 타이핑 효과 전에 placeholder 초기화
@@ -141,3 +144,4 @@ $(document).ready(() => {
         }
     });
 });
+

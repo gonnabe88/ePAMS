@@ -1,11 +1,8 @@
 package epams.domain.com.sidebar;
 
-import epams.domain.com.index.dto.TeamSearchDTO;
-import epams.domain.com.member.service.MemberService;
-import epams.domain.com.sidebar.dto.UserInfoDTO;
-import epams.domain.com.sidebar.service.SidebarService;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -14,9 +11,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import epams.domain.com.sidebar.dto.UserInfoDTO;
+import epams.domain.com.sidebar.service.SidebarService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 /***
  * @author 140024

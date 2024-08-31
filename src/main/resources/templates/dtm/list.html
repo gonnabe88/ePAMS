@@ -17,7 +17,7 @@
 <div layout:fragment="contents">
     <div class="container">
         <div id="main-content">
-            <div class="d-flex justify-content-center">
+            <div class="d-flex justify-content-start">
                 <div class="row col-lg-10 col-md-12 d-flex justify-content-center">
 
                     <!-- 페이지 제목 시작 -->
@@ -245,7 +245,7 @@
 
                         <!-- 페이징처리 시작 -->
                         <div th:if="${!dtmHis.isEmpty()}">
-                            <ul class="pagination justify-content-center align-items-center">
+                            <ul class="pagination pagination-primary justify-content-center align-items-center">
                                 <!-- Previous button -->
                                 <li class="page-item" th:classappend="${startPage == 1} ? 'disabled'">
                                     <a class="page-link" th:href="@{|?page=${startPage - 1}|}" th:if="${startPage > 1}">

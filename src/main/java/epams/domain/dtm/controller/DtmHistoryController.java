@@ -108,7 +108,7 @@ public class DtmHistoryController<S extends Session> {
 
 
         log.warn(dtos.toString());
-        //log.info("startPage : " + startPage + " endPage : " + endPage + " totalPages : " + totalPages + " currentPage : " + currentPage);
+        log.info("startPage : " + startPage + " endPage : " + endPage + " totalPages : " + totalPages + " currentPage : " + currentPage);
         model.addAttribute("dtmHis", dtos);
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);

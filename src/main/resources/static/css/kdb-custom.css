@@ -1,3 +1,5 @@
+
+
 .ossNotice {
     color : #767d82;
 }
@@ -502,7 +504,21 @@ label {
 
 /*검색폼 select2 스타일 조정*/
 .collapseSearch .select2 {
-    width: 100%;
+    width: 100% !important;
+    max-width: 500px !important;
+}
+
+.collapseSearch .select2-container--default .select2-selection--single {
+    height: 38px !important;
+    border: 1px solid #dce7f1 !important;
+}
+
+.collapseSearch .select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 38px !important;
+}
+
+.collapseSearch .select2-selection__rendered {
+    line-height: 38px !important;
 }
 
 /*검색폼 litepicker 시작일 숨김*/
@@ -515,16 +531,6 @@ label {
     display: none;
 }
 
-/*페이지네이션 스타일 조정*/
-.pagination .page-item {
-    margin: 0 2px; /* 좌우 마진을 동일하게 설정 */
-}
-
-/*페이지네이션 버튼 크기 스타일 조정*/
-.pagination .page-item .page-link {
-    padding: 7px 10px; /* 버튼 크기를 조정 */
-}
-
 /*상단 navbar 타이틀 텍스트 스타일*/
 .navbar .auth-title{
     font-family: Nunito;
@@ -534,6 +540,15 @@ label {
 /*상단 navbar 간편인증 설치 아이콘 스타일*/
 .navbar .bi {
     color:#435ebe;
+}
+
+
+.navbar .iconImage {
+    display: inline-block; text-align: center;
+}
+
+.navbar .iconText {
+    font-size: smaller;
 }
 
 /*사이드바 스타일 조정*/
@@ -853,15 +868,6 @@ html, body {
     opacity: 1;
 }
 /* 우측하단 Scroll To Top 버튼 */
-
-/** 페이지네이션 서식 수정 **/
-.pagination .page-item {
-    margin: 0 2px; /* 좌우 마진을 동일하게 설정 */
-}
-
-.pagination .page-item .page-link {
-    padding: 7px 10px; /* 버튼 크기를 조정 */
-}
 
 
 
@@ -2278,34 +2284,6 @@ textarea.form-control.is-invalid {
     background-color: var(--bs-breadcrumb-bg);
     border-radius: var(--bs-breadcrumb-border-radius)
 }
-
-
-.pagination {
-    --bs-pagination-padding-x: .75rem;
-    --bs-pagination-padding-y: .375rem;
-    --bs-pagination-font-size: 1rem;
-    --bs-pagination-color: #435ebe;
-    --bs-pagination-bg: #fff;
-    --bs-pagination-border-width: 1px;
-    --bs-pagination-border-color: #dee2e6;
-    --bs-pagination-border-radius: .25rem;
-    --bs-pagination-hover-color: #000;
-    --bs-pagination-hover-bg: #e9ecef;
-    --bs-pagination-hover-border-color: #dee2e6;
-    --bs-pagination-focus-color: #364b98;
-    --bs-pagination-focus-bg: #e9ecef;
-    --bs-pagination-focus-box-shadow: 0 0 0 .25rem rgba(67, 94, 190, .25);
-    --bs-pagination-active-color: #fff;
-    --bs-pagination-active-bg: #435ebe;
-    --bs-pagination-active-border-color: #435ebe;
-    --bs-pagination-disabled-color: #6c757d;
-    --bs-pagination-disabled-bg: #fff;
-    --bs-pagination-disabled-border-color: #dee2e6;
-    display: flex;
-    padding-left: 0;
-    list-style: none
-}
-
 
 .badge {
     --bs-badge-padding-x: .65em;
@@ -4159,79 +4137,153 @@ textarea.form-control.is-invalid {
     margin-left: 1rem
 }
 
-.pagination.pagination-primary .page-item.active .page-link {
-    background-color: #435ebe;
-    border-color: #435ebe;
-    box-shadow: 0 2px 5px rgba(67, 94, 190, .3)
+/** 페이지네이션 서식 수정 **/
+.pagination {
+    --bs-pagination-padding-x: .75rem;
+    --bs-pagination-padding-y: .375rem;
+    --bs-pagination-font-size: 1rem;
+    --bs-pagination-color: #435ebe;
+    --bs-pagination-bg: #fff;
+    --bs-pagination-border-width: 1px;
+    --bs-pagination-border-color: #dee2e6;
+    --bs-pagination-border-radius: .25rem;
+    --bs-pagination-hover-color: #000;
+    --bs-pagination-hover-bg: #e9ecef;
+    --bs-pagination-hover-border-color: #dee2e6;
+    --bs-pagination-focus-color: #364b98;
+    --bs-pagination-focus-bg: #e9ecef;
+    --bs-pagination-focus-box-shadow: 0 0 0 .25rem rgba(67, 94, 190, .25);
+    --bs-pagination-active-color: #fff;
+    --bs-pagination-active-bg: #435ebe;
+    --bs-pagination-active-border-color: #435ebe;
+    --bs-pagination-disabled-color: #6c757d;
+    --bs-pagination-disabled-bg: #fff;
+    --bs-pagination-disabled-border-color: #dee2e6;
+    display: flex;
+    padding-left: 0;
+    list-style: none
 }
 
-.pagination.pagination-secondary .page-item.active .page-link {
-    background-color: #6c757d;
-    border-color: #6c757d;
-    box-shadow: 0 2px 5px rgba(108, 117, 125, .3)
-}
 
-.pagination.pagination-success .page-item.active .page-link {
-    background-color: #198754;
-    border-color: #198754;
-    box-shadow: 0 2px 5px rgba(25, 135, 84, .3)
+.page-link {
+	position:relative;
+	display:block;
+	padding:var(--bs-pagination-padding-y) var(--bs-pagination-padding-x);
+	font-size:var(--bs-pagination-font-size);
+	color:var(--bs-pagination-color);
+	text-decoration:none;
+	background-color:var(--bs-pagination-bg);
+	border:var(--bs-pagination-border-width) solid var(--bs-pagination-border-color);
+	transition:color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out
 }
-
-.pagination.pagination-info .page-item.active .page-link {
-    background-color: #0dcaf0;
-    border-color: #0dcaf0;
-    box-shadow: 0 2px 5px rgba(13, 202, 240, .3)
+@media (prefers-reduced-motion:reduce) {
+	.page-link {
+		transition:none
+	}
 }
-
-.pagination.pagination-warning .page-item.active .page-link {
-    background-color: #ffc107;
-    border-color: #ffc107;
-    box-shadow: 0 2px 5px rgba(255, 193, 7, .3)
+.page-link:hover {
+	z-index:2;
+	color:var(--bs-pagination-hover-color);
+	background-color:var(--bs-pagination-hover-bg);
+	border-color:var(--bs-pagination-hover-border-color)
 }
-
-.pagination.pagination-danger .page-item.active .page-link {
-    background-color: #dc3545;
-    border-color: #dc3545;
-    box-shadow: 0 2px 5px rgba(220, 53, 69, .3)
+.page-link:focus {
+	z-index:3;
+	color:var(--bs-pagination-focus-color);
+	background-color:var(--bs-pagination-focus-bg);
+	outline:0;
+	box-shadow:var(--bs-pagination-focus-box-shadow)
 }
-
-.pagination.pagination-light .page-item.active .page-link {
-    background-color: #ced4da;
-    border-color: #ced4da;
-    box-shadow: 0 2px 5px rgba(206, 212, 218, .3)
+.page-link.active,.active>.page-link {
+	z-index:3;
+	color:var(--bs-pagination-active-color);
+	background-color:var(--bs-pagination-active-bg);
+	border-color:var(--bs-pagination-active-border-color)
 }
-
-.pagination.pagination-dark .page-item.active .page-link {
-    background-color: #131313;
-    border-color: #131313;
-    box-shadow: 0 2px 5px rgba(19, 19, 19, .3)
+.page-link.disabled,.disabled>.page-link {
+	color:var(--bs-pagination-disabled-color);
+	pointer-events:none;
+	background-color:var(--bs-pagination-disabled-bg);
+	border-color:var(--bs-pagination-disabled-border-color)
 }
-
-.page-item:not(.active) .page-link:hover {
-    color: #000
+.page-item:not(:first-child) .page-link {
+	margin-left:-1px
 }
-
-.page-item i,
-.page-item svg {
-    font-size: 13px;
-    width: 13px;
-    height: 13px
-}
-
 .page-item .page-link {
-    font-size: .875rem
+	border-radius:var(--bs-pagination-border-radius)
+}
+.pagination-lg {
+	--bs-pagination-padding-x:1.5rem;
+	--bs-pagination-padding-y:.75rem;
+	--bs-pagination-font-size:1.25rem;
+	--bs-pagination-border-radius:.3rem
+}
+.pagination-sm {
+	--bs-pagination-padding-x:.5rem;
+	--bs-pagination-padding-y:.25rem;
+	--bs-pagination-font-size:.875rem;
+	--bs-pagination-border-radius:.2rem
 }
 
+.pagination.pagination-primary .page-item.active .page-link {
+	background-color:#435ebe;
+	border-color:#435ebe;
+	box-shadow:0 2px 5px rgba(67,94,190,.3)
+}
+.pagination.pagination-secondary .page-item.active .page-link {
+	background-color:#6c757d;
+	border-color:#6c757d;
+	box-shadow:0 2px 5px rgba(108,117,125,.3)
+}
+.pagination.pagination-success .page-item.active .page-link {
+	background-color:#198754;
+	border-color:#198754;
+	box-shadow:0 2px 5px rgba(25,135,84,.3)
+}
+.pagination.pagination-info .page-item.active .page-link {
+	background-color:#0dcaf0;
+	border-color:#0dcaf0;
+	box-shadow:0 2px 5px rgba(13,202,240,.3)
+}
+.pagination.pagination-warning .page-item.active .page-link {
+	background-color:#ffc107;
+	border-color:#ffc107;
+	box-shadow:0 2px 5px rgba(255,193,7,.3)
+}
+.pagination.pagination-danger .page-item.active .page-link {
+	background-color:#dc3545;
+	border-color:#dc3545;
+	box-shadow:0 2px 5px rgba(220,53,69,.3)
+}
+.pagination.pagination-light .page-item.active .page-link {
+	background-color:#ced4da;
+	border-color:#ced4da;
+	box-shadow:0 2px 5px rgba(206,212,218,.3)
+}
+.pagination.pagination-dark .page-item.active .page-link {
+	background-color:#131313;
+	border-color:#131313;
+	box-shadow:0 2px 5px rgba(19,19,19,.3)
+}
+.page-item:not(.active) .page-link:hover {
+	color:#000
+}
+.page-item i,.page-item svg {
+	font-size:13px;
+	width:13px;
+	height:13px
+}
+.page-item .page-link {
+	font-size:.875rem
+}
 .page-item .page-link:focus {
-    box-shadow: none
+	box-shadow:none
 }
-
 .page-item:first-child {
-    margin-right: .4rem
+	margin-right:.4rem
 }
-
 .page-item:last-child {
-    margin-left: .4rem
+	margin-left:.4rem
 }
 
 .table td,

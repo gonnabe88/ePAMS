@@ -77,7 +77,7 @@ $('#reset-button').on('click', function() {
 
 // (목록수) itemsPerPage Select Box 선택 시 목록 갱신
 $('#itemsPerPage').on('change', function() {
-    search();
+    search();    
 });
 
 // 목록 갱신 함수

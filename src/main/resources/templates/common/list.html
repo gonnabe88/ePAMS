@@ -13,7 +13,7 @@
 <div layout:fragment="contents">
     <div class="container">
         <div id="main-content">
-            <div class="d-flex justify-content-center">
+            <div class="d-flex justify-content-start">
                 <div class="row col-lg-10 col-md-12 d-flex justify-content-center">
 
                     <!-- 페이지 제목 시작 -->
@@ -30,7 +30,7 @@
                     <!-- 게시글 목록 시작 -->
                     <div class="row col-lg-12 col-md-12 col-sm-12">
                         <div class="d-flex gap-2 flex-row-reverse">
-                            <a class="btn btn-primary mb-3" sec:authorize="hasRole('ROLE_ADMIN')" type="submit"
+                            <a class="btn btn-primary btn-sm mb-3" sec:authorize="hasRole('ROLE_ADMIN')" type="submit"
                                id="submit" th:href="@{/board/editor}">글쓰기</a><br>
                         </div>
                         <div class="col-12">

@@ -1,16 +1,11 @@
 package epams.domain.com.sidebar.repository;
 
-import epams.domain.com.index.dto.DeptSearchDTO;
-import epams.domain.com.index.dto.TeamSearchDTO;
-import epams.domain.com.member.dto.IamUserDTO;
-import epams.domain.com.member.dto.RoleDTO;
-import epams.domain.com.sidebar.dto.UserInfoDTO;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import epams.domain.com.sidebar.dto.UserInfoDTO;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author K140024

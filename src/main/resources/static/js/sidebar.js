@@ -82,7 +82,8 @@ const getUserInfo = () => {
             // JSON 응답에서 사용자 이름과 부서를 가져와서 HTML에 삽입
             $('#userName').text(userInfo.userName);
             $('#deptName').text(userInfo.deptName);
-            $('#workHours').text(`출근 ${userInfo.staTime} / 퇴근 ${userInfo.endTime}`);
+            $('#todayWorkTime').text(`${userInfo.staTime} ${userInfo.endTime}`);
+            $('#tomorrowWorkTime').text(`${userInfo.staTime} ${userInfo.endTime}`);
         },
         error: function(jqXHR, textStatus, errorThrown) { // 요청이 실패했을 때 실행되는 함수
             console.error('Error fetching user info:', textStatus, errorThrown);

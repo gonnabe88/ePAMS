@@ -23,10 +23,22 @@
 					</div>
 					<section class="section mt-2">
 						<div class="card m-0 p-1">
-							<div class="card-body p-1">
-								<span id="userName" class="h6 mt-3 me-1" th:text="${userName}"></span>
+							<div class="card-body pt-0 pb-0 ps-1">
+								<span id="userName" class="h6 mt-2 me-1" th:text="${userName}"></span>
 								<span id="deptName" class="h7" th:text="${deptName}"></span>
-								<span id="workHours" class="h7 d-block" th:text="${workHours}"></span>
+								<div class="row d-flex align-items-center">
+									<h7 class="d-flex align-items-center me-4">
+										<span class="badge rounded-pill bg-primary d-flex align-items-center justify-content-center p-2 me-2">
+											<span>오늘</span>
+										</span>
+										<span class="me-2" id="todayWorkTime" th:text="${todayWorkTime}"></span>
+										<span class="badge rounded-pill bg-info d-flex align-items-center justify-content-center p-2 me-2">
+											<span class="align-items-center">내일</span>
+										</span>
+										<span class="m-0" id="tomorrowWorkTime" th:text="${tomorrowWorkTime}"></span>
+									</h7>
+									
+								</div>
 							</div>
 						</div>
 					</section>

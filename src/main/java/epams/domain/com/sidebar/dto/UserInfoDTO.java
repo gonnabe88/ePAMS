@@ -35,6 +35,13 @@ public class UserInfoDTO {
      */
     private String deptName = "N/A";
 
+        /**
+     * @author 140024
+     * @implNote 팀명
+     * @since 2024-08-19
+     */
+    private String teamName = "N/A";
+
     /**
      * @author 140024
      * @implNote 직위코드명

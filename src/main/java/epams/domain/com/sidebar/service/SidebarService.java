@@ -1,17 +1,11 @@
 package epams.domain.com.sidebar.service;
 
-import epams.domain.com.index.dto.DeptSearchDTO;
-import epams.domain.com.index.dto.TeamSearchDTO;
-import epams.domain.com.member.dto.IamUserDTO;
-import epams.domain.com.member.dto.RoleDTO;
-import epams.domain.com.member.repository.MemberRepository;
+import org.springframework.stereotype.Service;
+
 import epams.domain.com.sidebar.dto.UserInfoDTO;
 import epams.domain.com.sidebar.repository.SidebarRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * @author K140024

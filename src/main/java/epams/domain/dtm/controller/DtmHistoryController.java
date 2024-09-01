@@ -85,9 +85,9 @@ public class DtmHistoryController<S extends Session> {
      * @implNote DTM 리스트 화면을 반환하는 메서드
      * @since 2024-06-11
      */
-    @GetMapping("/list")
+    @GetMapping("/dtmList")
     public String dtmList(@PageableDefault(page = 1) final Pageable pageable, @ModelAttribute final DtmHisDTO dto, final Model model) {
-        final String DTMLIST = "dtm/list";
+        final String DTMLIST = "dtm/dtmList";
         dto.setEmpId(Long.parseLong(authentication().getName().replace('K', '7')));
 
         // 언어목록

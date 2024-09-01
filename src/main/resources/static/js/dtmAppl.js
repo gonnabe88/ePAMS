@@ -60,7 +60,7 @@ const postDtmHisDTO = (dtmHisDTO) => {
             const staYmd = data.staYmd; // 서버에서 반환된 staYmd 값 사용
             const endYmd = data.endYmd; // 서버에서 반환된 endYmd 값 사용
             const dtmDispName = data.dtmDispName;
-            popupReHtmlMsg('신청되었습니다.', `<span class="dtmApplSuccessPopup">${staYmd} ${endYmd} ${dtmDispName}</span>`, 'success', '근태조회', '/dtm/list');
+            popupReHtmlMsg('신청되었습니다.', `<span class="dtmApplSuccessPopup">${staYmd} ${endYmd} ${dtmDispName}</span>`, 'success', '근태조회', '/dtm/dtmList');
             console.log('Success:', data);
         },
         error: (error) => { // 실패 (HTTP 상태코드 40X, 50X)

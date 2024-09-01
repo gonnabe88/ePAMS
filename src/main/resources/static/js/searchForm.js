@@ -43,13 +43,16 @@ $(document).on('click', '.page-link', function(event) {
             FORBID_ATTR: ['style']
         });
         $('#dtmListContainer').html(safeHTML);
-        updatePaginationLinks(); // 페이지 업데이트 후 다시 링크 업데이트
+        updatePaginationLinks(); // 페이지 업데이트 후 다시 링크 업데이트        
+        window.scrollTo({ top: 0, behavior: 'smooth' }); // 페이지 업데이트 후 화면을 최상단으로 스크롤
     });
 });
 
 // (검색폼) 조회 버튼 클릭 시
 $('#search-button').on('click', function() {
     search();
+    // 페이지네이션 링크 업데이트
+    updatePaginationLinks(); 
 });
 
 // (검색폼) 초기화 버튼 클릭 시 폼 초기화 후 목록 갱신
@@ -67,8 +70,8 @@ $('#reset-button').on('click', function() {
     $('#start-input').val(lastYear); // 시작 날짜 초기화
 
     // 종료 날짜 초기화
-    const today = new Date().toISOString().split('T')[0];
-    $('#end-input').val(today);
+    //const today = new Date().toISOString().split('T')[0];
+    //$('#end-input').val(today);
 
     window.resetPicker(); // Datepicker 초기화
     resetSelect(); // Select2 초기화
@@ -93,17 +96,19 @@ const search = () => {
 
     // 검색 조건에 맞는 데이터 조회
     // 2024-08-11 CWE-79(Cross-site Scripting (XSS)) 취약점 조치
-    $.get(`/dtm/list?statCdList=${statCdList.join(',')}&dtmReasonCd=${dtmReasonCd}&staYmdInput=${staYmdInput}&endYmdInput=${endYmdInput}&itemsPerPage=${itemsPerPage}`, function(data) {
+    $.get(`/dtm/dtmList?statCdList=${statCdList.join(',')}&dtmReasonCd=${dtmReasonCd}&staYmdInput=${staYmdInput}&endYmdInput=${endYmdInput}&itemsPerPage=${itemsPerPage}`, function(data) {
         let safeHTML = DOMPurify.sanitize($(data).find('#dtmListContainer').html(), {
             SAFE_FOR_TEMPLATES: true,
             ALLOWED_TAGS: ['h7', 'h6', 'h5', 'h4', 'h3', 'h2', 'h1', 'div', 'span', 'section', 'i', 'ul', 'li', 'a'], // 필요시 추가
             FORBID_ATTR: ['style']
         });
         $('#dtmListContainer').html(safeHTML);
+        updatePaginationLinks(); // 페이지 업데이트 후 다시 링크 업데이트
+        window.scrollTo({ top: 0, behavior: 'smooth' }); // 페이지 업데이트 후 화면을 최상단으로 스크롤
     });
 
     // 검색 버튼 collapse 처리
-    $('#collapseSearch').collapse('hide');
+    $('#collapseSearch').collapse('hide');    
 }
 
 // Function to reset Select2 component

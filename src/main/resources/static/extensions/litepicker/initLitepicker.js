@@ -17,8 +17,9 @@ const initializePicker = (staYmdInput, endYmdInput, startDate, endDate) => {
         plugins: ['mobilefriendly'],
         setup: (picker) => {
             picker.on('selected', (date1, date2) => {
-                staYmdInput.value = date1.format('YYYY-MM-DD');
-                endYmdInput.value = date2.format('YYYY-MM-DD');
+                // 날짜가 유효하지 않을 때 빈 문자열 설정
+                staYmdInput.value = date1 ? date1.format('YYYY-MM-DD') : ''; // 시작일
+                endYmdInput.value = date2 && !isNaN(date2.getTime()) ? date2.format('YYYY-MM-DD') : ''; // 종료일
             })
         }
     });
@@ -43,12 +44,18 @@ const initializePicker = (staYmdInput, endYmdInput, startDate, endDate) => {
         const lastYear = oneYear.toISOString().split('T')[0];
         staYmdInput.value = lastYear;
 
-        // 오늘 날짜 설정
-        const today = new Date().toISOString().split('T')[0];
-        endYmdInput.value = today;
+        // 종료일을 오늘 날짜로 설정
+        //const today = new Date().toISOString().split('T')[0];
+        //endYmdInput.value = today;
 
         // 달력 날짜 설정 (1년전 ~ 오늘)
-        picker.setDateRange(lastYear, today);
+        //picker.setDateRange(lastYear, today);
+
+        // 종료일을 공백으로 설정
+        endYmdInput.value = '';
+
+        // 달력 날짜 설정 (1년전 ~ )   
+        picker.setDateRange(lastYear, '');
     }
 
     setInitialDates(); // 초기화 함수 호출
@@ -56,14 +63,3 @@ const initializePicker = (staYmdInput, endYmdInput, startDate, endDate) => {
     // Reset function for external calls
     window.resetPicker = setInitialDates; // 글로벌 함수로 설정하여 외부 접근 가능
 }
-
-// 화면 로드 시 달력 초기화
-$(document).ready(function () {
-    // Input Form 입력값을 가져와서 달력 초기화
-    const staYmdInput = document.getElementById('start-input');
-    const endYmdInput = document.getElementById('end-input');
-    const startDate = document.getElementById('start-date');
-    const endDate = document.getElementById('end-date');
-    initializePicker(staYmdInput, endYmdInput, startDate, endDate);
-    console.log('Litepicker initialized');
-});

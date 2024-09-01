@@ -24,6 +24,7 @@
     <!-- 모든 데이터 조회 -->
     <select id="findAll" resultMap="viewLogMap">
         SELECT * FROM OEHR.THURXE_CVIEWL
+        ORDER BY FST_ENR_DTM DESC
     </select>
 
     <!-- 기본키 데이터 중복여부 조회 -->

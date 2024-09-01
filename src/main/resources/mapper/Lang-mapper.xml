@@ -21,12 +21,14 @@
     <!-- 모든 데이터 조회 -->
     <select id="findAll" resultMap="langMap">
         SELECT * FROM OEHR.THURXE_CCODEM
+        ORDER BY FST_ENR_DTM DESC
     </select>
 
     <!-- 특정 ID 데이터 조회 -->
     <select id="findById" parameterType="String" resultMap="langMap">
         SELECT * FROM OEHR.THURXE_CCODEM
         WHERE SRE_VCB_CDVA_ID = #{SRE_VCB_CDVA_ID}
+        ORDER BY FST_ENR_DTM DESC
     </select>
 
     <!-- 기본키 데이터 중복여부 조회 -->

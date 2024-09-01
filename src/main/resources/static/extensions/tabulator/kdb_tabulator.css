@@ -30,7 +30,7 @@
 }
 
 .highlight-cell {
-	background-color: yellow !important; /* 수정/추가된 행의 배경색 */
+	background-color: aliceblue !important; /* 수정/추가된 행의 배경색 */
 }
 
  .tabulator-row .tabulator-cell.tabulator-editing {

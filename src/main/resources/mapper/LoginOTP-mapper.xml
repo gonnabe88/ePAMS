@@ -22,6 +22,7 @@
     <!-- 모든 데이터 조회 -->
     <select id="findAll" resultMap="loginOtpMap">
         SELECT * FROM OEHR.THURXE_COTPIM
+        ORDER BY FST_ENR_DTM DESC
     </select>
 
     <!-- 모든 데이터 조회 -->

@@ -13,7 +13,7 @@
 <div layout:fragment="contents">
     <div class="container">
         <div id="main-content">
-            <div class="d-flex justify-content-start">
+            <div class="main-content d-flex justify-content-center">
                 <div class="row col-lg-10 col-md-12 d-flex justify-content-center">
 
                     <!-- 페이지 제목 시작 -->
@@ -34,8 +34,7 @@
                                id="submit" th:href="@{/board/editor}">글쓰기</a><br>
                         </div>
                         <div class="col-12">
-                            <div data-aos="fade-up" data-aos-offset="200" data-aos-easing="ease-out-cubic"
-                                 data-aos-duration="2000">
+                            <div class="animate__animated animate__fadeIn animate__slow">
                                 <section class="section" th:each="board: ${boardList}">
                                     <div class="card">
                                         <div class="card-body">

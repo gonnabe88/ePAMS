@@ -1,5 +1,13 @@
 package epams;
 
+import com.yubico.webauthn.RelyingParty;
+import com.yubico.webauthn.data.RelyingPartyIdentity;
+import epams.domain.com.login.util.webauthn.configuration.WebAuthProperties;
+import epams.domain.com.login.util.webauthn.service.RegistrationService;
+import epams.framework.storage.StorageProperties;
+import epams.framework.storage.StorageService;
+import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -9,21 +17,6 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.EnableScheduling;
-
-import com.yubico.webauthn.RelyingParty;
-import com.yubico.webauthn.data.RelyingPartyIdentity;
-
-import epams.framework.storage.StorageProperties;
-import epams.framework.storage.StorageService;
-import epams.domain.com.login.util.webauthn.service.RegistrationService;
-import epams.domain.com.login.util.webauthn.configuration.WebAuthProperties;
-import lombok.NoArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-
-import java.lang.reflect.Method;
-import java.util.Set;
-
-import org.reflections.Reflections;
 
 /**
  * @author 140024

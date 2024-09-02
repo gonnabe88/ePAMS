@@ -4,9 +4,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.Comment;
 
 /**
@@ -16,8 +14,12 @@ import org.hibernate.annotations.Comment;
  */
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(callSuper = false)
 @Getter
 @Setter
+@ToString
+@Builder
 @Table(name = "THURXE_CUSATI")
 @Comment("인사_외부근태 공통사용자자격등급기본")
 public class IamUserAuthEntity extends BaseEntity {

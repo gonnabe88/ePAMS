@@ -4,18 +4,26 @@
 
 <mapper namespace="IamUser">
 
-    <!-- Result Map 정의 -->
+    <!-- Result Map 정의
     <resultMap id="iamUserMap" type="iamUserDTO">
         <id property="username" column="EMP_NO"/>
         <result property="realname" column="EMP_NM"/>
         <result property="password" column="EMP_PWD"/>
         <result property="createdDate" column="TZ_DATE"/>
+    </resultMap>-->
+
+    <!-- Result Map 정의 -->
+    <resultMap id="iamUserMap" type="iamUserDTO">
+        <id property="username" column="ENO"/>
+        <result property="realname" column="EMP_NM"/>
+        <result property="password" column="USR_ECY_PWD"/>
     </resultMap>
 
     <!-- Result Map 정의 -->
     <resultMap id="teamSearchMap" type="teamSearchDTO">
-        <result property="userName" column="USR_NM"/>
-        <result property="userNo" column="ENO"/>
+        <result property="username" column="ENO"/>
+        <result property="realname" column="USR_NM"/>
+        <result property="password" column="USR_ECY_PWD"/>
         <result property="teamCode" column="TEM_C"/>
         <result property="teamName" column="TEM_NM"/>
         <result property="deptCode" column="BBR_C"/>
@@ -50,8 +58,26 @@
         FROM OEHR.THURXE_CUSRLI A
         INNER JOIN OEHR.THURXE_CORGLI B ON A.BBR_C = B.PRLM_OGZ_C_CONE
     </select>
-
     <!-- ID/PW 일치 사용자 조회 -->
+    <select id="login" parameterType="iamUserDTO" resultMap="iamUserMap">
+        SELECT
+        A.ENO,
+        A.USR_ECY_PWD
+        FROM OEHR.THURXE_CUSRLI A
+        WHERE
+        A.ENO = #{username} AND
+        A.USR_ECY_PWD = #{password}
+    </select>
+
+    <!-- ID 일치 사용자 조회 -->
+    <select id="findByUserId" parameterType="iamUserDTO" resultMap="iamUserMap">
+        SELECT *
+        FROM OEHR.THURXE_CUSRLI A
+        WHERE
+        A.ENO = #{username}
+    </select>
+
+    <!-- ID/PW 일치 사용자 조회
     <select id="login" parameterType="iamUserDTO" resultMap="iamUserMap">
         SELECT
         A.EMP_NO,
@@ -60,24 +86,15 @@
         WHERE
         A.EMP_NO = #{username} AND
         A.EMP_PWD = #{password}
-    </select>
+    </select>-->
 
-    <!-- ID 일치 사용자 조회 -->
+    <!-- ID 일치 사용자 조회
     <select id="findByUserId" parameterType="iamUserDTO" resultMap="iamUserMap">
         SELECT *
         FROM OHR.IF_IAM_USER A
         WHERE
         A.EMP_NO = #{username}
-    </select>
-
-    <!-- 통합 키워드 사용자 조회 -->
-    <select id="findBySearchValue" parameterType="String" resultMap="iamUserMap">
-        SELECT *
-        FROM OHR.IF_IAM_USER A
-        WHERE
-        A.EMP_NO LIKE '%' || #{searchValue} || '%' OR
-        A.EMP_NM LIKE '%' || #{searchValue} || '%'
-    </select>
+    </select>-->
 
     <!-- 특정 사용자 조회 -->
     <select id="findByUserNo" parameterType="String" resultMap="teamSearchMap">

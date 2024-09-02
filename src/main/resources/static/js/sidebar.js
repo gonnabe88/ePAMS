@@ -80,7 +80,7 @@ const getUserInfo = () => {
         success: function(data) { // 요청이 성공했을 때 실행되는 함수
             const userInfo = data.userInfo;
             // JSON 응답에서 사용자 이름과 부서를 가져와서 HTML에 삽입
-            $('#userName').text(userInfo.userName);
+            $('#username').text(userInfo.username);
             $('#deptName').text(userInfo.deptName);
             $('#todayWorkTime').text(`${userInfo.staTime} ${userInfo.endTime}`);
             $('#tomorrowWorkTime').text(`${userInfo.staTime} ${userInfo.endTime}`);

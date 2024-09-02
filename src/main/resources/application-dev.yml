@@ -59,9 +59,9 @@ authn:
 spring:  
   datasource:
     driver-class-name: oracle.jdbc.OracleDriver
-    url: jdbc:oracle:thin:@{개발계}
+    url: ${DB_URL}
     username: EHR
-    password: ${DB_PASSWORD}  # 시스템 환경변수 kdb1234! 세팅
+    password: ${DB_PASSWORD}
     hikari:
       connection-timeout: 60000
       idle-timeout: 300000

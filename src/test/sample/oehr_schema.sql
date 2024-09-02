@@ -38,7 +38,6 @@ CREATE TABLE OEHR.THURXE_CATHLI (
                                     LST_CHG_USID VARCHAR2(14),
                                     QLF_GR_MAT VARCHAR2(600),
                                     QLF_GR_NM VARCHAR2(200),
-                                    USE_YN VARCHAR2(1),
                                     CONSTRAINT SYS_C0011066 CHECK ("ATH_ID" IS NOT NULL),
                                     CONSTRAINT SYS_C0011067 CHECK ("DEL_YN" IS NOT NULL),
                                     CONSTRAINT SYS_C0011068 CHECK ("FST_ENR_USID" IS NOT NULL),
@@ -278,7 +277,6 @@ CREATE TABLE OEHR.THURXE_CORGLI (
                                     BBR_WREN_NM VARCHAR2(100),
                                     ITM_SQN_SNO VARCHAR2(9),
                                     PRLM_HRK_OGZ_C_CONE VARCHAR2(100),
-                                    USE_YN VARCHAR2(1),
                                     CONSTRAINT SYS_C0011135 CHECK ("PRLM_OGZ_C_CONE" IS NOT NULL),
                                     CONSTRAINT SYS_C0011136 CHECK ("DEL_YN" IS NOT NULL),
                                     CONSTRAINT SYS_C0011137 CHECK ("FST_ENR_USID" IS NOT NULL),
@@ -360,7 +358,6 @@ CREATE TABLE OEHR.THURXE_CUSATI (
                                     GUID_PRG_SNO NUMBER(4,0),
                                     LST_CHG_DTM DATE,
                                     LST_CHG_USID VARCHAR2(14),
-                                    USE_YN VARCHAR2(1),
                                     CONSTRAINT SYS_C0011158 CHECK ("ENO" IS NOT NULL),
                                     CONSTRAINT SYS_C0011159 CHECK ("ATH_ID" IS NOT NULL),
                                     CONSTRAINT SYS_C0011160 CHECK ("DEL_YN" IS NOT NULL),
@@ -398,7 +395,6 @@ CREATE TABLE OEHR.THURXE_CUSRLI (
                                     PT_C_NM VARCHAR2(200),
                                     TEM_C VARCHAR2(5),
                                     TEM_NM VARCHAR2(100),
-                                    USE_YN VARCHAR2(1),
                                     USR_NM VARCHAR2(100),
                                     USR_WREN_NM VARCHAR2(100),
                                     CONSTRAINT SYS_C0011166 CHECK ("ENO" IS NOT NULL),
@@ -563,7 +559,6 @@ COMMENT ON COLUMN OEHR.THURXE_CATHLI.LST_CHG_DTM IS '최종변경일시';
 COMMENT ON COLUMN OEHR.THURXE_CATHLI.LST_CHG_USID IS '최종변경사용자ID';
 COMMENT ON COLUMN OEHR.THURXE_CATHLI.QLF_GR_MAT IS '자격등급사항(내용)';
 COMMENT ON COLUMN OEHR.THURXE_CATHLI.QLF_GR_NM IS '자격등급명';
-COMMENT ON COLUMN OEHR.THURXE_CATHLI.USE_YN IS '사용여부';
 
 COMMENT ON TABLE OEHR.THURXE_CBRDFM IS '인사_외부근태 공지사항게시판파일기본';
 COMMENT ON COLUMN OEHR.THURXE_CBRDFM.BLB_APG_FL_SNO IS '게시판첨부파일일련번호';
@@ -668,7 +663,6 @@ COMMENT ON COLUMN OEHR.THURXE_CORGLI.BBR_NM IS '부점명';
 COMMENT ON COLUMN OEHR.THURXE_CORGLI.BBR_WREN_NM IS '부점영문명';
 COMMENT ON COLUMN OEHR.THURXE_CORGLI.ITM_SQN_SNO IS '항목순서일련번호';
 COMMENT ON COLUMN OEHR.THURXE_CORGLI.PRLM_HRK_OGZ_C_CONE IS '인사상위조직코드내용';
-COMMENT ON COLUMN OEHR.THURXE_CORGLI.USE_YN IS '사용여부';
 
 
 COMMENT ON TABLE OEHR.THURXE_COTPIM IS '인사_외부근태 OTP발급이력기본';
@@ -705,7 +699,6 @@ COMMENT ON COLUMN OEHR.THURXE_CUSATI.GUID IS 'GUID';
 COMMENT ON COLUMN OEHR.THURXE_CUSATI.GUID_PRG_SNO IS 'GUID진행일련번호';
 COMMENT ON COLUMN OEHR.THURXE_CUSATI.LST_CHG_DTM IS '최종변경일시';
 COMMENT ON COLUMN OEHR.THURXE_CUSATI.LST_CHG_USID IS '최종변경사용자ID';
-COMMENT ON COLUMN OEHR.THURXE_CUSATI.USE_YN IS '사용여부';
 
 COMMENT ON TABLE OEHR.THURXE_CUSRLI IS '인사_외부근태 공통사용자기본';
 COMMENT ON COLUMN OEHR.THURXE_CUSRLI.ENO IS '사원번호';
@@ -726,7 +719,6 @@ COMMENT ON COLUMN OEHR.THURXE_CUSRLI.PT_C IS '직위코드';
 COMMENT ON COLUMN OEHR.THURXE_CUSRLI.PT_C_NM IS '직위코드명';
 COMMENT ON COLUMN OEHR.THURXE_CUSRLI.TEM_C IS '팀코드';
 COMMENT ON COLUMN OEHR.THURXE_CUSRLI.TEM_NM IS '팀명';
-COMMENT ON COLUMN OEHR.THURXE_CUSRLI.USE_YN IS '사용여부';
 COMMENT ON COLUMN OEHR.THURXE_CUSRLI.USR_NM IS '직원명';
 COMMENT ON COLUMN OEHR.THURXE_CUSRLI.USR_WREN_NM IS '사용자영문명';
 

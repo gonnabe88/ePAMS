@@ -20,14 +20,14 @@ public class IamUserVO extends BaseEntity {
      * @implNote 사원번호
      * @since 2024-08-19
      */
-    private String empNo;
+    private String username;
     
     /**
      * @author 140024
      * @implNote 직원명
      * @since 2024-06-09
      */
-    private String userName;
+    private String realname;
     
     /**
      * @author 140024

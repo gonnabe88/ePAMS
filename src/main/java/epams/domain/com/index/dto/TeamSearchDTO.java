@@ -20,14 +20,14 @@ public class TeamSearchDTO {
      * @implNote 직원명
      * @since 2024-06-09
      */
-    private String userName;
+    private String realname;
 
     /**
      * @author 140024
      * @implNote 사원번호
      * @since 2024-06-09
      */
-    private String userNo;
+    private String username;
 
     /**
      * @author 140024

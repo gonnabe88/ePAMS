@@ -6,8 +6,8 @@
 
     <!-- Result Map 정의 -->
     <resultMap id="userInfoMap" type="userInfoDTO">
-        <result property="userNo" column="ENO"/>
-        <result property="userName" column="USR_NM"/>
+        <result property="username" column="ENO"/>
+        <result property="realname" column="USR_NM"/>
         <result property="deptName" column="BBR_NM"/>
         <result property="teamName" column="TEM_NM"/>
         <result property="positionName" column="PT_C_NM"/>
@@ -27,7 +27,7 @@
         FROM OEHR.THURXE_CUSRLI A
         INNER JOIN OEHR.THURXE_CORGLI B
             ON A.BBR_C = B.PRLM_OGZ_C_CONE
-        WHERE A.ENO = #{userNo}
+        WHERE A.ENO = #{username}
     </select>
 
 </mapper>

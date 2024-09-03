@@ -1,11 +1,14 @@
 package epams.domain.dtm.controller;
 
+import epams.domain.com.commonCode.CommonCodeDTO;
+import epams.domain.com.commonCode.CommonCodeService;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.session.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -13,6 +16,7 @@ import epams.domain.com.admin.service.HtmlLangDetailService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.List;
 import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,6 +41,7 @@ public class DtmRegController<S extends Session> {
      */
     private final HtmlLangDetailService langDetailService;
     private static final Logger logger = LoggerFactory.getLogger(DtmRegController.class);
+    private final CommonCodeService commonCodeService;
 
     /**
      * @author K210058
@@ -72,11 +77,29 @@ public class DtmRegController<S extends Session> {
             model.addAttribute("selectedDate", date);
         }
 
-//        // DTO 생성 및 값 설정
-//        DtmRegDTO dtmRegDTO = new DtmRegDTO();
-//        dtmRegDTO.setDtmCode(dtmKind);  // 선택한 값을 설정
-//
-//        model.addAttribute("dtmRegDTO", dtmRegDTO); // 모델에 추가하여 뷰에서 사용 가능
+        // 근태 사유코드 목록을 모델에 추가 (예: DTM01 유형 코드)
+        //model.addAttribute("reasonCodes", commonCodeService.getReasonCodes("DTM01"));
+
+        return DTMREGDET;
+    }
+
+    @PostMapping("/submitDtmReg")
+    public String submitDtmReg(@RequestParam("startDate") String startDate,
+                               @RequestParam("endDate") String endDate,
+                               @RequestParam("dtmReasonCd") String dtmReasonCd,
+                               Model model) {
+
+        final String DTMREGDET = "dtm/dtmApplPopup";
+
+        // 근태 사유코드명 조회
+        String codeName = commonCodeService.getCodeName("DTM_KIND", dtmReasonCd);
+
+        // 파라미터를 모델에 추가하여 팝업으로 전달할 데이터 구성
+        model.addAttribute("startDate", startDate);
+        model.addAttribute("endDate", endDate);
+        model.addAttribute("dtmKind", "DTM01");
+        model.addAttribute("dtmReasonCd", dtmReasonCd);
+        model.addAttribute("dtmReasonCdName", codeName);
 
         return DTMREGDET;
     }

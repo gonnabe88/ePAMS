@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.time.temporal.ChronoUnit;
 import java.util.Locale;
 
 /**
@@ -133,6 +134,11 @@ public class DtmPopupController<S extends Session> {
             String formattedStaYmd = staDay.format(dateFormatter) + "(" + staDay.format(dayOfWeekFormatter) + ")";
             String formattedEndYmd = endDay.format(dateFormatter) + "(" + endDay.format(dayOfWeekFormatter) + ")";
             dateRange = formattedStaYmd + " ~ " + formattedEndYmd;
+            // 시작일과 종료일의 차이를 계산
+            //long daysBetween = ChronoUnit.DAYS.between(staDay, endDay) + 1;
+
+            // dtmDispName에 몇 일인지를 추가
+            //dtmDispName += " (" + daysBetween + "일)";
         }
 
         model.addAttribute("nowDate", dateRange);

@@ -63,4 +63,11 @@
           AND CD = #{code}
     </select>
 
+    <select id="findCodeNameByKindAndCode" resultType="string">
+        SELECT CD_NM
+        FROM OHR.XFRMD2C
+        WHERE CD_KIND = #{codeKind}
+          AND CD = #{code}
+    </select>
+
 </mapper>

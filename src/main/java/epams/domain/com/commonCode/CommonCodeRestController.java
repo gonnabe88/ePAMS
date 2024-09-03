@@ -2,11 +2,9 @@ package epams.domain.com.commonCode;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
@@ -62,4 +60,18 @@ public class CommonCodeRestController {
         return ResponseEntity.ok(dtos);
     }
 
+    /***
+     * @author 210058
+     * @implNote 코드유형 & 코드에 해당하는 코드명 조회
+     * @since 2024-09-03
+     */
+    @GetMapping("/common/getCodeName")
+    public ResponseEntity<String> getCodeName(@RequestParam String codeKind, @RequestParam String code) {
+        String codeName = commonCodeService.getCodeName(codeKind, code);
+        if (codeName != null) {
+            return ResponseEntity.ok(codeName);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }

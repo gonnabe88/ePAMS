@@ -50,13 +50,13 @@ public class CommonCodeService {
         return commonCodeRepository.findByCodeKindAndCode(dto);
     }
 
-    /**
-     * @author K140024
-     * @implNote 코드유형 & 코드에 해당하는 코드 조회
-     * @since 2024-04-26
+    /***
+     * @author 210058
+     * @implNote 코드유형 & 코드에 해당하는 코드명 조회
+     * @since 2024-09-03
      */
-    public CommonCodeDTO findOneByCodeKindAndCode(CommonCodeDTO dto) {
-        return commonCodeRepository.findOneByCodeKindAndCode(dto);
+    public String getCodeName(String codeKind, String code) {
+        return commonCodeRepository.findCodeNameByKindAndCode(codeKind, code);
     }
 
 }

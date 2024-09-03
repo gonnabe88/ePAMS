@@ -5,6 +5,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 /***
  * @author 140024
@@ -50,12 +51,14 @@ public class CommonCodeRepository {
 	}
 
 	/***
-	 * @author 140024
-	 * @implNote 코드유형 & 코드에 해당하는 코드 조회
-	 * @since 2024-06-09
+	 * @author 210058
+	 * @implNote 코드유형 & 코드에 해당하는 코드명 조회
+	 * @since 2024-09-03
 	 */
-	public CommonCodeDTO findOneByCodeKindAndCode(CommonCodeDTO dto) {
-		return sql.selectOne("CommonCode.findOneByCodeKindAndCode", dto);
+	public String findCodeNameByKindAndCode(String codeKind, String code) {
+		Map<String, Object> params = Map.of("codeKind", codeKind, "code", code);
+		return sql.selectOne("CommonCode.findCodeNameByKindAndCode", params);
 	}
-    
+
+
 }

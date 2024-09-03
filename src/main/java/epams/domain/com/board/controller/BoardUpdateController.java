@@ -97,7 +97,7 @@ public class BoardUpdateController {
         boardDTO.setBoardWriter(authentication().getName());
         final BoardDTO board = boardUpdateServ.update(boardDTO);
         model.addAttribute("board", board);
-        return "common/detail";
+        return "common/boardDetail";
     }
 
     /**
@@ -116,7 +116,7 @@ public class BoardUpdateController {
             model.addAttribute("boardFileList", boardFileDTOList);
         }
         
-        return "common/update";
+        return "common/boardUpdate";
     }    
 
 }

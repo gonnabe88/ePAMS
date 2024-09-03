@@ -3,7 +3,6 @@ package epams.domain.com.board.controller;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
-import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
@@ -90,7 +89,7 @@ public class BoardMainController {
         model.addAttribute("boardList", boardList);
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
-        return "common/list";
+        return "common/boardList";
     }
 
     /**
@@ -101,7 +100,7 @@ public class BoardMainController {
     @GetMapping("/editor")
     public String editor(final Model model) {    
     	model.addAttribute("board", new BoardDTO());
-        return "common/editor";
+        return "common/boardEditor";
     }
     
     /**
@@ -138,7 +137,7 @@ public class BoardMainController {
             model.addAttribute("boardFileList", boardFileDTOList);
         }
 
-        return "common/detail";
+        return "common/boardDetail";
     }
 
     /**

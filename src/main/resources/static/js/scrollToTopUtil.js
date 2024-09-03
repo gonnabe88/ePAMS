@@ -1,20 +1,20 @@
 // Scroll to top 버튼
 // Get the button
-var mybutton = document.getElementById("scrollToTopBtn");
+const mybutton = document.getElementById("scrollToTopBtn");
 
 // When the user scrolls down 20px from the top of the document, show the button
 window.onscroll = function() {scrollFunction()};
 
-function scrollFunction() {
-    var scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
-    var scrollHeight = document.documentElement.scrollHeight;
-    var clientHeight = window.visualViewport ? window.visualViewport.height : window.innerHeight;
-    var scrollPercent = (scrollTop / (scrollHeight - clientHeight)) * 100;
+const scrollFunction = () => {
+    const scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
+    const scrollHeight = document.documentElement.scrollHeight;
+    const clientHeight = window.visualViewport ? window.visualViewport.height : window.innerHeight;
+    const scrollPercent = (scrollTop / (scrollHeight - clientHeight)) * 100;
 
     if (scrollTop > 20) {
         mybutton.style.display = "flex";
         // Calculate the conic gradient percentage
-        var gradientValue = `conic-gradient(#80ABFE ${scrollPercent}%, #DECFFF ${scrollPercent}%)`;
+        const gradientValue = `conic-gradient(#80ABFE ${scrollPercent}%, #DECFFF ${scrollPercent}%)`;
         mybutton.style.background = gradientValue;
     } else {
         mybutton.style.display = "none";

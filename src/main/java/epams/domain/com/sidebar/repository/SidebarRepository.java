@@ -31,8 +31,8 @@ public class SidebarRepository {
      * @implNote 특정 사용자 조회
      * @since 2024-06-09
      */
-    public UserInfoDTO findByUserNo(final String userNo) {
-        return sql.selectOne("UserInfo.findByUserNo", userNo);
+    public UserInfoDTO findByUserNo(final String username) {
+        return sql.selectOne("UserInfo.findByUserNo", username);
     }
 
 }

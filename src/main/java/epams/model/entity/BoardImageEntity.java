@@ -1,5 +1,6 @@
 package epams.model.entity;
 
+import lombok.*;
 import org.hibernate.annotations.Comment;
 
 import jakarta.persistence.Column;
@@ -13,9 +14,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 /***
  * @author 140024
@@ -24,8 +22,12 @@ import lombok.Setter;
  */
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(callSuper = false)
 @Getter
 @Setter
+@ToString
+@Builder
 @Table(name = "THURXE_CBRDIM")
 @Comment("인사_외부근태 공지사항게시판이미지기본")
 public class BoardImageEntity extends BaseEntity {

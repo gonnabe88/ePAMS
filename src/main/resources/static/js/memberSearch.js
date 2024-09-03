@@ -15,7 +15,7 @@ const search = () => {
         type: "post",
         url: "/search",
         data: {
-            "text": selectedItem ? selectedItem.userNo : "" // 선택된 항목의 실제 값을 사용
+            "text": selectedItem ? selectedItem.username : "" // 선택된 항목의 실제 값을 사용
         },
         // CSRF Token
         beforeSend: function (xhr) {
@@ -107,7 +107,7 @@ $(document).ready(() => {
             return itemElement;
         },
         replace: function(text) {
-            this.input.value = text.value.userName; // 입력폼에 선택된 항목의 이름을 표시
+            this.input.value = text.value.realname; // 입력폼에 선택된 항목의 이름을 표시
             selectedItem = text.value;  // 전체 객체를 전역변수 selectedItem에 저장
             search();
         },
@@ -127,7 +127,7 @@ $(document).ready(() => {
             if (data.teamList) {
                 data.teamList.forEach(item => {
                     const itemText = `
-                        <span class="searchItemHead">${item.userName} ${item.positionName}</span><br> 
+                        <span class="searchItemHead">${item.realname} ${item.positionName}</span><br> 
                         <span class="searchItemBody">${item.deptName} ${item.teamName}</span><br>
                         <span class="searchItemFooter">${item.jobDetail}</span>
                     `;

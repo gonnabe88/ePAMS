@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import lombok.*;
 import org.hibernate.annotations.Comment;
 
 import jakarta.persistence.Column;
@@ -14,11 +15,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 /***
  * @author 140024
@@ -28,17 +24,19 @@ import lombok.Setter;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(callSuper = false)
 @Getter
 @Setter
+@ToString
 @Builder
 @Table(name = "THURXE_CCODEM")
 @Comment("인사_외부근태 언어기본")
 public class LangEntity extends BaseEntity implements Serializable {
 	
     /**
-	 * 
+	 * 명시적 serialVersionUID 설정
 	 */
-	private static final long serialVersionUID = 1909895141704463760L;
+	private static final long serialVersionUID = 3L;
 
 	/***
      * @author 140024

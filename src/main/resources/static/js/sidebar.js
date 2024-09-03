@@ -80,7 +80,7 @@ const getUserInfo = () => {
         success: function(data) { // 요청이 성공했을 때 실행되는 함수
             const userInfo = data.userInfo;
             // JSON 응답에서 사용자 이름과 부서를 가져와서 HTML에 삽입
-            $('#userName').text(userInfo.userName);
+            $('#username').text(userInfo.username);
             $('#deptName').text(userInfo.deptName);
             $('#todayWorkTime').text(`${userInfo.staTime} ${userInfo.endTime}`);
             $('#tomorrowWorkTime').text(`${userInfo.staTime} ${userInfo.endTime}`);
@@ -114,56 +114,41 @@ class Sidebar {
         let startX = 0; // 드래그 시작 위치
         let endX = 0; // 드래그 종료 위치
 
-        // 드래그가 금지된 특정 div 요소를 선택합니다
         const noDragElement = document.querySelector('.no-drag');
 
-
-
         // PC에서 마우스 클릭 시작 이벤트 (드래그)
-        $(this.sidebarElement).on("mousedown", (event) => {
-            // no-drag 클래스가 있는 요소를 클릭한 경우 드래그를 무시합니다
+        $(document).on("mousedown", (event) => {
             if (noDragElement && noDragElement.contains(event.target)) return;
             startX = event.pageX; // 마우스 드래그 시작 위치 저장
+            endX = 0; // 드래그 시작 시 endX 초기화
         });
 
         // PC에서 마우스 클릭 종료 이벤트 (드래그)
-        $(this.sidebarElement).on("mouseup", (event) => {
-            // no-drag 클래스가 있는 요소를 클릭한 경우 드래그를 무시합니다
+        $(document).on("mouseup", (event) => {
             if (noDragElement && noDragElement.contains(event.target)) return;
             endX = event.pageX; // 마우스 드래그 끝 위치 저장
-            // 드래그 방향에 따라 사이드바를 보여주거나 숨깁니다
             if ((window.innerWidth < DESKTOP_SIZE) && (startX + 100 < endX)) {
-                // 오른쪽으로 드래그 된 경우
-                console.log("prev move");
-                this.show();
+                this.show(); // 오른쪽으로 드래그된 경우
             } else if ((window.innerWidth < DESKTOP_SIZE) && (startX > endX + 100)) {
-                // 왼쪽으로 드래그 된 경우
-                console.log("next move");
-                this.hide();
+                this.hide(); // 왼쪽으로 드래그된 경우
             }
         });
 
         // 모바일 터치 시작 이벤트 (스와이프)
-        $(this.sidebarElement).on("touchstart", (event) => {
-            // no-drag 클래스가 있는 요소를 클릭한 경우 스와이프를 무시합니다
+        $(document).on("touchstart", (event) => {
             if (noDragElement && noDragElement.contains(event.target)) return;
             startX = event.touches[0].pageX; // 터치가 시작되는 위치 저장
+            endX = 0; // 터치 시작 시 endX 초기화
         });
 
         // 모바일 터치 종료 이벤트 (스와이프)
-        $(this.sidebarElement).on("touchend", (event) => {
-            // no-drag 클래스가 있는 요소를 클릭한 경우 스와이프를 무시합니다
+        $(document).on("touchend", (event) => {
             if (noDragElement && noDragElement.contains(event.target)) return;
             endX = event.changedTouches[0].pageX; // 터치가 끝나는 위치 저장
-            // 스와이프 방향에 따라 사이드바를 보여주거나 숨깁니다
             if ((window.innerWidth < DESKTOP_SIZE) && (startX + 100 < endX)) {
-                // 오른쪽으로 스와이프 된 경우
-                console.log("prev move");
-                this.show();
+                this.show(); // 오른쪽으로 스와이프된 경우
             } else if ((window.innerWidth < DESKTOP_SIZE) && (startX > endX + 100)) {
-                // 왼쪽으로 스와이프 된 경우
-                console.log("next move");
-                this.hide();
+                this.hide(); // 왼쪽으로 스와이프된 경우
             }
         });
 

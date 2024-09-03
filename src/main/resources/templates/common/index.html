@@ -112,6 +112,90 @@
     </div>
     <!--end 빠른 근태신청-->
 
+    <!--start divider-->
+    <div class="divider">
+        <div class="divider-text" >
+            <img class="divider-text" src="/images/kdb/epams_r_cw_action.gif"/>
+        </div>
+    </div>
+    <!--end divider-->
+
+    <!--start 직원검색-->
+    <div class="main-content">
+        <div id="searchDiv">
+            <div class="container">
+
+                <!-- 직원검색 제목 -->
+                <div class="row d-flex justify-content-start mb-2">
+                    <h5 class="text-start">
+                        <i class="bi bi-search"></i> <span th:text="${langList['SEARCH_EMP_TTL']}"></span>
+                    </h5>
+                </div>
+
+                <!-- 직원검색 내용 -->
+                <div class="row d-flex justify-content-center">
+                    <div class="row col-lg-12">
+                        <section class="awesomplete section">
+                            <div class="mainCard shadow card">
+                                <div class="card-header pb-2">
+                                    <h4 class="card-title"><span th:text="${langList['SEARCH_EMP_01_STMT']}"></span>
+                                    </h4>
+                                </div>
+                                <div class="card-content">
+                                    <div class="card-body">
+
+                                        <div class="row">
+                                            <div class="col-12 mb-0">
+                                                <div class="input-with-icon d-flex align-items-center mb-3">
+                                                    <i class="bi bi-search m-0"></i>
+                                                    <input id="searchMember" class="awesomplete" placeholder="이름, 팀/부서, 업무" autocomplete="off">
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="awesomplete-result d-flex justify-content-center">
+                                    <div class="row col-12">
+                                        <div class="col-12 justify-self-center">
+                                            <div id="memberList" class="p-2 mb-4">
+                                                <p class="h6 mb-3"> 검색 방법 </p>
+                                                <p><span class="h7" th:utext="${langList['SEARCH_EMP_02_STMT']}"></span></p>
+
+                                                <!--start divider-->
+                                                <div class="divider">
+                                                    <div class="divider-text p-0" ></div>
+                                                </div>
+                                                <!--end divider-->
+
+                                                <p class="h6 mb-3"> 단일 검색 </p>
+                                                <p class="h7"> 예시) "홍길동" 입력 후 선택</p>
+                                                <p class="h7"> 예시) "단신부임" 입력 후 선택</p>
+
+                                                <!--start divider-->
+                                                <div class="divider">
+                                                    <div class="divider-text p-0" ></div>
+                                                </div>
+                                                <!--end divider-->
+
+                                                <p class="h6 mb-3"> 복합 검색 </p>
+                                                <p class="h7"> 예시) "디지털" + "업무지원" 입력 후 선택</p>
+                                                <p class="h7"> 예시) "인사부" + "통할" 입력 후 선택</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!--end 직원검색-->
+
 
     <!--start divider-->
     <div class="divider">
@@ -170,89 +254,7 @@
     </div>
     <!--end 최근 공지사항-->
 
-    <!--start divider-->
-    <div class="divider">
-        <div class="divider-text" >
-            <img class="divider-text" src="/images/kdb/epams_r_cw_action.gif"/>
-        </div>
-    </div>
-    <!--end divider-->
 
-    <!--start 직원검색-->
-    <div class="main-content">
-        <div id="searchDiv">
-            <div class="container">
-
-                <!-- 직원검색 제목 -->
-                <div class="row d-flex justify-content-start mb-2">
-                    <h5 class="text-start">
-                        <i class="bi bi-search"></i> <span th:text="${langList['SEARCH_EMP_TTL']}"></span>
-                    </h5>
-                </div>
-
-                <!-- 직원검색 내용 -->
-                <div class="row d-flex justify-content-center">
-                    <div class="row col-lg-12">
-                        <section class="awesomplete section">
-                            <div class="mainCard shadow card">
-                                <div class="card-header pb-2">
-                                    <h4 class="card-title"><span th:text="${langList['SEARCH_EMP_01_STMT']}"></span>
-                                    </h4>
-                                </div>
-                                <div class="card-content">
-                                    <div class="card-body">
-                                        
-                                        <div class="row">
-                                            <div class="col-12 mb-0">
-                                                <div class="input-with-icon d-flex align-items-center mb-3">
-                                                    <i class="bi bi-search m-0"></i>
-                                                    <input id="searchMember" class="awesomplete" placeholder="이름, 팀/부서, 업무" autocomplete="off">
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="awesomplete-result d-flex justify-content-center">
-                                    <div class="row col-12">
-                                        <div class="col-12 justify-self-center">
-                                            <div id="memberList" class="p-2 mb-4">
-                                                <p class="h6 mb-3"> 검색 방법 </p>
-                                                <p><span class="h7" th:utext="${langList['SEARCH_EMP_02_STMT']}"></span></p>
-
-                                                <!--start divider-->
-                                                <div class="divider">
-                                                    <div class="divider-text p-0" ></div>
-                                                </div>
-                                                <!--end divider-->
-
-                                                <p class="h6 mb-3"> 단일 검색 </p>
-                                                <p class="h7"> 예시) "홍길동" 입력 후 선택</p>
-                                                <p class="h7"> 예시) "단신부임" 입력 후 선택</p>
-
-                                                <!--start divider-->
-                                                <div class="divider">
-                                                    <div class="divider-text p-0" ></div>
-                                                </div>
-                                                <!--end divider-->
-
-                                                <p class="h6 mb-3"> 복합 검색 </p>
-                                                <p class="h7"> 예시) "디지털" + "업무지원" 입력 후 선택</p>
-                                                <p class="h7"> 예시) "인사부" + "통할" 입력 후 선택</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-    <!--end 직원검색-->
 
     <!--start scrollToTop 버튼-->
     <button class="animate__animated animate__fadeIn animate__slow" id="scrollToTopBtn" title="Go to top">

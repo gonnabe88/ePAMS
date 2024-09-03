@@ -1,4 +1,4 @@
-package epams.domain.com.index.dto;
+package epams.domain.dtm.dto;
 
 import lombok.*;
 

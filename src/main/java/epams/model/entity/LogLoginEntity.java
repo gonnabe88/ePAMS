@@ -12,8 +12,10 @@ import org.hibernate.annotations.Comment;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(callSuper = false)
 @Getter
 @Setter
+@ToString
 @Builder
 @Table(name = "THURXE_CLOGNL")
 @Comment("인사_외부근태 로그인로그")

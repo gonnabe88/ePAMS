@@ -1,9 +1,7 @@
 package epams.model.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.Comment;
 
 
@@ -14,8 +12,12 @@ import org.hibernate.annotations.Comment;
  */
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(callSuper = false)
 @Getter
 @Setter
+@ToString
+@Builder
 @Table(name = "THURXE_COTPIM")
 @Comment("인사_외부근태 OTP발급이력기본")
 public class LoginOTPEntity extends BaseEntity {

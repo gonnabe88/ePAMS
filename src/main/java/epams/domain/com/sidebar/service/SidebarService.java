@@ -26,11 +26,11 @@ public class SidebarService {
 
     /**
      * @implNote 행번을 사용하여 직원정보 검색
-     * @param userNo K/O행번
+     * @param username K/O행번
      * @return 검색된 직원 정보
      */
-    public UserInfoDTO findByUserNo(final String userNo) {
-        return sidebarRepository.findByUserNo(userNo);
+    public UserInfoDTO findByUserNo(final String username) {
+        return sidebarRepository.findByUserNo(username);
     }
 
 

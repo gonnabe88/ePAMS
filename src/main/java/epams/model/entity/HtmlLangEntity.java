@@ -20,6 +20,7 @@ import jakarta.persistence.Table;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(callSuper = false)
 @Getter
 @Setter
 @ToString
@@ -29,7 +30,7 @@ import jakarta.persistence.Table;
 public class HtmlLangEntity extends BaseEntity implements Serializable {
 
     /**
-	 * 
+	 * 명시적 serialVersionUID 설정
 	 */
 	private static final long serialVersionUID = 1L;
 

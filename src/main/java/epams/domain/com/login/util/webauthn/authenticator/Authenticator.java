@@ -28,7 +28,8 @@ public class Authenticator extends BaseEntity {
      * @since 2024-06-11
      */
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "authenticator_seq_gen") // auto_increment
+    @SequenceGenerator(name = "authenticator_seq_gen", sequenceName = "SQ_THURXE_CWCRDM_1", allocationSize = 1)
     @Column(name = "WEBA_SNO", columnDefinition = "NUMBER(10)")
     @Comment("Webauthn 일련번호")
     private Long seqId;

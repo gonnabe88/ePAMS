@@ -67,9 +67,7 @@ public class DtmApplyService {
 					dtmHisDTO.getDtmReasonCd(),
 					dtmHisDTO.getStaYmd(),
 					dtmHisDTO.getEndYmd(),
-					dtmHisDTO.getDtmHisId(),
-					"본인결재",
-					dtmHisDTO.getDtmKindCd()
+					dtmHisDTO.getEmpId()
 			); // DtmApplCheckProcDTO(사전검증) 객체 생성
 			proCheckProcRepo.callPreCheckProc(preCheckProcDTO); // 사전검증 프로시저 호출
 
@@ -93,7 +91,7 @@ public class DtmApplyService {
 			// 사후검증 프로시저
 			final DtmApplElaCheckProcDTO postCheckProcDTO = new DtmApplElaCheckProcDTO(
 					dtmHisDTO.getApplId(),
-					"K" + dtmHisDTO.getEmpId()
+					dtmHisDTO.getEmpId()
 			); // postCheckProcDTO(사후검증) 객체 생성
 			proCheckProcRepo.callNewCheckProc(postCheckProcDTO); // 사후검증 프로시저 호출
 

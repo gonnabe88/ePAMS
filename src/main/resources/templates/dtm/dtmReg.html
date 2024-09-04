@@ -7,11 +7,17 @@
 <body>
 <div layout:fragment="contents">
     <div class="dtmReg">
-        <h1 class="page-title">근태신청</h1>
         <div class="container">
-            <div class="card">
-                <div class="card-body">
-                    <div id="calendar"></div>
+            <div class="main-content">
+                <div class="page-heading">
+                    <div class="align-middle">
+                        <h2><i class="bi bi-bell-fill"></i> <span th:text="${langList['DTM_REG']}"></span></h2>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <div id="calendar"></div>
+                    </div>
                 </div>
             </div>
         </div>

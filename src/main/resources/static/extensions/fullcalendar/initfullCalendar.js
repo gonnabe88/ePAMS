@@ -6,13 +6,13 @@ document.addEventListener('DOMContentLoaded', function() {
     var calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth',
         headerToolbar: {
-            left: 'prev,next today',
+            left: 'today prev',
             center: 'title',
-            right: 'add'
+            right: 'next add'
         },
         customButtons: {
             add: {
-                text: '신청하기',
+                text: '신청',
                 click: function() {
                     var url = '/dtm/dtmRegDetail';
                     var date;
@@ -20,10 +20,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (selectedDateStr) {
                         date = selectedDateStr;
                     } else {
-                        // 오늘 날짜를 YYYY-MM-DD 형식으로 가져옵니다.dkswlgjs
+                        // 오늘 날짜를 YYYY-MM-DD 형식으로 가져옵니다.
                         var today = new Date();
                         var dd = String(today.getDate()).padStart(2, '0');
-                        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+                        var mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
                         var yyyy = today.getFullYear();
                         date = yyyy + '-' + mm + '-' + dd;
                     }
@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }
         },
-        titleFormat: { year: 'numeric', month: 'long' },
+        titleFormat: { month: 'long' },
         locale: 'ko',
         buttonText: {
             today: '오늘'

@@ -1,25 +1,31 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-    xmlns:sec="http://www.thymeleaf.org" layout:decorate="~{common/layout/layout}">
+      xmlns:sec="http://www.thymeleaf.org" layout:decorate="~{common/layout/layout}">
 
 <head>
     <th:block layout:fragment="css">
-        <link rel="stylesheet" href="/extensions/select2/select2.css" />
+        <link rel="stylesheet" href="/extensions/select2/select2.css"/>
     </th:block>
 </head>
 
 <body>
-    <div layout:fragment="contents">
-        <div class="dtmRegDetail">
-            <h1 class="page-title">근태 신청</h1>
-            <div class="container">
+<div layout:fragment="contents">
+    <div class="dtmRegDetail">
+        <div class="container">
+            <div class="main-content">
+                <div class="page-heading">
+                    <div class="align-middle">
+                        <h2>
+                            <i class="bi bi-bell-fill"></i> <span th:text="${langList['DTM_REG']}"></span></h2>
+                    </div>
+                </div>
                 <div class="card">
                     <div class="card-body">
                         <div class="row mb-3">
                             <div class="col">
                                 <h6><span th:text="${langList['DTM_KIND']}"></span></h6>
-                                <select class="form-control select2" aria-label="DTM Reason Code register" name="dtmReasonCd"
-                                    id="list">
+                                <select class="form-control select2" aria-label="DTM Reason Code register"
+                                        name="dtmReasonCd" id="list">
                                     <option value="" selected><span th:text="${langList['ENTIRE']}"></span></option>
                                 </select>
                             </div>
@@ -30,11 +36,11 @@
                                 <div class="date-input-container">
                                     <div class="date-input">
                                         <input type="date" id="startDate" name="startDate" th:value="${param.date}"
-                                            required>
+                                               required>
                                     </div>
                                     <div class="date-input">
                                         <input type="date" id="endDate" name="endDate" th:value="${param.date}"
-                                            required>
+                                               required>
                                     </div>
                                 </div>
                             </div>
@@ -52,15 +58,16 @@
             </div>
         </div>
     </div>
+</div>
 
-            <th:block layout:fragment="script">
-                <script src="/extensions/select2/select2.full.js"></script>
-                <script src="/js/selectForm.js"></script>
-                <script src="/js/moveBack.js"></script>
-                <script src="/js/index.js"></script>
-                <script src="/js/dtmAppl.js"></script>
-            </th:block>
-        </div>
+<th:block layout:fragment="script">
+    <script src="/extensions/select2/select2.full.js"></script>
+    <script src="/js/selectForm.js"></script>
+    <script src="/js/moveBack.js"></script>
+    <script src="/js/index.js"></script>
+    <script src="/js/dtmAppl.js"></script>
+</th:block>
+</div>
 </body>
 
 </html>

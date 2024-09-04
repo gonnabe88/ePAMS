@@ -1,5 +1,9 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" layout:decorate="~{common/layout/layout}">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/html"
+      layout:decorate="~{common/layout/layout}">
 
 <head>
     <!-- (start) private script -->
@@ -254,8 +258,6 @@
     </div>
     <!--end 최근 공지사항-->
 
-
-
     <!--start scrollToTop 버튼-->
     <button class="animate__animated animate__fadeIn animate__slow" id="scrollToTopBtn" title="Go to top">
         <i class="bi-chevron-up"></i>
@@ -268,18 +270,25 @@
 <th:block layout:fragment="script">
     <!--Forward Thymeleaf variable to Javascript-->
     <div id="authData" th:attr="data-simpleauth=${simpleauth}, data-username=${username}"></div>
+
+    <!--3rd Party Library-->
     <script src="/extensions/webauthn/js/base64js.min.js"></script>
     <script src="/extensions/webauthn/js/custom.js"></script>
     <script src="/extensions/awesomplete/awesomplete.js"></script>
     <script src="/extensions/select2/select2.full.js"></script>
     <script src="/extensions/swiper/swiper-bundle.min.js"></script>
     <script src="/extensions/swiper/initSwiper.js"></script>
-    <script src="/js/quickDtmAppl.js"></script>
-    <script src="/js/scrollToTop.js"></script>
-    <script src="/js/memberSearch.js"></script>
-    <script src="/js/webauthnPopup.js"></script>
-    <script src="/js/index.js"></script>
 
+    <!--KDB Utility-->
+    <script src="/js/scrollToTopUtil.js"></script>
+    <script src="/js/searchMemberUtil.js"></script>
+
+    <!--KDB PopUp-->
+    <script src="/js/quickDtmApplPopup.js"></script>
+    <script src="/js/webauthnPopup.js"></script>
+
+    <!--KDB Page-->
+    <script src="/js/index.js"></script>
 </th:block>
 <!-- (end) private script -->
 </body>

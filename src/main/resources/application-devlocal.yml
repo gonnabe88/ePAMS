@@ -1,4 +1,4 @@
-# 로컬 개발용 설정
+# 개발 서버용 설정 (java -jar epams.jar --spring.profiles.active=dev)
 
 kdb:
   filepath: C:/epams/ # 첨부파일, 이미지 등 저장할 filesystem 경로
@@ -8,7 +8,7 @@ kdb:
 # server port
 server:
   port: 8080
-  servlet: 
+  servlet:
     session:
       timeout: 15m
       persistent: true
@@ -19,21 +19,22 @@ server:
     whitelabel:
       enabled: false # Spring Boot 기본 에러 경로를 비활성화하고 사용자 정의 컨트롤러를 사용할 수 있도록 설정
 
+
 # webauthn & passkey
 authn:
   display: ePAMS
-  hostname: ${server.servlet.session.cookie.domain} 
+  hostname: ${server.servlet.session.cookie.domain}
   origin: http://localhost:8080
 
 # spring
 spring:
   devtools.livereload.enabled: true  # 로컬 개발 환경에서 livereload 활성화
-  
+
   datasource:
     driver-class-name: oracle.jdbc.OracleDriver
-    url: jdbc:oracle:thin:@localhost:1521/XE
+    url: ${DB_URL}
     username: EHR
-    password: ${DB_PASSWORD}  # 시스템 환경변수 kdb1234! 세팅
+    password: ${DB_PASSWORD}
     hikari:
       connection-timeout: 60000 # 1분(커넥션 풀에서 커넥션을 가져오는데 최대 대기 시간)
       idle-timeout: 300000 # 5분(커넥션 풀에 유휴 커넥션이 유지되는 시간)
@@ -45,12 +46,13 @@ spring:
       mode: always
       data-locations: classpath:init.sql
 
+  # 나중에 실제로 운영에 배포할 떄는 꼭 지울것
   jpa:
     open-in-view: true
     hibernate:
       ddl-auto: none
       naming:
-        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl      
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     show-sql: false
     properties:
       dialect: org.hibernate.dialect.MySQL8InnoDBDialect

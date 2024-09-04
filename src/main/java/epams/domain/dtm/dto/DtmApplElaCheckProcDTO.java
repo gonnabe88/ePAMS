@@ -26,7 +26,7 @@ public class DtmApplElaCheckProcDTO {
      * @implNote 변경자
      * @since 2024-08-05
      */
-    private String modUserId;
+    private Long modUserId;
 
     /***
      * @author 140024
@@ -40,14 +40,14 @@ public class DtmApplElaCheckProcDTO {
      * @implNote 언어코드
      * @since 2024-08-05
      */
-    private String localeCd = "ko";
+    private String localeCd = "KO";
 
     /***
      * @author 140024
      * @implNote 타임존코드
      * @since 2024-08-05
      */
-    private String tzCd = "ko";
+    private String tzCd = "KST";
 
     /***
      * @author 140024
@@ -68,7 +68,7 @@ public class DtmApplElaCheckProcDTO {
      * @implNote 생성자
      * @since 2024-08-05
      */
-    public DtmApplElaCheckProcDTO(final Long applId, final String modUserId) {
+    public DtmApplElaCheckProcDTO(final Long applId, final Long modUserId) {
         this.applId = applId;
         this.modUserId = modUserId;
     }

@@ -75,16 +75,6 @@ public class BoardSaveController {
         }
         return result;
     }    
-    
-    /**
-     * @author K140024
-     * @implNote 게시글 저장 화면을 보여주는 메소드
-     * @since 2024-04-26
-     */
-    @GetMapping("/save")
-    public String saveForm() {
-        return "common/save";
-    }
 
     /**
      * @author K140024

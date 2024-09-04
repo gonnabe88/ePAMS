@@ -4,7 +4,6 @@ $(document).ready(() => {
     const simpleauth = authData.data('simpleauth');
     const username = authData.data('username');
     const simpleAuthPopup = getCookie("SIMPLE_AUTH_POPUP_YN");
-    console.log(`WebAuthn: ${simpleauth} ${username}`);
 
     if (!simpleauth && simpleAuthPopup !== "FALSE") {
         Swal.fire({
@@ -35,7 +34,6 @@ $(document).ready(() => {
 
 // 간편인증 등록
 const webauthnReg = (username) => {
-    console.log("In webauthnReg");
     const header = $("meta[name='_csrf_header']").attr('content');
     const token = $("meta[name='_csrf']").attr('content');
     const formData = new FormData();

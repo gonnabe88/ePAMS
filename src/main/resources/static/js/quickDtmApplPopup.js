@@ -1,5 +1,5 @@
 // 빠른 근태 신청 팝업
-const ApplAlert = (element) => {
+const ApplAlertPopup = (element) => {
     const staDate = element.getAttribute('data-staDate');
     const staDateStr = element.getAttribute('data-staDateStr');
     const dtmCode = element.getAttribute('data-dtmCode');

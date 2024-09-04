@@ -1,4 +1,6 @@
-const del = () => {
+const del = (element) => {
+    const boardId = element.getAttribute('data-boardId');
+
     let header = $("meta[name='_csrf_header']").attr('content');
     let token = $("meta[name='_csrf']").attr('content');
 
@@ -18,7 +20,7 @@ const del = () => {
         if (result.isConfirmed) {
             $.ajax({
                 type: "get",
-                url: "/board/delete/[[${board.seqId}]]",
+                url: "/board/delete/"+boardId,
                 dataType: "json",
                 data: {},
                 //CSRF Token

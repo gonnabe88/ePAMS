@@ -68,6 +68,10 @@ spring:
       max-lifetime: 1800000 # 30분(커넥션 풀에 유휴 커넥션이 유지되는 최대 시간)
       maximum-pool-size: 20 # 최대 커넥션 수
       minimum-idle: 5 # 최소 커넥션 수
+  sql:
+    init:
+      mode: always
+      data-locations: classpath:init.sql
 
   # 나중에 실제로 운영에 배포할 떄는 꼭 지울것
   jpa:

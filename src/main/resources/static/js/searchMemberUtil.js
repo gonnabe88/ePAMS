@@ -2,7 +2,7 @@
 let selectedItem = null; // 선택된 항목을 저장할 변수
 
 // 직원 검색 조회 버튼 클릭 시 이벤트
-const search = () => {
+const searchMember = () => {
     const header = $("meta[name='_csrf_header']").attr('content');
     const token = $("meta[name='_csrf']").attr('content');
 
@@ -12,8 +12,8 @@ const search = () => {
     }
 
     $.ajax({
-        type: "post",
-        url: "/search",
+        type: "POST",
+        url: "/searchMember",
         data: {
             "text": selectedItem ? selectedItem.username : "" // 선택된 항목의 실제 값을 사용
         },
@@ -22,7 +22,6 @@ const search = () => {
             xhr.setRequestHeader(header, token);
         },
         complete: function(data) {
-            //console.log("search reply: " + data.responseText);
             $("#memberList").html(data.responseText);
         },
         error: function(error) {
@@ -109,7 +108,7 @@ $(document).ready(() => {
         replace: function(text) {
             this.input.value = text.value.realname; // 입력폼에 선택된 항목의 이름을 표시
             selectedItem = text.value;  // 전체 객체를 전역변수 selectedItem에 저장
-            search();
+            searchMember();
         },
         filter: function(text, input) {
             const terms = input.trim().toLowerCase().split(/\s+/);

@@ -1,17 +1,3 @@
-
-
-.ossNotice {
-    color : #767d82;
-}
-#ossNoticeModal .modal-dialog-scrollable .modal-body{
-    height: 80vh;
-    overflow-y: hidden;
-}
-#ossNoticeModal iframe{
-    height: 100%;
-    width: 100%;
-}
-
 #searchDiv .mainCard {
     min-height: 470px;
 }
@@ -909,10 +895,9 @@ html, body {
     --bs-body-bg: #E4F0FF;
     --bs-btn-bg: #6570C5;
     --bs-btn-border-color: #6570C5;
-    --bs-btn-bg: background: linear-gradient(90deg, rgba(68,119,197,1) 0%, rgba(101,112,197,1) 50%);
+    /*--bs-btn-bg: background: linear-gradient(90deg, rgba(68,119,197,1) 0%, rgba(101,112,197,1) 50%);*/
     --bs-btn-font-family: "Nanum Gothic"
 }
-
 
 .ps {
     overflow: hidden !important;
@@ -1199,155 +1184,6 @@ caption {
     margin-right: auto;
     margin-left: auto
 }
-
-.table,
-.dataTable-table {
-    --bs-table-color-type: initial;
-    --bs-table-bg-type: initial;
-    --bs-table-color-state: initial;
-    --bs-table-bg-state: initial;
-    --bs-table-color: #607080;
-    --bs-table-bg: transparent;
-    --bs-table-border-color: #eee;
-    --bs-table-accent-bg: transparent;
-    --bs-table-striped-color: #607080;
-    --bs-table-striped-bg: rgba(0, 0, 0, .05);
-    --bs-table-active-color: #607080;
-    --bs-table-active-bg: rgba(0, 0, 0, .1);
-    --bs-table-hover-color: #607080;
-    --bs-table-hover-bg: rgba(0, 0, 0, .075);
-    width: 100%;
-    margin-bottom: 1rem;
-    vertical-align: top;
-    border-color: var(--bs-table-border-color)
-}
-
-.table>:not(caption)>*>*,
-.dataTable-table>:not(caption)>*>* {
-    padding: .5rem;
-    color: var(--bs-table-color-state, var(--bs-table-color-type, var(--bs-table-color)));
-    background-color: var(--bs-table-bg);
-    border-bottom-width: 1px;
-    box-shadow: inset 0 0 0 9999px var(--bs-table-bg-state, var(--bs-table-bg-type, var(--bs-table-accent-bg)))
-}
-
-.table-group-divider {
-    border-top: 2px solid #dedede
-}
-
-.table-primary {
-    --bs-table-color: #000;
-    --bs-table-bg: #d9dff2;
-    --bs-table-border-color: #c3c9da;
-    --bs-table-striped-bg: #ced4e6;
-    --bs-table-striped-color: #000;
-    --bs-table-active-bg: #c3c9da;
-    --bs-table-active-color: #000;
-    --bs-table-hover-bg: #c9cee0;
-    --bs-table-hover-color: #000;
-    color: var(--bs-table-color);
-    border-color: var(--bs-table-border-color)
-}
-
-.table-secondary {
-    --bs-table-color: #000;
-    --bs-table-bg: #e2e3e5;
-    --bs-table-border-color: #cbccce;
-    --bs-table-striped-bg: #d7d8da;
-    --bs-table-striped-color: #000;
-    --bs-table-active-bg: #cbccce;
-    --bs-table-active-color: #000;
-    --bs-table-hover-bg: #d1d2d4;
-    --bs-table-hover-color: #000;
-    color: var(--bs-table-color);
-    border-color: var(--bs-table-border-color)
-}
-
-.table-success {
-    --bs-table-color: #000;
-    --bs-table-bg: #d1e7dd;
-    --bs-table-border-color: #bcd0c7;
-    --bs-table-striped-bg: #c7dbd2;
-    --bs-table-striped-color: #000;
-    --bs-table-active-bg: #bcd0c7;
-    --bs-table-active-color: #000;
-    --bs-table-hover-bg: #c1d6cc;
-    --bs-table-hover-color: #000;
-    color: var(--bs-table-color);
-    border-color: var(--bs-table-border-color)
-}
-
-.table-info {
-    --bs-table-color: #000;
-    --bs-table-bg: #cff4fc;
-    --bs-table-border-color: #badce3;
-    --bs-table-striped-bg: #c5e8ef;
-    --bs-table-striped-color: #000;
-    --bs-table-active-bg: #badce3;
-    --bs-table-active-color: #000;
-    --bs-table-hover-bg: #bfe2e9;
-    --bs-table-hover-color: #000;
-    color: var(--bs-table-color);
-    border-color: var(--bs-table-border-color)
-}
-
-
-.table-warning {
-    --bs-table-color: #000;
-    --bs-table-bg: #fff3cd;
-    --bs-table-border-color: #e6dbb9;
-    --bs-table-striped-bg: #f2e7c3;
-    --bs-table-striped-color: #000;
-    --bs-table-active-bg: #e6dbb9;
-    --bs-table-active-color: #000;
-    --bs-table-hover-bg: #ece1be;
-    --bs-table-hover-color: #000;
-    color: var(--bs-table-color);
-    border-color: var(--bs-table-border-color)
-}
-
-.table-danger {
-    --bs-table-color: #000;
-    --bs-table-bg: #f8d7da;
-    --bs-table-border-color: #dfc2c4;
-    --bs-table-striped-bg: #eccccf;
-    --bs-table-striped-color: #000;
-    --bs-table-active-bg: #dfc2c4;
-    --bs-table-active-color: #000;
-    --bs-table-hover-bg: #e5c7ca;
-    --bs-table-hover-color: #000;
-    color: var(--bs-table-color);
-    border-color: var(--bs-table-border-color)
-}
-
-.table-light {
-    --bs-table-color: #000;
-    --bs-table-bg: #ced4da;
-    --bs-table-border-color: #b9bfc4;
-    --bs-table-striped-bg: #c4c9cf;
-    --bs-table-striped-color: #000;
-    --bs-table-active-bg: #b9bfc4;
-    --bs-table-active-color: #000;
-    --bs-table-hover-bg: #bfc4ca;
-    --bs-table-hover-color: #000;
-    color: var(--bs-table-color);
-    border-color: var(--bs-table-border-color)
-}
-
-.table-dark {
-    --bs-table-color: #000;
-    --bs-table-bg: #f2f7ff;
-    --bs-table-border-color: #dadee6;
-    --bs-table-striped-bg: #e6ebf2;
-    --bs-table-striped-color: #000;
-    --bs-table-active-bg: #dadee6;
-    --bs-table-active-color: #000;
-    --bs-table-hover-bg: #e0e4ec;
-    --bs-table-hover-color: #000;
-    color: var(--bs-table-color);
-    border-color: var(--bs-table-border-color)
-}
-
 
 .form-text {
     margin-top: .25rem;
@@ -2293,26 +2129,6 @@ textarea.form-control.is-invalid {
     --bs-accordion-body-padding-y: 1rem;
     --bs-accordion-active-color: #3c55ab;
     --bs-accordion-active-bg: #eceff9
-}
-
-
-.breadcrumb {
-    --bs-breadcrumb-padding-x: 0;
-    --bs-breadcrumb-padding-y: 0;
-    --bs-breadcrumb-margin-bottom: 1rem;
-    --bs-breadcrumb-bg: ;
-    --bs-breadcrumb-border-radius: ;
-    --bs-breadcrumb-divider-color: #6c757d;
-    --bs-breadcrumb-item-padding-x: .5rem;
-    --bs-breadcrumb-item-active-color: #6c757d;
-    display: flex;
-    flex-wrap: wrap;
-    padding: var(--bs-breadcrumb-padding-y) var(--bs-breadcrumb-padding-x);
-    margin-bottom: var(--bs-breadcrumb-margin-bottom);
-    font-size: var(--bs-breadcrumb-font-size);
-    list-style: none;
-    background-color: var(--bs-breadcrumb-bg);
-    border-radius: var(--bs-breadcrumb-border-radius)
 }
 
 .badge {
@@ -3662,6 +3478,10 @@ textarea.form-control.is-invalid {
     transition: all .5s
 }
 
+.sidebar-wrapper {
+    --submenu-height: 100vh;
+}
+
 .sidebar-wrapper .menu .submenu.active {
     height: var(--submenu-height);
     display: block
@@ -3903,7 +3723,7 @@ textarea.form-control.is-invalid {
 }
 
 .navbar-top .notification-icon i {
-    vertical-align: -moz-middle-with-baseline;
+    /*vertical-align: -moz-middle-with-baseline;*/
     font-size: 20px
 }
 

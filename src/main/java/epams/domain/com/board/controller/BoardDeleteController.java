@@ -62,7 +62,7 @@ public class BoardDeleteController {
     @GetMapping("/delete/{seqId}")
     public ResponseEntity<String> delete(@PathVariable("seqId") final Long seqId) {
         boardDelService.delete(seqId);
-        return ResponseEntity.ok("/board/list");
+        return ResponseEntity.ok("board/list");
     }
     
     /**

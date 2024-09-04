@@ -15,7 +15,8 @@
                 #{hisOid,       mode=IN,    jdbcType=NUMERIC},
                 #{authType,     mode=IN,    jdbcType=VARCHAR},
                 #{dtmType,      mode=IN,    jdbcType=VARCHAR},
-                #{modUserId,    mode=IN,    jdbcType=VARCHAR},
+                #{childNo,      mode=IN,    jdbcType=VARCHAR},
+                #{modUserId,    mode=IN,    jdbcType=NUMERIC},
                 #{tzCd,         mode=IN,    jdbcType=VARCHAR},
                 #{resultCode,   mode=OUT,   jdbcType=VARCHAR},
                 #{resultMsg,    mode=OUT,   jdbcType=VARCHAR}

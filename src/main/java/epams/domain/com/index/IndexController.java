@@ -153,12 +153,12 @@ public class IndexController<S extends Session> {
 
         // 빠른 근태 신청 리스트
         List<QuickApplDTO> dtmApplList = List.of(
-            new QuickApplDTO("오늘", nowDateStr, nowDateStr, today, today,"DTM01", "1A1", "연차휴가 1일"),
-            new QuickApplDTO("오늘", nowDateStr, nowDateStr, today, today, "DTM02", "1A5", "연차휴가 오전 반차"),
-            new QuickApplDTO("오늘", nowDateStr, nowDateStr, today, today, "DTM03", "1AG", "연차휴가 오전 반반차"),
-            new QuickApplDTO("내일", tomorrowDateStr, tomorrowDateStr, tomorrow, tomorrow, "DTM01", "1A1", "연차휴가 1일"),
-            new QuickApplDTO("내일", tomorrowDateStr, tomorrowDateStr, tomorrow, tomorrow, "DTM02", "1A5", "연차휴가 오전 반차"),
-            new QuickApplDTO("내일", tomorrowDateStr, tomorrowDateStr, tomorrow, tomorrow, "DTM03", "1AG", "연차휴가 오전 반반차")
+            new QuickApplDTO("오늘", nowDateStr, nowDateStr, today, today,"1A", "1A1", "연차휴가 1일"),
+            new QuickApplDTO("오늘", nowDateStr, nowDateStr, today, today, "1A", "1A5", "연차휴가 오전 반차"),
+            new QuickApplDTO("오늘", nowDateStr, nowDateStr, today, today, "1A", "1AG", "연차휴가 오전 반반차"),
+            new QuickApplDTO("내일", tomorrowDateStr, tomorrowDateStr, tomorrow, tomorrow, "1A", "1A1", "연차휴가 1일"),
+            new QuickApplDTO("내일", tomorrowDateStr, tomorrowDateStr, tomorrow, tomorrow, "1A", "1A5", "연차휴가 오전 반차"),
+            new QuickApplDTO("내일", tomorrowDateStr, tomorrowDateStr, tomorrow, tomorrow, "1A", "1AG", "연차휴가 오전 반반차")
         );
         model.addAttribute("list", dtmApplList);
         log.info("dtmApplList : {}", dtmApplList);

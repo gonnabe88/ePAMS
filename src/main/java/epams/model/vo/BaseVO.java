@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
  * @implNote 게시판 테이블 데이터 정의 DTO
  * @since 2024-06-09
  */
+@ToString(callSuper = true)
 @Data
 public class BaseVO {
 

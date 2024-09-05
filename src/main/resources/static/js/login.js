@@ -216,8 +216,13 @@ const normal = (e, encodedPassword) => {
         body: formData
     })
     .then(response => {
+
+        // 서버에서 보내준 exception 처리 메시지 출력
         if (!response.ok) {
-            throw new Error('Network response was not ok ' + response.statusText);
+            return response.json().then(errorData => {
+                const errorMessage = errorData.error;                
+                throw new Error(errorMessage);
+            });
         }
         return response.json();
     })
@@ -225,7 +230,7 @@ const normal = (e, encodedPassword) => {
         if (data.result) {
             console.log("패스워드 로그인 성공:", data);
             // 패스워드 인증 성공 시
-            login(encodedPassword);
+            login(encodedPassword, data.maskedPhoneNo);
         } else {
             console.log("패스워드 로그인 실패:", data);
             // 패스워드 인증 실패 시
@@ -233,13 +238,12 @@ const normal = (e, encodedPassword) => {
         }
     })
     .catch(error => {
-        console.error('로그인 중 오류 발생:', error);
-        popupMsg("인증 오류", "인증을 다시 시도해주시기 바랍니다.", "error"); // 오류 처리 함수 호출
+        popupMsg("인증 오류", error.message, "error"); // 오류 처리 함수 호출
     });
 }
 
 // 로그인 처리
-const login = (encodedPassword) => {
+const login = (encodedPassword, maskedPhoneNo) => {
 
     const username = document.getElementById("username").value.toUpperCase();
     //const password = btoa(encodeURIComponent(document.getElementById("password").value));
@@ -253,10 +257,10 @@ const login = (encodedPassword) => {
 	        otpAuthAlert(username, MFA, password, header, token); //otp 인증
 	        break; 
 	    case 'SMS':
-	        otpAuthAlert(username, MFA, password, header, token); //SMS 인증
+	        otpAuthAlert(username, MFA, password, header, token, maskedPhoneNo); //SMS 인증
 	        break; 
 	    case '카카오톡':
-	        otpAuthAlert(username, MFA, password, header, token); //카카오톡 인증
+	        otpAuthAlert(username, MFA, password, header, token, maskedPhoneNo); //카카오톡 인증
 	        break; 
 	    case 'FIDO':
 	        fidoAuthAlert(username, MFA, password, header, token); //FIDO 인증
@@ -284,11 +288,11 @@ const fidoAuthAlert = (username, MFA, password, header, token) => {
 }
 
 // otp 유형(SMS, 카카오, mOTP) 인증화면
-const otpAuthAlert = (username, MFA, password, header, token) => {
+const otpAuthAlert = (username, MFA, password, header, token, maskedPhoneNo) => {
     console.log("otpAuthAlert");
     Swal.fire({
         title: MFA+" 인증",
-        html: MFA+" 인증번호 6자리 입력 후<br>제출을 눌러주세요(<b></b>초)",
+        html: `${MFA} 인증번호 6자리 입력 후<br>제출을 눌러주세요(<b></b>초)<p class="h7 mt-2">${maskedPhoneNo}</p>`,
         input: "number",
         inputPlaceholder: "인증번호(6자리)",
         inputAttributes: {

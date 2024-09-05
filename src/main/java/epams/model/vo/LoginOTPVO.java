@@ -10,6 +10,8 @@ import lombok.*;
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString(callSuper = true)
+@Builder
 @Data
 public class LoginOTPVO extends BaseVO {
 	

@@ -37,7 +37,6 @@ public class EPamsApplication  extends SpringBootServletInitializer {
 	 */
 	public static void main(final String[] args) {
 
-
 		SpringApplication.run(EPamsApplication.class, args);
 
 	}

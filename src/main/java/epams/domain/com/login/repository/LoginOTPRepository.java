@@ -50,8 +50,9 @@ public class LoginOTPRepository {
 	 * @implNote 신규 데이터 입력
 	 * @since 2024-06-09
 	 */
-    public void insert(final LoginOTPDTO loginOTP) {
-        sql.insert("LoginOtp.insert", loginOTP);
+    public Long insert(final LoginOTPDTO loginOTP) {
+		sql.insert("LoginOtp.insert", loginOTP);
+        return loginOTP.getSeqId();
     }
     
 	/***

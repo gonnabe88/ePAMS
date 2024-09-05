@@ -34,6 +34,16 @@ public class MemberRepository {
     /**
      * *
      * @author 140024
+     * @implNote 직원 휴대폰 번호 조회
+     * @since 2024-09-05
+     */
+    public String findPhoneNo(String username) {
+        return sql.selectOne("IamUser.findPhoneNo", username);
+    }
+
+    /**
+     * *
+     * @author 140024
      * @implNote 모든 내용 조회
      * @since 2024-06-09
      */

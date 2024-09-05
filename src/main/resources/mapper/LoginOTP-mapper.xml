@@ -19,6 +19,7 @@
         <result property="createUsid" column="FST_ENR_USID"/>
     </resultMap>
 
+
     <!-- 모든 데이터 조회 -->
     <select id="findAll" resultMap="loginOtpMap">
         SELECT * FROM OEHR.THURXE_COTPIM

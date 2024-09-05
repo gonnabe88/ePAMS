@@ -90,7 +90,9 @@ $(document).ready(() => {
 
     const awesomplete = new Awesomplete(inputElement, {
         minChars: 2,
-        autoFirst: true,
+        autoFirst: false,
+        listLabel: "label",
+        tabSelect: true,
         list: [],
         item: function(text, input) {
             let html = text.label;
@@ -103,18 +105,62 @@ $(document).ready(() => {
 
             const itemElement = document.createElement("li");
             itemElement.innerHTML = html;
+
+            // 터치 이벤트 감지 및 처리
+            let touchStartTime;
+            let isLongTouch = false;
+
+            itemElement.addEventListener('touchstart', (event) => {
+                touchStartTime = Date.now();
+                isLongTouch = false;
+            });
+
+            itemElement.addEventListener('touchend', (event) => {
+                const touchDuration = Date.now() - touchStartTime;
+
+                if (touchDuration >= 1000) {
+                    // 1초 이상 터치 시 아무 일도 하지 않음
+                    return;
+                }
+
+                if (touchDuration > 500 && touchDuration < 1000) { // 500ms 이상 1000ms 미만 터치하면 길게 누른 것으로 간주
+                    isLongTouch = true;
+                    // 해당 아이템을 선택으로 처리
+                    awesomplete.select(itemElement);
+                }
+            });
+
             return itemElement;
         },
         replace: function(text) {
-            this.input.value = text.value.realname; // 입력폼에 선택된 항목의 이름을 표시
+            this.input.value = ''; // 입력폼을 비움
             selectedItem = text.value;  // 전체 객체를 전역변수 selectedItem에 저장
-            searchMember();
+            searchMember(); // 검색 함수 호출
         },
         filter: function(text, input) {
             const terms = input.trim().toLowerCase().split(/\s+/);
             return terms.every(term => text.label.toLowerCase().includes(term));
         }
     });
+
+    // 드롭다운 내부 스크롤이 외부로 전파되지 않도록 설정
+    const dropdown = document.getElementById('awesomplete_list_2');
+
+    dropdown.addEventListener('scroll', function(event) {
+        // 스크롤 이벤트가 상단 또는 하단에 도달했는지 확인
+        if ((this.scrollTop + this.clientHeight) >= this.scrollHeight || this.scrollTop === 0) {
+            event.stopPropagation(); // 상단이나 하단에 도달하면 이벤트 전파를 중단
+        }
+    }, { passive: false });
+
+    // 터치 이벤트에 대한 방지 설정
+    dropdown.addEventListener('touchmove', function(event) {
+        // 스크롤 이벤트가 상단 또는 하단에 도달했는지 확인
+        if ((this.scrollTop + this.clientHeight) >= this.scrollHeight || this.scrollTop === 0) {
+            event.stopPropagation(); // 상단이나 하단에 도달하면 이벤트 전파를 중단
+        }
+    }, { passive: false });
+
 
     $.ajax({
         url: "api/index/getDeptList",

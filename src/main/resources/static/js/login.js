@@ -191,7 +191,7 @@ const webauthn = (e) => {
 
     })
     .catch(error => {
-        popupReHtmlMsg("인증 오류", "인증을 다시 시도해주시기 바랍니다.", "error", "돌아가기", "/login");
+        popupReHtmlMsg("인증 오류", "인증을 다시 시도해주시기 바랍니다.", "error","/login");
     });
 }
 

@@ -106,30 +106,6 @@ $(document).ready(() => {
             const itemElement = document.createElement("li");
             itemElement.innerHTML = html;
 
-            // 터치 이벤트 감지 및 처리
-            let touchStartTime;
-            let isLongTouch = false;
-
-            itemElement.addEventListener('touchstart', (event) => {
-                touchStartTime = Date.now();
-                isLongTouch = false;
-            });
-
-            itemElement.addEventListener('touchend', (event) => {
-                const touchDuration = Date.now() - touchStartTime;
-
-                if (touchDuration >= 1000) {
-                    // 1초 이상 터치 시 아무 일도 하지 않음
-                    return;
-                }
-
-                if (touchDuration > 500 && touchDuration < 1000) { // 500ms 이상 1000ms 미만 터치하면 길게 누른 것으로 간주
-                    isLongTouch = true;
-                    // 해당 아이템을 선택으로 처리
-                    awesomplete.select(itemElement);
-                }
-            });
-
             return itemElement;
         },
         replace: function(text) {
@@ -149,6 +125,7 @@ $(document).ready(() => {
     dropdown.addEventListener('scroll', function(event) {
         // 스크롤 이벤트가 상단 또는 하단에 도달했는지 확인
         if ((this.scrollTop + this.clientHeight) >= this.scrollHeight || this.scrollTop === 0) {
+            event.preventDefault();
             event.stopPropagation(); // 상단이나 하단에 도달하면 이벤트 전파를 중단
         }
     }, { passive: false });
@@ -157,6 +134,7 @@ $(document).ready(() => {
     dropdown.addEventListener('touchmove', function(event) {
         // 스크롤 이벤트가 상단 또는 하단에 도달했는지 확인
         if ((this.scrollTop + this.clientHeight) >= this.scrollHeight || this.scrollTop === 0) {
+            event.preventDefault();
             event.stopPropagation(); // 상단이나 하단에 도달하면 이벤트 전파를 중단
         }
     }, { passive: false });

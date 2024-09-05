@@ -7,6 +7,8 @@ import epams.domain.com.index.dto.TeamSearchDTO;
 import epams.domain.com.member.dto.RoleDTO;
 import epams.domain.com.member.dto.IamUserDTO;
 import epams.domain.com.member.repository.MemberRepository;
+import epams.domain.com.member.util.MaskPhoneNoUtil;
+
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
@@ -26,6 +28,30 @@ public class MemberService {
      * 회원 저장소
      */
     private final MemberRepository memberRepository;
+
+    /**
+     * *
+     * @author 140024
+     * @implNote 마스킹된 직원 휴대폰 번호 조회
+     * @return 마스킹된 휴대폰 번호
+     * @since 2024-09-05
+     */
+    public String findMaskedPhoneNo(final String username) {
+        String phoneNo = memberRepository.findPhoneNo(username);        
+        return MaskPhoneNoUtil.maskPhoneNo(phoneNo);
+    }
+
+    /**
+     * *
+     * @author 140024
+     * @implNote 직원 휴대폰 번호 조회
+     * @return 휴대폰 번호
+     * @since 2024-09-05
+     */
+    public String findMPhoneNo(final String username) {    
+        return memberRepository.findPhoneNo(username); 
+    }
+
 
     /**
      * 검색 값을 사용하여 회원을 찾는 메소드

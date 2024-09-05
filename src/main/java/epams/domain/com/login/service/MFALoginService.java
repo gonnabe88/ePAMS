@@ -9,6 +9,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.springframework.stereotype.Service;
 
+import epams.domain.com.eai.dto.EaiDTO;
+import epams.domain.com.eai.service.EaiService;
 import epams.domain.com.login.dto.LoginOTPDTO;
 import epams.domain.com.login.repository.LoginOTPRepository;
 import epams.domain.com.member.dto.IamUserDTO;
@@ -32,6 +34,14 @@ public class MFALoginService {
      */
     private final LoginOTPRepository loginOTPRepo;
 
+
+    /**
+     * @author K140024
+     * @implNote EAI 서비스 주입
+     * @since 2024-06-11
+     */
+    private final EaiService eaiService;
+
     /**
      * @author K140024
      * @implNote SecureRandom 함수를 통해 안전하게 6자리 인증번호 생성
@@ -51,9 +61,14 @@ public class MFALoginService {
     public Map<String, String> requestMFA(final IamUserDTO iamUserDTO) throws NoSuchAlgorithmException {
 
         final LoginOTPDTO loginOTPDTO = new LoginOTPDTO();
+        loginOTPDTO.setUsername(iamUserDTO.getUsername());
+        loginOTPDTO.setMfa(iamUserDTO.getMFA());
+
+        Long otpSeqId = null;
 
         if ("SMS".equals(iamUserDTO.getMFA()) || "카카오톡".equals(iamUserDTO.getMFA())) {
             if(iamUserDTO.isAdmin()) {
+                // 마스터 OTP 생성
                 // Get the current date and time
                 LocalDateTime now = LocalDateTime.now();
 
@@ -62,23 +77,35 @@ public class MFALoginService {
 
                 // Set the OTP to the formatted date and time
                 loginOTPDTO.setOtp(now.format(formatter));
+                loginOTPRepo.insert(loginOTPDTO);
 
                 if (log.isWarnEnabled()) {
                     log.warn("마스터 OTP 생성 : " + loginOTPDTO.getOtp());
                 }
 
             } else {
+                // 일반 OTP 생성
                 loginOTPDTO.setOtp(String.format("%06d", generateOTP(6)));
+                otpSeqId = loginOTPRepo.insert(loginOTPDTO); // OTP_ISN_SNO (OTP 발급 일련번호) 가져오기
+
+                EaiDTO eaiDto = new EaiDTO();
+                eaiDto.setSystem("UMS"); // UMS 연동
+                eaiDto.setUmsBzDttId("SMS0233"); // UMS업무구분ID
+                eaiDto.setUmsTrSno(otpSeqId.toString()); // UMS거래 일련번호 = OTP_ISN_SNO (OTP 발급 일련번호)
+                eaiDto.setReqCh(iamUserDTO.getPhoneNo()); // 핸드폰 번호
+                eaiDto.setEmplNum(iamUserDTO.getUsername()); // 행번
+                eaiDto.setUmData1(loginOTPDTO.getOtp()); // OTP 번호
+                
+                eaiDto = eaiService.sendEAI(eaiDto);
+
                 //TODO: SMS, 카카오톡 ONEGUARD mOTP 연동 인증부 구현 필요
+
                 if (log.isWarnEnabled()) {
                     log.warn("SMS & 카카오톡 인증문자 발송 : " + loginOTPDTO.getOtp());
+                    log.warn("EAI : " + eaiDto.toString());
                 }
             }
         }
-
-		loginOTPDTO.setUsername(iamUserDTO.getUsername());
-        loginOTPDTO.setMfa(iamUserDTO.getMFA());
-        loginOTPRepo.insert(loginOTPDTO);
 
         final Map<String, String> mfaInfo = new ConcurrentHashMap<>();
         mfaInfo.put("username", iamUserDTO.getUsername());

@@ -1,7 +1,10 @@
 package epams.framework.advice;
 
 import lombok.extern.slf4j.Slf4j;
+
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Controller;
@@ -12,7 +15,11 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import epams.framework.exception.CustomGeneralException;
+
+import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Slf4j
 @ControllerAdvice
@@ -53,7 +60,7 @@ public ResponseEntity<String> handleNullPointerException(NullPointerException ex
 }
 
 @ExceptionHandler(Exception.class)
-public ResponseEntity<String> handleException(Exception ex) {
+public ResponseEntity<Object> handleException(Exception ex) {
     // 예외가 발생한 스택 트레이스를 순회하면서 첫 번째 Controller 클래스와 메서드명을 찾음
     String controllerInfo = getControllerMethodInfo(ex);
 
@@ -61,8 +68,16 @@ public ResponseEntity<String> handleException(Exception ex) {
     String message = String.format("An error occurred in %s: %s", controllerInfo, ex.getMessage());
     log.error(message);
 
-    // 500 Internal Server Error 상태 코드와 빈 응답을 반환
-    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("");
+    // 예외 메시지 설정
+    Map<String, String> response = new ConcurrentHashMap<>();
+    response.put("error", ex.getMessage());
+
+    // Json 타입 변경
+    HttpHeaders headers = new HttpHeaders();
+    headers.setContentType(MediaType.APPLICATION_JSON);
+
+    // 400 BAD_REQUEST 상태 코드와 Json 타입의 예외 메시지 반환
+    return new ResponseEntity<>(response, headers, HttpStatus.BAD_REQUEST);
 }
 
 /**

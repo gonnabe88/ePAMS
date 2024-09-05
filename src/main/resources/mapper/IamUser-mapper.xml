@@ -33,6 +33,14 @@
         <result property="inlineNumber" column="INLE_NO"/>
     </resultMap>
 
+
+    <!-- 모든 데이터 조회 -->
+    <select id="findPhoneNo" parameterType="String" resultType="String">
+        SELECT A.CADR_TPN 
+        FROM OEHR.THURXE_CUSRLI A 
+        WHERE A.ENO = #{username}
+    </select>
+
     <!-- 모든 데이터 조회 -->
     <select id="findAll" resultMap="iamUserMap">
         SELECT * FROM OHR.IF_IAM_USER
@@ -76,25 +84,6 @@
         WHERE
         A.ENO = #{username}
     </select>
-
-    <!-- ID/PW 일치 사용자 조회
-    <select id="login" parameterType="iamUserDTO" resultMap="iamUserMap">
-        SELECT
-        A.EMP_NO,
-        A.EMP_PWD
-        FROM OHR.IF_IAM_USER A
-        WHERE
-        A.EMP_NO = #{username} AND
-        A.EMP_PWD = #{password}
-    </select>-->
-
-    <!-- ID 일치 사용자 조회
-    <select id="findByUserId" parameterType="iamUserDTO" resultMap="iamUserMap">
-        SELECT *
-        FROM OHR.IF_IAM_USER A
-        WHERE
-        A.EMP_NO = #{username}
-    </select>-->
 
     <!-- 특정 사용자 조회 -->
     <select id="findByUserNo" parameterType="String" resultMap="teamSearchMap">

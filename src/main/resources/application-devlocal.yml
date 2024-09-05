@@ -4,6 +4,7 @@ kdb:
   filepath: C:/epams/ # 첨부파일, 이미지 등 저장할 filesystem 경로
   logpath: C:/epams/ # 로그 파일 저장 경로
   logfile: ePAMS_logback.log
+  eaiUrl: http://deaiaa11:20002/eaicall
 
 # server port
 server:

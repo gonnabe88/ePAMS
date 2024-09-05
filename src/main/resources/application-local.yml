@@ -4,6 +4,7 @@ kdb:
   filepath: C:/epams/ # 첨부파일, 이미지 등 저장할 filesystem 경로
   logpath: C:/epams/ # 로그 파일 저장 경로
   logfile: ePAMS_logback.log
+  eaiUrl: http://deaiaa11:20002/eaicall
 
 # server port
 server:
@@ -33,7 +34,7 @@ spring:
     driver-class-name: oracle.jdbc.OracleDriver
     url: jdbc:oracle:thin:@localhost:1521/XE
     username: EHR
-    password: ${DB_PASSWORD}  # 시스템 환경변수 kdb1234! 세팅
+    password: kdb1234!  # 시스템 환경변수 kdb1234! 세팅
     hikari:
       connection-timeout: 60000 # 1분(커넥션 풀에서 커넥션을 가져오는데 최대 대기 시간)
       idle-timeout: 300000 # 5분(커넥션 풀에 유휴 커넥션이 유지되는 시간)

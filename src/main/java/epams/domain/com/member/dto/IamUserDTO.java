@@ -1,9 +1,11 @@
 package epams.domain.com.member.dto;
 
+import groovy.transform.builder.Builder;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import pams.model.vo.IamUserVO;
 
 /***
@@ -16,8 +18,17 @@ import pams.model.vo.IamUserVO;
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString(callSuper = true)
+@Builder
 @Data
 public class IamUserDTO extends IamUserVO {
+
+    /***
+     * @author 140024
+     * @implNote 휴대폰 번호
+     * @since 2024-09-05
+     */
+    private String phoneNo;
 
     /***
      * 2차인증 유형

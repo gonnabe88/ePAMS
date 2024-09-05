@@ -25,6 +25,7 @@ import epams.domain.com.login.service.MFALoginService;
 import epams.domain.com.login.util.webauthn.service.RegistrationService;
 import epams.domain.com.login.util.webauthn.authenticator.Authenticator;
 import epams.domain.com.member.dto.IamUserDTO;
+import epams.domain.com.member.service.MemberService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -56,6 +57,11 @@ public class LoginController {
      * mfa 로그인 서비스
      */
     private final MFALoginService restapiservice;
+    
+    /**
+     * 사용자 서비스
+     */
+    private final MemberService memberService;
 
     /**
      * 현재 인증된 사용자 정보를 가져오는 메소드
@@ -100,7 +106,6 @@ public class LoginController {
         final Authentication auth = authentication();
         final AppUser existingUser = service.getUserRepo().findByUsername(username);
         final Authenticator existingAuthUser = service.getAuthRepository().findByUser(existingUser);
-        
         if (existingAuthUser == null) {
             model.addAttribute("isChecked", "false");
             log.info("Not simple auth user");
@@ -135,7 +140,19 @@ public class LoginController {
 		final AppUser existingUser = service.getUserRepo().findByUsername(Objects.requireNonNull(iamUserDTO).getUsername());
         final Map<String, Object> res = new ConcurrentHashMap<>();
         if (loginService.pwLogin(iamUserDTO)) {
-            log.warn("성공?");
+
+            // 마스킹된 휴대폰 번호 설정
+            String maskedPhoneNo = memberService.findMaskedPhoneNo(iamUserDTO.getUsername());
+            res.put("maskedPhoneNo", maskedPhoneNo);
+
+            // 휴대폰 번호 설정
+            String phoneNo = memberService.findMPhoneNo(iamUserDTO.getUsername());
+            iamUserDTO.setPhoneNo(phoneNo);
+
+            // 유효하지 않은 휴대폰 번호인 경우 (9자리 이하)
+            if(phoneNo.length() <= 9)
+                throw new CustomGeneralRuntimeException("유효한 휴대폰 번호가 등록되어있지 않습니다.("+maskedPhoneNo+")");
+
             // 로그인 성공 시 인증번호 생성
             try {
 				restapiservice.requestMFA(iamUserDTO);
@@ -151,9 +168,9 @@ public class LoginController {
                 res.put("simpleauth", true);
             }
         } else {
-            log.warn("실패?");
             // 로그인 실패 시 실패 여부를 반환
-            res.put("result", false);
+            //res.put("result", false);
+            throw new CustomGeneralRuntimeException("인증 정보가 유효하지 않습니다.");
         }
         return res;
     }

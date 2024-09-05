@@ -48,6 +48,9 @@ repositories {
 
 // 프로젝트 의존성 설정
 dependencies {
+    
+    // JSONObject 라이브러리
+    implementation files('libs/json-simple-1.1.1.jar')
 
     // Oracle JDBC 드라이버
     implementation files('libs/orai18n.jar')

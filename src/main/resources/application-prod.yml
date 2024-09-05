@@ -4,6 +4,7 @@ kdb:
   filepath: /dat/ehr/attachments # 첨부파일, 이미지 등 저장할 filesystem 경로
   logpath: /log/ehr/ # 로그 파일 저장 경로
   logfile: ePAMS_logback.log
+  eaiUrl: http://peaiaa19-sip:20002/eaicall
 
 # server port
 server:

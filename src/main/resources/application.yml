@@ -42,6 +42,7 @@ spring:
     jdbc:
       initialize-schema: always
       table-name: OEHR.THURXE_SESSION
+      #table-name: EHR.THURXE_SESSION
       schema: classpath:session-schema.sql
 
   web:

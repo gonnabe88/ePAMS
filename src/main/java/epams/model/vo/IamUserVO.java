@@ -1,116 +1,59 @@
 package epams.model.vo;
 
-import epams.model.entity.BaseEntity;
-import lombok.*;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
-/**
+import groovy.transform.builder.Builder;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+import java.time.LocalDateTime;
+
+/***
+ * 사용자 정보를 담는 DTO 클래스입니다.
+ * 
  * @author 140024
- * @implNote 게시판 테이블 정의 entity
- * @since 2024-06-09
+ * @implNote 사용자
+ * @since 2024-06-30
  */
-@EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
+@Builder
 @Data
-@ToString(callSuper = true) // 상위 클래스의 toString 포함
-public class IamUserVO extends BaseEntity {
+public class IamUserVO {
 
-    /**
+    /***
+     * 사용자 행번(EMP_NO)
+     * 
      * @author 140024
-     * @implNote 사원번호
-     * @since 2024-08-19
+     * @since 2024-06-30
      */
     private String username;
-    
-    /**
+
+    /***
+     * 사용자명(EMP_NM)
+     * 
      * @author 140024
-     * @implNote 직원명
-     * @since 2024-06-09
+     * @since 2024-06-30
      */
     private String realname;
-    
-    /**
-     * @author 140024
-     * @implNote 사용자영문명
-     * @since 2024-06-09
-     */
-    private String userEngName;
 
-    /**
+    /***
+     * 사용자 패스워드(EMP_PWD)
+     * 
      * @author 140024
-     * @implNote 부점코드
-     * @since 2024-06-09
+     * @since 2024-06-30
      */
-    private String deptCode;
+    private String password;
 
-    /**
+    /***
+     * 생성일자(TZ_DATE)
+     * 
      * @author 140024
-     * @implNote 파견부점코드
-     * @since 2024-06-09
+     * @since 2024-06-30
      */
-    private String dispatchDeptCode;
-
-    /**
-     * @author 140024
-     * @implNote 팀코드
-     * @since 2024-06-09
-     */
-    private String teamCode;
-
-    /**
-     * @author 140024
-     * @implNote 팀명
-     * @since 2024-08-19
-     */
-    private String teamName;
-
-    /**
-     * @author 140024
-     * @implNote 직위코드
-     * @since 2024-08-19
-     */
-    private String positionCode;
-
-    /**
-     * @author 140024
-     * @implNote 직위코드명
-     * @since 2024-08-19
-     */
-    private String positionName;
-
-    /**
-     * @author 140024
-     * @implNote 직무상세내용
-     * @since 2024-08-19
-     */
-    private String jobDetail;
-
-    /**
-     * @author 140024
-     * @implNote 전자우편주소명
-     * @since 2024-08-19
-     */
-    private String email;
-
-    /**
-     * @author 140024
-     * @implNote 내선번호
-     * @since 2024-08-19
-     */
-    private String inlineNumber;
-
-    /**
-     * @author 140024
-     * @implNote 연락처전화번호
-     * @since 2024-08-19
-     */
-    private String phoneNumber;
-
-    /**
-     * @author 140024
-     * @implNote 사용여부
-     * @since 2024-08-19
-     */
-    private String useYn;
-
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime createdDate;
 }

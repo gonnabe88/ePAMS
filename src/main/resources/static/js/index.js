@@ -12,19 +12,16 @@ $(document).ready(() => {
 
     // 'searchMember' 인풋을 클릭했을 때 스크롤을 최상단으로 이동시키는 이벤트
     $('#searchMember').on('click', function() {
-        // 인풋 요소의 오프셋 위치를 가져옴
-        var offset = $(this).offset().top;
+        // 1초 후에 키패드가 올라온 상태에서 위치를 체크
+        setTimeout(() => {
+            // 인풋 요소의 오프셋 위치를 다시 가져옴 (키패드 올라온 후)
+            var offset = $(this).offset().top;
 
-        // 현재 스크롤 위치를 가져옴
-        var currentScroll = $(window).scrollTop();
-
-        // 이동해야 할 거리 계산 (오프셋 위치에서 현재 스크롤 위치를 뺀 값)
-        var distanceToScroll = offset - currentScroll;
-
-        // 스크롤 애니메이션으로 계산된 거리만큼 스크롤
-        $('html, body').animate({
-            scrollTop: currentScroll + distanceToScroll
-        }, 300); // 300ms의 애니메이션 지속 시간
+            // 스크롤 애니메이션으로 인풋을 화면 최상단에 위치시킴
+            $('html, body').animate({
+                scrollTop: offset
+            }, 300); // 300ms의 애니메이션 지속 시간
+        }, 1000); // 1초 대기 (키패드가 올라오는 시간 감안)
     });
 
 });

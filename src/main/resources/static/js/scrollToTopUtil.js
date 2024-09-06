@@ -13,9 +13,11 @@ const scrollFunction = () => {
 
     if (scrollTop > 20) {
         mybutton.style.display = "flex";
-        // Calculate the conic gradient percentage
-        const gradientValue = `conic-gradient(#80ABFE ${scrollPercent}%, #DECFFF ${scrollPercent}%)`;
-        mybutton.style.background = gradientValue;
+
+        // Calculate the conic gradient percentage for the mask
+        const maskValue = `conic-gradient(#000 ${scrollPercent}%, transparent ${scrollPercent}%)`;
+        mybutton.style.maskImage = maskValue;
+        mybutton.style.webkitMaskImage = maskValue; // For Safari compatibility
     } else {
         mybutton.style.display = "none";
     }

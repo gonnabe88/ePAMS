@@ -84,22 +84,26 @@
                                                 <div class="col-2 mb-0 align-content-center">
                                                     <div class="d-flex justify-content-end">
                                                         <div th:if="${date.applDateType == '오늘'}"
-                                                             class="btn btn-primary btn-sm appl-alert-button"
+                                                              th:classappend="${date.holidayYn == 'Y'} ? 'btn-secondary' : 'btn-primary appl-alert-button'"
+                                                              class="btn btn-sm"
                                                              th:attr="data-staDate=${date.staDate}
 																 ,data-staDateStr=${date.staDateStr}
 																 ,data-dtmCode=${date.dtmCode}
 																 ,data-dtmReasonCode=${date.dtmReasonCd}
                                                                  ,data-dtmDispName=${date.dtmDispName}">
-                                                            <span th:text="${langList['APPL_DTM_01_BTN']}"></span>
+                                                            <span th:if="${date.holidayYn == 'Y'}" th:text="'휴일'"></span>
+                                                            <span th:if="${date.holidayYn != 'Y'}" th:text="${langList['APPL_DTM_01_BTN']}"></span>
                                                         </div>
                                                         <div th:if="${date.applDateType == '내일'}"
-                                                             class="btn btn-info btn-sm appl-alert-button"
+                                                             th:classappend="${date.holidayYn == 'Y'} ? 'btn-secondary' : 'btn-info appl-alert-button'"
+                                                             class="btn btn-sm"
                                                              th:attr="data-staDate=${date.staDate}
 																 ,data-staDateStr=${date.staDateStr}
 																 ,data-dtmCode=${date.dtmCode}
 																 ,data-dtmReasonCode=${date.dtmReasonCd}
                                                                  ,data-dtmDispName=${date.dtmDispName}">
-                                                            <span th:text="${langList['APPL_DTM_01_BTN']}"></span>
+                                                            <span th:if="${date.holidayYn == 'Y'}" th:text="'휴일'"></span>
+                                                            <span th:if="${date.holidayYn != 'Y'}" th:text="${langList['APPL_DTM_01_BTN']}"></span>
                                                         </div>
                                                     </div>
                                                 </div>

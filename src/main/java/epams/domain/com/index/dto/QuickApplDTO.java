@@ -72,4 +72,11 @@ public class QuickApplDTO {
      * @since 2024-06-09
      */
     private String dtmDispName;
+
+    /***
+     * @author 140024
+     * @implNote 휴일구분
+     * @since 2024-09-06
+     */
+    private String holidayYn;
 }

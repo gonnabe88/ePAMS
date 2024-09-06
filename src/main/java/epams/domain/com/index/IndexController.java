@@ -144,21 +144,23 @@ public class IndexController<S extends Session> {
         final LocalDate today = LocalDate.now();
         final DayOfWeek dayOfWeek = today.getDayOfWeek();
         final String nowDateStr = today + "(" + dayOfWeek.getDisplayName(TextStyle.NARROW, Locale.KOREAN) + ")";
+        final String holidayYn = "Y";
         model.addAttribute("nowDateStr", nowDateStr);
 
         final LocalDate tomorrow = LocalDate.now().plusDays(1);
         final DayOfWeek dayOfWeek2 = tomorrow.getDayOfWeek();
         final String tomorrowDateStr = tomorrow + "(" + dayOfWeek2.getDisplayName(TextStyle.NARROW, Locale.KOREAN) + ")";
+        final String holidayYn2 = "N";
         model.addAttribute("tomorrowDateStr", tomorrowDateStr);
 
         // 빠른 근태 신청 리스트
         List<QuickApplDTO> dtmApplList = List.of(
-            new QuickApplDTO("오늘", nowDateStr, nowDateStr, today, today,"1A", "1A1", "연차휴가 1일"),
-            new QuickApplDTO("오늘", nowDateStr, nowDateStr, today, today, "1A", "1A5", "연차휴가 오전 반차"),
-            new QuickApplDTO("오늘", nowDateStr, nowDateStr, today, today, "1A", "1AG", "연차휴가 오전 반반차"),
-            new QuickApplDTO("내일", tomorrowDateStr, tomorrowDateStr, tomorrow, tomorrow, "1A", "1A1", "연차휴가 1일"),
-            new QuickApplDTO("내일", tomorrowDateStr, tomorrowDateStr, tomorrow, tomorrow, "1A", "1A5", "연차휴가 오전 반차"),
-            new QuickApplDTO("내일", tomorrowDateStr, tomorrowDateStr, tomorrow, tomorrow, "1A", "1AG", "연차휴가 오전 반반차")
+            new QuickApplDTO("오늘", nowDateStr, nowDateStr, today, today,"1A", "1A1", "연차휴가 1일", holidayYn),
+            new QuickApplDTO("오늘", nowDateStr, nowDateStr, today, today, "1A", "1A5", "연차휴가 오전 반차", holidayYn),
+            new QuickApplDTO("오늘", nowDateStr, nowDateStr, today, today, "1A", "1AG", "연차휴가 오전 반반차", holidayYn),
+            new QuickApplDTO("내일", tomorrowDateStr, tomorrowDateStr, tomorrow, tomorrow, "1A", "1A1", "연차휴가 1일", holidayYn2),
+            new QuickApplDTO("내일", tomorrowDateStr, tomorrowDateStr, tomorrow, tomorrow, "1A", "1A5", "연차휴가 오전 반차", holidayYn2),
+            new QuickApplDTO("내일", tomorrowDateStr, tomorrowDateStr, tomorrow, tomorrow, "1A", "1AG", "연차휴가 오전 반반차", holidayYn2)
         );
         model.addAttribute("list", dtmApplList);
         log.info("dtmApplList : {}", dtmApplList);

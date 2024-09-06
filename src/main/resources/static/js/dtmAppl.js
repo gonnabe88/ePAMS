@@ -15,6 +15,11 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
+        if(startDate>endDate){
+            alert("시작일이 종료일보다 큽니다.");
+            return;
+        }
+
         // 선택된 이유 코드명 가져오기
         const dtmDispName = reasonSelect.options[reasonSelect.selectedIndex].text;
 

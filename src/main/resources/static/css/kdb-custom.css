@@ -464,11 +464,16 @@ mark {
 }
 
 .date-input {
-    width: 48%; /* 입력 필드의 크기를 적절히 조정 */
-}
-.date-input {
     display: flex;
-    flex-direction: column;
+    justify-content: center; /* 입력 필드 가로 중앙 정렬 */
+    align-items: center; /* 입력 필드 수직 중앙 정렬 */
+    width: 45%; /* 원하는 크기로 설정 */
+    height: 40px; /* 원하는 크기로 설정 */
+}
+
+.date-input input {
+    width: 100%; /* 입력 필드가 전체 width 차지 */
+    text-align: center; /* 입력 필드 내부 텍스트 중앙 정렬 */
 }
 label {
     margin-bottom: 5px;
@@ -483,14 +488,9 @@ label {
     height: 38px;
 }
 
-.date-input {
-    height: 38px;
-    width: 45%;
-}
-
-.date-input input[type="date"] {
-    width: 100%;
-}
+/*.date-input input[type="date"] {*/
+/*    width: 100%;*/
+/*}*/
 
 /*근태신청화면 콤보*/
 

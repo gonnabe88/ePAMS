@@ -59,7 +59,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     var calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'twoWeekView',
-        headerToolbar: false,
+        headerToolbar: {
+            left: 'today prev',
+            center: 'title',
+            right: 'next'
+        },
         views: {
             twoWeekView: {
                 type: 'dayGrid',
@@ -78,6 +82,15 @@ document.addEventListener('DOMContentLoaded', function() {
         events: [
             // 여기에 이벤트를 추가하세요
         ],
+        titleFormat: {
+            month: 'numeric',
+            day: 'numeric'
+        },
+        titleRangeSeparator: ' ~ ',
+        locale: 'ko',
+        dayCellContent: function(arg) {
+            return { html: '<div class="fc-daygrid-day-number">' + arg.dayNumberText.replace('일', '') + '</div>' };
+        },
         dateClick: function(info) {
             var selectedDate = new Date(info.dateStr); // 선택한 날짜
             console.log("Selected Date:", formatDate(selectedDate));

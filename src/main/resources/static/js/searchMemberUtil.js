@@ -117,39 +117,6 @@ $(document).ready(() => {
         }
     });
 
-    const dropdown = document.getElementById('awesomplete_list_2');
-
-// 스크롤 방지 플래그
-    let isTouchScrolling = false;
-
-// PC에서 마우스 스크롤 이벤트 처리
-    dropdown.addEventListener('scroll', function(event) {
-        if (this.scrollTop === 0 || (this.scrollTop + this.clientHeight) >= this.scrollHeight) {
-            event.stopPropagation();
-        }
-    }, { passive: true });
-
-// 모바일에서 터치 스크롤 처리
-    dropdown.addEventListener('touchstart', function(event) {
-        if (this.scrollTop === 0 || (this.scrollTop + this.clientHeight) >= this.scrollHeight) {
-            isTouchScrolling = true;  // 상단 또는 하단에 도달했음을 표시
-        } else {
-            isTouchScrolling = false; // 내부 스크롤 중
-        }
-    }, { passive: true });
-
-    dropdown.addEventListener('touchmove', function(event) {
-        if (isTouchScrolling) {
-            // 상단 또는 하단에 도달한 경우 터치 스크롤 전파 차단
-            event.preventDefault();
-            event.stopPropagation();
-        }
-    }, { passive: false });
-
-    dropdown.addEventListener('touchend', function() {
-        isTouchScrolling = false; // 터치가 끝나면 스크롤 방지 플래그 해제
-    });
-
 
     $.ajax({
         url: "api/index/getDeptList",

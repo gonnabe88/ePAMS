@@ -147,42 +147,34 @@ $(document).ready(() => {
 
     const dropdown = document.getElementById('awesomplete_list_2');
 
-// 터치 스크롤 방지 플래그
-    let isTouchScrolling = false;
-
 // 드롭다운 내부 스크롤이 외부로 전파되지 않도록 설정
-    dropdown.addEventListener('touchstart', function(event) {
-        // 스크롤이 상단 또는 하단에 도달했는지 체크
-        if (this.scrollTop === 0 || (this.scrollTop + this.clientHeight) >= this.scrollHeight) {
-            isTouchScrolling = true;
-        } else {
-            isTouchScrolling = false;
+    dropdown.addEventListener('scroll', function(event) {
+        // 상단에 도달한 경우
+        if (this.scrollTop === 0) {
+            this.scrollTop += 1; // 상단에서 더 이상 스크롤되지 않도록 조정
         }
-    }, { passive: true });
 
+        // 하단에 도달한 경우
+        if ((this.scrollTop + this.clientHeight) >= this.scrollHeight) {
+            this.scrollTop -= 1; // 하단에서 더 이상 스크롤되지 않도록 조정
+        }
+    }, { passive: false });
+
+// 터치 이벤트에 대한 방지 설정
     dropdown.addEventListener('touchmove', function(event) {
         const scrollTop = this.scrollTop;
         const scrollHeight = this.scrollHeight;
         const clientHeight = this.clientHeight;
 
+        // 스크롤 가능 영역에서 벗어나지 않도록 설정
         if (scrollTop === 0 && event.touches[0].clientY > 0) {
-            // 상단에 도달하고 위로 스크롤하려고 할 때
+            // 상단에 도달한 경우 외부로 스크롤 전파 차단
             event.preventDefault();
         } else if ((scrollTop + clientHeight) >= scrollHeight && event.touches[0].clientY < 0) {
-            // 하단에 도달하고 아래로 스크롤하려고 할 때
+            // 하단에 도달한 경우 외부로 스크롤 전파 차단
             event.preventDefault();
         }
     }, { passive: false });
-
-    dropdown.addEventListener('scroll', function() {
-        // 스크롤 도중에 상단 또는 하단에 도달한 경우 플래그 갱신
-        if (this.scrollTop === 0 || (this.scrollTop + this.clientHeight) >= this.scrollHeight) {
-            isTouchScrolling = true;
-        } else {
-            isTouchScrolling = false;
-        }
-    }, { passive: true });
-
 
     $.ajax({
         url: "api/index/getDeptList",

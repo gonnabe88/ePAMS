@@ -65,20 +65,13 @@ public class DtmRegController<S extends Session> {
      * @since 2024-08-27
      */
     @GetMapping("/dtmRegDetail")
-    public String dtmRegDetail(@RequestParam("date") String date,
-                               Model model) {
+    public String dtmRegDetail(Model model) {
         final String DTMREGDET = "dtm/dtmRegDetail";
 
         // 언어목록
         final Map<String, String> langList = langDetailService.getCodeHtmlDetail(DTMREGDET);
         model.addAttribute("langList", langList);
 
-        if (date != null) {
-            model.addAttribute("selectedDate", date);
-        }
-
-        // 근태 사유코드 목록을 모델에 추가 (예: DTM01 유형 코드)
-        //model.addAttribute("reasonCodes", commonCodeService.getReasonCodes("DTM01"));
 
         return DTMREGDET;
     }

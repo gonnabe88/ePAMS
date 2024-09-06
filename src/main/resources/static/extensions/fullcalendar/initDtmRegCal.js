@@ -1,61 +1,118 @@
 document.addEventListener('DOMContentLoaded', function() {
-    var calendarEl = document.getElementById('dtmRegCal');
-    var selectedDate = null;
+    var calendarEl = document.getElementById('calender');
+    var selectedDates = [];
+    var selectOneDate = null;
     var selectedDateStr = null;
+    var currentPage = window.location.pathname;
 
     var calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth',
         headerToolbar: {
             left: 'today prev',
             center: 'title',
-            right: 'next add'
+            right: 'next'
         },
-        customButtons: {
-            add: {
-                text: '신청',
-                click: function() {
-                    var url = '/dtm/dtmRegDetail';
-                    var date;
-
-                    if (selectedDateStr) {
-                        date = selectedDateStr;
-                    } else {
-                        // 오늘 날짜를 YYYY-MM-DD 형식으로 가져옵니다.
-                        var today = new Date();
-                        var dd = String(today.getDate()).padStart(2, '0');
-                        var mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
-                        var yyyy = today.getFullYear();
-                        date = yyyy + '-' + mm + '-' + dd;
-                    }
-
-                    url += '?date=' + date;
-                    window.location.href = url;
-                }
-            }
-        },
-        titleFormat: { month: 'long' },
+        titleFormat: { year: 'numeric', month: '2-digit' },
         locale: 'ko',
         buttonText: {
             today: '오늘'
         },
         firstDay: 0,
         height: 'auto',
-        aspectRatio: 1,
         fixedWeekCount: false,
         dayCellContent: function(arg) {
             return { html: '<div class="fc-daygrid-day-number">' + arg.dayNumberText.replace('일', '') + '</div>' };
         },
         dateClick: function(info) {
-            if (selectedDate) {
-                selectedDate.classList.remove('selected-date');
+            var selectedDate = new Date(info.dateStr); // 선택한 날짜
+            console.log("Selected Date:", formatDate(selectedDate));
+            if (currentPage.includes('/dtm/dtmRegDetail')) {
+                selectedDates.push(selectedDate);
+                if (selectedDates.length === 2) {
+                    setStartAndEnd(selectedDates[0], selectedDates[1]);
+                    selectedDates = []; // 다음 클릭을 위해 배열 초기화
+                } else if (selectedDates.length === 1) {
+                    startDate = selectedDate;
+                    endDate = selectedDate;
+                    updateDates(startDate, endDate);
+                    addDateRangeHighlight(startDate, endDate);
+                }
             }
-            info.dayEl.classList.add('selected-date');
-            selectedDate = info.dayEl;
-            selectedDateStr = info.dateStr;
+            else {
+                if (selectOneDate) {
+                    selectOneDate.classList.remove('selected-date');
+                }
+                info.dayEl.classList.add('selected-date');
+                selectOneDate = info.dayEl;
+                selectedDateStr = info.dateStr;
+            }
+        },
+        datesSet: function() {
+            adjustCellSize();
         }
     });
 
     calendar.render();
+
+    function adjustCellSize() {
+        const cells = document.querySelectorAll('.fc-daygrid-day');
+        cells.forEach(cell => {
+            cell.style.height = `${cell.offsetWidth}px`;
+        });
+    }
+
+    function formatDate(date) {
+        var year = date.getFullYear();
+        var month = String(date.getMonth() + 1).padStart(2, '0');
+        var day = String(date.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`; // YYYY-MM-DD 형식으로 변환
+    }
+
+    function updateDates(start, end) {
+        document.getElementById('startDate').value = formatDate(start);
+        document.getElementById('endDate').value = formatDate(end);
+    }
+
+    function setStartAndEnd(date1, date2) {
+        if (date1 < date2) {
+            startDate = date1;
+            endDate = date2;
+        } else {
+            startDate = date2;
+            endDate = date1;
+        }
+        updateDates(startDate, endDate);
+        addDateRangeHighlight(startDate, endDate);
+    }
+
+    function addOneDay(date) {
+        var newDate = new Date(date);
+        newDate.setDate(newDate.getDate() + 1); // 하루 더하기
+        return newDate;
+    }
+
+    function addDateRangeHighlight(start, end) {
+        calendar.getEvents().forEach(event => event.remove());
+
+        if (start.getTime() === end.getTime()) {
+            calendar.addEvent({
+                start: start,
+                end: addOneDay(start), // 선택한 날짜 하루 더하기
+                allDay: true,
+                display: 'background',
+                classNames: ['selected-day']
+            });
+        } else {
+            calendar.addEvent({
+                start: start,
+                end: addOneDay(end), // 끝나는 날짜의 다음 날
+                allDay: true,
+                display: 'background',
+                backgroundColor: '#87CEFA',
+                borderColor: '#1E90FF'
+            });
+        }
+    }
 
     function adjustDateBoxSize() {
         var dayCells = document.querySelectorAll('.fc-daygrid-day');
@@ -71,6 +128,7 @@ document.addEventListener('DOMContentLoaded', function() {
         calendar.updateSize();
         adjustDateBoxSize();
     });
+
     let touchStartX, touchStartY;
     calendarEl.addEventListener('touchstart', function(e) {
         touchStartX = e.touches[0].clientX;
@@ -116,5 +174,5 @@ document.addEventListener('DOMContentLoaded', function() {
         } else {
             calendar.prev();
         }
-    });djwp
+    });
 });

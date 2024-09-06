@@ -107,13 +107,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 addDateRangeHighlight(startDate, endDate);
             }
         },
-        viewDidMount: function(view) {
-            if (view.type === 'twoWeekView') {
-                var startDate = view.currentStart;
-                var endDate = new Date(startDate.getTime() + 13 * 24 * 60 * 60 * 1000);
-                calendar.gotoDate(startDate);
-            }
-        }
     });
 
     calendar.render();
@@ -179,16 +172,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
         touchStartX = null;
         touchStartY = null;
-    });
-
-    // 마우스 휠 이벤트 처리
-    calendarEl.addEventListener('wheel', function(e) {
-        e.preventDefault();
-        if (e.deltaY > 0) {
-            calendar.next();
-        } else {
-            calendar.prev();
-        }
     });
     updateDates(startDate, endDate);
 });

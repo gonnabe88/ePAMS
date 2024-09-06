@@ -91,8 +91,6 @@ $(document).ready(() => {
     const awesomplete = new Awesomplete(inputElement, {
         minChars: 2,
         autoFirst: false,
-        listLabel: "label",
-        tabSelect: true,
         list: [],
         item: function(text, input) {
             let html = text.label;
@@ -119,25 +117,38 @@ $(document).ready(() => {
         }
     });
 
-    // 드롭다운 내부 스크롤이 외부로 전파되지 않도록 설정
     const dropdown = document.getElementById('awesomplete_list_2');
 
+// 스크롤 방지 플래그
+    let isTouchScrolling = false;
+
+// PC에서 마우스 스크롤 이벤트 처리
     dropdown.addEventListener('scroll', function(event) {
-        // 스크롤 이벤트가 상단 또는 하단에 도달했는지 확인
-        if ((this.scrollTop + this.clientHeight) >= this.scrollHeight || this.scrollTop === 0) {
+        if (this.scrollTop === 0 || (this.scrollTop + this.clientHeight) >= this.scrollHeight) {
+            event.stopPropagation();
+        }
+    }, { passive: true });
+
+// 모바일에서 터치 스크롤 처리
+    dropdown.addEventListener('touchstart', function(event) {
+        if (this.scrollTop === 0 || (this.scrollTop + this.clientHeight) >= this.scrollHeight) {
+            isTouchScrolling = true;  // 상단 또는 하단에 도달했음을 표시
+        } else {
+            isTouchScrolling = false; // 내부 스크롤 중
+        }
+    }, { passive: true });
+
+    dropdown.addEventListener('touchmove', function(event) {
+        if (isTouchScrolling) {
+            // 상단 또는 하단에 도달한 경우 터치 스크롤 전파 차단
             event.preventDefault();
-            event.stopPropagation(); // 상단이나 하단에 도달하면 이벤트 전파를 중단
+            event.stopPropagation();
         }
     }, { passive: false });
 
-    // 터치 이벤트에 대한 방지 설정
-    dropdown.addEventListener('touchmove', function(event) {
-        // 스크롤 이벤트가 상단 또는 하단에 도달했는지 확인
-        if ((this.scrollTop + this.clientHeight) >= this.scrollHeight || this.scrollTop === 0) {
-            event.preventDefault();
-            event.stopPropagation(); // 상단이나 하단에 도달하면 이벤트 전파를 중단
-        }
-    }, { passive: false });
+    dropdown.addEventListener('touchend', function() {
+        isTouchScrolling = false; // 터치가 끝나면 스크롤 방지 플래그 해제
+    });
 
 
     $.ajax({

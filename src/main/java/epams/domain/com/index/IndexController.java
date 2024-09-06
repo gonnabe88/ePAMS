@@ -140,7 +140,7 @@ public class IndexController<S extends Session> {
         final Page<BoardDTO> boardList = boardService.paging(PageRequest.of(currentPage, indexBrdCnt)); // 가장 최근 게시물의 indexBrdCnt 수만큼 가져옴
         model.addAttribute("boardList", boardList);
 
-        // 메인화면 빠른근태신청 출력
+        // 메인화면 빠른근태신청 날짜 세팅 (오늘)
         final LocalDate today = LocalDate.now();
         final DayOfWeek dayOfWeek = today.getDayOfWeek();
         final String nowDateStr = today + "(" + dayOfWeek.getDisplayName(TextStyle.NARROW, Locale.KOREAN) + ")";
@@ -151,6 +151,7 @@ public class IndexController<S extends Session> {
         }
         model.addAttribute("nowDateStr", nowDateStr);
 
+        // 메인화면 빠른근태신청 날짜 세팅 (내일)
         final LocalDate tomorrow = LocalDate.now().plusDays(1);
         final DayOfWeek dayOfWeek2 = tomorrow.getDayOfWeek();
         final String tomorrowDateStr = tomorrow + "(" + dayOfWeek2.getDisplayName(TextStyle.NARROW, Locale.KOREAN) + ")";

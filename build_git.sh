@@ -37,6 +37,9 @@ record_time "기존 빌드 디렉토리 삭제 중..."
 record_time "프로젝트를 빌드하는 중..."
 ./gradlew build --offline >> "$BUILD_LOG_FILE" 2>&1
 
+# 재시작
+sudo systemctl restart ePAMS.service
+
 # 결과 확인
 if [ $? -eq 0 ]; then
     record_time "빌드 성공"

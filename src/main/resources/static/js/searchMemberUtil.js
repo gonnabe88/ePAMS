@@ -90,7 +90,8 @@ $(document).ready(() => {
 
     const awesomplete = new Awesomplete(inputElement, {
         minChars: 2,
-        autoFirst: false,
+        maxItems: 50, // 최대 50개까지 검색 결과 표시
+        autoFirst: false, // 기본 지정 해제
         list: [],
         item: function(text, input) {
             let html = text.label;
@@ -116,6 +117,24 @@ $(document).ready(() => {
             return terms.every(term => text.label.toLowerCase().includes(term));
         }
     });
+
+    // 드롭다운 내부 스크롤이 외부로 전파되지 않도록 설정
+    const dropdown = document.getElementById('awesomplete_list_2');
+
+    dropdown.addEventListener('scroll', function(event) {
+        // 스크롤 이벤트가 상단 또는 하단에 도달했는지 확인
+        if ((this.scrollTop + this.clientHeight) >= this.scrollHeight || this.scrollTop === 0) {
+            event.stopPropagation(); // 상단이나 하단에 도달하면 이벤트 전파를 중단
+        }
+    }, { passive: false });
+
+    // 터치 이벤트에 대한 방지 설정
+    dropdown.addEventListener('touchmove', function(event) {
+        // 스크롤 이벤트가 상단 또는 하단에 도달했는지 확인
+        if ((this.scrollTop + this.clientHeight) >= this.scrollHeight || this.scrollTop === 0) {
+            event.stopPropagation(); // 상단이나 하단에 도달하면 이벤트 전파를 중단
+        }
+    }, { passive: false });
 
 
     $.ajax({

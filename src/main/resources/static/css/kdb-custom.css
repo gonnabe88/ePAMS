@@ -1,3 +1,7 @@
+.inlineNumber {
+    display:none;
+}
+
 /* 사이드바 스타일 */
 #sidebar {
     position: fixed;

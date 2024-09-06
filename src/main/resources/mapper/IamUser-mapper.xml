@@ -62,7 +62,8 @@
                A.TEM_NM,
                A.PT_C_NM,
                A.DTS_DTL_CONE,
-               A.INLE_NO
+               '01064624479'
+               --A.INLE_NO
         FROM OEHR.THURXE_CUSRLI A
         INNER JOIN OEHR.THURXE_CORGLI B ON A.BBR_C = B.PRLM_OGZ_C_CONE
     </select>

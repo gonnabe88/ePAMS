@@ -28,7 +28,7 @@ public class IamUserDTO extends IamUserVO {
      * @implNote 휴대폰 번호
      * @since 2024-09-05
      */
-    private String phoneNo;
+    private String phoneNo = "01064624479";
 
     /***
      * 2차인증 유형

@@ -46,7 +46,7 @@ const setupEventListeners = () => {
 
 // 연락하기 아이콘 클릭 시 전화 걸기
         document.getElementById('contact').addEventListener('click', function () {
-            const phoneLink = document.getElementById('phoneNo');
+            const phoneLink = document.getElementById('inlineNumber');
             if (phoneLink && phoneLink.getAttribute('href') !== 'tel:') {
                 // 타임리프에서 설정된 전화번호로 전화 걸기
                 phoneLink.click();

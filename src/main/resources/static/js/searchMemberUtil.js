@@ -47,10 +47,11 @@ const setupEventListeners = () => {
 // 연락하기 아이콘 클릭 시 전화 걸기
         document.getElementById('contact').addEventListener('click', function () {
             const phoneLink = document.getElementById('phoneNo');
-            if (phoneLink) {
-                // 여기서 전화번호를 설정할 수 있습니다.
-                phoneLink.setAttribute('href', 'tel:+01064624479');  // 전화번호를 설정
-                phoneLink.click();  // 전화 걸기
+            if (phoneLink && phoneLink.getAttribute('href') !== 'tel:') {
+                // 타임리프에서 설정된 전화번호로 전화 걸기
+                phoneLink.click();
+            } else {
+                popupMsg("입력 오류", "전화번호를 찾을 수 없습니다.", "error");
             }
         });
     });

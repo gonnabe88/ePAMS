@@ -112,8 +112,17 @@ $(document).ready(() => {
             selectedItem = text.value;  // 전체 객체를 전역변수 selectedItem에 저장
             searchMember(); // 검색 함수 호출
 
-            // 검색 결과가 선택되면 키패드 내리기
-            inputElement.blur(); // 모바일 키패드 숨김
+            // 키패드를 숨김
+            inputElement.blur();
+
+            // id가 searchDiv인 요소를 화면 최상단에 위치시킴
+            const searchDiv = document.getElementById('searchDiv');
+            const offset = searchDiv.offsetTop;
+
+            // 스크롤 애니메이션으로 searchDiv를 최상단에 위치시킴
+            $('html, body').animate({
+                scrollTop: offset
+            }, 300); // 300ms의 애니메이션 지속 시간
         },
         filter: function(text, input) {
             const terms = input.trim().toLowerCase().split(/\s+/);
@@ -121,10 +130,21 @@ $(document).ready(() => {
         }
     });
 
-    // 검색 결과가 나오면 키패드를 내리도록 설정
+// 검색 결과가 나오면 키패드를 숨기고 searchDiv를 최상단에 위치시킴
     inputElement.addEventListener('awesomplete-selectcomplete', function() {
-        inputElement.blur(); // 모바일 키패드 숨김
+        // 키패드를 숨김
+        inputElement.blur();
+
+        // id가 searchDiv인 요소를 화면 최상단에 위치시킴
+        const searchDiv = document.getElementById('searchDiv');
+        const offset = searchDiv.offsetTop;
+
+        // 스크롤 애니메이션으로 searchDiv를 최상단에 위치시킴
+        $('html, body').animate({
+            scrollTop: offset
+        }, 300); // 300ms의 애니메이션 지속 시간
     });
+
 
     // 드롭다운 내부 스크롤이 외부로 전파되지 않도록 설정
     const dropdown = document.getElementById('awesomplete_list_2');

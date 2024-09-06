@@ -1,3 +1,4 @@
+
 // awesomplete에서 선택된 항목 데이터를 저장할 전역 변수
 let selectedItem = null; // 선택된 항목을 저장할 변수
 
@@ -22,13 +23,38 @@ const searchMember = () => {
             xhr.setRequestHeader(header, token);
         },
         complete: function(data) {
+            // 서버로부터 받은 데이터를 memberList에 넣음
             $("#memberList").html(data.responseText);
+            // AJAX 후에 이벤트 바인딩
+            setupEventListeners();
         },
         error: function(error) {
             popupMsg("입력 오류", 'Error fetching data : '+error, "error");
         }
     });
 };
+// 함수: 이벤트 리스너 설정 (나중에 로드되는 HTML에도 적용)
+const setupEventListeners = () => {
+    $(document).ready(() => {
+// 다시검색 아이콘 클릭 시 searchMember 인풋에 포커스
+        document.getElementById('search').addEventListener('click', function () {
+            const searchInput = document.getElementById('searchMember');
+            if (searchInput) {
+                searchInput.focus();
+            }
+        });
+
+// 연락하기 아이콘 클릭 시 전화 걸기
+        document.getElementById('contact').addEventListener('click', function () {
+            const phoneLink = document.getElementById('phoneNo');
+            if (phoneLink) {
+                // 여기서 전화번호를 설정할 수 있습니다.
+                phoneLink.setAttribute('href', 'tel:+01064624479');  // 전화번호를 설정
+                phoneLink.click();  // 전화 걸기
+            }
+        });
+    });
+}
 
 // 직원 검색 폼으로 스크롤 이동
 const scrollToDiv = () => {

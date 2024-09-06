@@ -121,18 +121,31 @@ $(document).ready(() => {
     // 드롭다운 내부 스크롤이 외부로 전파되지 않도록 설정
     const dropdown = document.getElementById('awesomplete_list_2');
 
+    // 드롭다운 내부 스크롤이 외부로 전파되지 않도록 설정
     dropdown.addEventListener('scroll', function(event) {
-        // 스크롤 이벤트가 상단 또는 하단에 도달했는지 확인
-        if ((this.scrollTop + this.clientHeight) >= this.scrollHeight || this.scrollTop === 0) {
-            event.stopPropagation(); // 상단이나 하단에 도달하면 이벤트 전파를 중단
+        // 상단에 도달한 경우
+        if (this.scrollTop === 0) {
+            this.scrollTop += 1; // 상단에서 더 이상 스크롤되지 않도록 조정
+        }
+
+        // 하단에 도달한 경우
+        if ((this.scrollTop + this.clientHeight) >= this.scrollHeight) {
+            this.scrollTop -= 1; // 하단에서 더 이상 스크롤되지 않도록 조정
         }
     }, { passive: false });
 
     // 터치 이벤트에 대한 방지 설정
     dropdown.addEventListener('touchmove', function(event) {
-        // 스크롤 이벤트가 상단 또는 하단에 도달했는지 확인
-        if ((this.scrollTop + this.clientHeight) >= this.scrollHeight || this.scrollTop === 0) {
-            event.stopPropagation(); // 상단이나 하단에 도달하면 이벤트 전파를 중단
+        // 상단에 도달한 경우
+        if (this.scrollTop === 0) {
+            this.scrollTop += 1; // 상단에서 더 이상 스크롤되지 않도록 조정
+            event.preventDefault();
+        }
+
+        // 하단에 도달한 경우
+        if ((this.scrollTop + this.clientHeight) >= this.scrollHeight) {
+            this.scrollTop -= 1; // 하단에서 더 이상 스크롤되지 않도록 조정
+            event.preventDefault();
         }
     }, { passive: false });
 

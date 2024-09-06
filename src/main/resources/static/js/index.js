@@ -14,10 +14,16 @@ $(document).ready(() => {
     $('#searchMember').on('click', function() {
         // 인풋 요소의 오프셋 위치를 가져옴
         var offset = $(this).offset().top;
-        
-        // 스크롤 애니메이션으로 인풋을 화면 최상단에 위치시킴
+
+        // 현재 스크롤 위치를 가져옴
+        var currentScroll = $(window).scrollTop();
+
+        // 이동해야 할 거리 계산 (오프셋 위치에서 현재 스크롤 위치를 뺀 값)
+        var distanceToScroll = offset - currentScroll;
+
+        // 스크롤 애니메이션으로 계산된 거리만큼 스크롤
         $('html, body').animate({
-            scrollTop: offset
+            scrollTop: currentScroll + distanceToScroll
         }, 300); // 300ms의 애니메이션 지속 시간
     });
 

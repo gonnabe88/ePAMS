@@ -144,13 +144,21 @@ public class IndexController<S extends Session> {
         final LocalDate today = LocalDate.now();
         final DayOfWeek dayOfWeek = today.getDayOfWeek();
         final String nowDateStr = today + "(" + dayOfWeek.getDisplayName(TextStyle.NARROW, Locale.KOREAN) + ")";
-        final String holidayYn = "Y";
+        String holidayYn = "N";
+        // nowDateStr에 해당하는 날짜가 토요일 또는 일요일인지 확인
+        if (dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY) {
+            holidayYn = "Y";
+        }
         model.addAttribute("nowDateStr", nowDateStr);
 
         final LocalDate tomorrow = LocalDate.now().plusDays(1);
         final DayOfWeek dayOfWeek2 = tomorrow.getDayOfWeek();
         final String tomorrowDateStr = tomorrow + "(" + dayOfWeek2.getDisplayName(TextStyle.NARROW, Locale.KOREAN) + ")";
-        final String holidayYn2 = "N";
+        String holidayYn2 = "N";
+        // nowDateStr에 해당하는 날짜가 토요일 또는 일요일인지 확인
+        if (dayOfWeek2 == DayOfWeek.SATURDAY || dayOfWeek2 == DayOfWeek.SUNDAY) {
+            holidayYn2 = "Y";
+        }
         model.addAttribute("tomorrowDateStr", tomorrowDateStr);
 
         // 빠른 근태 신청 리스트

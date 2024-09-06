@@ -132,6 +132,25 @@ $(document).ready(() => {
             const itemElement = document.createElement("li");
             itemElement.innerHTML = html;
 
+            // 터치 이벤트 처리
+            let touchTimer;
+            let touchDuration = 500; // 터치를 길게 했을 때 인식하는 시간 (500ms)
+
+            itemElement.addEventListener('touchstart', function () {
+                touchTimer = setTimeout(function() {
+                    itemElement.click(); // 길게 터치했을 때 클릭 이벤트 발생
+                }, touchDuration);
+            });
+
+            itemElement.addEventListener('touchend', function () {
+                clearTimeout(touchTimer); // 터치가 짧으면 타이머 초기화
+            });
+
+            itemElement.addEventListener('click', function() {
+                // 여기서 짧은 터치와 동일한 이벤트 발생
+                awesomplete.replace(text); // 선택 시 동작
+            });
+
             return itemElement;
         },
         replace: function(text) {

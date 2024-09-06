@@ -77,7 +77,7 @@ dependencies {
     implementation 'com.yubico:webauthn-server-core:2.5.2'
 
     // Spring Session DBMS 관리, 컴파일 전용
-    compileOnly 'org.springframework.session:spring-session-jdbc:3.2.2'
+    implementation  'org.springframework.session:spring-session-jdbc:3.2.2'
 
     // Spring Session Core, 기본 세션 관리 기능
     implementation 'org.springframework.session:spring-session-core'
@@ -181,15 +181,4 @@ tasks.named('bootJar') {
 // Spring Boot 설정
 springBoot {
     mainClass = 'epams.EPamsApplication' // 애플리케이션의 메인 클래스 설정
-}
-
-// `bootRun` 태스크 설정, 프로덕션 프로파일 사용 시 devtools 제외
-bootRun {
-    if (project.hasProperty('spring.profiles.active') && project.property('spring.profiles.active') == 'prod') {
-        configurations {
-            runtimeClasspath {
-                exclude group: 'org.springframework.boot', module: 'spring-boot-devtools' // devtools 제외
-            }
-        }
-    }
 }

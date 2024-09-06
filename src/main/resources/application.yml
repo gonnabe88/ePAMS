@@ -10,7 +10,7 @@ management:
   endpoints:  
     web:
       exposure:
-        include: "*"
+        include: "sessions, health, info, prometheus, loggers, metrics"
 
   endpoint:
     prometheus:
@@ -37,17 +37,15 @@ spring:
     cache: false
     mode: HTML
     encoding: UTF-8
-    
-  session:
-    jdbc:
-      initialize-schema: always
-      table-name: OEHR.THURXE_SESSION
-      #table-name: EHR.THURXE_SESSION
-      schema: classpath:session-schema.sql
 
   web:
     resources:
       static-locations: classpath:/templates/
+
+  session:
+    jdbc:
+      initialize-schema: never
+      table-name: OEHR.THURXE_SESSION
 
 # mybatis
 mybatis:

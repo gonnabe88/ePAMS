@@ -2,6 +2,20 @@
     display:none;
 }
 
+.searchResultIcon {
+    background: aliceblue;
+    border-radius: 1.5rem;
+    transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    /* 그림자와 색상 변화의 전환 추가 */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 기본 그림자 */
+}
+
+.searchResultIcon:active {
+    background-color: lightblue; /* 클릭 시 더 짙은 색상 */
+    transform: scale(0.95); /* 클릭 시 살짝 작아지는 모션 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* 클릭 시 그림자 작아짐 */
+}
+
 /* 사이드바 스타일 */
 #sidebar {
     position: fixed;

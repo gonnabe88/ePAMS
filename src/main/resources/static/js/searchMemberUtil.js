@@ -111,11 +111,19 @@ $(document).ready(() => {
             this.input.value = ''; // 입력폼을 비움
             selectedItem = text.value;  // 전체 객체를 전역변수 selectedItem에 저장
             searchMember(); // 검색 함수 호출
+
+            // 검색 결과가 선택되면 키패드 내리기
+            inputElement.blur(); // 모바일 키패드 숨김
         },
         filter: function(text, input) {
             const terms = input.trim().toLowerCase().split(/\s+/);
             return terms.every(term => text.label.toLowerCase().includes(term));
         }
+    });
+
+    // 검색 결과가 나오면 키패드를 내리도록 설정
+    inputElement.addEventListener('awesomplete-selectcomplete', function() {
+        inputElement.blur(); // 모바일 키패드 숨김
     });
 
     // 드롭다운 내부 스크롤이 외부로 전파되지 않도록 설정

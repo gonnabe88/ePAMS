@@ -1,10 +1,10 @@
 /* 사이드바 스타일 */
 #sidebar {
     position: fixed;
-    left: -350px; /* 사이드바가 숨겨진 상태 */
+    left: -300px; /* 사이드바가 숨겨진 상태 */
     top: 0;
-    width: 350px;
-    height: 100%;
+    width: 300px;
+    height: 20%;
     transition: left 0.7s cubic-bezier(.22, 1, .36, 1); /* 부드러운 애니메이션 효과 */
     z-index: 10; /* 다른 요소 위에 표시 */
     overflow-y: auto; /* 사이드바에 스크롤이 필요할 경우 */
@@ -19,7 +19,7 @@
 .sidebar-toggler {
     position: absolute; /* 부모인 사이드바 내에서 절대 위치 */
     top: 10px; /* 상단에서 10px 떨어진 위치 */
-    right: 30px; /* 사이드바 바깥으로 30px 튀어나오게 */
+    right: 10px; /* 사이드바 바깥으로 30px 튀어나오게 */
     width: 50px; /* 네모 버튼의 가로 길이 */
     height: 30px; /* 네모 버튼의 세로 길이 */
     background-color: white; /* 예시 배경색 */
@@ -27,6 +27,9 @@
     border: none; /* 버튼의 테두리 제거 */
     z-index: 1000; /* 다른 요소 위에 표시 */
     cursor: pointer; /* 커서가 손가락 모양으로 변경 */
+    display: flex; /* Flexbox로 자식 정렬 */
+    align-items: center; /* 세로 정렬 */
+    justify-content: flex-end; /* 오른쪽 끝으로 정렬 */
 }
 
 /* 버튼 아이콘 스타일 */
@@ -347,18 +350,27 @@ mark {
 /* 날짜 셀의 세로선을 카드 배경색과 동일하게 설정하여 보이지 않게 하기 */
 .card .fc .fc-daygrid-day {
     border-right: 1px solid transparent; /* 세로선을 투명하게 설정 */
-    border-bottom: 1px solid var(--bs-gray-400); /* 가로선 색상, 필요에 따라 조정 */
+    border-bottom: 1px solid transparent;
+    /*border-bottom: 1px solid var(--bs-gray-400); !* 가로선 색상, 필요에 따라 조정 *!*/
 }
 
 /* 카드의 배경색에 맞게 세로선이 카드 배경색과 같도록 설정 (투명으로 설정하여 보이지 않도록) */
 .card .fc .fc-col-header-cell,
 .card .fc .fc-daygrid-day-frame {
     border-right: 1px solid transparent; /* 세로선을 투명하게 설정 */
+    border-bottom: 1px solid transparent; /* 가로선 제거 */
 }
 /*fullcalendar 선택하면 강조표시*/
 .fc-daygrid-day {
     position: relative; /* 자식 요소의 절대 위치를 위한 상대 위치 지정 */
+    flex-direction: column;
 }
+
+/* fc-daygrid-day-events 부분 숨기기 */
+.fc-daygrid-day-events {
+    display: none !important; /* 강제로 숨기기 */
+}
+
 
 /* 선택된 날짜에 동그라미 추가 */
 .fc-day.selected-date .fc-daygrid-day-number {
@@ -372,6 +384,17 @@ mark {
     justify-content: center;
     font-weight: bold;
     /*margin: auto; !* 중앙 정렬을 위해 추가 *!*/
+}
+
+#dateDisplay {
+    margin-top: 10px;
+    font-size: 16px;
+}
+/* 선택된 날짜에 동그라미를 그리는 스타일 */
+.fc-daygrid-day.selected-day {
+    background-color: transparent;
+    border: 2px solid #ff0000;
+    border-radius: 50%;
 }
 /*fullcalendar 오늘 강조 표시*/
 .fc-day-today.fc-daygrid-day {
@@ -402,6 +425,12 @@ mark {
     padding: 1rem;
 }
 
+.dtmRegDetail .page-heading {
+    display: flex;
+    justify-content: start; /* 왼쪽 정렬 */
+    width: 90%;
+    margin: 0 auto; /* 중앙 정렬 */
+}
 .dtmRegDetail .card {
     width: 100%;
     padding: 1rem;

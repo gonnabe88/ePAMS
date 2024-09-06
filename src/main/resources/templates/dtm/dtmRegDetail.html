@@ -15,8 +15,7 @@
             <div class="main-content">
                 <div class="page-heading">
                     <div class="align-middle">
-                        <h2>
-                            <i class="bi bi-bell-fill"></i> <span th:text="${langList['DTM_REG']}"></span></h2>
+                        <h2><i class="bi bi-bell-fill"></i> <span th:text="${langList['DTM_REG']}"></span></h2>
                     </div>
                 </div>
                 <div class="card">
@@ -30,19 +29,20 @@
                                 </select>
                             </div>
                         </div>
+
                         <div class="row mb-3">
                             <div class="col">
                                 <h6><span th:text="${langList['DTM_PERIOD']}"></span></h6>
                                 <div class="date-input-container">
                                     <div class="date-input">
-                                        <input type="date" id="startDate" name="startDate" th:value="${param.date}"
-                                               required>
+                                        <input type="text" id="startDate" name="startDate">
                                     </div>
                                     <div class="date-input">
-                                        <input type="date" id="endDate" name="endDate" th:value="${param.date}"
-                                               required>
+                                        <input type="text" id="endDate" name="endDate" >
                                     </div>
                                 </div>
+<!--                                <span id="startDate"></span> ~ <span id="endDate"></span>-->
+                                <div id="dtmRegDetCal"></div>
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -61,7 +61,12 @@
 </div>
 
 <th:block layout:fragment="script">
+    <script src="/extensions/fullcalendar/index.global.js"></script>
+    <script src="/extensions/fullcalendar/initDtmRegDetCal.js"></script>
+    <script src="/extensions/fullcalendar/main.min.css"></script>
+    <script src="/extensions/fullcalendar/main.min.js"></script>
     <script src="/extensions/select2/select2.full.js"></script>
+    <script src="/js/dateFormat.js"></script>
     <script src="/js/selectForm.js"></script>
     <script src="/js/moveBack.js"></script>
     <script src="/js/index.js"></script>

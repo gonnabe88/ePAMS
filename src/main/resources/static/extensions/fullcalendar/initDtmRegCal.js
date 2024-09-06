@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    var calendarEl = document.getElementById('calendar');
+    var calendarEl = document.getElementById('dtmRegCal');
     var selectedDate = null;
     var selectedDateStr = null;
 
@@ -70,5 +70,51 @@ document.addEventListener('DOMContentLoaded', function() {
     window.addEventListener('resize', function() {
         calendar.updateSize();
         adjustDateBoxSize();
+    });
+    let touchStartX, touchStartY;
+    calendarEl.addEventListener('touchstart', function(e) {
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+    });
+
+    calendarEl.addEventListener('touchmove', function(e) {
+        if (!touchStartX || !touchStartY) {
+            return;
+        }
+
+        let touchEndX = e.touches[0].clientX;
+        let touchEndY = e.touches[0].clientY;
+
+        let deltaX = touchStartX - touchEndX;
+        let deltaY = touchStartY - touchEndY;
+
+        if (Math.abs(deltaX) > Math.abs(deltaY)) {
+            // 좌우 스와이프
+            if (deltaX > 0) {
+                calendar.next();
+            } else {
+                calendar.prev();
+            }
+        } else {
+            // 상하 스와이프
+            if (deltaY > 0) {
+                calendar.next();
+            } else {
+                calendar.prev();
+            }
+        }
+
+        touchStartX = null;
+        touchStartY = null;
+    });
+
+    // 마우스 휠 이벤트 처리
+    calendarEl.addEventListener('wheel', function(e) {
+        e.preventDefault();
+        if (e.deltaY > 0) {
+            calendar.next();
+        } else {
+            calendar.prev();
+        }
     });
 });

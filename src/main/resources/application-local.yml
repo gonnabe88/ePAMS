@@ -29,7 +29,7 @@ authn:
 # spring
 spring:
   devtools.livereload.enabled: true  # 로컬 개발 환경에서 livereload 활성화
-  
+
   datasource:
     driver-class-name: oracle.jdbc.OracleDriver
     url: jdbc:oracle:thin:@localhost:1521/XE

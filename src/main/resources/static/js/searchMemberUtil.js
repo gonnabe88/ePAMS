@@ -198,13 +198,20 @@ $(document).ready(() => {
 
     // 드롭다운 내부 스크롤이 외부 스크롤로 전파되지 않도록 설정 (스크롤 이벤트)
     dropdown.addEventListener('scroll', function(event) {
+        const scrollTop = this.scrollTop;
+        const scrollHeight = this.scrollHeight;
+        const clientHeight = this.clientHeight;
+
+        // 값 확인을 위한 로그 출력
+        console.log('Scroll Event - scrollTop:', scrollTop, 'clientHeight:', clientHeight, 'scrollHeight:', scrollHeight);
+
         // 상단에 도달한 경우
-        if (this.scrollTop === 0) {
+        if (scrollTop === 0) {
             this.scrollTop += 1; // 상단에서 더 이상 스크롤되지 않도록 조정
         }
 
         // 하단에 도달한 경우
-        if ((this.scrollTop + this.clientHeight) >= this.scrollHeight) {
+        if (scrollTop + clientHeight >= scrollHeight - 1) { // 오차를 약간 둠
             this.scrollTop -= 1; // 하단에서 더 이상 스크롤되지 않도록 조정
         }
     }, { passive: false });
@@ -216,16 +223,22 @@ $(document).ready(() => {
         const clientHeight = this.clientHeight;
         const touchY = event.touches[0].clientY;
 
-        // 상단에 도달했을 때, 터치가 아래로 이동하는 경우 (scrollTop이 0일 때)
-        if (scrollTop === 0 && touchY > 0) {
-            this.scrollTop += 1; // 스크롤이 더 이상 위로 가지 않도록 방지
-            event.preventDefault(); // 외부로 스크롤 전파를 방지
-        }
+        // 값 확인을 위한 로그 출력
+        console.log('Touchmove Event - scrollTop:', scrollTop, 'clientHeight:', clientHeight, 'scrollHeight:', scrollHeight, 'touchY:', touchY);
 
-        // 하단에 도달했을 때, 터치가 위로 이동하는 경우 (scrollTop이 최대일 때)
-        if (scrollTop + clientHeight >= scrollHeight - 1 && touchY < 0) { // 오차를 약간 둠
-            this.scrollTop -= 1; // 스크롤이 더 이상 아래로 가지 않도록 방지
-            event.preventDefault(); // 외부로 스크롤 전파를 방지
+        // cancelable 상태일 때만 preventDefault 호출
+        if (event.cancelable) {
+            // 상단에 도달했을 때, 터치가 아래로 이동하는 경우 (scrollTop이 0일 때)
+            if (scrollTop === 0 && touchY > 0) {
+                this.scrollTop += 1; // 스크롤이 더 이상 위로 가지 않도록 방지
+                event.preventDefault(); // 외부로 스크롤 전파를 방지
+            }
+
+            // 하단에 도달했을 때, 터치가 위로 이동하는 경우 (scrollTop이 최대일 때)
+            if (scrollTop + clientHeight >= scrollHeight - 1 && touchY < 0) { // 오차를 약간 둠
+                this.scrollTop -= 1; // 스크롤이 더 이상 아래로 가지 않도록 방지
+                event.preventDefault(); // 외부로 스크롤 전파를 방지
+            }
         }
     }, { passive: false });
 

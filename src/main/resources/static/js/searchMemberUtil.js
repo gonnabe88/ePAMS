@@ -193,10 +193,10 @@ $(document).ready(() => {
         }, 300); // 300ms의 애니메이션 지속 시간
     });
 
-// 드롭다운 내부 스크롤이 외부 스크롤로 전파되지 않도록 설정
+    // 드롭다운 내부 스크롤이 외부 스크롤로 전파되지 않도록 설정
     const dropdown = document.getElementById('awesomplete_list_2');
 
-// 드롭다운 내부 스크롤이 외부 스크롤로 전파되지 않도록 설정 (스크롤 이벤트)
+    // 드롭다운 내부 스크롤이 외부 스크롤로 전파되지 않도록 설정 (스크롤 이벤트)
     dropdown.addEventListener('scroll', function(event) {
         // 상단에 도달한 경우
         if (this.scrollTop === 0) {
@@ -209,21 +209,22 @@ $(document).ready(() => {
         }
     }, { passive: false });
 
-// 드롭다운 내부 스크롤이 외부 스크롤로 전파되지 않도록 설정 (터치 이벤트)
+// 터치 이벤트에서 스크롤이 외부로 전파되지 않도록 설정
     dropdown.addEventListener('touchmove', function(event) {
         const scrollTop = this.scrollTop;
         const scrollHeight = this.scrollHeight;
         const clientHeight = this.clientHeight;
+        const touchY = event.touches[0].clientY;
 
-        // 상단에 도달한 경우
-        if (scrollTop === 0 && event.touches[0].clientY > 0) {
-            this.scrollTop += 1; // 상단에서 더 이상 스크롤되지 않도록 조정
+        // 상단에 도달했을 때, 터치가 아래로 이동하는 경우 (scrollTop이 0일 때)
+        if (scrollTop === 0 && touchY > 0) {
+            this.scrollTop += 1; // 스크롤이 더 이상 위로 가지 않도록 방지
             event.preventDefault(); // 외부로 스크롤 전파를 방지
         }
 
-        // 하단에 도달한 경우
-        if ((scrollTop + clientHeight) >= scrollHeight && event.touches[0].clientY < 0) {
-            this.scrollTop -= 1; // 하단에서 더 이상 스크롤되지 않도록 조정
+        // 하단에 도달했을 때, 터치가 위로 이동하는 경우 (scrollTop이 최대일 때)
+        if (scrollTop + clientHeight >= scrollHeight - 1 && touchY < 0) { // 오차를 약간 둠
+            this.scrollTop -= 1; // 스크롤이 더 이상 아래로 가지 않도록 방지
             event.preventDefault(); // 외부로 스크롤 전파를 방지
         }
     }, { passive: false });

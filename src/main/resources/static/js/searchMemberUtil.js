@@ -33,10 +33,11 @@ const searchMember = () => {
         }
     });
 };
-// 함수: 이벤트 리스너 설정 (나중에 로드되는 HTML에도 적용)
+
+// 직원검색 결과 하단 버튼 이벤트 등록
 const setupEventListeners = () => {
     $(document).ready(() => {
-// 다시검색 아이콘 클릭 시 searchMember 인풋에 포커스
+        // 다시검색 아이콘 클릭 시 searchMember 인풋에 포커스
         document.getElementById('search').addEventListener('click', function () {
             const searchInput = document.getElementById('searchMember');
             if (searchInput) {
@@ -44,7 +45,7 @@ const setupEventListeners = () => {
             }
         });
 
-// 연락하기 아이콘 클릭 시 전화 걸기
+        // 연락하기 아이콘 클릭 시 전화 걸기
         document.getElementById('contact').addEventListener('click', function () {
             const phoneLink = document.getElementById('inlineNumber');
             if (phoneLink && phoneLink.getAttribute('href') !== 'tel:') {
@@ -138,7 +139,8 @@ $(document).ready(() => {
 
             itemElement.addEventListener('touchstart', function () {
                 touchTimer = setTimeout(function() {
-                    itemElement.click(); // 길게 터치했을 때 클릭 이벤트 발생
+                    //itemElement.click(); // 길게 터치했을 때 클릭 이벤트 발생
+                    return false; // 길게 터치했을 때 무시
                 }, touchDuration);
             });
 
@@ -176,7 +178,7 @@ $(document).ready(() => {
         }
     });
 
-    // 검색 결과가 나오면 키패드를 숨기고 searchDiv를 최상단에 위치시킴
+    // 검색 결과가 나오면 키패드를 숨기고 searchDiv(직원검색 입력 폼)를 최상단에 위치시킴
     inputElement.addEventListener('awesomplete-selectcomplete', function() {
         // 키패드를 숨김
         inputElement.blur();
@@ -191,10 +193,10 @@ $(document).ready(() => {
         }, 300); // 300ms의 애니메이션 지속 시간
     });
 
-    // 드롭다운 내부 스크롤이 외부로 전파되지 않도록 설정
+// 드롭다운 내부 스크롤이 외부 스크롤로 전파되지 않도록 설정
     const dropdown = document.getElementById('awesomplete_list_2');
 
-    // 드롭다운 내부 스크롤이 외부로 전파되지 않도록 설정
+// 드롭다운 내부 스크롤이 외부 스크롤로 전파되지 않도록 설정 (스크롤 이벤트)
     dropdown.addEventListener('scroll', function(event) {
         // 상단에 도달한 경우
         if (this.scrollTop === 0) {
@@ -207,18 +209,22 @@ $(document).ready(() => {
         }
     }, { passive: false });
 
-    // 터치 이벤트에 대한 방지 설정
+// 드롭다운 내부 스크롤이 외부 스크롤로 전파되지 않도록 설정 (터치 이벤트)
     dropdown.addEventListener('touchmove', function(event) {
+        const scrollTop = this.scrollTop;
+        const scrollHeight = this.scrollHeight;
+        const clientHeight = this.clientHeight;
+
         // 상단에 도달한 경우
-        if (this.scrollTop === 0) {
+        if (scrollTop === 0 && event.touches[0].clientY > 0) {
             this.scrollTop += 1; // 상단에서 더 이상 스크롤되지 않도록 조정
-            event.preventDefault();
+            event.preventDefault(); // 외부로 스크롤 전파를 방지
         }
 
         // 하단에 도달한 경우
-        if ((this.scrollTop + this.clientHeight) >= this.scrollHeight) {
+        if ((scrollTop + clientHeight) >= scrollHeight && event.touches[0].clientY < 0) {
             this.scrollTop -= 1; // 하단에서 더 이상 스크롤되지 않도록 조정
-            event.preventDefault();
+            event.preventDefault(); // 외부로 스크롤 전파를 방지
         }
     }, { passive: false });
 

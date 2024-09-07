@@ -222,9 +222,6 @@ $(document).ready(() => {
         const scrollHeight = this.scrollHeight;
         const clientHeight = this.clientHeight;
 
-        // 값 확인을 위한 로그 출력
-        console.log('Touchmove Event - scrollTop:', scrollTop, 'clientHeight:', clientHeight, 'scrollHeight:', scrollHeight);
-
         // cancelable 상태일 때만 preventDefault 호출
         if (event.cancelable) {
             // 상단에 도달했을 때, 터치가 아래로 이동하는 경우 (scrollTop이 0일 때)

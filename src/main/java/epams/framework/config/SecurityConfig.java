@@ -142,12 +142,6 @@ public class SecurityConfig{
 							.requestMatchers("/admin/**").hasRole("ADMIN")  // ADMIN 역할만 접근 허용
 							.anyRequest().authenticated()  // 나머지 요청은 인증 필요
 			)
-			// 로그인 페이지에 대해서만 캐시 비활성화
-			.headers(headers -> headers
-					.cacheControl(HeadersConfigurer.CacheControlConfig::disable
-					)
-			)
-
 
 		    // 폼 로그인 설정
 		    .formLogin((formLogin) ->

@@ -118,6 +118,12 @@ public class LoginController {
         	VIEW = "redirect:index";
         	
         }
+
+        // 로그인 페이지에 대한 캐시 비활성화 헤더 추가
+        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+        response.setHeader("Pragma", "no-cache");
+        response.setDateHeader("Expires", 0);
+
         return VIEW;
     }
 

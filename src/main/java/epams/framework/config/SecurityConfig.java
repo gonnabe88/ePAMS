@@ -15,6 +15,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationDetailsSource;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
@@ -126,21 +127,26 @@ public class SecurityConfig{
 			)
 
 		    // URL별 접근 권한 설정
-		    .authorizeHttpRequests((authorizeRequests) ->
-		        authorizeRequests
-		            .requestMatchers(
-		                "/actuator/prometheus",
-		                "/manifest.webmanifest", "/login", "/logout", "/ossNotice",
-		                "/api/**", 
-		                "/css/**",
-		                "/js/**",
-		                "/extensions/**",
-		                "/images/**",
-		                "/error/**"
-		            ).permitAll()  // 특정 URL은 모든 사용자에게 허용
-		            .requestMatchers("/admin/**").hasRole("ADMIN")  // ADMIN 역할만 접근 허용
-		            .anyRequest().authenticated()  // 나머지 요청은 인증 필요
-		    )
+			.authorizeHttpRequests((authorizeRequests) ->
+					authorizeRequests
+							.requestMatchers(
+									"/actuator/prometheus",
+									"/manifest.webmanifest", "/login", "/logout", "/ossNotice",
+									"/api/**",
+									"/css/**",
+									"/js/**",
+									"/extensions/**",
+									"/images/**",
+									"/error/**"
+							).permitAll()  // 특정 URL은 모든 사용자에게 허용
+							.requestMatchers("/admin/**").hasRole("ADMIN")  // ADMIN 역할만 접근 허용
+							.anyRequest().authenticated()  // 나머지 요청은 인증 필요
+			)
+			// 로그인 페이지에 대해서만 캐시 비활성화
+			.headers(headers -> headers
+					.cacheControl(HeadersConfigurer.CacheControlConfig::disable
+					)
+			)
 
 
 		    // 폼 로그인 설정

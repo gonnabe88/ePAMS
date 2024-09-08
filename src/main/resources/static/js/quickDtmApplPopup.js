@@ -56,6 +56,13 @@ const updateProgressBar = async (startPercentage, targetPercentage) => {
     }
 };
 
+// 진행률 관리 함수 (충돌 방지)
+const controlProgressBar = async (startPercentage, targetPercentage) => {
+    const lock = controlProgressBar.lock || Promise.resolve(); // 이전 작업이 끝날 때까지 기다림
+    controlProgressBar.lock = lock.then(() => updateProgressBar(startPercentage, targetPercentage)); // 새로운 작업 추가
+    await controlProgressBar.lock; // 잠금 풀릴 때까지 대기
+};
+
 // 근태 신청
 const postDtmHisDTO = async (dtmHisDTO) => {
     const header = $('meta[name="_csrf_header"]').attr('content'); // CSRF 헤더
@@ -64,11 +71,11 @@ const postDtmHisDTO = async (dtmHisDTO) => {
     // AJAX로 모달 HTML 로드
     $.get('/dtm/dtmApplProcessModal', async function(modalHtml) {
 
-
         $('body').append(modalHtml); // 모달을 페이지에 동적으로 삽입
         $('#processModal').modal({backdrop: 'static'}) // 모달 배경 클릭 시 닫히지 않도록 설정
         $('#processModal').modal('show');// 모달 표시
-        await updateProgressBar(0, 40); // 진행률 0%에서 40%까지 증가
+
+        await controlProgressBar(0, 40); // 진행률 0%에서 40%까지 증가
 
         $.ajax({
             url: '/api/dtm/appl', // 요청 URL
@@ -80,15 +87,16 @@ const postDtmHisDTO = async (dtmHisDTO) => {
             data: JSON.stringify(dtmHisDTO), // 전송 DATA
             beforeSend: async () => {
                 // 진행률 40%에서 80%까지 증가
-                await updateProgressBar(41, 80);
+                await controlProgressBar(41, 80);
             },
             success: async (data) => { // 성공 (HTTP 상태코드 20X)
                 const staYmd = data.staYmd; // 서버에서 반환된 staYmd 값 사용
                 const dtmDispName = data.dtmDispName;
 
                 const progressBar = document.getElementById('progressBar');
-                progressBar.classList.add('bg-success'); // Danger 색상 변경
-                await updateProgressBar(81, 100); // 진행률 80%에서 100%까지 증가 후 모달 닫기
+                progressBar.classList.add('bg-success'); // 색상 변경
+
+                await controlProgressBar(81, 100); // 진행률 80%에서 100%까지 증가 후 모달 닫기
                 $('#processModal').modal('hide');
                 $('#processModal').remove(); // 모달을 제거하여 DOM을 깨끗하게 유지
 
@@ -97,10 +105,10 @@ const postDtmHisDTO = async (dtmHisDTO) => {
                 console.log('Success:', data);
             },
             error: async (error) => { // 실패 (HTTP 상태코드 40X, 50X)
-
                 const progressBar = document.getElementById('progressBar');
-                progressBar.classList.add('bg-danger'); // Danger 색상 변경
-                await updateProgressBar(81, 90); // 진행률 80%에서 100%까지 증가 후 모달 닫기
+                progressBar.classList.add('bg-danger'); // 색상 변경
+
+                await controlProgressBar(81, 90); // 진행률 80%에서 90%까지 증가 후 모달 닫기
                 $('#processModal').modal('hide');
                 $('#processModal').remove(); // 모달을 제거하여 DOM을 깨끗하게 유지
 

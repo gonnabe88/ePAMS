@@ -13,11 +13,33 @@
     <div class="dtmRegDetail">
         <div class="container">
             <div class="main-content">
-                <div class="page-heading">
-                    <div class="align-middle">
-                        <h2><i class="bi bi-bell-fill"></i> <span th:text="${langList['DTM_REG']}"></span></h2>
+                <div class="header-container">
+                    <h2><i class="bi bi-bell-fill"></i> <span th:text="${langList['DTM_REG']}"></span></h2>
+                    <button id="dtmStatusBtn" class="dtm-status-btn">휴가현황 <span class="toggle-icon">▼</span>
+                    </button>
+                </div>
+                <!--휴가보유현황-->
+                <div id="flipCardContainer">
+                    <div id="dtmStatusCard" class="card">
+                        <div class="card-body">
+                            <table>
+                                <tr>
+                                    <th>연차</th>
+                                    <th>저축</th>
+                                    <th>보상</th>
+                                    <th>합계</th>
+                                </tr>
+                                <tr>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                </tr>
+                            </table>
+                        </div>
                     </div>
                 </div>
+                <!--실제 근태 신청-->
                 <div class="card">
                     <div class="card-body">
                         <div class="row mb-3">
@@ -52,7 +74,7 @@
                         <div class="row mb-3">
                             <div class="col">
                                 <div class="button-group">
-                                    <button type="button" class="btn btn-back">돌아가기</button>
+                                    <!--                                    <button type="button" class="btn btn-back">돌아가기</button>-->
                                     <button type="submit" class="btn btn-submit">신청하기</button>
                                 </div>
                             </div>
@@ -67,13 +89,14 @@
 <th:block layout:fragment="script">
     <script src="/extensions/fullcalendar/index.global.js"></script>
     <script src="/extensions/fullcalendar/initDtmRegCal.js"></script>
-    <script src="/extensions/fullcalendar/main.min.css"></script>
+    <!--    <script src="/extensions/fullcalendar/main.min.css"></script>-->
     <script src="/extensions/fullcalendar/main.min.js"></script>
     <script src="/extensions/select2/select2.full.js"></script>
+    <script src="/js/dtmStatus.js"></script>
     <script src="/js/dateFormat.js"></script>
     <script src="/js/selectForm.js"></script>
-    <script src="/js/moveBack.js"></script>
-    <script src="/js/index.js"></script>
+    <!--    <script src="/js/moveBack.js"></script>-->
+    <!--    <script src="/js/index.js"></script>-->
     <script src="/js/dtmAppl.js"></script>
 </th:block>
 </div>

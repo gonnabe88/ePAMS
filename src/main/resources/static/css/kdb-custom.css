@@ -1,3 +1,6 @@
+.table {
+    --bs-table-bg: transparent;
+}
 
 .modalLogo {
     width: 50px;
@@ -520,7 +523,7 @@ mark {
      border-collapse: collapse;
      width: 100%;
  }
-.dtmRegDetail th, td {
+.dtmRegDetail th, .dtmRegDetail td {
     border: 1px solid #000; /* 테두리 색상을 검정색으로 변경 */
     text-align: center;
 }
@@ -1068,7 +1071,7 @@ html, body {
     --bs-btn-bg: #6570C5;
     --bs-btn-border-color: #6570C5;
     /*--bs-btn-bg: background: linear-gradient(90deg, rgba(68,119,197,1) 0%, rgba(101,112,197,1) 50%);*/
-    --bs-btn-font-family: "Nanum Gothic"
+    --bs-btn-font-family: "Nanum Gothic";
 }
 
 .ps {

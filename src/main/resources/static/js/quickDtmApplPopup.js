@@ -45,12 +45,13 @@ const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 // 진행률 업데이트 함수 (1%당 0.1초 대기)
 const updateProgressBar = async (startPercentage, targetPercentage) => {
     const progressBar = document.getElementById('progressBar');
+    const progressText = progressBar.querySelector('span');
     let currentPercentage = startPercentage;
 
     while (currentPercentage < targetPercentage) {
         currentPercentage++;
         progressBar.style.width = currentPercentage + '%';
-        progressBar.innerHTML = currentPercentage + '%';
+        progressText.innerHTML = currentPercentage + '%'; // 텍스트 중앙에 표시
         await delay(100);  // 0.1초 대기
     }
 };

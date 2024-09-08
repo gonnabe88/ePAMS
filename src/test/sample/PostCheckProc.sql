@@ -1,6 +1,6 @@
 CREATE OR REPLACE PROCEDURE OHR.P_DTM01_APPL_ELA_CHECK(
     an_appl_id IN NUMBER,
-    av_mod_user_id IN VARCHAR2,
+    av_mod_user_id IN NUMBER,
     av_company_cd IN VARCHAR2,
     av_locale_cd IN VARCHAR2,
     av_tz_cd IN VARCHAR2,

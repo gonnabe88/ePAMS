@@ -5,10 +5,11 @@ CREATE OR REPLACE PROCEDURE OHR.P_DTM_APPL_CHECK(
     av_reason_cd IN VARCHAR2,
     ad_sta_ymd IN DATE,
     ad_end_ymd IN DATE,
-    an_his_oid IN NUMBER, --?????
+    an_his_oid IN NUMBER,
     av_auth_type IN VARCHAR2,
     av_dtm_type IN VARCHAR2,
-    av_mod_user_id IN VARCHAR2, --?????
+    av_child_no IN VARCHAR2, --?????
+    av_mod_user_id IN NUMBER, --?????
     av_tz_cd IN VARCHAR2,
     av_ret_code OUT VARCHAR2,
     av_ret_message OUT VARCHAR2

@@ -1,3 +1,22 @@
+#progressBar {
+    position: relative;
+    width: 0; /* width는 JS로 설정됨 */
+    height: 30px; /* 진행 바의 높이 */
+    background-color: #007bff; /* 기본 진행 바 색상 */
+    color: white; /* 텍스트 색상 */
+    text-align: center; /* 텍스트를 중앙에 위치 */
+    line-height: 30px; /* 진행 바 높이와 동일하게 설정하여 중앙 정렬 */
+    overflow: hidden; /* overflow로 텍스트가 넘치지 않도록 설정 */
+    white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+}
+
+#progressBar span {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%); /* 텍스트를 중앙에 위치 */
+    z-index: 1; /* 텍스트가 바 위에 보이도록 설정 */
+}
+
 .modalLogo {
     width: 50px;
     height: 50px;

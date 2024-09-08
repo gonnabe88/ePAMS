@@ -120,6 +120,7 @@ public class LoginController {
         }
 
         // 로그인 페이지에 대한 캐시 비활성화 헤더 추가
+        // 로그인 후 메인페이지에서 바로 뒤로가기를 눌렀을 때 로그인 페이지가 나타나지 않도록 함
         response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
         response.setHeader("Pragma", "no-cache");
         response.setDateHeader("Expires", 0);

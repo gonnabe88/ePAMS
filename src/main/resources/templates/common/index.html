@@ -1,9 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:sec="http://www.thymeleaf.org"
-      xmlns="http://www.w3.org/1999/html"
-      layout:decorate="~{common/layout/layout}">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" layout:decorate="~{common/layout/layout}">
 
 <head>
     <!-- (start) private script -->
@@ -263,7 +259,8 @@
     <!--end 최근 공지사항-->
 
     <!--start scrollToTop 버튼-->
-    <button class="animate__animated animate__fadeIn animate__slow" id="scrollToTopBtn" title="Go to top">
+    <button class="animate__animated animate__fadeIn animate__slow p-0" id="scrollToTopBtn" title="Go to top">
+        <div class="button-content"></div>
     </button>
     <!--end scrollToTop 버튼-->
 

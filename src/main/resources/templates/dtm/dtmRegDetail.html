@@ -18,10 +18,28 @@
                     <button id="dtmStatusBtn" class="dtm-status-btn">휴가현황 <span class="toggle-icon">▼</span>
                     </button>
                 </div>
-                <div id="dtmStatusCard" class="dtm-status-card" style="display: none;">
-                    <!-- 휴가 현황 내용 -->
-                    <p>휴가 현황 정보가 여기에 표시됩니다.</p>
+                <!--휴가보유현황-->
+                <div id="flipCardContainer">
+                    <div id="dtmStatusCard" class="card">
+                        <div class="card-body">
+                            <table>
+                                <tr>
+                                    <th>연차</th>
+                                    <th>저축</th>
+                                    <th>보상</th>
+                                    <th>합계</th>
+                                </tr>
+                                <tr>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
                 </div>
+                <!--실제 근태 신청-->
                 <div class="card">
                     <div class="card-body">
                         <div class="row mb-3">

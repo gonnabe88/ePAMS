@@ -1,9 +1,12 @@
 document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calender');
     var selectedDates = [];
-    var selectOneDate = null;
+    var selectOneDate = new Date();
     var selectedDateStr = null;
     var currentPage = window.location.pathname;
+
+    // 페이지 로드 시 날짜 입력 필드에 오늘 날짜 설정
+    updateDates(new Date(), new Date());
 
     var calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth',

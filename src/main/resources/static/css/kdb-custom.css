@@ -351,7 +351,7 @@ mark {
 }
 
 .fc .fc-event-title {
-    font-size: clamp(0.6em, 1.5vw, 1em); /* 날짜 및 이벤트 제목 크기 조정 */
+    font-size: clamp(0.6em, 1.5vw, 1dtmRegDetailm); /* 날짜 및 이벤트 제목 크기 조정 */
 }
 
 /* 카드 안에 있는 FullCalendar에서 세로선 제거 */
@@ -447,18 +447,32 @@ mark {
     align-items: center; /* 수직 중앙 정렬 추가 */
     flex-direction: column; /* 수직 정렬 */
 }
-
-.dtmRegDetail .main-content {
-    width: 100%;
-    padding: 1rem;
-}
-
-.dtmRegDetail .page-heading {
+.header-container {
     display: flex;
-    justify-content: start; /* 왼쪽 정렬 */
-    width: 90%;
-    margin: 0 auto; /* 중앙 정렬 */
+    justify-content: space-between;
+    align-items: center;
 }
+
+.dtm-status-btn {
+    /*padding: 8px 16px;*/
+    background-color: #435ebe;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.toggle-icon {
+    margin-left: 5px;
+}
+
+.dtm-status-card {
+    margin-top: 10px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
 .dtmRegDetail .card {
     width: 100%;
     padding: 1rem;

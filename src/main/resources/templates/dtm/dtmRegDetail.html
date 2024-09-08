@@ -13,10 +13,14 @@
     <div class="dtmRegDetail">
         <div class="container">
             <div class="main-content">
-                <div class="page-heading">
-                    <div class="align-middle">
-                        <h2><i class="bi bi-bell-fill"></i> <span th:text="${langList['DTM_REG']}"></span></h2>
-                    </div>
+                <div class="header-container">
+                    <h2><i class="bi bi-bell-fill"></i> <span th:text="${langList['DTM_REG']}"></span></h2>
+                    <button id="dtmStatusBtn" class="dtm-status-btn">휴가현황 <span class="toggle-icon">▼</span>
+                    </button>
+                </div>
+                <div id="dtmStatusCard" class="dtm-status-card" style="display: none;">
+                    <!-- 휴가 현황 내용 -->
+                    <p>휴가 현황 정보가 여기에 표시됩니다.</p>
                 </div>
                 <div class="card">
                     <div class="card-body">
@@ -52,7 +56,7 @@
                         <div class="row mb-3">
                             <div class="col">
                                 <div class="button-group">
-                                    <button type="button" class="btn btn-back">돌아가기</button>
+                                    <!--                                    <button type="button" class="btn btn-back">돌아가기</button>-->
                                     <button type="submit" class="btn btn-submit">신청하기</button>
                                 </div>
                             </div>
@@ -67,13 +71,14 @@
 <th:block layout:fragment="script">
     <script src="/extensions/fullcalendar/index.global.js"></script>
     <script src="/extensions/fullcalendar/initDtmRegCal.js"></script>
-    <script src="/extensions/fullcalendar/main.min.css"></script>
+    <!--    <script src="/extensions/fullcalendar/main.min.css"></script>-->
     <script src="/extensions/fullcalendar/main.min.js"></script>
     <script src="/extensions/select2/select2.full.js"></script>
+    <script src="/js/dtmStatus.js"></script>
     <script src="/js/dateFormat.js"></script>
     <script src="/js/selectForm.js"></script>
-    <script src="/js/moveBack.js"></script>
-    <script src="/js/index.js"></script>
+    <!--    <script src="/js/moveBack.js"></script>-->
+    <!--    <script src="/js/index.js"></script>-->
     <script src="/js/dtmAppl.js"></script>
 </th:block>
 </div>

@@ -473,13 +473,13 @@ mark {
     background-color: white;
     transform-style: preserve-3d; /* 3D 변환 유지 */
     transition: transform 0.3s; /* 회전 애니메이션 시간 */
-    transform: rotateY(90deg); /* 기본적으로 90도 회전된 상태 */
+    transform: rotateX(90deg); /* 기본적으로 90도 회전된 상태 */
     display: none; /* 기본적으로 안보이게 */
 }
 
 #dtmStatusCard.show {
     display: block; /* 보여질 때 block으로 전환 */
-    transform: rotateY(0deg); /* 회전 후 정면을 보이게 */
+    transform: rotateX(0deg); /* 회전 후 정면을 보이게 */
 }
 
 /* 아이콘 회전 효과 */
@@ -488,9 +488,12 @@ mark {
 }
 
 #dtmStatusCard.show + .toggle-icon {
-    transform: rotate(180deg); /* 아이콘 회전 */
+    transform: rotateX(180deg); /* 아이콘 회전 */
 }
+/* 휴가현황 카드 끝 */
 
+
+/* 휴가현황 테이블 시작*/
 .dtmRegDetail table {
      border-collapse: collapse;
      width: 100%;
@@ -502,7 +505,7 @@ mark {
 .dtmRegDetail th {
     background-color: #f2f7ff;
 }
-
+/* 휴가현황 테이블 끝*/
 
 .dtmRegDetail .card {
     width: 100%;

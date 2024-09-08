@@ -52,7 +52,7 @@ const updateProgressBar = async (startPercentage, targetPercentage) => {
         currentPercentage++;
         progressBar.style.width = currentPercentage + '%';
         progressText.innerHTML = currentPercentage + '%'; // 텍스트 중앙에 표시
-        await delay(100);  // 0.1초 대기
+        await delay(50);  // 0.05초 대기
     }
 };
 
@@ -75,8 +75,6 @@ const postDtmHisDTO = async (dtmHisDTO) => {
         $('#processModal').modal({backdrop: 'static'}) // 모달 배경 클릭 시 닫히지 않도록 설정
         $('#processModal').modal('show');// 모달 표시
 
-        await controlProgressBar(0, 40); // 진행률 0%에서 40%까지 증가
-
         $.ajax({
             url: '/api/dtm/appl', // 요청 URL
             method: 'POST', // 요청 방식
@@ -87,7 +85,7 @@ const postDtmHisDTO = async (dtmHisDTO) => {
             data: JSON.stringify(dtmHisDTO), // 전송 DATA
             beforeSend: async () => {
                 // 진행률 40%에서 80%까지 증가
-                await controlProgressBar(41, 80);
+                await controlProgressBar(0, 80);
             },
             success: async (data) => { // 성공 (HTTP 상태코드 20X)
                 const staYmd = data.staYmd; // 서버에서 반환된 staYmd 값 사용

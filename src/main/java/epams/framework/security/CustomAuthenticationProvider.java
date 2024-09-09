@@ -78,21 +78,17 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         log.info("MFA: {}", MFA);
         switch (MFA) {
             case "SMS":
-                // @TODO SMS 인증 로직 추가
                 loginResult = loginService.otpLogin(iamUserDTO, OTP);
                 break;
             case "카카오톡":
-                // @TODO 카카오톡 인증 로직 추가
                 loginResult = loginService.otpLogin(iamUserDTO, OTP);
                 break;
-            case "otp":
+            case "OTP":
                 loginResult = loginService.otpLogin(iamUserDTO, OTP);
                 break;
             case "FIDO":
                 loginResult = loginService.fidoLogin(iamUserDTO);
                 break;
-            default:
-            	loginResult = loginService.fidoLogin(iamUserDTO);
         }
 
         // 1차 인증(ID/PW) 실패

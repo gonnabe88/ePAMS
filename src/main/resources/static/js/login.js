@@ -238,7 +238,7 @@ const normal = (e, encodedPassword) => {
         }
     })
     .catch(error => {
-        popupMsg("인증 오류", error.message, "error"); // 오류 처리 함수 호출
+        popupReHtmlMsg("인증 오류", error.message, "error","/login");
     });
 }
 

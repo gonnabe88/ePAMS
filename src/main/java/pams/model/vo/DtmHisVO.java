@@ -3,6 +3,7 @@ package pams.model.vo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.time.LocalDateTime;
 
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
  * @implNote 근태 이력 테이블 정의 VO
  * @since 2024-06-09
  */
+@ToString(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
 @Data

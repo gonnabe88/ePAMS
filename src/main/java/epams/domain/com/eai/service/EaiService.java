@@ -136,109 +136,6 @@ public class EaiService {
         */
         return new EaiDTO();
     }
-
-    /*
-    public EaiDTO sendEAIDB(EaiDTO request) {
-        //request
-        String umsBzDttId = request.getTemplId();   //템플릿 ID (TBL_NOTIFICATION_TEMPLATE.TPL_ID)
-        String reqUsid = request.getEmplNum();      //수신자 행번 (퇴직자 금지)
-        String umsSdChnNo = request.getReqCh();     //수신자 채널 (번호/이메일/DM, UMS전용)
-        String umsSdMplDt = request.getSendDt();    //발신 예정일 (YYYYMMDD)
-        String umsSdMplTm = request.getSendTime();  //발신 예정시간 (null-즉시, HHMMSS-예약)
-        String chnReqTpC = request.getSendType();   //발신 유형 (10-즉시, 20-예약)
-
-        //거래일자, 거래시각
-        String trDt = new SimpleDateFormat("yyyyMMdd", LocaleContextHolder.getLocale()).format(new Date());
-
-        //UMS거래일련번호, UMS접수번호
-        String umsTrSno = eaiMapper.notificationSendHistoryCnt(request);
-        String umsRetNo = umsBzDttId + trDt + String.format("%08d", Integer.parseInt(umsTrSno));    //템플릿ID(7) + 연월일(8) + 일련번호(8)UMS_TR_SNO
-
-        //UMS송신채널번호 (SMS~, ALT~, EML~)
-        String umsTmeChnNo = "1588-1500";
-        if ("E".equals(umsBzDttId.substring(0, 1))) { //이메일
-            umsTmeChnNo = "hrd@kdb.co.kr";
-        }
-
-        //요청사용자명, 요청부점코드, 요청부점명
-        EaiDTO user = eaiMapper.getMember(request);
-        String reqUsrNm = user.getNm();
-        String reqBbrC = user.getDeptKey();
-        String reqBbrNm = user.getDeptNm();
-
-        //UMS발송채널유형코드 (SMS(S), ALT(A), EML(M))
-        String umsSdChnTpC = umsBzDttId.substring(0, 1);
-        if ("E".equals(umsSdChnTpC)) {
-            umsSdChnTpC = "M";
-        }
-
-        //가변데이터_S0, 가변데이터길이_N9
-        String variDatS0 = setVariDatS0(request);
-        String variDatLenN9 = String.valueOf(variDatS0.getBytes().length);
-
-        //guid
-        String dt = new SimpleDateFormat("yyyyMMdd", LocaleContextHolder.getLocale()).format(new Date());
-        String dt2 = new SimpleDateFormat("HHmmssSSS", LocaleContextHolder.getLocale()).format(new Date());
-        String num = getRandomNum(9);
-        String num2 = getRandomNum(9);
-        String guid = "ECP" + dt + dt2 + num + num2;
-
-        EaiDTO dto = new EaiDTO();
-        dto.setUmsRetNo(umsRetNo);          //UMS접수번호
-        dto.setUmsBzDttId(umsBzDttId);      //UMS업무구분ID
-        dto.setTrDt(trDt);                  //거래일자
-        dto.setUmsTrSno(umsTrSno);          //UMS거래일련번호
-
-        //dto.setCno("SYSTEM");             //고객번호
-        //dto.setCstNm("관리자");            //고객명
-        dto.setCno(reqUsid);                //고객번호
-        dto.setCstNm(reqUsrNm);             //고객명
-
-        dto.setSectEmlCnfmNo(null);         //보안이메일확인번호
-        dto.setUmsSdChnNo(umsSdChnNo);      //UMS발송채널번호
-        dto.setUmsSdChnAddrCone(null);      //UMS발송채널주소내용
-        dto.setUmsSdMplDt(umsSdMplDt);      //UMS발송예정일자
-        dto.setUmsSdMplTm(umsSdMplTm);      //UMS발송예정시각 (null-즉시, HHMMSS-예약)
-        dto.setUmsTmeChnNo(umsTmeChnNo);    //UMS송신채널번호
-        dto.setAppC("ECP");                 //어플리케이션코드
-        dto.setAppBzLv1C("CX");             //어플리케이션업무1레벨코드
-
-        //dto.setReqUsid(reqUsid);          //요청사용자ID
-        //dto.setReqUsrNm(reqUsrNm);        //요청사용자명
-        dto.setReqUsid("SYSTEM");           //요청사용자ID
-        dto.setReqUsrNm("관리자");           //요청사용자명
-        //dto.setReqBbrC(reqBbrC);          //요청부점코드
-        //dto.setReqBbrNm(reqBbrNm);        //요청부점명
-
-        dto.setUmsCkgC("N");                //UMS점검코드
-        dto.setUmsSdMsgInf(variDatS0);      //UMS발송메시지정보
-        dto.setApgFlCone(null);             //첨부파일내용
-        dto.setTrTm(null);                  //거래시각
-        dto.setUmsSdChnTpC(umsSdChnTpC);    //UMS발송채널유형코드
-        dto.setChnReqTpC(chnReqTpC);        //채널요청유형코드  (10-실시간, 20-스케쥴)
-        dto.setBzDcmInfCone(null);          //업무식별정보내용
-        dto.setUmsBzRfrCone(null);          //UMS업무참조내용
-        dto.setBzCS3("ECP");                //업무코드_S3
-        dto.setUmsSdMsgClsfTc(null);        //UMS발송메세지분류구분코드
-        dto.setEaiFwdiYn("N");              //EAI전송여부
-        dto.setEaiPrcDtm(null);             //EAI처리일시
-        dto.setIfSysC("ECP");               //인터페이스시스템코드
-        dto.setDelYn("N");                  //삭제여부
-        dto.setGuid(guid);                  //GUID
-        dto.setGuidPrgSno("1");             //GUID진행일련번호
-        dto.setLstChgUsid("SYSTEM");        //최종변경사용자ID
-        //dto.setLstChgDtm();               //최종변경일시
-
-        //DB 발송 INSERT
-        eaiMapper.insertTecpesUmsbati(dto);
-
-        //알림발송이력 저장
-        request.setSendDttm(umsSdMplDt + umsSdMplTm);
-        insertNotificationSendHistory(request, "UMS", umsRetNo);
-
-        return request;
-    }
- */
     private byte[] getReqData(EaiDTO request) throws IndexOutOfBoundsException {
         String param01 = getParam01();          //01. 시스템공통부
         String param02 = getParam02(request);   //02. 거래공통부
@@ -295,25 +192,24 @@ public class EaiService {
         String ipAddr = getIpAddr();
         String macAddr = getMacAddr();
 
-        String param = "";                             //필드명				필드설명			Type	Length	Offset	값(예제로 받은 값, 알맞게 변경)
-        param += lpad("N", 8, "");      //WHL_TGR_LEN		전체전문길이		N		8		0		00011104
-        param += lpad("N", 8, "");      //HER_LEN			헤더길이			N		8		8		00001102
-        param += lpad("N", 8, "");      //PRO_MDA_LEN		출력매체부길이		N		8		16		00000000
-        param += "1.0";                                //TGR_VRS_INF		전문버전정보		C		3		24		1.0
-        param += "ko";                                 //MLAN_TC			다국어구분코드		C		2		27		ko
-        param += "prod".equals(profile) ? "P" : "L";   //SYS_ENV_TC		    시스템환경구분코드	C		1		29		D
-        param += ipAddr;                               //IP_ADDR			IP주소			C		40		30
-        param += macAddr;                              //MAC_ADDR			MAC주소			C		12		70
-        param += guid;                                 //GUID				GUID			C		38		82		ITT20220406092237530000025DK0205470001
-        param += "0001";                               //GUID_PRG_SNO		GUID진행일련번호	N		4		120		0004
-        param += guid;                                 //FST_GUID			최초GUID			C		38		124		ITT20220406092237530000025DK0205470001
-        param += "EHR";                                //FWDI_SYS_C		    전송시스템코드		C		3		162		CBK
-        param += "EHR";                                //FST_FWDI_SYS_C	    최초전송시스템코드	C		3		165		ITT
-        param += lpad("C", 12, "");     //SYS_CO_RSRV		시스템공통부 예비	C		12		168
+        String param = "";
+        param += lpad("N", 8, "");      //WHL_TGR_LEN		전체전문길이
+        param += lpad("N", 8, "");      //HER_LEN			헤더길이
+        param += lpad("N", 8, "");      //PRO_MDA_LEN		출력매체부길이
+        param += "1.0";                                //TGR_VRS_INF		전문버전정보
+        param += "ko";                                 //MLAN_TC			다국어구분코드
+        param += "prod".equals(profile) ? "P" : "L";   //SYS_ENV_TC		    시스템환경구분코드
+        param += ipAddr;                               //IP_ADDR			IP주소
+        param += macAddr;                              //MAC_ADDR			MAC주소
+        param += guid;                                 //GUID				GUID
+        param += "0001";                               //GUID_PRG_SNO		GUID진행일련번호
+        param += guid;                                 //FST_GUID			최초GUID
+        param += "EHR";                                //FWDI_SYS_C		    전송시스템코드
+        param += "EHR";                                //FST_FWDI_SYS_C	    최초전송시스템코드
+        param += lpad("C", 12, "");     //SYS_CO_RSRV		시스템공통부 예비
 
         return param;
     }
-
 
     //02. 거래공통부
     private String getParam02(EaiDTO request) throws IndexOutOfBoundsException {
@@ -507,116 +403,41 @@ public class EaiService {
         String variDatS0 = setVariDatS0(request);
         String variDatLenN9 = String.valueOf(variDatS0.getBytes().length);
 
-        String param = "";                                  //필드명					필드설명				    Type	Length	Offset	값(예제로 받은 값, 알맞게 변경)
-        param += lpad("C", 7, umsBzDttId);      //UMS_BZ_DTT_ID			UMS업무구분ID			STRING	7				UMS 서비스 코드
-        param += trDt;                                      //TR_DT					거래일자				    STRING	8				[거래_일자] : 거래가 이루어진 일자 / RM-대지급 기표일자
-        param += lpad("N", 10, umsTrSno);       //UMS_TR_SNO			UMS거래일련번호			NUMERIC	10				통합메시지서비스 거래 일련번호
-        param += lpad("C", 23, umsRetNo);       //UMS_RET_NO			UMS접수번호			    STRING	23				UMS 발송에 부여하는 접수번호
-
-        param += lpad("C", 8, reqUsid);         //CNO					고객번호				    STRING	8				고객등록기준에따라 정상적으로 고객원장에 등록된경우, 고객을 구분(식별)하기위한 일련번호
-        param += lpad("C", 100, reqUsrNm);      //CST_NM				고객명					STRING	100				[고객명] : 개인의 성명 또는 사업자의 명칭
-        //param += lpad("C", 8, "SYSTEM");	    //CNO					고객번호				    STRING	8				고객등록기준에따라 정상적으로 고객원장에 등록된경우, 고객을 구분(식별)하기위한 일련번호
-        //param += lpad("C", 100, "관리자");     //CST_NM				고객명					STRING	100				[고객명] : 개인의 성명 또는 사업자의 명칭
-
-        param += lpad("C", 30, "");             //SECT_EML_CNFM_NO		보안이메일확인번호			STRING	30				UMS 이메일을 확인하기 위한 보안번호
-        param += lpad("C", 200, umsSdChnNo);    //UMS_SD_CHN_NO			UMS발송채널번호			STRING	200				전환번호(SMS,팩스,푸시?), 이메일,DM(우편번호)
-        param += lpad("C", 4000, "");           //UMS_SD_CHN_ADDR_CONE	UMS발송채널주소내용		STRING	4000			UMS 발송하기 위한 채널별 주소(푸시(디바이스아이디),DM(주소))
-        param += lpad("C", 8, Objects.isNull(sendDt) ? trDt : sendDt);              //UMS_SD_MPL_DT			UMS발송예정일자			STRING	8				UMS에서 발송 될 예정일자 지정
-        param += lpad("C", 6, (Objects.isNull(sendTime) ? "" : sendTime));          //UMS_SD_MPL_TM			UMS발송예정시각			STRING	6				UMS에서 발송 될 예정시각 지정 (실시간 '000000' 으로 셋팅)
-        param += lpad("C", 100, umsTmeChnNo);   //UMS_TME_CHN_NO		UMS송신채널번호			STRING	100				UMS로 발송할때 송신하는 채널의 번호 (발신자 (이메일 : hrd@kdb.co.kr, 전화번호 : 1588-1500))
-        param += "HUR";                         //APP_C					어플리케이션코드			STRING	3				독립적인 업무를 수행하는 단위인 어플리케이션을 나타내는 코드 1
-        param += "XH";                          //APP_BZ_LV1_C			어플리케이션업무1레벨코드	STRING	2				어플리케이션 하위 Level 1의 업무분류를 나타내는 코드(업무레벨L1코드)
-
-        param += lpad("C", 14, "SYSTEM");       //REQ_USID				요청사용자ID			    STRING	14				요청한 결재자 ID
-        param += lpad("C", 100, "관리자");       //REQ_USR_NM			요청사용자명				STRING	100				요청자 사용자 명
-        //param += lpad("C", 14, reqUsid);      //REQ_USID				요청사용자ID			    STRING	14				요청한 결재자 ID
-        //param += lpad("C", 100, reqUsrNm);    //REQ_USR_NM			요청사용자명				STRING	100				요청자 사용자 명
-        param += lpad("C", 3, reqBbrC);         //REQ_BBR_C				요청부점코드				STRING	3				(한도 확인) 요청 부점 코드
-        param += lpad("C", 100, reqBbrNm);      //REQ_BBR_NM			요청부점명				STRING	100				(금융서비스 등을) 요청한 부점의 부점명
-
-        param += "N";                           //UMS_CKG_C				UMS점검코드			    STRING	1				UMS을 점검하는 코드
-        param += lpad("C", 4000, "");           //APG_FL_CONE			첨부파일내용				STRING	4000			첨부파일에 대한 내용
-        param += lpad("C", 6, trTm);            //TR_TM					거래시각				    STRING	6				[거래_시각] : 거래 시각
-        param += umsSdChnTpC;                   //UMS_SD_CHN_TP_C		UMS발송채널유형코드		STRING	1				UMS 발송하는 채널의 유형 코드(이메일, 팩스, SMS, LMS, 푸시, DM  구분) (이메일(M)/팩스(F)/SMS(S)/LMS(T)/DM(D)/푸시(P)/알림톡(A))
-        param += "10";                          //CHN_REQ_TP_C			채널요청유형코드			STRING	2				채널 요청 유형코드(실시간/배치, EAI 연동 유형) (REAL_TIME/BATCH (실시간발송코드 '10', 스케줄 '20'))
-        param += lpad("C", 100, "");            //BZ_DCM_INF_CONE		업무식별정보내용			STRING	100				업무에서 센터컷 서비스 처리시에 참조하는 내용을 기록한다.
-        param += lpad("C", 1000, "");           //UMS_BZ_RFR_CONE		UMS업무참조내용			STRING	1000			UMS 사용에 업무에서 참조할 내용
-        param += lpad("C", 1, "N");             //DEL_YN				삭제여부				    STRING	1				[DELETE_여부] : 테이블의 ROW의 DELETE여부
-        param += lpad("C", 14, "SYSTEM");       //LST_CHG_USID			최종변경사용자ID			STRING	14				DB 및 전문관련 마지막 변경 사용자ID
-        param += "EHR";                         //BZ_C_S3				UMS요청시스템코드			STRING	3
-        param += lpad("N", 9, variDatLenN9);    //VARI_DAT_LEN_N9		가변데이터길이_N9		    NUMERIC	9				UMS발송메시지정보(UMS_SD_MSG_INF) CLOB JSON 데이터
-        param += variDatS0;                     //VARI_DAT_S0			가변데이터_S0			    STRING	0				UMS발송메시지정보(UMS_SD_MSG_INF) CLOB JSON 데이터 길이
-
-        //알림발송이력 저장
-        //request.setSendDttm(trDt + trTm);
-        //insertNotificationSendHistory(request, "UMS", umsRetNo);
+        String param = "";  
+        param += lpad("C", 7, umsBzDttId);  //UMS_BZ_DTT_ID UMS업무구분ID
+        param += trDt;  //TR_DT 거래일자
+        param += lpad("N", 10, umsTrSno);   //UMS_TR_SNO    UMS거래일련번호	
+        param += lpad("C", 23, umsRetNo);   //UMS_RET_NO    UMS접수번호
+        param += lpad("C", 8, reqUsid); //CNO   고객번호
+        param += lpad("C", 100, reqUsrNm);  //CST_NM    고객명
+        param += lpad("C", 30, ""); //SECT_EML_CNFM_NO  보안이메일확인번호
+        param += lpad("C", 200, umsSdChnNo);    //UMS_SD_CHN_NO UMS발송채널번호
+        param += lpad("C", 4000, "");   //UMS_SD_CHN_ADDR_CONE  UMS발송채널주소내용
+        param += lpad("C", 8, Objects.isNull(sendDt) ? trDt : sendDt);  //UMS_SD_MPL_DT UMS발송예정일자
+        param += lpad("C", 6, (Objects.isNull(sendTime) ? "" : sendTime));  //UMS_SD_MPL_TM UMS발송예정시각
+        param += lpad("C", 100, umsTmeChnNo);   //UMS_TME_CHN_NO    UMS송신채널번호
+        param += "HUR"; //APP_C 어플리케이션코드
+        param += "XH";  //APP_BZ_LV1_C  어플리케이션업무1레벨코드
+        param += lpad("C", 14, reqUsid);    //REQ_USID  요청사용자ID
+        param += lpad("C", 100, reqUsrNm);  //REQ_USR_NM    요청사용자명
+        param += lpad("C", 3, reqBbrC); //REQ_BBR_C 요청부점코드
+        param += lpad("C", 100, reqBbrNm);  //REQ_BBR_NM    요청부점명
+        param += "N";   //UMS_CKG_C UMS점검코드
+        param += lpad("C", 4000, "");   //APG_FL_CONE   첨부파일내용
+        param += lpad("C", 6, trTm);    //TR_TM 거래시각
+        param += umsSdChnTpC;   //UMS_SD_CHN_TP_C   UMS발송채널유형코드
+        param += "10";  //CHN_REQ_TP_C  채널요청유형코드
+        param += lpad("C", 100, "");    //BZ_DCM_INF_CONE   업무식별정보내용
+        param += lpad("C", 1000, "");   //UMS_BZ_RFR_CONE   UMS업무참조내용
+        param += lpad("C", 1, "N"); //DEL_YN    삭제여부
+        param += lpad("C", 14, "SYSTEM");   //LST_CHG_USID  최종변경사용자ID
+        param += "EHR"; //BZ_C_S3   UMS요청시스템코드
+        param += lpad("N", 9, variDatLenN9);    //VARI_DAT_LEN_N9   가변데이터길이_N9
+        param += variDatS0; //VARI_DAT_S0   가변데이터_S0
 
         return param;
     }
 
-    /*
-    private String getParamGWE(EaiDTO request) throws IndexOutOfBoundsException {
-        //request
-        String recvIds = request.getEmplNum();      //수신자 행번 (퇴직자 금지)
-
-        //메시지키값
-        String dt = new SimpleDateFormat("yyyyMMddHHmmss", LocaleContextHolder.getLocale()).format(new Date());
-        String num = getRandomNum(8);
-        String msgKey = "mailt" + "ECP" + "CX" + dt + num;
-
-        //템플릿 가져오기
-        //EaiDTO templ = eaiMapper.getNotificationTemplate(request);
-
-        //알림내용
-        String notifCnts = HtmlUtils.htmlUnescape(templ.getNotifCnts());
-        if (!ObjectUtils.isEmpty(request.getUmData1())) {
-            notifCnts = notifCnts.replaceAll("UM_DATA_1", request.getUmData1());
-        }
-        if (!ObjectUtils.isEmpty(request.getUmData2())) {
-            notifCnts = notifCnts.replaceAll("UM_DATA_2", request.getUmData2());
-        }
-        if (!ObjectUtils.isEmpty(request.getUmData3())) {
-            notifCnts = notifCnts.replaceAll("UM_DATA_3", request.getUmData3());
-        }
-        if (!ObjectUtils.isEmpty(request.getUmData4())) {
-            notifCnts = notifCnts.replaceAll("UM_DATA_4", request.getUmData4());
-        }
-        if (!ObjectUtils.isEmpty(request.getUmData5())) {
-            notifCnts = notifCnts.replaceAll("UM_DATA_5", request.getUmData5());
-        }
-        if (!ObjectUtils.isEmpty(request.getUmData6())) {
-            notifCnts = notifCnts.replaceAll("UM_DATA_6", request.getUmData6());
-        }
-        if (!ObjectUtils.isEmpty(request.getUmData7())) {
-            notifCnts = notifCnts.replaceAll("UM_DATA_7", request.getUmData7());
-        }
-
-        String subject = templ.getNotifTitle();
-        String contents = notifCnts;
-
-        String param = "";                      //필드명				필드설명				Type	Length	Offset	값(예제로 받은 값, 알맞게 변경)
-        param += lpad("C", 32, msgKey);         //MSG_KEY			메시지키값			STRING	32				alert+어플리케이션코드(3)+업무레벨(2)+날짜(년월일시분초)+임의의수(8) (alertBICTQ2017120814152700000001)
-        param += lpad("C", 1, "3");             //MSG_GUBUN			알림구분				STRING	1				1:메신저, 3:메일
-        param += lpad("C", 50, "systemalert");  //SEND_ID			전송자 사원번호		STRING	50				전송자 행번(k+개인번호), 또는 부서 ID - 시스템알림의 경우 “systemalert” 으로 등록
-        param += lpad("C", 100, "관리자");       //SEND_NAME			전송자 이름			STRING	100				-”직원명”,  “시스템명,  “업무명“ - 예) “000관리자”
-        param += lpad("C", 1, "1");             //DEST_GUBUN		수신자 구분			STRING	1               1:사용자(Default), 2: 부서
-        param += lpad("C", 4000, recvIds);      //RECV_IDS			수신자 정보			STRING	4000            수신자 정보 : 사원번호(emp_code) 또는 부서코드(dept_code) 목록  (구분자는 콤마(,)) 예) k0011,k0012 또는 kdb0001,kdb0002 (- 필수 : 사용자, 부서 혼용 불가. - 부서는 하위부서 포함되지 않음 - 공백 사용 불가 - 퇴직자행번 입력시 알림 발송 오류 발생)
-        param += lpad("C", 500, "");            //CC_RECV_IDS		참조 수신자 정보		STRING	500             메일 전용
-        param += lpad("C", 500, "");            //BCC_RECV_IDS      숨은참조 수신자 정보	STRING	500             메일 전용
-        param += lpad("C", 200, subject);       //SUBJECT			제목					STRING	200
-        param += lpad("C", 4000, contents);     //CONTENTS			내용					STRING	4000            HTML TAG 지원
-        param += lpad("C", 500, "");            //URL				메신저 클릭URL		STRING	500             메신저 전용, 예) http://[URL정보]?user_id=(%USER_ID%)&username=(%USER_NAME%) (메신저 TAG 설명- 사원번호 : (%USER_ID%) - 사용자명 : (%USER_NAME%))
-        param += lpad("C", 1, "");              //ATT_FLAG			첨부여부				STRING	1               메일 전용
-        param += lpad("C", 4000, "");           //ATT				첨부정보				STRING	14000           메일 전용
-        param += lpad("C", 3, "ECP");           //SYSTEM_CODE		발송요청 시스템코드	STRING	3
-
-        //알림발송이력 저장
-        request.setSendDttm(dt);
-        insertNotificationSendHistory(request, "GWE", msgKey);
-
-        return param;
-    }
- */
     public static String lpad(String type, int offset, String str) throws IndexOutOfBoundsException {
         String tmpStr = "";
         tmpStr = str;
@@ -808,3 +629,171 @@ public class EaiService {
     }
 
 }
+
+    /*
+    public EaiDTO sendEAIDB(EaiDTO request) {
+        //request
+        String umsBzDttId = request.getTemplId();   //템플릿 ID (TBL_NOTIFICATION_TEMPLATE.TPL_ID)
+        String reqUsid = request.getEmplNum();      //수신자 행번 (퇴직자 금지)
+        String umsSdChnNo = request.getReqCh();     //수신자 채널 (번호/이메일/DM, UMS전용)
+        String umsSdMplDt = request.getSendDt();    //발신 예정일 (YYYYMMDD)
+        String umsSdMplTm = request.getSendTime();  //발신 예정시간 (null-즉시, HHMMSS-예약)
+        String chnReqTpC = request.getSendType();   //발신 유형 (10-즉시, 20-예약)
+
+        //거래일자, 거래시각
+        String trDt = new SimpleDateFormat("yyyyMMdd", LocaleContextHolder.getLocale()).format(new Date());
+
+        //UMS거래일련번호, UMS접수번호
+        String umsTrSno = eaiMapper.notificationSendHistoryCnt(request);
+        String umsRetNo = umsBzDttId + trDt + String.format("%08d", Integer.parseInt(umsTrSno));    //템플릿ID(7) + 연월일(8) + 일련번호(8)UMS_TR_SNO
+
+        //UMS송신채널번호 (SMS~, ALT~, EML~)
+        String umsTmeChnNo = "1588-1500";
+        if ("E".equals(umsBzDttId.substring(0, 1))) { //이메일
+            umsTmeChnNo = "hrd@kdb.co.kr";
+        }
+
+        //요청사용자명, 요청부점코드, 요청부점명
+        EaiDTO user = eaiMapper.getMember(request);
+        String reqUsrNm = user.getNm();
+        String reqBbrC = user.getDeptKey();
+        String reqBbrNm = user.getDeptNm();
+
+        //UMS발송채널유형코드 (SMS(S), ALT(A), EML(M))
+        String umsSdChnTpC = umsBzDttId.substring(0, 1);
+        if ("E".equals(umsSdChnTpC)) {
+            umsSdChnTpC = "M";
+        }
+
+        //가변데이터_S0, 가변데이터길이_N9
+        String variDatS0 = setVariDatS0(request);
+        String variDatLenN9 = String.valueOf(variDatS0.getBytes().length);
+
+        //guid
+        String dt = new SimpleDateFormat("yyyyMMdd", LocaleContextHolder.getLocale()).format(new Date());
+        String dt2 = new SimpleDateFormat("HHmmssSSS", LocaleContextHolder.getLocale()).format(new Date());
+        String num = getRandomNum(9);
+        String num2 = getRandomNum(9);
+        String guid = "ECP" + dt + dt2 + num + num2;
+
+        EaiDTO dto = new EaiDTO();
+        dto.setUmsRetNo(umsRetNo);          //UMS접수번호
+        dto.setUmsBzDttId(umsBzDttId);      //UMS업무구분ID
+        dto.setTrDt(trDt);                  //거래일자
+        dto.setUmsTrSno(umsTrSno);          //UMS거래일련번호
+
+        //dto.setCno("SYSTEM");             //고객번호
+        //dto.setCstNm("관리자");            //고객명
+        dto.setCno(reqUsid);                //고객번호
+        dto.setCstNm(reqUsrNm);             //고객명
+
+        dto.setSectEmlCnfmNo(null);         //보안이메일확인번호
+        dto.setUmsSdChnNo(umsSdChnNo);      //UMS발송채널번호
+        dto.setUmsSdChnAddrCone(null);      //UMS발송채널주소내용
+        dto.setUmsSdMplDt(umsSdMplDt);      //UMS발송예정일자
+        dto.setUmsSdMplTm(umsSdMplTm);      //UMS발송예정시각 (null-즉시, HHMMSS-예약)
+        dto.setUmsTmeChnNo(umsTmeChnNo);    //UMS송신채널번호
+        dto.setAppC("ECP");                 //어플리케이션코드
+        dto.setAppBzLv1C("CX");             //어플리케이션업무1레벨코드
+
+        //dto.setReqUsid(reqUsid);          //요청사용자ID
+        //dto.setReqUsrNm(reqUsrNm);        //요청사용자명
+        dto.setReqUsid("SYSTEM");           //요청사용자ID
+        dto.setReqUsrNm("관리자");           //요청사용자명
+        //dto.setReqBbrC(reqBbrC);          //요청부점코드
+        //dto.setReqBbrNm(reqBbrNm);        //요청부점명
+
+        dto.setUmsCkgC("N");                //UMS점검코드
+        dto.setUmsSdMsgInf(variDatS0);      //UMS발송메시지정보
+        dto.setApgFlCone(null);             //첨부파일내용
+        dto.setTrTm(null);                  //거래시각
+        dto.setUmsSdChnTpC(umsSdChnTpC);    //UMS발송채널유형코드
+        dto.setChnReqTpC(chnReqTpC);        //채널요청유형코드  (10-실시간, 20-스케쥴)
+        dto.setBzDcmInfCone(null);          //업무식별정보내용
+        dto.setUmsBzRfrCone(null);          //UMS업무참조내용
+        dto.setBzCS3("ECP");                //업무코드_S3
+        dto.setUmsSdMsgClsfTc(null);        //UMS발송메세지분류구분코드
+        dto.setEaiFwdiYn("N");              //EAI전송여부
+        dto.setEaiPrcDtm(null);             //EAI처리일시
+        dto.setIfSysC("ECP");               //인터페이스시스템코드
+        dto.setDelYn("N");                  //삭제여부
+        dto.setGuid(guid);                  //GUID
+        dto.setGuidPrgSno("1");             //GUID진행일련번호
+        dto.setLstChgUsid("SYSTEM");        //최종변경사용자ID
+        //dto.setLstChgDtm();               //최종변경일시
+
+        //DB 발송 INSERT
+        eaiMapper.insertTecpesUmsbati(dto);
+
+        //알림발송이력 저장
+        request.setSendDttm(umsSdMplDt + umsSdMplTm);
+        insertNotificationSendHistory(request, "UMS", umsRetNo);
+
+        return request;
+    }
+ */
+
+ 
+    /*
+    private String getParamGWE(EaiDTO request) throws IndexOutOfBoundsException {
+        //request
+        String recvIds = request.getEmplNum();      //수신자 행번 (퇴직자 금지)
+
+        //메시지키값
+        String dt = new SimpleDateFormat("yyyyMMddHHmmss", LocaleContextHolder.getLocale()).format(new Date());
+        String num = getRandomNum(8);
+        String msgKey = "mailt" + "ECP" + "CX" + dt + num;
+
+        //템플릿 가져오기
+        //EaiDTO templ = eaiMapper.getNotificationTemplate(request);
+
+        //알림내용
+        String notifCnts = HtmlUtils.htmlUnescape(templ.getNotifCnts());
+        if (!ObjectUtils.isEmpty(request.getUmData1())) {
+            notifCnts = notifCnts.replaceAll("UM_DATA_1", request.getUmData1());
+        }
+        if (!ObjectUtils.isEmpty(request.getUmData2())) {
+            notifCnts = notifCnts.replaceAll("UM_DATA_2", request.getUmData2());
+        }
+        if (!ObjectUtils.isEmpty(request.getUmData3())) {
+            notifCnts = notifCnts.replaceAll("UM_DATA_3", request.getUmData3());
+        }
+        if (!ObjectUtils.isEmpty(request.getUmData4())) {
+            notifCnts = notifCnts.replaceAll("UM_DATA_4", request.getUmData4());
+        }
+        if (!ObjectUtils.isEmpty(request.getUmData5())) {
+            notifCnts = notifCnts.replaceAll("UM_DATA_5", request.getUmData5());
+        }
+        if (!ObjectUtils.isEmpty(request.getUmData6())) {
+            notifCnts = notifCnts.replaceAll("UM_DATA_6", request.getUmData6());
+        }
+        if (!ObjectUtils.isEmpty(request.getUmData7())) {
+            notifCnts = notifCnts.replaceAll("UM_DATA_7", request.getUmData7());
+        }
+
+        String subject = templ.getNotifTitle();
+        String contents = notifCnts;
+
+        String param = "";                      //필드명				필드설명				Type	Length	Offset	값(예제로 받은 값, 알맞게 변경)
+        param += lpad("C", 32, msgKey);         //MSG_KEY			메시지키값			STRING	32				alert+어플리케이션코드(3)+업무레벨(2)+날짜(년월일시분초)+임의의수(8) (alertBICTQ2017120814152700000001)
+        param += lpad("C", 1, "3");             //MSG_GUBUN			알림구분				STRING	1				1:메신저, 3:메일
+        param += lpad("C", 50, "systemalert");  //SEND_ID			전송자 사원번호		STRING	50				전송자 행번(k+개인번호), 또는 부서 ID - 시스템알림의 경우 “systemalert” 으로 등록
+        param += lpad("C", 100, "관리자");       //SEND_NAME			전송자 이름			STRING	100				-”직원명”,  “시스템명,  “업무명“ - 예) “000관리자”
+        param += lpad("C", 1, "1");             //DEST_GUBUN		수신자 구분			STRING	1               1:사용자(Default), 2: 부서
+        param += lpad("C", 4000, recvIds);      //RECV_IDS			수신자 정보			STRING	4000            수신자 정보 : 사원번호(emp_code) 또는 부서코드(dept_code) 목록  (구분자는 콤마(,)) 예) k0011,k0012 또는 kdb0001,kdb0002 (- 필수 : 사용자, 부서 혼용 불가. - 부서는 하위부서 포함되지 않음 - 공백 사용 불가 - 퇴직자행번 입력시 알림 발송 오류 발생)
+        param += lpad("C", 500, "");            //CC_RECV_IDS		참조 수신자 정보		STRING	500             메일 전용
+        param += lpad("C", 500, "");            //BCC_RECV_IDS      숨은참조 수신자 정보	STRING	500             메일 전용
+        param += lpad("C", 200, subject);       //SUBJECT			제목					STRING	200
+        param += lpad("C", 4000, contents);     //CONTENTS			내용					STRING	4000            HTML TAG 지원
+        param += lpad("C", 500, "");            //URL				메신저 클릭URL		STRING	500             메신저 전용, 예) http://[URL정보]?user_id=(%USER_ID%)&username=(%USER_NAME%) (메신저 TAG 설명- 사원번호 : (%USER_ID%) - 사용자명 : (%USER_NAME%))
+        param += lpad("C", 1, "");              //ATT_FLAG			첨부여부				STRING	1               메일 전용
+        param += lpad("C", 4000, "");           //ATT				첨부정보				STRING	14000           메일 전용
+        param += lpad("C", 3, "ECP");           //SYSTEM_CODE		발송요청 시스템코드	STRING	3
+
+        //알림발송이력 저장
+        request.setSendDttm(dt);
+        insertNotificationSendHistory(request, "GWE", msgKey);
+
+        return param;
+    }
+ */

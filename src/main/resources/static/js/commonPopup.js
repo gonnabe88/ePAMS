@@ -50,3 +50,17 @@ const popupBtnReHtmlMsg = (title, html, icon, button_text, url) => {
         }
     });
 }
+
+// 공통 버튼이름 지정 팝업 URL Redirect
+const popupCustBtnReHtmlMsg = (title, html, icon, url, btn) => {
+    Swal.fire({
+        title: title,
+        html: html,
+        icon: icon,
+        showCancelButton: false,
+        confirmButtonColor: "#6c757d",
+        confirmButtonText: btn,
+    }).then((result) => {
+        window.location.href = url
+    });
+}

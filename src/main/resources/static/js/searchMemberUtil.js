@@ -27,6 +27,11 @@ const searchMember = () => {
             $("#memberList").html(data.responseText);
             // AJAX 후에 이벤트 바인딩
             setupEventListeners();
+
+            // 입력폼 값 및 X 버튼 삭제
+            $('#searchMember').val('');
+            $('#clearSearch').attr("hidden", true);
+
         },
         error: function(error) {
             popupMsg("입력 오류", 'Error fetching data : '+error, "error");
@@ -139,8 +144,7 @@ $(document).ready(() => {
 
             itemElement.addEventListener('touchstart', function () {
                 touchTimer = setTimeout(function() {
-                    //itemElement.click(); // 길게 터치했을 때 클릭 이벤트 발생
-                    return false; // 길게 터치했을 때 무시
+                    itemElement.click(); // 길게 터치했을 때 클릭 이벤트 발생
                 }, touchDuration);
             });
 
@@ -156,7 +160,6 @@ $(document).ready(() => {
             return itemElement;
         },
         replace: function(text) {
-            this.input.value = ''; // 입력폼을 비움
             selectedItem = text.value;  // 전체 객체를 전역변수 selectedItem에 저장
             searchMember(); // 검색 함수 호출
 
@@ -216,7 +219,7 @@ $(document).ready(() => {
         }
     }, { passive: false });
 
-// 터치 이벤트에서 스크롤이 외부로 전파되지 않도록 설정
+    // 터치 이벤트에서 스크롤이 외부로 전파되지 않도록 설정
     dropdown.addEventListener('touchmove', function(event) {
         const scrollTop = this.scrollTop;
         const scrollHeight = this.scrollHeight;

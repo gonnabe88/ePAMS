@@ -34,7 +34,17 @@
                 #{resultMsg,    mode=OUT,   jdbcType=VARCHAR}
               )}
     </insert>
-
-
-
+    
+    <insert id="revokeCheck" statementType="CALLABLE" parameterType="dtmApplElaCheckProcDTO">
+        {CALL OHR.P_DTM03_APPL_ELA_CHECK(
+                #{applId,       mode=IN,    jdbcType=NUMERIC},
+                #{modUserId,    mode=IN,    jdbcType=NUMERIC},
+                #{companyCd,    mode=IN,    jdbcType=VARCHAR},
+                #{localeCd,     mode=IN,    jdbcType=VARCHAR},
+                #{tzCd,         mode=IN,    jdbcType=VARCHAR},
+                #{resultCode,   mode=OUT,   jdbcType=VARCHAR},
+                #{resultMsg,    mode=OUT,   jdbcType=VARCHAR}
+              )}
+    </insert>
+    
 </mapper>

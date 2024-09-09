@@ -23,7 +23,8 @@ BEGIN
     FROM OHR.DTM_HIS
     WHERE EMP_ID = an_emp_id
       AND STA_YMD >= ad_sta_ymd
-      AND END_YMD <= ad_end_ymd;
+      AND END_YMD <= ad_end_ymd
+      AND STAT_CD = '132';
 
     -- 조회 결과에 따른 반환값 설정
     IF v_count > 0 THEN

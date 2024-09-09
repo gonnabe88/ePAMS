@@ -60,11 +60,7 @@ public class LoginService {
         loginOTPDTO.setUsername(iamUserDTO.getUsername());
         loginOTPDTO = loginOTPRepo.findValidOneByUsername(loginOTPDTO);
 
-        // ONEGUARD mOTP 연동 인증부 구현 필요
-        log.warn("ONEGUAER otp 검증 요청 및 응답");
-
         return (isiamUserDTO.getUsername() != null) && OTP.equals(loginOTPDTO.getOtp());
-
     }
 
     /**

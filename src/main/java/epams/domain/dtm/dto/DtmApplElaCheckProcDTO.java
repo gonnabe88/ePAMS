@@ -3,12 +3,14 @@ package epams.domain.dtm.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 /***
  * @author 140024
  * @implNote 프로시저 호출용
  * @since 2024-06-09
  */
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Data

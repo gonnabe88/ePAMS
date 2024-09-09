@@ -22,6 +22,11 @@ $(document).ready(function () {
     // 휴가 보유현황 클릭 시 Modal 실행 이벤트 등록
     $('#openDtmStatusModal').on('click', function () {
         $('#dtmStatusModal').modal('show');
-    });   
+    });
+
+    // 취소 클릭 시 Modal 실행 이벤트 등록
+    $('.cancelBtn').on('click', function () {
+        dtmRevokeApplPopup(this);
+    });
 
 });

@@ -1,3 +1,9 @@
+.cancelBtn {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+}
+
 .table {
     --bs-table-bg: transparent;
 }
@@ -23,8 +29,16 @@
     cursor: pointer;
 }
 
+.hidden {
+    display: none !important;
+}
+
+.visible {
+    display: flex !important;
+}
+
 .inlineNumber {
-    display:none;
+    display: none;
 }
 
 .searchResultIcon {
@@ -132,6 +146,25 @@ body {
     box-sizing: border-box; /* 패딩과 테두리를 포함하여 전체 너비를 설정 */
     position: relative; /* 입력 필드에 상대 위치 설정 */
     z-index: 0; /* 입력 필드의 z-index를 낮은 값으로 설정 */
+}
+
+/* 직원검색 입력값 삭제 버튼 */
+.clear-btn {
+    position: absolute;
+    right: 10px;
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+    color: #ccc;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 직원검색 입력값 삭제 버튼 */
+.clear-btn:hover {
+    color: #000;
 }
 
 .awesomplete ul {

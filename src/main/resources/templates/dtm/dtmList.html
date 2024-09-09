@@ -203,17 +203,49 @@
                                 <section class="section" th:each="dtm: ${dtmHis}">
                                     <div class="card">
                                         <div class="card-body">
-                                            <div th:switch="${dtm.status}">
+
+                                            <!-- 상태 (예정/진행/과거/취소) -->
+                                            <div th:if="${dtm.statCd} == '132'">
+                                                <div th:switch="${dtm.status}">
+                                                    <!-- 과거 -->
                                                     <span th:case="${langList['DTM_STATUS_PAST']}" class="badge badge-sm mb-4 bg-secondary">
                                                         <span th:text="${dtm.status}"></span>
                                                     </span>
-                                                <span th:case="${langList['DTM_STATUS_DUE']}" class="badge badge-sm mb-4 bg-primary">
-                                                        <span th:text="${dtm.status}"></span>
+                                                    <!-- 예정 -->
+                                                    <span th:case="${langList['DTM_STATUS_DUE']}">
+                                                        <span th:text="${dtm.status}" class="badge badge-sm mb-4 bg-primary"></span>
+                                                        <!-- 결재완료인 경우 취소 버튼 -->
+                                                        <div th:if="${dtm.statCd} == '132'" class="cancelBtn btn btn-danger btn-sm" 
+                                                            th:attr="data-applId=${dtm.applId}
+                                                                    ,data-dtmHisId=${dtm.dtmHisId}
+                                                                    ,data-staYmd=${dtm.staYmd}
+                                                                    ,data-endYmd=${dtm.endYmd}
+                                                                    ,data-dtmKindCd=${dtm.dtmKindCd}
+                                                                    ,data-dtmReasonCd=${dtm.dtmReasonCd}
+                                                                    ,data-dtmReasonNm=${dtm.dtmReasonNm}
+                                                                    ,data-dtmDispName=${dtm.dtmDispName}">취소</div>                                  
                                                     </span>
-                                                <span th:case="${langList['DTM_STATUS_NOW']}" class="badge badge-sm mb-4 bg-warning">
-                                                        <span th:text="${dtm.status}"></span>
+                                                    <!-- 진행 -->
+                                                    <span th:case="${langList['DTM_STATUS_NOW']}">
+                                                        <span th:text="${dtm.status}"  class="badge badge-sm mb-4 bg-warning"></span>
+                                                        <!-- 결재완료인 경우 취소 버튼 -->
+                                                        <div th:if="${dtm.statCd} == '132'" class="cancelBtn btn btn-danger btn-sm" 
+                                                            th:attr="data-applId=${dtm.applId}
+                                                                    ,data-dtmHisId=${dtm.dtmHisId}
+                                                                    ,data-staYmd=${dtm.staYmd}
+                                                                    ,data-endYmd=${dtm.endYmd}
+                                                                    ,data-dtmKindCd=${dtm.dtmKindCd}
+                                                                    ,data-dtmReasonCd=${dtm.dtmReasonCd}
+                                                                    ,data-dtmReasonNm=${dtm.dtmReasonNm}
+                                                                    ,data-dtmDispName=${dtm.dtmDispName}">취소</div>       
                                                     </span>
+                                                </div>
                                             </div>
+                                            <div th:if="${dtm.statCd} == '141'">
+                                                <span class="badge badge-sm mb-4 bg-secondary">취소</span>
+                                            </div>
+
+                                            <!-- 휴가명 (연차휴가 등) -->
                                             <h6><span th:text="${dtm.dtmReasonNm}"></span></h6>
                                             <div class="d-flex flex-row align-items-center mt-3 mb-3 gap-3">
                                                 <div class="d-flex align-items-center gap-2">
@@ -282,6 +314,9 @@
     <script src="/js/dateInputValidation.js"></script>
     <script src="/js/searchForm.js"></script>
     <script src="/js/selectForm.js"></script>
+
+    <script src="/js/dtmRevokeApplPopup.js"></script>
+
     <script src="/js/list.js"></script>
 </th:block>
 <!-- (end) private script -->

@@ -35,7 +35,7 @@ public class DtmApplProcRepository
 
     /***
      * @author 140024
-     * @implNote (전처리) 근태 신청가능 여부 확인 프로시저 호출
+     * @implNote (후처리) 근태 신청가능 여부 확인 프로시저 호출
      * @since 2024-08-05
      */
     public String callNewCheckProc(final DtmApplElaCheckProcDTO dto){

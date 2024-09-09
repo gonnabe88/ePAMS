@@ -25,22 +25,3 @@ const getCookie = (cookieName) => {
     }
     return decodeURIComponent(cookieValue);
 }
-
-function checkSession() {
-    $.ajax({
-        type: "GET",
-        url: "/check-session",
-        success: function(data) {
-            // 세션이 유효하지 않으면 리다이렉트
-            if (!data.sessionActive) {
-                window.location.href = '/login';
-            }
-        },
-        error: function(jqxhr, status, error) {
-            // 서버 오류 또는 세션이 유효하지 않은 경우
-            if (jqxhr.status === 401 || jqxhr.status === 403) {
-                window.location.href = '/login';
-            }
-        }
-    });
-}

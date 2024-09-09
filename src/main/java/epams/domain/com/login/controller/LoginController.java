@@ -129,7 +129,7 @@ public class LoginController {
     }
 
     /**
-     * 비밀번호 로그인 처리
+     * 비밀번호(+ MFA) 로그인 처리
      * 
      * @return 응답 데이터 맵
      * @throws Exception 예외 발생 시
@@ -160,7 +160,7 @@ public class LoginController {
             if(phoneNo.length() <= 9)
                 throw new CustomGeneralRuntimeException("유효한 휴대폰 번호가 등록되어있지 않습니다.("+maskedPhoneNo+")");
 
-            // 로그인 성공 시 인증번호 생성
+            // PW 로그인 성공 시 MFA 로그인 진행
             try {
 				restapiservice.requestMFA(iamUserDTO);
 			} catch (NoSuchAlgorithmException e) {
@@ -168,12 +168,14 @@ public class LoginController {
 			}
             // 로그인 성공 시 추가 인증 단계로 넘어가기 위해 성공 여부를 반환
             res.put("result", true);
+
             if (existingUser == null) {
                 res.put("simpleauth", false);
             }
             else {
                 res.put("simpleauth", true);
             }
+
         } else {
             // 로그인 실패 시 실패 여부를 반환
             //res.put("result", false);

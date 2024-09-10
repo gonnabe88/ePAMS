@@ -1,10 +1,7 @@
 package epams.domain.dtm.dto;
 
+import lombok.*;
 import pams.model.vo.DtmHisVO;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDateTime;
@@ -20,16 +17,10 @@ import java.util.List;
 @Slf4j
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
+@AllArgsConstructor
 @NoArgsConstructor
 @Data
 public class DtmHisDTO extends DtmHisVO {
-
-    /***
-     * @author 140024
-     * @implNote 페이지당 게시물 수
-     * @since 2024-06-09
-     */
-    private Integer itemsPerPage = 5;
 
     /***
      * @author 140024
@@ -54,13 +45,6 @@ public class DtmHisDTO extends DtmHisVO {
 
     /***
      * @author 140024
-     * @implNote 결재상태코드 리스트 (121/132/131)
-     * @since 2024-06-09
-     */
-    private List<String> statCdList;
-
-    /***
-     * @author 140024
      * @implNote 경과여부 (과거/진행중/예정)
      * @since 2024-06-09
      */
@@ -68,59 +52,17 @@ public class DtmHisDTO extends DtmHisVO {
 
     /***
      * @author 140024
-     * @implNote 근태유형이름 (연차/반차..)
+     * @implNote 근태명 (연차/반차/반반차..)
      * @since 2024-06-09
      */
     private String dtmReasonNm;
 
     /***
      * @author 140024
-     * @implNote 근태유형이름 (연차/반차..)
+     * @implNote 근태종류 (연차/보상..)
      * @since 2024-06-09
      */
     private String dtmKindNm;
-
-    /***
-     * @author 140024
-     * @implNote 근태시작일 입력값
-     * @since 2024-06-09
-     */
-    private String staYmdInput;
-
-    /***
-     * @author 140024
-     * @implNote 근태종료일 입력값
-     * @since 2024-06-09
-     */
-    private String endYmdInput;
-
-    /***
-     * @author 140024
-     * @implNote 종료일
-     * @since 2024-06-09
-     */
-    private int limit;
-
-    /***
-     * @author 140024
-     * @implNote 종료일
-     * @since 2024-06-09
-     */
-    private int offset;
-
-    /***
-     * @author 140024
-     * @implNote 생성자
-     * @since 2024-06-09
-     */
-    public DtmHisDTO(final Long dtmHisId, final Long empId, final String dtmKindCd, final String dtmReasonCd, final LocalDateTime staYmd, final String staHm, final LocalDateTime endYmd, final String endHm, final String dtmReason, final String destPlc, final String telno, final String childNo, final Long applId, final String statCd, final LocalDateTime finalApprYmd, final String modiType, final String modiReason, final Long modiDtmHisId, final Long modUserId, final LocalDateTime modDate, final String tzCd, final LocalDateTime tzDate, final String companyNm, final String document, final String adUseYn, final String mailSendYn, final String esbAskDt, final LocalDateTime childBirthYmd, final String dtmStoreYn, final Long fileId, final String sealMgrYn, final String secuMgrYn, final String infoMgrYn, final String safeMgrYn, final String placeCd, final int limit, final int offset, final String dtmReasonNm, final String statCdNm) {
-        super(dtmHisId, empId, dtmKindCd, dtmReasonCd, staYmd, staHm, endYmd, endHm, dtmReason, destPlc, telno, childNo, applId, statCd, finalApprYmd, modiType, modiReason, modiDtmHisId, modUserId, modDate, tzCd, tzDate, companyNm, document, adUseYn, mailSendYn, esbAskDt, childBirthYmd, dtmStoreYn, fileId, sealMgrYn, secuMgrYn, infoMgrYn, safeMgrYn, placeCd);
-        this.limit = limit;
-        this.offset = offset;
-        this.status = calculateStatus(staYmd, staHm, endYmd, endHm);
-        this.dtmReasonNm = dtmReasonNm;
-        this.statCdNm = statCdNm;
-    }
 
     /***
      * @author 140024

@@ -1,8 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:sec="http://www.thymeleaf.org"
-      layout:decorate="~{common/layout/layout}">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.thymeleaf.org" layout:decorate="~{common/layout/layout}">
 
 <head>
     <!-- (start) private script -->
@@ -23,7 +20,7 @@
                     <!-- 페이지 제목 시작 -->
                     <div class="page-heading">
                         <div class="align-middle">
-                            <h2><i class="bi bi-bell-fill"></i> <span th:text="${langList['DTM_LIST']}"></span> </h2><br>
+                            <h2><i class="bi bi-bell-fill"></i> <span th:text="${langList['DTM_LIST']}"></span></h2><br>
                         </div>
                     </div>
                     <!-- 페이지 제목 끝 -->
@@ -33,15 +30,16 @@
                         <div class="d-flex justify-content-between align-items-center">
                             <!-- Select Dropdown on the Left -->
                             <select id="itemsPerPage" class="form-select form-select-sm ms-2 w-auto" aria-label="Items per page">
-                                <option value="5" selected>5개</option>
-                                <option value="10">10개</option>
-                                <option value="20">20개</option>
-                                <option value="50">50개</option>
+                                <option value="5" th:selected="${itemsPerPage == 5}">5개</option>
+                                <option value="10" th:selected="${itemsPerPage == 10}">10개</option>
+                                <option value="20" th:selected="${itemsPerPage == 20}">20개</option>
+                                <option value="50" th:selected="${itemsPerPage == 50}">50개</option>
                             </select>
 
                             <!-- Button Group on the Right -->
                             <div class="ms-auto">
-                                <button type="button" class="btn btn-primary btn-sm" id="openDtmStatusModal"><span th:text="${langList['DTM_STATUS']}"></span>
+                                <button type="button" class="btn btn-primary btn-sm" id="openDtmStatusModal">
+                                    <span th:text="${langList['DTM_STATUS']}"></span>
                                 </button>
                                 <button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="collapse" data-bs-target="#collapseSearch" aria-expanded="false" aria-controls="collapseSearch">
                                     <i class="bi bi-search"></i><span th:text="${langList['RETRIEVE']}"></span>
@@ -61,14 +59,22 @@
                                             <div class="d-flex align-items-center justify-content-between mb-2">
                                                 <h6><span th:text="${langList['ELA_STAT']}"></span></h6>
                                                 <div class="btn-group btn-group-sm" role="group" aria-label="Basic radio toggle button group">
-                                                    <input type="checkbox" class="btn-check" name="statCdList" id="121" autocomplete="off" checked>
+
+                                                    <!-- 체크박스 121 -->
+                                                    <input type="checkbox" class="btn-check" name="statCdList" id="121" autocomplete="off" th:checked="${#lists.contains(searchDTO.statCdList, '121')}">
                                                     <label class="btn btn-outline-primary" for="121"><span th:text="${langList['ELA_STAT_CD_121_S']}"></span></label>
 
-                                                    <input type="checkbox" class="btn-check" name="statCdList" id="132" autocomplete="off" checked>
+                                                    <!-- 체크박스 132 -->
+                                                    <input type="checkbox" class="btn-check" name="statCdList" id="132" autocomplete="off" th:checked="${#lists.contains(searchDTO.statCdList, '132')}">
                                                     <label class="btn btn-outline-primary" for="132"><span th:text="${langList['ELA_STAT_CD_132_S']}"></span></label>
 
-                                                    <input type="checkbox" class="btn-check" name="statCdList" id="131" autocomplete="off" checked>
+                                                    <!-- 체크박스 131 -->
+                                                    <input type="checkbox" class="btn-check" name="statCdList" id="131" autocomplete="off" th:checked="${#lists.contains(searchDTO.statCdList, '131')}">
                                                     <label class="btn btn-outline-primary" for="131"><span th:text="${langList['ELA_STAT_CD_131_S']}"></span></label>
+
+                                                    <!-- 체크박스 141 -->
+                                                    <input type="checkbox" class="btn-check" name="statCdList" id="141" autocomplete="off" th:checked="${#lists.contains(searchDTO.statCdList, '141')}">
+                                                    <label class="btn btn-outline-primary" for="141"><span th:text="${langList['ELA_STAT_CD_141_S']}"></span></label>
                                                 </div>
                                             </div>
                                         </div>
@@ -77,35 +83,53 @@
                                             <div class="d-flex align-items-center justify-content-between mb-2">
                                                 <h6><span th:text="${langList['DTM_KIND']}"></span></h6>
                                                 <div class="btn-group btn-group-sm" role="group" aria-label="DTM Kind Code Select">
-                                                    <input type="radio" class="btn-check" name="category" id="allCategory" autocomplete="off" checked>
-                                                    <label class="btn btn-outline-primary" for="allCategory"><span th:text="${langList['ENTIRE']}"></span></label>
 
-                                                    <input type="radio" class="btn-check" name="category" id="1A" autocomplete="off">
-                                                    <label class="btn btn-outline-primary" for="1A"><span th:text="${langList['DTM_KIND_CD_1A_S']}"></span></label>
+                                                    <!-- 값이 비어 있으면 allCategory 체크 -->
+                                                    <input type="radio" class="btn-check" name="category" id="allCategory" value="" autocomplete="off" th:checked="${searchDTO.dtmKindCd == null || searchDTO.dtmKindCd.isEmpty()}">
+                                                    <label class="btn btn-outline-primary" for="allCategory">
+                                                        <span th:text="${langList['ENTIRE']}"></span>
+                                                    </label>
 
-                                                    <input type="radio" class="btn-check" name="category" id="1B" autocomplete="off">
-                                                    <label class="btn btn-outline-primary" for="1B"><span th:text="${langList['DTM_KIND_CD_1B_S']}"></span></label>
+                                                    <!-- dtmKindCd 값이 '1A'이면 체크 -->
+                                                    <input type="radio" class="btn-check" name="category" id="1A" value="1A" autocomplete="off" th:checked="${searchDTO.dtmKindCd == '1A'}">
+                                                    <label class="btn btn-outline-primary" for="1A">
+                                                        <span th:text="${langList['DTM_KIND_CD_1A_S']}"></span>
+                                                    </label>
 
-                                                    <input type="radio" class="btn-check" name="category" id="1Z" autocomplete="off">
-                                                    <label class="btn btn-outline-primary" for="1Z"><span th:text="${langList['DTM_KIND_CD_1Z_S']}"></span></label>
+                                                    <!-- dtmKindCd 값이 '1B'이면 체크 -->
+                                                    <input type="radio" class="btn-check" name="category" id="1B" value="1B" autocomplete="off" th:checked="${searchDTO.dtmKindCd == '1B'}">
+                                                    <label class="btn btn-outline-primary" for="1B">
+                                                        <span th:text="${langList['DTM_KIND_CD_1B_S']}"></span>
+                                                    </label>
+
+                                                    <!-- dtmKindCd 값이 '1Z'이면 체크 -->
+                                                    <input type="radio" class="btn-check" name="category" id="1Z" value="1Z" autocomplete="off" th:checked="${searchDTO.dtmKindCd == '1Z'}">
+                                                    <label class="btn btn-outline-primary" for="1Z">
+                                                        <span th:text="${langList['DTM_KIND_CD_1Z_S']}"></span>
+                                                    </label>
+
                                                 </div>
                                             </div>
-                                            <select class="form-control select2" aria-label="DTM Reason Code Select" name="select" id="list">
-                                                <option value="" selected><span th:text="${langList['ENTIRE']}"></span></option>
+
+                                            <select class="form-control select2" aria-label="DTM Reason Code Select" name="select" id="list" th:attr="data-dtmReasonCd=${searchDTO.dtmReasonCd}">
                                             </select>
                                         </div>
 
                                         <div class="card-body p-3">
                                             <h6><span th:text="${langList['DTM_PERIOD']}"></span></h6>
                                             <div class="d-flex align-items-center justify-content-between mb-2">
+                                                <!-- 시작 날짜 -->
                                                 <label for="start-input">
-                                                    <input type="text" class="form-control me-1 start-input" name="start-input" id="start-input" placeholder="YYYY-MM-DD">
+                                                    <input type="text" class="form-control me-1 start-input" name="start-input" id="start-input" placeholder="YYYY-MM-DD" th:value="${searchDTO.staYmdInput}">
                                                 </label>
                                                 <span>~</span>
+                                                <!-- 종료 날짜 -->
                                                 <label for="end-input">
-                                                    <input type="text" class="form-control ms-1 end-input" name="end-input" id="end-input" placeholder="YYYY-MM-DD">
+                                                    <input type="text" class="form-control ms-1 end-input" name="end-input" id="end-input" placeholder="YYYY-MM-DD" th:value="${searchDTO.endYmdInput}">
                                                 </label>
                                             </div>
+
+                                            <!-- 아래 필드는 추가적인 날짜 입력 필드로 보여짐 -->
                                             <div class="d-flex justify-content-center">
                                                 <label for="start-date">
                                                     <input type="text" class="form-control start-date" id="start-date">
@@ -118,10 +142,12 @@
 
                                         <div class="card-body p-3">
                                             <div class="d-flex flex-wrap gap-2 justify-content-end align-items-center mb-2">
-                                                <button class="btn btn-secondary btn-sm" id="reset-button"><span th:text="${langList['RESET']}"></span>
+                                                <button class="btn btn-secondary btn-sm" id="reset-button">
+                                                    <span th:text="${langList['RESET']}"></span>
                                                 </button>
-                                                <button class="btn btn-primary btn-sm" id="search-button"><span th:text="${langList['SEARCH']}"></span>
-                                                </button>                                                
+                                                <button class="btn btn-primary btn-sm" id="search-button">
+                                                    <span th:text="${langList['SEARCH']}"></span>
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
@@ -136,7 +162,8 @@
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="dtmStatusModalLabel"><span th:text="${langList['DTM_STATUS']}"></span></h5>
+                                    <h5 class="modal-title" id="dtmStatusModalLabel">
+                                        <span th:text="${langList['DTM_STATUS']}"></span></h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
@@ -186,7 +213,8 @@
                                     <!-- End of Original Content -->
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal"><span th:text="${langList['CLOSE']}"></span>
+                                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">
+                                        <span th:text="${langList['CLOSE']}"></span>
                                     </button>
                                 </div>
                             </div>
@@ -204,59 +232,50 @@
                                     <div class="card">
                                         <div class="card-body">
 
-                                            <!-- 상태 (예정/진행/과거/취소) -->
-                                            <div th:if="${dtm.statCd} == '132'">
-                                                <div th:switch="${dtm.status}">
-                                                    <!-- 과거 -->
-                                                    <span th:case="${langList['DTM_STATUS_PAST']}" class="badge badge-sm mb-4 bg-secondary">
-                                                        <span th:text="${dtm.status}"></span>
-                                                    </span>
-                                                    <!-- 예정 -->
-                                                    <span th:case="${langList['DTM_STATUS_DUE']}">
-                                                        <span th:text="${dtm.status}" class="badge badge-sm mb-4 bg-primary"></span>
-                                                        <!-- 결재완료인 경우 취소 버튼 -->
-                                                        <div th:if="${dtm.statCd} == '132'" class="cancelBtn btn btn-danger btn-sm" 
-                                                            th:attr="data-applId=${dtm.applId}
-                                                                    ,data-dtmHisId=${dtm.dtmHisId}
-                                                                    ,data-staYmd=${dtm.staYmd}
-                                                                    ,data-endYmd=${dtm.endYmd}
-                                                                    ,data-dtmKindCd=${dtm.dtmKindCd}
-                                                                    ,data-dtmReasonCd=${dtm.dtmReasonCd}
-                                                                    ,data-dtmReasonNm=${dtm.dtmReasonNm}
-                                                                    ,data-dtmDispName=${dtm.dtmDispName}">취소</div>                                  
-                                                    </span>
-                                                    <!-- 진행 -->
-                                                    <span th:case="${langList['DTM_STATUS_NOW']}">
-                                                        <span th:text="${dtm.status}"  class="badge badge-sm mb-4 bg-warning"></span>
-                                                        <!-- 결재완료인 경우 취소 버튼 -->
-                                                        <div th:if="${dtm.statCd} == '132'" class="cancelBtn btn btn-danger btn-sm" 
-                                                            th:attr="data-applId=${dtm.applId}
-                                                                    ,data-dtmHisId=${dtm.dtmHisId}
-                                                                    ,data-staYmd=${dtm.staYmd}
-                                                                    ,data-endYmd=${dtm.endYmd}
-                                                                    ,data-dtmKindCd=${dtm.dtmKindCd}
-                                                                    ,data-dtmReasonCd=${dtm.dtmReasonCd}
-                                                                    ,data-dtmReasonNm=${dtm.dtmReasonNm}
-                                                                    ,data-dtmDispName=${dtm.dtmDispName}">취소</div>       
-                                                    </span>
+                                            <div class="d-flex flex-row justify-content-start align-items-center gap-2">
+                                                <!-- 상태뱃지(결재 완료인 경우만 표시) -->
+                                                <div th:if="${dtm.statCd} == '132'">
+                                                    <!-- 상태 (예정/진행/과거/취소) -->
+                                                    <div th:switch="${dtm.status}">
+                                                        <!-- 과거 -->
+                                                        <span th:case="${langList['DTM_STATUS_PAST']}" class="badge badge-sm bg-secondary">
+                                                            <span th:text="${dtm.status}"></span>
+                                                        </span>
+                                                        <!-- 예정 -->
+                                                        <span th:case="${langList['DTM_STATUS_DUE']}">
+                                                            <span th:text="${dtm.status}" class="badge badge-sm bg-primary"></span>
+                                                            <!-- 결재완료인 경우 취소 버튼 -->
+                                                            <div th:if="${dtm.statCd} == '132'" class="cancelBtn btn btn-danger btn-sm" th:data-applid="${dtm.applId}" th:data-dtmhisid="${dtm.dtmHisId}" th:data-staymd="${dtm.staYmd}" th:data-endymd="${dtm.endYmd}" th:data-dtmkindcd="${dtm.dtmKindCd}" th:data-dtmreasoncd="${dtm.dtmReasonCd}" th:data-dtmreasonnm="${dtm.dtmReasonNm}" th:data-dtmdispname="${dtm.dtmDispName}">취소</div>
+                                                        </span>
+                                                        <!-- 진행 -->
+                                                        <span th:case="${langList['DTM_STATUS_NOW']}">
+                                                            <span th:text="${dtm.status}" class="badge badge-sm bg-warning"></span>
+                                                            <!-- 결재완료인 경우 취소 버튼 -->
+                                                            <div th:if="${dtm.statCd} == '132'" class="cancelBtn btn btn-danger btn-sm" th:data-applid="${dtm.applId}" th:data-dtmhisid="${dtm.dtmHisId}" th:data-staymd="${dtm.staYmd}" th:data-endymd="${dtm.endYmd}" th:data-dtmkindcd="${dtm.dtmKindCd}" th:data-dtmreasoncd="${dtm.dtmReasonCd}" th:data-dtmreasonnm="${dtm.dtmReasonNm}" th:data-dtmdispname="${dtm.dtmDispName}">취소</div>
+                                                        </span>
+                                                    </div>
                                                 </div>
+                                                <!-- 휴가명 (연차휴가 등) -->
+                                                <h6 class="m-0"><span th:text="${dtm.dtmReasonNm}"></span></h6>
                                             </div>
+
                                             <div th:if="${dtm.statCd} == '141'">
                                                 <span class="badge badge-sm mb-4 bg-secondary">취소</span>
                                             </div>
 
-                                            <!-- 휴가명 (연차휴가 등) -->
-                                            <h6><span th:text="${dtm.dtmReasonNm}"></span></h6>
-                                            <div class="d-flex flex-row align-items-center mt-3 mb-3 gap-3">
+                                            <!--근태기간-->
+                                            <div class="d-flex flex-row align-items-center mt-3 gap-3">
                                                 <div class="d-flex align-items-center gap-2">
-                                                    <h6>
+                                                    <h6 class="m-0">
                                                         <span th:text="${#temporals.format(dtm.staYmd, 'yyyy-MM-dd')}"> </span>
                                                         ~
                                                         <span th:text="${#temporals.format(dtm.endYmd, 'yyyy-MM-dd')}"> </span>
                                                     </h6>
                                                 </div>
                                             </div>
-                                            <div class="d-flex flex-row mb-3 gap-3">
+
+                                            <!--신청일, 결재상태-->
+                                            <div class="d-flex flex-row mt-3 gap-3">
                                                 <div>
                                                     <i class="bi bi-calendar-check"></i>
                                                     <h7 th:text="${#temporals.format(dtm.tzDate, 'yyyy-MM-dd')}"></h7>
@@ -311,13 +330,14 @@
     <script src="/extensions/litepicker/mobilefriendly.js"></script>
     <script src="/extensions/litepicker/initLitepicker.js"></script>
     <script src="/extensions/select2/select2.full.js"></script>
+
     <script src="/js/dateInputValidation.js"></script>
     <script src="/js/searchForm.js"></script>
     <script src="/js/selectForm.js"></script>
 
     <script src="/js/dtmRevokeApplPopup.js"></script>
 
-    <script src="/js/list.js"></script>
+    <script src="/js/dtmList.js"></script>
 </th:block>
 <!-- (end) private script -->
 </body>

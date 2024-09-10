@@ -36,6 +36,7 @@ const initializePicker = (staYmdInput, endYmdInput, startDate, endDate) => {
     $('#staYmdInput').on('change', updatePicker);
     $('#endYmdInput').on('change', updatePicker);
 
+
     // 초기 날짜 설정
     const setInitialDates = () => {
         // 1년 전 날짜 설정
@@ -58,8 +59,8 @@ const initializePicker = (staYmdInput, endYmdInput, startDate, endDate) => {
         picker.setDateRange(lastYear, '');
     }
 
-    setInitialDates(); // 초기화 함수 호출
+    //setInitialDates(); // 초기화 함수 호출
 
     // Reset function for external calls
-    window.resetPicker = setInitialDates; // 글로벌 함수로 설정하여 외부 접근 가능
+    //window.resetPicker = setInitialDates; // 글로벌 함수로 설정하여 외부 접근 가능
 }

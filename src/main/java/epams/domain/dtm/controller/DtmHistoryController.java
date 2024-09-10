@@ -2,6 +2,7 @@ package epams.domain.dtm.controller;
 
 import epams.domain.com.admin.service.HtmlLangDetailService;
 import epams.domain.dtm.dto.DtmHisDTO;
+import epams.domain.dtm.dto.DtmSearchDTO;
 import epams.domain.dtm.service.DtmHistoryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,14 +35,6 @@ import java.util.Map;
 public class DtmHistoryController<S extends Session> {
 
     /**
-     * @author K140024 kk
-     * @implNote list 화면에 노출할 게시물 수 설정값 (application.yml)
-     * @since 2024-06-11
-     */
-    @Value("${kdb.listBrdCnt}")
-    private int listBrdCnt;
-
-    /**
      * @author K140024
      * @implNote 모든 페이지네이션 시 노출할 최대 버튼 수 설정값 (application.yml)
      * @since 2024-06-11
@@ -62,7 +55,6 @@ public class DtmHistoryController<S extends Session> {
      * @since 2024-06-11
      */
     private final DtmHistoryService dtmHisService;
-
 
     /**
      * @author K140024
@@ -86,33 +78,30 @@ public class DtmHistoryController<S extends Session> {
      * @since 2024-06-11
      */
     @GetMapping("/dtmList")
-    public String dtmList(@PageableDefault(page = 1) final Pageable pageable, @ModelAttribute final DtmHisDTO dto, final Model model) {
+    public String dtmList(@PageableDefault(page = 1) final Pageable pageable, @ModelAttribute final DtmSearchDTO searchDTO, final Model model) {
         final String DTMLIST = "dtm/dtmList";
-        dto.setEmpId(Long.parseLong(authentication().getName().replace('K', '7')));
+        searchDTO.setEmpId(Long.parseLong(authentication().getName().replace('K', '7')));
 
-        // 언어목록
+        // 언어목록 조회
         final Map<String, String> langList = langDetailService.getCodeHtmlDetail(DTMLIST);
         model.addAttribute("langList", langList);
 
-        // 근태목록 출력
+        // 근태목록 조회 및 페이지네이션 변수 설정
         final int currentPage = pageable.getPageNumber();
-        final Pageable updatedPageable = PageRequest.of(currentPage, dto.getItemsPerPage());
-        final Page<DtmHisDTO> dtos = dtmHisService.findByCondition(updatedPageable, dto);
-        final int totalPages = dtos.getTotalPages();
+        final Pageable updatedPageable = PageRequest.of(currentPage, searchDTO.getItemsPerPage());
+        final Page<DtmHisDTO> dtmHisDTOList = dtmHisService.findByCondition(updatedPageable, searchDTO);
+        final int totalPages = dtmHisDTOList.getTotalPages();
         int startPage = Math.max(1, currentPage - (maxPageBtn / 2));
         final int endPage = Math.min(totalPages, startPage + maxPageBtn - 1);
-
         if (endPage - startPage < maxPageBtn - 1) {
             startPage = Math.max(1, endPage - maxPageBtn + 1);
         }
 
-
-        log.warn(dtos.toString());
-        log.info("startPage : " + startPage + " endPage : " + endPage + " totalPages : " + totalPages + " currentPage : " + currentPage);
-        model.addAttribute("dtmHis", dtos);
+        model.addAttribute("dtmHis", dtmHisDTOList);
+        model.addAttribute("searchDTO", searchDTO);
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
-        model.addAttribute("itemsPerPage", dto.getItemsPerPage());
+        model.addAttribute("itemsPerPage", searchDTO.getItemsPerPage());
 
         return DTMLIST;
     }

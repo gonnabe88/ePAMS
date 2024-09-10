@@ -13,106 +13,61 @@
 
 // 페이지네이션 링크 주소 업데이트
 const updatePaginationLinks = () => {
-    // 폼의 값 가져오기
-    let statCdList = [];
+    // 결재상태
+    const statCdList = [];
     $('input[name="statCdList"]:checked').each(function() {
         statCdList.push($(this).attr('id'));
     });
-    let dtmReasonCd = $('#list option:selected').val();
-    let staYmdInput = $('#start-input').val();
-    let endYmdInput = $('#end-input').val();
-    let itemsPerPage = $('#itemsPerPage').val();
+    const dtmReasonCd = $('#list').data('dtmreasoncd') || ''; // 근태유형 (undefined 처리)
+    const dtmKindCd = $('input[name="category"]:checked').val()|| ''; //근태종류 undefined 처리
+    const staYmdInput = $('#start-input').val(); // 근태기간(시작일)
+    const endYmdInput = $('#end-input').val(); // 근태기간(종료일)
+    const itemsPerPage = $('#itemsPerPage').val(); // 페이지 아이템수
 
     // 페이지네이션 링크 업데이트
     $('.page-link').each(function() {
-        let baseUrl = $(this).attr('href').split('?')[0];
-        let newUrl = `${baseUrl}?page=${$(this).text()}&statCdList=${statCdList.join(',')}&dtmReasonCd=${dtmReasonCd}&staYmdInput=${staYmdInput}&endYmdInput=${endYmdInput}&itemsPerPage=${itemsPerPage}`;
+        let baseUrl = '/dtm/dtmList';
+        let newUrl = `${baseUrl}?page=${$(this).text()}&statCdList=${statCdList.join(',')}&dtmReasonCd=${dtmReasonCd}&dtmKindCd=${dtmKindCd}&staYmdInput=${staYmdInput}&endYmdInput=${endYmdInput}&itemsPerPage=${itemsPerPage}`;
         $(this).attr('href', newUrl);
     });
 }
 
-// 페이지네이션 버튼 클릭 시 전체화면을 reload 하지 않도록 비동기 처리
-// 2024-08-11 CWE-79(Cross-site Scripting (XSS)) 취약점 조치
-$(document).on('click', '.page-link', function(event) {
-    event.preventDefault();
-    let url = $(this).attr('href');
-    $.get(url, function(data) {
-        let safeHTML = DOMPurify.sanitize($(data).find('#dtmListContainer').html(), {
-            SAFE_FOR_TEMPLATES: true,
-            ALLOWED_TAGS: ['h7', 'h6', 'h5', 'h4', 'h3', 'h2', 'h1', 'div', 'span', 'section', 'i', 'ul', 'li', 'a'], // 필요시 추가
-            FORBID_ATTR: ['style']
-        });
-        $('#dtmListContainer').html(safeHTML);
-        updatePaginationLinks(); // 페이지 업데이트 후 다시 링크 업데이트        
-        window.scrollTo({ top: 0, behavior: 'smooth' }); // 페이지 업데이트 후 화면을 최상단으로 스크롤
+// 조회 함수
+const search = () => {
+    // 조회 조건 가져오기
+    const statCdList = [];
+    $('input[name="statCdList"]:checked').each(function() {
+        statCdList.push($(this).attr('id'));
     });
-});
+    const dtmReasonCd = $('#list option:selected').val() || ''; // undefined 처리
+    const dtmKindCd = $('input[name="category"]:checked').val()|| ''; // undefined 처리
+    const staYmdInput = $('#start-input').val();
+    const endYmdInput = $('#end-input').val();
+    const itemsPerPage = $('#itemsPerPage').val();
 
-// (검색폼) 조회 버튼 클릭 시
-$('#search-button').on('click', function() {
-    search();
-    // 페이지네이션 링크 업데이트
-    updatePaginationLinks(); 
-});
+    console.log("검색폼");
+    console.log(statCdList, dtmReasonCd, dtmKindCd, staYmdInput, endYmdInput, itemsPerPage);
 
-// (검색폼) 초기화 버튼 클릭 시 폼 초기화 후 목록 갱신
-$('#reset-button').on('click', function() {
+    // 검색 조건에 맞는 데이터를 포함한 새로운 URL을 만듭니다.
+    let baseUrl = '/dtm/dtmList';
+    let newUrl = `${baseUrl}?&statCdList=${statCdList.join(',')}&dtmReasonCd=${dtmReasonCd}&dtmKindCd=${dtmKindCd}&staYmdInput=${staYmdInput}&endYmdInput=${endYmdInput}&itemsPerPage=${itemsPerPage}`;
+
+    // 새로운 URL로 리다이렉트하여 페이지를 로드합니다.
+    window.location.href = newUrl;
+
+    // 검색 버튼 collapse 처리
+    $('#collapseSearch').collapse('hide');
+};
+
+// 검색 폼에서 초기화를 눌렀을 때
+const resetSelect = () => {
     $('input[name="statCdList"]').prop('checked', true); // 모든 체크박스 체크
     $('input[name="select"]').prop('checked', false); // 모든 라디오버튼 해제
     $('#allCategory').prop('checked', true); // '전체' 라디오버튼 체크
     $('#list').val(''); // 셀렉트박스 초기화
     $('#itemsPerPage').val('5'); // 페이지네이션 갯수 초기화
-
-    // 시작 날짜 초기화
-    const oneYear = new Date();
-    oneYear.setFullYear(oneYear.getFullYear() - 1);
-    const lastYear = oneYear.toISOString().split('T')[0];
-    $('#start-input').val(lastYear); // 시작 날짜 초기화
-
-    // 종료 날짜 초기화
-    //const today = new Date().toISOString().split('T')[0];
-    //$('#end-input').val(today);
-
     window.resetPicker(); // Datepicker 초기화
-    resetSelect(); // Select2 초기화
-    search(); // 목록 갱신
-});
 
-// (목록수) itemsPerPage Select Box 선택 시 목록 갱신
-$('#itemsPerPage').on('change', function() {
-    search();    
-});
-
-// 목록 갱신 함수
-const search = () => {
-    let statCdList = [];
-    $('input[name="statCdList"]:checked').each(function() {
-        statCdList.push($(this).attr('id'));
-    });
-    let dtmReasonCd = $('#list option:selected').val() || ''; // Handle undefined by defaulting to ''
-    let staYmdInput = $('#start-input').val();
-    let endYmdInput = $('#end-input').val();
-    let itemsPerPage = $('#itemsPerPage').val();
-
-    // 검색 조건에 맞는 데이터 조회
-    // 2024-08-11 CWE-79(Cross-site Scripting (XSS)) 취약점 조치
-    $.get(`/dtm/dtmList?statCdList=${statCdList.join(',')}&dtmReasonCd=${dtmReasonCd}&staYmdInput=${staYmdInput}&endYmdInput=${endYmdInput}&itemsPerPage=${itemsPerPage}`, function(data) {
-        let safeHTML = DOMPurify.sanitize($(data).find('#dtmListContainer').html(), {
-            SAFE_FOR_TEMPLATES: true,
-            ALLOWED_TAGS: ['h7', 'h6', 'h5', 'h4', 'h3', 'h2', 'h1', 'div', 'span', 'section', 'i', 'ul', 'li', 'a'], // 필요시 추가
-            FORBID_ATTR: ['style']
-        });
-        $('#dtmListContainer').html(safeHTML);
-        updatePaginationLinks(); // 페이지 업데이트 후 다시 링크 업데이트
-        window.scrollTo({ top: 0, behavior: 'smooth' }); // 페이지 업데이트 후 화면을 최상단으로 스크롤
-    });
-
-    // 검색 버튼 collapse 처리
-    $('#collapseSearch').collapse('hide');    
-}
-
-// Function to reset Select2 component
-const resetSelect = () => {
     $.ajax({
         url: "/api/commoncode/code/DTM_REASON_CD",
         method: 'GET',

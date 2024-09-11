@@ -23,13 +23,18 @@ const updatePaginationLinks = () => {
     const staYmdInput = $('#start-input').val(); // 근태기간(시작일)
     const endYmdInput = $('#end-input').val(); // 근태기간(종료일)
     const itemsPerPage = $('#itemsPerPage').val(); // 페이지 아이템수
+    const startPage = $('.first.page-link').length ? $('.first.page-link').data('startPage') : ''; 
+    const endPage = $('.last.page-link').length ? $('.last.page-link').data('endPage') : ''; 
+    let baseUrl = '/dtm/dtmList?page=';
+    let searchParam = `&statCdList=${statCdList.join(',')}&dtmReasonCd=${dtmReasonCd}&dtmKindCd=${dtmKindCd}&staYmdInput=${staYmdInput}&endYmdInput=${endYmdInput}&itemsPerPage=${itemsPerPage}`;
 
     // 페이지네이션 링크 업데이트
     $('.page-link').each(function() {
-        let baseUrl = '/dtm/dtmList';
-        let newUrl = `${baseUrl}?page=${$(this).text()}&statCdList=${statCdList.join(',')}&dtmReasonCd=${dtmReasonCd}&dtmKindCd=${dtmKindCd}&staYmdInput=${staYmdInput}&endYmdInput=${endYmdInput}&itemsPerPage=${itemsPerPage}`;
-        $(this).attr('href', newUrl);
+        $(this).attr('href', baseUrl+`${$(this).text()}`+searchParam);
     });
+    $('.first.page-link').length ? $('.first.page-link').attr('href') : baseUrl+startPage+searchParam;
+    $('.last.page-link').length ? $('.last.page-link').attr('href') : baseUrl+endPage+searchParam;
+
 }
 
 // 조회 함수

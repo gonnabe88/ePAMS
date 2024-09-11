@@ -22,7 +22,7 @@ public class ElaApplTrCDTO extends ElaApplTrCVO {
      * @implNote 생성자
      * @since 2024-08-04
      */
-    public ElaApplTrCDTO(Long empId, String apprKind, Long applId, Integer ordNo) {
+    public ElaApplTrCDTO(Long empId, String apprKind, Long applId, Integer ordNo, String apprCd) {
         super(); // 부모 클래스의 기본 생성자 호출
 
         this.setApprKind(apprKind); // 요청승인구분
@@ -30,5 +30,6 @@ public class ElaApplTrCDTO extends ElaApplTrCVO {
         this.setOrdNo(ordNo); // 결재순번
         this.setApprEmpId(empId); // 결재직원ID
         this.setModUserId(empId); // 변경자
+        this.setApprCd(apprCd);
     }
 }

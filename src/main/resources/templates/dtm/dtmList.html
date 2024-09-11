@@ -175,23 +175,23 @@
                                                     <thead>
                                                     <tr>
                                                         <th></th>
-                                                        <th>보유</th>
+                                                        <th>전체</th>
                                                         <th>사용</th>
-                                                        <th>잔여</th>
+                                                        <th>보유</th>
                                                     </tr>
                                                     </thead>
                                                     <tbody>
                                                     <tr>
                                                         <td>연차(기본)</td>
-                                                        <td>18일</td>
-                                                        <td>16일</td>
-                                                        <td>2일</td>
+                                                        <td th:text="${dtmAnnualStatus.AnnualDayTotalCnt}">-</td>
+                                                        <td th:text="${dtmAnnualStatus.AnnualDayUsedCnt}">-</td>
+                                                        <td th:text="${dtmAnnualStatus.AnnualDayRemainCnt}">-</td>
                                                     </tr>
                                                     <tr>
                                                         <td>연차(저축)</td>
-                                                        <td>-</td>
-                                                        <td>-</td>
-                                                        <td>-</td>
+                                                        <td th:text="${dtmAnnualStatus.SaveDayTotalCnt}">-</td>
+                                                        <td th:text="${dtmAnnualStatus.SaveDayTotalCnt}">-</td>
+                                                        <td th:text="${dtmAnnualStatus.SaveDayTotalCnt}">-</td>
                                                     </tr>
                                                     <tr>
                                                         <td>보상휴가</td>
@@ -254,13 +254,13 @@
                                                             <div th:if="${dtm.statCd} == '132'" class="cancelBtn btn btn-danger btn-sm" th:data-applid="${dtm.applId}" th:data-dtmhisid="${dtm.dtmHisId}" th:data-staymd="${dtm.staYmd}" th:data-endymd="${dtm.endYmd}" th:data-dtmkindcd="${dtm.dtmKindCd}" th:data-dtmreasoncd="${dtm.dtmReasonCd}" th:data-dtmreasonnm="${dtm.dtmReasonNm}" th:data-dtmdispname="${dtm.dtmDispName}">취소</div>
                                                         </span>
                                                     </div>
+                                                    <!-- 취소 버튼 -->
+                                                    <div th:if="${dtm.statCd} == '141'">
+                                                        <span class="badge badge-sm mb-4 bg-secondary">취소</span>
+                                                    </div>
                                                 </div>
                                                 <!-- 휴가명 (연차휴가 등) -->
                                                 <h6 class="m-0"><span th:text="${dtm.dtmReasonNm}"></span></h6>
-                                            </div>
-
-                                            <div th:if="${dtm.statCd} == '141'">
-                                                <span class="badge badge-sm mb-4 bg-secondary">취소</span>
                                             </div>
 
                                             <!--근태기간-->
@@ -297,7 +297,7 @@
                             <ul class="pagination pagination-primary justify-content-center align-items-center">
                                 <!-- Previous button -->
                                 <li class="page-item" th:classappend="${startPage == 1} ? 'disabled'">
-                                    <a class="page-link" th:href="@{|?page=${startPage - 1}|}" th:if="${startPage > 1}">
+                                    <a class="first page-link" th:data-startPage="${startPage - 1}" th:href="@{|?page=${startPage - 1}|}" th:if="${startPage > 1}">
                                         <span><i class="bi bi-caret-left-fill"></i></span>
                                     </a>
                                 </li>
@@ -307,7 +307,7 @@
                                 </li>
                                 <!-- Next button -->
                                 <li class="page-item" th:classappend="${endPage == dtmHis.totalPages} ? 'disabled'" th:if="${endPage < dtmHis.totalPages}">
-                                    <a class="page-link" th:href="@{|?page=${endPage + 1}|}">
+                                    <a class="last page-link" th:data-endPage="${endPage + 1}" th:href="@{|?page=${endPage + 1}|}">
                                         <span><i class="bi bi-caret-right-fill"></i></span>
                                     </a>
                                 </li>

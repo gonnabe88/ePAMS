@@ -92,11 +92,11 @@ public class MFALoginService {
                 switch (iamUserDTO.getMFA()) {
                     case "SMS":
                         eaiDto.setUmsBzDttId("SMS2096"); // UMS업무구분ID
-                        eaiDto.setIfId(""); // EAI 인터페이스 ID
+                        eaiDto.setIfId("EHRO00043754"); // EAI 인터페이스 ID
                         break;
                     case "카카오톡":
                         eaiDto.setUmsBzDttId("ALT0165"); // UMS업무구분ID
-                        eaiDto.setIfId(""); // EAI 인터페이스 ID
+                        eaiDto.setIfId("EHRO00043754"); // EAI 인터페이스 ID
                         break;
                 }
                 

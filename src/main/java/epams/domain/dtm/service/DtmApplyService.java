@@ -85,10 +85,10 @@ public class DtmApplyService {
 			dtmHisRepo.insert(dtmHisDTO); // 근태신청 추가
 
 			// 신청서결재내역 추가
-			final ElaApplTrCDTO elaApplTrCDTO = new ElaApplTrCDTO(dtmHisDTO.getEmpId(), "1", applId, 1); // ElaApplTrCDTO(신청서결재내역) 객체 생성
+			final ElaApplTrCDTO elaApplTrCDTO = new ElaApplTrCDTO(dtmHisDTO.getEmpId(), "1", applId, 1, "201"); // ElaApplTrCDTO(신청서결재내역) 객체 생성
 			elaApplTrCRepo.insert(elaApplTrCDTO); // 신청서결재내역 추가
 
-			// 사후검증 프로시저
+			// 사후검증 프로시저 #1
 			final DtmApplElaCheckProcDTO postCheckProcDTO = new DtmApplElaCheckProcDTO(
 					dtmHisDTO.getApplId(),
 					dtmHisDTO.getEmpId()
@@ -109,8 +109,16 @@ public class DtmApplyService {
 			dtmHisRepo.updateByApplId(dtmHisDTO); // 결재완료 상태로 업데이트
 			
 			// 신청서결재내역 업데이트
-			elaApplTrCDTO.setApprCd("132"); // 결재완료 상태 세팅
+			elaApplTrCDTO.setApprCd("202"); // 결재완료 상태 세팅
 			elaApplTrCRepo.updateByApplId(elaApplTrCDTO); // 결재완료 상태로 업데이트
+
+			// 사후검증 프로시저 #2
+			proCheckProcRepo.callNewCheckProc(postCheckProcDTO); // 사후검증 프로시저 호출
+
+			// 사후검증 실패 시 예외 처리
+			if ("FAILURE!".equals(postCheckProcDTO.getResultCode())) {
+				throw new CustomGeneralRuntimeException(postCheckProcDTO.getResultMsg());
+			}
 
 			return "신청이 성공적으로 처리되었습니다.";
 

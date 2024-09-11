@@ -1,8 +1,10 @@
 package epams.domain.dtm.controller;
 
 import epams.domain.com.admin.service.HtmlLangDetailService;
+import epams.domain.dtm.dto.DtmAnnualStatusDTO;
 import epams.domain.dtm.dto.DtmHisDTO;
 import epams.domain.dtm.dto.DtmSearchDTO;
+import epams.domain.dtm.service.DtmAnnualStatusService;
 import epams.domain.dtm.service.DtmHistoryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -56,6 +58,14 @@ public class DtmHistoryController<S extends Session> {
      */
     private final DtmHistoryService dtmHisService;
 
+    
+    /**
+     * @author K140024
+     * @implNote DTM 서비스 주입
+     * @since 2024-06-11
+     */
+    private final DtmAnnualStatusService dtmAnnualStatusService;
+
     /**
      * @author K140024
      * @implNote 현재 인증된 사용자 정보를 가져오는 메소드
@@ -82,6 +92,11 @@ public class DtmHistoryController<S extends Session> {
         final String DTMLIST = "dtm/dtmList";
         searchDTO.setEmpId(Long.parseLong(authentication().getName().replace('K', '7')));
 
+        // 휴가보유 현황
+        final DtmAnnualStatusDTO dtmAnnualStatusDTO = dtmAnnualStatusService.getDtmAnnualStatus(searchDTO.getEmpId());
+        DtmAnnualStatusDTO.removeBracket(dtmAnnualStatusDTO);
+        model.addAttribute("dtmAnnualStatus", dtmAnnualStatusDTO);
+        
         // 언어목록 조회
         final Map<String, String> langList = langDetailService.getCodeHtmlDetail(DTMLIST);
         model.addAttribute("langList", langList);
@@ -97,6 +112,9 @@ public class DtmHistoryController<S extends Session> {
             startPage = Math.max(1, endPage - maxPageBtn + 1);
         }
 
+        log.info("startPage : " + startPage +" endPage : " + endPage + " TotalElements : " + dtmHisDTOList.getTotalElements());
+
+        
         model.addAttribute("dtmHis", dtmHisDTOList);
         model.addAttribute("searchDTO", searchDTO);
         model.addAttribute("startPage", startPage);

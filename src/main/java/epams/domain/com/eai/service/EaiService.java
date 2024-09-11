@@ -69,7 +69,7 @@ public class EaiService {
 
         log.warn("reqData : " + new String(reqData, StandardCharsets.UTF_8));
 
-        /* Http 발송 
+
         try {
             // 요청 처리
             URL url = new URL(urlStr);
@@ -78,10 +78,11 @@ public class EaiService {
             conn.setReadTimeout(3 * 1000); // 거래 타임아웃
             conn.addRequestProperty("Content-Type", "application/octet-stream");
             conn.addRequestProperty("Content-Length", "" + reqData.length);
+            System.out.println("HTTP LEGNTH" + reqData.length);
             conn.setDoOutput(true);
             conn.setDoInput(true);
             os = conn.getOutputStream();
-            System.out.println("HTTP REQ[" + urlStr + "][" + new String(rtnData) + "]");
+            System.out.println("HTTP REQ[" + urlStr + "][" + new String(reqData) + "]");
             os.write(reqData);
             os.flush();
             System.out.println("HTTP Response [" + conn.getResponseCode() + "]" + conn.getResponseMessage());
@@ -103,14 +104,14 @@ public class EaiService {
             System.out.println("HTTP RES[" + urlStr + "][" + new String(rtnData) + "]");
         } catch (IOException e) {
             log.info("sendEAI, 02");
-            //log.info("{}", LogUtil.getFullLogMessage(e));
+            log.info("{}", e.getMessage());
         } finally {
             if (baos != null) {
                 try {
                     baos.close();
                 } catch (IOException ee) {
                     log.info("sendEAI, 03");
-                    //log.info("{}", LogUtil.getFullLogMessage(ee));
+                    log.info("{}", ee.getMessage());
                 }
             }
             if (os != null) {
@@ -118,7 +119,7 @@ public class EaiService {
                     os.close();
                 } catch (IOException ee) {
                     log.info("sendEAI, 04");
-                    //log.info("{}", LogUtil.getFullLogMessage(ee));
+                    log.info("{}", ee.getMessage());
                 }
             }
             if (is != null) {
@@ -126,14 +127,13 @@ public class EaiService {
                     is.close();
                 } catch (IOException ee) {
                     log.info("sendEAI, 05");
-                    //log.info("{}", LogUtil.getFullLogMessage(ee));
+                    log.info("{}", ee.getMessage());
                 }
             }
             if (conn != null) {
                 conn.disconnect();
             }
         }
-        */
         return new EaiDTO();
     }
     private byte[] getReqData(EaiDTO request) throws IndexOutOfBoundsException {

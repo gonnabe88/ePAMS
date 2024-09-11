@@ -1,6 +1,7 @@
 package epams.domain.dtm.repository;
 
 import epams.domain.dtm.dto.DtmHisDTO;
+import epams.domain.dtm.dto.DtmSearchDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -29,8 +30,8 @@ public class DtmHistoryRepository {
      * @implNote 조건(ID, 기간 등)에 맞는 모든 근태 조회
      * @since 2024-06-09
      */
-    public List<DtmHisDTO> findByCondition(final DtmHisDTO dto) {
-        return sql.selectList("DtmHis.findByCondition", dto);
+    public List<DtmHisDTO> findByCondition(final DtmSearchDTO searchDTO) {
+        return sql.selectList("DtmHis.findByCondition", searchDTO);
     }
 
     /***
@@ -38,8 +39,8 @@ public class DtmHistoryRepository {
      * @implNote 조건(ID, 기간 등)에 맞는 모든 근태 수
      * @since 2024-06-09
      */
-    public long countByCondition(final DtmHisDTO dto) {
-        return sql.selectOne("DtmHis.countByCondition", dto);
+    public long countByCondition(final DtmSearchDTO searchDTO) {
+        return sql.selectOne("DtmHis.countByCondition", searchDTO);
     }
 
      /***

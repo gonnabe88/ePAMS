@@ -1,14 +1,14 @@
 
 // 근태 취소 팝업
 const dtmRevokeApplPopup = (element) => {
-    const applId = element.getAttribute('data-applId');
-    const dtmHisId = element.getAttribute('data-dtmHisId');
-    const staYmd = element.getAttribute('data-staYmd');
-    const endYmd = element.getAttribute('data-endYmd');
-    const dtmKindCd = element.getAttribute('data-dtmKindCd');
-    const dtmReasonCd = element.getAttribute('data-dtmReasonCd');
-    const dtmReasonNm = element.getAttribute('data-dtmReasonNm');
-    const dtmDispName = element.getAttribute('data-dtmDispName');
+    const applId = element.getAttribute('data-applid');
+    const dtmHisId = element.getAttribute('data-dtmhisid');
+    const staYmd = element.getAttribute('data-staymd');
+    const endYmd = element.getAttribute('data-endymd');
+    const dtmKindCd = element.getAttribute('data-dtmkindcd');
+    const dtmReasonCd = element.getAttribute('data-dtmreasoncd');
+    const dtmReasonNm = element.getAttribute('data-dtmreasonnm');
+    const dtmDispName = element.getAttribute('data-dtmdispname');
 
     // DtmHisDTO 객체 생성
     const dtmHisDTO = {

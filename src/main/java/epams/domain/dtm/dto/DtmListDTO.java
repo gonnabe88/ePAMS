@@ -3,6 +3,7 @@ package epams.domain.dtm.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.time.LocalDate;
 
@@ -11,6 +12,7 @@ import java.time.LocalDate;
  * @implNote 빠른신청 데이터 정의 DTO
  * @since 2024-06-09
  */
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Data

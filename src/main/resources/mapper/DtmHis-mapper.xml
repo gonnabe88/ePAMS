@@ -54,7 +54,7 @@
     </select>
 
     <!-- 특정 데이터 조회 -->
-    <select id="findByCondition" parameterType="dtmHis" resultMap="dtmHisResultMap">
+    <select id="findByCondition" parameterType="dtmSearchDTO" resultMap="dtmHisResultMap">
         SELECT
             d.*,
             x1.CD_NM AS DTM_REASON_NM,
@@ -73,6 +73,9 @@
                 #{item}
             </foreach>
         </if>
+        <if test="dtmKindCd != null and dtmKindCd != ''">
+            AND d.DTM_KIND_CD = #{dtmKindCd}
+        </if>
         <if test="dtmReasonCd != null and dtmReasonCd != ''">
             AND d.DTM_REASON_CD = #{dtmReasonCd}
         </if>
@@ -82,28 +85,39 @@
         <if test="endYmdInput != null and endYmdInput != ''">
             AND d.END_YMD &lt;= TO_DATE(#{endYmdInput}, 'YYYY-MM-DD')
         </if>
-        ORDER BY d.DTM_HIS_ID DESC
+        ORDER BY d.STA_YMD DESC
         OFFSET #{offset} ROWS FETCH NEXT #{limit} ROWS ONLY
     </select>
 
     <!-- 특정 데이터 건수 조회 -->
-    <select id="countByCondition" parameterType="dtmHis" resultType="long">
-        SELECT COUNT(*) FROM OHR.DTM_HIS
-        WHERE EMP_ID = #{empId}
+    <select id="countByCondition" parameterType="dtmSearchDTO" resultType="long">
+        SELECT
+        count(*)
+        FROM
+        OHR.DTM_HIS d
+        LEFT JOIN OHR.XFRMD2C x1 ON d.DTM_REASON_CD = x1.CD
+        AND x1.CD_KIND = 'DTM_REASON_CD'
+        LEFT JOIN OHR.XFRMD2C x2 ON d.STAT_CD = x2.CD
+        AND x2.CD_KIND = 'ELA_STAT_CD'
+        WHERE
+        d.EMP_ID = #{empId}
         <if test="statCdList != null and statCdList.size() > 0">
-            AND STAT_CD IN
+            AND d.STAT_CD IN
             <foreach item="item" index="index" collection="statCdList" open="(" separator="," close=")">
                 #{item}
             </foreach>
         </if>
+        <if test="dtmKindCd != null and dtmKindCd != ''">
+            AND d.DTM_KIND_CD = #{dtmKindCd}
+        </if>
         <if test="dtmReasonCd != null and dtmReasonCd != ''">
-            AND DTM_REASON_CD = #{dtmReasonCd}
+            AND d.DTM_REASON_CD = #{dtmReasonCd}
         </if>
         <if test="staYmdInput != null and staYmdInput != ''">
-            AND STA_YMD &gt;= TO_DATE(#{staYmdInput}, 'YYYY-MM-DD')
+            AND d.STA_YMD &gt;= TO_DATE(#{staYmdInput}, 'YYYY-MM-DD')
         </if>
         <if test="endYmdInput != null and endYmdInput != ''">
-            AND END_YMD &lt;= TO_DATE(#{endYmdInput}, 'YYYY-MM-DD')
+            AND d.END_YMD &lt;= TO_DATE(#{endYmdInput}, 'YYYY-MM-DD')
         </if>
     </select>
 

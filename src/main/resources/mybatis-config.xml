@@ -29,6 +29,7 @@
 
         <typeAlias type="epams.domain.dtm.dto.DtmApplDTO" alias="dtmAppl"></typeAlias>
         <typeAlias type="epams.domain.dtm.dto.DtmHisDTO" alias="dtmHis"></typeAlias>
+        <typeAlias type="epams.domain.dtm.dto.DtmSearchDTO" alias="dtmSearchDTO"></typeAlias>
 
         <typeAlias type="epams.domain.com.commonCode.CommonCodeDTO" alias="commonCodeDTO"></typeAlias>
 

@@ -1,0 +1,30 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- dtm010_03_03_p_07 (업무기준관리 연차촉진기간 조회) -->
+<mapper namespace="DtmGetPromotionYn">
+        <!-- TABLE Result Map 정의 -->
+        <resultMap id="DtmPromotionMap" type="dtmPromotionDTO">
+                <result property="promotionYn" column="PROMOTION_YN"/>
+                <result property="staYmd" column="STA_YMD"/>
+                <result property="endYmd" column="END_YMD"/>
+        </resultMap>
+
+        <select id="getDtmPromotionYn" parameterType="dtmPromotionDTO" resultMap="DtmPromotionMap">
+                SELECT 
+                        CASE WHEN COUNT(*) > 0 THEN 'Y' ELSE 'N' END AS PROMOTION_YN
+                        ,MAX(B.STA_YMD) AS STA_YMD
+                        ,MAX(B.END_YMD) AS END_YMD
+                FROM 
+                        XFRMH01M A
+                        ,XFRMH02T B
+                WHERE 
+                        A.STD_NM = '연차촉진기간'
+                        AND A.COMPANY_CD =  '01'
+                        AND A.UNIT_CD    = 'DTM'
+                        AND A.XFRMH01M_ID = B.XFRMH01M_ID   
+                        AND TRUNC(SYSDATE) BETWEEN B.STA_YMD AND B.END_YMD
+                        AND B.ETC_CD1 = #{stdYear}
+        </select>
+</mapper>

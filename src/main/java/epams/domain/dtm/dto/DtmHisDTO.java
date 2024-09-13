@@ -1,13 +1,16 @@
 package epams.domain.dtm.dto;
 
-import lombok.*;
-import pams.model.vo.DtmHisVO;
-import lombok.extern.slf4j.Slf4j;
-
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
+import pams.model.vo.DtmHisVO;
 
 /***
  * @author 140024
@@ -68,6 +71,11 @@ public class DtmHisDTO extends DtmHisVO {
      * @author 140024
      * @implNote 경과여부 (과거/진행중/예정) 세팅
      * @since 2024-06-09
+     * @param staYmd 시작일
+     * @param staHm 시작시간
+     * @param endYmd 종료일
+     * @param endHm 종료시간
+     * @return String 타입의 예정, 과거, 진행
      */
     public final String calculateStatus(final LocalDateTime staYmd, final String staHm, final LocalDateTime endYmd, final String endHm) {
         final LocalDateTime now = LocalDateTime.now();

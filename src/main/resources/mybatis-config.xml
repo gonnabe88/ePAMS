@@ -6,10 +6,12 @@
     </settings>
     <typeAliases>
 
+        <!-- [COM] 공지사항 DTO -->
         <typeAlias type="epams.domain.com.board.dto.BoardImageDTO" alias="boardImageDTO"></typeAlias>
         <typeAlias type="epams.domain.com.board.dto.BoardDTO" alias="boardDTO"></typeAlias>
         <typeAlias type="epams.domain.com.board.dto.BoardFileDTO" alias="boardFileDTO"></typeAlias>
 
+        <!-- [COM] 관리자 화면 DTO -->
         <typeAlias type="epams.domain.com.admin.dto.LogLoginDTO" alias="logLoginVO"></typeAlias>
         <typeAlias type="epams.domain.com.admin.dto.LangDTO" alias="langDTO"></typeAlias>
         <typeAlias type="epams.domain.com.admin.dto.HtmlDTO" alias="htmlDTO"></typeAlias>
@@ -17,29 +19,39 @@
         <typeAlias type="epams.domain.com.admin.dto.LogViewDTO" alias="viewLogDTO"></typeAlias>
         <typeAlias type="epams.domain.com.admin.dto.HtmlLangDetailDTO" alias="htmlLangDetail"></typeAlias>
 
+        <!-- [COM] OTP 인증번호 발급 DTO -->
         <typeAlias type="epams.domain.com.login.dto.LoginOTPDTO" alias="loginOtpDTO"></typeAlias>
 
+        <!-- [COM] IAM 사용자, 역할 DTO -->
         <typeAlias type="epams.domain.com.member.dto.IamUserDTO" alias="iamUserDTO"></typeAlias>
         <typeAlias type="epams.domain.com.member.dto.RoleDTO" alias="roleDTO"></typeAlias>
 
+        <!-- [COM] 직원검색(메인화면) DTO -->
         <typeAlias type="epams.domain.com.index.dto.DeptSearchDTO" alias="deptSearchDTO"></typeAlias>
         <typeAlias type="epams.domain.com.index.dto.TeamSearchDTO" alias="teamSearchDTO"></typeAlias>
 
+        <!-- [COM] 사용자 정보(사이드바) DTO -->
         <typeAlias type="epams.domain.com.sidebar.dto.UserInfoDTO" alias="userInfoDTO"></typeAlias>
+        
+        <!-- [COM] 화면용어(코드) DTO -->
+        <typeAlias type="epams.domain.com.commonCode.CommonCodeDTO" alias="commonCodeDTO"></typeAlias>
 
+        <!-- [COM] 신청서 DTO -->
+        <typeAlias type="epams.domain.com.apply.dto.ElaApplCDTO" alias="ElaApplCDTO"></typeAlias>
+        <typeAlias type="epams.domain.com.apply.dto.ElaApplTrCDTO" alias="ElaApplTrCDTO"></typeAlias>
+
+        <!-- [DTM] 근태 DTO -->
         <typeAlias type="epams.domain.dtm.dto.DtmApplDTO" alias="dtmAppl"></typeAlias>
         <typeAlias type="epams.domain.dtm.dto.DtmHisDTO" alias="dtmHis"></typeAlias>
         <typeAlias type="epams.domain.dtm.dto.DtmSearchDTO" alias="dtmSearchDTO"></typeAlias>
         <typeAlias type="epams.domain.dtm.dto.DtmAnnualStatusDTO" alias="dtmAnnualStatusDTO"></typeAlias>
-        <typeAlias type="epams.domain.dtm.dto.DtmAnnualStatusParamDTO" alias="dtmAnnualStatusParamDTO"></typeAlias>
-
-        <typeAlias type="epams.domain.com.commonCode.CommonCodeDTO" alias="commonCodeDTO"></typeAlias>
-
-        <typeAlias type="epams.domain.com.apply.dto.ElaApplCDTO" alias="ElaApplCDTO"></typeAlias>
-        <typeAlias type="epams.domain.com.apply.dto.ElaApplTrCDTO" alias="ElaApplTrCDTO"></typeAlias>
-
+        <typeAlias type="epams.domain.dtm.dto.DtmSqlParamDTO" alias="dtmSqlParamDTO"></typeAlias>
+        <typeAlias type="epams.domain.dtm.dto.DtmPromotionDTO" alias="dtmPromotionDTO"></typeAlias>
+        <typeAlias type="epams.domain.dtm.dto.DtmSaveDTO" alias="dtmSaveDTO"></typeAlias>
         <typeAlias type="epams.domain.dtm.dto.DtmApplCheckProcDTO" alias="dtmApplCheckProcDTO"></typeAlias>
         <typeAlias type="epams.domain.dtm.dto.DtmApplElaCheckProcDTO" alias="dtmApplElaCheckProcDTO"></typeAlias>
+        <typeAlias type="epams.domain.dtm.dto.DtmCheckDTO" alias="dtmCheckDTO"></typeAlias>
+        <typeAlias type="epams.domain.dtm.dto.DtmApplStatusDTO" alias="dtmApplStatusDTO"></typeAlias>
 
     </typeAliases>
 

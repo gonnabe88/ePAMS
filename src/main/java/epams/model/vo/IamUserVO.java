@@ -48,12 +48,52 @@ public class IamUserVO {
      */
     private String password;
 
-    /***
-     * 생성일자(TZ_DATE)
-     * 
+    /**
      * @author 140024
-     * @since 2024-06-30
+     * @implNote 인사조직코드내용
+     * @since 2024-08-19
      */
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime createdDate;
+    private String deptCode;
+
+    /**
+     * @author 140024
+     * @implNote 부점명
+     * @since 2024-08-19
+     */
+    private String deptName;
+
+    /**
+     * @author 140024
+     * @implNote 팀코드
+     * @since 2024-06-09
+     */
+    private String teamCode;
+
+    /**
+     * @author 140024
+     * @implNote 팀명
+     * @since 2024-08-19
+     */
+    private String teamName;
+
+    /**
+     * @author 140024
+     * @implNote 직위코드명
+     * @since 2024-08-19
+     */
+    private String positionName;
+
+    /**
+     * @author 140024
+     * @implNote 직무상세내용
+     * @since 2024-08-19
+     */
+    private String jobDetail;
+
+    /**
+     * @author 140024
+     * @implNote 내선번호
+     * @since 2024-08-19
+     */
+    private String inlineNumber;
 }

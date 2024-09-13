@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import pams.model.vo.IamUserVO;
+import epams.model.vo.IamUserVO;
 
 /***
  * 사용자 정보를 담는 DTO 클래스입니다.
@@ -28,7 +28,7 @@ public class IamUserDTO extends IamUserVO {
      * @implNote 휴대폰 번호
      * @since 2024-09-05
      */
-    private String phoneNo = "01064624479";
+    private String phoneNo = "";
 
     /***
      * 2차인증 유형

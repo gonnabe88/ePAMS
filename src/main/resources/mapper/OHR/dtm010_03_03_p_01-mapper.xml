@@ -1,0 +1,265 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- dtm010_03_03_p_01 (근태신청정보조회 사원정보 및 잔여연차일수조회) -->
+<mapper namespace="DtmApplStatus">
+        <!-- TABLE Result Map 정의 -->
+        <resultMap id="DtmApplStatusMap" type="dtmApplStatusDTO">
+                <result property="empId" column="emp_id"/>
+                <result property="empId" column="emp_id"/>
+                <result property="empId" column="emp_id"/>
+                <result property="empId" column="emp_id"/>
+
+                <result property="username" column="EMP_ID"/>
+                <result property="empNo" column="EMP_NO"/>
+                <result property="realname" column="EMP_NM"/>
+                <result property="deptName" column="ORG_NM"/>
+                <result property="positionName" column="POS_GRD_NM"/>
+                <result property="dutyName" column="DUTY_NM"/>
+
+                <result property="annualDayTotalCnt" column="TOT_YY"/>
+                <result property="annualHourTotalCnt" column="TOT_HH"/>
+                <result property="annualDayUsedCnt" column="TOT_USED"/>
+                <result property="annualHourUsedCnt" column="TOT_USED_HH"/>
+                <result property="annualDayRemainCnt" column="TOT_REMAIN"/>
+                <result property="annualHourRemainCnt" column="TOT_REMAIN_HH"/>
+
+                <result property="dutyAnnualDayTotalCnt" column="ANNUAL_CNT"/>
+                <result property="dutyAnnualHourTotalCnt" column="ANNUAL_CNT_HH"/>
+
+                <result property="fixedDutyAnnualDayTotalCnt" column="REMAIN_CNT2"/>
+                <result property="fixedDutyAnnualHourTotalCnt" column="REMAIN_CNT2_HH"/>
+
+                <result property="todayYmd" column="NOW_DATE"/>
+                <result property="headHrDept" column="CHEIF_EMP_NM"/>
+                <result property="dtmYmRestId" column="DTM_YM_REST_ID"/>
+
+                <result property="ingRevokeDayCnt" column="YYCNT_DEL_USING_CNT"/>
+                <result property="ingRevokeHourCnt" column="HHCNT_DEL_USING_CNT"/>
+        </resultMap>
+
+        <select id="getDtmApplStatus" parameterType="dtmApplStatusDTO" resultMap="DtmApplStatusMap">
+                select    emp_id
+                        , emp_no
+                        , emp_nm
+                        , pos_grd_nm
+                        , pos_grd_cd
+                        , org_nm
+                        , pos_nm
+                        , hire_ymd
+                        , ctz_no
+                        , telno
+                        , FLOOR(4*NVL(remain_hhcnt,0)/WORK_TIME)/4 AS remain_cnt
+                        , duty_cnt
+                        , remain_cnt1
+                        , remain_cnt2
+                        , remain_cnt3
+                        , remain_cnt4
+                        , remain_cnt5
+                        , remain_cnt6
+                        , NEXT_REMAIN_CNT
+                        , YYCNT
+                        , USED_CNT
+                        , AD_USE_YYCNT
+                        , AD_USE_YYCNT2
+                        , AD_USE_YN
+                        , SAVE_YYCNT
+                        , remain_hhcnt 
+                        , remain_cnt7
+                        , NEXT_REMAIN_HHCNT
+                        , to_char(HHCNT) HHCNT
+                        , USED_HHCNT
+                        , AD_USE_HHCNT
+                        , AD_USE_HHCNT2
+                        , SAVE_HHCNT
+                        , remain_hhcnt||'시간' as remain_cnt_val1
+                        , FLOOR(4*NVL(remain_hhcnt,0)/WORK_TIME)/4||'일' as remain_cnt_val2
+                        , NEXT_REMAIN_HHCNT||'시간' as next_remain_cnt_val1
+                        , NEXT_REMAIN_CNT||'일' as next_remain_cnt_val2
+                        , SAVE_HHCNT||'시간' as save_cnt_val1
+                        , SAVE_YYCNT||'일' as save_cnt_val2
+                        , AD_USE_HHCNT2||'시간' as ad_use_cnt2_val1
+                        , FLOOR(4*NVL(AD_USE_HHCNT2,0)/WORK_TIME)/4||'일' as ad_use_cnt2_val2
+                        , remain_cnt7||'시간' as remain_cnt6_val1
+                        , remain_cnt6||'일' as remain_cnt6_val2
+                        from (
+                                select emp_id
+                                , emp_no
+                                , emp_nm
+                                , pos_grd_nm
+                                , pos_grd_cd
+                                , org_nm
+                                , pos_nm
+                                , hire_ymd
+                                , ctz_no
+                                , telno
+                                , case when remain_cnt >= 0 then remain_cnt
+                                        else 0 end as remain_cnt 
+                                , duty_cnt
+                                , remain_cnt1
+                                , remain_cnt2
+                                , remain_cnt3
+                                , remain_cnt4
+                                , remain_cnt5
+                                , remain_cnt6
+                                , (SELECT nvl(mmcnt_remain_cnt,0) + nvl(yycnt_remain_cnt,0)
+                                        - NVL((SELECT SUM( F_DTM_GET_USE_DAYCNT(COMPANY_CD, T1.DTM_REASON_CD, T1.STA_YMD, T1.END_YMD, LOCALE_CD, T1.EMP_ID)  ) SUM1 --결재중인 연차 건수 빼기(반려, 결재완료, 취소건 제외)
+                                                FROM DTM_HIS T1
+                                                INNER JOIN ELA_APPL_C T2
+                                                ON T1.APPL_ID = T2.APPL_ID
+                                                WHERE T1.EMP_ID = A.EMP_ID
+                                                AND TO_CHAR(T1.STA_YMD, 'YYYY') = B.YY +1
+                                                AND T1.DTM_REASON_CD IN ('1A1','1A5','1A6','1F1','1K1','1AE','1AG','1AH') -- 2023.12.01 반반차신설
+                                                AND T1.STAT_CD NOT IN( '132', '131', '141', '111')
+                                                AND NVL(T1.MODI_TYPE,'I') != 'U'
+                                                ), 0)
+                                        FROM DTM_YM_REST 
+                                        WHERE EMP_ID = A.EMP_ID
+                                        AND YY = B.YY +1
+                                ) NEXT_REMAIN_CNT
+                                , B.YYCNT
+                                , B.USED_CNT
+                                , NVL(B.AD_USE_YYCNT,0) AS AD_USE_YYCNT
+                                , CASE WHEN remain_cnt >= 0 THEN NVL(B.AD_USE_YYCNT,0) 
+                                        ELSE NVL(B.AD_USE_YYCNT,0) + remain_cnt END AS AD_USE_YYCNT2
+                                , 'N' as AD_USE_YN
+                                , SAVE_YYCNT
+                                -- 2019.07.29 시간추가
+                                ,  case when remain_hhcnt >= 0 then remain_hhcnt
+                                        else 0 end as remain_hhcnt 
+                                , remain_cnt7
+                                , (SELECT NVL(HHCNT, 0)-NVL(HHCNT_USED_CNT,0) - (NVL(YYCNT_HALF_USED_CNT,0)/2) - (NVL(YYCNT_QUATER_USED_CNT,0)/4) -- 2023.12.01 반반차신설
+                                        - NVL((SELECT SUM( F_DTM_GET_USE_HOUR(COMPANY_CD, T1.DTM_REASON_CD, T1.STA_YMD, T1.END_YMD, LOCALE_CD, T1.EMP_ID)  ) SUM1 --결재중인 연차 건수 빼기(반려, 결재완료, 취소건 제외)
+                                                        FROM DTM_HIS T1
+                                                INNER JOIN ELA_APPL_C T2
+                                                        ON T1.APPL_ID = T2.APPL_ID
+                                                WHERE T1.EMP_ID = A.EMP_ID
+                                                        AND TO_CHAR(T1.STA_YMD, 'YYYY') = B.YY +1
+                                                        AND T1.DTM_REASON_CD IN ('1A1','1A5','1A6','1F1','1K1','1AE','1AG','1AH') -- 2023.12.01 반반차신설
+                                                        AND T1.STAT_CD NOT IN( '132', '131', '141', '111')
+                                                        AND NVL(T1.MODI_TYPE,'I') != 'U'
+                                                ), 0)
+                                        FROM DTM_YM_REST 
+                                        WHERE EMP_ID = A.EMP_ID
+                                        AND YY = B.YY +1
+                                ) NEXT_REMAIN_HHCNT
+                                , B.HHCNT
+                                , B.USED_HHCNT
+                                , NVL(B.AD_USE_HHCNT,0) AS AD_USE_HHCNT
+                                , CASE WHEN remain_hhcnt >= 0 THEN NVL(B.AD_USE_HHCNT,0) 
+                                        ELSE NVL(B.AD_USE_HHCNT,0) + remain_hhcnt END AS AD_USE_HHCNT2
+                                , SAVE_HHCNT
+                                , F_DTM_WORK_TIME(EMP_ID, SYSDATE) AS WORK_TIME
+                                from (select emp_no
+                                        , a.emp_id
+                                        , emp_nm
+                                        , pos_grd_cd
+                                        , F_CAM_HISTORY_C(a.EMP_ID, SYSDATE, 'POS_GRD_NM',  b.locale_cd) as pos_grd_nm
+                                        , F_CAM_HISTORY_C(a.EMP_ID, SYSDATE, 'DUTY_NM', b.locale_cd) as pos_nm
+                                        , org_cd
+                                        , F_CAM_HISTORY_C(a.EMP_ID, SYSDATE, 'ORG_NM', b.locale_cd) as org_nm
+                                        , hire_ymd
+                                        , ctz_no
+                                        , F_PHM_PHONE_C(a.company_cd, a.emp_id, '30', SYSDATE, b.locale_cd) as telno
+                                        from v_phm_emp_c a
+                                        INNER JOIN (select #{companyCd} as company_cd, #{localeCd} as locale_cd, #{empId} as emp_id from dual) b ON 1=1
+                                        where a.company_cd = b.company_cd
+                                        and a.emp_id = b.emp_id) a,
+                                (select NVL(YYCNT, 0)-NVL(YYCNT_USED_CNT,0)  - (NVL(YYCNT_HALF_USED_CNT,0)/2) - (NVL(YYCNT_QUATER_USED_CNT,0)/4) -- 2023.12.01 반반차신설
+                                        - NVL((SELECT SUM( F_DTM_GET_USE_DAYCNT(B.COMPANY_CD, T1.DTM_REASON_CD, T1.STA_YMD, T1.END_YMD, B.LOCALE_CD, T1.EMP_ID)  ) SUM1 --결재중인 연차 건수 빼기(반려, 결재완료, 취소건 제외)
+                                                FROM DTM_HIS T1
+                                                INNER JOIN ELA_APPL_C T2
+                                                ON T1.APPL_ID = T2.APPL_ID
+                                                WHERE T1.EMP_ID = A.EMP_ID
+                                                AND TO_CHAR(T1.STA_YMD, 'YYYY') = B.YYYY
+                                                AND T1.DTM_REASON_CD IN ('1A1','1A5','1A6','1F1','1K1','1AE','1AG','1AH') -- 2023.12.01 반반차신설
+                                                AND T1.STAT_CD NOT IN( '132', '131', '141', '111')
+                                                AND NVL(T1.MODI_TYPE,'I') != 'U'
+                                                ), 0) as remain_cnt  -- 년차사용가능
+                                        -- 2019.07.29 시간추가
+                                        , NVL(HHCNT, 0)-NVL(HHCNT_USED_CNT,0)
+                                        - NVL((SELECT SUM( F_DTM_GET_USE_HOUR(b.company_cd, T1.DTM_REASON_CD, T1.STA_YMD, T1.END_YMD, b.locale_cd, T1.EMP_ID)  ) SUM1 --결재중인 연차 건수 빼기(반려, 결재완료, 취소건 제외)
+                                                        FROM DTM_HIS T1
+                                                INNER JOIN ELA_APPL_C T2
+                                                        ON T1.APPL_ID = T2.APPL_ID
+                                                WHERE T1.EMP_ID = A.EMP_ID
+                                                        AND TO_CHAR(T1.STA_YMD, 'YYYY') = B.YYYY
+                                                        AND T1.DTM_REASON_CD IN ('1A1','1A5','1A6','1F1','1K1','1AE','1AG','1AH') -- 2023.12.01 반반차신설
+                                                        AND T1.STAT_CD NOT IN( '132', '131', '141', '111')
+                                                        AND NVL(T1.MODI_TYPE,'I') != 'U'
+                                                ), 0) as remain_hhcnt  -- 년차(시간)사용가능
+                                        , F_DTM_GET_DEV_DAYCNT(b.company_cd, a.emp_id, b.locale_cd, '3') as duty_cnt        -- 자기개발연수
+                                        , F_DTM_GET_REMAIN_CNT(b.company_cd, a.emp_id, b.locale_cd, 'A') as remain_cnt1     -- 안식년휴가 10년
+                                        , F_DTM_GET_REMAIN_CNT(b.company_cd, a.emp_id, b.locale_cd, 'B') as remain_cnt2     -- 안식년휴가 20년
+                                        , F_DTM_GET_REMAIN_CNT(b.company_cd, a.emp_id, b.locale_cd, 'C') as remain_cnt3     -- 안식년휴가 30년
+                                        , F_DTM_GET_REMAIN_CNT(b.company_cd, a.emp_id, b.locale_cd, 'D') as remain_cnt4     -- 마일리지
+                                        , F_DTM_GET_REMAIN_CNT(b.company_cd, a.emp_id, b.locale_cd, 'E') as remain_cnt5     -- 장기근속/기타
+                                        , F_DTM_GET_REMAIN_CNT(b.company_cd, a.emp_id, b.locale_cd, 'F') as remain_cnt6     -- 보상휴가
+                                        , F_DTM_GET_REMAIN_CNT(b.company_cd, a.emp_id, b.locale_cd, 'F4') as remain_cnt7     -- 보상휴가시간
+                                        , A.YY
+                                        , B.LOCALE_CD
+                                        , B.COMPANY_CD
+                                        , A.YYCNT
+                                        -- 2019.07.29 시간추가
+                                        , A.HHCNT
+                                        , NVL(MMCNT_USED_CNT,0)+NVL(YYCNT_USED_CNT,0)
+                                        + NVL((SELECT SUM( F_DTM_GET_USE_DAYCNT(B.COMPANY_CD, T1.DTM_REASON_CD, T1.STA_YMD, T1.END_YMD, B.LOCALE_CD, T1.EMP_ID)  ) SUM1 --결재중인 연차 건수 빼기(반려, 결재완료, 취소건 제외)
+                                                FROM DTM_HIS T1
+                                                INNER JOIN ELA_APPL_C T2
+                                                ON T1.APPL_ID = T2.APPL_ID
+                                                WHERE T1.EMP_ID = A.EMP_ID
+                                                AND TO_CHAR(T1.STA_YMD, 'YYYY') = B.YYYY
+                                                AND T1.DTM_REASON_CD IN ('1A1','1A5','1A6','1F1','1K1','1AE','1AG','1AH') -- 2023.12.01 반반차신설
+                                                AND T1.STAT_CD NOT IN( '132', '131', '141', '111')
+                                                AND NVL(T1.MODI_TYPE,'I') != 'U'
+                                                ), 0)+ (NVL(YYCNT_HALF_USED_CNT,0)*0.5)+ (NVL(YYCNT_QUATER_USED_CNT,0)*0.25) AS USED_CNT -- 2017.05.11 이종화추가  -- 2023.12.01 반반차신설
+                                        , AD_USE_YYCNT
+                                        , NVL(A.SAVE_YYCNT,0) 
+                                        - NVL((SELECT SUM( F_DTM_GET_USE_DAYCNT(B.COMPANY_CD, T1.DTM_REASON_CD, T1.STA_YMD, T1.END_YMD, b.locale_cd, T1.EMP_ID)  ) SUM1 --결재중인 연차 건수 빼기(반려, 결재완료, 취소건 제외)
+                                                        FROM DTM_HIS T1
+                                                        INNER JOIN ELA_APPL_C T2
+                                                                                ON T1.APPL_ID = T2.APPL_ID
+                                                WHERE T1.EMP_ID = A.EMP_ID
+                                                        AND TO_CHAR(T1.STA_YMD, 'YYYY') = A.YY
+                                                        AND T1.DTM_REASON_CD IN ('1AB','1AC','1AD','1AF','1AI','1AJ') -- 2023.12.01 반반차신설 
+                                                        AND T1.STAT_CD NOT IN( '132', '131', '141', '111')--결재완료건은 이미 빠져있을테니 다시 뺄필요없다.
+                                                        AND NVL(T1.MODI_TYPE,'I') != 'U'
+                                                ), 0) AS SAVE_YYCNT
+                                        -- 2019.07.29 시간추가
+                                        , NVL(HHCNT_USED_CNT,0)
+                                        + NVL((SELECT SUM( F_DTM_GET_USE_HOUR(B.COMPANY_CD, T1.DTM_REASON_CD, T1.STA_YMD, T1.END_YMD, B.LOCALE_CD, T1.EMP_ID)  ) SUM1 --결재중인 연차 건수 빼기(반려, 결재완료, 취소건 제외)
+                                                FROM DTM_HIS T1
+                                                INNER JOIN ELA_APPL_C T2
+                                                ON T1.APPL_ID = T2.APPL_ID
+                                                WHERE T1.EMP_ID = A.EMP_ID
+                                                AND TO_CHAR(T1.STA_YMD, 'YYYY') = B.YYYY
+                                                AND T1.DTM_REASON_CD IN ('1A1','1A5','1A6','1F1','1K1','1AE','1AG','1AH') -- 2023.12.01 반반차신설
+                                                AND T1.STAT_CD NOT IN( '132', '131', '141', '111')
+                                                AND NVL(T1.MODI_TYPE,'I') != 'U'
+                                                ), 0) AS USED_HHCNT -- 2017.05.11 이종화추가
+                                        , NVL(AD_USE_HHCNT,0) AS AD_USE_HHCNT 
+                                        , NVL(A.SAVE_HHCNT,0) 
+                                        - NVL((SELECT SUM( F_DTM_GET_USE_HOUR(B.COMPANY_CD, T1.DTM_REASON_CD, T1.STA_YMD, T1.END_YMD, b.locale_cd, T1.EMP_ID)  ) SUM1 --결재중인 연차 건수 빼기(반려, 결재완료, 취소건 제외)
+                                                        FROM DTM_HIS T1
+                                                        INNER JOIN ELA_APPL_C T2
+                                                                                ON T1.APPL_ID = T2.APPL_ID
+                                                WHERE T1.EMP_ID = A.EMP_ID
+                                                        AND TO_CHAR(T1.STA_YMD, 'YYYY') = A.YY
+                                                        AND T1.DTM_REASON_CD IN ('1AB','1AC','1AD','1AF','1AI','1AJ') -- 2023.12.01 반반차신설  
+                                                        AND T1.STAT_CD NOT IN( '132', '131', '141', '111')--결재완료건은 이미 빠져있을테니 다시 뺄필요없다.
+                                                        AND NVL(T1.MODI_TYPE,'I') != 'U'
+                                                ), 0) AS SAVE_HHCNT
+                                        from dtm_ym_rest a
+                                        INNER JOIN (select
+                                                #{companyCd} as company_cd
+                                                , #{localeCd} as locale_cd
+                                                , #{empId} as emp_id
+                                                , #{stdYear} as yyyy
+                                        from dual
+                                        ) b ON 1=1
+                                        where a.emp_id = b.emp_id
+                                        and a.yy = b.yyyy) b
+                                )
+        </select>
+</mapper>

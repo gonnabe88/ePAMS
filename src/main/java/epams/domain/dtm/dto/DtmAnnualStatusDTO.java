@@ -1,14 +1,13 @@
 package epams.domain.dtm.dto;
 
-import lombok.*;
-import pams.model.vo.DtmHisVO;
-import lombok.extern.slf4j.Slf4j;
-
 import java.lang.reflect.Field;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 
 /***
  * @author 140024
@@ -263,7 +262,12 @@ public class DtmAnnualStatusDTO {
     private String sYear;
 
 
-
+    /***
+     * @author 140024
+     * @implNote 모든 String 변수에 포함된 특수문자 '(', ')' 제거
+     * @since 2024-09-11
+     * @param DtmAnnualStatusDTO 년간근태조회 DTO
+     */
     public static void removeBracket(DtmAnnualStatusDTO dto) {
         Field[] fields = dto.getClass().getDeclaredFields();
         for(Field field : fields) {

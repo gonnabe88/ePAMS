@@ -1,4 +1,4 @@
-package epams.domain.com.member.util;
+package epams.domain.com.login.util;
 
 /**
  * @author K140024

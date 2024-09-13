@@ -67,7 +67,8 @@ public class EaiService {
         ByteArrayOutputStream baos = null;
 
 
-        log.warn("reqData : " + new String(reqData, StandardCharsets.UTF_8));
+        //log.warn("reqData (70) : " + new String(reqData, StandardCharsets.UTF_8));
+        log.warn("reqData (70) : " + new String(reqData));
 
 
         try {
@@ -146,15 +147,15 @@ public class EaiService {
         String param07 = getParam07(request);   //07. 개별부(입력데이터)
         String param08 = "@@";                  //08. 종료부
 
-        System.out.println(param01.getBytes().length);
-        System.out.println(param02.getBytes().length);
-        System.out.println(param03.getBytes().length);
-        System.out.println(param04.getBytes().length);
-        System.out.println(param05.getBytes().length);
-        System.out.println(param06.getBytes().length);
-        System.out.println(param07.getBytes().length);
-        System.out.println(param08.getBytes().length);
-        System.out.println(param01.getBytes().length + param02.getBytes().length + param03.getBytes().length + param04.getBytes().length + param05.getBytes().length + param06.getBytes().length + param07.getBytes().length + param08.getBytes().length);
+        // System.out.println(param01.getBytes().length);
+        // System.out.println(param02.getBytes().length);
+        // System.out.println(param03.getBytes().length);
+        // System.out.println(param04.getBytes().length);
+        // System.out.println(param05.getBytes().length);
+        // System.out.println(param06.getBytes().length);
+        // System.out.println(param07.getBytes().length);
+        // System.out.println(param08.getBytes().length);
+        // System.out.println(param01.getBytes().length + param02.getBytes().length + param03.getBytes().length + param04.getBytes().length + param05.getBytes().length + param06.getBytes().length + param07.getBytes().length + param08.getBytes().length);
         
 
         //전체전문길이 (01 ~ 08)
@@ -389,7 +390,7 @@ public class EaiService {
 
         //요청사용자명, 요청부점코드, 요청부점명
         //EaiDTO user = eaiMapper.getMember(request);
-        String reqUsrNm = request.getNm();
+        String reqUsrNm = request.getCstNm();
         String reqBbrC = request.getDeptKey();
         String reqBbrNm = request.getDeptNm();
 

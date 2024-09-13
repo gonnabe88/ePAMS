@@ -23,6 +23,7 @@ import epams.framework.exception.CustomGeneralRuntimeException;
 import epams.domain.com.login.service.LoginService;
 import epams.domain.com.login.service.MFALoginService;
 import epams.domain.com.login.util.webauthn.service.RegistrationService;
+import epams.domain.com.login.util.MaskPhoneNoUtil;
 import epams.domain.com.login.util.webauthn.authenticator.Authenticator;
 import epams.domain.com.member.dto.IamUserDTO;
 import epams.domain.com.member.service.MemberService;
@@ -136,28 +137,30 @@ public class LoginController {
      */
     @PostMapping("/login")
     @ResponseBody
-    public Map<String, Object> pwlogin(final HttpServletResponse response, @ModelAttribute final IamUserDTO iamUserDTO, final Model model)
+    public Map<String, Object> pwlogin(final HttpServletResponse response, @ModelAttribute final IamUserDTO param, final Model model)
     {
         // Front-end에서 ID가 대문자로 바뀌지 않는 경우에 대비하여 한번 더 대문자 변환 처리
-        if (iamUserDTO != null && iamUserDTO.getUsername() != null) {
-            final String uppercaseUsername = iamUserDTO.getUsername().toUpperCase(Locale.getDefault());
-            iamUserDTO.setUsername(uppercaseUsername);
+        if (param != null && param.getUsername() != null) {
+            final String uppercaseUsername = param.getUsername().toUpperCase(Locale.getDefault());
+            param.setUsername(uppercaseUsername);
         }
 
-		final AppUser existingUser = service.getUserRepo().findByUsername(Objects.requireNonNull(iamUserDTO).getUsername());
+		final AppUser existingUser = service.getUserRepo().findByUsername(Objects.requireNonNull(param).getUsername());
         final Map<String, Object> res = new ConcurrentHashMap<>();
-        if (loginService.pwLogin(iamUserDTO)) {
+        if (loginService.pwLogin(param)) {
+
+
+            // 사용자 정보 가져오기
+            final IamUserDTO iamUserDTO = memberService.findUserByUserNo(param.getUsername());
+            iamUserDTO.setMFA(param.getMFA());
+            log.warn(iamUserDTO.toString());
 
             // 마스킹된 휴대폰 번호 설정
-            String maskedPhoneNo = memberService.findMaskedPhoneNo(iamUserDTO.getUsername());
+            final String maskedPhoneNo = MaskPhoneNoUtil.maskPhoneNo(iamUserDTO.getPhoneNo());
             res.put("maskedPhoneNo", maskedPhoneNo);
 
-            // 휴대폰 번호 설정
-            String phoneNo = memberService.findMPhoneNo(iamUserDTO.getUsername());
-            iamUserDTO.setPhoneNo(phoneNo);
-
             // 유효하지 않은 휴대폰 번호인 경우 (9자리 이하)
-            if(phoneNo.length() <= 9)
+            if(iamUserDTO.getPhoneNo().length() <= 9)
                 throw new CustomGeneralRuntimeException("유효한 휴대폰 번호가 등록되어있지 않습니다.("+maskedPhoneNo+")");
 
             // PW 로그인 성공 시 MFA 로그인 진행

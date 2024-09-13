@@ -1,5 +1,6 @@
 package epams.domain.dtm.controller;
 
+import epams.domain.com.commonCode.CommonCodeDTO;
 import epams.domain.com.commonCode.CommonCodeService;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -15,6 +16,7 @@ import epams.domain.com.admin.service.HtmlLangDetailService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.List;
 import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,7 +50,7 @@ public class DtmRegController<S extends Session> {
      */
     @GetMapping("/dtmReg")
     public String dtmReg(@PageableDefault(page = 1) final Pageable pageable, final Model model) {
-        final String DTMREG = "dtmCal";
+        final String DTMREG = "dtm/dtmReg";
 
         // 언어목록
         final Map<String, String> langList = langDetailService.getCodeHtmlDetail(DTMREG);

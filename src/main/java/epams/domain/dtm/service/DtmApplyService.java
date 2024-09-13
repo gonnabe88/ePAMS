@@ -1,19 +1,32 @@
 package epams.domain.dtm.service;
 
+import java.text.DecimalFormat;
+
 import epams.domain.com.apply.dto.ElaApplCDTO;
 import epams.domain.com.apply.dto.ElaApplTrCDTO;
 import epams.domain.com.apply.repository.ElaApplCRepository;
 import epams.domain.com.apply.repository.ElaApplTrCRepository;
 import epams.domain.dtm.dto.DtmApplCheckProcDTO;
 import epams.domain.dtm.dto.DtmApplElaCheckProcDTO;
+import epams.domain.dtm.dto.DtmApplStatusDTO;
+import epams.domain.dtm.dto.DtmCheckDTO;
 import epams.domain.dtm.dto.DtmHisDTO;
+import epams.domain.dtm.dto.DtmKindSumDTO;
+import epams.domain.dtm.dto.DtmPromotionDTO;
+import epams.domain.dtm.dto.DtmSaveDTO;
 import epams.domain.dtm.repository.DtmHistoryRepository;
 import epams.domain.dtm.repository.DtmApplProcRepository;
+import epams.domain.dtm.repository.DtmCheckRepository;
 import epams.framework.exception.CustomGeneralRuntimeException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.time.LocalDate;
+
+
 
 /***
  * @author 140024
@@ -52,7 +65,70 @@ public class DtmApplyService {
 	 * @since 2024-08-04
 	 */
 	private final DtmApplProcRepository proCheckProcRepo;
-    
+
+	/***
+	 * @author 140024
+	 * @implNote Repository 객체 생성
+	 * @since 2024-08-04
+	 */
+	private final DtmCheckRepository dtmCheckRepository;
+
+	/***
+	 * @author 140024
+	 * @implNote 근태신청 가능여부 체크로직
+	 * @since 2024-09-13
+	 */
+	public void check(final List<DtmHisDTO> hisDTOList, final DtmPromotionDTO proDTO, final DtmSaveDTO saveDTO, final DtmApplStatusDTO statusDTO) {
+
+		// 사용자 화면에 숫자 표시 소숫점이 있으면 실수로, 소숫점이 없으면 정수형으로 표기
+		final DecimalFormat decimalFormat = new DecimalFormat("0.#");		
+		final DtmKindSumDTO sumDTO = new DtmKindSumDTO();
+
+		for(DtmHisDTO hisDTO : hisDTOList) {
+
+			// 근태 체크를 위한 input 데이터 세팅
+			final DtmCheckDTO checkDTO = new DtmCheckDTO( 
+				hisDTO.getDtmReasonCd(), // 근태종류
+				hisDTO.getStaYmd(), // 근태시작일
+				hisDTO.getEndYmd(), // 근태종료일
+				hisDTO.getEmpId() // 직원행번
+			);
+			
+			if(checkDTO.getAnnualCheckList().contains(hisDTO.getDtmReasonCd())) {
+				// 근태 체크 대상(연차)인 경우 데이터 가져오기
+				dtmCheckRepository.getNumberOfDay(checkDTO); //daycnt_day
+				dtmCheckRepository.getNumberOfHour(checkDTO); //daycnt
+
+				// 합계 구하기
+				if(hisDTO.getStaYmd().getYear() == LocalDate.now().getYear()) {
+					sumDTO.thisAnnaulSum(checkDTO.getDayCount(), checkDTO.getHourCount()); // 올해 합계
+				} 
+				else {
+					sumDTO.nextAnnualSum(checkDTO.getDayCount(), checkDTO.getHourCount()); // 내년 합계
+				}
+			}
+
+			if(sumDTO.getNextAnnualHourSum() > 0) {
+				// 내년 연차 사용 시
+				if(sumDTO.getNextAnnualHourSum() > statusDTO.getNextAnnualHourRemainCnt()) {
+					// 내년 연차가 부족할때	
+					throw new CustomGeneralRuntimeException(
+							"<p> 내년에 사용 가능한 연차가 부족합니다.</p>");	
+				}
+			}
+			else {
+				// 올해 연차 등 근태 사용 시
+
+			}
+			
+			
+
+		}
+
+		
+
+	}
+
 	/***
 	 * @author 140024
 	 * @implNote 근태신청

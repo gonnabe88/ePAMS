@@ -1,0 +1,21 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- dtm010_03_03_p_10 (근태별 신청시간 조회) -->
+<mapper namespace="DtmGetNumberOfHour">
+        <!-- TABLE Result Map 정의 -->
+        <resultMap id="DtmCheckDTOMap" type="dtmCheckDTO">
+                <result property="hourCount" column="DAYCNT"/>
+        </resultMap>
+
+        <select id="getHour" parameterType="dtmCheckDTO" resultMap="DtmCheckDTOMap">
+                SELECT F_DTM_GET_USE_HOUR(
+                        #{companyCd},
+                        #{dtmReasonCd}, 
+                        #{staYmd}, 
+                        #{endYmd}, 
+                        #{localeCd}, 
+                        #{empId}) DAYCNT FROM DUAL
+        </select>
+</mapper>

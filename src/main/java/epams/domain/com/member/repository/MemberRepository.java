@@ -31,6 +31,17 @@ public class MemberRepository {
      */
     private final SqlSessionTemplate sql;
 
+
+    /**
+     * *
+     * @author 140024
+     * @implNote 특정 사용자 정보 조회
+     * @since 2024-09-05
+     */
+    public IamUserDTO findUserByUserNo(String username) {
+        return sql.selectOne("IamUser.findUserByUserNo", username);
+    }
+
     /**
      * *
      * @author 140024

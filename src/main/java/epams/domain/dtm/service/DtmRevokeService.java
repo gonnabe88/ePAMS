@@ -1,27 +1,26 @@
 package epams.domain.dtm.service;
 
+import java.text.DecimalFormat;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import epams.domain.com.apply.dto.ElaApplCDTO;
 import epams.domain.com.apply.dto.ElaApplTrCDTO;
 import epams.domain.com.apply.repository.ElaApplCRepository;
 import epams.domain.com.apply.repository.ElaApplTrCRepository;
-import epams.domain.dtm.dto.DtmApplCheckProcDTO;
 import epams.domain.dtm.dto.DtmApplElaCheckProcDTO;
+import epams.domain.dtm.dto.DtmCheckDTO;
 import epams.domain.dtm.dto.DtmHisDTO;
+import epams.domain.dtm.dto.DtmPromotionDTO;
+import epams.domain.dtm.dto.DtmSaveDTO;
+import epams.domain.dtm.repository.DtmCheckRepository;
 import epams.domain.dtm.repository.DtmHistoryRepository;
 import epams.domain.dtm.repository.DtmRevokeRepository;
 import epams.framework.exception.CustomGeneralRuntimeException;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 /***
  * @author 140024
@@ -61,6 +60,92 @@ public class DtmRevokeService {
 	 * @since 2024-06-09
 	 */
 	private final DtmHistoryRepository dtmHisRepo;
+
+	/***
+	 * @author 140024
+	 * @implNote Repository 객체 생성
+	 * @since 2024-09-13
+	 */
+	private final DtmCheckRepository dtmCheckRepository;
+
+	/***
+	 * @author 140024
+	 * @implNote 근태취소 가능여부 체크로직
+	 * @since 2024-09-13
+	 */
+	public void check(final DtmHisDTO hisDTO, final DtmPromotionDTO proDTO, final DtmSaveDTO saveDTO) {
+
+		// 사용자 화면에 숫자 표시 소숫점이 있으면 실수로, 소숫점이 없으면 정수형으로 표기
+		DecimalFormat decimalFormat = new DecimalFormat("0.#");		
+
+		// 근태 체크를 위한 input 데이터 세팅
+		final DtmCheckDTO checkDTO = new DtmCheckDTO( 
+			hisDTO.getDtmReasonCd(), // 근태종류
+			hisDTO.getStaYmd(), // 근태시작일
+			hisDTO.getEndYmd(), // 근태종료일
+			hisDTO.getEmpId() // 직원행번
+		);
+
+		// 근태 체크 대상(연차)인 경우 데이터 가져오기
+		if(checkDTO.getAnnualCheckList().contains(hisDTO.getDtmReasonCd())) {
+			dtmCheckRepository.getNumberOfDay(checkDTO); //daycnt_day
+			dtmCheckRepository.getNumberOfHour(checkDTO); //daycnt
+			log.info("연차촉진 및 저축 확인대상");
+		}
+
+		// 취소 후 연차사용일수 (tot_used2 = tot_used*1 - daycnt_day*1)
+		checkDTO.setAfterAnnualDayUsedCnt(proDTO.getAnnualDayUsedCnt() - checkDTO.getDayCount());
+		// 취소 후 연차사용시간 (tot_used_hh2 = tot_used_hh*1 - daycnt*1)
+		checkDTO.setAfterAnnualHourUsedCnt(proDTO.getAnnualHourUsedCnt() - checkDTO.getHourCount());
+
+		if(checkDTO.getDayCount() > 0) { // 연차촉진 및 저축 확인대상 근태를 사용하는 경우		
+			if("Y".equals(saveDTO.getSavableYn())) { // 저축가능기간인 경우		
+
+				if(proDTO.getIngRevokeHourCnt() > 0) { //취소중인 근태가있을경우
+					checkDTO.setAfterAnnualHourUsedCnt(checkDTO.getAfterAnnualHourUsedCnt() - proDTO.getIngRevokeHourCnt());
+					checkDTO.setAfterAnnualDayUsedCnt(checkDTO.getAfterAnnualDayUsedCnt() - proDTO.getIngRevokeDayCnt());
+				}
+				
+				if("N".equals(saveDTO.getSaveYn())) { // 저축을 하지 않은 경우					
+					if(proDTO.getAnnualHourUsedCnt() < proDTO.getDutyAnnualHourTotalCnt()) {
+						throw new CustomGeneralRuntimeException(
+							"<p> 연차 촉진기간만큼 연차가 등록되지않았습니다." + 
+							"연차 촉진기간만큼 연차를 등록한 후 진행해주세요.</p>" +
+							"<h6 class=\"text-left\"> 연차 촉진기간 : " + decimalFormat.format(proDTO.getDutyAnnualDayTotalCnt()) + "일</h6>" + 
+							"<h6 class=\"text-left\"> 취소 전 연차 사용기간 : " + decimalFormat.format(proDTO.getAnnualDayUsedCnt()) + "일</h6>" +
+							"<h6 class=\"text-left text-danger\"> 취소 후 연차 사용기간 : " + decimalFormat.format(checkDTO.getAfterAnnualDayUsedCnt()) + "일</h6>");
+					}					
+				}
+
+				if(proDTO.getDutyAnnualHourTotalCnt() < saveDTO.getSaveHourCnt()) {
+					// 촉진시간-저축시간이 < 0 인 경우 저축가능시간은 촉진시간 이하가 되어야함
+					saveDTO.setSaveHourCnt(proDTO.getDutyAnnualHourTotalCnt());
+				}
+				
+				if(checkDTO.getAfterAnnualHourUsedCnt() < proDTO.getDutyAnnualHourTotalCnt()) {
+					//취소 후 사용한 근태사용일수가 의무사용연차보다 작아지는 경우
+					throw new CustomGeneralRuntimeException(
+						"<p> 연차저축에 해당하는 근태변경입니다. 저축 필요시 내부망 PAMS 근태 저축화면을 이용해주세요</p>" +
+						"<h6 class=\"text-left\"> 연차 촉진기간 : " + decimalFormat.format(proDTO.getDutyAnnualDayTotalCnt()) + "일</h6>" + 
+						"<h6 class=\"text-left\"> 취소 전 연차 사용기간 : " + decimalFormat.format(proDTO.getAnnualDayUsedCnt()) + "일</h6>" +
+						"<h6 class=\"text-left text-danger\"> 취소 후 연차 사용기간 : " + decimalFormat.format(checkDTO.getAfterAnnualDayUsedCnt()) + "일</h6>");
+				}
+
+			} else { //연차저축제시행하지않는경우 원래 촉진제 체크로직으로 실행
+
+				if(checkDTO.getAfterAnnualHourUsedCnt() < proDTO.getDutyAnnualHourTotalCnt()) {
+					// 취소 후 사용한 근태사용시간이 의무사용연차보다 작은 경우
+					throw new CustomGeneralRuntimeException(
+						"<p> 근태 취소 시 연차 촉진기간보다 사용한 근태기간이 적어 취소할 수 없습니다." + 
+						"취소 필요시 새로운 근태를 등록한 후 취소해주시기 바랍니다.</p>" +
+						"<h6 class=\"text-left\"> 연차 촉진기간 : " + decimalFormat.format(proDTO.getDutyAnnualDayTotalCnt()) + "일</h6>" + 
+						"<h6 class=\"text-left\"> 취소 전 연차 사용기간 : " + decimalFormat.format(proDTO.getAnnualDayUsedCnt()) + "일</h6>" +
+						"<h6 class=\"text-left text-danger\"> 취소 후 연차 사용기간 : " + decimalFormat.format(checkDTO.getAfterAnnualDayUsedCnt()) + "일</h6>");
+				}
+
+			}
+		}
+	}
 
 	/***
 	 * @author 140024

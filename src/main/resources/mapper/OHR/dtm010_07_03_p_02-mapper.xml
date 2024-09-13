@@ -42,7 +42,7 @@
                 <result property="sYear" column="S_YEAR"/>
         </resultMap>
 
-        <select id="findDtmAnnualStatus" parameterType="dtmAnnualStatusParamDTO" resultMap="DtmAnnualStatusDTO">
+        <select id="findDtmAnnualStatus" parameterType="dtmSqlParamDTO" resultMap="DtmAnnualStatusDTO">
                 SELECT yycnt
                         , hhcnt
                         , ad_use_yycnt 

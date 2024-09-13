@@ -1,7 +1,7 @@
 package epams.domain.dtm.repository;
 
 import epams.domain.dtm.dto.DtmAnnualStatusDTO;
-import epams.domain.dtm.dto.DtmAnnualStatusParamDTO;
+import epams.domain.dtm.dto.DtmSqlParamDTO;
 import epams.domain.dtm.dto.DtmApplElaCheckProcDTO;
 import epams.domain.dtm.dto.DtmHisDTO;
 import lombok.RequiredArgsConstructor;
@@ -34,7 +34,7 @@ public class DtmAnnualStatusRepository {
      * @implNote 년간근태현황 조회
      * @since 2024-09-09
      */
-    public DtmAnnualStatusDTO getDtmAnnualStatus(final DtmAnnualStatusParamDTO dto) {
+    public DtmAnnualStatusDTO getDtmAnnualStatus(final DtmSqlParamDTO dto) {
 
     	return sql.selectOne("DtmAnnualStatus.findDtmAnnualStatus", dto);
     }

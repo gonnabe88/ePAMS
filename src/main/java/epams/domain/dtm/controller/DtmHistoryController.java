@@ -3,9 +3,13 @@ package epams.domain.dtm.controller;
 import epams.domain.com.admin.service.HtmlLangDetailService;
 import epams.domain.dtm.dto.DtmAnnualStatusDTO;
 import epams.domain.dtm.dto.DtmHisDTO;
+import epams.domain.dtm.dto.DtmPromotionDTO;
+import epams.domain.dtm.dto.DtmSaveDTO;
 import epams.domain.dtm.dto.DtmSearchDTO;
 import epams.domain.dtm.service.DtmAnnualStatusService;
 import epams.domain.dtm.service.DtmHistoryService;
+import epams.domain.dtm.service.DtmPromotionService;
+import epams.domain.dtm.service.DtmSaveService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -89,6 +93,8 @@ public class DtmHistoryController<S extends Session> {
      */
     @GetMapping("/dtmList")
     public String dtmList(@PageableDefault(page = 1) final Pageable pageable, @ModelAttribute final DtmSearchDTO searchDTO, final Model model) {
+
+
         final String DTMLIST = "dtm/dtmList";
         searchDTO.setEmpId(Long.parseLong(authentication().getName().replace('K', '7')));
 
@@ -111,9 +117,6 @@ public class DtmHistoryController<S extends Session> {
         if (endPage - startPage < maxPageBtn - 1) {
             startPage = Math.max(1, endPage - maxPageBtn + 1);
         }
-
-        log.info("startPage : " + startPage +" endPage : " + endPage + " TotalElements : " + dtmHisDTOList.getTotalElements());
-
         
         model.addAttribute("dtmHis", dtmHisDTOList);
         model.addAttribute("searchDTO", searchDTO);

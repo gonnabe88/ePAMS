@@ -1,0 +1,55 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- dtm010_03_03_p_09 (연차저축가능일수 조회) -->
+<mapper namespace="DtmGetSavableDay">
+        <!-- 연차저축가능일수 조회 -->
+        <resultMap id="DtmGetSavableDayMap" type="dtmSaveDTO">
+                <result property="saveDayCnt" column="SAVE_CNT"/>
+                <result property="saveHourCnt" column="SAVE_HHCNT"/>
+                <result property="saveYn" column="STORE_YN"/>
+        </resultMap>
+
+        <select id="getDtmGetSavableDay" parameterType="dtmSaveDTO" resultMap="DtmGetSavableDayMap">
+                SELECT 
+                        SAVE_CNT
+                        , CASE WHEN SAVE_HHCNT &lt; 0 THEN EXP_USE_APPT_HOUR_CNT
+                                --WHEN WORK_TIME = 4 THEN FLOOR(SAVE_HHCNT/WORK_TIME)*WORK_TIME
+                                --ELSE FLOOR(SAVE_HHCNT/(WORK_TIME/2))*WORK_TIME/2
+                                --2019.10.28 저축가능시간은 0.5일단위는 안됨
+                                ELSE FLOOR(SAVE_HHCNT/WORK_TIME)*WORK_TIME
+                        END AS SAVE_HHCNT
+                        , STORE_YN
+                        FROM (      
+                                SELECT CASE WHEN B.EMP_ID IS NULL AND C.EMP_ID IS NULL THEN TRUNC(TO_NUMBER(F_FRM_CODE_VALUE_C('01','PHM_POS_GRD_CD',POS_GRD_CD,SYSDATE,'X8'))/TO_NUMBER (F_FRM_CONST_VALUE_C ('01','DTM','DTM_BASE_HOUR',SYSDATE))*(#{savableRate}/100))
+                                        WHEN B.EMP_ID IS NULL AND C.EMP_ID IS NOT NULL THEN TRUNC(C.EXP_USE_APPT_DAY_CNT*(#{savableRate}/100)) 
+                                        ELSE B.EXP_USE_APPT_DAY_CNT
+                                        END AS SAVE_CNT
+                                , CASE WHEN B.EMP_ID IS NULL AND C.EMP_ID IS NULL THEN TRUNC(TO_NUMBER(F_FRM_CODE_VALUE_C('01','PHM_POS_GRD_CD',POS_GRD_CD,SYSDATE,'X8'))*(#{savableRate}/100))
+                                        WHEN B.EMP_ID IS NULL AND C.EMP_ID IS NOT NULL THEN TRUNC(C.EXP_USE_APPT_HOUR_CNT*(#{savableRate}/100)) 
+                                        ELSE -1                                                                        END AS SAVE_HHCNT
+                                , B.EXP_USE_APPT_HOUR_CNT    
+                                , (SELECT CASE WHEN COUNT(*) > 0 THEN 'Y'
+                                                ELSE 'N' END
+                                        FROM DTM_HIS
+                                        WHERE EMP_ID = A.EMP_ID
+                                        AND STA_YMD BETWEEN TO_CHAR(SYSDATE,'YYYY')||'0101' AND TO_CHAR(SYSDATE,'YYYY')||'1231' 
+                                --           AND STAT_CD = '132'
+                                        --and stat_cd not in ('111', '131', '141')
+                                        and stat_cd not in ('111', '131')
+                                        AND DTM_STORE_YN = '1') AS STORE_YN
+                                , F_DTM_WORK_TIME(A.EMP_ID, SYSDATE) AS WORK_TIME     
+                                FROM PHM_EMP_C A
+                                LEFT OUTER JOIN DTM_SAVE_EXP B
+                                                                ON B.EMP_ID = A.EMP_ID
+                                                                AND B.YY = TO_CHAR(SYSDATE,'YYYY')
+                                --2019.08.08 연차촉진예외테이블도 참고 
+                                LEFT OUTER JOIN DTM_EXP C
+                                                        ON C.EMP_ID = A.EMP_ID
+                                                        AND C.YY = TO_CHAR(SYSDATE,'YYYY')
+                                                        AND EXP_TYPE = '1'   
+                                WHERE A.EMP_ID = #{empId}
+                                )
+        </select>
+</mapper>

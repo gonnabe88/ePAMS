@@ -2,8 +2,12 @@ package epams.domain.dtm.controller;
 
 import epams.domain.com.admin.service.HtmlLangDetailService;
 import epams.domain.dtm.dto.DtmHisDTO;
+import epams.domain.dtm.dto.DtmPromotionDTO;
+import epams.domain.dtm.dto.DtmSaveDTO;
 import epams.domain.dtm.service.DtmHistoryService;
+import epams.domain.dtm.service.DtmPromotionService;
 import epams.domain.dtm.service.DtmRevokeService;
+import epams.domain.dtm.service.DtmSaveService;
 import epams.framework.exception.CustomGeneralRuntimeException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -73,6 +77,19 @@ public class DtmRevokeRestController<S extends Session> {
      */
     private final DtmRevokeService dtmRevokeService;
 
+    /**
+     * @author K140024
+     * @implNote 연차촉진 서비스 주입
+     * @since 2024-06-11
+     */
+    private final DtmPromotionService dtmPromotionService;
+
+    /**
+     * @author K140024
+     * @implNote 연차저축 서비스 주입
+     * @since 2024-09-13
+     */
+    private final DtmSaveService dtmSaveService;
 
     /**
      * @author K140024
@@ -97,6 +114,7 @@ public class DtmRevokeRestController<S extends Session> {
      */
     @PostMapping("/dtmRevoke")
      public ResponseEntity<Map<String, String>> dtmRevoke(@RequestBody final DtmHisDTO dto) throws IOException {
+
         // 사용자 ID 설정
         dto.setEmpId(Long.parseLong(authentication().getName().replace('K', '7')));
         dto.setModUserId(Long.parseLong(authentication().getName().replace('K', '7')));
@@ -105,14 +123,24 @@ public class DtmRevokeRestController<S extends Session> {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
         // 응답 메시지 설정
-        Map<String, String> response = new ConcurrentHashMap<>();
-
-        
+        Map<String, String> response = new ConcurrentHashMap<>();        
         log.warn(dto.toString());
 
         try {
+            // 연차촉진 관련 데이터 가져오기
+            final DtmPromotionDTO dtmPromotionDTO = dtmPromotionService.getDtmPromotionYnCheckData(dto.getEmpId(), "2024");
+
+            // 연차촉진 기간인 경우
+            if("Y".equals(dtmPromotionDTO.getPromotionYn())) {
+                // 연차저축 관련 데이터 가져오기
+                final DtmSaveDTO dtmSaveDTO = dtmSaveService.getDtmSaveCheckData(dto.getEmpId(), "2024");
+                // 연차촉진 및 저축 관련 유효성 체크
+                dtmRevokeService.check(dto, dtmPromotionDTO, dtmSaveDTO);
+            }
+
             // 서비스 호출 및 결과 메시지 설정
             String resultMessage = dtmRevokeService.revoke(dto);
+
             response.put("message", resultMessage);
             response.put("dtmReasonNm", dto.getDtmReasonNm());
             response.put("staYmd",  dto.getStaYmd().toLocalDate().format(formatter));

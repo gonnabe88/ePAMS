@@ -1,0 +1,261 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- dtm010_23_03_p_04 (연차촉진 조회) -->
+<mapper namespace="DtmGetPromotionDetail">
+        <!-- TABLE Result Map 정의 -->
+        <resultMap id="DtmGetPromotionDetailMap" type="dtmPromotionDTO">
+                <result property="Period" column="YMD"/>
+
+                <result property="username" column="EMP_ID"/>
+                <result property="empNo" column="EMP_NO"/>
+                <result property="realname" column="EMP_NM"/>
+                <result property="deptName" column="ORG_NM"/>
+                <result property="positionName" column="POS_GRD_NM"/>
+                <result property="dutyName" column="DUTY_NM"/>
+
+                <result property="annualDayTotalCnt" column="TOT_YY"/>
+                <result property="annualHourTotalCnt" column="TOT_HH"/>
+                <result property="annualDayUsedCnt" column="TOT_USED"/>
+                <result property="annualHourUsedCnt" column="TOT_USED_HH"/>
+                <result property="annualDayRemainCnt" column="TOT_REMAIN"/>
+                <result property="annualHourRemainCnt" column="TOT_REMAIN_HH"/>
+
+                <result property="dutyAnnualDayTotalCnt" column="ANNUAL_CNT"/>
+                <result property="dutyAnnualHourTotalCnt" column="ANNUAL_CNT_HH"/>
+
+                <result property="fixedDutyAnnualDayTotalCnt" column="REMAIN_CNT2"/>
+                <result property="fixedDutyAnnualHourTotalCnt" column="REMAIN_CNT2_HH"/>
+
+                <result property="todayYmd" column="NOW_DATE"/>
+                <result property="headHrDept" column="CHEIF_EMP_NM"/>
+                <result property="dtmYmRestId" column="DTM_YM_REST_ID"/>
+
+                <result property="ingRevokeDayCnt" column="YYCNT_DEL_USING_CNT"/>
+                <result property="ingRevokeHourCnt" column="HHCNT_DEL_USING_CNT"/>
+        </resultMap>
+
+        <select id="getPromotionDetail" parameterType="dtmPromotionDTO" resultMap="DtmGetPromotionDetailMap">
+                SELECT 
+                        YMD
+                        , EMP_ID
+                        , EMP_NO
+                        , EMP_NM
+                        , ORG_NM
+                        , POS_GRD_NM
+                        , DUTY_NM
+                        , TOT_YY
+                        , TOT_HH
+                        --, CASE WHEN (TOT_USED_HH/WORK_TIME) - TRUNC(TOT_USED_HH/WORK_TIME) >= 0.5 THEN TRUNC(TOT_USED_HH/WORK_TIME) + 0.5
+                        --       ELSE TRUNC(TOT_USED_HH/WORK_TIME) END AS  TOT_USED --기사용연차
+                        , FLOOR(4*NVL(TOT_USED_HH,0)/WORK_TIME)/4 AS TOT_USED --2023.12.04 반반차 신설
+                        , TOT_USED_HH --기사용연차
+                        --, (TOT_YY - (CASE WHEN (TOT_USED_HH/WORK_TIME) - TRUNC(TOT_USED_HH/WORK_TIME) >= 0.5 THEN TRUNC(TOT_USED_HH/WORK_TIME) + 0.5
+                        --                             ELSE TRUNC(TOT_USED_HH/WORK_TIME) END)) AS TOT_REMAIN
+                        , TOT_YY - FLOOR(4*NVL(TOT_USED_HH,0)/WORK_TIME)/4 AS TOT_REMAIN --2023.12.04 반반차 신설
+                        , (TOT_HH - TOT_USED_HH)   AS TOT_REMAIN_HH
+                        , ANNUAL_CNT --연차촉진일수
+                        , ANNUAL_CNT_HH
+                        --, TRUNC(REMAIN_CNT2)+(CASE WHEN REMAIN_CNT2-TRUNC(REMAIN_CNT2) >= 0.5 THEN 0.5 ELSE 0 END) AS REMAIN_CNT2 --사용시기지정일수
+                        , FLOOR(4*REMAIN_CNT2)/4 AS REMAIN_CNT2 --2023.12.04 반반차 신설
+                        , REMAIN_CNT2_HH
+                        , NOW_DATE
+                        , CHEIF_EMP_NM
+                        , DTM_YM_REST_ID
+                        , YYCNT_DEL_USING_CNT
+                        , HHCNT_DEL_USING_CNT
+                        , YYCNT
+                        FROM (SELECT  ''''||SUBSTR(A.YY,3,2)||'.01.01~12.31' AS YMD
+                                , A.EMP_ID AS EMP_ID
+                                , B.EMP_NO AS EMP_NO
+                                , B.EMP_NM AS EMP_NM
+                                , F_ORM_ORG_NM_C(A.COMPANY_CD, B.ORG_CD, B.RETIRE_YMD, '1', A.LOCALE_CD) AS ORG_NM
+                                , F_FRM_CODE_NM_C(A.COMPANY_CD, 'PHM_POS_GRD_CD', B.POS_GRD_CD, B.RETIRE_YMD, '1', A.LOCALE_CD) AS POS_GRD_NM
+                                , F_FRM_CODE_NM_C(A.COMPANY_CD, 'PHM_POS_CD', B.DUTY_CD, B.RETIRE_YMD, '1', A.LOCALE_CD) AS DUTY_NM
+                                , NVL(A.YYCNT,0) - GREATEST(NVL(F_DTM_VAL(A.EMP_ID, A.YY, '3'),0),0) - NVL(MMCNT,0) AS TOT_YY
+                                , NVL(A.HHCNT,0) - GREATEST(NVL(F_DTM_VAL(A.EMP_ID, A.YY, '4'),0),0) - (MMHHCNT1+MMHHCNT2+MMHHCNT3+MMHHCNT4+MMHHCNT5+MMHHCNT6+MMHHCNT7+MMHHCNT8+MMHHCNT9+MMHHCNT10+MMHHCNT11+MMHHCNT12) AS TOT_HH
+                                , NVL(A.YYCNT_USED_CNT, 0) AS TOT_USED --기사용연차
+                                , NVL(A.HHCNT_USED_CNT, 0) AS TOT_USED_HH --기사용연차
+                                , CASE WHEN A.PROMOTION_CONFIRM_YMD IS NOT NULL AND B.EXP_TYPE IS NULL THEN TO_NUMBER(F_FRM_CODE_VALUE_C(A.COMPANY_CD,'PHM_POS_GRD_CD', F_CAM_HISTORY_C(A.EMP_ID, A.PROMOTION_CONFIRM_YMD, 'POS_GRD_CD', A.LOCALE_CD), A.PROMOTION_CONFIRM_YMD,'X8'))  
+                                        ELSE B.ANNUAL_CNT END AS ANNUAL_CNT --연차촉진일수
+                                , B.ANNUAL_CNT_HH AS ANNUAL_CNT_HH
+                                , ROUND((CASE WHEN A.HHCNT_USED_CNT >= B.ANNUAL_CNT_HH THEN 0
+                                                ELSE B.ANNUAL_CNT_HH - A.HHCNT_USED_CNT 
+                                        END)/A.STD_WORK_TIME,3) AS REMAIN_CNT2 --사용시기지정일수
+                                , CASE WHEN A.HHCNT_USED_CNT >= B.ANNUAL_CNT_HH THEN 0
+                                        ELSE B.ANNUAL_CNT_HH - A.HHCNT_USED_CNT
+                                END AS REMAIN_CNT2_HH
+                                , TO_CHAR(SYSDATE, 'YYYY.MM.DD.') AS NOW_DATE
+                                , (SELECT EMP_NM FROM PHM_EMP_C WHERE ORG_CD = '16000' AND IN_OFFI_YN = 1 AND DUTY_CD = 'B1AX') AS CHEIF_EMP_NM
+                                , DTM_YM_REST_ID
+                                , YYCNT_DEL_USING_CNT + (CASE WHEN 0 > YYCNT_UPD_USING_CNT THEN 0 ELSE YYCNT_UPD_USING_CNT END)  AS YYCNT_DEL_USING_CNT
+                                , HHCNT_DEL_USING_CNT + (CASE WHEN 0 > HHCNT_UPD_USING_CNT THEN 0 ELSE HHCNT_UPD_USING_CNT END)  AS HHCNT_DEL_USING_CNT
+                                --, A.YYCNT
+                                ,NVL(A.YYCNT,0) - NVL(F_DTM_VAL(A.EMP_ID, A.YY, '3'),0) - NVL(A.MMCNT,0) AS YYCNT
+                                ,WORK_TIME
+                                FROM (SELECT B.DTM_YM_REST_ID
+                                        , B.YY
+                                        , B.EMP_ID
+                                        , TRUNC(LEAST(TRUNC((NVL(B.WK_ADD_YYCNT,0)+NVL(B.ADD_YYCNT,0))/2,0)+NVL(B.BASE_YYCNT,0),25)*NVL(B.ATTD_OFFI_RATE,1)) AS TOT_YY
+                                        , B.YYCNT
+                                        , C.COMPANY_CD
+                                        , C.LOCALE_CD
+                                        , B.YYCNT_REMAIN_CNT
+                                        , NVL(B.YYCNT_USED_CNT,0) + (NVL(B.YYCNT_HALF_USED_CNT,0) /2) AS  YYCNT_USED_CNT
+                                        , NVL((SELECT SUM( F_DTM_GET_USE_DAYCNT(C.COMPANY_CD, T1.DTM_REASON_CD, T1.STA_YMD, T1.END_YMD, C.LOCALE_CD, T1.EMP_ID)  ) SUM1 --결재중인 연차 건수 빼기(반려, 결재완료, 취소건 제외)
+                                                FROM DTM_HIS T1
+                                                WHERE T1.EMP_ID = B.EMP_ID
+                                                AND TO_CHAR(T1.STA_YMD, 'YYYY') = B.YY
+                                                --AND T1.DTM_REASON_CD IN ('1A1','1A5','1A6','1F1') -- 2019.06.11 공가반차추가
+                                                --AND T1.DTM_REASON_CD IN ('1A1','1A5','1A6','1F1','1K1') -- 2020.06.18 연수연차추가
+                                                --AND T1.DTM_REASON_CD IN ('1A1','1A5','1A6','1F1','1K1','1AE') -- 2021.09.07 휴게시간미사용 오후반차추가
+                                                AND T1.DTM_REASON_CD IN ('1A1','1A5','1A6','1F1','1K1','1AE','1AG','1AH') -- 2023.12.04 반반차 신설
+                                                AND T1.STAT_CD = '132'
+                                                AND T1.STA_YMD BETWEEN TO_DATE(C.YY||'0101', 'YYYYMMDD') AND TO_DATE(C.YY||'1231', 'YYYYMMDD')
+                                                AND T1.DTM_HIS_ID NOT IN (SELECT DTM_HIS_ID
+                                                                        FROM DTM_HIS
+                                                                        WHERE EMP_ID = T1.EMP_ID
+                                                                                AND NVL(MODI_TYPE,'I') = 'D'
+                                                                                AND STAT_CD = '132')
+                                        ), 0) YYCNT_USED_CNT2
+                                        , B.PROMOTION_CONFIRM_YMD
+                                        , NVL((SELECT SUM( F_DTM_GET_USE_DAYCNT(C.COMPANY_CD, T1.DTM_REASON_CD, T1.STA_YMD, T1.END_YMD, C.LOCALE_CD, T1.EMP_ID)  ) SUM1 --결재중인 연차 건수 빼기(반려, 결재완료, 취소건 제외)
+                                                FROM DTM_HIS T1
+                                                WHERE T1.EMP_ID = B.EMP_ID
+                                                AND TO_CHAR(T1.STA_YMD, 'YYYY') = B.YY
+                                                --AND T1.DTM_REASON_CD IN ('1A1','1A5','1A6','1F1') -- 2019.06.11 공가반차추가
+                                                --AND T1.DTM_REASON_CD IN ('1A1','1A5','1A6','1F1','1K1') -- 2020.06.18 연수연차추가
+                                                --AND T1.DTM_REASON_CD IN ('1A1','1A5','1A6','1F1','1K1','1AE') -- 2021.09.07 휴게시간미사용 오후반차추가
+                                                AND T1.DTM_REASON_CD IN ('1A1','1A5','1A6','1F1','1K1','1AE','1AG','1AH') -- 2023.12.04 반반차 신설
+                                                AND T1.STAT_CD IN ('121','123')
+                                                AND T1.STA_YMD BETWEEN TO_DATE(C.YY||'0101', 'YYYYMMDD') AND TO_DATE(C.YY||'1231', 'YYYYMMDD')
+                                                AND NVL(MODI_TYPE,'I') = 'D'                             
+                                                ), 0) as YYCNT_DEL_USING_CNT
+                                        ,NVL((/*SELECT SUM(CASE WHEN T1.DTM_REASON_CD IN ('1A1','1A5','1A6') THEN F_DTM_GET_USE_DAYCNT(C.COMPANY_CD, T1.DTM_REASON_CD, T1.STA_YMD, T1.END_YMD, C.LOCALE_CD, T1.EMP_ID)
+                                                                ELSE 0 END) -
+                                                        SUM(CASE WHEN T2.DTM_REASON_CD IN ('1A1','1A5','1A6') THEN F_DTM_GET_USE_DAYCNT(C.COMPANY_CD, T2.DTM_REASON_CD, T2.STA_YMD, T2.END_YMD, C.LOCALE_CD, T2.EMP_ID)
+                                                                ELSE 0 END) AS UPD_YY_CNT*/
+                                                -- 2021.09.07 휴게시간미사용 오후반차추가
+                                                /*SELECT SUM(CASE WHEN T1.DTM_REASON_CD IN ('1A1','1A5','1A6','1AE') THEN F_DTM_GET_USE_DAYCNT(C.COMPANY_CD, T1.DTM_REASON_CD, T1.STA_YMD, T1.END_YMD, C.LOCALE_CD, T1.EMP_ID)
+                                                                ELSE 0 END) -
+                                                        SUM(CASE WHEN T2.DTM_REASON_CD IN ('1A1','1A5','1A6','1AE') THEN F_DTM_GET_USE_DAYCNT(C.COMPANY_CD, T2.DTM_REASON_CD, T2.STA_YMD, T2.END_YMD, C.LOCALE_CD, T2.EMP_ID)
+                                                                ELSE 0 END) AS UPD_YY_CNT*/
+                                                -- 2023.12.04 반반차 신설
+                                                SELECT SUM(CASE WHEN T1.DTM_REASON_CD IN ('1A1','1A5','1A6','1F1','1K1','1AE','1AG','1AH') THEN F_DTM_GET_USE_DAYCNT(C.COMPANY_CD, T1.DTM_REASON_CD, T1.STA_YMD, T1.END_YMD, C.LOCALE_CD, T1.EMP_ID)
+                                                                ELSE 0 END) -
+                                                        SUM(CASE WHEN T2.DTM_REASON_CD IN ('1A1','1A5','1A6','1F1','1K1','1AE','1AG','1AH') THEN F_DTM_GET_USE_DAYCNT(C.COMPANY_CD, T2.DTM_REASON_CD, T2.STA_YMD, T2.END_YMD, C.LOCALE_CD, T2.EMP_ID)
+                                                                ELSE 0 END) AS UPD_YY_CNT 
+                                                FROM DTM_HIS T1
+                                                        INNER JOIN DTM_HIS T2
+                                                                        ON T2.DTM_HIS_ID = T1.MODI_DTM_HIS_ID
+                                                WHERE T1.EMP_ID = B.EMP_ID
+                                                        AND T1.STA_YMD BETWEEN TO_DATE(C.YY||'0101', 'YYYYMMDD') AND TO_DATE(C.YY||'1231', 'YYYYMMDD')
+                                                        AND T2.STAT_CD IN ('121','123')
+                                                        AND T2.STA_YMD BETWEEN TO_DATE(C.YY||'0101', 'YYYYMMDD') AND TO_DATE(C.YY||'1231', 'YYYYMMDD')
+                                                ),0) AS YYCNT_UPD_USING_CNT
+                                        , B.HHCNT
+                                        , B.HHCNT_USED_CNT
+                                        , CASE WHEN D.EMP_ID IS NULL THEN TO_NUMBER(F_FRM_CONST_VALUE_C('01', 'DTM', 'DTM_BASE_HOUR', SYSDATE))
+                                                ELSE TO_NUMBER(F_FRM_UNIT_VALUE2('01', 'KO', 'DTM', '근무유형관리', NVL(D.SEL_WK_CD,'M'), '2', D.STA_YMD)) 
+                                        END AS STD_WORK_TIME
+                                        , NVL((SELECT SUM( F_DTM_GET_USE_HOUR(C.COMPANY_CD, T1.DTM_REASON_CD, T1.STA_YMD, T1.END_YMD, C.LOCALE_CD, T1.EMP_ID)  ) SUM1 --결재중인 연차 건수 빼기(반려, 결재완료, 취소건 제외)
+                                                FROM DTM_HIS T1
+                                                WHERE T1.EMP_ID = B.EMP_ID
+                                                AND TO_CHAR(T1.STA_YMD, 'YYYY') = B.YY
+                                                --AND T1.DTM_REASON_CD IN ('1A1','1A5','1A6','1F1') -- 2019.06.11 공가반차추가
+                                                --AND T1.DTM_REASON_CD IN ('1A1','1A5','1A6','1F1','1K1') -- 2020.06.18 연수연차추가
+                                                --AND T1.DTM_REASON_CD IN ('1A1','1A5','1A6','1F1','1K1','1AE') -- 2021.09.07 휴게시간미사용 오후반차추가
+                                                AND T1.DTM_REASON_CD IN ('1A1','1A5','1A6','1F1','1K1','1AE','1AG','1AH') -- 2023.12.04 반반차 신설
+                                                AND T1.STAT_CD IN ('121','123')
+                                                AND T1.STA_YMD BETWEEN TO_DATE(C.YY||'0101', 'YYYYMMDD') AND TO_DATE(C.YY||'1231', 'YYYYMMDD')
+                                                AND NVL(MODI_TYPE,'I') = 'D'                             
+                                                ), 0) as HHCNT_DEL_USING_CNT
+                                        ,NVL((/*SELECT SUM(CASE WHEN T1.DTM_REASON_CD IN ('1A1','1A5','1A6') THEN F_DTM_GET_USE_HOUR(C.COMPANY_CD, T1.DTM_REASON_CD, T1.STA_YMD, T1.END_YMD, C.LOCALE_CD, T1.EMP_ID)
+                                                                ELSE 0 END) -
+                                                        SUM(CASE WHEN T2.DTM_REASON_CD IN ('1A1','1A5','1A6') THEN F_DTM_GET_USE_HOUR(C.COMPANY_CD, T2.DTM_REASON_CD, T2.STA_YMD, T2.END_YMD, C.LOCALE_CD, T2.EMP_ID)
+                                                                ELSE 0 END) AS UPD_YY_CNT*/
+                                                -- 2021.09.07 휴게시간미사용 오후반차추가
+                                                /*SELECT SUM(CASE WHEN T1.DTM_REASON_CD IN ('1A1','1A5','1A6','1AE') THEN F_DTM_GET_USE_HOUR(C.COMPANY_CD, T1.DTM_REASON_CD, T1.STA_YMD, T1.END_YMD, C.LOCALE_CD, T1.EMP_ID)
+                                                                ELSE 0 END) -
+                                                        SUM(CASE WHEN T2.DTM_REASON_CD IN ('1A1','1A5','1A6','1AE') THEN F_DTM_GET_USE_HOUR(C.COMPANY_CD, T2.DTM_REASON_CD, T2.STA_YMD, T2.END_YMD, C.LOCALE_CD, T2.EMP_ID)
+                                                                ELSE 0 END) AS UPD_YY_CN*/
+                                                -- 2023.12.04 반반차 신설
+                                                SELECT SUM(CASE WHEN T1.DTM_REASON_CD IN ('1A1','1A5','1A6','1F1','1K1','1AE','1AG','1AH') THEN F_DTM_GET_USE_HOUR(C.COMPANY_CD, T1.DTM_REASON_CD, T1.STA_YMD, T1.END_YMD, C.LOCALE_CD, T1.EMP_ID)
+                                                                ELSE 0 END) -
+                                                        SUM(CASE WHEN T2.DTM_REASON_CD IN ('1A1','1A5','1A6','1F1','1K1','1AE','1AG','1AH') THEN F_DTM_GET_USE_HOUR(C.COMPANY_CD, T2.DTM_REASON_CD, T2.STA_YMD, T2.END_YMD, C.LOCALE_CD, T2.EMP_ID)
+                                                                ELSE 0 END) AS UPD_YY_CNT
+                                                FROM DTM_HIS T1
+                                                        INNER JOIN DTM_HIS T2
+                                                                        ON T2.DTM_HIS_ID = T1.MODI_DTM_HIS_ID
+                                                WHERE T1.EMP_ID = B.EMP_ID
+                                                        AND T1.STA_YMD BETWEEN TO_DATE(C.YY||'0101', 'YYYYMMDD') AND TO_DATE(C.YY||'1231', 'YYYYMMDD')
+                                                        AND T2.STAT_CD IN ('121','123')
+                                                        AND T2.STA_YMD BETWEEN TO_DATE(C.YY||'0101', 'YYYYMMDD') AND TO_DATE(C.YY||'1231', 'YYYYMMDD')
+                                                ),0) AS HHCNT_UPD_USING_CNT
+                                        , NVL(b.mmcnt1,0)+NVL(b.mmcnt2,0)+NVL(b.mmcnt3,0)+NVL(b.mmcnt4,0)+NVL(b.mmcnt5,0)+NVL(b.mmcnt6,0)+NVL(b.mmcnt7,0)+NVL(b.mmcnt8,0)+NVL(b.mmcnt9,0)+NVL(b.mmcnt10,0)+NVL(b.mmcnt11,0)+NVL(b.mmcnt12,0) AS MMCNT
+                                        , CASE WHEN NVL(b.mmcnt1,0) > 0 THEN NVL(b.mmcnt1,0)* F_DTM_WORK_TIME(B.EMP_ID, B.YY||'0101')  
+                                                ELSE 0 END AS MMHHCNT1 
+                                        , CASE WHEN NVL(b.mmcnt2,0) > 0 THEN NVL(b.mmcnt2,0)* F_DTM_WORK_TIME(B.EMP_ID, B.YY||'0201')  
+                                                ELSE 0 END AS MMHHCNT2
+                                        , CASE WHEN NVL(b.mmcnt3,0) > 0 THEN NVL(b.mmcnt3,0)* F_DTM_WORK_TIME(B.EMP_ID, B.YY||'0301')  
+                                                ELSE 0 END AS MMHHCNT3
+                                        , CASE WHEN NVL(b.mmcnt4,0) > 0 THEN NVL(b.mmcnt4,0)* F_DTM_WORK_TIME(B.EMP_ID, B.YY||'0401')  
+                                                ELSE 0 END AS MMHHCNT4
+                                        , CASE WHEN NVL(b.mmcnt5,0) > 0 THEN NVL(b.mmcnt5,0)* F_DTM_WORK_TIME(B.EMP_ID, B.YY||'0501')  
+                                                ELSE 0 END AS MMHHCNT5
+                                        , CASE WHEN NVL(b.mmcnt6,0) > 0 THEN NVL(b.mmcnt6,0)* F_DTM_WORK_TIME(B.EMP_ID, B.YY||'0601')  
+                                                ELSE 0 END AS MMHHCNT6
+                                        , CASE WHEN NVL(b.mmcnt7,0) > 0 THEN NVL(b.mmcnt7,0)* F_DTM_WORK_TIME(B.EMP_ID, B.YY||'0701')  
+                                                ELSE 0 END AS MMHHCNT7
+                                        , CASE WHEN NVL(b.mmcnt8,0) > 0 THEN NVL(b.mmcnt8,0)* F_DTM_WORK_TIME(B.EMP_ID, B.YY||'0801')  
+                                                ELSE 0 END AS MMHHCNT8
+                                        , CASE WHEN NVL(b.mmcnt9,0) > 0 THEN NVL(b.mmcnt9,0)* F_DTM_WORK_TIME(B.EMP_ID, B.YY||'0901')  
+                                                ELSE 0 END AS MMHHCNT9
+                                        , CASE WHEN NVL(b.mmcnt10,0) > 0 THEN NVL(b.mmcnt10,0)* F_DTM_WORK_TIME(B.EMP_ID, B.YY||'1001')  
+                                                ELSE 0 END AS MMHHCNT10
+                                        , CASE WHEN NVL(b.mmcnt11,0) > 0 THEN NVL(b.mmcnt11,0)* F_DTM_WORK_TIME(B.EMP_ID, B.YY||'1101')  
+                                                ELSE 0 END AS MMHHCNT11
+                                        , CASE WHEN NVL(b.mmcnt12,0) > 0 THEN NVL(b.mmcnt12,0)* F_DTM_WORK_TIME(B.EMP_ID, B.YY||'1201')  
+                                                ELSE 0 END AS MMHHCNT12 
+                                        , F_DTM_WORK_TIME(B.EMP_ID, SYSDATE) WORK_TIME 
+                                        FROM DTM_YM_REST B
+                                        LEFT JOIN PHM_WORK D
+                                                        ON D.EMP_ID = B.EMP_ID
+                                                        AND TRUNC(SYSDATE) BETWEEN STA_YMD AND END_YMD  
+                                        INNER JOIN (SELECT #{localeCd} AS LOCALE_CD
+                                                        , #{companyCd} AS COMPANY_CD
+                                                        , #{stdYear} AS YY
+                                                FROM DUAL
+                                        ) C
+                                        ON 1=1
+                                        WHERE (C.YY IS NULL OR B.YY = C.YY)
+                                        AND B.EMP_ID IN (#{empId})
+                                        AND B.EMP_ID NOT IN (SELECT EMP_ID
+                                                                FROM DTM_EXP
+                                                                WHERE YY = B.YY
+                                                                AND EMP_ID = B.EMP_ID
+                                                                AND EXP_TYPE = '2'
+                                        )
+                                ) A
+                                INNER JOIN (SELECT T1.*
+                                                , CASE WHEN NVL(T2.EXP_USE_APPT_DAY_CNT, 0) > 0 THEN T2.EXP_USE_APPT_DAY_CNT
+                                                        ELSE TO_NUMBER(F_FRM_CODE_VALUE_C(T1.COMPANY_CD,'PHM_POS_GRD_CD',T1.POS_GRD_CD,SYSDATE,'X8'))
+                                                END ANNUAL_CNT
+                                                , CASE WHEN NVL(T2.EXP_USE_APPT_HOUR_CNT, 0) > 0 THEN T2.EXP_USE_APPT_HOUR_CNT
+                                                        ELSE TO_NUMBER(F_FRM_CODE_VALUE_C(T1.COMPANY_CD,'PHM_POS_GRD_CD',T1.POS_GRD_CD,SYSDATE,'X8'))
+                                                        * TO_NUMBER(F_FRM_CONST_VALUE_C(T1.COMPANY_CD, 'DTM', 'DTM_BASE_HOUR', SYSDATE))
+                                                END ANNUAL_CNT_HH
+                                                , T2.EXP_TYPE
+                                        FROM PHM_EMP_C T1
+                                        LEFT OUTER JOIN DTM_EXP T2
+                                                ON T1.EMP_ID = T2.EMP_ID
+                                                AND T2.YY = #{stdYear}
+                                                AND T2.EXP_TYPE = '1'
+                                ) B
+                                ON A.COMPANY_CD = B.COMPANY_CD
+                                AND A.EMP_ID = B.EMP_ID
+                                ORDER BY  F_PHM_EMP_LIST_SORT(A.EMP_ID)
+                                )
+        </select>
+</mapper>

@@ -1,0 +1,19 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- dtm010_23_03_p_01 (연차사용촉진관리 대상자 여부 조회) -->
+<mapper namespace="DtmGetPromotionExp">
+        <!-- TABLE Result Map 정의 -->
+        <resultMap id="DtmGetPromotionExpMap" type="dtmPromotionDTO">
+                <result property="promotionExp" column="CNT"/>
+        </resultMap>
+
+        <select id="getDtmPromotionExp" parameterType="dtmPromotionDTO" resultMap="DtmGetPromotionExpMap">
+                SELECT COUNT(*) CNT
+                FROM DTM_EXP
+                WHERE EMP_ID = #{empId}
+                AND YY = #{stdYear}
+                AND EXP_TYPE = '2'
+        </select>
+</mapper>

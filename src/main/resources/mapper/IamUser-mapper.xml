@@ -14,9 +14,17 @@
 
     <!-- Result Map 정의 -->
     <resultMap id="iamUserMap" type="iamUserDTO">
-        <id property="username" column="ENO"/>
-        <result property="realname" column="EMP_NM"/>
+        <result property="username" column="ENO"/>
+        <result property="realname" column="USR_NM"/>
         <result property="password" column="USR_ECY_PWD"/>
+        <result property="teamCode" column="TEM_C"/>
+        <result property="teamName" column="TEM_NM"/>
+        <result property="deptCode" column="BBR_C"/>
+        <result property="deptName" column="BBR_NM"/>
+        <result property="positionName" column="PT_C_NM"/>
+        <result property="jobDetail" column="DTS_DTL_CONE"/>
+        <result property="inlineNumber" column="INLE_NO"/>
+        <result property="phoneNo" column="CADR_TPN"/>
     </resultMap>
 
     <!-- Result Map 정의 -->
@@ -33,8 +41,26 @@
         <result property="inlineNumber" column="INLE_NO"/>
     </resultMap>
 
+    <!-- 특정 사용자 조회 -->
+    <select id="findUserByUserNo" parameterType="String" resultMap="iamUserMap">
+        SELECT A.USR_NM,
+               A.ENO,
+               A.BBR_C,
+               B.BBR_NM,
+               A.USR_ECY_PWD,
+               A.TEM_C,
+               A.TEM_NM,
+               A.PT_C_NM,
+               A.DTS_DTL_CONE,
+               A.CADR_TPN,
+               A.INLE_NO
+        FROM OEHR.THURXE_CUSRLI A
+                 INNER JOIN OEHR.THURXE_CORGLI B ON A.BBR_C = B.PRLM_OGZ_C_CONE
+        WHERE
+            A.ENO = #{username}
+    </select>
 
-    <!-- 모든 데이터 조회 -->
+    <!-- 휴대폰 번호 조회 -->
     <select id="findPhoneNo" parameterType="String" resultType="String">
         SELECT A.CADR_TPN 
         FROM OEHR.THURXE_CUSRLI A 
@@ -47,12 +73,12 @@
         ORDER BY FST_ENR_DTM DESC
     </select>
 
-    <!-- 모든 데이터 조회 -->
+    <!-- 모든 팀 조회 -->
     <select id="findAllTeam" resultMap="teamSearchMap">
         SELECT DISTINCT(A.TEM_C), A.TEM_NM FROM OEHR.THURXE_CUSRLI A
     </select>
 
-    <!-- 모든 데이터 조회 -->
+    <!-- 모든 사용자 정보 조회 -->
     <select id="findAllMember" resultMap="teamSearchMap">
         SELECT A.USR_NM,
                A.ENO,
@@ -66,6 +92,7 @@
         FROM OEHR.THURXE_CUSRLI A
         INNER JOIN OEHR.THURXE_CORGLI B ON A.BBR_C = B.PRLM_OGZ_C_CONE
     </select>
+
     <!-- ID/PW 일치 사용자 조회 -->
     <select id="login" parameterType="iamUserDTO" resultMap="iamUserMap">
         SELECT

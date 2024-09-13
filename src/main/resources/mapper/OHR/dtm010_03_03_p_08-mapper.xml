@@ -1,0 +1,31 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<!-- dtm010_03_03_p_08 (업무기준관리 연차저축기간 및 비율조회) -->
+<mapper namespace="DtmGetSaveStandard">
+        <!-- TABLE Result Map 정의 -->
+        <resultMap id="DtmGetSaveStandardMap" type="dtmSaveDTO">
+                <result property="savableYn" column="DTM_SAVE_YN"/>
+                <result property="staYmd" column="STA_YMD"/>
+                <result property="endYmd" column="END_YMD"/>
+                <result property="savableRate" column="DTM_SAVE_RATE"/>
+        </resultMap>
+
+        <select id="getSaveStandard" parameterType="dtmSaveDTO" resultMap="DtmGetSaveStandardMap">
+                SELECT CASE WHEN COUNT(*) > 0 THEN 'Y'
+                        ELSE 'N' END AS DTM_SAVE_YN
+                        , MAX(B.STA_YMD) AS STA_YMD
+                        , MAX(B.END_YMD) AS END_YMD
+                        , MAX(B.ETC_CD2) AS DTM_SAVE_RATE
+                FROM XFRMH01M A
+                        , XFRMH02T B
+                WHERE A.STD_NM = '연차저축비율'
+                        AND A.COMPANY_CD =  '01'
+                        AND A.UNIT_CD    = 'DTM'
+                        AND A.XFRMH01M_ID = B.XFRMH01M_ID   
+                        AND TRUNC(SYSDATE) BETWEEN B.STA_YMD AND B.END_YMD
+                        AND B.ETC_CD1= #{stdYear}
+        </select>
+</mapper>

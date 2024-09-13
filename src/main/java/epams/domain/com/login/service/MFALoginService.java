@@ -17,6 +17,8 @@ import epams.domain.com.member.dto.IamUserDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import java.nio.charset.StandardCharsets;
+
 /**
  * @author K140024
  * @implNote 멀티 팩터 인증 로그인 서비스
@@ -60,6 +62,7 @@ public class MFALoginService {
      */
     public Map<String, String> requestMFA(final IamUserDTO iamUserDTO) throws NoSuchAlgorithmException {
 
+
         final LoginOTPDTO loginOTPDTO = new LoginOTPDTO();
         loginOTPDTO.setUsername(iamUserDTO.getUsername());
         loginOTPDTO.setMfa(iamUserDTO.getMFA());
@@ -87,6 +90,10 @@ public class MFALoginService {
                 eaiDto.setUmsTrSno(otpSeqId.toString()); // UMS거래 일련번호 = OTP_ISN_SNO (OTP 발급 일련번호)
                 eaiDto.setReqCh(iamUserDTO.getPhoneNo()); // 핸드폰 번호
                 eaiDto.setEmplNum(iamUserDTO.getUsername()); // 행번
+                eaiDto.setCstNm(iamUserDTO.getRealname()); // 이름(고객명)
+                //eaiDto.setCstNm("PJH"); // 이름(고객명)
+                eaiDto.setDeptKey(iamUserDTO.getDeptCode()); // 부서코드
+                eaiDto.setDeptNm(iamUserDTO.getDeptName()); // 부서명
                 eaiDto.setUmData1(loginOTPDTO.getOtp()); // OTP 번호
 
                 switch (iamUserDTO.getMFA()) {

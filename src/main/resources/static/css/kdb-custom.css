@@ -374,6 +374,139 @@ mark {
     text-overflow: ellipsis;
 }
 
+
+
+/************************* 근태조회(dtmCalendar) FULLCALENDAR 시작 **************************/
+
+/*HEADER Next, 월, PREV 버튼간 간격 이슈 해결*/
+.fc-direction-ltr .fc-toolbar > * > :not(:first-child) {
+    margin: 0;
+}
+
+/*이벤트 배경색*/
+.dtmList .fc-h-event {
+    background-color: #9D5DB6; /* 변수로 배경색 적용 */
+    border: 1px solid #9D5DB6; /* 변수로 테두리 색상 적용 */
+    display: block;
+}
+
+/*HEADER 스타일 설정*/
+.dtmList .fc-toolbar-chunk {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/*경계선 제거*/
+.dtmList .fc table, .dtmList .fc td, .dtmList .fc th {
+    border: none !important;
+}
+
+/* 달력 내부 컨텐츠 높이를 화면의 60%로 설정*/
+.dtmList .fc tbody {
+    height: 60vh;
+}
+
+/* 날짜 기본 스타일 */
+.dtmList .fc .fc-daygrid-day-top {
+    flex-grow: 1;
+    display: flex;
+    justify-content: start;
+    align-items: start;
+}
+
+/* 날짜 선택 시 스타일 */
+.dtmList .fc-day.selected-date .fc-daygrid-day-number {
+    background-color: #435ebe;
+    color: white;
+    border-radius: 50%;
+    width: clamp(30px, 4vw, 35px);  /* 최소 20px, 최대 35px, 기본 값은 4vw로 설정 */
+    height: clamp(30px, 4vw, 35px); /* 최소 20px, 최대 35px, 기본 값은 4vw로 설정 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+/*이벤트 박스 스타일 조정*/
+.dtmList .fc .fc-daygrid-day-events {
+    width: 100%;
+    margin-bottom: 0;
+}
+
+/* 이벤트 박스 스타일 조정 */
+.dtmList .fc .fc-event {
+    border: white;
+    width: 100%;
+    overflow: hidden; /* 넘치는 텍스트는 숨김 */
+    position: relative;
+    white-space: nowrap; /* 텍스트를 한 줄로 설정 */
+}
+
+/* 이벤트 타이틀 크기 조정 */
+.dtmList .fc .fc-event-title {
+    font-size: clamp(0.6em, 3vw, 1em);
+    white-space: nowrap; /* 텍스트가 한 줄로 표시되도록 설정 */
+    display: inline-block;
+    overflow: hidden;
+    transition: transform 0.5s ease; /* 부드러운 전환 효과 추가 */
+}
+
+/* 제목 크기 및 날짜 및 이벤트 제목 크기도 동적으로 조절 */
+.dtmList .fc .fc-toolbar h2 {
+    font-size: clamp(1em, 3vw, 1.5em); /* 제목 크기 조정 */
+    min-width: clamp(3em, 3vw, 4.5em);
+    text-align: center;
+    margin-right: 0.5rem;
+    margin-left: 0.5rem;
+}
+
+/* 카드 안에 있는 FullCalendar에서 세로선 제거 */
+/* 날짜 셀의 세로선을 카드 배경색과 동일하게 설정하여 보이지 않게 하기 */
+.dtmList .card .fc .fc-daygrid-day {
+    border: none;
+}
+
+/* 카드의 배경색에 맞게 세로선이 카드 배경색과 같도록 설정 (투명으로 설정하여 보이지 않도록) */
+.dtmList .card .fc .fc-col-header-cell,
+.dtmList .card .fc .fc-daygrid-day-frame {
+    border: none;
+}
+
+/*날짜와 이벤트 그리드 비율*/
+.dtmList .fc .fc-daygrid-day-frame {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 선택된 날짜에 동그라미를 그리는 스타일 */
+.dtmList .fc-daygrid-day.selected-day {
+    background-color: transparent;
+    border: 2px solid #ff0000;
+    border-radius: 50%;
+}
+
+/*fullcalendar 오늘 강조 표시*/
+.dtmList .fc-day-today.fc-daygrid-day {
+    background-color: #f2f7ff !important; /* 원하는 색상으로 변경 */
+    font-weight: bold;
+
+}
+
+/*NEXT, PREV 버튼 스타일 설정*/
+.dtmList .fc-button.fc-prev-button,
+.dtmList .fc-button.fc-next-button {
+    background-color: transparent !important; /* 배경색 제거 */
+    border: none !important; /* 테두리 제거 */
+    color: #435ebe !important; /* 글자 색은 기본 유지 */
+    box-shadow: none !important; /* 그림자 제거 */
+}
+
+/************************* 근태조회(dtmCalendar) FULLCALENDAR 끝 **************************/
+
 /*근태 신청화면 card*/
 .dtmReg .container {
     display: flex;
@@ -402,42 +535,42 @@ mark {
 }
 
 /* full calender 시작*/
-.fc {
+.dtmRegDetail .fc {
     font-size: clamp(0.8em, 2vw, 5em); /* 최소 0.8em, 최대 5em, 기본 값은 2vw로 설정 */
     text-align: center;
     border: none;
 }
 
 /* 제목 크기 및 날짜 및 이벤트 제목 크기도 동적으로 조절 */
-.fc .fc-toolbar h2 {
+.dtmRegDetail .fc .fc-toolbar h2 {
     font-size: clamp(1em, 3vw, 1.5em); /* 제목 크기 조정 */
 }
 
-.fc .fc-event-title {
+.dtmRegDetail .fc .fc-event-title {
     font-size: clamp(0.6em, 1.5vw, 1dtmRegDetailm); /* 날짜 및 이벤트 제목 크기 조정 */
 }
 
 /* 카드 안에 있는 FullCalendar에서 세로선 제거 */
 /* 날짜 셀의 세로선을 카드 배경색과 동일하게 설정하여 보이지 않게 하기 */
-.card .fc .fc-daygrid-day {
+.dtmRegDetail .card .fc .fc-daygrid-day {
     border: none;
 }
 
 /* 카드의 배경색에 맞게 세로선이 카드 배경색과 같도록 설정 (투명으로 설정하여 보이지 않도록) */
-.card .fc .fc-col-header-cell,
-.card .fc .fc-daygrid-day-frame {
+.dtmRegDetail .card .fc .fc-col-header-cell,
+.dtmRegDetail .card .fc .fc-daygrid-day-frame {
     border: none;
 }
 
 
 /* fc-daygrid-day-events 부분 숨기기 */
-.fc-daygrid-day-events {
+.dtmRegDetail .fc-daygrid-day-events {
     display: none !important; /* 강제로 숨기기 */
 }
 
 
 /* 선택된 날짜에 동그라미 추가 */
-.fc-day.selected-date .fc-daygrid-day-number {
+.dtmRegDetail .fc-day.selected-date .fc-daygrid-day-number {
     background-color: #435ebe;
     color: white;
     border-radius: 50%;
@@ -449,53 +582,53 @@ mark {
     font-weight: bold;
     /*margin: auto; !* 중앙 정렬을 위해 추가 *!*/
 }
-#dateDisplay {
+.dtmRegDetail #dateDisplay {
     margin-top: 10px;
     font-size: 16px;
 }
 
-#calendar {
+.dtmRegDetail #calendar {
     max-width: 1000px;
     margin: 0 auto;
 }
-.fc .fc-daygrid-day {
+.dtmRegDetail .fc .fc-daygrid-day {
     aspect-ratio: 1 / 1;
 }
-.fc .fc-daygrid-day-frame {
+.dtmRegDetail .fc .fc-daygrid-day-frame {
     height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
-.fc .fc-daygrid-day-top {
+.dtmRegDetail .fc .fc-daygrid-day-top {
     flex-grow: 1;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.fc-daygrid-day-content {
+.dtmRegDetail .fc-daygrid-day-content {
     position: absolute;
     width: 100%;
     height: 100%;
     box-sizing: border-box;
 }
 /* 선택된 날짜에 동그라미를 그리는 스타일 */
-.fc-daygrid-day.selected-day {
+.dtmRegDetail .fc-daygrid-day.selected-day {
     background-color: transparent;
     border: 2px solid #ff0000;
     border-radius: 50%;
 }
 /*fullcalendar 오늘 강조 표시*/
-.fc-day-today.fc-daygrid-day {
+.dtmRegDetail .fc-day-today.fc-daygrid-day {
     background-color: #f2f7ff !important; /* 원하는 색상으로 변경 */
     font-weight: bold;
 
 }
-.fc-button.fc-today-button,
-.fc-button.fc-prev-button,
-.fc-button.fc-next-button {
+.dtmRegDetail .fc-button.fc-today-button,
+.dtmRegDetail .fc-button.fc-prev-button,
+.dtmRegDetail .fc-button.fc-next-button {
     background-color: transparent !important; /* 배경색 제거 */
     border: none !important; /* 테두리 제거 */
     color: #435ebe !important; /* 글자 색은 기본 유지 */
@@ -1228,8 +1361,8 @@ html, body {
     --bs-secondary-bg-subtle: #f8f9fa;
     --bs-primary-border-subtle: #b4bfe5;
     --bs-secondary-border-subtle: #e9ecef;
-    --bs-body-font-family: "Nanum Gothic";
-    --bs-btn-font-family: "Nanum Gothic";
+    --bs-body-font-family: "Nanum Gothic" !important;
+    --bs-btn-font-family: "Nanum Gothic" !important;
     --bs-body-color: #607080;
     --bs-body-color-rgb: 96, 112, 128;
     --bs-body-bg: #f2f7ff;
@@ -2012,6 +2145,10 @@ textarea.form-control.is-invalid {
 .was-validated .form-check-input:invalid~.form-check-label,
 .form-check-input.is-invalid~.form-check-label {
     color: #dc3545
+}
+
+.btn {
+    --bs-btn-font-family: "Nanum Gothic" !important;
 }
 
 .btn-primary {
@@ -4578,7 +4715,7 @@ textarea.form-control.is-invalid {
 }
 
 .page-heading {
-    margin: 0 0 2rem
+    margin: 0 0 1rem
 }
 
 .page-heading h3,

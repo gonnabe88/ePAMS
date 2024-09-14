@@ -1,5 +1,6 @@
 package epams.domain.dtm.repository;
 
+import epams.domain.dtm.dto.DtmCalendarDTO;
 import epams.domain.dtm.dto.DtmHisDTO;
 import epams.domain.dtm.dto.DtmSearchDTO;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,16 @@ public class DtmHistoryRepository {
 	 * @since 2024-06-09
 	 */
     private final SqlSessionTemplate sql;
+
+    /***
+     * @author 140024
+     * @implNote 조건(ID, 기간 등)에 맞는 모든 근태 조회
+     * @since 2024-06-09
+     */
+    public List<DtmCalendarDTO> findByYears(final DtmSearchDTO searchDTO) {
+        log.warn("/dtmList/dtmCalendar");
+        return sql.selectList("DtmHis.findByYears", searchDTO);
+    }
 
     /***
      * @author 140024

@@ -1,6 +1,7 @@
 package epams.domain.dtm.service;
 
 import epams.domain.com.apply.repository.ElaApplCRepository;
+import epams.domain.dtm.dto.DtmCalendarDTO;
 import epams.domain.dtm.dto.DtmHisDTO;
 import epams.domain.dtm.dto.DtmSearchDTO;
 import epams.domain.dtm.repository.DtmHistoryRepository;
@@ -31,6 +32,23 @@ public class DtmHistoryService {
 	 * @since 2024-06-09
 	 */
 	private final DtmHistoryRepository dtmHisRepo;
+
+	/***
+	 * @author 140024
+	 * @implNote logRepository 객체의 findLoginLogAll 호출하여 LogLoginEntity 리스트 반환
+	 * @since 2024-06-09
+	 */
+	public List<DtmCalendarDTO> findByYears(final DtmSearchDTO searchDTO) {
+
+		// MyBatis 쿼리를 통해 데이터 조회
+		final List<DtmCalendarDTO> dtmCalDTOs = dtmHisRepo.findByYears(searchDTO);
+		log.warn("/dtmList/dtmCalendar");
+		for (DtmCalendarDTO dto : dtmCalDTOs) {
+			log.warn(dto.toString());
+		}
+		return dtmCalDTOs;
+	}
+
 
 	/***
 	 * @author 140024

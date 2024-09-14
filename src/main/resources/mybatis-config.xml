@@ -52,6 +52,7 @@
         <typeAlias type="epams.domain.dtm.dto.DtmApplElaCheckProcDTO" alias="dtmApplElaCheckProcDTO"></typeAlias>
         <typeAlias type="epams.domain.dtm.dto.DtmCheckDTO" alias="dtmCheckDTO"></typeAlias>
         <typeAlias type="epams.domain.dtm.dto.DtmApplStatusDTO" alias="dtmApplStatusDTO"></typeAlias>
+        <typeAlias type="epams.domain.dtm.dto.DtmCalendarDTO" alias="dtmCalendarDTO"></typeAlias>
 
     </typeAliases>
 

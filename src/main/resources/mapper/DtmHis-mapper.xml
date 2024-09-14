@@ -5,6 +5,13 @@
 <mapper namespace="DtmHis">
 
     <!-- resultMap 정의 -->
+    <resultMap id="dtmCalendarMap" type="dtmCalendarDTO">
+        <result property="title" column="DTM_REASON_NM" />
+        <result property="start" column="STA_YMD" />
+        <result property="end" column="END_YMD" />
+    </resultMap>
+
+    <!-- resultMap 정의 -->
     <resultMap id="dtmHisResultMap" type="DtmHis">
         <!-- DTM_HIS 테이블 -->
         <id property="dtmHisId" column="DTM_HIS_ID" />
@@ -53,6 +60,42 @@
         SELECT COUNT(*) FROM OHR.DTM_HIS WHERE EMP_ID = #{empId}
     </select>
 
+    <!-- 2년 데이터 조회 -->
+    <select id="findByYears" parameterType="dtmSearchDTO" resultMap="dtmCalendarMap">
+        SELECT
+        d.sta_ymd AS STA_YMD,
+        d.end_ymd AS END_YMD,
+        x1.CD_NM AS DTM_REASON_NM
+        FROM
+        OHR.DTM_HIS d
+        LEFT JOIN OHR.XFRMD2C x1 ON d.DTM_REASON_CD = x1.CD
+        AND x1.CD_KIND = 'DTM_REASON_CD'
+        LEFT JOIN OHR.XFRMD2C x2 ON d.STAT_CD = x2.CD
+        AND x2.CD_KIND = 'ELA_STAT_CD'
+        WHERE
+        d.EMP_ID = #{empId}
+        AND (d.MODI_TYPE != 'D' OR d.MODI_TYPE IS NULL)
+        <if test="statCdList != null and statCdList.size() > 0">
+            AND d.STAT_CD IN
+            <foreach item="item" index="index" collection="statCdList" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <if test="dtmKindCd != null and dtmKindCd != ''">
+            AND d.DTM_KIND_CD = #{dtmKindCd}
+        </if>
+        <if test="dtmReasonCd != null and dtmReasonCd != ''">
+            AND d.DTM_REASON_CD = #{dtmReasonCd}
+        </if>
+        <if test="staYmdInput != null and staYmdInput != ''">
+            AND d.STA_YMD &gt;= TO_DATE(#{staYmdInput}, 'YYYY-MM-DD')
+        </if>
+        <if test="endYmdInput != null and endYmdInput != ''">
+            AND d.END_YMD &lt;= TO_DATE(#{endYmdInput}, 'YYYY-MM-DD')
+        </if>
+        ORDER BY d.STAT_CD ASC, d.STA_YMD DESC
+    </select>
+
     <!-- 특정 데이터 조회 -->
     <select id="findByCondition" parameterType="dtmSearchDTO" resultMap="dtmHisResultMap">
         SELECT
@@ -86,7 +129,7 @@
         <if test="endYmdInput != null and endYmdInput != ''">
             AND d.END_YMD &lt;= TO_DATE(#{endYmdInput}, 'YYYY-MM-DD')
         </if>
-        ORDER BY d.STAT_CD asc, d.STA_YMD DESC
+        ORDER BY d.STAT_CD ASC, d.STA_YMD DESC
         OFFSET #{offset} ROWS FETCH NEXT #{limit} ROWS ONLY
     </select>
 

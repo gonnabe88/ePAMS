@@ -1,15 +1,10 @@
 package epams.domain.dtm.controller;
 
+
 import epams.domain.com.admin.service.HtmlLangDetailService;
-import epams.domain.dtm.dto.DtmAnnualStatusDTO;
-import epams.domain.dtm.dto.DtmHisDTO;
-import epams.domain.dtm.dto.DtmPromotionDTO;
-import epams.domain.dtm.dto.DtmSaveDTO;
-import epams.domain.dtm.dto.DtmSearchDTO;
+import epams.domain.dtm.dto.*;
 import epams.domain.dtm.service.DtmAnnualStatusService;
 import epams.domain.dtm.service.DtmHistoryService;
-import epams.domain.dtm.service.DtmPromotionService;
-import epams.domain.dtm.service.DtmSaveService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,6 +22,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.fasterxml.jackson.databind.SerializationFeature;
+
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -88,21 +89,58 @@ public class DtmHistoryController<S extends Session> {
 
     /**
      * @author K140024
+     * @implNote DTM 달력 화면을 반환하는 메서드
+     * @since 2024-06-11
+     */
+    @GetMapping("/dtmCalendar")
+    public String dtmCalendar(@ModelAttribute final DtmSearchDTO searchDTO, final Model model) {
+
+        searchDTO.setEmpId(Long.parseLong(authentication().getName().replace('K', '7')));
+
+        // 언어목록
+        final Map<String, String> langList = langDetailService.getCodeHtmlDetail("dtm/dtmCalendar");
+        model.addAttribute("langList", langList);
+
+        // 근태목록
+        final List<DtmCalendarDTO> dtmCalDTOList = dtmHisService.findByYears(searchDTO);
+
+        // Jackson을 사용하여 List<DtmCalendarDTO>를 JSON으로 변환
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            objectMapper.registerModule(new JavaTimeModule());  // Java 8 날짜 및 시간 모듈 등록
+            // 기본적으로 ISO 형식(yyyy-MM-dd)으로 변환되도록 설정
+            objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+            String dtmHisJson = objectMapper.writeValueAsString(dtmCalDTOList);
+            model.addAttribute("dtmHis", dtmHisJson);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+
+        return "dtm/dtmCalendar";
+    }
+
+    /**
+     * @author K140024
      * @implNote DTM 리스트 화면을 반환하는 메서드
      * @since 2024-06-11
      */
     @GetMapping("/dtmList")
     public String dtmList(@PageableDefault(page = 1) final Pageable pageable, @ModelAttribute final DtmSearchDTO searchDTO, final Model model) {
 
-
         final String DTMLIST = "dtm/dtmList";
         searchDTO.setEmpId(Long.parseLong(authentication().getName().replace('K', '7')));
 
-        // 휴가보유 현황
-        final DtmAnnualStatusDTO dtmAnnualStatusDTO = dtmAnnualStatusService.getDtmAnnualStatus(searchDTO.getEmpId());
-        DtmAnnualStatusDTO.removeBracket(dtmAnnualStatusDTO);
-        model.addAttribute("dtmAnnualStatus", dtmAnnualStatusDTO);
-        
+        try {
+            // 휴가보유 현황
+            final DtmAnnualStatusDTO dtmAnnualStatusDTO = dtmAnnualStatusService.getDtmAnnualStatus(searchDTO.getEmpId());
+            DtmAnnualStatusDTO.removeBracket(dtmAnnualStatusDTO);
+            model.addAttribute("dtmAnnualStatus", dtmAnnualStatusDTO);
+        } catch (Exception e) {
+            final DtmAnnualStatusDTO dtmAnnualStatusDTO = new DtmAnnualStatusDTO();
+            model.addAttribute("dtmAnnualStatus", dtmAnnualStatusDTO);
+            log.error("휴가보유 현황 조회 실패", e);
+        }
+
         // 언어목록 조회
         final Map<String, String> langList = langDetailService.getCodeHtmlDetail(DTMLIST);
         model.addAttribute("langList", langList);
@@ -117,7 +155,7 @@ public class DtmHistoryController<S extends Session> {
         if (endPage - startPage < maxPageBtn - 1) {
             startPage = Math.max(1, endPage - maxPageBtn + 1);
         }
-        
+
         model.addAttribute("dtmHis", dtmHisDTOList);
         model.addAttribute("searchDTO", searchDTO);
         model.addAttribute("startPage", startPage);

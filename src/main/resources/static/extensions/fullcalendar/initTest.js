@@ -1,15 +1,21 @@
-document.addEventListener('DOMContentLoaded', function() {
-    var calendarEl = document.getElementById('dtmRegCal');
-    var selectedDate = null;
-    var selectedDateStr = null;
+$(document).ready(function () {
+
+    const calendarEl = document.getElementById('dtmCalendar');
+    let selectedDate = null;
+    let selectedDateStr = null;
 
     // div 태그에서 data-events 속성을 추출하여 JSON 데이터로 변환
-    var eventsData = calendarEl.getAttribute('data-events');
-    var events = JSON.parse(eventsData);
+    const eventsData = calendarEl.getAttribute('data-events');
+    const events = JSON.parse(eventsData);
+
+    // 휴일 목록 추가 (YYYY-MM-DD 형식)
+    const holidays = ['2024-09-16', '2024-09-17', '2024-09-18']; // 추가할 휴일 날짜
+
+
 
     console.log(events); // 변환된 이벤트 데이터 확인
 
-    var calendar = new FullCalendar.Calendar(calendarEl, {
+    const calendar = new FullCalendar.Calendar(calendarEl, {
         themeSystem: 'standard',
         initialView: 'dayGridMonth',
         headerToolbar: {
@@ -21,21 +27,7 @@ document.addEventListener('DOMContentLoaded', function() {
             add: {
                 text: '신청',
                 click: function() {
-                    var url = '/dtm/dtmRegDetail';
-                    var date;
-
-                    if (selectedDateStr) {
-                        date = selectedDateStr;
-                    } else {
-                        // 오늘 날짜를 YYYY-MM-DD 형식으로 가져옵니다.
-                        var today = new Date();
-                        var dd = String(today.getDate()).padStart(2, '0');
-                        var mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
-                        var yyyy = today.getFullYear();
-                        date = yyyy + '-' + mm + '-' + dd;
-                    }
-                    url += '?date=' + date;
-                    window.location.href = url;
+                    window.location.href = '/dtm/dtmRegDetail';
                 }
             }
         },
@@ -50,15 +42,32 @@ document.addEventListener('DOMContentLoaded', function() {
         fixedWeekCount: false,
         events: events,  // 이벤트 리스트 추가
         datesSet: function() {
-            // 오늘 버튼에 클래스 추가
-            var todayButton = document.querySelector('.fc-today-button');
-            if (todayButton) {
-                todayButton.className = 'btn btn-primary btn-sm';
-            }
+            // 오늘 버튼 스타일 적용을 위한 클래스 추가
+            const todayButton = document.querySelector('.fc-today-button');
+            todayButton && (todayButton.className = 'btn btn-primary btn-sm');
 
-            var applButton = document.querySelector('.fc-add-button');
-            if (applButton) {
-                applButton.className = 'btn btn-primary btn-sm';
+            // 신청 버튼 스타일 적용을 위한 클래스 추가
+            const applButton = document.querySelector('.fc-add-button');
+            applButton && (applButton.className = 'btn btn-primary btn-sm');
+        },
+        dayCellDidMount: function(info) {
+            const day = info.date.getDay(); // 0: 일요일, 6: 토요일
+            const dateStr = info.date.toLocaleDateString('ko-KR', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit'
+            }).replace(/\. /g, '-').replace('.', '');  // YYYY-MM-DD 형식으로 변환
+
+            if (day === 0) {
+                // 일요일에 대한 스타일 적용
+                info.el.style.setProperty('color', '#FF0000');
+            } else if (day === 6) {
+                // 토요일에 대한 스타일 적용
+                info.el.style.setProperty('color', '#0000FF');
+            }
+            // 휴일 목록에 있는 날짜에 대해 스타일 적용
+            if (holidays.includes(dateStr)) {
+                info.el.style.setProperty('color', '#FF0000'); // 휴일 글씨색 적용 (일요일처럼)
             }
         },
         dayCellContent: function(arg) {
@@ -77,5 +86,4 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     calendar.render();
-    console.log("Calendar initialized and rendered");
 });

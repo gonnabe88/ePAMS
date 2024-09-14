@@ -378,6 +378,13 @@ mark {
 
 /************************* 근태조회(dtmCalendar) FULLCALENDAR 시작 **************************/
 
+/*a 링크 속성 제거 (색상 및 밑줄 제거)*/
+a.fc-daygrid-day-number,
+a.fc-daygrid-day-number div {
+    color: inherit !important; /* 상위 요소의 색상을 따르도록 설정 */
+    text-decoration: none !important; /* 밑줄 제거 */
+}
+
 /*HEADER Next, 월, PREV 버튼간 간격 이슈 해결*/
 .fc-direction-ltr .fc-toolbar > * > :not(:first-child) {
     margin: 0;
@@ -418,7 +425,7 @@ mark {
 /* 날짜 선택 시 스타일 */
 .dtmList .fc-day.selected-date .fc-daygrid-day-number {
     background-color: #435ebe;
-    color: white;
+    color: white !important;
     border-radius: 50%;
     width: clamp(30px, 4vw, 35px);  /* 최소 20px, 최대 35px, 기본 값은 4vw로 설정 */
     height: clamp(30px, 4vw, 35px); /* 최소 20px, 최대 35px, 기본 값은 4vw로 설정 */

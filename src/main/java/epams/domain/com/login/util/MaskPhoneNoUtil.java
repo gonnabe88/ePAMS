@@ -9,9 +9,11 @@ public class MaskPhoneNoUtil {
 
     public static String maskPhoneNo(String phoneNo) {
 
+        // 모든 '-'를 제거
+        phoneNo = phoneNo.replaceAll("-", "");
+
         // 마스킹된 휴대폰 번호 (리턴값)
         String maskedPhoneNo = null;
-        
 
         // 입력값이 null이거나 길이가 10자리 이하인 경우 그대로 반환
         if(phoneNo == null || phoneNo.length() <= 4) {

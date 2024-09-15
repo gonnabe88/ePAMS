@@ -378,23 +378,26 @@ mark {
 
 /************************* 근태조회(dtmCalendar) FULLCALENDAR 시작 **************************/
 
+/*이벤트 아이템(근태목록) 행간 조정*/
 .dtmList .event-item {
     padding-bottom: 10px;
 }
 
+/*이벤트 아이템(근태목록) 행간 조정(마지막이 아닌 경우)*/
 .dtmList .event-item:not(:last-child) {
-    border-bottom: 1px solid #E4F0FF;
+    border-bottom: 1px solid #E4F0FF; /* 행 사이에 경계선 설정 */
     margin-bottom: 10px;
     padding-top: 10px;
 }
 
+/*이벤트 아이템(근태목록) 행간 조정(마지막인 경우)*/
 .dtmList .event-item:is(:last-child) {
     padding-top: 10px;
     margin-bottom: 0;
     padding-bottom: 0;
 }
 
-/* 애니메이션 정의 */
+/* 달력 이전/다음 전환 시 애니메이션 Fade-In 정의 */
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -404,36 +407,25 @@ mark {
     }
 }
 
-@keyframes fadeOut {
-    from {
-        opacity: 1;
-    }
-    to {
-        opacity: 0;
-    }
-}
-
+/* 달력 이전/다음 전환 시 애니메이션 Fade-In 정의 */
 .dtmList .fc-fade {
     animation: fadeIn 0.5s ease-in-out;
     opacity: 1;
 }
 
-.dtmList .fc-fade-out {
-    animation: fadeOut 0.5s ease-in-out;
-    opacity: 0;
-}
-
-/*오늘 버튼 비활성화 시 안보이게 설정*/
+/* 오늘 버튼 비활성화 시 기본으로 안보이게 설정*/
 .dtmList .btn.disabled, .btn:disabled, fieldset:disabled .btn {
     visibility: hidden;
 }
 
+/* 달력 행 사이에 경계선 설정 */
 .dtmList tbody tr {
-    border-bottom: 1px solid #E4F0FF; /* 행 사이에 경계선 설정 */
+    border-bottom: 1px solid #E4F0FF;
 }
 
+/* 달력 마지막 행에는 경계선 제거 */
 .dtmList tbody tr:last-child {
-    border-bottom: none; /* 마지막 행에는 경계선 제거 */
+    border-bottom: none;
 }
 
 /*달력 크기 및 여백 조정*/
@@ -492,11 +484,18 @@ mark {
     padding: 0;
 }
 
-
 /*이벤트 박스 스타일 조정*/
 .dtmList .fc .fc-daygrid-day-events {
     width: 100%;
     margin-bottom: 0;
+}
+
+/* 이벤트 컨테이너 스타일 */
+.dtmList .fc .fc-event-title-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
 }
 
 /* 이벤트 박스 스타일 조정 */
@@ -556,7 +555,6 @@ mark {
     height: 100%;
     display: flex;
     flex-direction: column;
-    /*justify-content: center;*/
     align-items: center;
 }
 
@@ -568,7 +566,7 @@ mark {
 }
 
 /* 선택된 날짜에 동그라미를 그리는 스타일 */
-.dtmList .fc-daygrid-day.selected-day {
+.dtmList .fc .fc-daygrid-day.selected-day {
     background-color: transparent;
     border: 2px solid #ff0000;
     border-radius: 50%;
@@ -578,7 +576,6 @@ mark {
 .dtmList .fc-day-today.fc-daygrid-day {
     background-color: #f2f7ff !important; /* 원하는 색상으로 변경 */
     font-weight: bold;
-
 }
 
 /*NEXT, PREV 버튼 스타일 설정*/

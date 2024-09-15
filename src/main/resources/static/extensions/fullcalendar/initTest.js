@@ -82,15 +82,15 @@ $(document).ready(function () {
             }).replace(/\. /g, '-').replace('.', '');  // YYYY-MM-DD 형식으로 변환
 
             if (day === 0) {
-                // 일요일에 대한 스타일 적용
-                info.el.style.setProperty('color', '#FF0000');
+                // 일요일에 대한 스타일 적용 (danger #dc3545)
+                info.el.style.setProperty('color', '#dc3545');
             } else if (day === 6) {
-                // 토요일에 대한 스타일 적용
-                info.el.style.setProperty('color', '#0000FF');
+                // 토요일에 대한 스타일 적용 (primary #435ebe)
+                info.el.style.setProperty('color', '#435ebe');
             }
-            // 휴일 목록에 있는 날짜에 대해 스타일 적용
+            // 휴일 목록에 있는 날짜에 대해 스타일 적용 (danger #dc3545)
             if (holidays.includes(dateStr)) {
-                info.el.style.setProperty('color', '#FF0000'); // 휴일 글씨색 적용 (일요일처럼)
+                info.el.style.setProperty('color', '#dc3545'); // 휴일 글씨색 적용 (일요일처럼)
             }
         },
         dayCellContent: function(arg) {

@@ -378,6 +378,22 @@ mark {
 
 /************************* 근태조회(dtmCalendar) FULLCALENDAR 시작 **************************/
 
+.dtmList .event-item {
+    padding-bottom: 10px;
+}
+
+.dtmList .event-item:not(:last-child) {
+    border-bottom: 1px solid #E4F0FF;
+    margin-bottom: 10px;
+    padding-top: 10px;
+}
+
+.dtmList .event-item:is(:last-child) {
+    padding-top: 10px;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
 /* 애니메이션 정의 */
 @keyframes fadeIn {
     from {

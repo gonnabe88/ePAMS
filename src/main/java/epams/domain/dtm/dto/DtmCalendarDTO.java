@@ -48,4 +48,11 @@ public class DtmCalendarDTO{
      * @since 2024-08-11
      */
     private Boolean allDay = true;
+
+    /***
+     * @author 140024
+     * @implNote 근태 ID (dtmHisId)
+     * @since 2024-08-11
+     */
+    private String dtmHisId;
 }

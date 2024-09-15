@@ -6,7 +6,20 @@ $(document).ready(function () {
 
     // div 태그에서 data-events 속성을 추출하여 JSON 데이터로 변환
     const eventsData = calendarEl.getAttribute('data-events');
-    const events = JSON.parse(eventsData);
+    const eventsRaw = JSON.parse(eventsData);
+    console.log(eventsRaw);
+
+    const events = eventsRaw.map(function(event) {
+        return {
+            title: event.title,
+            start: event.start,
+            end: event.end,
+            allDay: event.allDay,
+            extendedProps: {
+                dtmHisId: event.dtmHisId // 커스텀 필드는 extendedProps로 추가
+            }
+        };
+    });
 
     // 휴일 목록 추가 (YYYY-MM-DD 형식)
     const holidays = ['2024-09-16', '2024-09-17', '2024-09-18']; // 추가할 휴일 날짜
@@ -94,6 +107,35 @@ $(document).ready(function () {
             // 날짜를 클릭하면 신청 버튼 보이기
             const applButton = document.querySelector('.fc-add-button');
             applButton && (applButton.style.visibility = 'visible'); // 버튼 보이기
+
+            // 해당 날짜의 이벤트 찾기
+            const events = calendar.getEvents(); // 모든 이벤트 가져오기
+            const selectedEvents = events.filter(event => {
+                return event.startStr === info.dateStr; // 해당 날짜의 이벤트만 필터링
+            });
+
+            // 이벤트 출력 영역
+            const eventContainer = document.getElementById('dtmEvent');
+            if (selectedEvents.length > 0) {
+                eventContainer.innerHTML = selectedEvents.map(event => {
+                    // YYYY-MM-DD 형식으로 변환
+                    const startDate = event.start.toISOString().split('T')[0]; // start 날짜 형식 변환
+                    const endDate = event.end ? event.end.toISOString().split('T')[0] : ''; // end 날짜가 있으면 변환
+
+                    return `
+                        <div class="event-item">
+                            <div class="d-flex align-items-end gap-2">
+                                <span class="h6">${event.title}</span>
+                                <span class="h7">${startDate}</span>
+                                ${endDate ? `<span class="h7"> ~ ${endDate}</span>` : ''}
+                                <span class="h7">${event.extendedProps.dtmHisId}(HIS_ID)</span>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            } else {
+                eventContainer.innerHTML = '<span class="h7">해당일은 근태가 없습니다.</span>';
+            }
         }
 
     });

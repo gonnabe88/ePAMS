@@ -11,8 +11,6 @@ $(document).ready(function () {
     // 휴일 목록 추가 (YYYY-MM-DD 형식)
     const holidays = ['2024-09-16', '2024-09-17', '2024-09-18']; // 추가할 휴일 날짜
 
-
-
     console.log(events); // 변환된 이벤트 데이터 확인
 
     const calendar = new FullCalendar.Calendar(calendarEl, {
@@ -47,11 +45,20 @@ $(document).ready(function () {
         datesSet: function() {
             // 오늘 버튼 스타일 적용을 위한 클래스 추가
             const todayButton = document.querySelector('.fc-today-button');
-            todayButton && (todayButton.className = 'btn btn-primary btn-sm');
+            todayButton && (todayButton.className = 'btn btn-primary btn-sm fc-today-button');
 
             // 신청 버튼 스타일 적용을 위한 클래스 추가
             const applButton = document.querySelector('.fc-add-button');
-            applButton && (applButton.className = 'btn btn-primary btn-sm');
+            applButton && (applButton.className = 'btn btn-primary btn-sm fc-add-button');
+            applButton && (applButton.style.visibility = 'hidden'); // 기본적으로 버튼을 숨김
+
+            // 달력이 전환될 때 fadeIn
+            const calendarContainer = document.querySelector('.fc-view-harness');
+            calendarContainer.classList.add('fc-fade');
+
+            setTimeout(() => {
+                calendarContainer.classList.remove('fc-fade'); // fadeIn 완료 후 클래스 제거
+            }, 500); // fadeIn 애니메이션 지속 시간
         },
         dayCellDidMount: function(info) {
             const day = info.date.getDay(); // 0: 일요일, 6: 토요일
@@ -79,14 +86,48 @@ $(document).ready(function () {
         },
         dateClick: function(info) {
             // 날짜를 클릭하면 선택된 날짜를 표시
-            if (selectedDate) {
-                selectedDate.classList.remove('selected-date');
-            }
+            selectedDate && (selectedDate.classList.remove('selected-date'));
             info.dayEl.classList.add('selected-date');
             selectedDate = info.dayEl;
             selectedDateStr = info.dateStr;
+
+            // 날짜를 클릭하면 신청 버튼 보이기
+            const applButton = document.querySelector('.fc-add-button');
+            applButton && (applButton.style.visibility = 'visible'); // 버튼 보이기
         }
+
     });
 
+    // 달력 렌더링
     calendar.render();
+
+    // 터치 스와이프 이벤트 추가
+    let touchStartX, touchStartY;
+    calendarEl.addEventListener('touchstart', function(e) {
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+    });
+    calendarEl.addEventListener('touchmove', function(e) {
+        if (!touchStartX || !touchStartY) {
+            return;
+        }
+
+        let touchEndX = e.touches[0].clientX;
+        let touchEndY = e.touches[0].clientY;
+
+        let deltaX = touchStartX - touchEndX;
+        let deltaY = touchStartY - touchEndY;
+
+        if (Math.abs(deltaX) > Math.abs(deltaY)) {
+            // 좌우 스와이프
+            if (deltaX > 0) {
+                calendar.next();
+            } else {
+                calendar.prev();
+            }
+        }
+        touchStartX = null;
+        touchStartY = null;
+    });
+
 });

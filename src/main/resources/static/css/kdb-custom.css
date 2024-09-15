@@ -378,6 +378,40 @@ mark {
 
 /************************* 근태조회(dtmCalendar) FULLCALENDAR 시작 **************************/
 
+/* 애니메이션 정의 */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+.dtmList .fc-fade {
+    animation: fadeIn 0.5s ease-in-out;
+    opacity: 1;
+}
+
+.dtmList .fc-fade-out {
+    animation: fadeOut 0.5s ease-in-out;
+    opacity: 0;
+}
+
+/*오늘 버튼 비활성화 시 안보이게 설정*/
+.dtmList .btn.disabled, .btn:disabled, fieldset:disabled .btn {
+    visibility: hidden;
+}
+
 .dtmList tbody tr {
     border-bottom: 1px solid #E4F0FF; /* 행 사이에 경계선 설정 */
 }

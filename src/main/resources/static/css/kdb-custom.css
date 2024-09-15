@@ -391,12 +391,13 @@ mark {
     margin-bottom: 1rem;
 }
 .dtmList .card-body {
+    max-width: 100% !important;
     padding: 1rem 1px 1px;
 }
 .dtmList .fc-scrollgrid-sync-table,
 .dtmList .fc-daygrid-body
 {
-    width: 100%;
+    width: 100% !important;
 }
 
 /*a 링크 속성 제거 (색상 및 밑줄 제거)*/
@@ -427,6 +428,7 @@ mark {
 
 /*경계선 제거*/
 .dtmList .fc table, .dtmList .fc td, .dtmList .fc th {
+    width: 100%  !important;
     border: none !important;
 }
 

@@ -411,29 +411,14 @@ a.fc-daygrid-day-number div {
 
 /* 달력 내부 컨텐츠 높이를 화면의 60%로 설정*/
 .dtmList .fc tbody {
-    height: 60vh;
+    height: 50vh;
 }
 
-/* 날짜 기본 스타일 */
-.dtmList .fc .fc-daygrid-day-top {
-    flex-grow: 1;
-    display: flex;
-    justify-content: start;
-    align-items: start;
+/* 날짜 박스 불필요한 여백 제거 */
+.dtmList .fc .fc-daygrid-day-number {
+    padding: 0;
 }
 
-/* 날짜 선택 시 스타일 */
-.dtmList .fc-day.selected-date .fc-daygrid-day-number {
-    background-color: #435ebe;
-    color: white !important;
-    border-radius: 50%;
-    width: clamp(30px, 4vw, 35px);  /* 최소 20px, 최대 35px, 기본 값은 4vw로 설정 */
-    height: clamp(30px, 4vw, 35px); /* 최소 20px, 최대 35px, 기본 값은 4vw로 설정 */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-}
 
 /*이벤트 박스 스타일 조정*/
 .dtmList .fc .fc-daygrid-day-events {
@@ -457,6 +442,19 @@ a.fc-daygrid-day-number div {
     display: inline-block;
     overflow: hidden;
     transition: transform 0.5s ease; /* 부드러운 전환 효과 추가 */
+}
+
+/* 날짜 선택 시 스타일 */
+.dtmList .fc-day.selected-date .fc-daygrid-day-number {
+    background-color: #435ebe;
+    color: white !important;
+    border-radius: 50%;
+    width: 1.5em;
+    height: 1.5em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
 }
 
 /* 제목 크기 및 날짜 및 이벤트 제목 크기도 동적으로 조절 */
@@ -485,8 +483,15 @@ a.fc-daygrid-day-number div {
     height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    /*justify-content: center;*/
     align-items: center;
+}
+
+/* 날짜 기본 스타일 */
+.dtmList .fc .fc-daygrid-day-top {
+    display: flex;
+    justify-content: start;
+    align-items: start;
 }
 
 /* 선택된 날짜에 동그라미를 그리는 스타일 */

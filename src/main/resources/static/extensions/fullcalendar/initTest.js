@@ -18,6 +18,9 @@ $(document).ready(function () {
     const calendar = new FullCalendar.Calendar(calendarEl, {
         themeSystem: 'standard',
         initialView: 'dayGridMonth',
+        editable: true,
+        selectable: true,
+        scrollable: true,
         headerToolbar: {
             left: 'today',
             center: 'prev title next',

@@ -454,13 +454,6 @@ mark {
     margin: 0;
 }
 
-/*이벤트 배경색*/
-.dtmList .fc-h-event {
-    background-color: #9D5DB6; /* 변수로 배경색 적용 */
-    border: 1px solid #9D5DB6; /* 변수로 테두리 색상 적용 */
-    display: block;
-}
-
 /*HEADER 스타일 설정*/
 .dtmList .fc-toolbar-chunk {
     display: flex;
@@ -490,6 +483,15 @@ mark {
     margin-bottom: 0;
 }
 
+/* 이벤트 박스 스타일 조정 */
+.dtmList .fc .fc-event {
+    border: 1px solid white;
+    width: 100%;
+    overflow: hidden; /* 넘치는 텍스트는 숨김 */
+    position: relative;
+    white-space: nowrap; /* 텍스트를 한 줄로 설정 */
+}
+
 /* 이벤트 컨테이너 스타일 */
 .dtmList .fc .fc-event-title-container {
     display: flex;
@@ -498,13 +500,11 @@ mark {
     height: 100%;
 }
 
-/* 이벤트 박스 스타일 조정 */
-.dtmList .fc .fc-event {
-    border: white;
-    width: 100%;
-    overflow: hidden; /* 넘치는 텍스트는 숨김 */
-    position: relative;
-    white-space: nowrap; /* 텍스트를 한 줄로 설정 */
+/*이벤트 배경색*/
+.dtmList .fc-h-event {
+    background-color: #d63384; /* 변수로 배경색 적용 */
+    border: 1px solid white; /* 변수로 테두리 색상 적용 */
+    display: block;
 }
 
 /* 이벤트 타이틀 크기 조정 */

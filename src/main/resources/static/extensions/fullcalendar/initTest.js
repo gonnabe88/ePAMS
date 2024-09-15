@@ -34,7 +34,7 @@ $(document).ready(function () {
                 }
             }
         },
-        titleFormat: { month: 'long' },
+        titleFormat: { year: 'numeric', month: '2-digit' },
         locale: 'ko',
         buttonText: {
             today: '오늘'

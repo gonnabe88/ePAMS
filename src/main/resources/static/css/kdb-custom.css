@@ -378,15 +378,36 @@ mark {
 
 /************************* 근태조회(dtmCalendar) FULLCALENDAR 시작 **************************/
 
+.dtmList tbody tr {
+    border-bottom: 1px solid #E4F0FF; /* 행 사이에 경계선 설정 */
+}
+
+.dtmList tbody tr:last-child {
+    border-bottom: none; /* 마지막 행에는 경계선 제거 */
+}
+
+/*달력 크기 및 여백 조정*/
+.dtmList .fc .fc-toolbar.fc-header-toolbar {
+    margin-bottom: 1rem;
+}
+.dtmList .card-body {
+    padding: 1rem 1px 1px;
+}
+.dtmList .fc-scrollgrid-sync-table,
+.dtmList .fc-daygrid-body
+{
+    width: 100%;
+}
+
 /*a 링크 속성 제거 (색상 및 밑줄 제거)*/
-a.fc-daygrid-day-number,
-a.fc-daygrid-day-number div {
+.dtmList a.fc-daygrid-day-number,
+.dtmList a.fc-daygrid-day-number div {
     color: inherit !important; /* 상위 요소의 색상을 따르도록 설정 */
     text-decoration: none !important; /* 밑줄 제거 */
 }
 
 /*HEADER Next, 월, PREV 버튼간 간격 이슈 해결*/
-.fc-direction-ltr .fc-toolbar > * > :not(:first-child) {
+.dtmList .fc-direction-ltr .fc-toolbar > * > :not(:first-child) {
     margin: 0;
 }
 
@@ -448,8 +469,8 @@ a.fc-daygrid-day-number div {
 .dtmList .fc-day.selected-date .fc-daygrid-day-number {
     background-color: #435ebe;
     color: white !important;
-    border-radius: 50%;
-    width: 1.5em;
+    border-radius: 30%;
+    width: 1.7em;
     height: 1.5em;
     display: flex;
     align-items: center;
@@ -460,7 +481,7 @@ a.fc-daygrid-day-number div {
 /* 제목 크기 및 날짜 및 이벤트 제목 크기도 동적으로 조절 */
 .dtmList .fc .fc-toolbar h2 {
     font-size: clamp(1em, 3vw, 1.5em); /* 제목 크기 조정 */
-    min-width: clamp(3em, 3vw, 4.5em);
+    min-width: clamp(5em, 3vw, 7.5em);
     text-align: center;
     margin-right: 0.5rem;
     margin-left: 0.5rem;

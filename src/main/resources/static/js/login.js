@@ -1,7 +1,16 @@
-document.getElementById('username').addEventListener('input', function(event) {
-    event.target.value = event.target.value.toUpperCase();
+// 화면 전환 시 수행
+$(document).on("visibilitychange", function() {
+    if(document.visibilityState === "visible") {
+        checkSession(); // 세션 유효성 체크
+    }
 });
 
+// ID 입력 시 수행
+document.getElementById('username').addEventListener('input', function(event) {
+    event.target.value = event.target.value.toUpperCase(); // 대문자 변환
+});
+
+// 화면 로드 시 수행
 document.addEventListener("DOMContentLoaded", () => {
     const checkbox = document.getElementById('flexSwitchCheckChecked');
     const label = document.getElementById('switchLabel');

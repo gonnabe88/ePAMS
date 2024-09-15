@@ -66,7 +66,7 @@ $(document).ready(function () {
             applButton && (applButton.style.visibility = 'hidden'); // 기본적으로 버튼을 숨김
 
             // 달력이 전환될 때 fadeIn
-            const calendarContainer = document.querySelector('.fc-view-harness');
+            const calendarContainer = document.querySelector('.fc-scrollgrid-sync-table');
             calendarContainer.classList.add('fc-fade');
 
             setTimeout(() => {
@@ -118,10 +118,18 @@ $(document).ready(function () {
             const eventContainer = document.getElementById('dtmEvent');
             if (selectedEvents.length > 0) {
                 eventContainer.innerHTML = selectedEvents.map(event => {
-                    // YYYY-MM-DD 형식으로 변환
-                    const startDate = event.start.toISOString().split('T')[0]; // start 날짜 형식 변환
-                    const endDate = event.end ? event.end.toISOString().split('T')[0] : ''; // end 날짜가 있으면 변환
-
+                    // 시작일을 YYYY-MM-DD 형식으로 변환
+                    const startDate = event.start.toLocaleDateString('ko-KR', {
+                        year: 'numeric',
+                        month: '2-digit',
+                        day: '2-digit'
+                    }).replace(/\.\s?/g, '-').replace(/-$/, ''); // 점(.)을 하이픈(-)으로, 마지막 하이픈 제거
+                    // 종료일을 YYYY-MM-DD 형식으로 변환
+                    const endDate = event.end ? event.end.toLocaleDateString('ko-KR', {
+                        year: 'numeric',
+                        month: '2-digit',
+                        day: '2-digit'
+                    }).replace(/\.\s?/g, '-').replace(/-$/, '') : ''; // end 날짜가 있으면 동일하게 변환
                     return `
                         <div class="event-item">
                             <div class="d-flex align-items-end gap-2">
@@ -162,9 +170,9 @@ $(document).ready(function () {
 
         if (Math.abs(deltaX) > Math.abs(deltaY)) {
             // 좌우 스와이프
-            if (deltaX > 0) {
+            if (deltaX > 3) {
                 calendar.next();
-            } else {
+            } else if (deltaX < -3) {
                 calendar.prev();
             }
         }

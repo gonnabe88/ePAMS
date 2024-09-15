@@ -1,2 +1,2 @@
-// a2hs_sw.js
+// swA2HS.js
 self.addEventListener("fetch", e => {});

@@ -1,7 +1,7 @@
 //A2HS
 (function () {
     if ("serviceWorker" in navigator) {
-        navigator.serviceWorker.register("/js/a2hs_sw.js");
+        navigator.serviceWorker.register("/js/utils/swA2HS.js");
     }
 })();
 

@@ -1,3 +1,14 @@
+/* 선택된 라디오 버튼에 대한 스타일 */
+.dtmViewType input[type="radio"]:checked + label {
+    font-weight: normal;
+    padding: 5px;
+}
+
+/* 선택되지 않은 라디오 버튼에 대한 기본 스타일 */
+.dtmViewType input[type="radio"] + label {
+    font-weight: bold;
+    padding: 5px;
+}
 
 .swal2-html-container .text-left {
     text-align: left !important;
@@ -307,7 +318,7 @@ mark {
 
 /*로그인 인증방법 라디오 버튼 텍스트*/
 #auth .mfa-radio-text {
-    font-size: 15px;
+    font-size: 16px;
 }
 
 #auth #auth-right {
@@ -414,7 +425,8 @@ mark {
 }
 
 /* 오늘 버튼 비활성화 시 기본으로 안보이게 설정*/
-.dtmList .btn.disabled, .btn:disabled, fieldset:disabled .btn {
+.dtmList .btn.disabled,
+.dtmList fieldset:disabled .btn {
     visibility: hidden;
 }
 
@@ -2439,7 +2451,6 @@ textarea.form-control.is-invalid {
 .btn-group>.btn-group:not(:first-child) {
     margin-left: -1px
 }
-
 
 .nav {
     --bs-nav-link-padding-x: 1rem;
@@ -4823,6 +4834,7 @@ textarea.form-control.is-invalid {
 }
 
 a {
+    color: inherit;
     text-decoration: none
 }
 

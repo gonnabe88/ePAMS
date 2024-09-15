@@ -101,17 +101,16 @@ public class LoginController {
      * @throws Exception 예외 발생 시
      */
     @GetMapping({ "/", "/login" })
-    public String login(final HttpServletResponse response, @CookieValue(value = "idChk", required = false) final String username,
-            @RequestParam(value = "isChecked", defaultValue = "false") final boolean isChecked, final Model model) {
+    public String login(final HttpServletResponse response, @CookieValue(value = "USERNAME", required = false) final String username, final Model model) {
     	String VIEW = "common/login";
         final Authentication auth = authentication();
         final AppUser existingUser = service.getUserRepo().findByUsername(username);
         final Authenticator existingAuthUser = service.getAuthRepository().findByUser(existingUser);
         if (existingAuthUser == null) {
-            model.addAttribute("isChecked", "false");
+            model.addAttribute("webauthn", "N");
             log.info("Not simple auth user");
         } else {
-            model.addAttribute("isChecked", "true");
+            model.addAttribute("webauthn", "Y");
             log.info("simple auth user");
         }
 

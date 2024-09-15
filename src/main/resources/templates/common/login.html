@@ -41,15 +41,7 @@
 						<div class="d-flex justify-content-center">
 							<h1 class="auth-title mb-5">ePAMS</h1>
 						</div>
-						<form action="/webauthn/welcome" method="POST" id="form">
-							<div class="d-flex align-items-center justify-content-end me-2 mb-2">
-								<div class="form-check form-switch d-flex align-items-center">
-									<input class="form-check-input me-2" type="checkbox" role="switch" id="flexSwitchCheckChecked" th:checked="${isChecked}">
-									<label class="form-check-label m-0" id="switchLabel" for="flexSwitchCheckChecked">
-										<h6 class="m-0">간편인증</h6>
-									</label>
-								</div>
-							</div>
+						<form action="/webauthn/welcome" method="POST" id="loginForm">
 
 							<div class="justify-content-center">
 								<div class="container col-xl-12 col-lg-12 col-12">
@@ -59,7 +51,7 @@
 											<i class="bi bi-person"></i>
 										</div>
 									</div>
-									<div class="form-group position-relative has-icon-left mb-1" id="twostepDiv">
+									<div class="form-group position-relative has-icon-left mb-1" id="passwordDiv">
 										<input type="password" name="password" id="password" class="form-control form-control-xl" placeholder="ESSO 패스워드" autocomplete="new-password">
 										<div class="form-control-icon">
 											<i class="bi bi-key"></i>
@@ -80,18 +72,21 @@
 											</h6>
 										</div>
 									</div>
-									<fieldset id="twostepDiv2">
-										<div class="d-flex justify-content-center">
-											<label> <input class="form-check-input" type="radio" name="MFA" id="sms" value="SMS" checked /> <span class="mfa-radio-text">SMS</span>
-											</label> <label> <input class="form-check-input ms-2" type="radio" name="MFA" id="kakao" value="카카오톡" /> <span class="mfa-radio-text">카카오</span>
-											</label> <label> <input class="form-check-input ms-2" type="radio" name="MFA" id="otp" value="OTP" /> <span class="mfa-radio-text">OTP</span>
-											</label> <label> <input class="form-check-input ms-2" type="radio" name="MFA" id="fido" value="FIDO" /> <span class="mfa-radio-text">FIDO</span>
+									<fieldset id="authTypeRadio">
+										<div class="d-flex justify-content-center align-items-center">
+											<label class="d-flex justify-content-center align-items-center gap-1">
+												<input class="form-check-input mt-0" type="radio" name="MFA" id="sms" value="SMS" checked />
+												<span class="mfa-radio-text">SMS</span>
 											</label>
-										</div>
-									</fieldset>
-									<fieldset id="twostepDiv3">
-										<div class="d-flex justify-content-center">
-											<label> <input class="form-check-input" type="radio" name="MFA2" id="simple" value="SIMPLE" checked /> <span class="badge rounded-pill text-bg-primary">간편인증</span>
+											<label class="d-flex justify-content-center align-items-center gap-1">
+												<input class="form-check-input mt-0 ms-3" type="radio" name="MFA" id="kakao" value="카카오톡" />
+												<span class="mfa-radio-text">카카오</span>
+											</label>
+											<label class="d-flex justify-content-center align-items-center gap-1">
+												<input class="form-check-input mt-0 ms-3" type="radio" name="MFA" id="webauthn" value="webauthn" />
+												<span class="mfa-radio-text d-flex justify-content-center align-items-center">간편인증
+													<i id="simpleAuthQ" class="bi bi-question-circle-fill text-primary ms-1"></i>
+												</span>
 											</label>
 										</div>
 									</fieldset>
@@ -173,16 +168,22 @@
 		</div>
 	</div>
 
+	<!--Forward Thymeleaf variable to Javascript-->
+	<div id="webauthnData" th:attr="data-webauthn=${webauthn}"></div>
+
 	<script src="/extensions/jquery/jquery.min.js"></script>
-	<script src="/js/bootstrap.js"></script>
+	<script src="/extensions/bootstrap/bootstrap.js"></script>
 	<script src="/extensions/sweetalert2/sweetalert2.min.js"></script>
 	<script src="/extensions/webauthn/js/base64js.min.js"></script>
 	<script src="/extensions/webauthn/js/custom.js"></script>
-	<script src="/js/a2hs_init.js"></script>
-	<script src="/js/commonPopup.js"></script>
-	<script src="/js/cookie.js"></script>
-	<script src="/js/session.js"></script>
-	<script src="/js/login.js"></script>
+	<script src="/js/utils/initA2HS.js"></script>
+	<script src="/js/utils/commonPopup.js"></script>
+	<script src="/js/utils/cookie.js"></script>
+	<script src="/js/utils/session.js"></script>
+	<script src="/js/utils/remember.js"></script>
+	<script src="/js/utils/webauthn.js"></script>
+	<script src="/js/utils/otpLogin.js"></script>
+	<script src="/js/pages/login.js"></script>
 
 </body>
 

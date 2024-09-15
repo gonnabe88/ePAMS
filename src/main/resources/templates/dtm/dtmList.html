@@ -24,9 +24,22 @@
                                 <h2><i class="bi bi-bell-fill"></i> <span th:text="${langList['DTM_LIST']}"></span></h2>
                             </div>
                             <div class="align-end">
-                                <a href="/dtm/dtmCalendar">
-                                    <h6><i class="bi bi-calendar me-2"></i><span>달력보기</span></h6>
-                                </a>
+                                <div class="dtmViewType btn-group" role="group" aria-label="DTM VIEW TYPE">
+                                    <input type="radio" class="btn-check" name="dtmListView" id="dtmListView" autocomplete="off" checked>
+                                    <label class="btn btn-outline-primary btn-sm d-flex justify-content-between" for="dtmListView">
+                                        <a href="/dtm/dtmList">
+                                            <i class="bi bi-list-ul"></i>
+                                            <span>목록</span>
+                                        </a>
+                                    </label>
+                                    <input type="radio" class="btn-check" name="dtmCalendarView" id="dtmCalendarView" autocomplete="off">
+                                    <label class="btn btn-outline-primary btn-sm d-flex justify-content-between" for="dtmCalendarView">
+                                        <a href="/dtm/dtmCalendar">
+                                            <i class="bi bi-calendar"></i>
+                                            <span>달력</span>
+                                        </a>
+                                    </label>
+                                </div>
                             </div>
                         </div>
                     </div>

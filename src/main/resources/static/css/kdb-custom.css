@@ -1524,6 +1524,7 @@ h1, .auth-subtitle {
 }
 
 .navbar-header h1, .auth-subtitle {
+    color: var(--bs-primary);
     font-family: "Nunito";
     font-size: calc(1.5rem + 1.5vh);
     position: absolute;

@@ -53,12 +53,12 @@ public class AuthDeleteService {
     }
 
     /**
-     * 주어진 사용자 이름으로 AppUser를 삭제합니다.
-     * @param username 사용자 이름
+     * 현재 로그인된 사용자의 인증정보를 모두 삭제합니다.
      * @since 2024-06-11
      */
     @Transactional
     public void deleteByUsername() {
+        service.getAuthRepository().deleteAllByUser_Username(authentication().getName());
         service.getUserRepo().deleteByUsername(authentication().getName());
     }
 }

@@ -1,4 +1,40 @@
 
+// 간편인증 등록
+const webauthnRevoke = (username) => {
+    const header = $("meta[name='_csrf_header']").attr('content');
+    const token = $("meta[name='_csrf']").attr('content');
+
+    fetch('/api/webauthn/revoke', {
+        method: 'POST',
+        headers: {
+            'header': header,
+            'X-CSRF-Token': token,
+        },
+    })
+        .then(response => {
+            if (response.ok) {
+                popupReHtmlMsg("등록 취소", "간편인증 등록을 취소하였습니다.", "success", "/loginManager");
+            }
+            else {
+                popupReHtmlMsg("등록 취소 실패", "등록 취소 중 오류가 발생했습니다.", "error", "/loginManager");
+            }
+        })
+        .catch((error) => {
+            popupMsg("등록 취소 실패", error, "error");
+        });
+};
+
+// 간편인증 로그인 시 로그인 버튼 스피너 설정
+const showSpinnerButton = () => {
+    const loginBtn = document.getElementById('login');
+    loginBtn.innerHTML = `
+            <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+            <span role="status">Loading...</span>
+        `;
+    loginBtn.setAttribute('disabled', 'true');
+}
+
+// 간편인증 로그인
 const webauthnLogin = (e) => {
     const header = document.querySelector('meta[name="_csrf_header"]').content;
     let token = document.querySelector('meta[name="_csrf"]').content;
@@ -114,12 +150,68 @@ const webauthnLogin = (e) => {
         });
 }
 
-// 간편인증 WebAuthn 인증 로직
-const showSpinnerButton = () => {
-    const loginBtn = document.getElementById('login');
-    loginBtn.innerHTML = `
-            <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
-            <span role="status">Loading...</span>
-        `;
-    loginBtn.setAttribute('disabled', 'true');
-}
+// 간편인증 등록
+const webauthnReg = (username, popupType) => {
+    const header = $("meta[name='_csrf_header']").attr('content');
+    const token = $("meta[name='_csrf']").attr('content');
+    const formData = new FormData();
+    formData.append("username", username);
+
+    fetch('/api/webauthn/register', {
+        method: 'POST',
+        headers: {
+            'header': header,
+            'X-CSRF-Token': token,
+        },
+        body: formData,
+    })
+        .then(response => initialCheckStatus(response))
+        .then(credentialCreateJson => ({
+            publicKey: {
+                ...credentialCreateJson.publicKey,
+                challenge: base64urlToUint8array(credentialCreateJson.publicKey.challenge),
+                user: {
+                    ...credentialCreateJson.publicKey.user,
+                    id: base64urlToUint8array(credentialCreateJson.publicKey.user.id),
+                },
+                excludeCredentials: credentialCreateJson.publicKey.excludeCredentials.map(credential => ({
+                    ...credential,
+                    id: base64urlToUint8array(credential.id),
+                })),
+                extensions: credentialCreateJson.publicKey.extensions,
+            },
+        }))
+        .then(credentialCreateOptions => navigator.credentials.create(credentialCreateOptions))
+        .then(publicKeyCredential => ({
+            type: publicKeyCredential.type,
+            id: publicKeyCredential.id,
+            response: {
+                attestationObject: uint8arrayToBase64url(publicKeyCredential.response.attestationObject),
+                clientDataJSON: uint8arrayToBase64url(publicKeyCredential.response.clientDataJSON),
+                transports: publicKeyCredential.response.getTransports ? publicKeyCredential.response.getTransports() : [],
+            },
+            clientExtensionResults: publicKeyCredential.getClientExtensionResults(),
+        }))
+        .then((encodedResult) => {
+            console.log("encodedResult:", encodedResult);
+            formData.append("credential", JSON.stringify(encodedResult));
+            return fetch("/api/webauthn/finishauth", {
+                method: 'POST',
+                headers: {
+                    'header': header,
+                    'X-CSRF-Token': token,
+                },
+                body: formData,
+            });
+        })
+        .then((response) => {
+            if (response.status === 200) {
+                popupReloadHtmlMsg("등록 성공", "간편인증 등록을 성공하였습니다.", "success");
+            } else {
+                popupReloadHtmlMsg("등록 오류", "등록 중 오류가 발생했습니다.", "error");
+            }
+        })
+        .catch((error) => {
+            popupMsg("등록 취소", "간편인증 등록을 취소하였습니다.", "info");
+        });
+};

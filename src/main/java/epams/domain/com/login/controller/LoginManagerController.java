@@ -119,64 +119,11 @@ public class LoginManagerController {
         final Map<String, String> langList = langDetailService.getCodeHtmlDetail(VIEW_URL);
         model.addAttribute("langList", langList);
 
+        // 사용자 계정
+        model.addAttribute("username", auth.getName());
+        log.warn(auth.getName());
+
         return VIEW_URL;
-    }
-
-    /**
-     * 비밀번호(+ MFA) 로그인 처리
-     * 
-     * @return 응답 데이터 맵
-     * @throws Exception 예외 발생 시
-     */
-    @PostMapping("/loginManager")
-    @ResponseBody
-    public Map<String, Object> pwlogin(final HttpServletResponse response, @ModelAttribute final IamUserDTO param, final Model model)
-    {
-        // Front-end에서 ID가 대문자로 바뀌지 않는 경우에 대비하여 한번 더 대문자 변환 처리
-        if (param != null && param.getUsername() != null) {
-            final String uppercaseUsername = param.getUsername().toUpperCase(Locale.getDefault());
-            param.setUsername(uppercaseUsername);
-        }
-
-		final AppUser existingUser = service.getUserRepo().findByUsername(Objects.requireNonNull(param).getUsername());
-        final Map<String, Object> res = new ConcurrentHashMap<>();
-        if (loginService.pwLogin(param)) {
-
-            // 사용자 정보 가져오기
-            final IamUserDTO iamUserDTO = memberService.findUserByUserNo(param.getUsername());
-            iamUserDTO.setMFA(param.getMFA());
-            iamUserDTO.setAdmin(param.isAdmin());
-
-            // 마스킹된 휴대폰 번호 설정
-            final String maskedPhoneNo = MaskPhoneNoUtil.maskPhoneNo(iamUserDTO.getPhoneNo());
-            res.put("maskedPhoneNo", maskedPhoneNo);
-
-            // 유효하지 않은 휴대폰 번호인 경우 (9자리 이하)
-            if(iamUserDTO.getPhoneNo().length() <= 9)
-                throw new CustomGeneralRuntimeException("유효한 휴대폰 번호가 등록되어있지 않습니다.("+maskedPhoneNo+")");
-
-            // PW 로그인 성공 시 MFA 로그인 진행
-            try {
-				restapiservice.requestMFA(iamUserDTO);
-			} catch (NoSuchAlgorithmException e) {
-	            throw new CustomGeneralRuntimeException("NoSuchAlgorithmException : restapiservice.requestMFA(iamUserDTO)", e);
-			}
-            // 로그인 성공 시 추가 인증 단계로 넘어가기 위해 성공 여부를 반환
-            res.put("result", true);
-
-            if (existingUser == null) {
-                res.put("simpleauth", false);
-            }
-            else {
-                res.put("simpleauth", true);
-            }
-
-        } else {
-            // 로그인 실패 시 실패 여부를 반환
-            //res.put("result", false);
-            throw new CustomGeneralRuntimeException("인증 정보가 유효하지 않습니다.");
-        }
-        return res;
     }
 
 }

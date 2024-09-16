@@ -53,4 +53,6 @@ public interface AuthenticatorRepository extends CrudRepository<Authenticator, L
      * @since 2024-06-11
      */
     List<Authenticator> findAllByCredentialId(ByteArray credentialId);
+
+    void deleteAllByUser_Username(String username);
 }

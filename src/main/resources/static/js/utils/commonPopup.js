@@ -33,6 +33,21 @@ const popupReHtmlMsg = (title, html, icon, url) => {
     });
 }
 
+// 공통 심플 팝업 URL Redirect
+const popupReloadHtmlMsg = (title, html, icon) => {
+    Swal.fire({
+        title: title,
+        html: html,
+        icon: icon,
+        showCancelButton: false,
+        confirmButtonColor: "#6c757d",
+        confirmButtonText: '닫기',
+    }).then((result) => {
+        location.reload(); // 화면 새로고침
+    });
+}
+
+
 // 공통 팝업 URL Redirect
 const popupBtnReHtmlMsg = (title, html, icon, button_text, url) => {
     Swal.fire({

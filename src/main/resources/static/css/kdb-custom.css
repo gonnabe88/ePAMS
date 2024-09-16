@@ -1,3 +1,19 @@
+.webauthnImage {
+    position: relative; /* 컨테이너를 상대적으로 배치 */
+    display: inline-block; /* 이미지 크기만큼 컨테이너를 차지 */
+}
+
+.webauthnImage .bottom-left-text {
+    position: absolute;
+    bottom: 10px; /* 하단으로부터 10px 위에 위치 */
+    left: 10px; /* 왼쪽으로부터 10px에 위치 */
+    color: white; /* 텍스트 색상 */
+    background-color: rgba(0, 0, 0, 0.5); /* 반투명 검은색 배경 */
+    padding: 5px; /* 텍스트 주위 여백 */
+    font-size: 12px; /* 텍스트 크기 */
+    border-radius: 5px; /* 배경에 둥근 모서리 추가 */
+}
+
 /* 선택된 라디오 버튼에 대한 스타일 */
 .dtmViewType input[type="radio"]:checked + label {
     font-weight: normal;

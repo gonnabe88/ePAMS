@@ -25,6 +25,9 @@ $(document).ready(() => {
         $('#searchMember').val('');
         $('#clearSearch').attr("hidden", true);
         $('#searchMember').focus();
-    });    
+    });
+
+    // 간편인증 등록 팝업
+    webauthnPopup("REMIND");
 
 });

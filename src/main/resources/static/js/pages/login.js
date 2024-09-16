@@ -68,7 +68,7 @@ $(function() {
         }
     });
 
-    rememberAuthType(); // 인증방식 기억하기 세팅
+    rememberAuthType(webauthnYn); // 인증방식 기억하기 세팅
     rememberId(); // ID 기억하기 세팅
     setPasswordInput(); // 인증방식에 따른 패스워드 입력창 세팅
     setWebauthnRadio(); // Webauthn 인증 등록 사용자 Webauthn 라디오 버튼 자동 세팅

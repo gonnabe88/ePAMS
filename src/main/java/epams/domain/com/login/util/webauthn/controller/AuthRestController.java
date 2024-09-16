@@ -1,5 +1,6 @@
 package epams.domain.com.login.util.webauthn.controller;
 
+import epams.domain.com.login.util.webauthn.service.AuthDeleteService;
 import epams.domain.com.login.util.webauthn.service.AuthRegistService;
 import epams.domain.com.login.util.webauthn.service.AuthService;
 import org.owasp.encoder.Encode;
@@ -17,6 +18,9 @@ import org.springframework.web.server.ResponseStatusException;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author K140024
@@ -56,6 +60,13 @@ public class AuthRestController {
      * @since 2024-06-22
      */
     private final AuthRegistService authRegistService;
+
+    /**
+     * @author K140024
+     * @implNote 간편인증 삭제 서비스
+     * @since 2024-06-22
+     */
+    private final AuthDeleteService authDeleteService;
 
     /**
      * @author K140024
@@ -177,5 +188,26 @@ public class AuthRestController {
     ) {
     	log.warn("POST welcome");
         return authService.finishLogin(credential, username, model, session);
+    }
+    /**
+     * @author K140024
+     * @implNote 새로운 사용자 등록 요청 처리
+     * @since 2024-06-22
+     * @return 등록 요청에 대한 JSON 응답
+     */
+    @PostMapping("/revoke")
+    @ResponseBody
+    public ResponseEntity<Map<String, String>> revokeRegistration() {
+
+        // 응답 메시지 설정
+        Map<String, String> response = new ConcurrentHashMap<>();
+
+        try {
+            authDeleteService.deleteByUsername();
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (Exception e) {
+            response.put("error", "인증정보 삭제 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.");
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

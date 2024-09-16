@@ -12,10 +12,12 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author K140024
@@ -67,27 +69,22 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         // ID & PW 로그인 검증
         final boolean pwLoginResult = loginService.pwLogin(iamUserDTO);
         
-        // 사용자 역할 조회
-        final RoleDTO role = memberService.findOneRoleByUsername(iamUserDTO);
-        
-        // otp & mfa 정보 추출
+        // 사용자 역할 조회 후 List<GrantedAuthority>로 변환
+        final List<RoleDTO> roleDTOs = memberService.findOneRoleByUsername(iamUserDTO);
+        List<GrantedAuthority> authorities = roleDTOs.stream()
+                .map(roleDTO -> new SimpleGrantedAuthority("ROLE_" + roleDTO.getRoleId()))
+                .collect(Collectors.toList());
+
+        // OTP & MFA 정보 확인 후 인증
         final String OTP = customDetails.getOTP();
         final String MFA = customDetails.getMFA();
-
         boolean loginResult = false;
-        log.info("MFA: {}", MFA);
         switch (MFA) {
             case "SMS":
                 loginResult = loginService.otpLogin(iamUserDTO, OTP);
                 break;
             case "카카오톡":
                 loginResult = loginService.otpLogin(iamUserDTO, OTP);
-                break;
-            case "OTP":
-                loginResult = loginService.otpLogin(iamUserDTO, OTP);
-                break;
-            case "FIDO":
-                loginResult = loginService.fidoLogin(iamUserDTO);
                 break;
         }
 
@@ -98,7 +95,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
             throw new AuthenticationException("Invalid credentials") {};
         }
 
-        // 2차 인증(SMS, 카카오, otp, FIDO) 실패
+        // 2차 인증(SMS, 카카오) 실패
         if (!loginResult) {
             log.warn("2차 인증 실패");
             logRepository.insert(LogLoginDTO.getDTO(iamUserDTO.getUsername(), MFA, "0"));
@@ -106,11 +103,13 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         }
 
         // Authentication 객체 생성 (인증 성공)
-        final Authentication authenticated = new UsernamePasswordAuthenticationToken(
-                iamUserDTO.getUsername(), iamUserDTO.getPassword(), List.of(new SimpleGrantedAuthority(role.getRoleId())));
+        final Authentication authenticated = new UsernamePasswordAuthenticationToken(iamUserDTO.getUsername(), iamUserDTO.getPassword(), authorities);
+
         if(log.isWarnEnabled()){
-            log.warn("로그인 사용자 정보: {}, {}", iamUserDTO.getUsername(), role.getRoleId());
+            log.warn("{} 사용자의 역할은 {}입니다.", iamUserDTO.getUsername(), roleDTOs.stream()
+                    .map(roleDTO -> "ROLE_" + roleDTO.getRoleId()).collect(Collectors.joining(", ")));
         }
+
         // 로그인 성공 로깅
         logRepository.insert(LogLoginDTO.getDTO(iamUserDTO.getUsername(), MFA, "1"));
 

@@ -4,13 +4,17 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
+import epams.domain.com.member.dto.RoleDTO;
+import epams.domain.com.member.service.MemberService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -73,7 +77,14 @@ public class AuthService {
     /**
      * LogRepository 인스턴스
      */
-    private final LogRepository logRepository; 
+    private final LogRepository logRepository;
+
+    /**
+     * @author K140024
+     * @implNote 로그인 기록 저장소 주입
+     * @since 2024-06-11
+     */
+    private final MemberService memberService;
 
     /**
      * 현재 인증된 사용자 정보 가져오기
@@ -106,7 +117,6 @@ public class AuthService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e);
         }
     }
-
     
     /**
      * 로그인 완료 요청 처리
@@ -114,9 +124,18 @@ public class AuthService {
      */
     public ResponseEntity<?> finishLogin(final String credential, final String username, final Model model, final HttpSession session) {
         log.warn("finishLogin START");
+
+        // 사용자 로그인 정보 세팅
         final IamUserDTO iamUserDTO = new IamUserDTO();
-        iamUserDTO.setUsername(username);
-        loginRepository.findByUserId(iamUserDTO);
+        iamUserDTO.setUsername(username); // 계정 (사번)
+        loginRepository.findByUserId(iamUserDTO); // 사용자 정보 조회
+
+        // 사용자 역할 조회 후 List<GrantedAuthority>로 변환
+        final List<RoleDTO> roleDTOs = memberService.findOneRoleByUsername(iamUserDTO);
+        List<GrantedAuthority> authorities = roleDTOs.stream()
+                .map(roleDTO -> new SimpleGrantedAuthority("ROLE_" + roleDTO.getRoleId()))
+                .collect(Collectors.toList());
+
         final Map<String, Object> response = new ConcurrentHashMap<>();
         HttpStatus status = HttpStatus.OK;
     
@@ -140,15 +159,28 @@ public class AuthService {
             
             if (result.isSuccess()) {
                 model.addAttribute(USERNAME_PARAM, iamUserDTO.getUsername());
+
+                // 인증 성공 시 SecurityContext에 인증 정보 저장
                 final SecurityContext context = SecurityContextHolder.createEmptyContext();
-                final Authentication authentication = 
-                    new UsernamePasswordAuthenticationToken(iamUserDTO.getUsername(), null, List.of(new SimpleGrantedAuthority("ROLE_ADMIN")));
-                context.setAuthentication(authentication);
+                // Authentication 객체 생성 (인증 성공)
+                final Authentication authenticated = new UsernamePasswordAuthenticationToken(iamUserDTO.getUsername(), null, authorities);
+                // SecurityContext에 인증 정보 저장
+                context.setAuthentication(authenticated);
+                // SecurityContext를 SecurityContextHolder에 저장
                 SecurityContextHolder.setContext(context);
+                // HttpSession에 SecurityContext 저장
                 session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, context);
+                // 로그인 성공 로깅
                 logRepository.insert(LogLoginDTO.getDTO(iamUserDTO.getUsername(), SIMPLEAUTH_STR, "1"));
-                response.put("status", "OK");
-                response.put("redirectUrl", "index");
+
+                if(log.isWarnEnabled()){
+                    log.warn("{} 사용자의 역할은 {}입니다.", iamUserDTO.getUsername(), roleDTOs.stream()
+                            .map(roleDTO -> "ROLE_" + roleDTO.getRoleId()).collect(Collectors.joining(", ")));
+                }
+
+                response.put("status", "OK"); // 성공
+                response.put("redirectUrl", "index"); // 메인화면으로 리다이렉션
+
             } else {
                 logRepository.insert(LogLoginDTO.getDTO(iamUserDTO.getUsername(), SIMPLEAUTH_STR, "0"));
                 response.put("status", "BAD_REQUEST");

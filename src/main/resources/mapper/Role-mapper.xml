@@ -5,6 +5,12 @@
 <mapper namespace="Role">
 
     <!-- Result Map 정의 -->
+    <resultMap id="iamUserAuthMap" type="roleDTO">
+        <id property="username" column="ENO"/>
+        <result property="roleId" column="ATH_ID"/>
+    </resultMap>
+
+    <!-- Result Map 정의 -->
     <resultMap id="roleMap" type="roleDTO">
         <id property="username" column="ENO"/>
         <result property="roleId" column="ATH_ID"/>
@@ -16,6 +22,13 @@
         <result property="createdTime" column="FST_ENR_DTM"/>
         <result property="createUsid" column="FST_ENR_USID"/>
     </resultMap>
+
+    <!-- 특정 계정에 대한 모든 역할 데이터 조회 -->
+    <select id="findRoleByUsername" parameterType="iamUserDTO" resultMap="roleMap">
+        SELECT * FROM OEHR.THURXE_CUSATI
+        WHERE
+            ENO = #{username}
+    </select>
 
     <!-- 특정 계정에 대한 역할 1건 데이터 조회 -->
     <select id="findOneRoleByUsername" parameterType="iamUserDTO" resultMap="roleMap">

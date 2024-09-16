@@ -108,7 +108,7 @@ public class MemberService {
      * 
      * @since 2024-06-11
      */
-    public RoleDTO findOneRoleByUsername(final IamUserDTO iamUserDTO) {
+    public List<RoleDTO> findOneRoleByUsername(final IamUserDTO iamUserDTO) {
         return memberRepository.findOneRoleByUsername(iamUserDTO);
     }
 

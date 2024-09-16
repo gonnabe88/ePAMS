@@ -1,6 +1,8 @@
 package epams.domain.com.member.repository;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import epams.domain.com.index.dto.DeptSearchDTO;
 import epams.domain.com.index.dto.TeamSearchDTO;
@@ -116,27 +118,31 @@ public class MemberRepository {
      * @implNote 사용자의 역할 조회
      * @since 2024-06-10
      */
-    public RoleDTO findOneRoleByUsername(final IamUserDTO iamUserDTO) {
+    public List<RoleDTO> findOneRoleByUsername(final IamUserDTO iamUserDTO) {
         if (log.isWarnEnabled()) {
             log.warn("{} 사용자의 역할을 조회합니다.", iamUserDTO.getUsername());
         }
         
-        RoleDTO roleDTO = sql.selectOne("Role.findOneRoleByUsername", iamUserDTO);
+        List<RoleDTO> roleDTOs = sql.selectList("Role.findRoleByUsername", iamUserDTO);
         
-        if (roleDTO == null) {
+        if (roleDTOs == null || roleDTOs.isEmpty()) {
             if (log.isWarnEnabled()) {
                 log.warn("{} 사용자의 역할이 존재하지 않습니다. 기본 역할을 부여합니다.", iamUserDTO.getUsername());
             }
-            roleDTO = new RoleDTO();
-            roleDTO.setRoleId("ROLE_NORMAL");
+            RoleDTO roleDTO = new RoleDTO();
+            roleDTO.setRoleId("HURXE001AA");
             roleDTO.setUsername(iamUserDTO.getUsername());
+            roleDTOs = new ArrayList<>();
+            roleDTOs.add(roleDTO);
+
         } else {
             if (log.isWarnEnabled()) {
-                log.warn("{} 사용자의 역할은 {}입니다.", roleDTO.getUsername(), roleDTO.getRoleId());
+                log.warn("{} 사용자의 역할은 {}입니다.", iamUserDTO.getUsername(), roleDTOs.stream()
+                        .map(RoleDTO::getRoleId).collect(Collectors.joining(", ")));
             }
         }
         
-        return roleDTO;
+        return roleDTOs;
     }
 
 }

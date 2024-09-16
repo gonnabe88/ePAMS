@@ -45,7 +45,7 @@
 					</section>
 				</div>
 				
-				<div class="d-flex justify-content-end me-3" sec:authorize="hasRole('ADMIN')">
+				<div class="d-flex justify-content-end me-3" sec:authorize="hasRole('HURXE001ZZ')">
 					<div class="form-check form-switch">
 						<input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckAdmin">
 						<label class="form-check-label" for="flexSwitchCheckAdmin">
@@ -56,13 +56,6 @@
 
 				<div class="sidebar-menu">
 
-
-<!--					<div class="d-flex justify-content-end align-items-end me-3">-->
-<!--						<div class="sidebar-toggler  x mt-3">-->
-<!--							<a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x-circle-fill bi-middle"></i></a>-->
-<!--						</div>-->
-<!--					</div>-->
-				
 					<ul class="menu" id="menu">
 						<!--render html from sidebar.js-->
 					</ul>
@@ -75,6 +68,13 @@
 							</div>
 						</div>
 						<!--end divider-->
+
+						<li class="sidebar-item">
+							<a href="/loginManager" class='sidebar-link' >
+								<i class="bi bi-x-octagon-fill"></i>
+								<span>인증관리</span>
+							</a>
+						</li>
 
 						<li class="sidebar-item">
 							<a href="/logout" class='sidebar-link' >

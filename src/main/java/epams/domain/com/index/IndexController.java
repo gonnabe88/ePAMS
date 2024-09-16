@@ -122,7 +122,8 @@ public class IndexController<S extends Session> {
         // 간편인증 등록 여부 확인
         final AppUser existingUser = service.getUserRepo().findByUsername(auth.getName());
         final Authenticator existingAuthUser = service.getAuthRepository().findByUser(existingUser);
-        model.addAttribute("username", auth.getName());
+
+        // 간편인증 사용 여부를 모델에 추가
         if (existingAuthUser == null) {
             model.addAttribute("simpleauth", false);
             log.info("Not simple auth user");
@@ -130,6 +131,9 @@ public class IndexController<S extends Session> {
             model.addAttribute("simpleauth", true);
             log.info("simple auth user");
         }
+
+        // 사용자 정보를 모델에 추가
+        model.addAttribute("username", auth.getName());
 
         // 언어목록
         final Map<String, String> langList = langDetailService.getCodeHtmlDetail(INDEXMAIN);

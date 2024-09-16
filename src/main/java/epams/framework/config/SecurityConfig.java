@@ -139,7 +139,7 @@ public class SecurityConfig{
 									"/images/**",
 									"/error/**"
 							).permitAll()  // 특정 URL은 모든 사용자에게 허용
-							.requestMatchers("/admin/**").hasRole("ADMIN")  // ADMIN 역할만 접근 허용
+							.requestMatchers("/admin/**").hasRole("HURXE001ZZ")  // ADMIN 역할만 접근 허용
 							.anyRequest().authenticated()  // 나머지 요청은 인증 필요
 			)
 

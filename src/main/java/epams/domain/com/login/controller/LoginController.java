@@ -148,10 +148,10 @@ public class LoginController {
         final Map<String, Object> res = new ConcurrentHashMap<>();
         if (loginService.pwLogin(param)) {
 
-
             // 사용자 정보 가져오기
             final IamUserDTO iamUserDTO = memberService.findUserByUserNo(param.getUsername());
             iamUserDTO.setMFA(param.getMFA());
+            iamUserDTO.setAdmin(param.isAdmin());
             log.warn(iamUserDTO.toString());
 
             // 마스킹된 휴대폰 번호 설정

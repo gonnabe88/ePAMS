@@ -152,7 +152,6 @@ public class LoginController {
             final IamUserDTO iamUserDTO = memberService.findUserByUserNo(param.getUsername());
             iamUserDTO.setMFA(param.getMFA());
             iamUserDTO.setAdmin(param.isAdmin());
-            log.warn(iamUserDTO.toString());
 
             // 마스킹된 휴대폰 번호 설정
             final String maskedPhoneNo = MaskPhoneNoUtil.maskPhoneNo(iamUserDTO.getPhoneNo());

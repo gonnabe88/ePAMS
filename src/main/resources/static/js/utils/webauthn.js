@@ -13,10 +13,10 @@ const webauthnRevoke = (username) => {
     })
         .then(response => {
             if (response.ok) {
-                popupReHtmlMsg("등록 취소", "간편인증 등록을 취소하였습니다.", "success", "/loginManager");
+                popupReloadHtmlMsg("등록 취소", "간편인증 등록을 취소하였습니다.", "success");
             }
             else {
-                popupReHtmlMsg("등록 취소 실패", "등록 취소 중 오류가 발생했습니다.", "error", "/loginManager");
+                popupReloadHtmlMsg("등록 취소 실패", "등록 취소 중 오류가 발생했습니다.", "error");
             }
         })
         .catch((error) => {

@@ -71,6 +71,7 @@ tinymce.init({
             console.log("NodeChange");
             if (e && e.element.nodeName.toLowerCase() == 'img') {
                 e.element.classList.add('tinymce-image');
+                e.element.style.maxWidth = '100%';
             }
         });
     }

@@ -76,8 +76,10 @@ public class BoardImageController {
      */
     @PostMapping("/upload/image")
     public ResponseEntity<?> uploadImage(@RequestParam("file") final MultipartFile file) {
+
         final String uploadDir = filepath; // 이미지 저장 경로 설정
         ResponseEntity<?> responseEntity = ResponseEntity.status(500).body("Error uploading file");
+
         try {
             // 파일명 검증 취약점 조치 CWE-23 "문자/숫자/,/-/_" 외 모든 단어는 _로 대체
             final String originalFilename = file.getOriginalFilename().replaceAll("[^a-zA-Z0-9\\.\\-_]", "_");
@@ -128,7 +130,8 @@ public class BoardImageController {
             if (!filePath.startsWith(Paths.get(filepath).normalize())) {
                 // 파일 경로가 기본 디렉토리 경로를 벗어나는 경우 접근 차단
                 // CWE-918 - Server-Side Request Forgery (SSRF)
-                return ResponseEntity.badRequest().build();            }
+                return ResponseEntity.badRequest().build();
+            }
 
             if (resource.exists() && resource.isReadable()) {
                 responseEntity = ResponseEntity.ok()

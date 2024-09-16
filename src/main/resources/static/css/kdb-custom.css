@@ -428,16 +428,18 @@ mark {
     font-weight: 400;
 }
 
-.boardDetail .h6 {
-    width: auto;
+.ellipsis {
     white-space: nowrap;
-    overflow: hidden;
     text-overflow: ellipsis;
 }
+.overflow-hidden {
+    overflow: hidden;
+}
+.overflow-scroll {
+    overflow: scroll;
+}
 
-
-
-/************************* 근태조회(dtmCalendar) FULLCALENDAR 시작 **************************/
+    /************************* 근태조회(dtmCalendar) FULLCALENDAR 시작 **************************/
 
 /*이벤트 아이템(근태목록) 행간 조정*/
 .dtmList .event-item {

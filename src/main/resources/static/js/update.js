@@ -73,7 +73,7 @@ $(document).ready(function() {
                                     <div class="d-flex align-items-center p-2 truncate-multiline">
                                         <div class="col-9 d-flex align-items-center gap-2">
                                             <span class="badge text-bg-primary" > 첨부 </span>
-                                            <h6 class="mb-0">
+                                            <h6 class="overflow-hidden ellipsis mb-0">
                                                 <a></a>
                                             </h6>
                                         </div>

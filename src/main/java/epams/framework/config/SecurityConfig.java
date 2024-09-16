@@ -98,7 +98,7 @@ public class SecurityConfig{
 		final String cspPolicy = String.format(
 				"default-src 'self'; " + // 기본 출처를 동일 출처로 제한
 				"font-src 'self' data:;" + // 폰트는 동일 출처와 data:만 허용
-				"img-src 'self' data:; " + // 이미지는 동일 출처와 data:만 허용
+				"img-src 'self'  data: blob:; " + // 이미지는 동일 출처와 data:만 허용
 				"style-src 'self' 'nonce-kdb'; " + // 스타일은 동일 출처와 nonce-kdb만 허용
 				"script-src 'self' %s; " + // 스크립트는 동일 출처와 nonce-kdb만 허용
 				"object-src 'none'; " + // 'none'으로 설정하여 객체 삽입을 차단

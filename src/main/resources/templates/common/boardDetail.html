@@ -45,10 +45,10 @@
 							<!-- 기존 첨부파일 목록 -->
 							<ul class="list-unstyled mb-3">
 								<li th:if="${board.fileAttached == '1'}" th:each="boardFile: ${boardFileList}">
-									<div class="d-flex align-items-center p-2 truncate-multiline">
+									<div class="d-flex align-items-center p-2">
 										<div class="col-11 d-flex align-items-center gap-2">
 											<span class="badge text-bg-primary"> 첨부 </span>
-											<h6 class="mb-0">
+											<h6 class="overflow-hidden ellipsis mb-0">
 												<a th:href="@{|/board/${board.seqId}/download/${boardFile.seqId}|}" th:utext="${boardFile.originalFileName}"></a>
 											</h6>
 										</div>
@@ -62,8 +62,8 @@
 								</li>
 							</ul>
 							<div class="d-flex gap-2 flex-row-reverse">
-								<a class="btn btn-primary btn-sm mt-3" sec:authorize="hasRole('ROLE_ADMIN')" type="submit" id="modify" th:href="@{|/board/update/${board.seqId}|}">수정</a>
-								<button class="btn btn-danger btn-sm mt-3" sec:authorize="hasRole('ROLE_ADMIN')"
+								<a class="btn btn-primary btn-sm mt-3" sec:authorize="hasRole('HURXE001ZZ')" type="submit" id="modify" th:href="@{|/board/update/${board.seqId}|}">수정</a>
+								<button class="btn btn-danger btn-sm mt-3" sec:authorize="hasRole('HURXE001ZZ')"
 										th:attr="data-boardId=${board.seqId}" type="submit" id="delete">삭제</button>
 								<a class="btn btn-secondary btn-sm mt-3" type="submit" id="list" th:href="@{/board/list}">목록</a>
 							</div>

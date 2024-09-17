@@ -140,7 +140,7 @@ $(document).ready(() => {
 
             // 터치 이벤트 처리
             let touchTimer;
-            let touchDuration = 500; // 터치를 길게 했을 때 인식하는 시간 (500ms)
+            let touchDuration = 1500; // 터치를 길게 했을 때 인식하는 시간 (ms)
 
             itemElement.addEventListener('touchstart', function () {
                 touchTimer = setTimeout(function() {

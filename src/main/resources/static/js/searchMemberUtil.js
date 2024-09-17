@@ -141,15 +141,10 @@ $(document).ready(() => {
             // 터치 이벤트 처리
             let touchTimer;
             let touchDuration = 1500; // 터치를 길게 했을 때 인식하는 시간 (ms)
-            let startX, startY; // 터치 시작 좌표
 
-            itemElement.addEventListener('touchstart', function (e) {
-                // 터치 시작 좌표 저장
-                startX = e.touches[0].clientX;
-                startY = e.touches[0].clientY;
-
+            itemElement.addEventListener('touchstart', function () {
                 touchTimer = setTimeout(function() {
-                    itemElement.click(); // 길게 터치했을 때 클릭 이벤트 발생
+                    itemElement.focus(); // 길게 터치했을 때 클릭 이벤트 발생
                 }, touchDuration);
             });
 
@@ -157,18 +152,8 @@ $(document).ready(() => {
                 clearTimeout(touchTimer); // 터치가 짧으면 타이머 초기화
             });
 
-            itemElement.addEventListener('touchmove', function (e) {
-                // 터치 중 좌표가 움직이면 타이머 초기화
-                let moveX = e.touches[0].clientX;
-                let moveY = e.touches[0].clientY;
-
-                if (Math.abs(moveX - startX) > 10 || Math.abs(moveY - startY) > 10) {
-                    clearTimeout(touchTimer); // 터치 중 움직임 감지 시 타이머 초기화
-                }
-            });
-
             itemElement.addEventListener('click', function() {
-                // 짧은 터치와 동일한 클릭 이벤트 발생
+                // 여기서 짧은 터치와 동일한 이벤트 발생
                 awesomplete.replace(text); // 선택 시 동작
             });
 

@@ -317,7 +317,10 @@
                             <ul class="pagination pagination-primary justify-content-center align-items-center">
                                 <!-- Previous button -->
                                 <li class="page-item" th:classappend="${startPage == 1} ? 'disabled'">
-                                    <a class="first page-link" th:data-startPage="${startPage - 1}" th:href="@{|?page=${startPage - 1}|}" th:if="${startPage > 1}">
+                                    <a class="first page-link" id="first-page-link"
+                                       th:data-startPage="${startPage - 1}"
+                                       th:href="@{|?page=${startPage - 1}&statCdList=${statCdList}&dtmReasonCd=${dtmReasonCd}&dtmKindCd=${dtmKindCd}&staYmdInput=${staYmdInput}&endYmdInput=${endYmdInput}&itemsPerPage=${itemsPerPage}|}"
+                                       th:if="${startPage > 1}">
                                         <span><i class="bi bi-caret-left-fill"></i></span>
                                     </a>
                                 </li>
@@ -327,7 +330,9 @@
                                 </li>
                                 <!-- Next button -->
                                 <li class="page-item" th:classappend="${endPage == dtmHis.totalPages} ? 'disabled'" th:if="${endPage < dtmHis.totalPages}">
-                                    <a class="last page-link" th:data-endPage="${endPage + 1}" th:href="@{|?page=${endPage + 1}|}">
+                                    <a class="last page-link" id="end-page-link"
+                                       th:data-endPage="${endPage + 1}"
+                                       th:href="@{|?page=${endPage + 1}&statCdList=${statCdList}&dtmReasonCd=${dtmReasonCd}&dtmKindCd=${dtmKindCd}&staYmdInput=${staYmdInput}&endYmdInput=${endYmdInput}&itemsPerPage=${itemsPerPage}|}">
                                         <span><i class="bi bi-caret-right-fill"></i></span>
                                     </a>
                                 </li>

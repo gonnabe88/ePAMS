@@ -23,17 +23,34 @@ const updatePaginationLinks = () => {
     const staYmdInput = $('#start-input').val(); // 근태기간(시작일)
     const endYmdInput = $('#end-input').val(); // 근태기간(종료일)
     const itemsPerPage = $('#itemsPerPage').val(); // 페이지 아이템수
-    const startPage = $('.first.page-link').length ? $('.first.page-link').data('startPage') : ''; 
-    const endPage = $('.last.page-link').length ? $('.last.page-link').data('endPage') : ''; 
+
+    // startPage 값 가져오기
+    const firstPageLink = $('#first-page-link');
+    const startPage = firstPageLink.length ? firstPageLink.data('startpage') : '';
+
+    // endPage 값 가져오기
+    const endPageLink = $('#end-page-link');
+    const endPage = endPageLink.length ? endPageLink.data('endpage') : '';
+
+    // Base URL + 검색조건
     let baseUrl = '/dtm/dtmList?page=';
     let searchParam = `&statCdList=${statCdList.join(',')}&dtmReasonCd=${dtmReasonCd}&dtmKindCd=${dtmKindCd}&staYmdInput=${staYmdInput}&endYmdInput=${endYmdInput}&itemsPerPage=${itemsPerPage}`;
 
     // 페이지네이션 링크 업데이트
     $('.page-link').each(function() {
-        $(this).attr('href', baseUrl+`${$(this).text()}`+searchParam);
+        const pageNumber = $(this).text().trim(); // 페이지 번호 가져오기
+        $(this).attr('href', `${baseUrl}${pageNumber}${searchParam}`);
     });
-    $('.first.page-link').length ? $('.first.page-link').attr('href') : baseUrl+startPage+searchParam;
-    $('.last.page-link').length ? $('.last.page-link').attr('href') : baseUrl+endPage+searchParam;
+
+    // 첫 페이지 링크 설정
+    if (firstPageLink.length) {
+        firstPageLink.attr('href', `${baseUrl}${startPage}${searchParam}`);
+    }
+
+    // 마지막 페이지 링크 설정
+    if (endPageLink.length) {
+        endPageLink.attr('href', `${baseUrl}${endPage}${searchParam}`);
+    }
 
 }
 

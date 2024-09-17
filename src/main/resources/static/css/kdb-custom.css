@@ -1,3 +1,9 @@
+#pdf-frame{
+    height: 90vh;
+}
+
+
+
 .webauthnImage {
     position: relative; /* 컨테이너를 상대적으로 배치 */
     display: inline-block; /* 이미지 크기만큼 컨테이너를 차지 */

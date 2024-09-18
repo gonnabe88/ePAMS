@@ -193,16 +193,19 @@ $(document).ready(() => {
         if (scrollTop === 0) {
             this.scrollTop += 1; // 상단에서 더 이상 스크롤되지 않도록 조정
             event.preventDefault(); // 외부로 스크롤 전파를 방지
+            console.log("preventDefault#1");
         }
 
         // 하단에 도달한 경우
         if (scrollTop + clientHeight >= scrollHeight - 1) { // 오차를 약간 둠
             this.scrollTop -= 1; // 하단에서 더 이상 스크롤되지 않도록 조정
             event.preventDefault(); // 외부로 스크롤 전파를 방지
+            console.log("preventDefault#2");
         }
 
         // 스크롤이 내부에서만 발생하도록 설정
         event.stopPropagation();
+        console.log("stopPropagation#1");
 
     }, { passive: false });
 
@@ -218,18 +221,21 @@ $(document).ready(() => {
             if (scrollTop === 0) {
                 this.scrollTop += 1; // 스크롤이 더 이상 위로 가지 않도록 방지
                 event.preventDefault(); // 외부로 스크롤 전파를 방지
+                console.log("preventDefault#3");
             }
 
             // 하단에 도달했을 때, 터치가 위로 이동하는 경우 (scrollTop이 최대일 때)
             if (scrollTop + clientHeight >= scrollHeight) { // 오차를 약간 둠
                 this.scrollTop -= 1; // 스크롤이 더 이상 아래로 가지 않도록 방지
                 event.preventDefault(); // 외부로 스크롤 전파를 방지
+                console.log("preventDefault#4");
             }
 
         }
 
         // 스크롤이 내부에서만 발생하도록 설정
         event.stopPropagation();
+        console.log("stopPropagation#2");
     }, { passive: false });
 
     $.ajax({

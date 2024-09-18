@@ -230,13 +230,14 @@ $(document).ready(() => {
             // 하단에 도달했을 때, 터치가 위로 이동하는 경우 (scrollTop이 최대일 때)
             if (scrollTop + clientHeight >= scrollHeight) { // 오차를 약간 둠
                 this.scrollTop -= 1; // 스크롤이 더 이상 아래로 가지 않도록 방지
-                event.preventDefault(); // 외부로 스크롤 전파를 방지
+
                 console.log("preventDefault#4");
             }
 
         //}
 
         // 스크롤이 내부에서만 발생하도록 설정
+        event.preventDefault(); // 외부로 스크롤 전파를 방지
         event.stopPropagation();
         console.log("stopPropagation#2");
     }, { passive: false });

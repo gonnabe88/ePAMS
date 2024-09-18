@@ -139,10 +139,21 @@ $(document).ready(() => {
             itemElement.innerHTML = html;
 
             // 터치 이벤트 처리
-            const noTouchArea = document.getElementById('awesomplete_list_2');
-            noTouchArea.addEventListener('touchstart', function(event) {
-                event.preventDefault();
+            let touchTimer;
+            let touchDuration = 1500; // 터치를 길게 했을 때 인식하는 시간 (ms)
+            const preventTouch = document.getElementById('awesomplete_list_2');
+
+            preventTouch.addEventListener('touchstart', function (event) {
+                touchTimer = setTimeout(function() {
+                    // 길게 터치했을 때 터치이벤트 차단
+                    event.preventDefault();
+                }, touchDuration);
             });
+
+            preventTouch.addEventListener('touchend', function () {
+                clearTimeout(touchTimer); // 터치가 짧으면 타이머 초기화
+            });
+
 
             return itemElement;
         },

@@ -139,7 +139,7 @@ $(document).ready(() => {
             itemElement.innerHTML = html;
 
             // 터치 이벤트 처리
-            const noTouchArea = document.getElementById('searchMember');
+            const noTouchArea = document.getElementById('awesomplete_list_2');
             noTouchArea.addEventListener('touchstart', function(event) {
                 event.preventDefault();
             });

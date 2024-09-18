@@ -140,17 +140,16 @@ $(document).ready(() => {
 
             // 터치 이벤트 처리
             let touchTimer;
-            let touchDuration = 500; // 터치를 길게 했을 때 인식하는 시간 (ms)
+            let touchDuration = 1000; // 터치를 길게 했을 때 인식하는 시간 (ms)
             const preventTouch = document.getElementById('awesomplete_list_2');
 
             preventTouch.addEventListener('touchstart', function (event) {
                 touchTimer = setTimeout(function() {
                     // 길게 터치했을 때 터치이벤트 차단
-                    event.preventDefault();
-                    console.log('Touch Event Blocked');
+                    preventTouch.click();
+                    console.log('Clicked by touch event');
                 }, touchDuration);
             });
-
             preventTouch.addEventListener('touchend', function () {
                 clearTimeout(touchTimer); // 터치가 끝나면 타이머 초기화
             });

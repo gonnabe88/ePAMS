@@ -207,29 +207,29 @@ $(document).ready(() => {
         }
 
         // 스크롤이 내부에서만 발생하도록 설정
-        event.stopPropagation();
+        //event.stopPropagation();
         //console.log("[scroll] stopPropagation#1");
 
     }, { passive: false });
 
     // 터치 이벤트에서 스크롤이 외부로 전파되지 않도록 설정
     dropdown.addEventListener('touchmove', function(event) {
-        event.stopPropagation();
+        //event.stopPropagation();
         console.log("[touchmove] stopPropagation#2");
     }, { passive: false });
 
     dropdown.addEventListener('touchstart', function(event) {
-        event.stopPropagation();
+        //event.stopPropagation();
         console.log("[touchstart] stopPropagation#3");
     }, { passive: false });
 
     dropdown.addEventListener('touchend', function(event) {
-        event.stopPropagation();
+        //event.stopPropagation();
         console.log("[touchend] stopPropagation#4");
     }, { passive: false });
 
     dropdown.addEventListener('touchcancel', function(event) {
-        event.stopPropagation();
+        //event.stopPropagation();
         console.log("[touchcancel] stopPropagation#5");
     }, { passive: false });
 

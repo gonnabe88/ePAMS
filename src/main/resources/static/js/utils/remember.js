@@ -2,15 +2,16 @@
 const rememberAuthType = (webauthnYn) => {
 
     let key = getCookie("MFA");
-    if( webauthnYn === 'Y' ) {
+    if(webauthnYn === 'Y') {
         $("input:radio[name='MFA'][value='webauthn']").prop("checked", true);
     }
-    else if (key !== "") {
+    else if (key !== "" && key !== "webauthn") {
         // 쿠키에 설정된 값으로 라디오 버튼 체크
         $("input:radio[name='MFA'][value='" + key + "']").prop("checked", true);
     } else {
         // 카카오톡으로 Webauthn 체크
         $("input:radio[name='MFA'][value='카카오톡']").prop("checked", true);
+        setCookie("MFA", "카카오톡", 30);
     }
 }
 

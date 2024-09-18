@@ -1,3 +1,15 @@
+.toast-container {
+    position: fixed; /* 고정된 위치 */
+    top: 1rem; /* 하단에서 약간의 여백 */
+    left: 50%; /* 가로로 중앙 정렬 */
+    transform: translateX(-50%); /* 정확히 가로 중앙에 위치하게 */
+    z-index: 1050; /* 다른 요소 위에 표시되도록 z-index 설정 */
+}
+
+.toast {
+    --bs-toast-bg: rgba(var(--bs-body-bg-rgb));
+}
+
 #pdf-frame{
     height: 90vh;
 }

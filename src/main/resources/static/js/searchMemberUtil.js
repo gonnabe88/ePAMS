@@ -154,8 +154,13 @@ $(document).ready(() => {
                 startY = touch.clientY;
 
                 touchTimer = setTimeout(function() {
-                    itemElement.click();
-                    console.log('Clicked by touch event');
+                    // 해당 좌표에서 요소 찾기
+                    const targetElement = document.elementFromPoint(startX, startY);
+
+                    if (targetElement) {
+                        targetElement.click(); // 요소가 있으면 클릭 이벤트 발생
+                        console.log('Element clicked:', targetElement);
+                    }
                 }, touchDuration);
             });
 
@@ -168,6 +173,7 @@ $(document).ready(() => {
                 // 움직임이 일정 이상이면 터치 취소
                 if (deltaX > moveThreshold || deltaY > moveThreshold) {
                     clearTimeout(touchTimer);
+                    e.preventDefault();
                     console.log('Touch movement detected, click canceled');
                 }
             });

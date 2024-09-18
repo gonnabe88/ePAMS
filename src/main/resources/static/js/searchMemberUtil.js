@@ -185,19 +185,20 @@ $(document).ready(() => {
         const scrollTop = this.scrollTop;
         const scrollHeight = this.scrollHeight;
         const clientHeight = this.clientHeight;
+        const deltaY = event.deltaY;
 
         // 값 확인을 위한 로그 출력
         //console.log('Scroll Event - scrollTop:', scrollTop, 'clientHeight:', clientHeight, 'scrollHeight:', scrollHeight);
 
         // 상단에 도달한 경우
-        if (scrollTop === 0) {
+        if (scrollTop === 0 && deltaY < 0) {
             this.scrollTop += 1; // 상단에서 더 이상 스크롤되지 않도록 조정
             event.preventDefault(); // 외부로 스크롤 전파를 방지
             console.log("preventDefault#1");
         }
 
         // 하단에 도달한 경우
-        if (scrollTop + clientHeight >= scrollHeight - 1) { // 오차를 약간 둠
+        if (scrollTop + clientHeight >= scrollHeight - 1 && deltaY > 0) { // 오차를 약간 둠
             this.scrollTop -= 1; // 하단에서 더 이상 스크롤되지 않도록 조정
             event.preventDefault(); // 외부로 스크롤 전파를 방지
             console.log("preventDefault#2");

@@ -190,7 +190,7 @@ $(document).ready(() => {
         const currentTime = new Date().toLocaleTimeString();
 
         // 값 확인을 위한 로그 출력 (현재 시간 포함)
-        console.log(`[${currentTime}] Scroll Event - scrollTop: ${scrollTop}, clientHeight: ${clientHeight}, scrollHeight: ${scrollHeight}`);
+        //console.log(`[${currentTime}] Scroll Event - scrollTop: ${scrollTop}, clientHeight: ${clientHeight}, scrollHeight: ${scrollHeight}`);
 
         // 상단에 도달한 경우
         if (scrollTop <= 1) {
@@ -214,6 +214,7 @@ $(document).ready(() => {
 
     // 터치 이벤트에서 스크롤이 외부로 전파되지 않도록 설정
     dropdown.addEventListener('touchmove', function(event) {
+        event.preventDefault();
         event.stopPropagation();
         console.log("[touchmove] stopPropagation#2");
     }, { passive: false });

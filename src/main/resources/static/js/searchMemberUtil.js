@@ -186,8 +186,11 @@ $(document).ready(() => {
         const scrollHeight = this.scrollHeight;
         const clientHeight = this.clientHeight;
 
-        // 값 확인을 위한 로그 출력
-        console.log('Scroll Event - scrollTop:', scrollTop, 'clientHeight:', clientHeight, 'scrollHeight:', scrollHeight);
+        // 현재 시간 가져오기
+        const currentTime = new Date().toLocaleTimeString();
+
+        // 값 확인을 위한 로그 출력 (현재 시간 포함)
+        console.log(`[${currentTime}] Scroll Event - scrollTop: ${scrollTop}, clientHeight: ${clientHeight}, scrollHeight: ${scrollHeight}`);
 
         // 상단에 도달한 경우
         if (scrollTop <= 0) {

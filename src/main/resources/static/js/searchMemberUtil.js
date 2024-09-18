@@ -208,13 +208,12 @@ $(document).ready(() => {
 
         // 스크롤이 내부에서만 발생하도록 설정
         event.stopPropagation();
-        console.log("[scroll] stopPropagation#1");
+        //console.log("[scroll] stopPropagation#1");
 
     }, { passive: false });
 
     // 터치 이벤트에서 스크롤이 외부로 전파되지 않도록 설정
     dropdown.addEventListener('touchmove', function(event) {
-        event.preventDefault();
         event.stopPropagation();
         console.log("[touchmove] stopPropagation#2");
     }, { passive: false });

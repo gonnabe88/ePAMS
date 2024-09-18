@@ -140,7 +140,7 @@ $(document).ready(() => {
 
             // 터치 이벤트 처리
             let touchTimer;
-            let touchDuration = 1500; // 터치를 길게 했을 때 인식하는 시간 (ms)
+            let touchDuration = 500; // 터치를 길게 했을 때 인식하는 시간 (ms)
             const preventTouch = document.getElementById('awesomplete_list_2');
 
             preventTouch.addEventListener('touchstart', function (event) {

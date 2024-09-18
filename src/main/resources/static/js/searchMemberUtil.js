@@ -138,51 +138,6 @@ $(document).ready(() => {
             const itemElement = document.createElement("li");
             itemElement.innerHTML = html;
 
-            // 터치 이벤트 처리
-            let touchTimer;
-            let touchDuration = 1000; // 길게 터치할 때 인식하는 시간 (ms)
-            let startX = 0;
-            let startY = 0;
-            let moveThreshold = 10; // 움직임 감지 임계값 (px)
-            const preventTouch = document.getElementById('awesomplete_list_2');
-
-
-            preventTouch.addEventListener('touchstart', function (e) {
-                // 터치 시작 좌표 저장
-                const touch = e.touches[0];
-                startX = touch.clientX;
-                startY = touch.clientY;
-
-                touchTimer = setTimeout(function() {
-                    // 해당 좌표에서 요소 찾기
-                    const targetElement = document.elementFromPoint(startX, startY);
-
-                    if (targetElement) {
-                        targetElement.click(); // 요소가 있으면 클릭 이벤트 발생
-                        console.log('Element clicked:', targetElement);
-                    }
-                }, touchDuration);
-            });
-
-            preventTouch.addEventListener('touchmove', function (e) {
-                // 움직임이 있으면 타이머 초기화
-                const touch = e.touches[0];
-                const deltaX = Math.abs(touch.clientX - startX);
-                const deltaY = Math.abs(touch.clientY - startY);
-
-                // 움직임이 일정 이상이면 터치 취소
-                if (deltaX > moveThreshold || deltaY > moveThreshold) {
-                    clearTimeout(touchTimer);
-                    e.preventDefault();
-                    console.log('Touch movement detected, click canceled');
-                }
-            });
-
-            preventTouch.addEventListener('touchend', function () {
-                clearTimeout(touchTimer); // 터치가 끝나면 타이머 초기화
-            });
-
-
             return itemElement;
         },
         replace: function(text) {

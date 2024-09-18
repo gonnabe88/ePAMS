@@ -196,41 +196,41 @@ $(document).ready(() => {
         if (scrollTop <= 1) {
             this.scrollTop += 1; // 상단에서 더 이상 스크롤되지 않도록 조정
             event.preventDefault(); // 외부로 스크롤 전파를 방지
-            console.log("preventDefault#1");
+            //console.log("preventDefault#1");
         }
 
         // 하단에 도달한 경우
         if (scrollTop + clientHeight >= scrollHeight - 1) { // 오차를 약간 둠
             this.scrollTop -= 1; // 하단에서 더 이상 스크롤되지 않도록 조정
             event.preventDefault(); // 외부로 스크롤 전파를 방지
-            console.log("preventDefault#2");
+            //console.log("preventDefault#2");
         }
 
         // 스크롤이 내부에서만 발생하도록 설정
         event.stopPropagation();
-        console.log("stopPropagation#1");
+        console.log("[scroll] stopPropagation#1");
 
     }, { passive: false });
 
     // 터치 이벤트에서 스크롤이 외부로 전파되지 않도록 설정
     dropdown.addEventListener('touchmove', function(event) {
         event.stopPropagation();
-        console.log("stopPropagation#2");
+        console.log("[touchmove] stopPropagation#2");
     }, { passive: false });
 
     dropdown.addEventListener('touchstart', function(event) {
         event.stopPropagation();
-        console.log("stopPropagation#3");
+        console.log("[touchstart] stopPropagation#3");
     }, { passive: false });
 
     dropdown.addEventListener('touchend', function(event) {
         event.stopPropagation();
-        console.log("stopPropagation#4");
+        console.log("[touchend] stopPropagation#4");
     }, { passive: false });
 
     dropdown.addEventListener('touchcancel', function(event) {
         event.stopPropagation();
-        console.log("stopPropagation#5");
+        console.log("[touchcancel] stopPropagation#5");
     }, { passive: false });
 
     $.ajax({

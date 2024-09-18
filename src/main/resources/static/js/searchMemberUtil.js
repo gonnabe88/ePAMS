@@ -140,16 +140,38 @@ $(document).ready(() => {
 
             // 터치 이벤트 처리
             let touchTimer;
-            let touchDuration = 1000; // 터치를 길게 했을 때 인식하는 시간 (ms)
+            let touchDuration = 1000; // 길게 터치할 때 인식하는 시간 (ms)
+            let startX = 0;
+            let startY = 0;
+            let moveThreshold = 10; // 움직임 감지 임계값 (px)
             const preventTouch = document.getElementById('awesomplete_list_2');
 
-            preventTouch.addEventListener('touchstart', function () {
+
+            preventTouch.addEventListener('touchstart', function (e) {
+                // 터치 시작 좌표 저장
+                const touch = e.touches[0];
+                startX = touch.clientX;
+                startY = touch.clientY;
+
                 touchTimer = setTimeout(function() {
-                    // 길게 터치했을 때 터치이벤트 차단
                     itemElement.click();
                     console.log('Clicked by touch event');
                 }, touchDuration);
             });
+
+            preventTouch.addEventListener('touchmove', function (e) {
+                // 움직임이 있으면 타이머 초기화
+                const touch = e.touches[0];
+                const deltaX = Math.abs(touch.clientX - startX);
+                const deltaY = Math.abs(touch.clientY - startY);
+
+                // 움직임이 일정 이상이면 터치 취소
+                if (deltaX > moveThreshold || deltaY > moveThreshold) {
+                    clearTimeout(touchTimer);
+                    console.log('Touch movement detected, click canceled');
+                }
+            });
+
             preventTouch.addEventListener('touchend', function () {
                 clearTimeout(touchTimer); // 터치가 끝나면 타이머 초기화
             });

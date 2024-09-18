@@ -214,32 +214,19 @@ $(document).ready(() => {
 
     // 터치 이벤트에서 스크롤이 외부로 전파되지 않도록 설정
     dropdown.addEventListener('touchmove', function(event) {
-        const scrollTop = this.scrollTop;
-        const scrollHeight = this.scrollHeight;
-        const clientHeight = this.clientHeight;
-
-        // cancelable 상태일 때만 preventDefault 호출
-        //if (event.cancelable) {
-            // 상단에 도달했을 때, 터치가 아래로 이동하는 경우 (scrollTop이 0일 때)
-            if (scrollTop <= 1) {
-                this.scrollTop += 1; // 스크롤이 더 이상 위로 가지 않도록 방지
-                event.preventDefault(); // 외부로 스크롤 전파를 방지
-                console.log("preventDefault#3");
-            }
-
-            // 하단에 도달했을 때, 터치가 위로 이동하는 경우 (scrollTop이 최대일 때)
-            if (scrollTop + clientHeight >= scrollHeight) { // 오차를 약간 둠
-                this.scrollTop -= 1; // 스크롤이 더 이상 아래로 가지 않도록 방지
-
-                console.log("preventDefault#4");
-            }
-
-        //}
-
-        // 스크롤이 내부에서만 발생하도록 설정
-        event.preventDefault(); // 외부로 스크롤 전파를 방지
         event.stopPropagation();
-        console.log("stopPropagation#2");
+    }, { passive: false });
+
+    dropdown.addEventListener('touchstart', function(event) {
+        event.stopPropagation();
+    }, { passive: false });
+
+    dropdown.addEventListener('touchend', function(event) {
+        event.stopPropagation();
+    }, { passive: false });
+
+    dropdown.addEventListener('touchcancel', function(event) {
+        event.stopPropagation();
     }, { passive: false });
 
     $.ajax({

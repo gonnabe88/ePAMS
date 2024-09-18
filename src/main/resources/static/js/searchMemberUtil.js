@@ -192,12 +192,18 @@ $(document).ready(() => {
         // 상단에 도달한 경우
         if (scrollTop === 0) {
             this.scrollTop += 1; // 상단에서 더 이상 스크롤되지 않도록 조정
+            event.preventDefault(); // 외부로 스크롤 전파를 방지
         }
 
         // 하단에 도달한 경우
         if (scrollTop + clientHeight >= scrollHeight - 1) { // 오차를 약간 둠
             this.scrollTop -= 1; // 하단에서 더 이상 스크롤되지 않도록 조정
+            event.preventDefault(); // 외부로 스크롤 전파를 방지
         }
+
+        // 스크롤이 내부에서만 발생하도록 설정
+        event.stopPropagation();
+
     }, { passive: false });
 
     // 터치 이벤트에서 스크롤이 외부로 전파되지 않도록 설정
@@ -219,7 +225,11 @@ $(document).ready(() => {
                 this.scrollTop -= 1; // 스크롤이 더 이상 아래로 가지 않도록 방지
                 event.preventDefault(); // 외부로 스크롤 전파를 방지
             }
+
         }
+
+        // 스크롤이 내부에서만 발생하도록 설정
+        event.stopPropagation();
     }, { passive: false });
 
     $.ajax({

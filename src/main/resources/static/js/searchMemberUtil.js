@@ -215,18 +215,22 @@ $(document).ready(() => {
     // 터치 이벤트에서 스크롤이 외부로 전파되지 않도록 설정
     dropdown.addEventListener('touchmove', function(event) {
         event.stopPropagation();
+        console.log("stopPropagation#2");
     }, { passive: false });
 
     dropdown.addEventListener('touchstart', function(event) {
         event.stopPropagation();
+        console.log("stopPropagation#3");
     }, { passive: false });
 
     dropdown.addEventListener('touchend', function(event) {
         event.stopPropagation();
+        console.log("stopPropagation#4");
     }, { passive: false });
 
     dropdown.addEventListener('touchcancel', function(event) {
         event.stopPropagation();
+        console.log("stopPropagation#5");
     }, { passive: false });
 
     $.ajax({

@@ -193,7 +193,7 @@ $(document).ready(() => {
         console.log(`[${currentTime}] Scroll Event - scrollTop: ${scrollTop}, clientHeight: ${clientHeight}, scrollHeight: ${scrollHeight}`);
 
         // 상단에 도달한 경우
-        if (scrollTop <= 0) {
+        if (scrollTop <= 1) {
             this.scrollTop += 1; // 상단에서 더 이상 스크롤되지 않도록 조정
             event.preventDefault(); // 외부로 스크롤 전파를 방지
             console.log("preventDefault#1");

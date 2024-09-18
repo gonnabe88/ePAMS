@@ -216,7 +216,7 @@ $(document).ready(() => {
         const clientHeight = this.clientHeight;
 
         // cancelable 상태일 때만 preventDefault 호출
-        if (event.cancelable) {
+        //if (event.cancelable) {
             // 상단에 도달했을 때, 터치가 아래로 이동하는 경우 (scrollTop이 0일 때)
             if (scrollTop === 0) {
                 this.scrollTop += 1; // 스크롤이 더 이상 위로 가지 않도록 방지
@@ -231,7 +231,7 @@ $(document).ready(() => {
                 console.log("preventDefault#4");
             }
 
-        }
+        //}
 
         // 스크롤이 내부에서만 발생하도록 설정
         event.stopPropagation();

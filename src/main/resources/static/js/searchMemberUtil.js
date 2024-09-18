@@ -147,11 +147,12 @@ $(document).ready(() => {
                 touchTimer = setTimeout(function() {
                     // 길게 터치했을 때 터치이벤트 차단
                     event.preventDefault();
+                    console.log('Touch Event Blocked');
                 }, touchDuration);
             });
 
             preventTouch.addEventListener('touchend', function () {
-                clearTimeout(touchTimer); // 터치가 짧으면 타이머 초기화
+                clearTimeout(touchTimer); // 터치가 끝나면 타이머 초기화
             });
 
 
@@ -204,7 +205,7 @@ $(document).ready(() => {
         const clientHeight = this.clientHeight;
 
         // 값 확인을 위한 로그 출력
-        console.log('Scroll Event - scrollTop:', scrollTop, 'clientHeight:', clientHeight, 'scrollHeight:', scrollHeight);
+        //console.log('Scroll Event - scrollTop:', scrollTop, 'clientHeight:', clientHeight, 'scrollHeight:', scrollHeight);
 
         // 상단에 도달한 경우
         if (scrollTop === 0) {

@@ -143,10 +143,10 @@ $(document).ready(() => {
             let touchDuration = 1000; // 터치를 길게 했을 때 인식하는 시간 (ms)
             const preventTouch = document.getElementById('awesomplete_list_2');
 
-            preventTouch.addEventListener('touchstart', function (event) {
+            preventTouch.addEventListener('touchstart', function () {
                 touchTimer = setTimeout(function() {
                     // 길게 터치했을 때 터치이벤트 차단
-                    preventTouch.click();
+                    itemElement.click();
                     console.log('Clicked by touch event');
                 }, touchDuration);
             });

@@ -8,60 +8,38 @@
         <div class="divider-text">
             <h5 class="card-title">
                 <span>조회결과</span>
-<!--                <span th:text="${langList['SEARCH_EMP_03_STMT']}"></span>-->
             </h5>
         </div>
     </div>
 
-<!--    <div th:if="${memberList == null or memberList.isEmpty()}">-->
-<!--        <div class="animate__animated animate__fadeIn animate__slow">-->
-<!--            <div class="shadow card">-->
-<!--                <div class="card-body d-flex justify-content-center align-items-center">-->
-<!--                    <h5>No Result</h5>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
     <section class="section" th:each="member: ${memberList}">
         <div class="animate__animated animate__fadeIn animate__slow">
-            <div class="shadow card">
-                <div class="card-body">
-                    <p class="card-text" th:utext="${member.realname}+' '+${member.positionName}"></p>
-                    <div class="row">
-                        <div class="col-2">
-                            <i class="bi bi-building"></i>
-                        </div>
-                        <div class="col-10">
-                            <small class="text-body-secondary"
-                                   th:text="${member.deptName}+' '+${member.teamName}"></small>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-2">
-                            <i class="bi bi-diagram-2"></i>
-                        </div>
-                        <div class="col-10">
-                            <small class="text-body-secondary" th:text="${member.inlineNumber}"></small>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-2">
-                            <i class="bi bi-briefcase-fill"></i>
-                        </div>
-                        <div class="col-10">
-                            <small class="text-body-secondary" th:text="${member.jobDetail}"></small>
-                        </div>
-                    </div>
-                </div>
+            <p class="h6" th:utext="${member.realname}+' '+${member.positionName}"></p>
+            <div class="d-flex align-items-center justify-content-start gap-3 mt-3">
+                <i class="bi bi-building"></i>
+                <span class="h7 m-0" th:text="${member.deptName}"></span>
             </div>
+            <div class="d-flex align-items-center justify-content-start gap-3 mt-3">
+                <i class="bi bi-diagram-2"></i>
+                <span class="h7 m-0"  th:text="${member.teamName}"></span>
+            </div>
+            <div class="d-flex align-items-center justify-content-start gap-3 mt-3">
+                <i class="bi bi-telephone-fill"></i>
+                <span class="h7 m-0"  th:text="${member.inlineNumber}"></span>
+            </div>
+            <div class="d-flex align-items-center justify-content-start gap-3 mt-3">
+                <i class="bi bi-briefcase-fill"></i>
+                <span class="h7 m-0"  th:text="${member.jobDetail}"></span>
+            </div>
+
             <div class="d-flex justify-content-around mt-5">
-                <div class="text-center searchResultIcon p-3" id="search">
-                    <h3><i class="bi bi-binoculars-fill" ></i></h3>
+                <div class="text-center searchResultIcon p-0 d-flex flex-column justify-content-center align-items-center" id="search">
+                    <h3 class="m-0"><i class="bi bi-binoculars-fill"></i></h3>
                     <small>다시검색</small>
                 </div>
-                <div class="text-center searchResultIcon p-3" id="contact">
+                <div class="text-center searchResultIcon p-0 d-flex flex-column justify-content-center align-items-center" id="contact">
                     <a id="inlineNumber" class="inlineNumber" th:href="'tel:' + ${member.inlineNumber}"></a>
-                    <h3><i class="bi bi-telephone-outbound-fill"></i></h3>
+                    <h3 class="m-0"><i class="bi bi-telephone-outbound-fill"></i></h3>
                     <small>연락하기</small>
                 </div>
             </div>

@@ -142,28 +142,16 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-
-
-
-
-
-    function resetAllDayStyles() {
-        // 모든 날짜 셀에서 관련 클래스 제거
-        const allDayCells = calendar.el.querySelectorAll('.fc-daygrid-day');
-        allDayCells.forEach(cell => {
-            cell.classList.remove('selected-date-range', 'range-start', 'range-end');
-        });
-    }
-    function adjustDateBoxSize() {
-        var dayCells = document.querySelectorAll('.fc-daygrid-day');
-        dayCells.forEach(function (cell) {
-            var width = cell.offsetWidth;
-            cell.style.height = width + 'px';
-        });
-    }
-
-    // 초기 호출 및 창 크기 변경 시 박스 크기 조정
-    adjustDateBoxSize();
+    // function adjustDateBoxSize() {
+    //     var dayCells = document.querySelectorAll('.fc-daygrid-day');
+    //     dayCells.forEach(function (cell) {
+    //         var width = cell.offsetWidth;
+    //         cell.style.height = width + 'px';
+    //     });
+    // }
+    //
+    // // 초기 호출 및 창 크기 변경 시 박스 크기 조정
+    // adjustDateBoxSize();
 
     calendar.render();
 

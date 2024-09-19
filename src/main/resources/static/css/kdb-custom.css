@@ -661,38 +661,21 @@ mark {
 
 /************************* 근태조회(dtmCalendar) FULLCALENDAR 끝 **************************/
 
-/*근태 신청화면 card*/
-.dtmReg .container {
-    display: flex;
-    justify-content: center;
-    align-items: center; /* 수직 중앙 정렬 추가 */
-    flex-direction: column; /* 수직 정렬 */
-}
-
-.dtmReg .main-content {
-    width: 100%;
-    padding: 1rem;
-}
-
-.dtmReg .page-heading {
-    display: flex;
-    justify-content: start; /* 왼쪽 정렬 */
-    width: 90%;
-    margin: 0 auto; /* 중앙 정렬 */
-}
-
-.dtmReg .card {
-    width: 90%;
-    padding: 1rem;
-    margin: 0 auto; /* 부모 요소에서 중앙 정렬 */
-    display: block; /* 필요시 flex에서 block으로 변경 */
-}
 
 /************************ 근태 신청화면 full calender 시작 ************************/
 .dtmRegDetail .fc {
     font-size: clamp(0.8em, 2vw, 5em); /* 최소 0.8em, 최대 5em, 기본 값은 2vw로 설정 */
     text-align: center;
     border: none;
+}
+
+/* 날짜 박스 불필요한 여백 제거 */
+.dtmRegDetail .fc .fc-daygrid-day-number {
+    padding: 0;
+    min-height: 2em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .dtmRegDetail .fc-fade {

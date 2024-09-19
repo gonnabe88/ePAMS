@@ -34,10 +34,11 @@ $(function() {
         let MFA = $('input[name="MFA"]:checked').val(); // MFA 라디오 버튼 값 확인
         setCookie("MFA", MFA, 30); // 쿠키 갱신
         setPasswordInput(); // 패스워드 입력창을 숨기거나 보여줌
-        webauthnYn === 'Y' && MFA !== 'webauthn' ? popupHtmlMsg(
-            "안내사항",
-            "<p>간편인증이 등록된 사용자는 자동으로 간편인증이 선택됩니다.</p> <p>간편인증 사용을 원하지 않으시면 로그인 후 간편인증 등록을 해제해주세요.</p>",
-            "info") : null; // Webauthn 등록 사용자이고 Webauthn 선택 시 Webauthn 인증
+        webauthnYn === 'Y' && MFA !== 'webauthn' ? loadToastHTML() : null;
+        // webauthnYn === 'Y' && MFA !== 'webauthn' ? popupHtmlMsg(
+        //     "안내사항",
+        //     "<p>간편인증이 등록된 사용자는 자동으로 간편인증이 선택됩니다.</p> <p>간편인증 사용을 원하지 않으시면 로그인 후 간편인증 등록을 해제해주세요.</p>",
+        //     "info") : null; // Webauthn 등록 사용자이고 Webauthn 선택 시 Webauthn 인증
     });
 
     $('#simpleAuthQ').on('click', function() { // 간편인증 등록 사용자 안내사항 클릭 시
@@ -73,3 +74,17 @@ $(function() {
     setPasswordInput(); // 인증방식에 따른 패스워드 입력창 세팅
     setWebauthnRadio(); // Webauthn 인증 등록 사용자 Webauthn 라디오 버튼 자동 세팅
 });
+
+
+function loadToastHTML() {
+    // Toast 엘리먼트를 가져옴
+    const toastEl = document.querySelector('.toast');
+    if (toastEl) {
+        // Bootstrap Toast 초기화
+        const toast = new bootstrap.Toast(toastEl, {
+            delay: 3000 // 3초 후 자동으로 사라지게 설정
+        });
+        // Toast 보여주기
+        toast.show();
+    }
+}

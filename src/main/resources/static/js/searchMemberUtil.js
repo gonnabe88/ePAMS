@@ -138,6 +138,28 @@ $(document).ready(() => {
             const itemElement = document.createElement("li");
             itemElement.innerHTML = html;
 
+            // 터치 이벤트 처리
+            let touchTimer;
+            let touchDuration = 500; // 터치를 길게 했을 때 인식하는 시간 (500ms)
+            itemElement.addEventListener('touchstart', function (event) {
+                touchTimer = setTimeout(function() {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    itemElement.click(); // 길게 터치했을 때 클릭 이벤트 발생
+                }, touchDuration);
+            });
+            itemElement.addEventListener('touchend', function (event) {
+                event.preventDefault();
+                event.stopPropagation();
+                clearTimeout(touchTimer); // 터치가 짧으면 타이머 초기화
+            });
+            itemElement.addEventListener('click', function(event) {
+                // 여기서 짧은 터치와 동일한 이벤트 발생
+                event.preventDefault();
+                event.stopPropagation();
+                awesomplete.replace(text); // 선택 시 동작
+            });
+
             return itemElement;
         },
         replace: function(text) {
@@ -186,17 +208,14 @@ $(document).ready(() => {
         const scrollHeight = this.scrollHeight;
         const clientHeight = this.clientHeight;
 
-        // 현재 시간 가져오기
-        const currentTime = new Date().toLocaleTimeString();
-
-        // 값 확인을 위한 로그 출력 (현재 시간 포함)
+        //값 확인을 위한 로그 출력 (현재 시간 포함)
+        //const currentTime = new Date().toLocaleTimeString();
         //console.log(`[${currentTime}] Scroll Event - scrollTop: ${scrollTop}, clientHeight: ${clientHeight}, scrollHeight: ${scrollHeight}`);
 
         // 상단에 도달한 경우
         if (scrollTop <= 1) {
             this.scrollTop += 1; // 상단에서 더 이상 스크롤되지 않도록 조정
             event.preventDefault(); // 외부로 스크롤 전파를 방지
-            //console.log("preventDefault#1");
         }
 
         // 하단에 도달한 경우
@@ -207,29 +226,29 @@ $(document).ready(() => {
         }
 
         // 스크롤이 내부에서만 발생하도록 설정
-        //event.stopPropagation();
-        //console.log("[scroll] stopPropagation#1");
+        event.stopPropagation();
+        console.log("[scroll] stopPropagation#1");
 
     }, { passive: false });
 
     // 터치 이벤트에서 스크롤이 외부로 전파되지 않도록 설정
     dropdown.addEventListener('touchmove', function(event) {
-        //event.stopPropagation();
+        event.stopPropagation();
         console.log("[touchmove] stopPropagation#2");
     }, { passive: false });
 
     dropdown.addEventListener('touchstart', function(event) {
-        //event.stopPropagation();
+        event.stopPropagation();
         console.log("[touchstart] stopPropagation#3");
     }, { passive: false });
 
     dropdown.addEventListener('touchend', function(event) {
-        //event.stopPropagation();
+        event.stopPropagation();
         console.log("[touchend] stopPropagation#4");
     }, { passive: false });
 
     dropdown.addEventListener('touchcancel', function(event) {
-        //event.stopPropagation();
+        event.stopPropagation();
         console.log("[touchcancel] stopPropagation#5");
     }, { passive: false });
 

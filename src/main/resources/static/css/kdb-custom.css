@@ -1,3 +1,15 @@
+.toast-container {
+    position: fixed; /* 고정된 위치 */
+    top: 1rem; /* 하단에서 약간의 여백 */
+    left: 50%; /* 가로로 중앙 정렬 */
+    transform: translateX(-50%); /* 정확히 가로 중앙에 위치하게 */
+    z-index: 1050; /* 다른 요소 위에 표시되도록 z-index 설정 */
+}
+
+.toast {
+    --bs-toast-bg: rgba(var(--bs-body-bg-rgb));
+}
+
 #pdf-frame{
     height: 90vh;
 }
@@ -112,17 +124,35 @@
 }
 
 .searchResultIcon {
+    width: 5rem;
+    height: 5rem;
     background: aliceblue;
-    border-radius: 1.5rem;
+    border-radius: 50%;
     transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
-    /* 그림자와 색상 변화의 전환 추가 */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 기본 그림자 */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }
 
 .searchResultIcon:active {
     background-color: lightblue; /* 클릭 시 더 짙은 색상 */
     transform: scale(0.95); /* 클릭 시 살짝 작아지는 모션 */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* 클릭 시 그림자 작아짐 */
+}
+
+.searchResultIcon h3 {
+    margin-bottom: 0.5rem; /* 아이콘과 텍스트 간격 */
+}
+
+.searchResultIcon small {
+    margin-top: 0;
+}
+
+.searchResultIcon .bi {
+    line-height: 1;
 }
 
 /* 사이드바 스타일 */

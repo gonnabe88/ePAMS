@@ -1,22 +1,29 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const submitButton = document.querySelector('.btn-submit');
     const reasonSelect = document.getElementById('list');
     const startDateInput = document.getElementById('startDate');
     const endDateInput = document.getElementById('endDate');
 
-    submitButton.addEventListener('click', function() {
+    submitButton.addEventListener('click', function () {
         const startDate = startDateInput.value;
         const endDate = endDateInput.value;
         const dtmReasonCd = reasonSelect.value;
 
+        console.log(new Date(startDateInput.value));
         // dtmReasonCd가 없을 경우 경고 메시지 표시
         if (!dtmReasonCd) {
             alert("근태종류를 선택 바랍니다.");
             return;
         }
 
-        if(startDate>endDate){
+        if (startDate > endDate) {
             alert("시작일이 종료일보다 큽니다.");
+            return;
+        }
+
+        // 과거일자 신청제한
+        if (new Date(startDate) < today) {
+            alert("과거일자 근태 신청은 외부망에서 할 수 없습니다");
             return;
         }
 
@@ -36,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const queryString = $.param(dtmHisDTO);
 
         // HTML 파일을 불러오기 (쿼리 스트링과 함께 GET 요청)
-        $.get(`/dtm/dtmApplPopup?${queryString}`, function(htmlContent) {
+        $.get(`/dtm/dtmApplPopup?${queryString}`, function (htmlContent) {
             Swal.fire({
                 title: "신청하시겠습니까?",
                 html: htmlContent,
@@ -57,6 +64,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
 });
+
 // 근태 신청
 const postDtmHisDTO = (dtmHisDTO) => {
     const header = $('meta[name="_csrf_header"]').attr('content'); // CSRF 헤더

@@ -776,7 +776,7 @@ mark {
     background-color: #435ebe !important;
     /*color: white !important;*/
     font-weight: bold;
-    border-radius: 30%;
+    border-radius: 20%;
     opacity: 1 !important; /* 투명도 제거 */
 }
 
@@ -793,18 +793,18 @@ mark {
     background-color: #435ebe !important;
     font-weight: bold !important;
     color: white !important;
-    border-top-left-radius: 30% !important;
-    border-bottom-left-radius: 30% !important;
-    border-top-right-radius: 30% !important;
-    border-bottom-right-radius: 30% !important;
+    border-top-left-radius: 20% !important;
+    border-bottom-left-radius: 20% !important;
+    border-top-right-radius: 20% !important;
+    border-bottom-right-radius: 20% !important;
 }
 
 /* 선택된 날짜 범위의 스타일 */
 .selected-range-start {
     background-color: #435ebe !important;
     font-weight: bold !important;
-    border-top-left-radius: 30% !important;
-    border-bottom-left-radius: 30% !important;
+    border-top-left-radius: 20% !important;
+    border-bottom-left-radius: 20% !important;
 }
 
 .selected-range-middle {
@@ -816,8 +816,8 @@ mark {
 .selected-range-end {
     background-color: #435ebe !important;
     font-weight: bold !important;
-    border-top-right-radius: 30% !important;
-    border-bottom-right-radius: 30% !important;
+    border-top-right-radius: 20% !important;
+    border-bottom-right-radius: 20% !important;
 }
 
 /* 선택된 날짜의 숫자 색상 */
@@ -935,8 +935,8 @@ mark {
 
 /*신청하기 버튼*/
 .btn-submit{
-    background-color: #435ebe;
-    color: white;
+    background-color: #435ebe !important;;
+    color: white !important;;
 }
 
 .date-input-container {
@@ -970,9 +970,10 @@ label {
     height: 38px;
 }
 
-/*.date-input input[type="date"] {*/
-/*    width: 100%;*/
-/*}*/
+#dateWarning {
+    display: none; /* 기본적으로는 숨긴 상태 */
+    color: red;    /* 경고 문구는 빨간색으로 표시 */
+}
 
 /*근태신청화면 콤보*/
 

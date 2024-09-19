@@ -66,6 +66,7 @@
                                 </div>
                             </div>
                         </div>
+                        <div id="dateWarning" >오늘 이후 건만 신청가능합니다</div>
                         <div class="row mb-3">
                             <div class="col">
                                 <div id="calender"></div>
@@ -74,7 +75,6 @@
                         <div class="row mb-3">
                             <div class="col">
                                 <div class="button-group">
-                                    <!--                                    <button type="button" class="btn btn-back">돌아가기</button>-->
                                     <button type="submit" class="btn btn-submit">신청하기</button>
                                 </div>
                             </div>
@@ -89,15 +89,13 @@
 <th:block layout:fragment="script">
     <script src="/extensions/fullcalendar/index.global.js"></script>
     <script src="/extensions/fullcalendar/initDtmRegCal.js"></script>
-    <!--    <script src="/extensions/fullcalendar/main.min.css"></script>-->
     <script src="/extensions/fullcalendar/main.min.js"></script>
     <script src="/extensions/select2/select2.full.js"></script>
     <script src="/js/dtmStatus.js"></script>
     <script src="/js/dateFormat.js"></script>
     <script src="/js/selectForm.js"></script>
-    <!--    <script src="/js/moveBack.js"></script>-->
-    <!--    <script src="/js/index.js"></script>-->
     <script src="/js/dtmAppl.js"></script>
+    <script src="/js/pastValid.js"></script>
 </th:block>
 </div>
 </body>

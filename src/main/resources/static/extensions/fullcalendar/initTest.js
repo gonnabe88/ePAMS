@@ -22,7 +22,10 @@ $(document).ready(function () {
     });
 
     // 휴일 목록 추가 (YYYY-MM-DD 형식)
-    const holidays = ['2024-09-16', '2024-09-17', '2024-09-18']; // 추가할 휴일 날짜
+    //const holidays = ['2024-09-16', '2024-09-17', '2024-09-18']; // 추가할 휴일 날짜
+
+    const holidays = calendarEl.getAttribute('data-holiDayList');; // 추가할 휴일 날짜
+    console.log(holidays);
 
     console.log(events); // 변환된 이벤트 데이터 확인
 

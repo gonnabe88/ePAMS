@@ -22,8 +22,8 @@
             B.BBR_NM,
             A.TEM_NM,
             A.PT_C_NM,
-            '10:00' AS STA_TIME,
-            '19:00' AS END_TIME
+            F_OTM_SEL_WK ('01', REPLACE(#{username}, 'K', '7'), SYSDATE, 'S1', 'KO') AS STA_TIME,
+            F_OTM_SEL_WK ('01', REPLACE(#{username}, 'K', '7'), SYSDATE, 'E1', 'KO') AS END_TIME
         FROM OEHR.THURXE_CUSRLI A
         INNER JOIN OEHR.THURXE_CORGLI B
             ON A.BBR_C = B.PRLM_OGZ_C_CONE

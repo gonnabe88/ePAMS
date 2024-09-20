@@ -24,7 +24,7 @@ public class DtmApplStatusDTO extends DtmSqlParamDTO {
 
     /***
      * @author 140024
-     * @implNote 행번(7140024) (EMP_NO)
+     * @implNote 행번(140024) (emp_no)
      * @since 2024-09-12
      */
     private String empNo;
@@ -83,7 +83,7 @@ public class DtmApplStatusDTO extends DtmSqlParamDTO {
      * @implNote 휴대폰번호 (telno)
      * @since 2024-09-12
      */
-    private String PhoneNo;
+    private String phoneNo;
 
     /***
      * @author 140024
@@ -153,14 +153,14 @@ public class DtmApplStatusDTO extends DtmSqlParamDTO {
      * @implNote 내년연차잔여일수(NEXT_REMAIN_CNT)
      * @since 2024-09-11
      */
-    private float NextAnnualDayRemainCnt;
+    private float nextAnnualDayRemainCnt;
 
     /***
      * @author 140024
      * @implNote 내년연차잔여시간(NEXT_REMAIN_HHCNT)
      * @since 2024-09-11
      */
-    private float NextAnnualHourRemainCnt;
+    private float nextAnnualHourRemainCnt;
 
     /***
      * @author 140024
@@ -199,11 +199,31 @@ public class DtmApplStatusDTO extends DtmSqlParamDTO {
 
     /***
      * @author 140024
+     * @implNote 선연차사용시간(AD_USE_HHCNT)
+     * @since 2024-09-11
+     */
+    private float advAnnualHourNetUsedCnt;
+
+    /***
+     * @author 140024
+     * @implNote (-)연차 + 선연차사용시간(AD_USE_HHCNT2)
+     * @since 2024-09-11
+     */
+    private float advAnnualHourTotalUsedCnt;
+
+    /***
+     * @author 140024
      * @implNote 저축일수(SAVE_YYCNT)
      * @since 2024-09-11
      */
     private float saveDayCnt = 0F;
 
+    /***
+     * @author 140024
+     * @implNote 저축시간 (SAVE_HHCNT)
+     * @since 2024-09-12
+     */
+    private float saveHourCnt;
 
     /***
      * @author 140024
@@ -228,23 +248,66 @@ public class DtmApplStatusDTO extends DtmSqlParamDTO {
 
     /***
      * @author 140024
-     * @implNote 선연차사용시간(AD_USE_HHCNT)
+     * @implNote 연차잔여시간(remain_cnt_val1)
+     * @implSpec String
      * @since 2024-09-11
      */
-    private float advAnnualHourNetUsedCnt;
+    private String annualHourRemainCntStr;
 
     /***
      * @author 140024
-     * @implNote (-)연차 + 선연차사용시간(AD_USE_HHCNT2)
+     * @implNote 연차잔여일수(remain_cnt_val2)
+     * @implSpec String
      * @since 2024-09-11
      */
-    private float advAnnualHourTotalUsedCnt;
+    private String annualDayRemainCntStr;
 
     /***
      * @author 140024
-     * @implNote 저축시간 (SAVE_HHCNT)
-     * @since 2024-09-12
+     * @implNote 저축시간(save_cnt_val1)
+     * @implSpec String
+     * @since 2024-09-11
      */
-    private float saveHourCnt;
+    private String saveHourCntStr;
+
+    /***
+     * @author 140024
+     * @implNote 저축일수(save_cnt_val2)
+     * @implSpec String
+     * @since 2024-09-11
+     */
+    private String saveDayCntStr;
+
+    /***
+     * @author 140024
+     * @implNote (-)연차 + 선연차사용시간(ad_use_cnt2_val1)
+     * @implSpec String
+     * @since 2024-09-11
+     */
+    private String advAnnualHourTotalUsedCntStr;
+
+    /***
+     * @author 140024
+     * @implNote (-)연차 + 선연차사용일수(ad_use_cnt2_val2)
+     * @implSpec String
+     * @since 2024-09-11
+     */
+    private String advAnnualDayTotalUsedCntStr;
+
+        /***
+     * @author 140024
+     * @implNote 보상휴가시간(rewardHourCnt)
+     * @implSpec String
+     * @since 2024-09-11
+     */
+    private String rewardHourCntStr;
+
+        /***
+     * @author 140024
+     * @implNote 보상휴가일수(rewardDayCnt)
+     * @implSpec String
+     * @since 2024-09-11
+     */
+    private String rewardDayCntStr;
 
 }

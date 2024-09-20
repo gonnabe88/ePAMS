@@ -191,7 +191,7 @@ public class DtmHisVO {
      * @implNote 선연차사용여부
      * @since 2024-08-11
      */
-    private String adUseYn;
+    private String adUseYn = "N";
 
     /***
      * @author 140024

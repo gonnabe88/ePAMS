@@ -54,8 +54,8 @@
                             </li>
                         </ul>
                         <div class="d-flex gap-2 flex-row-reverse">
-                            <a class="btn btn-primary btn-sm mt-3" sec:authorize="hasRole('HURXE001ZZ')" type="submit" id="modify" th:href="@{|/board/update/${board.seqId}|}">수정</a>
-                            <button class="btn btn-danger btn-sm mt-3" sec:authorize="hasRole('HURXE001ZZ')" th:attr="data-boardId=${board.seqId}" type="submit" id="delete">
+                            <a class="btn btn-primary btn-sm mt-3" sec:authorize="hasRole('EHRAD001')" type="submit" id="modify" th:href="@{|/board/update/${board.seqId}|}">수정</a>
+                            <button class="btn btn-danger btn-sm mt-3" sec:authorize="hasRole('EHRAD001')" th:attr="data-boardId=${board.seqId}" type="submit" id="delete">
                                 삭제
                             </button>
                             <a class="btn btn-secondary btn-sm mt-3" type="submit" id="list" th:href="@{/board/list}">목록</a>

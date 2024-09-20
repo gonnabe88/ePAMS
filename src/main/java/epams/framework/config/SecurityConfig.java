@@ -1,5 +1,18 @@
 package epams.framework.config;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationDetailsSource;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.WebAuthenticationDetails;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
 import epams.domain.com.login.repository.LoginRepository;
 import epams.framework.exception.CustomGeneralException;
 import epams.framework.security.CustomAuthenticationDetailsSource;
@@ -9,19 +22,6 @@ import epams.framework.security.CustomPasswordEncoder;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationDetailsSource;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.AuthenticationFailureHandler;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.security.web.authentication.WebAuthenticationDetails;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 /**
  * @author K140024
@@ -139,7 +139,7 @@ public class SecurityConfig{
 									"/images/**",
 									"/error/**"
 							).permitAll()  // 특정 URL은 모든 사용자에게 허용
-							.requestMatchers("/admin/**").hasRole("HURXE001ZZ")  // ADMIN 역할만 접근 허용
+							.requestMatchers("/admin/**").hasRole("EHRAD001")  // ADMIN 역할만 접근 허용
 							.anyRequest().authenticated()  // 나머지 요청은 인증 필요
 			)
 

@@ -1,7 +1,7 @@
 // 화면 전환 시 수행
 $(document).on("visibilitychange", function() {
     if(document.visibilityState === "visible") {
-        checkSession(); // 세션 유효성 체크
+        checkSessionValid(); // 세션 유효성 체크
     }
 });
 
@@ -12,6 +12,7 @@ document.getElementById('username').addEventListener('input', function(event) {
 
 // 화면 로드 시 수행
 $(function() {
+    console.log("@@");
     const webauthnData = $('#webauthnData');
     const webauthnYn = webauthnData.data('webauthn');
 

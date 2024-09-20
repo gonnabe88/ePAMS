@@ -15,6 +15,6 @@ $(document).ready(function() {
 
 $(document).on("visibilitychange", function() {
     if(document.visibilityState === "visible") {
-        checkSession();
+        checkSessionAuth();
     }
 });

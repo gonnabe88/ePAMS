@@ -56,4 +56,14 @@ public class LangService {
         	langRepository.delete(dto);
         }
     }
+
+        /**
+     * @author K140024
+     * @implNote 용어명을 ID로 찾기
+     * @since 2024-09-20
+     */
+    public String findLangById(final String code) {    	
+    	
+    	return langRepository.findLangById(code);
+    }
 }

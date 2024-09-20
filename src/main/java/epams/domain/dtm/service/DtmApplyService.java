@@ -1,11 +1,18 @@
 package epams.domain.dtm.service;
 
 import java.text.DecimalFormat;
+import java.time.LocalDate;
+import java.util.List;
 
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import epams.domain.com.admin.service.LangService;
 import epams.domain.com.apply.dto.ElaApplCDTO;
 import epams.domain.com.apply.dto.ElaApplTrCDTO;
 import epams.domain.com.apply.repository.ElaApplCRepository;
 import epams.domain.com.apply.repository.ElaApplTrCRepository;
+import epams.domain.com.constValue.ConstValueService;
 import epams.domain.dtm.dto.DtmApplCheckProcDTO;
 import epams.domain.dtm.dto.DtmApplElaCheckProcDTO;
 import epams.domain.dtm.dto.DtmApplStatusDTO;
@@ -14,19 +21,12 @@ import epams.domain.dtm.dto.DtmHisDTO;
 import epams.domain.dtm.dto.DtmKindSumDTO;
 import epams.domain.dtm.dto.DtmPromotionDTO;
 import epams.domain.dtm.dto.DtmSaveDTO;
-import epams.domain.dtm.repository.DtmHistoryRepository;
 import epams.domain.dtm.repository.DtmApplProcRepository;
 import epams.domain.dtm.repository.DtmCheckRepository;
+import epams.domain.dtm.repository.DtmHistoryRepository;
 import epams.framework.exception.CustomGeneralRuntimeException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.time.LocalDate;
-
-
 
 /***
  * @author 140024
@@ -75,15 +75,39 @@ public class DtmApplyService {
 
 	/***
 	 * @author 140024
+	 * @implNote Service 객체 생성
+	 * @since 2024-08-04
+	 */
+	private final ConstValueService constValueService;
+
+	/***
+	 * @author 140024
+	 * @implNote Service 객체 생성
+	 * @since 2024-08-04
+	 */
+	private final LangService langService;
+
+	/***
+	 * @author 140024
 	 * @implNote 근태신청 가능여부 체크로직
 	 * @since 2024-09-13
 	 */
-	public void check(final List<DtmHisDTO> hisDTOList, final DtmPromotionDTO proDTO, final DtmSaveDTO saveDTO, final DtmApplStatusDTO statusDTO) {
+	public boolean check(final List<DtmHisDTO> hisDTOList, final DtmPromotionDTO proDTO, final DtmSaveDTO saveDTO, final DtmApplStatusDTO statusDTO, final DtmKindSumDTO sumDTO) {
 
 		// 사용자 화면에 숫자 표시 소숫점이 있으면 실수로, 소숫점이 없으면 정수형으로 표기
 		final DecimalFormat decimalFormat = new DecimalFormat("0.#");		
-		final DtmKindSumDTO sumDTO = new DtmKindSumDTO();
+		
+		// 선연차 상수값 가져오기
+		final float advAnnualDay = Float.parseFloat(constValueService.findConstValue("DTM", "DTM_CREATE_C50")); // cons_cnt
+		final float advAnnualHour = Float.parseFloat(constValueService.findConstValue("DTM", "DTM_CREATE_C60")); // cons_hhcnt
 
+		Boolean adUseYn = false;
+		
+		/***
+		 * @author 140024
+		 * @implNote 신청된 근태 유형별 합계 시간 계산
+		 * @since 2024-09-13
+		 */
 		for(DtmHisDTO hisDTO : hisDTOList) {
 
 			// 근태 체크를 위한 input 데이터 세팅
@@ -94,38 +118,118 @@ public class DtmApplyService {
 				hisDTO.getEmpId() // 직원행번
 			);
 			
-			if(checkDTO.getAnnualCheckList().contains(hisDTO.getDtmReasonCd())) {
+			if(checkDTO.getAnnualCheckList().contains(hisDTO.getDtmReasonCd())) { // 연차
 				// 근태 체크 대상(연차)인 경우 데이터 가져오기
 				dtmCheckRepository.getNumberOfDay(checkDTO); //daycnt_day
 				dtmCheckRepository.getNumberOfHour(checkDTO); //daycnt
-
+				log.warn(checkDTO.toString());
 				// 합계 구하기
 				if(hisDTO.getStaYmd().getYear() == LocalDate.now().getYear()) {
-					sumDTO.thisAnnaulSum(checkDTO.getDayCount(), checkDTO.getHourCount()); // 올해 합계
+					sumDTO.thisAnnaulSum(checkDTO.getDayCount(), checkDTO.getHourCount()); // 올해 합계 (daycnt1)
 				} 
 				else {
-					sumDTO.nextAnnualSum(checkDTO.getDayCount(), checkDTO.getHourCount()); // 내년 합계
+					sumDTO.nextAnnualSum(checkDTO.getDayCount(), checkDTO.getHourCount()); // 내년 합계 (daycnt8)
 				}
 			}
-
-			if(sumDTO.getNextAnnualHourSum() > 0) {
-				// 내년 연차 사용 시
-				if(sumDTO.getNextAnnualHourSum() > statusDTO.getNextAnnualHourRemainCnt()) {
-					// 내년 연차가 부족할때	
-					throw new CustomGeneralRuntimeException(
-							"<p> 내년에 사용 가능한 연차가 부족합니다.</p>");	
-				}
-			}
-			else {
-				// 올해 연차 등 근태 사용 시
-
-			}
-			
-			
-
 		}
 
+		/***
+		 * @author 140024
+		 * @implNote 연차(당해/내년) 검증
+		 * @since 2024-09-13
+		 */
+		if(sumDTO.getNextAnnualHourSum() > 0) { // (내년 연차 사용 시) 신청된 근태의 일수의 합이 연차사용가능일수보다 크면 막음
+			if(sumDTO.getNextAnnualHourSum() > statusDTO.getNextAnnualHourRemainCnt()) { // 내년 연차가 부족할때					
+				throw new CustomGeneralRuntimeException(
+					langService.findLangById("DTM_ERROR_003") // 내년에 사용 가능한 연차가 부족합니다
+				);
+			}
+		}
+		else { // (올해 연차 등 근태 사용 시)
+			if(statusDTO.getAnnualHourTotalCnt() < advAnnualHour) { // hhCnt > cons_hhcnt 
+				if(sumDTO.getAnnualHourSum() > 0) { // 연차가 아닌경우는 체크하지않음 daycnt1
+					if((statusDTO.getAnnualHourUsedCnt() + sumDTO.getAnnualHourSum()) > (statusDTO.getAnnualHourTotalCnt() + statusDTO.getAdvAnnualHourNetUsedCnt())) { 
+						//사용한 연차수 + 신청한 연차수 > 연차발생일수 + 선사용가능연차일수
+						//usedHhCnt*1 + daycnt1*1 > hhCnt*1 + ad_use_hhcnt*1
+
+						float annualHourRemainCnt = 0f; // 연차 잔여시간
+						float advAnnualHourRemainCnt = 0f; // 선연차 잔여시간
+
+						if (statusDTO.getAnnualHourTotalCnt() <= statusDTO.getAnnualHourUsedCnt()) { //연차발생일수가 사용한 연차일수와 같거나 작은 경우
+							annualHourRemainCnt = 0f;
+							advAnnualHourRemainCnt = statusDTO.getAnnualHourTotalCnt() + statusDTO.getAdvAnnualHourNetUsedCnt() - statusDTO.getAnnualHourUsedCnt();
+						} else {
+							annualHourRemainCnt = statusDTO.getAnnualHourTotalCnt() - statusDTO.getAnnualHourUsedCnt();
+							advAnnualHourRemainCnt = statusDTO.getAdvAnnualHourNetUsedCnt();
+						}
+
+						
+						throw new CustomGeneralRuntimeException(
+							String.format(
+								langService.findLangById("DTM_ERROR_001"), // 연차 사용가능 시간이 부족합니다.
+								decimalFormat.format(annualHourRemainCnt), 
+								decimalFormat.format(advAnnualHourRemainCnt), 
+								decimalFormat.format(sumDTO.getAnnualHourSum())
+								));
+					} else if(statusDTO.getAnnualHourUsedCnt() + sumDTO.getAnnualHourSum() > statusDTO.getAnnualHourTotalCnt()){
+						// 사용한 연차수 + 신청한 연차수 > 연차발생일수 => 선사용연차 사용
+						// 현재 신청된 모든 건에 대해 ad_use_yn = Y 세팅
+						hisDTOList.forEach(hisDTO -> hisDTO.setAdUseYn("Y"));
+						adUseYn = true;
+					}
+				}
+			} else {
+				if(sumDTO.getAnnualHourSum() > statusDTO.getAnnualHourRemainCnt()) { // 신청한 연차 시간이 잔여 시간보다 큰 경우
+					// 연차 사용가능 시간이 부족합니다. 잔여시간(<<remain_cnt>>),신청시간(<<app_cnt>>)
+					throw new CustomGeneralRuntimeException(
+						String.format(
+							langService.findLangById("DTM_ERROR_004"), // 연차 사용가능 시간이 부족합니다
+							decimalFormat.format(statusDTO.getAnnualHourRemainCnt()),
+							decimalFormat.format(sumDTO.getAnnualHourSum())
+						));
+				}
+			}
+		}
+
+		/***
+		 * @author 140024
+		 * @implNote 연차촉진 검증
+		 * @since 2024-09-13
+		 */
+		if("Y".equals(proDTO.getPromotionYn())){
+			if(sumDTO.getAnnualHourSum() > 0) {
+				if("Y".equals(saveDTO.getSavableYn())) {  // 저축기간인 경우
+					if("Y".equals(saveDTO.getSaveYn())) { // 저축내역이 있을경우
+						if(sumDTO.getAnnualHourSum() + saveDTO.getSaveHourCnt() < proDTO.getFixedDutyAnnualHourTotalCnt()) {
+							throw new CustomGeneralRuntimeException(
+								String.format(
+									langService.findLangById("DTM_ERROR_002"), // 연차촉진시간(일수) 확인 후 연차휴가를 등록해주세요
+									decimalFormat.format(proDTO.getFixedDutyAnnualHourTotalCnt())
+								));
+						}
+					} else { 
+						if(sumDTO.getAnnualHourSum() < proDTO.getFixedDutyAnnualHourTotalCnt()) {
+							// 연차휴가 사용시간이 의무사용연차에 미달하는 경우
+							throw new CustomGeneralRuntimeException(
+								String.format(
+									langService.findLangById("DTM_ERROR_002"), // 연차촉진시간(일수) 확인 후 연차휴가를 등록해주세요
+									decimalFormat.format(proDTO.getFixedDutyAnnualHourTotalCnt())
+							));
+						}
+					}
+				} else {
+					if(sumDTO.getAnnualHourSum() < proDTO.getFixedDutyAnnualHourTotalCnt()) {
+						throw new CustomGeneralRuntimeException(
+							String.format(
+								langService.findLangById("DTM_ERROR_002"), // 연차촉진시간(일수) 확인 후 연차휴가를 등록해주세요
+								decimalFormat.format(proDTO.getFixedDutyAnnualHourTotalCnt())
+						));
+					}
+				}
+			}
+		}	
 		
+		return adUseYn;
 
 	}
 
@@ -135,7 +239,9 @@ public class DtmApplyService {
 	 * @since 2024-06-09
 	 */
 	@Transactional
-	public String insert(final DtmHisDTO dtmHisDTO) {
+	public String insert(final List<DtmHisDTO> dtmHisDTOList) {
+
+		for(DtmHisDTO dtmHisDTO : dtmHisDTOList) {
 		try {
 			// 사전검증 프로시저
 			final DtmApplCheckProcDTO preCheckProcDTO = new DtmApplCheckProcDTO(
@@ -196,7 +302,7 @@ public class DtmApplyService {
 				throw new CustomGeneralRuntimeException(postCheckProcDTO.getResultMsg());
 			}
 
-			return "신청이 성공적으로 처리되었습니다.";
+			
 
 		} catch (CustomGeneralRuntimeException e) {
 			log.error("[신청 불가] {}", e.getMessage());
@@ -205,5 +311,8 @@ public class DtmApplyService {
 			log.error("예기치 못한 오류 발생", e);
 			throw new CustomGeneralRuntimeException("신청 처리 중 오류가 발생했습니다. 관리자에게 문의하세요.");
 		}
+	}
+
+	return "신청이 성공적으로 처리되었습니다.";
 	}
 }

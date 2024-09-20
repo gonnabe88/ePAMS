@@ -39,8 +39,8 @@ public class DtmSaveService {
 		dtmSaveDTO.setEmpId(empId);
 		dtmSaveDTO.setStdYear(stdYear);		
 
-		dtmSaveRepo.getSaveStandard(dtmSaveDTO);
-		dtmSaveRepo.getDtmGetSavableDay(dtmSaveDTO);
+		dtmSaveRepo.getSaveStandard(dtmSaveDTO); // dtm010_03_03_p_08
+		dtmSaveRepo.getDtmGetSavableDay(dtmSaveDTO); // dtm010_03_03_p_09
 
 		return dtmSaveDTO;
 	}

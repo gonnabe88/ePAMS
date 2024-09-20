@@ -23,6 +23,13 @@ public class UserInfoDTO {
 
     /**
      * @author 140024
+     * @implNote 관리자 여부
+     * @since 2024-06-09
+     */
+    private Boolean isAdmin;
+
+    /**
+     * @author 140024
      * @implNote 직원명
      * @since 2024-06-09
      */

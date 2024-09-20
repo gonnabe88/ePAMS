@@ -23,7 +23,6 @@ const defaultColumns = [
         formatter: "rownum",
         headerSort: false,
         hozAlign: "center",
-        resizable: true,
         frozen: false,
         width: 3,
         headerFilter: "input"
@@ -53,6 +52,10 @@ function createTable(selectableRange, columns, url) {
         movableColumns: true,
         paginationCounter: "rows",
 
+        resizableRows: true,
+        resizableRowGuide: true,
+        resizableColumnGuid: true,
+
         //enable range selection
         selectableRange: selectableRange,
         selectableRangeColumns: true,
@@ -75,6 +78,7 @@ function createTable(selectableRange, columns, url) {
 
         columnDefaults: {
             headerHozAlign: "center",
+            resizable: true,
         },
         columns: finalColumns,
         sortOrderReverse: true,

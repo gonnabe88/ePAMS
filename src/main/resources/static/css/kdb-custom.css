@@ -691,31 +691,167 @@ mark {
 
 /************************* 근태조회(dtmCalendar) FULLCALENDAR 끝 **************************/
 
-/*근태 신청화면 card*/
-.dtmReg .container {
+    /************************* 근태조회(dtmCalendar) FULLCALENDAR 시작 **************************/
+
+/*이벤트 아이템(근태목록) 행간 조정*/
+.dtmList .event-item {
+    padding-bottom: 10px;
+}
+
+/*이벤트 아이템(근태목록) 행간 조정(마지막이 아닌 경우)*/
+.dtmList .event-item:not(:last-child) {
+    border-bottom: 1px solid #E4F0FF; /* 행 사이에 경계선 설정 */
+    margin-bottom: 10px;
+    padding-top: 10px;
+}
+
+/*이벤트 아이템(근태목록) 행간 조정(마지막인 경우)*/
+.dtmList .event-item:is(:last-child) {
+    padding-top: 10px;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+/* 달력 이전/다음 전환 시 애니메이션 Fade-In 정의 */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* 달력 이전/다음 전환 시 애니메이션 Fade-In 정의 */
+.dtmList .fc-fade {
+    animation: fadeIn 0.5s ease-in-out;
+    opacity: 1;
+}
+
+/* 오늘 버튼 비활성화 시 기본으로 안보이게 설정*/
+.dtmList .btn.disabled,
+.dtmList fieldset:disabled .btn {
+    visibility: hidden;
+}
+
+/* 달력 행 사이에 경계선 설정 */
+.dtmList tbody tr {
+    border-bottom: 1px solid #E4F0FF;
+}
+
+/* 달력 마지막 행에는 경계선 제거 */
+.dtmList tbody tr:last-child {
+    border-bottom: none;
+}
+
+/*달력 크기 및 여백 조정*/
+.dtmList .fc .fc-toolbar.fc-header-toolbar {
+    margin-bottom: 1rem;
+}
+.dtmList .card-body {
+    max-width: 100% !important;
+    padding: 1rem 1px 1px;
+}
+.dtmList .fc-scrollgrid-sync-table,
+.dtmList .fc-daygrid-body
+{
+    width: 100% !important;
+}
+
+/*a 링크 속성 제거 (색상 및 밑줄 제거)*/
+.dtmList a.fc-daygrid-day-number,
+.dtmList a.fc-daygrid-day-number div {
+    color: inherit !important; /* 상위 요소의 색상을 따르도록 설정 */
+    text-decoration: none !important; /* 밑줄 제거 */
+}
+
+/*HEADER Next, 월, PREV 버튼간 간격 이슈 해결*/
+.dtmList .fc-direction-ltr .fc-toolbar > * > :not(:first-child) {
+    margin: 0;
+}
+
+/*HEADER 스타일 설정*/
+.dtmList .fc-toolbar-chunk {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/*경계선 제거*/
+.dtmList .fc table, .dtmList .fc td, .dtmList .fc th {
+    width: 100%  !important;
+    border: none !important;
+}
+
+/* 달력 내부 컨텐츠 높이를 화면의 60%로 설정*/
+.dtmList .fc tbody {
+    height: 50vh;
+}
+
+/* 날짜 박스 불필요한 여백 제거 */
+.dtmList .fc .fc-daygrid-day-number {
+    padding: 0;
+}
+
+/*이벤트 박스 스타일 조정*/
+.dtmList .fc .fc-daygrid-day-events {
+    width: 100%;
+    margin-bottom: 0;
+}
+
+/* 이벤트 박스 스타일 조정 */
+.dtmList .fc .fc-event {
+    border: 1px solid white;
+    width: 100%;
+    overflow: hidden; /* 넘치는 텍스트는 숨김 */
+    position: relative;
+    white-space: nowrap; /* 텍스트를 한 줄로 설정 */
+}
+
+/* 이벤트 컨테이너 스타일 */
+.dtmList .fc .fc-event-title-container {
     display: flex;
     justify-content: center;
-    align-items: center; /* 수직 중앙 정렬 추가 */
-    flex-direction: column; /* 수직 정렬 */
+    align-items: center;
+    height: 100%;
 }
 
-.dtmReg .main-content {
-    width: 100%;
-    padding: 1rem;
+/*이벤트 배경색*/
+.dtmList .fc-h-event {
+    background-color: #d63384; /* 변수로 배경색 적용 */
+    border: 1px solid white; /* 변수로 테두리 색상 적용 */
+    display: block;
 }
 
-.dtmReg .page-heading {
+/* 이벤트 타이틀 크기 조정 */
+.dtmList .fc .fc-event-title {
+    font-size: clamp(0.6em, 3vw, 1em);
+    white-space: nowrap; /* 텍스트가 한 줄로 표시되도록 설정 */
+    display: inline-block;
+    overflow: hidden;
+    transition: transform 0.5s ease; /* 부드러운 전환 효과 추가 */
+}
+
+/* 날짜 선택 시 스타일 */
+.dtmList .fc-day.selected-date .fc-daygrid-day-number {
+    background-color: #435ebe;
+    color: white !important;
+    border-radius: 30%;
+    width: 1.7em;
+    height: 1.5em;
     display: flex;
-    justify-content: start; /* 왼쪽 정렬 */
-    width: 90%;
-    margin: 0 auto; /* 중앙 정렬 */
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
 }
 
-.dtmReg .card {
-    width: 90%;
-    padding: 1rem;
-    margin: 0 auto; /* 부모 요소에서 중앙 정렬 */
-    display: block; /* 필요시 flex에서 block으로 변경 */
+/* 제목 크기 및 날짜 및 이벤트 제목 크기도 동적으로 조절 */
+.dtmList .fc .fc-toolbar h2 {
+    font-size: clamp(1em, 3vw, 1.5em); /* 제목 크기 조정 */
+    min-width: clamp(5em, 3vw, 7.5em);
+    text-align: center;
+    margin-right: 0.5rem;
+    margin-left: 0.5rem;
 }
 
 /************************ 근태 신청화면 full calender 시작 ************************/
@@ -952,8 +1088,8 @@ mark {
 
 /*신청하기 버튼*/
 .btn-submit{
-    background-color: #435ebe;
-    color: white;
+    background-color: #435ebe !important;;
+    color: white !important;;
 }
 
 .date-input-container {
@@ -985,11 +1121,13 @@ label {
     display: flex;
     justify-content: space-between;
     height: 38px;
-}
+}zz
 
-/*.date-input input[type="date"] {*/
-/*    width: 100%;*/
-/*}*/
+#dateWarning {
+    display: none; /* 기본적으로는 숨긴 상태 */
+    color: red;
+    align-items: center; /* 입력 필드 수직 중앙 정렬 */
+}
 
 /*근태신청화면 콤보*/
 

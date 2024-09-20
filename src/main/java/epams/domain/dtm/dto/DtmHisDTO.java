@@ -37,6 +37,14 @@ public class DtmHisDTO extends DtmHisVO {
      * @implNote 화면에 표시할 근태명
      * @since 2024-06-09
      */
+    private String dtmRange;
+
+
+    /***
+     * @author 140024
+     * @implNote 화면에 표시할 근태명
+     * @since 2024-06-09
+     */
     private String dtmDispName;
 
     /***

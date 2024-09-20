@@ -42,7 +42,8 @@
 					<!-- 캘린더 시작 -->
 					<div class="card">
 						<div class="card-body">
-							<div id="dtmCalendar" th:attr="data-events=${dtmHis}"></div>
+							<div id="dtmCalendar" 
+								th:attr="data-events=${dtmHis}, data-holiDayList=${holiDayList}"></div>
 						</div>
 					</div>
 					<!-- 캘린더 끝 -->

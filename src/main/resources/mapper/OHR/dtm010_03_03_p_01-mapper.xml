@@ -7,36 +7,54 @@
         <!-- TABLE Result Map 정의 -->
         <resultMap id="DtmApplStatusMap" type="dtmApplStatusDTO">
                 <result property="empId" column="emp_id"/>
-                <result property="empId" column="emp_id"/>
-                <result property="empId" column="emp_id"/>
-                <result property="empId" column="emp_id"/>
+                <result property="empNo" column="emp_no"/>
+                <result property="empNm" column="emp_nm"/>
+                <result property="gradeNm" column="pos_grd_nm"/>
+                <result property="gradeCd" column="pos_grd_cd"/>
+                <result property="deptName" column="org_nm"/>
+                <result property="positionName" column="pos_nm"/>
 
-                <result property="username" column="EMP_ID"/>
-                <result property="empNo" column="EMP_NO"/>
-                <result property="realname" column="EMP_NM"/>
-                <result property="deptName" column="ORG_NM"/>
-                <result property="positionName" column="POS_GRD_NM"/>
-                <result property="dutyName" column="DUTY_NM"/>
+                <result property="hireYmd" column="hire_ymd"/>
+                <result property="encryptedCtzNo" column="ctz_no"/>
+                <result property="phoneNo" column="telno"/>
 
-                <result property="annualDayTotalCnt" column="TOT_YY"/>
-                <result property="annualHourTotalCnt" column="TOT_HH"/>
-                <result property="annualDayUsedCnt" column="TOT_USED"/>
-                <result property="annualHourUsedCnt" column="TOT_USED_HH"/>
-                <result property="annualDayRemainCnt" column="TOT_REMAIN"/>
-                <result property="annualHourRemainCnt" column="TOT_REMAIN_HH"/>
+                <result property="annualDayRemainDayCnt" column="remain_cnt"/>
+                <result property="selfDevTrainingDayCnt" column="duty_cnt"/>
+                <result property="sabbaticalYear10DayCnt" column="remain_cnt1"/>
+                <result property="sabbaticalYear20DayCnt" column="remain_cnt2"/>
+                <result property="sabbaticalYear30DayCnt" column="remain_cnt3"/>
+                <result property="mileageDayCnt" column="remain_cnt4"/>
+                <result property="longSerivceDayCnt" column="remain_cnt5"/>
+                <result property="rewardDayCnt" column="remain_cnt6"/>
+                <result property="rewardHourCnt" column="remain_cnt7"/>
 
-                <result property="dutyAnnualDayTotalCnt" column="ANNUAL_CNT"/>
-                <result property="dutyAnnualHourTotalCnt" column="ANNUAL_CNT_HH"/>
+                <result property="nextAnnualDayRemainCnt" column="NEXT_REMAIN_CNT"/>
+                <result property="nextAnnualHourRemainCnt" column="NEXT_REMAIN_HHCNT"/>
 
-                <result property="fixedDutyAnnualDayTotalCnt" column="REMAIN_CNT2"/>
-                <result property="fixedDutyAnnualHourTotalCnt" column="REMAIN_CNT2_HH"/>
+                <result property="annualDayTotalCnt" column="YYCNT"/>
+                <result property="annualDayUsedCnt" column="USED_CNT"/>
 
-                <result property="todayYmd" column="NOW_DATE"/>
-                <result property="headHrDept" column="CHEIF_EMP_NM"/>
-                <result property="dtmYmRestId" column="DTM_YM_REST_ID"/>
+                <result property="advAnnualDayNetUsedCnt" column="AD_USE_YYCNT"/>
+                <result property="advAnnualDayTotalUsedCnt" column="AD_USE_YYCNT2"/>
+                <result property="advAnnualUsedYn" column="AD_USE_YN"/>
+                <result property="advAnnualHourNetUsedCnt" column="AD_USE_HHCNT"/>
+                <result property="advAnnualHourTotalUsedCnt" column="AD_USE_HHCNT2"/>
 
-                <result property="ingRevokeDayCnt" column="YYCNT_DEL_USING_CNT"/>
-                <result property="ingRevokeHourCnt" column="HHCNT_DEL_USING_CNT"/>
+                <result property="saveDayCnt" column="SAVE_YYCNT"/>
+                <result property="saveHourCnt" column="SAVE_HHCNT"/>
+
+                <result property="annualHourRemainCnt" column="remain_hhcnt"/>
+                <result property="annualHourTotalCnt" column="HHCNT"/>
+                <result property="annualHourUsedCnt" column="USED_HHCNT"/>
+
+                <result property="annualHourRemainCntStr" column="remain_cnt_val1"/>
+                <result property="annualDayRemainCntStr" column="remain_cnt_val2"/>
+                <result property="saveHourCntStr" column="save_cnt_val1"/>
+                <result property="saveDayCntStr" column="save_cnt_val2"/>
+                <result property="advAnnualHourTotalUsedCntStr" column="ad_use_cnt2_val1"/>
+                <result property="advAnnualDayTotalUsedCntStr" column="ad_use_cnt2_val2"/>
+                <result property="rewardHourCntStr" column="remain_cnt6_val1"/>
+                <result property="rewardDayCntStr" column="remain_cnt6_val2"/>
         </resultMap>
 
         <select id="getDtmApplStatus" parameterType="dtmApplStatusDTO" resultMap="DtmApplStatusMap">

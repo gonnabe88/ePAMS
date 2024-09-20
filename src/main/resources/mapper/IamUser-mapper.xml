@@ -91,6 +91,7 @@
                A.INLE_NO
         FROM OEHR.THURXE_CUSRLI A
         INNER JOIN OEHR.THURXE_CORGLI B ON A.BBR_C = B.PRLM_OGZ_C_CONE
+        ORDER BY A.ENO ASC
     </select>
 
     <!-- ID/PW 일치 사용자 조회 -->
@@ -122,7 +123,7 @@
                A.TEM_NM,
                A.PT_C_NM,
                A.DTS_DTL_CONE,
-               '01064624479'
+               A.INLE_NO
         --A.INLE_NO
         FROM OEHR.THURXE_CUSRLI A
                  INNER JOIN OEHR.THURXE_CORGLI B ON A.BBR_C = B.PRLM_OGZ_C_CONE

@@ -67,5 +67,10 @@ public class LangRepository {
     public void update(final LangDTO langDTO) {
         sql.update("Lang.update", langDTO);
     }
+
+	public String findLangById(final String code) {    	
+    	
+    	return sql.selectOne("Lang.findLangById", code);
+    }
     
 }

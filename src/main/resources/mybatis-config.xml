@@ -36,6 +36,12 @@
         <!-- [COM] 화면용어(코드) DTO -->
         <typeAlias type="epams.domain.com.commonCode.CommonCodeDTO" alias="commonCodeDTO"></typeAlias>
 
+        <!-- [COM] 상수값관리 DTO -->
+        <typeAlias type="epams.domain.com.constValue.ConstValueDTO" alias="constValueDTO"></typeAlias>
+
+        <!-- [COM] 휴일 DTO -->
+        <typeAlias type="epams.domain.com.holiday.HolidayDTO" alias="holidayDTO"></typeAlias>
+
         <!-- [COM] 신청서 DTO -->
         <typeAlias type="epams.domain.com.apply.dto.ElaApplCDTO" alias="ElaApplCDTO"></typeAlias>
         <typeAlias type="epams.domain.com.apply.dto.ElaApplTrCDTO" alias="ElaApplTrCDTO"></typeAlias>

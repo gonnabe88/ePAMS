@@ -24,6 +24,13 @@
         ORDER BY FST_ENR_DTM DESC
     </select>
 
+    <!-- 특정 ID에 해당하는 용어명 조회 -->
+    <select id="findLangById" parameterType="String" resultType="String">
+        SELECT SRE_VCB_NM FROM OEHR.THURXE_CCODEM
+        WHERE SRE_VCB_CDVA_ID = #{SRE_VCB_CDVA_ID}
+        AND DEL_YN = 'N'
+    </select>
+
     <!-- 특정 ID 데이터 조회 -->
     <select id="findById" parameterType="String" resultMap="langMap">
         SELECT * FROM OEHR.THURXE_CCODEM

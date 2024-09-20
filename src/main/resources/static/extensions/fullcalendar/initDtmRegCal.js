@@ -1,12 +1,12 @@
 document.addEventListener('DOMContentLoaded', function () {
     var calendarEl = document.getElementById('calender');
     var selectedDates = [];
-    var selectOneDate = new Date();
-    var selectedDateStr = null;
-    var currentPage = window.location.pathname;
 
     // 페이지 로드 시 날짜 입력 필드에 오늘 날짜 설정
-    updateDates(new Date(), new Date());
+    var tod=new Date()
+    updateDates(tod, tod);
+
+    const holidays = ['2024-09-16', '2024-09-17', '2024-09-18']; // 추가할 휴일 날짜
 
     const holidays = ['2024-09-16', '2024-09-17', '2024-09-18']; // 추가할 휴일 날짜
 
@@ -90,6 +90,22 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('endDate').value = formatDate(end);
     }
 
+    document.getElementById('startDate').addEventListener('change', updateCalendar);
+    document.getElementById('endDate').addEventListener('change', updateCalendar);
+
+    function updateCalendar() {
+        var startDate = document.getElementById('startDate').value;
+        var endDate = document.getElementById('endDate').value;
+
+        if (startDate && endDate) {
+            var end = new Date(endDate);
+            end.setDate(end.getDate());
+
+            addDateRangeHighlight(new Date(startDate), end);
+            checkDateValidity(new Date(startDate), end)
+        }
+    }
+
     function setStartAndEnd(date1, date2) {
         if (date1 < date2) {
             startDate = date1;
@@ -100,12 +116,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         updateDates(startDate, endDate);
         addDateRangeHighlight(startDate, endDate);
-    }
-
-    function addOneDay(date) {
-        var newDate = new Date(date);
-        newDate.setDate(newDate.getDate() + 1); // 하루 더하기
-        return newDate;
+        checkDateValidity(startDate, endDate);
     }
 
     function addDateRangeHighlight(start, end) {

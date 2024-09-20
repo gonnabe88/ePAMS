@@ -4,16 +4,22 @@ import java.util.Enumeration;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import epams.framework.exception.CustomGeneralRuntimeException;
 import jakarta.servlet.http.HttpSession;
+import lombok.extern.slf4j.Slf4j;
 
-
+@Slf4j
 @RestController
+@RequestMapping("/api/session")
 public class SessionRestController {
     
     /**
@@ -32,26 +38,37 @@ public class SessionRestController {
         return result;
     }    
 
-    @GetMapping("/check-session")
-    public Map<String, Object> checkSession(HttpSession session) {
+    @GetMapping("/check-session-auth")
+    public ResponseEntity<Map<String, Object>> checkSessionAuth(HttpSession session) {
 
         Map<String, Object> response = new ConcurrentHashMap<>();
 
-        if (authentication().getName() != null) {
+        log.warn(session.getAttributeNames().toString());
+
+        try {
+            if (authentication().getName() != null) {
+                response.put("sessionValid", true);
+            }
+            else {
+                response.put("sessionValid", false);
+            }
+        } catch(Exception e) {
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        }       
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }    
+
+    @GetMapping("/check-session-valid")
+    public ResponseEntity<Map<String, Object>> checkSessionValid(HttpSession session) {
+
+        Map<String, Object> response = new ConcurrentHashMap<>();
+        if(session == null || session.isNew()){
+            response.put("sessionValid", false);
+        } else {
             response.put("sessionValid", true);
         }
-        else {
-            response.put("sessionValid", false);
-        }
 
-
-        // Enumeration<String> attr = session.getAttributeNames();
-        // while (attr.hasMoreElements()) {
-        //     String attrName = attr.nextElement();
-        //     Object attrVal = session.getAttribute(attrName);
-        //     response.put(attrName, attrVal);
-        // }
-
-        return response;
-    }    
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }  
 }

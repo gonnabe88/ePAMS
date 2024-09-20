@@ -37,4 +37,5 @@ public class HtmlLangDetailService {
     	return htmlLangMapRepo.findAllByHtml(html).stream()
                 .collect(Collectors.toMap(HtmlLangDetailDTO::getLang, HtmlLangDetailDTO::getLangName));
     }
+
 }

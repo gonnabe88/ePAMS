@@ -30,10 +30,18 @@ public class DtmApplStatusRepository {
      * @param DtmSaveDTO 연차저축 DTO
      */
     public void getApplStatus(final DtmApplStatusDTO dto) {
+
     	final DtmApplStatusDTO res = sql.selectOne("DtmApplStatus.getDtmApplStatus", dto);
-        if(res != null) {
-            dto.setNextAnnualHourRemainCnt(res.getNextAnnualHourRemainCnt()); //dtm_save_yn
-            dto.setNextAnnualDayRemainCnt(res.getNextAnnualDayRemainCnt()); //dtm_save_rate
+        
+        if(res != null) {            
+            dto.setNextAnnualHourRemainCnt(res.getNextAnnualHourRemainCnt()); //NEXT_REMAIN_CNT
+            dto.setNextAnnualDayRemainCnt(res.getNextAnnualDayRemainCnt()); //NEXT_REMAIN_HHCNT
+            dto.setAnnualHourTotalCnt(res.getAnnualHourTotalCnt()); //HHCNT
+            dto.setAnnualDayTotalCnt(res.getAnnualDayTotalCnt());
+            dto.setAnnualHourUsedCnt(res.getAnnualHourUsedCnt()); //USED_HHCNT
+            dto.setAnnualDayUsedCnt(res.getAnnualDayUsedCnt()); 
+            dto.setAdvAnnualHourNetUsedCnt(res.getAdvAnnualHourNetUsedCnt()); //AD_USE_HHCNT
+            dto.setAnnualHourRemainCnt(res.getAnnualHourRemainCnt()); //remain_hhcnt
         }
     }
 

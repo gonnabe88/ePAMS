@@ -61,7 +61,7 @@
         SELECT COUNT(*) FROM OHR.DTM_HIS WHERE EMP_ID = #{empId}
     </select>
 
-    <!-- 2년 데이터 조회 -->
+    <!-- 2년 데이터 조회 (캘린더) -->
     <select id="findByYears" parameterType="dtmSearchDTO" resultMap="dtmCalendarMap">
         SELECT
         d.sta_ymd AS STA_YMD,
@@ -77,12 +77,7 @@
         WHERE
         d.EMP_ID = #{empId}
         AND (d.MODI_TYPE != 'D' OR d.MODI_TYPE IS NULL)
-        <if test="statCdList != null and statCdList.size() > 0">
-            AND d.STAT_CD IN
-            <foreach item="item" index="index" collection="statCdList" open="(" separator="," close=")">
-                #{item}
-            </foreach>
-        </if>
+        AND (d.STAT_CD LIKE '12%' OR d.STAT_CD = '132')
         <if test="dtmKindCd != null and dtmKindCd != ''">
             AND d.DTM_KIND_CD = #{dtmKindCd}
         </if>

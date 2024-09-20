@@ -39,7 +39,7 @@ public class DtmApplStatusService {
 		dtmApplStatusDTO.setEmpId(empId);
 		dtmApplStatusDTO.setStdYear(stdYear);		
 
-		dtmApplStatusRepo.getApplStatus(dtmApplStatusDTO);
+		dtmApplStatusRepo.getApplStatus(dtmApplStatusDTO); // dtm010_03_03_p_08
 
 		return dtmApplStatusDTO;
 	}

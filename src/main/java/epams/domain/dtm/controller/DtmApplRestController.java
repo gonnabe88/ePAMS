@@ -1,22 +1,34 @@
 package epams.domain.dtm.controller;
 
-import epams.domain.dtm.service.DtmApplyService;
-import epams.domain.dtm.dto.DtmHisDTO;
-import epams.framework.exception.CustomGeneralRuntimeException;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.io.IOException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import epams.domain.dtm.dto.DtmApplStatusDTO;
+import epams.domain.dtm.dto.DtmHisDTO;
+import epams.domain.dtm.dto.DtmKindSumDTO;
+import epams.domain.dtm.dto.DtmPromotionDTO;
+import epams.domain.dtm.dto.DtmSaveDTO;
+import epams.domain.dtm.service.DtmApplStatusService;
+import epams.domain.dtm.service.DtmApplyService;
+import epams.domain.dtm.service.DtmPromotionService;
+import epams.domain.dtm.service.DtmSaveService;
+import epams.framework.exception.CustomGeneralRuntimeException;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 /***
  * @author 140024
@@ -35,6 +47,29 @@ public class DtmApplRestController {
      * @since 2024-06-09
      */
     private final DtmApplyService dtmApplyService;
+
+    
+    /**
+     * @author K140024
+     * @implNote 연차촉진 서비스 주입
+     * @since 2024-06-11
+     */
+    private final DtmPromotionService dtmPromotionService;
+
+    /**
+     * @author K140024
+     * @implNote 연차저축 서비스 주입
+     * @since 2024-09-13
+     */
+    private final DtmSaveService dtmSaveService;
+
+    /**
+     * @author K140024
+     * @implNote 연차저축 서비스 주입
+     * @since 2024-09-13
+     */
+    private final DtmApplStatusService dtmApplStatusService;
+
     /**
      * @author K140024
      * @implNote 현재 인증된 사용자 정보를 가져오는 메소드
@@ -53,17 +88,72 @@ public class DtmApplRestController {
 
     /***
      * @author 140024
-     * @implNote 모든 멤버 데이터를 검색
-     * @since 2024-06-09
+     * @implNote 근태 신청내역 검사
+     * @since 2024-09-20
      */
-    @PostMapping("/appl")
-    public ResponseEntity<Map<String, String>> applyDtm(@RequestBody final DtmHisDTO dto) throws IOException {
+    @PostMapping("/check")
+    public ResponseEntity<Map<String, Object>> checkDtm(@RequestBody final DtmHisDTO dto) throws IOException {
+        
         // 사용자 ID 설정
         dto.setEmpId(Long.parseLong(authentication().getName().replace('K', '7')));
         dto.setModUserId(Long.parseLong(authentication().getName().replace('K', '7')));
 
-        // 날짜를 YYYY-MM-DD 형식으로 포맷팅
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        // 현재 기준 년도(YYYY) 세팅 ex)2024 
+        LocalDate currenDate = LocalDate.now();
+        String thisYear = String.valueOf(currenDate.getYear());
+
+        // 응답 메시지 설정
+        Map<String, Object> response = new ConcurrentHashMap<>();
+
+        try {
+            // 근태 유형별 합계 시간 데이터 저장용 객체 생성
+            final DtmKindSumDTO sumDTO = new DtmKindSumDTO();
+
+            // 연차촉진 관련 데이터 가져오기 (dtm010_03_03_p_07, dtm010_23_03_p_01, dtm010_23_03_p_04)
+            final DtmPromotionDTO dtmPromotionDTO = dtmPromotionService.getDtmPromotionYnCheckData(dto.getEmpId(), thisYear);
+
+            // 연차저축 관련 데이터 가져오기 (dtm010_03_03_p_08, dtm010_03_03_p_09)
+            final DtmSaveDTO dtmSaveDTO = dtmSaveService.getDtmSaveCheckData(dto.getEmpId(), thisYear);
+
+            // 근태신청 관련 데이터 가져오기 (dtm010_03_03_p_08)
+            final DtmApplStatusDTO statusDTO = dtmApplStatusService.getApplStatus(dto.getEmpId(), thisYear);
+
+            // 근태 리스트 생성 (@TODO 나중에 기본적으로 DTO List를 받으면 지워도 됨)
+            List<DtmHisDTO> dtmHisDTOList = new ArrayList<>();
+            dtmHisDTOList.add(dto);
+
+            // 근태 체크 로직 수행
+            Boolean adUseYn = dtmApplyService.check(dtmHisDTOList, dtmPromotionDTO, dtmSaveDTO, statusDTO, sumDTO);
+
+            // 서비스 호출 및 결과 메시지 설정
+            response.put("dtmHisDTOList", dtmHisDTOList);
+            response.put("adUseYn", adUseYn);
+            response.put("annualSum", sumDTO.getAnnualDaySum()); // 신청시간
+            response.put("annualUsedCnt", statusDTO.getAnnualDayUsedCnt()); // 기 사용시간
+            response.put("annualTotalCnt", statusDTO.getAnnualDayTotalCnt()); // 총 보유시간
+            return new ResponseEntity<>(response, HttpStatus.CREATED);
+
+        } catch (CustomGeneralRuntimeException e) {
+            // 비즈니스 로직 오류 처리
+            response.put("error", e.getMessage());
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+
+        } catch (Exception e) {
+            // 일반 예외 처리
+            e.printStackTrace();
+            response.put("error", "서버 내부 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.");
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+    /***
+     * @author 140024
+     * @implNote 근태 신청
+     * @since 2024-06-09
+     */
+    @PostMapping("/appl")
+    public ResponseEntity<Map<String, String>> applyDtm(@RequestBody final List<DtmHisDTO> dto) throws IOException {    
 
         // 응답 메시지 설정
         Map<String, String> response = new ConcurrentHashMap<>();
@@ -72,9 +162,6 @@ public class DtmApplRestController {
             // 서비스 호출 및 결과 메시지 설정
             String resultMessage = dtmApplyService.insert(dto);
             response.put("message", resultMessage);
-            response.put("dtmDispName", dto.getDtmDispName());
-            response.put("staYmd",  dto.getStaYmd().toLocalDate().format(formatter));
-            response.put("endYmd",  dto.getEndYmd().toLocalDate().format(formatter));
             return new ResponseEntity<>(response, HttpStatus.CREATED);
 
         } catch (CustomGeneralRuntimeException e) {

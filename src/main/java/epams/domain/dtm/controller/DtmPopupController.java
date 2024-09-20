@@ -14,6 +14,8 @@ import org.springframework.session.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -21,6 +23,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -143,6 +146,38 @@ public class DtmPopupController<S extends Session> {
 
         model.addAttribute("nowDate", dateRange);
         model.addAttribute("dtmDispName", dtmDispName);
+
+        return VIEW; // View 이름 반환
+    }
+
+    @PostMapping("/dtmApplListPopup")
+    public String dtmListApplPopup(@RequestBody List<DtmHisDTO> dtmHisDTOList, final Model model) {
+
+        final String VIEW = "dtm/dtmApplListPopup";
+
+        // 기타 필요한 모델 속성 설정
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        DateTimeFormatter dayOfWeekFormatter = DateTimeFormatter.ofPattern("E", Locale.KOREAN);
+        LocalDateTime staDay ;
+        LocalDateTime endDay ;
+        String dateRange; 
+
+        for(DtmHisDTO dto : dtmHisDTOList) {
+            staDay = dto.getStaYmd();
+            endDay = dto.getEndYmd();
+            if (staDay.isEqual(endDay)) {
+                // 시작일과 종료일이 같은 경우
+                dateRange = staDay.format(dateFormatter) + "(" + staDay.format(dayOfWeekFormatter) + ")";
+            } else {
+                // 시작일과 종료일이 다른 경우
+                String formattedStaYmd = staDay.format(dateFormatter) + "(" + staDay.format(dayOfWeekFormatter) + ")";
+                String formattedEndYmd = endDay.format(dateFormatter) + "(" + endDay.format(dayOfWeekFormatter) + ")";
+                dateRange = formattedStaYmd + " ~ " + formattedEndYmd;
+            }
+            dto.setDtmRange(dateRange);
+        }
+
+        model.addAttribute("dtmHisDTOList", dtmHisDTOList);
 
         return VIEW; // View 이름 반환
     }

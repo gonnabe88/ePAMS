@@ -2,6 +2,7 @@ package epams.domain.dtm.controller;
 
 
 import epams.domain.com.admin.service.HtmlLangDetailService;
+import epams.domain.com.holiday.HolidayService;
 import epams.domain.dtm.dto.*;
 import epams.domain.dtm.service.DtmAnnualStatusService;
 import epams.domain.dtm.service.DtmHistoryService;
@@ -70,6 +71,12 @@ public class DtmHistoryController<S extends Session> {
      * @since 2024-06-11
      */
     private final DtmAnnualStatusService dtmAnnualStatusService;
+    /***
+     * @author 140024
+     * @implNote 휴일 서비스
+     * @since 2024-06-09
+     */
+    private final HolidayService holidayService;
 
     /**
      * @author K140024
@@ -104,6 +111,9 @@ public class DtmHistoryController<S extends Session> {
         // 근태목록
         final List<DtmCalendarDTO> dtmCalDTOList = dtmHisService.findByYears(searchDTO);
 
+        // 휴일목록
+        final List<String> holiDayList = holidayService.findholiYmd();
+
         // Jackson을 사용하여 List<DtmCalendarDTO>를 JSON으로 변환
         ObjectMapper objectMapper = new ObjectMapper();
         try {
@@ -112,6 +122,7 @@ public class DtmHistoryController<S extends Session> {
             objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
             String dtmHisJson = objectMapper.writeValueAsString(dtmCalDTOList);
             model.addAttribute("dtmHis", dtmHisJson);
+            model.addAttribute("holiDayList", holiDayList);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }

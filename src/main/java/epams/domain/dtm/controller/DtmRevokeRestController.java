@@ -124,7 +124,6 @@ public class DtmRevokeRestController<S extends Session> {
 
         // 응답 메시지 설정
         Map<String, String> response = new ConcurrentHashMap<>();        
-        log.warn(dto.toString());
 
         try {
             // 연차촉진 관련 데이터 가져오기

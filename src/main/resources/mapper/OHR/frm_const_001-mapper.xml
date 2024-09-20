@@ -1,0 +1,15 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- frm_const_001(상수값 조회)-->
+<mapper namespace="ConstValue">
+        <!-- TABLE Result Map 정의 -->
+        <!-- <resultMap id="ConstValueMap" type="constValueDTO">
+                <result property="constValue" column="root_menu"/>
+        </resultMap> -->
+
+        <select id="findConstValue" parameterType="constValueDTO" resultType="String">
+                select f_frm_const_value_c(#{companyCd}, #{unitCd}, #{constKind}, xf_nvl_d(#{baseYmd},SYSDATE)) root_menu from dual
+        </select>
+</mapper>

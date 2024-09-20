@@ -1,0 +1,31 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Holiday">
+
+    <!-- Result Map 정의 -->
+    <resultMap id="holidayMap" type="holidayDTO">
+        <result property="holiYmd" column="YMD"/>
+        <result property="holiDay" column="WEEK"/>
+        <result property="holiNm" column="NOTE"/>
+    </resultMap>
+
+    <!-- 모든 휴일 데이터 조회 -->
+    <select id="findAll" resultMap="holidayMap">
+        SELECT * 
+        FROM OHR.HPS_CALENDAR CAL
+        WHERE MINUS_DD = '0'
+            AND (TO_CHAR(CAL.YMD,'YYYY') = TO_CHAR(#{staYmd},'YYYY') OR TO_CHAR(CAL.YMD,'YYYY') = TO_CHAR(#{endYmd},'YYYY'))
+    </select>
+
+    <!-- 휴일 날짜 데이터 조회 -->
+    <select id="findholiYmd" resultMap="holidayMap">
+        SELECT CAL.YMD 
+        FROM OHR.HPS_CALENDAR CAL
+        WHERE MINUS_DD = '0'
+            AND (TO_CHAR(CAL.YMD,'YYYY') = EXTRACT(YEAR FROM ADD_MONTHS(SYSDATE, -12)) 
+            OR TO_CHAR(CAL.YMD,'YYYY') = EXTRACT(YEAR FROM SYSDATE)
+            OR TO_CHAR(CAL.YMD,'YYYY') = EXTRACT(YEAR FROM ADD_MONTHS(SYSDATE, 12)))
+    </select>
+</mapper>

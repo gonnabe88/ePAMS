@@ -13,7 +13,7 @@ $(document).ready(function () {
         return {
             title: event.title,
             start: event.start,
-            end: event.end,
+            end: new Date(new Date(event.end).setHours(24, 0, 0, 0)),    // 24:00 시간으로 설정
             allDay: event.allDay,
             extendedProps: {
                 dtmHisId: event.dtmHisId // 커스텀 필드는 extendedProps로 추가

@@ -929,7 +929,7 @@ mark {
     background-color: #435ebe !important;
     /*color: white !important;*/
     font-weight: bold;
-    border-radius: 30%;
+    border-radius: 20%;
     opacity: 1 !important; /* 투명도 제거 */
 }
 
@@ -946,18 +946,18 @@ mark {
     background-color: #435ebe !important;
     font-weight: bold !important;
     color: white !important;
-    border-top-left-radius: 30% !important;
-    border-bottom-left-radius: 30% !important;
-    border-top-right-radius: 30% !important;
-    border-bottom-right-radius: 30% !important;
+    border-top-left-radius: 20% !important;
+    border-bottom-left-radius: 20% !important;
+    border-top-right-radius: 20% !important;
+    border-bottom-right-radius: 20% !important;
 }
 
 /* 선택된 날짜 범위의 스타일 */
 .selected-range-start {
     background-color: #435ebe !important;
     font-weight: bold !important;
-    border-top-left-radius: 30% !important;
-    border-bottom-left-radius: 30% !important;
+    border-top-left-radius: 20% !important;
+    border-bottom-left-radius: 20% !important;
 }
 
 .selected-range-middle {
@@ -969,8 +969,8 @@ mark {
 .selected-range-end {
     background-color: #435ebe !important;
     font-weight: bold !important;
-    border-top-right-radius: 30% !important;
-    border-bottom-right-radius: 30% !important;
+    border-top-right-radius: 20% !important;
+    border-bottom-right-radius: 20% !important;
 }
 
 /* 선택된 날짜의 숫자 색상 */
@@ -1078,19 +1078,12 @@ mark {
     justify-content: center;
 }
 
-/*돌아가기 버튼*/
-.btn-back{
-    background-color: #f2f7ff;
-    color: #435ebe;
-    float: left;
-    margin-right: auto;
-}
 
-/*신청하기 버튼*/
 .btn-submit{
     background-color: #435ebe !important;;
     color: white !important;;
 }
+
 
 .date-input-container {
     display: flex;
@@ -1117,16 +1110,23 @@ label {
 #dtmType {
     width: 100%;
 }
+
 .date-group {
     display: flex;
     justify-content: space-between;
     height: 38px;
-}zz
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; } /* 처음과 끝은 보이는 상태 */
+    50% { opacity: 0; } /* 중간에 잠깐 사라짐 */
+}
 
 #dateWarning {
     display: none; /* 기본적으로는 숨긴 상태 */
     color: red;
     align-items: center; /* 입력 필드 수직 중앙 정렬 */
+    animation: blink 0.5s ease-in-out;
 }
 
 /*근태신청화면 콤보*/

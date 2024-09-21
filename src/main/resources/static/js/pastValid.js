@@ -6,7 +6,6 @@ const dateWarning = document.getElementById('dateWarning');
 
 // 경고 문구를 표시할 함수
 function checkDateValidity(startDateInput, endDateInput) {
-
     if ((startDateInput && startDateInput < today) || (endDateInput && startDateInput < today)) {
         dateWarning.style.display = 'block'; // 경고 문구 표시
     } else {

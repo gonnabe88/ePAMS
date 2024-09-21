@@ -8,9 +8,9 @@ $(document).ready(function() {
 
         // flexSwitchCheckAdmin의 체크 상태 설정
         if(isAdmin) {
-            if(isChecked) {
+            if(isChecked.match("true")) {
                 console.log("admin : " + isAdmin + " " + isChecked);
-                $('#flexSwitchCheckAdmin').prop('checked', isChecked === true);
+                $('#flexSwitchCheckAdmin').prop('checked', true);
                 url = '/common/layout/renderSidebarAdmin';
             } else {
                 url = '/common/layout/renderSidebarNormal';

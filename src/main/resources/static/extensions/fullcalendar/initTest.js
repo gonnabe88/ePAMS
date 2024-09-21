@@ -100,54 +100,14 @@ $(document).ready(function () {
             // 날짜에서 '일'단어를 제거
             return { html: '<div class="fc-daygrid-day-number">' + arg.dayNumberText.replace('일', '') + '</div>' };
         },
+        // 날짜를 클릭했을 때 이벤트
         dateClick: function(info) {
-            // 날짜를 클릭하면 선택된 날짜를 표시
-            selectedDate && (selectedDate.classList.remove('selected-date'));
-            info.dayEl.classList.add('selected-date');
-            selectedDate = info.dayEl;
-            selectedDateStr = info.dateStr;
-
-            // 날짜를 클릭하면 신청 버튼 보이기
-            const applButton = document.querySelector('.fc-add-button');
-            applButton && (applButton.style.visibility = 'visible'); // 버튼 보이기
-
-            // 해당 날짜의 이벤트 찾기
-            const events = calendar.getEvents(); // 모든 이벤트 가져오기
-            const selectedEvents = events.filter(event => {
-                return event.startStr === info.dateStr; // 해당 날짜의 이벤트만 필터링
-            });
-
-            // 이벤트 출력 영역
-            const eventContainer = document.getElementById('dtmEvent');
-            if (selectedEvents.length > 0) {
-                eventContainer.innerHTML = selectedEvents.map(event => {
-                    // 시작일을 YYYY-MM-DD 형식으로 변환
-                    const startDate = event.start.toLocaleDateString('ko-KR', {
-                        year: 'numeric',
-                        month: '2-digit',
-                        day: '2-digit'
-                    }).replace(/\.\s?/g, '-').replace(/-$/, ''); // 점(.)을 하이픈(-)으로, 마지막 하이픈 제거
-                    // 종료일을 YYYY-MM-DD 형식으로 변환
-                    const endDate = event.end ? event.end.toLocaleDateString('ko-KR', {
-                        year: 'numeric',
-                        month: '2-digit',
-                        day: '2-digit'
-                    }).replace(/\.\s?/g, '-').replace(/-$/, '') : ''; // end 날짜가 있으면 동일하게 변환
-                    return `
-                        <div class="event-item">
-                            <div class="d-flex align-items-end gap-2">
-                                <span class="h6">${event.title}</span>
-                                <span class="h7">${startDate}</span>
-                                ${endDate ? `<span class="h7"> ~ ${endDate}</span>` : ''}
-                                <span class="h7">${event.extendedProps.dtmHisId}(HIS_ID)</span>
-                            </div>
-                        </div>
-                    `;
-                }).join('');
-            } else {
-                eventContainer.innerHTML = '<span class="h7">해당일은 근태가 없습니다.</span>';
-            }
-        }
+            handleEventOrDateClick(info.dateStr, calendar.getEvents(), info.dateStr, '날짜');
+        },
+        // 이벤트 클릭했을 때 이벤트
+        eventClick: function(info) {
+            handleEventOrDateClick(info.event.startStr, [info.event], info.event.startStr, '이벤트');
+        },
 
     });
 
@@ -182,5 +142,62 @@ $(document).ready(function () {
         touchStartX = null;
         touchStartY = null;
     });
+
+    // 공통 함수로 클릭 처리
+    const handleEventOrDateClick = (selectedDateStr, events, infoDateStr, type) => {
+        console.log(`${type} 클릭됨: ${selectedDateStr}`);
+
+        selectedDate && selectedDate.classList.remove('selected-date');
+        const selectedDateEl = document.querySelector(`[data-date="${infoDateStr}"]`);
+        selectedDateEl && selectedDateEl.classList.add('selected-date');
+        selectedDate = selectedDateEl;
+
+        // 신청 버튼 보이기
+        const applButton = document.querySelector('.fc-add-button');
+        applButton && (applButton.style.visibility = 'visible');
+
+        const selectedEvents = events.filter(event => {
+            const start = event.start;
+            const end = event.end || start;
+            const selectedDate = new Date(selectedDateStr);
+            return start <= selectedDate && selectedDate <= end;
+        });
+
+        // 이벤트 출력 영역
+        const eventContainer = document.getElementById('dtmEvent');
+        if (selectedEvents.length > 0) {
+            eventContainer.innerHTML = selectedEvents.map(event => {
+                const startDate = event.start.toLocaleDateString('ko-KR', {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit'
+                }).replace(/\.\s?/g, '-').replace(/-$/, '');
+
+                const endDate = event.end ? (() => {
+                    const adjustedEndDate = new Date(event.end);
+                    adjustedEndDate.setDate(adjustedEndDate.getDate() - 1);
+                    const formattedEndDate = adjustedEndDate.toLocaleDateString('ko-KR', {
+                        year: 'numeric',
+                        month: '2-digit',
+                        day: '2-digit'
+                    }).replace(/\.\s?/g, '-').replace(/-$/, '');
+                    return startDate === formattedEndDate ? '' : formattedEndDate;
+                })() : '';
+
+                return `
+                <div class="event-item">
+                    <div class="d-flex align-items-end gap-2">
+                        <span class="h6">${event.title}</span>
+                        <span class="h7">${startDate}</span>
+                        ${endDate ? `<span class="h7"> ~ ${endDate}</span>` : ''}
+                        <span class="h7">${event.extendedProps.dtmHisId}(HIS_ID)</span>
+                    </div>
+                </div>
+            `;
+            }).join('');
+        } else {
+            eventContainer.innerHTML = '<span class="h7">해당일은 근태가 없습니다.</span>';
+        }
+    }
 
 });

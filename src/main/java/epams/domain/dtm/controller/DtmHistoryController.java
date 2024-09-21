@@ -28,6 +28,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
 
@@ -120,6 +123,9 @@ public class DtmHistoryController<S extends Session> {
             objectMapper.registerModule(new JavaTimeModule());  // Java 8 날짜 및 시간 모듈 등록
             // 기본적으로 ISO 형식(yyyy-MM-dd)으로 변환되도록 설정
             objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+
+
+
             String dtmHisJson = objectMapper.writeValueAsString(dtmCalDTOList);
             model.addAttribute("dtmHis", dtmHisJson);
             model.addAttribute("holiDayList", holiDayList);

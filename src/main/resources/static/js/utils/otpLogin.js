@@ -35,10 +35,12 @@ const passwordLogin = (e, encodedPassword) => {
                 // 패스워드 인증 실패 시 팝업
                 popupMsg("인증 실패", data.message, "error");
             }
+            hideSpinnerButton(); // 스피너 제거 및 버튼 복구
         })
         .catch(error => {
             // 패스워드 인증 실패 시 팝업
             popupReHtmlMsg("인증 오류", error.message, "error","/login");
+            hideSpinnerButton(); // 스피너 제거 및 버튼 복구
         });
 }
 

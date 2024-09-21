@@ -24,15 +24,6 @@ const webauthnRevoke = (username) => {
         });
 };
 
-// 간편인증 로그인 시 로그인 버튼 스피너 설정
-const showSpinnerButton = () => {
-    const loginBtn = document.getElementById('login');
-    loginBtn.innerHTML = `
-            <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
-            <span role="status">Loading...</span>
-        `;
-    loginBtn.setAttribute('disabled', 'true');
-}
 
 // 간편인증 로그인
 const webauthnLogin = (e) => {
@@ -40,8 +31,6 @@ const webauthnLogin = (e) => {
     let token = document.querySelector('meta[name="_csrf"]').content;
     e.preventDefault();
     const formData = new FormData(e.target);
-
-    showSpinnerButton();
 
     console.time("total");
     console.time("fetch /api/webauthn/login");

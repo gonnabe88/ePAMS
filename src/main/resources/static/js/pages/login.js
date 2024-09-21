@@ -12,7 +12,6 @@ document.getElementById('username').addEventListener('input', function(event) {
 
 // 화면 로드 시 수행
 $(function() {
-    console.log("@@");
     const webauthnData = $('#webauthnData');
     const webauthnYn = webauthnData.data('webauthn');
 
@@ -36,7 +35,7 @@ $(function() {
         setCookie("MFA", MFA, 30); // 쿠키 갱신
         setPasswordInput(); // 패스워드 입력창을 숨기거나 보여줌
         webauthnYn === 'Y' && MFA !== 'webauthn' ? loadToastHTML() : null;
-        // webauthnYn === 'Y' && MFA !== 'webauthn' ? popupHtmlMsg(
+        //  간편인증 사용자가 다른 인증을 선택하면 토스트 메시지 출력
         //     "안내사항",
         //     "<p>간편인증이 등록된 사용자는 자동으로 간편인증이 선택됩니다.</p> <p>간편인증 사용을 원하지 않으시면 로그인 후 간편인증 등록을 해제해주세요.</p>",
         //     "info") : null; // Webauthn 등록 사용자이고 Webauthn 선택 시 Webauthn 인증
@@ -57,6 +56,8 @@ $(function() {
         const encodedPassword = btoa(encodeURIComponent(password)); // Base64 인코딩
         let MFA = $('input[name="MFA"]:checked').val(); // 선택된 MFA 값 가져오기
 
+        showSpinnerButton(); // 로그인 버튼 스피너 설정
+
         switch (MFA) {
             case 'webauthn':
                 webauthnLogin(e); // 간편인증
@@ -68,6 +69,7 @@ $(function() {
                 passwordLogin(e, encodedPassword); // OTP 인증 (카카오톡)
                 break;
         }
+
     });
 
     rememberAuthType(webauthnYn); // 인증방식 기억하기 세팅
@@ -76,8 +78,7 @@ $(function() {
     setWebauthnRadio(); // Webauthn 인증 등록 사용자 Webauthn 라디오 버튼 자동 세팅
 });
 
-
-function loadToastHTML() {
+const loadToastHTML = () => {
     // Toast 엘리먼트를 가져옴
     const toastEl = document.querySelector('.toast');
     if (toastEl) {

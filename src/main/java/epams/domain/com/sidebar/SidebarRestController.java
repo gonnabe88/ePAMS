@@ -71,9 +71,9 @@ public class SidebarRestController {
         final Boolean isAdmin = authorities.stream().anyMatch(role -> role.getAuthority().equals("ROLE_EHRAD001"));
         userInfo.setIsAdmin(isAdmin);
         if(isAdmin) {
-            log.info("True");
+            log.info("isAdmin : True");
         } else {
-            log.info("false");
+            log.info("isAdmin : False");
         }
 
         // 사용자 정보 객체 전달 

@@ -2,33 +2,39 @@
 $(document).ready(function() {
 
     // 사용자 정보
-    getUserInfo();
+    getUserInfo(function(ret){
+        const isAdmin = ret;
+        const isChecked = getCookie("adminView");
 
-    // 쿠키에서 관리자 모드 여부를 확인
-    let isChecked = getCookie("adminView");
+        // flexSwitchCheckAdmin의 체크 상태 설정
+        if(isAdmin) {
+            if(isChecked) {
+                console.log("admin : " + isAdmin + " " + isChecked);
+                $('#flexSwitchCheckAdmin').prop('checked', isChecked === true);
+                url = '/common/layout/renderSidebarAdmin';
+            } else {
+                url = '/common/layout/renderSidebarNormal';
+            }
+        } else {
+            console.log("normal : " + isAdmin + " " + isChecked);
+            url = '/common/layout/renderSidebarNormal';
+        }
 
-    // flexSwitchCheckAdmin의 체크 상태 설정
-    $('#flexSwitchCheckAdmin').prop('checked', isChecked === 'true');
-
-    // 적절한 URL을 선택하여 사이드바 로드
-    let url = isChecked === 'true' ? '/common/layout/renderSidebarAdmin' : '/common/layout/renderSidebarNormal';
-    console.log("url: " + url);
-
-    // 서버에 요청을 보내어 사용자 또는 관리자 sidebar 템플릿을 받아옴
-    $.get(url, function(html) {
-        // 2024-08-17 CWE-79(Cross-site Scripting (XSS)) 취약점 조치
-        const safeHTML = DOMPurify.sanitize(html, {
-            SAFE_FOR_TEMPLATES: true,
-            ALLOWED_TAGS: ['h7', 'h6', 'h5', 'h4', 'h3', 'h2', 'h1', 'div', 'span', 'section', 'i', 'ul', 'li', 'a'], // 필요시 추가
-            FORBID_ATTR: ['style']
+        // 서버에 요청을 보내어 사용자 또는 관리자 sidebar 템플릿을 받아옴
+        $.get(url, function(html) {
+            // 2024-08-17 CWE-79(Cross-site Scripting (XSS)) 취약점 조치
+            const safeHTML = DOMPurify.sanitize(html, {
+                SAFE_FOR_TEMPLATES: true,
+                ALLOWED_TAGS: ['h7', 'h6', 'h5', 'h4', 'h3', 'h2', 'h1', 'div', 'span', 'section', 'i', 'ul', 'li', 'a'], // 필요시 추가
+                FORBID_ATTR: ['style']
+            });
+            $('#menu').html(safeHTML);
+            // 사이드바가 로드된 후에 .sidebar-item 요소를 탐색합니다
+            highlightActiveMenuItem();
+        }).fail(function(error) {
+            console.error('Error loading sidebar:', error);
         });
-        $('#menu').html(safeHTML);
-        // 사이드바가 로드된 후에 .sidebar-item 요소를 탐색합니다
-        highlightActiveMenuItem();
-    }).fail(function(error) {
-        console.error('Error loading sidebar:', error);
     });
-
 
     // 현재 페이지 경로와 일치하는 사이드바 항목에 'active' 클래스를 추가하는 함수
     function highlightActiveMenuItem() {
@@ -46,8 +52,6 @@ $(document).ready(function() {
             }
         });
     }
-
-
 });
 
 // (Switch 변경 시) 관리자 페이지와 일반 사용자 페이지의 sidebar를 동적으로 변경하는 스크립트
@@ -72,7 +76,7 @@ $('#flexSwitchCheckAdmin').on('change', function () {
 });
 
 // Ajax 요청을 사용하여 사용자 데이터를 가져오는 함수 정의
-const getUserInfo = () => {
+const getUserInfo = (callback) => {
     $.ajax({
         url: '/api/sidebar/getUserInfo', // 요청할 URL
         method: 'GET', // HTTP 메서드
@@ -84,6 +88,7 @@ const getUserInfo = () => {
             $('#deptName').text(userInfo.deptName);
             $('#todayWorkTime').text(`${userInfo.staTime} ${userInfo.endTime}`);
             $('#tomorrowWorkTime').text(`${userInfo.staTime} ${userInfo.endTime}`);
+            callback(userInfo.isAdmin);
         },
         error: function(jqXHR, textStatus, errorThrown) { // 요청이 실패했을 때 실행되는 함수
             console.error('Error fetching user info:', textStatus, errorThrown);
@@ -91,12 +96,6 @@ const getUserInfo = () => {
     });
 };
 
-
-
-
-
-
-// Sidebar 기본 동작
 // Sidebar 기본 동작을 위한 상수 설정
 const DESKTOP_SIZE = 1200; // 데스크톱 화면 크기 기준 상수
 

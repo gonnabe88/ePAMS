@@ -32,6 +32,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -46,29 +47,6 @@ import java.util.concurrent.ConcurrentHashMap;
 @RequiredArgsConstructor
 @RequestMapping("/api/dtm")
 public class DtmRevokeRestController<S extends Session> {
-
-    /**
-     * @author K140024 kk
-     * @implNote list 화면에 노출할 게시물 수 설정값 (application.yml)
-     * @since 2024-06-11
-     */
-    @Value("${kdb.listBrdCnt}")
-    private int listBrdCnt;
-
-    /**
-     * @author K140024
-     * @implNote 모든 페이지네이션 시 노출할 최대 버튼 수 설정값 (application.yml)
-     * @since 2024-06-11
-     */
-    @Value("${kdb.maxPageBtn}")
-    private int maxPageBtn;
-
-    /**
-     * @author K140024
-     * @implNote 코드 상세 서비스 주입
-     * @since 2024-06-11
-     */
-    private final HtmlLangDetailService langDetailService;
 
     /**
      * @author K140024
@@ -116,23 +94,29 @@ public class DtmRevokeRestController<S extends Session> {
      public ResponseEntity<Map<String, String>> dtmRevoke(@RequestBody final DtmHisDTO dto) throws IOException {
 
         // 사용자 ID 설정
-        dto.setEmpId(Long.parseLong(authentication().getName().replace('K', '7')));
-        dto.setModUserId(Long.parseLong(authentication().getName().replace('K', '7')));
+        final Long empId = Long.parseLong(authentication().getName().replace('K', '7'));
+        dto.setEmpId(empId);
+        dto.setModUserId(empId);
 
-        // 날짜를 YYYY-MM-DD 형식으로 포맷팅
+        // 날짜 포메터 설정 (YYYY-MM-DD 형식)
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        // 현재 기준 년도(YYYY) 세팅 ex)2024
+        LocalDate currenDate = LocalDate.now();
+        String thisYear = String.valueOf(currenDate.getYear());
 
         // 응답 메시지 설정
         Map<String, String> response = new ConcurrentHashMap<>();        
 
         try {
+
             // 연차촉진 관련 데이터 가져오기
-            final DtmPromotionDTO dtmPromotionDTO = dtmPromotionService.getDtmPromotionYnCheckData(dto.getEmpId(), "2024");
+            final DtmPromotionDTO dtmPromotionDTO = dtmPromotionService.getDtmPromotionYnCheckData(empId, thisYear);
 
             // 연차촉진 기간인 경우
             if("Y".equals(dtmPromotionDTO.getPromotionYn())) {
                 // 연차저축 관련 데이터 가져오기
-                final DtmSaveDTO dtmSaveDTO = dtmSaveService.getDtmSaveCheckData(dto.getEmpId(), "2024");
+                final DtmSaveDTO dtmSaveDTO = dtmSaveService.getDtmSaveCheckData(empId, thisYear);
                 // 연차촉진 및 저축 관련 유효성 체크
                 dtmRevokeService.check(dto, dtmPromotionDTO, dtmSaveDTO);
             }

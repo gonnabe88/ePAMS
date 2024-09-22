@@ -93,12 +93,17 @@ public class DtmApplRestController {
      */
     @PostMapping("/check")
     public ResponseEntity<Map<String, Object>> checkDtm(@RequestBody final DtmHisDTO dto) throws IOException {
-        
-        // 사용자 ID 설정
-        dto.setEmpId(Long.parseLong(authentication().getName().replace('K', '7')));
-        dto.setModUserId(Long.parseLong(authentication().getName().replace('K', '7')));
 
-        // 현재 기준 년도(YYYY) 세팅 ex)2024 
+        // 근태 리스트 생성 (@TODO 나중에 기본적으로 DTO List를 받으면 지워도 됨)
+        List<DtmHisDTO> dtmHisDTOList = new ArrayList<>();
+        dtmHisDTOList.add(dto);
+
+        // 사용자 ID 설정
+        final Long empId = Long.parseLong(authentication().getName().replace('K', '7'));
+        dtmHisDTOList.forEach(dtmHisDTO -> dtmHisDTO.setEmpId(empId));
+        dtmHisDTOList.forEach(dtmHisDTO -> dtmHisDTO.setModUserId(empId));
+
+        // 현재 기준 년도(YYYY) 세팅 ex)2024
         LocalDate currenDate = LocalDate.now();
         String thisYear = String.valueOf(currenDate.getYear());
 
@@ -106,46 +111,46 @@ public class DtmApplRestController {
         Map<String, Object> response = new ConcurrentHashMap<>();
 
         try {
+/* @TODO 외부 테스트 시 주석 처리
+
             // 근태 유형별 합계 시간 데이터 저장용 객체 생성
             final DtmKindSumDTO sumDTO = new DtmKindSumDTO();
 
             // 연차촉진 관련 데이터 가져오기 (dtm010_03_03_p_07, dtm010_23_03_p_01, dtm010_23_03_p_04)
-            final DtmPromotionDTO dtmPromotionDTO = dtmPromotionService.getDtmPromotionYnCheckData(dto.getEmpId(), thisYear);
+            final DtmPromotionDTO dtmPromotionDTO = dtmPromotionService.getDtmPromotionYnCheckData(empId, thisYear);
 
             // 연차저축 관련 데이터 가져오기 (dtm010_03_03_p_08, dtm010_03_03_p_09)
-            final DtmSaveDTO dtmSaveDTO = dtmSaveService.getDtmSaveCheckData(dto.getEmpId(), thisYear);
+            final DtmSaveDTO dtmSaveDTO = dtmSaveService.getDtmSaveCheckData(empId, thisYear);
 
             // 근태신청 관련 데이터 가져오기 (dtm010_03_03_p_08)
-            final DtmApplStatusDTO statusDTO = dtmApplStatusService.getApplStatus(dto.getEmpId(), thisYear);
-
-            // 근태 리스트 생성 (@TODO 나중에 기본적으로 DTO List를 받으면 지워도 됨)
-            List<DtmHisDTO> dtmHisDTOList = new ArrayList<>();
-            dtmHisDTOList.add(dto);
+            final DtmApplStatusDTO statusDTO = dtmApplStatusService.getApplStatus(empId, thisYear);
 
             // 근태 체크 로직 수행
             Boolean adUseYn = dtmApplyService.check(dtmHisDTOList, dtmPromotionDTO, dtmSaveDTO, statusDTO, sumDTO);
 
             // 서비스 호출 및 결과 메시지 설정
-            response.put("dtmHisDTOList", dtmHisDTOList);
-            response.put("adUseYn", adUseYn);
+            response.put("adUseYn", adUseYn); // 선연차 사용 동의
             response.put("annualSum", sumDTO.getAnnualDaySum()); // 신청시간
             response.put("annualUsedCnt", statusDTO.getAnnualDayUsedCnt()); // 기 사용시간
             response.put("annualTotalCnt", statusDTO.getAnnualDayTotalCnt()); // 총 보유시간
+
+*/
+            response.put("dtmHisDTOList", dtmHisDTOList); // 근태신청 리스트
             return new ResponseEntity<>(response, HttpStatus.CREATED);
 
         } catch (CustomGeneralRuntimeException e) {
             // 비즈니스 로직 오류 처리
+            log.error(e.getMessage());
             response.put("error", e.getMessage());
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
 
         } catch (Exception e) {
             // 일반 예외 처리
-            e.printStackTrace();
+            log.error(e.getMessage());
             response.put("error", "서버 내부 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.");
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
 
     /***
      * @author 140024

@@ -15,7 +15,7 @@
     <div class="container">
         <div id="main-content">
             <div class="main-content d-flex justify-content-center">
-                <div class="row col-lg-10 col-md-12 d-flex justify-content-center">
+                <div class="row d-flex justify-content-center">
 
                     <!-- 페이지 제목 시작 -->
                     <div class="page-heading">
@@ -264,19 +264,11 @@
                                                         <!-- 예정 -->
                                                         <span th:case="${langList['DTM_STATUS_DUE']}">
                                                             <span th:text="${dtm.status}" class="badge badge-sm bg-primary"></span>
-                                                            <!-- 결재완료인 경우 취소 버튼 -->
-                                                            <div th:if="${dtm.statCd} == '132'" class="cancelBtn btn btn-danger btn-sm" th:data-applid="${dtm.applId}" th:data-dtmhisid="${dtm.dtmHisId}" th:data-staymd="${dtm.staYmd}" th:data-endymd="${dtm.endYmd}" th:data-dtmkindcd="${dtm.dtmKindCd}" th:data-dtmreasoncd="${dtm.dtmReasonCd}" th:data-dtmreasonnm="${dtm.dtmReasonNm}" th:data-dtmdispname="${dtm.dtmDispName}">취소</div>
                                                         </span>
                                                         <!-- 진행 -->
                                                         <span th:case="${langList['DTM_STATUS_NOW']}">
                                                             <span th:text="${dtm.status}" class="badge badge-sm bg-warning"></span>
-                                                            <!-- 결재완료인 경우 취소 버튼 -->
-                                                            <div th:if="${dtm.statCd} == '132'" class="cancelBtn btn btn-danger btn-sm" th:data-applid="${dtm.applId}" th:data-dtmhisid="${dtm.dtmHisId}" th:data-staymd="${dtm.staYmd}" th:data-endymd="${dtm.endYmd}" th:data-dtmkindcd="${dtm.dtmKindCd}" th:data-dtmreasoncd="${dtm.dtmReasonCd}" th:data-dtmreasonnm="${dtm.dtmReasonNm}" th:data-dtmdispname="${dtm.dtmDispName}">취소</div>
                                                         </span>
-                                                    </div>
-                                                    <!-- 취소 버튼 -->
-                                                    <div th:if="${dtm.statCd} == '141'">
-                                                        <span class="badge badge-sm mb-4 bg-secondary">취소</span>
                                                     </div>
                                                 </div>
                                                 <!-- 휴가명 (연차휴가 등) -->
@@ -305,12 +297,81 @@
                                                     <h7 th:text="${dtm.statCdNm}"></h7>
                                                 </div>
                                             </div>
+                                            <!--변경/취소-->
+                                            <div class="d-flex flex-row justify-content-end mt-3 gap-1">
+                                                <!-- 결재완료인 경우 변경 버튼 -->
+                                                <div th:if="${dtm.isModifiable}" class="modifyBtn btn btn-primary btn-sm"
+                                                     th:data-applid="${dtm.applId}"
+                                                     th:data-dtmhisid="${dtm.dtmHisId}"
+                                                     th:data-staymd="${dtm.staYmd}"
+                                                     th:data-endymd="${dtm.endYmd}"
+                                                     th:data-dtmkindcd="${dtm.dtmKindCd}"
+                                                     th:data-dtmreasoncd="${dtm.dtmReasonCd}"
+                                                     th:data-dtmreasonnm="${dtm.dtmReasonNm}"
+                                                     th:data-dtmdispname="${dtm.dtmDispName}"
+                                                     data-bs-toggle="modal" data-bs-target="#dynamicModal" >변경</div>
+
+                                                <!-- 결재완료인 경우 취소 버튼 -->
+                                                <div th:if="${dtm.isRevocable}" class="cancelBtn btn btn-danger btn-sm"
+                                                     th:data-applid="${dtm.applId}"
+                                                     th:data-dtmhisid="${dtm.dtmHisId}"
+                                                     th:data-staymd="${dtm.staYmd}"
+                                                     th:data-endymd="${dtm.endYmd}"
+                                                     th:data-dtmkindcd="${dtm.dtmKindCd}"
+                                                     th:data-dtmreasoncd="${dtm.dtmReasonCd}"
+                                                     th:data-dtmreasonnm="${dtm.dtmReasonNm}"
+                                                     th:data-dtmdispname="${dtm.dtmDispName}">취소</div>
+                                            </div>
                                         </div>
                                     </div>
                                 </section>
                             </div>
                         </div>
                         <!-- 근태 목록 끝 -->
+
+                        <!-- Modal Structure -->
+                        <div class="modal fade" id="dynamicModal" tabindex="-1" aria-labelledby="dynamicModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="dynamicModalLabel">근태 변경</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="dtmRegDetail">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <div class="row mb-3">
+                                                        <div class="col">
+                                                            <h6><span th:text="${langList['DTM_PERIOD']}"></span></h6>
+                                                            <div class="date-input-container">
+                                                                <div class="date-input">
+                                                                    <input type="text" id="startDate" name="startDate">
+                                                                </div>
+                                                                <span class="tilde">~</span>
+                                                                <div class="date-input">
+                                                                    <input type="text" id="endDate" name="endDate">
+                                                                </div>
+                                                            </div>
+                                                            <div id="dateWarning">오늘 이후 건만 신청가능합니다</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mb-3">
+                                                        <div class="col">
+                                                            <div id="calender"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                                        <button type="button" class="btn btn-primary">저장</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
                         <!-- 페이징처리 시작 -->
                         <div th:if="${!dtmHis.isEmpty()}">
@@ -356,9 +417,17 @@
     <script src="/extensions/litepicker/initLitepicker.js"></script>
     <script src="/extensions/select2/select2.full.js"></script>
 
+
+    <script src="/extensions/fullcalendar/index.global.js"></script>
+    <script src="/extensions/fullcalendar/initDtmRegCal.js"></script>
+    <script src="/extensions/fullcalendar/main.min.js"></script>
+    <script src="/js/dateFormat.js"></script>
+    <script src="/js/pastValid.js"></script>
+
     <script src="/js/dateInputValidation.js"></script>
     <script src="/js/searchForm.js"></script>
     <script src="/js/selectForm.js"></script>
+    <script src="/js/utils/progressBar.js"></script>
 
     <script src="/js/dtmRevokeApplPopup.js"></script>
 

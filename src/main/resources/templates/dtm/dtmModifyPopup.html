@@ -1,0 +1,48 @@
+<div class="dtmApplPopup">
+    <p class="title">
+        <p class="mb-2" th:text="${nowDate}"></p>
+        <p th:text="${dtmDispName}"></p>
+    </p>
+    <!--실제 근태 신청-->
+    <div class="card">
+        <div class="card-body">
+            <div class="row mb-3">
+                <div class="col">
+                    <h6><span th:text="${langList['DTM_KIND']}"></span></h6>
+                    <select class="form-control select2" aria-label="DTM Reason Code register"
+                            name="dtmReasonCd" id="list">
+                        <option value="" selected><span th:text="${langList['ENTIRE']}"></span></option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col">
+                    <h6><span th:text="${langList['DTM_PERIOD']}"></span></h6>
+                    <div class="date-input-container">
+                        <div class="date-input">
+                            <input type="text" id="startDate" name="startDate">
+                        </div>
+                        <span class="tilde">~</span>
+                        <div class="date-input">
+                            <input type="text" id="endDate" name="endDate">
+                        </div>
+                    </div>
+                    <div id="dateWarning">오늘 이후 건만 신청가능합니다</div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col">
+                    <div id="calender"></div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col">
+                    <div class="button-group">
+                        <button type="submit" class="btn btn-submit">신청하기</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

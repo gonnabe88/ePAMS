@@ -1,5 +1,6 @@
 package epams.domain.dtm.dto;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -31,6 +32,20 @@ public class DtmHisDTO extends DtmHisVO {
      * @since 2024-06-09
      */
     private final static String midnight = "2400";
+
+    /***
+     * @author 140024
+     * @implNote 취소 가능여부
+     * @since 2024-09-22
+     */
+    private Boolean isRevocable;
+    
+    /***
+     * @author 140024
+     * @implNote 수정 가능여부
+     * @since 2024-09-22
+     */
+    private Boolean isModifiable;
 
     /***
      * @author 140024
@@ -85,25 +100,40 @@ public class DtmHisDTO extends DtmHisVO {
      * @param endHm 종료시간
      * @return String 타입의 예정, 과거, 진행
      */
-    public final String calculateStatus(final LocalDateTime staYmd, final String staHm, final LocalDateTime endYmd, final String endHm) {
-        final LocalDateTime now = LocalDateTime.now();
+    public final void updateStatus(final String statCd, final LocalDateTime staYmd, final String staHm, final LocalDateTime endYmd, final String endHm) {
+        final LocalDate today = LocalDate.now();  // 현재 날짜
+        final LocalDate startDate = staYmd.toLocalDate();  // 시작 날짜
         final LocalDateTime startDateTime = LocalDateTime.of(staYmd.toLocalDate(), LocalTime.parse(staHm, DateTimeFormatter.ofPattern("HHmm")));
         final LocalDateTime endDateTime;
-        if (midnight.equals(endHm)) {
+
+        if ("2400".equals(endHm)) {
             // endHm이 2400이면 +1일 00시로 설정
             endDateTime = LocalDateTime.of(endYmd.toLocalDate().plusDays(1), LocalTime.MIDNIGHT);
         } else {
             endDateTime = LocalDateTime.of(endYmd.toLocalDate(), LocalTime.parse(endHm, DateTimeFormatter.ofPattern("HHmm")));
         }
 
-        if (now.isBefore(startDateTime)) {
-            this.status = "예정";
-        } else if (now.isAfter(endDateTime)) {
-        	this.status = "과거";
+        // 상태(status) 결정
+        if (LocalDateTime.now().isBefore(startDateTime)) {
+            this.status = "예정";  // 현재 시간이 시작 전이면 '예정'
+        } else if (LocalDateTime.now().isAfter(endDateTime)) {
+            this.status = "과거";  // 현재 시간이 종료 후면 '과거'
         } else {
-        	this.status = "진행";
+            this.status = "진행";  // 현재 시간이 시작과 종료 사이면 '진행'
         }
-        
-        return status;
+
+        // 취소 가능 여부 결정 (날짜만 기준으로 비교, statCd가 132이어야 함)
+        if ("132".equals(statCd) && (startDate.isAfter(today) || startDate.isEqual(today))) {
+            this.isRevocable = true;
+        } else {
+            this.isRevocable = false;
+        }
+
+        // 수정 가능 여부 결정 (날짜만 기준으로 비교, statCd가 132이어야 함)
+        if ("132".equals(statCd) && (startDate.isAfter(today) || startDate.isEqual(today))) {
+            this.isModifiable = true;
+        } else {
+            this.isModifiable = false;
+        }
     }
 }

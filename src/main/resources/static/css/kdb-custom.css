@@ -81,9 +81,6 @@
 }
 
 .cancelBtn {
-    position: absolute;
-    bottom: 15px;
-    right: 15px;
 }
 
 .table {
@@ -1061,6 +1058,11 @@ mark {
     border: 1px solid #000; /* 테두리 색상을 검정색으로 변경 */
     text-align: center;
 }
+
+.dtmRegDetail .fc .fc-daygrid-body {
+    width: 100% !important;
+}
+
 .dtmRegDetail th {
     background-color: #f2f7ff;
 }

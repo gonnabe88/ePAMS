@@ -29,6 +29,11 @@ $(document).ready(function () {
         dtmRevokeApplPopup(this);
     });
 
+    // 변경 클릭 시 Modal 실행 이벤트 등록
+    $('.modifyBtn').on('click', function () {
+        $('#dynamicModal').modal('show');
+    });
+
     // (검색폼) 조회 버튼 클릭 시
     $('#search-button').on('click', function() {
         search();

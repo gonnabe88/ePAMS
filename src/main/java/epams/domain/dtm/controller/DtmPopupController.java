@@ -25,6 +25,7 @@ import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * @author K140024
@@ -38,49 +39,82 @@ import java.util.Locale;
 public class DtmPopupController<S extends Session> {
 
     /**
-     * @author K140024 kk
-     * @implNote list 화면에 노출할 게시물 수 설정값 (application.yml)
-     * @since 2024-06-11
-     */
-    @Value("${kdb.listBrdCnt}")
-    private int listBrdCnt;
-
-    /**
-     * @author K140024
-     * @implNote 모든 페이지네이션 시 노출할 최대 버튼 수 설정값 (application.yml)
-     * @since 2024-06-11
-     */
-    @Value("${kdb.maxPageBtn}")
-    private int maxPageBtn;
-
-    /**
-     * @author K140024
-     * @implNote 게시판 서비스 주입
-     * @since 2024-06-11
-     */
-    private final BoardMainService boardService;
-
-    /**
      * @author K140024
      * @implNote 코드 상세 서비스 주입
      * @since 2024-06-11
      */
-    private final HtmlLangDetailService codeDetailService;
+    private final HtmlLangDetailService langDetailService;
 
     /**
      * @author K140024
-     * @implNote DTM 서비스 주입
+     * @implNote DTM 신청팝업 메서드
      * @since 2024-06-11
      */
-    private final DtmService dtmService;
+    @GetMapping("/dtmModifyPopup")
+    public String dtmModifyPopup(
+            @RequestParam("dtmKindCd") String dtmKindCd,
+            @RequestParam("dtmReasonCd") String dtmReasonCd,
+            @RequestParam("staYmd") String staYmd,
+            @RequestParam("endYmd") String endYmd,
+            @RequestParam("dtmDispName") String dtmDispName,
+            @PageableDefault(page = 1) final Pageable pageable,
+            final Model model) {
 
+        final String VIEW = "dtm/dtmModifyPopup";
+        // 언어목록 조회
+        final Map<String, String> langList = langDetailService.getCodeHtmlDetail(VIEW);
+        model.addAttribute("langList", langList);
 
-    /**
-     * @author K140024
-     * @implNote 공통코드 서비스 주입
-     * @since 2024-06-11
-     */
-    private final CommonCodeService commonCodeService;
+        // 날짜 형식이 ISO-8601 형식인 경우
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
+
+        // DtmHisDTO 객체를 생성하여 필요한 로직에 활용 가능
+        DtmHisDTO dto = new DtmHisDTO();
+        dto.setDtmKindCd(dtmKindCd);
+        dto.setDtmReasonCd(dtmReasonCd);
+        dto.setDtmDispName(dtmDispName);
+
+        // 날짜 문자열을 LocalDateTime으로 변환
+        try {
+            dto.setStaYmd(LocalDateTime.parse(staYmd, formatter));
+            dto.setEndYmd(LocalDateTime.parse(endYmd, formatter));
+        } catch (DateTimeParseException e) {
+            // 날짜 파싱 실패 시 처리 (예: 기본값 설정 또는 예외 처리)
+            model.addAttribute("error", "Invalid date format");
+            return "errorView";
+        }
+
+        // 필요한 로직 처리 후 모델에 추가
+        model.addAttribute("dtmHisDTO", dto);
+
+        // 기타 필요한 모델 속성 설정
+        final LocalDateTime staDay = dto.getStaYmd();
+        final LocalDateTime endDay = dto.getEndYmd();
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        DateTimeFormatter dayOfWeekFormatter = DateTimeFormatter.ofPattern("E", Locale.KOREAN);
+
+        String dateRange;
+
+        if (staDay.isEqual(endDay)) {
+            // 시작일과 종료일이 같은 경우
+            dateRange = staDay.format(dateFormatter) + "(" + staDay.format(dayOfWeekFormatter) + ")";
+        } else {
+            // 시작일과 종료일이 다른 경우
+            String formattedStaYmd = staDay.format(dateFormatter) + "(" + staDay.format(dayOfWeekFormatter) + ")";
+            String formattedEndYmd = endDay.format(dateFormatter) + "(" + endDay.format(dayOfWeekFormatter) + ")";
+            dateRange = formattedStaYmd + " ~ " + formattedEndYmd;
+            // 시작일과 종료일의 차이를 계산
+            //long daysBetween = ChronoUnit.DAYS.between(staDay, endDay) + 1;
+
+            // dtmDispName에 몇 일인지를 추가
+            //dtmDispName += " (" + daysBetween + "일)";
+        }
+
+        model.addAttribute("nowDate", dateRange);
+        model.addAttribute("dtmDispName", dtmDispName);
+
+        return VIEW; // View 이름 반환
+    }
 
     /**
      * @author K140024

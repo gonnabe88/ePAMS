@@ -28,12 +28,10 @@ $(document).ready(() => {
             },
             data: JSON.stringify(dtmHisDTO), // 전송 DATA
             success: (data) => { // 성공 (HTTP 상태코드 20X)
-                const staYmd = data.staYmd; // 서버에서 반환된 staYmd 값 사용
-                const dtmDispName = data.dtmDispName;
 
                 if(data.adUseYn){
                     Swal.fire({
-                        title: "선연차 사용",
+                        title: "선연차 사용 동의",
                         html: `<p>올해 잔여연차 부족으로 선연차를 사용합니다. 신청하시겠습니까?</p>
                                <h6 class=\"text-left\">총 보유연차 : ${data.annualTotalCnt}일</h6>
                                <h6 class=\"text-left\">기 사용연차 : ${data.annualUsedCnt}일</h6>

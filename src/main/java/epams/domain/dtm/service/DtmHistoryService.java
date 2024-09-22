@@ -1,6 +1,5 @@
 package epams.domain.dtm.service;
 
-import epams.domain.com.apply.repository.ElaApplCRepository;
 import epams.domain.dtm.dto.DtmCalendarDTO;
 import epams.domain.dtm.dto.DtmHisDTO;
 import epams.domain.dtm.dto.DtmSearchDTO;
@@ -14,7 +13,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 /***
  * @author 140024
@@ -69,8 +67,7 @@ public class DtmHistoryService {
 
 		// 각 DTO 객체에 대해 status를 갱신
 		dtmHisDTOs.forEach(dto -> {
-			String status = dto.calculateStatus(dto.getStaYmd(), dto.getStaHm(), dto.getEndYmd(), dto.getEndHm());
-			dto.setStatus(status);
+			dto.updateStatus(dto.getStatCd(), dto.getStaYmd(), dto.getStaHm(), dto.getEndYmd(), dto.getEndHm());
 		});
 
 		final long totalElements = dtmHisRepo.countByCondition(searchDTO); // 전체 데이터 개수를 조회하는 메소드 필요

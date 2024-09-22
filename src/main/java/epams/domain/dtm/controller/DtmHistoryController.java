@@ -66,7 +66,6 @@ public class DtmHistoryController<S extends Session> {
      * @since 2024-06-11
      */
     private final DtmHistoryService dtmHisService;
-
     
     /**
      * @author K140024
@@ -124,8 +123,6 @@ public class DtmHistoryController<S extends Session> {
             // 기본적으로 ISO 형식(yyyy-MM-dd)으로 변환되도록 설정
             objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 
-
-
             String dtmHisJson = objectMapper.writeValueAsString(dtmCalDTOList);
             model.addAttribute("dtmHis", dtmHisJson);
             model.addAttribute("holiDayList", holiDayList);
@@ -173,6 +170,9 @@ public class DtmHistoryController<S extends Session> {
             startPage = Math.max(1, endPage - maxPageBtn + 1);
         }
 
+        dtmHisDTOList.forEach(dto -> {
+            log.warn(dto.toString());
+        });
         model.addAttribute("dtmHis", dtmHisDTOList);
         model.addAttribute("searchDTO", searchDTO);
         model.addAttribute("startPage", startPage);

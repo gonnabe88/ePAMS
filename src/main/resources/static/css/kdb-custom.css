@@ -1125,10 +1125,9 @@ label {
 #dateWarning {
     display: none; /* 기본적으로는 숨긴 상태 */
     color: red;
-    align-items: center; /* 입력 필드 수직 중앙 정렬 */
+    text-align: center;
     animation: blink 0.5s ease-in-out;
 }
-
 /*근태신청화면 콤보*/
 
 .dtmApplPopup .title{

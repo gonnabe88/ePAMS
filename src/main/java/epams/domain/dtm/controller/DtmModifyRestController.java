@@ -36,7 +36,7 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/dtm")
-public class DtmRevokeRestController<S extends Session> {
+public class DtmModifyRestController<S extends Session> {
 
     /**
      * @author K140024
@@ -80,8 +80,8 @@ public class DtmRevokeRestController<S extends Session> {
      * @implNote 모든 멤버 데이터를 검색
      * @since 2024-06-09
      */
-    @PostMapping("/dtmRevoke")
-     public ResponseEntity<Map<String, String>> dtmRevoke(@RequestBody final DtmHisDTO dto) throws IOException {
+    @PostMapping("/dtmModify")
+     public ResponseEntity<Map<String, String>> dtmModify(@RequestBody final DtmHisDTO dto) throws IOException {
 
         // 사용자 ID 설정
         final Long empId = Long.parseLong(authentication().getName().replace('K', '7'));

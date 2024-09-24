@@ -308,7 +308,7 @@
                                                      th:data-dtmkindcd="${dtm.dtmKindCd}"
                                                      th:data-dtmreasoncd="${dtm.dtmReasonCd}"
                                                      th:data-dtmreasonnm="${dtm.dtmReasonNm}"
-                                                     th:data-dtmdispname="${dtm.dtmDispName}"
+                                                     id="dtmModifyBtn"
                                                      data-bs-toggle="modal" data-bs-target="#dynamicModal" >변경</div>
 
                                                 <!-- 결재완료인 경우 취소 버튼 -->
@@ -323,12 +323,13 @@
                                                      th:data-dtmdispname="${dtm.dtmDispName}">취소</div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div>                                    
                                 </section>
                             </div>
                         </div>
                         <!-- 근태 목록 끝 -->
 
+                        <div class="dtmModifyModal">
                         <!-- Modal Structure -->
                         <div class="modal fade" id="dynamicModal" tabindex="-1" aria-labelledby="dynamicModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-lg">
@@ -337,26 +338,41 @@
                                         <h5 class="modal-title" id="dynamicModalLabel">근태 변경</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
-                                    <div class="modal-body">
-                                        <div class="dtmRegDetail">
-                                            <div class="card">
-                                                <div class="card-body">
-                                                    <div class="row mb-3">
-                                                        <div class="col">
-                                                            <h6><span th:text="${langList['DTM_PERIOD']}"></span></h6>
-                                                            <div class="date-input-container">
-                                                                <div class="date-input">
-                                                                    <input type="text" id="startDate" name="startDate">
-                                                                </div>
-                                                                <span class="tilde">~</span>
-                                                                <div class="date-input">
-                                                                    <input type="text" id="endDate" name="endDate">
-                                                                </div>
-                                                            </div>
-                                                            <div id="dateWarning">오늘 이후 건만 신청가능합니다</div>
+                                    <div class="modal-body">                                        
+                                        <div class="card mb-1">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <h6><span class="text-danger">변경 전</span> 근태</h6>
+                                                        <div class="d-flex justify-content-start gap-1">
+                                                            <span class="text-bold" id="dtmResonNm"></span>
+                                                            <span id="beforeStaYmd"></span>
+                                                            <span class="tilde">~</span>
+                                                            <span id="beforeEndYmd"></span>
                                                         </div>
                                                     </div>
-                                                    <div class="row mb-3">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card mb-1">
+                                            <div class="card-body">
+                                                <div class="row mb-3">
+                                                    <div class="col">
+                                                        <h6><span class="text-primary">변경 후</span> 근태</h6>
+                                                        <div class="date-input-container">
+                                                            <div class="date-input">
+                                                                <input type="text" id="startDate" name="startDate">
+                                                            </div>
+                                                            <span class="tilde">~</span>
+                                                            <div class="date-input">
+                                                                <input type="text" id="endDate" name="endDate">
+                                                            </div>
+                                                        </div>
+                                                        <div id="dateWarning">오늘 이후 건만 신청가능합니다</div>
+                                                    </div>
+                                                </div>
+                                                <div class="dtmRegDetail">
+                                                    <div class="row">
                                                         <div class="col">
                                                             <div id="calender"></div>
                                                         </div>
@@ -366,12 +382,13 @@
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                                        <button type="button" class="btn btn-primary">저장</button>
+                                        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">닫기</button>
+                                        <button type="button" class="btn btn-primary btn-sm" id="submit">신청</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                    </div>
 
                         <!-- 페이징처리 시작 -->
                         <div th:if="${!dtmHis.isEmpty()}">
@@ -429,6 +446,7 @@
     <script src="/js/selectForm.js"></script>
     <script src="/js/utils/progressBar.js"></script>
 
+    <script src="/js/quickDtmApplPopup.js"></script>
     <script src="/js/dtmRevokeApplPopup.js"></script>
 
     <script src="/js/dtmList.js"></script>

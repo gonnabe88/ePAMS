@@ -31,7 +31,63 @@ $(document).ready(function () {
 
     // 변경 클릭 시 Modal 실행 이벤트 등록
     $('.modifyBtn').on('click', function () {
+
+        let dtmHisDTOList = [];
+        const button = $('#dtmModifyBtn');
+        const applId = button.data('applid');
+        const dtmHisId = button.data('dtmhisid');
+        const modiType = "D";
+        const dtmKindCd = button.data('dtmkindcd');
+        const dtmReasonCd = button.data('dtmreasoncd');
+        const dtmReasonNm = button.data('dtmreasonnm');
+        const beforeStaYmd = button.data('staymd');
+        const beforeEndYmd = button.data('endymd');        
+                
+        // 변경 대상(취소) 객체 세팅
+        let revokeDtmHisDTO = {
+            applId: applId,
+            dtmHisId: dtmHisId,
+            modiType: modiType,
+            dtmKindCd: dtmKindCd,
+            dtmReasonCd: dtmReasonCd,
+            dtmReasonNm: dtmReasonNm,
+            staYmd: new Date(beforeStaYmd),
+            endYmd: new Date(beforeEndYmd)
+        };
+
+        // 서버로 전달할 전체 리스트 객체 추가
+        dtmHisDTOList.push(revokeDtmHisDTO);
+
+        // Modal에 변경 대상(취소) 객체 보여주기
         $('#dynamicModal').modal('show');
+        $('#dtmResonNm').text(dtmReasonNm);
+        $('#beforeStaYmd').text(beforeStaYmd.split('T')[0]);
+        $('#beforeEndYmd').text(beforeEndYmd.split('T')[0]);
+
+        // Submit 버튼 클릭 시 기존에 등록된 이벤트 핸들러가 있다면 제거 후 등록 (중복 호출 방지)
+        $('#submit').off('click').on('click', function() {
+
+            // 현재 세팅된 날짜 가져오기
+            const afterStaYmd = $('#startDate').val();
+            const afterEndYmd = $('#endDate').val();
+
+            // dtoHisDTO 객체 세팅
+            let registDtmHisDTO = {
+                dtmKindCd: dtmKindCd,
+                dtmReasonCd: dtmReasonCd,
+                dtmReasonNm: dtmReasonNm,
+                staYmd: new Date(afterStaYmd),
+                endYmd: new Date(afterEndYmd)
+            };
+            // 서버로 전달할 전체 리스트 객체 추가
+            dtmHisDTOList.push(registDtmHisDTO);
+            
+            // 신청 팝업 실행 후
+            ApplListAlertPopup(this, dtmHisDTOList);
+
+            // 모달 종료
+            $('#dynamicModal').modal('hide');
+        });
     });
 
     // (검색폼) 조회 버튼 클릭 시

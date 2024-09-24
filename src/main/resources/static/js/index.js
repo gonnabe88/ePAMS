@@ -14,7 +14,7 @@ $(document).ready(() => {
         const dtmHisDTO = {
             dtmKindCd: dtmCode,
             dtmReasonCd: dtmReasonCode,
-            dtmDispName: dtmDispName,
+            dtmReasonNm: dtmDispName,
             staYmd: new Date(staDate).toISOString(),
             endYmd: new Date(staDate).toISOString()
         };

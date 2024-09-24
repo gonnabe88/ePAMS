@@ -148,17 +148,17 @@ $(document).ready(() => {
                     itemElement.click(); // 길게 터치했을 때 클릭 이벤트 발생
                 }, touchDuration);
             });
-            itemElement.addEventListener('touchend', function (event) {
-                event.preventDefault();
-                event.stopPropagation();
-                clearTimeout(touchTimer); // 터치가 짧으면 타이머 초기화
-            });
-            itemElement.addEventListener('click', function(event) {
-                // 여기서 짧은 터치와 동일한 이벤트 발생
-                event.preventDefault();
-                event.stopPropagation();
-                awesomplete.replace(text); // 선택 시 동작
-            });
+            // itemElement.addEventListener('touchend', function (event) {
+            //     event.preventDefault();
+            //     event.stopPropagation();
+            //     clearTimeout(touchTimer); // 터치가 짧으면 타이머 초기화
+            // });
+            // itemElement.addEventListener('click', function(event) {
+            //     // 여기서 짧은 터치와 동일한 이벤트 발생
+            //     event.preventDefault();
+            //     event.stopPropagation();
+            //     awesomplete.replace(text); // 선택 시 동작
+            // });
 
             return itemElement;
         },

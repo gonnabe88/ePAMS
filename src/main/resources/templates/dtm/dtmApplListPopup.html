@@ -1,8 +1,22 @@
 <div class="dtmApplPopup">
     <p class="title">
-        <div th:each="item : ${dtmHisDTOList}">
-            <p class="mb-2" th:text="${item.dtmRange}"></p>
-            <p th:text="${item.dtmDispName}"></p>
+        <div class="row d-flex align-items-center justify-content-start mb-4" th:each="dto : ${revokeDtmHisDTOList}">
+            <div class="revokeDtmNameTag ms-2 pe-0">
+                <h6>
+                    <span class="badge badge-sm rounded-pill bg-danger m-0">취소</span>
+                    <span th:text="${dto.dtmReasonNm}"></span>
+                </h6>
+                <h7 th:text="${dto.dtmRange}"></h7>  
+            </div>
+        </div>
+        <div class="row d-flex align-items-center justify-content-start mb-4" th:each="dto : ${registDtmHisDTOList}">
+            <div class="registDtmNameTag ms-2 pe-0">
+                <h6>
+                    <span class="badge badge-sm rounded-pill bg-primary m-0">신규</span>
+                    <span th:text="${dto.dtmReasonNm}"></span> 
+                </h6>                 
+                <h7 th:text="${dto.dtmRange}"></h7>         
+            </div>
         </div>
     </p>
     <div class="accordion" id="accordionExample">

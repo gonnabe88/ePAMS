@@ -6,6 +6,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 import java.util.Base64.Decoder;
 import java.util.Base64.Encoder;
+import java.net.URLDecoder;
 
 import org.springframework.stereotype.Service;
 
@@ -30,16 +31,16 @@ public class ShaEncryptService {
      */
     public String encrypt(final String encodedText) throws CustomGeneralException {
         try {
-            // 디코딩
+            // 디코딩(base64)
             final Decoder decoder = Base64.getDecoder();
             final byte[] decodedBytes = decoder.decode(encodedText);
-            final String decodedStr = new String(decodedBytes, StandardCharsets.UTF_8);
-
+            final String base64DecodeStr = new String(decodedBytes, StandardCharsets.UTF_8);
+            // 디코딩(URL)
+            final String decodedStr = URLDecoder.decode(base64DecodeStr, StandardCharsets.UTF_8);
             // SHA-256 암호화
             final MessageDigest msg = MessageDigest.getInstance("SHA-256");
             final Encoder encoder = Base64.getEncoder();
             final byte[] digest = msg.digest(decodedStr.getBytes(StandardCharsets.UTF_8));
-
             // 인코딩
             return encoder.encodeToString(digest);
         } catch (final NoSuchAlgorithmException e) {

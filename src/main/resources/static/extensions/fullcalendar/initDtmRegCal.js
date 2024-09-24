@@ -1,3 +1,5 @@
+let calendar;
+
 document.addEventListener('DOMContentLoaded', function () {
     var calendarEl = document.getElementById('calender');
     var selectedDates = [];
@@ -8,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const holidays = ['2024-09-16', '2024-09-17', '2024-09-18']; // 추가할 휴일 날짜
 
-    var calendar = new FullCalendar.Calendar(calendarEl, {
+    calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth',
         headerToolbar: {
             left: 'today prev',
@@ -183,4 +185,5 @@ document.addEventListener('DOMContentLoaded', function () {
         touchStartX = null;
         touchStartY = null;
     });
+
 });

@@ -1,3 +1,28 @@
+.swal2-html-container {
+    text-align:inherit !important;
+}
+
+.badge-sm {
+    font-size: 0.8rem !important;
+}
+
+.revokeDtmNameTag {
+    border-left: 2px solid #dc3545;
+    border-left-width: thick;
+    border-radius: 5px 0 0 5px;
+}
+
+.registDtmNameTag {
+    border-left: 2px solid #435ebe;
+    border-left-width: thick;
+    border-radius: 5px 0 0 5px;
+}
+
+.dtmModifyModal .fc .fc-daygrid-day-number {
+    padding-left: 0;    
+    padding-right: 0;
+}
+
 .toast-container {
     position: fixed; /* 고정된 위치 */
     top: 1rem; /* 하단에서 약간의 여백 */
@@ -1104,7 +1129,19 @@ mark {
 .date-input input {
     width: 100%; /* 입력 필드가 전체 width 차지 */
     text-align: center; /* 입력 필드 내부 텍스트 중앙 정렬 */
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #607080;
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #dce7f1;
+    border-radius: .25rem;
 }
+
 label {
     margin-bottom: 5px;
 }

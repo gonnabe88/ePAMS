@@ -5,8 +5,8 @@ document.addEventListener('DOMContentLoaded', function () {
     var selectedDates = [];
 
     // 페이지 로드 시 날짜 입력 필드에 오늘 날짜 설정
-    var tod=new Date()
-    updateDates(tod, tod);
+    var today=new Date()
+    updateDates(today, today);
 
     const holidays = ['2024-09-16', '2024-09-17', '2024-09-18']; // 추가할 휴일 날짜
 
@@ -36,30 +36,33 @@ document.addEventListener('DOMContentLoaded', function () {
 
             setTimeout(() => {
                 calendarContainer.classList.remove('fc-fade'); // fadeIn 완료 후 클래스 제거
-                let cell = document.querySelector(`[data-date='${tod.toISOString().split('T')[0]}']`);
+                let cell = document.querySelector(`[data-date='${today.toISOString().split('T')[0]}']`);
                 if (cell) {
                     cell.classList.add('selected-single-day'); // 오늘 날짜에 클래스 추가
                 }
             }, 500); // fadeIn 애니메이션 지속 시간
         },
+
         dayCellDidMount: function (info) {
-            const day = info.date.getDay(); // 0: 일요일, 6: 토요일
+            const day = info.date.getDay();
             const dateStr = info.date.toLocaleDateString('ko-KR', {
                 year: 'numeric',
                 month: '2-digit',
                 day: '2-digit'
-            }).replace(/\. /g, '-').replace('.', '');  // YYYY-MM-DD 형식으로 변환
+            }).replace(/\. /g, '-').replace('.', '');
 
             if (day === 0) {
-                // 일요일에 대한 스타일 적용 (danger #dc3545)
                 info.el.style.setProperty('color', '#dc3545');
             } else if (day === 6) {
-                // 토요일에 대한 스타일 적용 (primary #435ebe)
                 info.el.style.setProperty('color', '#435ebe');
             }
-            // 휴일 목록에 있는 날짜에 대해 스타일 적용 (danger #dc3545)
             if (holidays.includes(dateStr)) {
-                info.el.style.setProperty('color', '#dc3545'); // 휴일 글씨색 적용 (일요일처럼)
+                info.el.style.setProperty('color', '#dc3545');
+            }
+
+            // 오늘 이전 날짜에 클래스 추가
+            if (info.date < new Date().setHours(0,0,0,0)) {
+                info.el.classList.add('past-date');
             }
         },
         dayCellContent: function (arg) {
@@ -67,7 +70,13 @@ document.addEventListener('DOMContentLoaded', function () {
         },
         dateClick: function (info) {
             var selectedDate = new Date(info.dateStr); // 선택한 날짜
+            // 과거일자 선택 시 경고표시 및 비활성화 -- 추후 과거일자 선택가능해지면 아래 if문(disablePastDates.js)만 제거하면 됨
+            if (selectedDate < today.setHours(0, 0, 0, 0)) {
+                disablePastDates();
+                return; // 함수 종료
+            }
             selectedDates.push(selectedDate);
+
             if (selectedDates.length === 2) { //날짜 2개 클릭한 경우
                 setStartAndEnd(selectedDates[0], selectedDates[1]);
                 selectedDates = []; // 다음 클릭을 위해 배열 초기화
@@ -76,7 +85,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 endDate = selectedDate;
                 updateDates(startDate, endDate);
                 addDateRangeHighlight(startDate, endDate);
-                checkDateValidity(selectedDate,null);
             }
 
         },
@@ -94,22 +102,7 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('endDate').value = formatDate(end);
     }
 
-    document.getElementById('startDate').addEventListener('change', updateCalendar);
-    document.getElementById('endDate').addEventListener('change', updateCalendar);
-
-    function updateCalendar() {
-        var startDate = document.getElementById('startDate').value;
-        var endDate = document.getElementById('endDate').value;
-
-        if (startDate && endDate) {
-            var end = new Date(endDate);
-            end.setDate(end.getDate());
-
-            addDateRangeHighlight(new Date(startDate), end);
-            checkDateValidity(new Date(startDate), end)
-        }
-    }
-
+    //날짜 2개 선택시 시작 종료일
     function setStartAndEnd(date1, date2) {
         if (date1 < date2) {
             startDate = date1;
@@ -120,9 +113,9 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         updateDates(startDate, endDate);
         addDateRangeHighlight(startDate, endDate);
-        checkDateValidity(startDate, endDate);
     }
 
+    //캘린더 강조 표시 함수
     function addDateRangeHighlight(start, end) {
         // 이전에 선택된 날짜 셀들의 스타일 초기화
         document.querySelectorAll('.fc-daygrid-day').forEach(dayEl => {
@@ -151,6 +144,31 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
                 currentDate.setDate(currentDate.getDate() + 1); // 다음 날짜로 이동
             }
+        }
+    }
+
+
+    //text로 직접 입력하는 경우
+    document.getElementById('startDate').addEventListener('change', updateCalendar);
+    document.getElementById('endDate').addEventListener('change', updateCalendar);
+
+    function updateCalendar() {
+        var startDate = document.getElementById('startDate').value;
+        var endDate = document.getElementById('endDate').value;
+
+        if (new Date(startDate) < today.setHours(0, 0, 0, 0) || new Date(endDate) < today.setHours(0, 0, 0, 0)) {
+            //텍스트로 과거일자 선택하는 경우에도 못하게 제한
+            disablePastDates();
+            updateDates(today, today);
+            addDateRangeHighlight(today, today);
+            return; // 함수 종료
+        }
+        
+        if (startDate && endDate) {
+            var end = new Date(endDate);
+            end.setDate(end.getDate());
+
+            addDateRangeHighlight(new Date(startDate), end);
         }
     }
 

@@ -170,9 +170,10 @@ public class DtmHistoryController<S extends Session> {
             startPage = Math.max(1, endPage - maxPageBtn + 1);
         }
 
-        dtmHisDTOList.forEach(dto -> {
-            log.warn(dto.toString());
-        });
+        // dtmHisDTOList.forEach(dto -> {
+        //     log.warn(dto.toString());
+        // });
+        
         model.addAttribute("dtmHis", dtmHisDTOList);
         model.addAttribute("searchDTO", searchDTO);
         model.addAttribute("startPage", startPage);

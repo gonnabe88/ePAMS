@@ -16,7 +16,7 @@ server:
       persistent: true
       tracking-modes: cookie
       cookie:
-        domain: epams.duckdns.org
+        domain: epams.kdb.co.kr
         http-only: true
         path: /
         max-age: -1 # infinite
@@ -60,7 +60,7 @@ authn:
 spring:  
   datasource:
     driver-class-name: oracle.jdbc.OracleDriver
-    url: jdbc:oracle:thin:@192.168.0.10:1521:ORCLCDB
+    url: ${DB_URL}
     username: EHR
     password: ${DB_PASSWORD}  # 시스템 환경변수 kdb1234! 세팅
     hikari:
@@ -69,6 +69,7 @@ spring:
       max-lifetime: 1800000 # 30분(커넥션 풀에 유휴 커넥션이 유지되는 최대 시간)
       maximum-pool-size: 20 # 최대 커넥션 수
       minimum-idle: 5 # 최소 커넥션 수
+      connection-init-sql: ALTER SESSION SET NLS_DATE_FORMAT = 'YYYY-MM-DD'
   sql:
     init:
       mode: always

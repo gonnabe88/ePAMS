@@ -22,6 +22,24 @@ const ApplListAlertPopup = (element, dtmHisDTO) => {
                 cancelButtonColor: "#d33",
                 confirmButtonText: "네, 신청할게요!",
                 cancelButtonText: "아니요",
+                didOpen: () => {
+                    const confirmButton = Swal.getConfirmButton();
+                    const agreeCheck = $('#agreeCheck');
+
+                    confirmButton.disabled = true;
+
+                    agreeCheck.on('change', function () {
+                        confirmButton.disabled = !this.checked;
+                    });
+                },
+                preConfirm: () => {
+                    const isChecked = $('#agreeCheck').checked;
+                    if(!isChecked) {
+                        Swal.showValidationMessage('동의 후 진행 가능합니다.');
+                        return false;
+                    }
+                    return true;
+                }
             }).then((result) => {
                 if (result.isConfirmed) {
                     // POST 요청 함수 호출

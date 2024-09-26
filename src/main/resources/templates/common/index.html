@@ -48,7 +48,7 @@
                 </h5>
             </div>
             <div class="row d-flex justify-content-end mb-1">
-                <a href="/dtm/dtmRegDetail" class="link d-flex justify-content-end align-items-top">
+                <a href="/dtm/dtmReg" class="link d-flex justify-content-end align-items-top">
                     <h6> <span th:text="${langList['QUICK_APPL_01_STMT']}"></span>
                     <i class="bi bi-arrow-right-circle-fill ms-1"></i></h6>
                 </a>
@@ -220,10 +220,16 @@
     <!--start 최근 공지사항-->
     <div class="main-content">
         <div class="recent-notice container">
-            <div class="row d-flex justify-content-start mb-2">
+            <div class="row d-flex justify-content-start mb-1">
                 <h5 class="text-start">
                     <i class="bi bi-bell-fill"></i> <span th:text="${langList['RECENT_NOTICE_TTL']}"></span>
                 </h5>
+            </div>
+            <div class="row d-flex justify-content-end mb-1">
+                <a href="/board/list" class="link d-flex justify-content-end align-items-top">
+                    <h6> <span>더보기</span>
+                    <i class="bi bi-arrow-right-circle-fill ms-1"></i></h6>
+                </a>
             </div>
             <div class="row d-flex justify-content-center">
                 <div class="row col-lg-12">

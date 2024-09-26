@@ -72,8 +72,10 @@
         OHR.DTM_HIS d
         LEFT JOIN OHR.XFRMD2C x1 ON d.DTM_REASON_CD = x1.CD
         AND x1.CD_KIND = 'DTM_REASON_CD'
+        AND d.STA_YMD BETWEEN x1.STA_YMD AND x1.END_YMD
         LEFT JOIN OHR.XFRMD2C x2 ON d.STAT_CD = x2.CD
         AND x2.CD_KIND = 'ELA_STAT_CD'
+        AND d.STA_YMD BETWEEN x2.STA_YMD AND x2.END_YMD
         WHERE
         d.EMP_ID = #{empId}
         AND (d.MODI_TYPE != 'D' OR d.MODI_TYPE IS NULL)
@@ -103,8 +105,10 @@
             OHR.DTM_HIS d
         LEFT JOIN OHR.XFRMD2C x1 ON d.DTM_REASON_CD = x1.CD
               AND x1.CD_KIND = 'DTM_REASON_CD'
+              AND d.STA_YMD BETWEEN x1.STA_YMD AND x1.END_YMD
         LEFT JOIN OHR.XFRMD2C x2 ON d.STAT_CD = x2.CD
               AND x2.CD_KIND = 'ELA_STAT_CD'
+              AND d.STA_YMD BETWEEN x2.STA_YMD AND x2.END_YMD
         WHERE
                 d.EMP_ID = #{empId}
             AND (d.MODI_TYPE != 'D' OR d.MODI_TYPE IS NULL)

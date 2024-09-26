@@ -30,7 +30,9 @@ public class SidebarService {
      * @return 검색된 직원 정보
      */
     public UserInfoDTO findByUserNo(final String username) {
-        return sidebarRepository.findByUserNo(username);
+        final UserInfoDTO userInfoDTO = sidebarRepository.findByUserNo(username);
+        userInfoDTO.setTime(userInfoDTO.getStaTime(), userInfoDTO.getEndTime());
+        return userInfoDTO;
     }
 
 

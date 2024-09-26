@@ -1,6 +1,5 @@
 package epams.domain.dtm.controller;
 
-import epams.domain.com.commonCode.CommonCodeDTO;
 import epams.domain.com.commonCode.CommonCodeService;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -16,7 +15,6 @@ import epams.domain.com.admin.service.HtmlLangDetailService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.List;
 import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,31 +47,15 @@ public class DtmRegController<S extends Session> {
      * @since 2024-08-27
      */
     @GetMapping("/dtmReg")
-    public String dtmReg(@PageableDefault(page = 1) final Pageable pageable, final Model model) {
-        final String DTMREG = "dtm/dtmReg";
+    public String dtmReg(Model model) {
 
         // 언어목록
-        final Map<String, String> langList = langDetailService.getCodeHtmlDetail(DTMREG);
-        model.addAttribute("langList", langList);
-
-        return DTMREG;
-    }
-
-    /**
-     * @author K210058
-     * @implNote 근태신청 컨트롤러
-     * @since 2024-08-27
-     */
-    @GetMapping("/dtmRegDetail")
-    public String dtmRegDetail(Model model) {
-        final String DTMREGDET = "dtm/dtmRegDetail";
-
-        // 언어목록
-        final Map<String, String> langList = langDetailService.getCodeHtmlDetail(DTMREGDET);
+        final Map<String, String> langList = langDetailService.getCodeHtmlDetail("dtm/dtmReg");
+        logger.info(langList.get("DTM_PERIOD"));
         model.addAttribute("langList", langList);
 
 
-        return DTMREGDET;
+        return "dtm/dtmReg";
     }
 
     @PostMapping("/submitDtmReg")

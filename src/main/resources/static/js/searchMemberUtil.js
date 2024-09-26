@@ -141,24 +141,29 @@ $(document).ready(() => {
             // 터치 이벤트 처리
             let touchTimer;
             let touchDuration = 500; // 터치를 길게 했을 때 인식하는 시간 (500ms)
+            let startX, startY;
             itemElement.addEventListener('touchstart', function (event) {
+                startX = event.touches[0].clientX;
+                startY = event.touches[0].clientY;
                 touchTimer = setTimeout(function() {
                     event.preventDefault();
                     event.stopPropagation();
                     itemElement.click(); // 길게 터치했을 때 클릭 이벤트 발생
                 }, touchDuration);
             });
-            // itemElement.addEventListener('touchend', function (event) {
-            //     event.preventDefault();
-            //     event.stopPropagation();
-            //     clearTimeout(touchTimer); // 터치가 짧으면 타이머 초기화
-            // });
-            // itemElement.addEventListener('click', function(event) {
-            //     // 여기서 짧은 터치와 동일한 이벤트 발생
-            //     event.preventDefault();
-            //     event.stopPropagation();
-            //     awesomplete.replace(text); // 선택 시 동작
-            // });
+            itemElement.addEventListener('touchmove', function (event) {
+                let moveX = event.touches[0].clientX;
+                let moveY = event.touches[0].clientY;
+                if(Math.abs(moveX - startX) > 10 || Math.abs(moveY - startY) > 10) {
+                    clearTimeout(touchTimer);
+                }
+            });
+            itemElement.addEventListener('touchend', function (event) {
+                clearTimeout(touchTimer);
+            });
+            itemElement.addEventListener('touchcancel', function (event) {
+                clearTimeout(touchTimer);
+            });
 
             return itemElement;
         },

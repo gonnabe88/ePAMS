@@ -23,7 +23,12 @@ $(document).ready(function () {
         success: function (data) {
             const $select = $('#list');
             $select.empty(); // 기존 옵션 삭제
-            $select.append(new Option("전체", "")); // 기본 옵션 추가
+            //근태 신청화면에서는 전체선택 제외
+            if(window.location.pathname != '/dtm/dtmReg'){
+                $select.append(new Optemdemdfion("전체", "")); // 기본 옵션 추가
+            }else {
+                $select.append(new Option("","")) //선택 안됐을때는 null값
+            }
             data.forEach(item => {
                 $select.append(new Option(item.codeName, item.code)); // 새로운 옵션 추가
             });
@@ -33,7 +38,7 @@ $(document).ready(function () {
             if (dtmReasonCd) {
                 $select.val(dtmReasonCd).trigger('change');
             } else {
-                $select.val("").trigger('change'); // 기본 옵션 선택
+                $select.val(null).trigger('change'); // 기본 옵션 선택
             }
 
         },

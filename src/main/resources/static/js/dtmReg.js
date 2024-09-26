@@ -4,12 +4,21 @@ document.addEventListener('DOMContentLoaded', function () {
     const startDateInput = document.getElementById('startDate');
     const endDateInput = document.getElementById('endDate');
 
+    
+    // //근태 종류 입력전까지 신청하기 비활성화
+    // $('#list').on('change',function(){
+    //     if(this.value!="") {
+    //         console.log(this.value)
+    //         $('#submitButton').prop('disabled',false);
+    //     }
+    // });
+
+    //신청하기 버튼 클릭시
     submitButton.addEventListener('click', function () {
         const startDate = startDateInput.value;
         const endDate = endDateInput.value;
         const dtmReasonCd = reasonSelect.value;
 
-        console.log(new Date(startDateInput.value));
         // dtmReasonCd가 없을 경우 경고 메시지 표시
         if (!dtmReasonCd) {
             alert("근태종류를 선택 바랍니다.");
@@ -21,11 +30,11 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
 
-        // 과거일자 신청제한
-        if (new Date(startDate) < today) {
-            alert("과거일자 근태 신청은 외부망에서 할 수 없습니다");
-            return;
-        }
+        // // 과거일자 신청제한
+        // if (new Date(startDate) < today) {
+        //     alert("과거일자 근태 신청은 외부망에서 할 수 없습니다");
+        //     return;
+        // }
 
         // 선택된 이유 코드명 가져오기
         const dtmDispName = reasonSelect.options[reasonSelect.selectedIndex].text;

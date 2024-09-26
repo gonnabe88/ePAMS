@@ -68,7 +68,7 @@ public class EaiService {
 
 
         //log.warn("reqData (70) : " + new String(reqData, StandardCharsets.UTF_8));
-        log.warn("reqData (70) : " + new String(reqData));
+        //log.warn("reqData (70) : " + new String(reqData));
 
 
         try {

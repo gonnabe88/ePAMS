@@ -40,7 +40,7 @@ public class DtmSearchDTO {
      * @implNote 결재상태코드 리스트 (121/132/131/141)
      * @since 2024-06-09
      */
-    private List<String> statCdList = List.of("121","132","131","141");
+    private List<String> statCdList = List.of("121","132"); // 121(결재중), 132(결재완료) 기본선택
 
     /***
      * @author 140024

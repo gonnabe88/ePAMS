@@ -44,7 +44,7 @@ $(document).ready(function () {
             add: {
                 text: '신청',
                 click: function() {
-                    window.location.href = '/dtm/dtmRegDetail';
+                    window.location.href = '/dtm/dtmAppl';
                 }
             }
         },

@@ -80,19 +80,19 @@
                                                 <h6><span th:text="${langList['ELA_STAT']}"></span></h6>
                                                 <div class="btn-group btn-group-sm" role="group" aria-label="Basic radio toggle button group">
 
-                                                    <!-- 체크박스 121 -->
+                                                    <!-- 체크박스 121 진행(결재중)-->
                                                     <input type="checkbox" class="btn-check" name="statCdList" id="121" autocomplete="off" th:checked="${#lists.contains(searchDTO.statCdList, '121')}">
                                                     <label class="btn btn-outline-primary" for="121"><span th:text="${langList['ELA_STAT_CD_121_S']}"></span></label>
 
-                                                    <!-- 체크박스 132 -->
+                                                    <!-- 체크박스 132 결재완료-->
                                                     <input type="checkbox" class="btn-check" name="statCdList" id="132" autocomplete="off" th:checked="${#lists.contains(searchDTO.statCdList, '132')}">
                                                     <label class="btn btn-outline-primary" for="132"><span th:text="${langList['ELA_STAT_CD_132_S']}"></span></label>
 
-                                                    <!-- 체크박스 131 -->
+                                                    <!-- 체크박스 131 반려-->
                                                     <input type="checkbox" class="btn-check" name="statCdList" id="131" autocomplete="off" th:checked="${#lists.contains(searchDTO.statCdList, '131')}">
                                                     <label class="btn btn-outline-primary" for="131"><span th:text="${langList['ELA_STAT_CD_131_S']}"></span></label>
 
-                                                    <!-- 체크박스 141 -->
+                                                    <!-- 체크박스 141 취소-->
                                                     <input type="checkbox" class="btn-check" name="statCdList" id="141" autocomplete="off" th:checked="${#lists.contains(searchDTO.statCdList, '141')}">
                                                     <label class="btn btn-outline-primary" for="141"><span th:text="${langList['ELA_STAT_CD_141_S']}"></span></label>
                                                 </div>
@@ -202,28 +202,22 @@
                                                     </thead>
                                                     <tbody>
                                                     <tr>
-                                                        <td>연차(기본)</td>
+                                                        <td>연차</td>
                                                         <td th:text="${dtmAnnualStatus.AnnualDayTotalCnt}">-</td>
                                                         <td th:text="${dtmAnnualStatus.AnnualDayUsedCnt}">-</td>
-                                                        <td th:text="${dtmAnnualStatus.AnnualDayRemainCnt}">-</td>
+                                                        <td th:text="${dtmAnnualStatus.AnnualDayNoSaveRemainCnt}">-</td>
                                                     </tr>
                                                     <tr>
-                                                        <td>연차(저축)</td>
+                                                        <td>저축</td>
                                                         <td th:text="${dtmAnnualStatus.SaveDayTotalCnt}">-</td>
                                                         <td th:text="${dtmAnnualStatus.SaveDayTotalCnt}">-</td>
-                                                        <td th:text="${dtmAnnualStatus.SaveDayTotalCnt}">-</td>
+                                                        <td th:text="${dtmAnnualStatus.ExpSaveDayTotalCnt}">-</td>
                                                     </tr>
                                                     <tr>
-                                                        <td>보상휴가</td>
-                                                        <td>-</td>
-                                                        <td>-</td>
-                                                        <td>-</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>합계</td>
-                                                        <td>-</td>
-                                                        <td>-</td>
-                                                        <td>-</td>
+                                                        <td>보상</td>
+                                                        <td th:text="${dtmAnnualStatus.SaveDayTotalCnt}">-</td>
+                                                        <td th:text="${dtmAnnualStatus.SaveDayTotalCnt}">-</td>
+                                                        <td th:text="${dtmAnnualStatus.ExpSaveDayTotalCnt}">-</td>
                                                     </tr>
                                                     </tbody>
                                                 </table>
@@ -371,7 +365,7 @@
                                                         <div id="dateWarning">오늘 이후 건만 신청가능합니다</div>
                                                     </div>
                                                 </div>
-                                                <div class="dtmRegDetail">
+                                                <div class="dtmAppl">
                                                     <div class="row">
                                                         <div class="col">
                                                             <div id="calender"></div>
@@ -436,10 +430,10 @@
 
 
     <script src="/extensions/fullcalendar/index.global.js"></script>
-    <script src="/extensions/fullcalendar/initDtmRegCal.js"></script>
+    <script src="/extensions/fullcalendar/initDtmApplCal.js"></script>
     <script src="/extensions/fullcalendar/main.min.js"></script>
     <script src="/js/dateFormat.js"></script>
-    <script src="/js/pastValid.js"></script>
+    <script src="/js/disablePastDates.js"></script>
 
     <script src="/js/dateInputValidation.js"></script>
     <script src="/js/searchForm.js"></script>

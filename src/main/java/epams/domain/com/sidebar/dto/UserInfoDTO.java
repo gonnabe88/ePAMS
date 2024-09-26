@@ -71,4 +71,11 @@ public class UserInfoDTO {
      */
     private String endTime = "19:00";
 
+    public void setTime(String staTime, String endTime) {
+        if(!"N/A".equals(staTime) && !"N/A".equals(endTime) && staTime.length() == 4 && endTime.length() == 4 ) {
+            this.staTime = staTime.substring(0, 2) + ":" + staTime.substring(2, 4);
+            this.endTime = endTime.substring(0, 2) + ":" + endTime.substring(2, 4);
+        }
+    }
+
 }

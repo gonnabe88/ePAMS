@@ -10,7 +10,7 @@
 
 <body>
 <div layout:fragment="contents">
-    <div class="dtmRegDetail">
+    <div class="dtmReg">
         <div class="container">
             <div class="main-content">
                 <div class="header-container">
@@ -44,16 +44,6 @@
                     <div class="card-body">
                         <div class="row mb-3">
                             <div class="col">
-                                <h6><span th:text="${langList['DTM_KIND']}"></span></h6>
-                                <select class="form-control select2" aria-label="DTM Reason Code register"
-                                        name="dtmReasonCd" id="list">
-                                    <option value="" selected><span th:text="${langList['ENTIRE']}"></span></option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <div class="col">
                                 <h6><span th:text="${langList['DTM_PERIOD']}"></span></h6>
                                 <div class="date-input-container">
                                     <div class="date-input">
@@ -64,7 +54,11 @@
                                         <input type="text" id="endDate" name="endDate">
                                     </div>
                                 </div>
-                                <div id="dateWarning">오늘 이후 건만 신청가능합니다</div>
+                                <div id="dateWarning" class="warning-overlay">
+                                    <div class="warning-box">
+                                        <p>과거일자는 선택 불가합니다</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -72,10 +66,19 @@
                                 <div id="calender"></div>
                             </div>
                         </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col">
+                                <h6><span th:text="${langList['DTM_KIND']}"></span></h6>
+                                <select class="form-control select2" aria-label="DTM Reason Code register" 
+                                        name="dtmReasonCd" id="list" th:data-placeholder="${langList['DTM_REG_SELECT']}">
+                                </select>
+                            </div>
+                        </div>
                         <div class="row mb-3">
                             <div class="col">
                                 <div class="button-group">
-                                    <button type="submit" class="btn btn-submit">신청하기</button>
+                                    <button type="submit" class="btn btn-submit" id="submitButton">신청하기</button>
                                 </div>
                             </div>
                         </div>
@@ -96,9 +99,9 @@
     <script src="/js/dtmStatus.js"></script>
     <script src="/js/dateFormat.js"></script>
     <script src="/js/selectForm.js"></script>
-    <script src="/js/pastValid.js"></script>
+    <script src="/js/disablePastDates.js"></script>
 
-    <script src="/js/dtmAppl.js"></script>
+    <script src="/js/dtmReg.js"></script>
 
 </th:block>
 </div>

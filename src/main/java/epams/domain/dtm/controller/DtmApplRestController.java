@@ -111,7 +111,7 @@ public class DtmApplRestController {
         Map<String, Object> response = new ConcurrentHashMap<>();
 
         try {
-/* @TODO 외부 테스트 시 주석 처리(시작)
+/* @TODO 외부 테스트 시 주석 처리(시작)*/
 
             // 근태 유형별 합계 시간 데이터 저장용 객체 생성
             final DtmKindSumDTO sumDTO = new DtmKindSumDTO();
@@ -134,7 +134,7 @@ public class DtmApplRestController {
             response.put("annualUsedCnt", statusDTO.getAnnualDayUsedCnt()); // 기 사용시간
             response.put("annualTotalCnt", statusDTO.getAnnualDayTotalCnt()); // 총 보유시간
 
- @TODO 외부 테스트 시 주석 처리(끝) */
+ /*@TODO 외부 테스트 시 주석 처리(끝) */
             response.put("dtmHisDTOList", dtmHisDTOList); // 근태신청 리스트
             return new ResponseEntity<>(response, HttpStatus.CREATED);
 

@@ -100,7 +100,7 @@ public class DtmRevokeRestController<S extends Session> {
 
         try {
 
-/* @TODO 외부 테스트 시 주석 처리(시작)
+/* @TODO 외부 테스트 시 주석 처리(시작)*/
 
             // 연차촉진 관련 데이터 가져오기
             final DtmPromotionDTO dtmPromotionDTO = dtmPromotionService.getDtmPromotionYnCheckData(empId, thisYear);
@@ -113,7 +113,7 @@ public class DtmRevokeRestController<S extends Session> {
                 dtmRevokeService.check(dto, dtmPromotionDTO, dtmSaveDTO);
             }
 
- @TODO 외부 테스트 시 주석 처리(끝) */
+ /*@TODO 외부 테스트 시 주석 처리(끝) */
             // 서비스 호출 및 결과 메시지 설정
             String resultMessage = dtmRevokeService.revoke(dto);
 

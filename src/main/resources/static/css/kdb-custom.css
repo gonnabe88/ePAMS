@@ -1,3 +1,22 @@
+#awesomplete_list_2 {
+    overflow-y: auto; /* 세로 스크롤 활성화 */
+    -webkit-overflow-scrolling: touch; /* 모바일에서 부드러운 스크롤 지원 */
+    scrollbar-width: auto; /* 스크롤바 두께 설정 (Firefox 지원) */
+
+    background: linear-gradient(to bottom right, white, hsla(0, 0%, 100%, 1.0)); /* 배경 그라데이션 설정 */
+}
+
+/* 크롬 및 사파리에서 스크롤바 스타일 */
+#awesomplete_list_2::-webkit-scrollbar {
+    width: 8px; /* 스크롤바 너비 */
+}
+
+#awesomplete_list_2::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.3); /* 스크롤바 색상 */
+    border-radius: 10px; /* 스크롤바 둥근 모서리 */
+}
+
+
 .swal2-html-container {
     text-align:inherit !important;
 }

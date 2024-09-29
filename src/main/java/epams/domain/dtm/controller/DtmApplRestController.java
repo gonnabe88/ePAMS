@@ -171,6 +171,7 @@ public class DtmApplRestController {
             // 서비스 호출 및 결과 메시지 설정
             String resultMessage = dtmApplyService.insert(dto);
             response.put("message", resultMessage);
+
             return new ResponseEntity<>(response, HttpStatus.CREATED);
 
         } catch (CustomGeneralRuntimeException e) {

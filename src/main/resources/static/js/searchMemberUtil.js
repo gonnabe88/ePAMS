@@ -69,6 +69,12 @@ const scrollToDiv = () => {
     target.scrollIntoView({ behavior: 'smooth'});
 };
 
+// 직원 검색 폼으로 스크롤 이동
+const scrollToSearchMemberCard = () => {
+    const target = $('#searchMemberCard').get(0);
+    target.scrollIntoView({ behavior: 'smooth'});
+};
+
 // 직원 검색 시 자동완성을 위한 데이터 가져오기
 $(document).ready(() => {
     const inputElement = document.getElementById('searchMember');
@@ -111,6 +117,7 @@ $(document).ready(() => {
         typingInterval = null; // interval 변수 초기화
         inputElement.setAttribute("placeholder", "");
         isFocused = true;  // 포커스 상태를 true로 설정
+        scrollToSearchMemberCard(); // 검색 폼으로 스크롤 이동
     });
 
     // searchMember 입력 필드가 포커스를 잃었을 때 애니메이션 재개
@@ -139,31 +146,31 @@ $(document).ready(() => {
             itemElement.innerHTML = html;
 
             // 터치 이벤트 처리
-            let touchTimer;
-            let touchDuration = 500; // 터치를 길게 했을 때 인식하는 시간 (500ms)
-            let startX, startY;
-            itemElement.addEventListener('touchstart', function (event) {
-                startX = event.touches[0].clientX;
-                startY = event.touches[0].clientY;
-                touchTimer = setTimeout(function() {
-                    event.preventDefault();
-                    event.stopPropagation();
-                    itemElement.click(); // 길게 터치했을 때 클릭 이벤트 발생
-                }, touchDuration);
-            });
-            itemElement.addEventListener('touchmove', function (event) {
-                let moveX = event.touches[0].clientX;
-                let moveY = event.touches[0].clientY;
-                if(Math.abs(moveX - startX) > 10 || Math.abs(moveY - startY) > 10) {
-                    clearTimeout(touchTimer);
-                }
-            });
-            itemElement.addEventListener('touchend', function (event) {
-                clearTimeout(touchTimer);
-            });
-            itemElement.addEventListener('touchcancel', function (event) {
-                clearTimeout(touchTimer);
-            });
+            // let touchTimer;
+            // let touchDuration = 500; // 터치를 길게 했을 때 인식하는 시간 (500ms)
+            // let startX, startY;
+            // itemElement.addEventListener('touchstart', function (event) {
+            //     startX = event.touches[0].clientX;
+            //     startY = event.touches[0].clientY;
+            //     touchTimer = setTimeout(function() {
+            //         event.preventDefault();
+            //         event.stopPropagation();
+            //         itemElement.click(); // 길게 터치했을 때 클릭 이벤트 발생
+            //     }, touchDuration);
+            // });
+            // itemElement.addEventListener('touchmove', function (event) {
+            //     let moveX = event.touches[0].clientX;
+            //     let moveY = event.touches[0].clientY;
+            //     if(Math.abs(moveX - startX) > 10 || Math.abs(moveY - startY) > 10) {
+            //         clearTimeout(touchTimer);
+            //     }
+            // });
+            // itemElement.addEventListener('touchend', function (event) {
+            //     clearTimeout(touchTimer);
+            // });
+            // itemElement.addEventListener('touchcancel', function (event) {
+            //     clearTimeout(touchTimer);
+            // });
 
             return itemElement;
         },
@@ -232,30 +239,18 @@ $(document).ready(() => {
 
         // 스크롤이 내부에서만 발생하도록 설정
         event.stopPropagation();
-        console.log("[scroll] stopPropagation#1");
-
-    }, { passive: false });
+    });
 
     // 터치 이벤트에서 스크롤이 외부로 전파되지 않도록 설정
     dropdown.addEventListener('touchmove', function(event) {
         event.stopPropagation();
-        console.log("[touchmove] stopPropagation#2");
-    }, { passive: false });
-
+    }, { passive: true });
     dropdown.addEventListener('touchstart', function(event) {
         event.stopPropagation();
-        console.log("[touchstart] stopPropagation#3");
-    }, { passive: false });
-
+    }, { passive: true });
     dropdown.addEventListener('touchend', function(event) {
         event.stopPropagation();
-        console.log("[touchend] stopPropagation#4");
-    }, { passive: false });
-
-    dropdown.addEventListener('touchcancel', function(event) {
-        event.stopPropagation();
-        console.log("[touchcancel] stopPropagation#5");
-    }, { passive: false });
+    }, { passive: true });
 
     $.ajax({
         url: "api/index/getDeptList",

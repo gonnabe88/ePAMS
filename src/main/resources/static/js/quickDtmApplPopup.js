@@ -33,7 +33,8 @@ const ApplListAlertPopup = (element, dtmHisDTO) => {
                     });
                 },
                 preConfirm: () => {
-                    const isChecked = $('#agreeCheck').checked;
+                    const isChecked = $('#agreeCheck').is(':checked');
+                    console.log(isChecked);
                     if(!isChecked) {
                         Swal.showValidationMessage('동의 후 진행 가능합니다.');
                         return false;
@@ -54,38 +55,6 @@ const ApplListAlertPopup = (element, dtmHisDTO) => {
         }
     });
 
-};
-
-// 빠른 근태 신청 팝업
-const ApplAlertPopup = (element, dtmHisDTO) => {
-    const staDate = element.getAttribute('data-staDate');
-    const staDateStr = element.getAttribute('data-staDateStr');
-    const dtmCode = element.getAttribute('data-dtmCode');
-    const dtmReasonCode = element.getAttribute('data-dtmReasonCode');
-    const dtmDispName = element.getAttribute('data-dtmDispName');
-
-    // 객체를 쿼리 스트링으로 변환
-    const queryString = $.param(dtmHisDTO[0]);
-
-    // HTML 파일을 불러오기 (쿼리 스트링과 함께 GET 요청)
-    $.get(`/dtm/dtmApplPopup?${queryString}`, function(htmlContent) {
-        Swal.fire({
-            title: "신청하시겠습니까?",
-            html: htmlContent,
-            icon: "info",
-            showCancelButton: true,
-            scrollbarPadding: false,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "네, 신청할게요!",
-            cancelButtonText: "아니요",
-        }).then((result) => {
-            if (result.isConfirmed) {
-                // POST 요청 함수 호출
-                postDtmHisDTO(dtmHisDTO);
-            }
-        });
-    });
 };
 
 // 근태 신청
@@ -113,8 +82,6 @@ const postDtmHisDTO = async (dtmHisDTO) => {
                 await controlProgressBar(0, 80);
             },
             success: async (data) => { // 성공 (HTTP 상태코드 20X)
-                const staYmd = data.staYmd; // 서버에서 반환된 staYmd 값 사용
-                const dtmReasonNm = data.dtmReasonNm;
 
                 console.log(data);
 
@@ -126,7 +93,7 @@ const postDtmHisDTO = async (dtmHisDTO) => {
                 $('#processModal').remove(); // 모달을 제거하여 DOM을 깨끗하게 유지
 
                 // 신청 완료 팝업
-                popupBtnReHtmlMsg('신청되었습니다.', `<span class="dtmApplSuccessPopup">${staYmd} ${dtmReasonNm}</span>`, 'success', '근태조회', '/dtm/dtmList');
+                popupBtnReHtmlMsg('신청되었습니다.','', 'success', '근태조회', '/dtm/dtmList');
                 console.log('Success:', data);
             },
             error: async (error) => { // 실패 (HTTP 상태코드 40X, 50X)

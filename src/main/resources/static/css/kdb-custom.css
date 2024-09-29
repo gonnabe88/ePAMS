@@ -19,7 +19,7 @@
 }
 
 .dtmModifyModal .fc .fc-daygrid-day-number {
-    padding-left: 0;    
+    padding-left: 0;
     padding-right: 0;
 }
 
@@ -103,6 +103,9 @@
 
 .swal2-html-container .text-left {
     text-align: left !important;
+}
+
+.cancelBtn {
 }
 
 .table {
@@ -217,8 +220,6 @@
 body {
     overflow-x: visible; /* X축 방향의 오버플로를 보이도록 설정 */
 }
-
-
 
 #searchDiv .mainCard {
     min-height: 470px;
@@ -496,7 +497,7 @@ mark {
     overflow: scroll;
 }
 
-    /************************* 근태조회(dtmCalendar) FULLCALENDAR 시작 **************************/
+/************************* 근태조회(dtmCalendar) FULLCALENDAR 시작 **************************/
 
 /*이벤트 아이템(근태목록) 행간 조정*/
 .dtmList .event-item {
@@ -590,7 +591,7 @@ mark {
 
 /* 달력 내부 컨텐츠 높이를 화면의 60%로 설정*/
 .dtmList .fc tbody {
-    height: 50vh;
+    height: 40vh;
 }
 
 /* 날짜 박스 불필요한 여백 제거 */
@@ -619,6 +620,12 @@ mark {
     justify-content: center;
     align-items: center;
     height: 100%;
+}
+
+/*More 버튼*/
+.dtmList .fc-daygrid-day-bottom {
+    font-size: 0.7rem;
+    color: #25396f;  /* 버튼 색상 설정 */
 }
 
 /*이벤트 배경색*/
@@ -708,87 +715,250 @@ mark {
     box-shadow: none !important; /* 그림자 제거 */
 }
 
+/*이벤트 아이템(근태목록) 행간 조정*/
+.dtmList .event-item {
+    padding-bottom: 10px;
+}
+
+/*이벤트 아이템(근태목록) 행간 조정(마지막이 아닌 경우)*/
+.dtmList .event-item:not(:last-child) {
+    border-bottom: 1px solid #E4F0FF; /* 행 사이에 경계선 설정 */
+    margin-bottom: 10px;
+    padding-top: 10px;
+}
+
+/*이벤트 아이템(근태목록) 행간 조정(마지막인 경우)*/
+.dtmList .event-item:is(:last-child) {
+    padding-top: 10px;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+/* 달력 이전/다음 전환 시 애니메이션 Fade-In 정의 */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* 달력 이전/다음 전환 시 애니메이션 Fade-In 정의 */
+.dtmList .fc-fade {
+    animation: fadeIn 0.5s ease-in-out;
+    opacity: 1;
+}
+
+/* 오늘 버튼 비활성화 시 기본으로 안보이게 설정*/
+.dtmList .btn.disabled,
+.dtmList fieldset:disabled .btn {
+    visibility: hidden;
+}
+
+/* 달력 행 사이에 경계선 설정 */
+.dtmList tbody tr {
+    border-bottom: 1px solid #E4F0FF;
+}
+
+/* 달력 마지막 행에는 경계선 제거 */
+.dtmList tbody tr:last-child {
+    border-bottom: none;
+}
+
+/*달력 크기 및 여백 조정*/
+.dtmList .fc .fc-toolbar.fc-header-toolbar {
+    margin-bottom: 1rem;
+}
+.dtmList .card-body {
+    max-width: 100% !important;
+    padding: 1rem 1px 1px;
+}
+.dtmList .fc-scrollgrid-sync-table,
+.dtmList .fc-daygrid-body
+{
+    width: 100% !important;
+}
+
+/*a 링크 속성 제거 (색상 및 밑줄 제거)*/
+.dtmList a.fc-daygrid-day-number,
+.dtmList a.fc-daygrid-day-number div {
+    color: inherit !important; /* 상위 요소의 색상을 따르도록 설정 */
+    text-decoration: none !important; /* 밑줄 제거 */
+}
+
+/*HEADER Next, 월, PREV 버튼간 간격 이슈 해결*/
+.dtmList .fc-direction-ltr .fc-toolbar > * > :not(:first-child) {
+    margin: 0;
+}
+
+/*HEADER 스타일 설정*/
+.dtmList .fc-toolbar-chunk {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/*경계선 제거*/
+.dtmList .fc table, .dtmList .fc td, .dtmList .fc th {
+    width: 100%  !important;
+    border: none !important;
+}
+
+/* 날짜 박스 불필요한 여백 제거 */
+.dtmList .fc .fc-daygrid-day-number {
+    padding: 0;
+}
+
+/*이벤트 박스 스타일 조정*/
+.dtmList .fc .fc-daygrid-day-events {
+    width: 100%;
+    margin-bottom: 0;
+}
+
+/* 이벤트 박스 스타일 조정 */
+.dtmList .fc .fc-event {
+    border: 1px solid white;
+    width: 100%;
+    overflow: hidden; /* 넘치는 텍스트는 숨김 */
+    position: relative;
+    white-space: nowrap; /* 텍스트를 한 줄로 설정 */
+}
+
+/* 이벤트 컨테이너 스타일 */
+.dtmList .fc .fc-event-title-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+/*이벤트 배경색*/
+.dtmList .fc-h-event {
+    background-color: #d63384; /* 변수로 배경색 적용 */
+    border: 1px solid white; /* 변수로 테두리 색상 적용 */
+    display: block;
+}
+
+/* 이벤트 타이틀 크기 조정 */
+.dtmList .fc .fc-event-title {
+    font-size: clamp(0.6em, 3vw, 1em);
+    white-space: nowrap; /* 텍스트가 한 줄로 표시되도록 설정 */
+    display: inline-block;
+    overflow: hidden;
+    transition: transform 0.5s ease; /* 부드러운 전환 효과 추가 */
+}
+
+/* 날짜 선택 시 스타일 */
+.dtmList .fc-day.selected-date .fc-daygrid-day-number {
+    background-color: #435ebe;
+    color: white !important;
+    border-radius: 30%;
+    width: 1.7em;
+    height: 1.5em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+/* 제목 크기 및 날짜 및 이벤트 제목 크기도 동적으로 조절 */
+.dtmList .fc .fc-toolbar h2 {
+    font-size: clamp(1em, 3vw, 1.5em); /* 제목 크기 조정 */
+    min-width: clamp(5em, 3vw, 7.5em);
+    text-align: center;
+    margin-right: 0.5rem;
+    margin-left: 0.5rem;
+}
 /************************* 근태조회(dtmCalendar) FULLCALENDAR 끝 **************************/
 
 /************************ 근태 신청화면 full calender 시작 ************************/
-.dtmReg .fc {
+.dtmRegDetail .fc {
     font-size: clamp(0.8em, 2vw, 5em); /* 최소 0.8em, 최대 5em, 기본 값은 2vw로 설정 */
     text-align: center;
     border: none;
 }
 
-.dtmReg .fc-fade {
+.dtmRegDetail .fc-fade {
     animation: fadeIn 0.5s ease-in-out;
     opacity: 1;
 }
 
 /* 년,월 날짜 및 이벤트 제목 크기도 동적으로 조절 */
-.dtmReg .fc .fc-toolbar h2 {
+.dtmRegDetail .fc .fc-toolbar h2 {
     font-size: clamp(1em, 3vw, 1.5em); /* 제목 크기 조정 */
-}
-
-/* 날짜 박스 불필요한 여백 제거 */
-.dtmReg .fc .fc-daygrid-day-number {
-    padding: 0;
-}
-
-/* 날짜박스 높이 조정 */
-.dtmReg .fc .fc-daygrid-day-frame {
-    min-height: 2em; /* 셀 높이 설정 */
 }
 
 /* 카드 안에 있는 FullCalendar에서 세로선 제거 */
 /* 날짜 셀의 세로선을 카드 배경색과 동일하게 설정하여 보이지 않게 하기 */
-.dtmReg .card .fc .fc-daygrid-day {
+.dtmRegDetail .card .fc .fc-daygrid-day {
     border: none;
 }
 
 /* 헤더 부분 cell 테두리 없애기*/
-.dtmReg .card .fc .fc-col-header-cell,
-.dtmReg .card .fc .fc-daygrid-day-frame {
+.dtmRegDetail .card .fc .fc-col-header-cell,
+.dtmRegDetail .card .fc .fc-daygrid-day-frame {
     border: none;
 }
 
-/*a 링크 속성 제거 (색상 및20 밑줄 제거)*/
-.dtmReg a.fc-daygrid-day-number,
-.dtmReg a.fc-daygrid-day-number div {
+/*a 링크 속성 제거 (색상 및 밑줄 제거)*/
+.dtmRegDetail a.fc-daygrid-day-number,
+.dtmRegDetail a.fc-daygrid-day-number div {
     color: inherit !important; /* 상위 요소의 색상을 따르도록 설정 */
     text-decoration: none !important; /* 밑줄 제거 */
 }
 
-.dtmReg .fc table,
-.dtmReg .fc td,
-.dtmReg .fc th {
+.dtmRegDetail .fc table,
+.dtmRegDetail .fc td,
+.dtmRegDetail .fc th {
     width: 100%  !important;
     border: none !important;
 }
 
 /* fc-daygrid-day-events 부분 숨기기 */
-.dtmReg .fc-daygrid-day-events {
+.dtmRegDetail .fc-daygrid-day-events {
     display: none !important; /* 강제로 숨기기 */
 }
 
-.dtmReg .fc .fc-daygrid-day-frame {
+.dtmRegDetail .fc .fc-daygrid-day-frame {
     height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
-.dtmReg .fc .fc-daygrid-day-top {
+.dtmRegDetail .fc .fc-daygrid-day-top {
     flex-grow: 1;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.dtmReg .fc-daygrid-day-content {
+.dtmRegDetail .fc-daygrid-day-content {
     position: absolute;
     width: 100%;
     height: 100%;
     box-sizing: border-box;
 }
 
+/* 선택된 범위에만 스타일 적용 */
+.selected-day,
+.selected-range {
+    background-color: #435ebe !important;
+    /*color: white !important;*/
+    font-weight: bold;
+    border-radius: 20%;
+    opacity: 1 !important; /* 투명도 제거 */
+}
+
+/* 선택된 날짜 범위에 우선 적용되는 스타일 */
+.selected-range-start,
+.selected-range-middle,
+.selected-range-end {
+    background-color: #435ebe !important; /* 선택된 날짜의 배경색이 우선 */
+    font-weight: bold !important; /* 선택된 날짜의 글꼴 두께가 우선 */
+    color: white !important;
+}
 /* 시작일과 종료일이 같은 경우 */
 .selected-single-day {
     background-color: #435ebe !important;
@@ -809,7 +979,7 @@ mark {
 }
 
 .selected-range-middle {
-    background-color: #E4F0FF !important;
+    background-color: #435ebe !important;
     font-weight: bold !important;
     border-radius: 0 !important;
 }
@@ -824,24 +994,22 @@ mark {
 /* 선택된 날짜의 숫자 색상 */
 .selected-single-day .fc-daygrid-day-number,
 .selected-range-start .fc-daygrid-day-number,
+.selected-range-middle .fc-daygrid-day-number,
 .selected-range-end .fc-daygrid-day-number {
     color: white !important;
 }
 
-.selected-range-middle .fc-daygrid-day-number{
-    color: black !important;
-}
 
 /*fullcalendar 오늘 강조 표시*/
-.dtmReg .fc-day-today.fc-daygrid-day {
+.dtmRegDetail .fc-day-today.fc-daygrid-day {
     background-color: #f2f7ff; /* 원하는 색상으로 변경 */
     font-weight: bold;
 
 }
 /*헤더, 오늘 강조*/
-.dtmReg .fc-button.fc-today-button,
-.dtmReg .fc-button.fc-prev-button,
-.dtmReg .fc-button.fc-next-button {
+.dtmRegDetail .fc-button.fc-today-button,
+.dtmRegDetail .fc-button.fc-prev-button,
+.dtmRegDetail .fc-button.fc-next-button {
     background-color: transparent !important; /* 배경색 제거 */
     border: none !important; /* 테두리 제거 */
     color: #435ebe !important; /* 글자 색은 기본 유지 */
@@ -850,7 +1018,7 @@ mark {
 /************************ 근태 신청화면 full calender 끝************************/
 
 /*근태신청 상세화면 시작*/
-.dtmReg .container {
+.dtmRegDetail .container {
     display: flex;
     justify-content: center;
     align-items: center; /* 수직 중앙 정렬 추가 */
@@ -903,32 +1071,32 @@ mark {
 
 
 /* 휴가현황 테이블 시작*/
-.dtmReg table {
-     border-collapse: collapse;
-     width: 100%;
- }
-.dtmReg th, .dtmReg td {
+.dtmRegDetail table {
+    border-collapse: collapse;
+    width: 100%;
+}
+.dtmRegDetail th, .dtmRegDetail td {
     border: 1px solid #000; /* 테두리 색상을 검정색으로 변경 */
     text-align: center;
 }
 
-.dtmReg .fc .fc-daygrid-body {
+.dtmRegDetail .fc .fc-daygrid-body {
     width: 100% !important;
 }
 
-.dtmReg th {
+.dtmRegDetail th {
     background-color: #f2f7ff;
 }
 /* 휴가현황 테이블 끝*/
 
-.dtmReg .card {
+.dtmRegDetail .card {
     width: 100%;
     padding: 1rem;
     display: flex;
     justify-content: center;
 }
 
-.dtmReg .button-group {
+.dtmRegDetail .button-group {
     display: flex;
     justify-content: center;
 }
@@ -968,29 +1136,6 @@ mark {
     background-clip: padding-box;
     border: 1px solid #dce7f1;
     border-radius: .25rem;
-    align-items: center; /* 입력 필드 수직 중앙 정렬 */
-}
-
-.dtmReg .select2-container--default .select2-selection--single{
-    width: 100% !important; /* 입력 필드가 전체 width 차지 */
-    height: 40px !important;
-    border: 1px solid #dce7f1 !important;
-    font-size: 1rem !important;
-    font-weight: 400 !important;
-    display: flex;
-    align-items: center !important; 
-}
-
-.dtmReg .select2-container--default .select2-selection--single.select2-selection__rendered{
-    line-height: 40px !important;
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
-}
-
-.dtmReg .select2-container--default .select2-selection--single .select2-selection__arrow {
-    top : 20%
 }
 
 label {
@@ -1012,44 +1157,11 @@ label {
     50% { opacity: 0; } /* 중간에 잠깐 사라짐 */
 }
 
-/* 전체 화면을 덮는 반투명한 배경 */
-.warning-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(230, 235, 245, 0.7);
-    background-image: repeating-linear-gradient(
-            45deg,/*45도 각도*/
-            transparent,
-            transparent 9px,/*9픽셀까지 투명 상태를 유지*/
-            rgba(0, 0, 0, 0.1) 9px,/*9픽셀 지점에서 약간 투명한 검은색 (10% 불투명도)으로 변경*/
-            rgba(0, 0, 0, 0.1) 10px/*20픽셀 지점까지 약간 투명한 검은색을 유지합니다.*/
-    );
-    display: none; /* 기본적으로 보이지 않음 */
-    justify-content: center;
-    align-items: center;
-    z-index: 1000; /* 다른 요소들 위에 표시되도록 설정 */
-    opacity: 1; /* 처음에는 보이게 설정 */
-    transition: opacity 1s ease-in-out; /* 서서히 사라지게 설정 */
-}
-
-/* 경고 박스 스타일 */
-.warning-box {
-    background-color: #fff;
-    border-radius: 10px; /* 테두리 둥글게 설정 */
-    padding: 20px;
+#dateWarning {
+    display: none; /* 기본적으로는 숨긴 상태 */
+    color: red;
     text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 약간의 그림자 */
-}
-
-.warning-box p {
-    color: red; /* 글자 색 빨간색 */
-    font-size: 18px;
-    margin: 0;
-    font-weight: bold;
-    user-select: none; /* 텍스트 선택 불가 */
+    animation: blink 0.5s ease-in-out;
 }
 /*근태신청화면 콤보*/
 
@@ -4654,124 +4766,124 @@ textarea.form-control.is-invalid {
 
 
 .page-link {
-	position:relative;
-	display:block;
-	padding:var(--bs-pagination-padding-y) var(--bs-pagination-padding-x);
-	font-size:var(--bs-pagination-font-size);
-	color:var(--bs-pagination-color);
-	text-decoration:none;
-	background-color:var(--bs-pagination-bg);
-	border:var(--bs-pagination-border-width) solid var(--bs-pagination-border-color);
-	transition:color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out
+    position:relative;
+    display:block;
+    padding:var(--bs-pagination-padding-y) var(--bs-pagination-padding-x);
+    font-size:var(--bs-pagination-font-size);
+    color:var(--bs-pagination-color);
+    text-decoration:none;
+    background-color:var(--bs-pagination-bg);
+    border:var(--bs-pagination-border-width) solid var(--bs-pagination-border-color);
+    transition:color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out
 }
 @media (prefers-reduced-motion:reduce) {
-	.page-link {
-		transition:none
-	}
+    .page-link {
+        transition:none
+    }
 }
 .page-link:hover {
-	z-index:2;
-	color:var(--bs-pagination-hover-color);
-	background-color:var(--bs-pagination-hover-bg);
-	border-color:var(--bs-pagination-hover-border-color)
+    z-index:2;
+    color:var(--bs-pagination-hover-color);
+    background-color:var(--bs-pagination-hover-bg);
+    border-color:var(--bs-pagination-hover-border-color)
 }
 .page-link:focus {
-	z-index:3;
-	color:var(--bs-pagination-focus-color);
-	background-color:var(--bs-pagination-focus-bg);
-	outline:0;
-	box-shadow:var(--bs-pagination-focus-box-shadow)
+    z-index:3;
+    color:var(--bs-pagination-focus-color);
+    background-color:var(--bs-pagination-focus-bg);
+    outline:0;
+    box-shadow:var(--bs-pagination-focus-box-shadow)
 }
 .page-link.active,.active>.page-link {
-	z-index:3;
-	color:var(--bs-pagination-active-color);
-	background-color:var(--bs-pagination-active-bg);
-	border-color:var(--bs-pagination-active-border-color)
+    z-index:3;
+    color:var(--bs-pagination-active-color);
+    background-color:var(--bs-pagination-active-bg);
+    border-color:var(--bs-pagination-active-border-color)
 }
 .page-link.disabled,.disabled>.page-link {
-	color:var(--bs-pagination-disabled-color);
-	pointer-events:none;
-	background-color:var(--bs-pagination-disabled-bg);
-	border-color:var(--bs-pagination-disabled-border-color)
+    color:var(--bs-pagination-disabled-color);
+    pointer-events:none;
+    background-color:var(--bs-pagination-disabled-bg);
+    border-color:var(--bs-pagination-disabled-border-color)
 }
 .page-item:not(:first-child) .page-link {
-	margin-left:-1px
+    margin-left:-1px
 }
 .page-item .page-link {
-	border-radius:var(--bs-pagination-border-radius)
+    border-radius:var(--bs-pagination-border-radius)
 }
 .pagination-lg {
-	--bs-pagination-padding-x:1.5rem;
-	--bs-pagination-padding-y:.75rem;
-	--bs-pagination-font-size:1.25rem;
-	--bs-pagination-border-radius:.3rem
+    --bs-pagination-padding-x:1.5rem;
+    --bs-pagination-padding-y:.75rem;
+    --bs-pagination-font-size:1.25rem;
+    --bs-pagination-border-radius:.3rem
 }
 .pagination-sm {
-	--bs-pagination-padding-x:.5rem;
-	--bs-pagination-padding-y:.25rem;
-	--bs-pagination-font-size:.875rem;
-	--bs-pagination-border-radius:.2rem
+    --bs-pagination-padding-x:.5rem;
+    --bs-pagination-padding-y:.25rem;
+    --bs-pagination-font-size:.875rem;
+    --bs-pagination-border-radius:.2rem
 }
 
 .pagination.pagination-primary .page-item.active .page-link {
-	background-color:#435ebe;
-	border-color:#435ebe;
-	box-shadow:0 2px 5px rgba(67,94,190,.3)
+    background-color:#435ebe;
+    border-color:#435ebe;
+    box-shadow:0 2px 5px rgba(67,94,190,.3)
 }
 .pagination.pagination-secondary .page-item.active .page-link {
-	background-color:#6c757d;
-	border-color:#6c757d;
-	box-shadow:0 2px 5px rgba(108,117,125,.3)
+    background-color:#6c757d;
+    border-color:#6c757d;
+    box-shadow:0 2px 5px rgba(108,117,125,.3)
 }
 .pagination.pagination-success .page-item.active .page-link {
-	background-color:#198754;
-	border-color:#198754;
-	box-shadow:0 2px 5px rgba(25,135,84,.3)
+    background-color:#198754;
+    border-color:#198754;
+    box-shadow:0 2px 5px rgba(25,135,84,.3)
 }
 .pagination.pagination-info .page-item.active .page-link {
-	background-color:#0dcaf0;
-	border-color:#0dcaf0;
-	box-shadow:0 2px 5px rgba(13,202,240,.3)
+    background-color:#0dcaf0;
+    border-color:#0dcaf0;
+    box-shadow:0 2px 5px rgba(13,202,240,.3)
 }
 .pagination.pagination-warning .page-item.active .page-link {
-	background-color:#ffc107;
-	border-color:#ffc107;
-	box-shadow:0 2px 5px rgba(255,193,7,.3)
+    background-color:#ffc107;
+    border-color:#ffc107;
+    box-shadow:0 2px 5px rgba(255,193,7,.3)
 }
 .pagination.pagination-danger .page-item.active .page-link {
-	background-color:#dc3545;
-	border-color:#dc3545;
-	box-shadow:0 2px 5px rgba(220,53,69,.3)
+    background-color:#dc3545;
+    border-color:#dc3545;
+    box-shadow:0 2px 5px rgba(220,53,69,.3)
 }
 .pagination.pagination-light .page-item.active .page-link {
-	background-color:#ced4da;
-	border-color:#ced4da;
-	box-shadow:0 2px 5px rgba(206,212,218,.3)
+    background-color:#ced4da;
+    border-color:#ced4da;
+    box-shadow:0 2px 5px rgba(206,212,218,.3)
 }
 .pagination.pagination-dark .page-item.active .page-link {
-	background-color:#131313;
-	border-color:#131313;
-	box-shadow:0 2px 5px rgba(19,19,19,.3)
+    background-color:#131313;
+    border-color:#131313;
+    box-shadow:0 2px 5px rgba(19,19,19,.3)
 }
 .page-item:not(.active) .page-link:hover {
-	color:#000
+    color:#000
 }
 .page-item i,.page-item svg {
-	font-size:13px;
-	width:13px;
-	height:13px
+    font-size:13px;
+    width:13px;
+    height:13px
 }
 .page-item .page-link {
-	font-size:.875rem
+    font-size:.875rem
 }
 .page-item .page-link:focus {
-	box-shadow:none
+    box-shadow:none
 }
 .page-item:first-child {
-	margin-right:.4rem
+    margin-right:.4rem
 }
 .page-item:last-child {
-	margin-left:.4rem
+    margin-left:.4rem
 }
 
 .table td,

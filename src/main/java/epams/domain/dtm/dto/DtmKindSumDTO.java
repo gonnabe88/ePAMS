@@ -26,7 +26,39 @@ public class DtmKindSumDTO {
 
     /***
      * @author 140024
-     * @implNote 연차휴가 일수 합계
+     * @implNote 저축휴가 신청 일수 합계
+     * @implSpec Output
+     * @since 2024-08-11
+     */
+    private Float saveDaySum = 0F;
+
+    /***
+     * @author 140024
+     * @implNote 저축휴가 신청 시간 합계
+     * @implSpec Output
+     * @since 2024-08-11
+     */
+    private Float saveHourSum = 0F;
+
+    /***
+     * @author 140024
+     * @implNote 저축휴가 신청(취소/변경 대상) 일수 합계
+     * @implSpec Output
+     * @since 2024-08-11
+     */
+    private Float beforeSaveHourSum = 0F;
+
+    /***
+     * @author 140024
+     * @implNote 저축휴가 신청(신규 대상) 시간 합계
+     * @implSpec Output
+     * @since 2024-08-11
+     */
+    private Float AfterSaveHourSum = 0F;
+
+    /***
+     * @author 140024
+     * @implNote 연차휴가 신청 일수 합계
      * @implSpec Output
      * @since 2024-08-11
      */
@@ -34,7 +66,7 @@ public class DtmKindSumDTO {
 
     /***
      * @author 140024
-     * @implNote 연차휴가 시간 합계
+     * @implNote 연차휴가 신청 시간 합계
      * @implSpec Output
      * @since 2024-08-11
      */
@@ -42,7 +74,7 @@ public class DtmKindSumDTO {
 
     /***
      * @author 140024
-     * @implNote 내년 연차휴가 일수 합계
+     * @implNote 내년 연차휴가 신청 일수 합계
      * @implSpec Output
      * @since 2024-08-11
      */
@@ -50,7 +82,7 @@ public class DtmKindSumDTO {
 
     /***
      * @author 140024
-     * @implNote 내년 연차휴가 시간 합계
+     * @implNote 내년 연차휴가 신청 시간 합계
      * @implSpec Output
      * @since 2024-08-11
      */
@@ -65,4 +97,10 @@ public class DtmKindSumDTO {
         this.nextAnnualDaySum += day;
         this.nextAnnualHourSum += hour;
     }
+
+    public void thisSaveSum(Float day, Float hour) {
+        this.saveDaySum += day;
+        this.saveHourSum += hour;
+    }
+
 }

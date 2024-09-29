@@ -27,7 +27,7 @@ public class DtmCheckRepository {
      * @author 140024
      * @implNote dtm010_03_03_p_06 (근태별 신청일수 조회)
      * @since 2024-09-12
-     * @param DtmSaveDTO 연차저축 DTO
+     * @param dto 연차저축 DTO
      */
     public void getNumberOfDay(final DtmCheckDTO dto) {
     	final DtmCheckDTO res = sql.selectOne("DtmGetNumberOfDay.getDay", dto);
@@ -40,7 +40,7 @@ public class DtmCheckRepository {
      * @author 140024
      * @implNote dtm010_03_03_p_10 (근태별 신청시간 조회)
      * @since 2024-09-12
-     * @param DtmSaveDTO 연차저축 DTO
+     * @param dto 연차저축 DTO
      */
     public void getNumberOfHour(final DtmCheckDTO dto) {
     	final DtmCheckDTO res = sql.selectOne("DtmGetNumberOfHour.getHour", dto);

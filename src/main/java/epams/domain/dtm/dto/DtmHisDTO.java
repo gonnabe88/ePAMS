@@ -92,6 +92,30 @@ public class DtmHisDTO extends DtmHisVO {
 
     /***
      * @author 140024
+     * @implNote 근태시작일자시간
+     * @since 2024-09-28
+     * @return LocalDateTime
+     */
+    public LocalDateTime getStartDateTime() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HHmm");
+        LocalTime time = LocalTime.parse(super.getStaHm(), formatter);
+        return LocalDateTime.of(super.getStaYmd().toLocalDate(), time);
+    }
+
+    /***
+     * @author 140024
+     * @implNote 근태종료일자시간
+     * @since 2024-09-28
+     * @return LocalDateTime
+     */
+    public LocalDateTime getEndDateTime() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HHmm");
+        LocalTime time = LocalTime.parse(super.getEndHm(), formatter);
+        return LocalDateTime.of(super.getEndYmd().toLocalDate(), time);
+    }
+
+    /***
+     * @author 140024
      * @implNote 경과여부 (과거/진행중/예정) 세팅
      * @since 2024-06-09
      * @param staYmd 시작일
@@ -106,8 +130,7 @@ public class DtmHisDTO extends DtmHisVO {
         final LocalDateTime startDateTime = LocalDateTime.of(staYmd.toLocalDate(), LocalTime.parse(staHm, DateTimeFormatter.ofPattern("HHmm")));
         final LocalDateTime endDateTime;
 
-        if ("2400".equals(endHm)) {
-            // endHm이 2400이면 +1일 00시로 설정
+        if ("2400".equals(endHm)) { // endHm이 2400이면 +1일 00시로 설정
             endDateTime = LocalDateTime.of(endYmd.toLocalDate().plusDays(1), LocalTime.MIDNIGHT);
         } else {
             endDateTime = LocalDateTime.of(endYmd.toLocalDate(), LocalTime.parse(endHm, DateTimeFormatter.ofPattern("HHmm")));

@@ -25,8 +25,8 @@
                 <result property="dutyAnnualDayTotalCnt" column="ANNUAL_CNT"/>
                 <result property="dutyAnnualHourTotalCnt" column="ANNUAL_CNT_HH"/>
 
-                <result property="fixedDutyAnnualDayTotalCnt" column="REMAIN_CNT2"/>
-                <result property="fixedDutyAnnualHourTotalCnt" column="REMAIN_CNT2_HH"/>
+                <result property="fixedDutyAnnualDayRemainCnt" column="REMAIN_CNT2"/>
+                <result property="fixedDutyAnnualHourRemainCnt" column="REMAIN_CNT2_HH"/>
 
                 <result property="todayYmd" column="NOW_DATE"/>
                 <result property="headHrDept" column="CHEIF_EMP_NM"/>

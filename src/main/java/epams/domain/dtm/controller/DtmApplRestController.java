@@ -92,7 +92,7 @@ public class DtmApplRestController {
      * @since 2024-09-20
      */
     @PostMapping("/check")
-    public ResponseEntity<Map<String, Object>> checkDtm(@RequestBody final DtmHisDTO dto) throws IOException {
+    public ResponseEntity<Map<String, Object>> checkDtm(@RequestBody final DtmHisDTO dto) {
 
         // 근태 리스트 생성 (@TODO 나중에 기본적으로 DTO List를 받으면 지워도 됨)
         List<DtmHisDTO> dtmHisDTOList = new ArrayList<>();
@@ -111,7 +111,7 @@ public class DtmApplRestController {
         Map<String, Object> response = new ConcurrentHashMap<>();
 
         try {
-/* @TODO 외부 테스트 시 주석 처리*/
+/* @TODO 외부 테스트 시 주석 처리(시작)
 
             // 근태 유형별 합계 시간 데이터 저장용 객체 생성
             final DtmKindSumDTO sumDTO = new DtmKindSumDTO();
@@ -134,18 +134,22 @@ public class DtmApplRestController {
             response.put("annualUsedCnt", statusDTO.getAnnualDayUsedCnt()); // 기 사용시간
             response.put("annualTotalCnt", statusDTO.getAnnualDayTotalCnt()); // 총 보유시간
 
-/**/
+ @TODO 외부 테스트 시 주석 처리(끝) */
             response.put("dtmHisDTOList", dtmHisDTOList); // 근태신청 리스트
             return new ResponseEntity<>(response, HttpStatus.CREATED);
 
         } catch (CustomGeneralRuntimeException e) {
             // 비즈니스 로직 오류 처리
+            e.printStackTrace();
+            log.warn("CustomGeneralRuntimeException");
             log.error(e.getMessage());
             response.put("error", e.getMessage());
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
 
         } catch (Exception e) {
             // 일반 예외 처리
+            e.printStackTrace();
+            log.warn("Exception");
             log.error(e.getMessage());
             response.put("error", "서버 내부 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.");
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);

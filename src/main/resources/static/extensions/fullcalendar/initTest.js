@@ -21,13 +21,7 @@ $(document).ready(function () {
         };
     });
 
-    // 휴일 목록 추가 (YYYY-MM-DD 형식)
-    //const holidays = ['2024-09-16', '2024-09-17', '2024-09-18']; // 추가할 휴일 날짜
-
     const holidays = calendarEl.getAttribute('data-holiDayList'); // 추가할 휴일 날짜
-    console.log(holidays);
-
-    console.log(events); // 변환된 이벤트 데이터 확인
 
     const calendar = new FullCalendar.Calendar(calendarEl, {
         themeSystem: 'standard',
@@ -44,7 +38,7 @@ $(document).ready(function () {
             add: {
                 text: '신청',
                 click: function() {
-                    window.location.href = '/dtm/dtmAppl';
+                    window.location.href = '/dtm/dtmRegDetail';
                 }
             }
         },
@@ -58,6 +52,13 @@ $(document).ready(function () {
         aspectRatio: 1,
         fixedWeekCount: false,
         events: events,  // 이벤트 리스트 추가
+        dayMaxEvents: 1, // 1일에 표시할 이벤트 수 제한 (2개 이상 시 more)
+        moreLinkText: function(num) { // more 링크 텍스트 변경
+            return `+${num}개`;  // 원하는 형식으로 변경
+        },
+        moreLinkClick: function(info) {
+            return 'none'; // 기본 동작 방지
+        },
         datesSet: function() {
             // 오늘 버튼 스타일 적용을 위한 클래스 추가
             const todayButton = document.querySelector('.fc-today-button');
@@ -165,7 +166,7 @@ $(document).ready(function () {
 
         // 이벤트 출력 영역
         const eventContainer = document.getElementById('dtmEvent');
-        if (selectedEvents.length > 0) {
+        if (selectedEvents.length > 0) { // 이벤트가 있는 경우
             eventContainer.innerHTML = selectedEvents.map(event => {
                 const startDate = event.start.toLocaleDateString('ko-KR', {
                     year: 'numeric',
@@ -186,11 +187,12 @@ $(document).ready(function () {
 
                 return `
                 <div class="event-item">
-                    <div class="d-flex align-items-end gap-2">
-                        <span class="h6">${event.title}</span>
-                        <span class="h7">${startDate}</span>
-                        ${endDate ? `<span class="h7"> ~ ${endDate}</span>` : ''}
-                        <span class="h7">${event.extendedProps.dtmHisId}(HIS_ID)</span>
+                    <div class="d-flex align-items-center justify-content-start">
+                        <div class="registDtmNameTag ms-2 ps-2 pe-0">
+                            <h6 class="m-0">${event.title}</h6>
+                            <h7>${startDate}</h7>
+                            ${endDate ? `<span class="h7"> ~ ${endDate}</span>` : ''}
+                        </div>
                     </div>
                 </div>
             `;

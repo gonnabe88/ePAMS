@@ -98,7 +98,7 @@ public class DtmRevokeService {
 		// 취소 후 연차사용시간 (tot_used_hh2 = tot_used_hh*1 - daycnt*1)
 		checkDTO.setAfterAnnualHourUsedCnt(proDTO.getAnnualHourUsedCnt() - checkDTO.getHourCount());
 
-		if(checkDTO.getDayCount() > 0) { // 연차촉진 및 저축 확인대상 근태를 사용하는 경우		
+		if(checkDTO.getDayCount() > 0) { // 연차촉진 및 저축 확인대상 근태를 사용하는 경우
 			if("Y".equals(saveDTO.getSavableYn())) { // 저축가능기간인 경우		
 
 				if(proDTO.getIngRevokeHourCnt() > 0) { //취소중인 근태가있을경우

@@ -24,7 +24,7 @@ public class DtmPromotionDTO extends DtmSqlParamDTO {
 
     /***
      * @author 140024
-     * @implNote 연차촉진제외대상여부 (0 : 대상 / 1 이상 : 제외 ) (CNT)
+     * @implNote 연차촉진제외대상여부 (0 : 대상 / 1 이상 : 제외 ) (CNT / exception_yn)
      * @since 2024-09-12
      */
     private String promotionExp = "0";
@@ -150,24 +150,24 @@ public class DtmPromotionDTO extends DtmSqlParamDTO {
 
     /***
      * @author 140024
-     * @implNote 의무사용연차일수(ANNUAL_CNT_HH)
+     * @implNote 의무사용연차일수(ANNUAL_CNT_HH / annual_hhcnt)
      * @since 2024-09-11
      */
     private Float dutyAnnualHourTotalCnt;
 
     /***
      * @author 140024
-     * @implNote 사용시기지정일수 (REMAIN_CNT2)
+     * @implNote 잔여 사용시기지정일수 (REMAIN_CNT2)
      * @since 2024-09-11
      */
-    private Float fixedDutyAnnualDayTotalCnt;
+    private Float fixedDutyAnnualDayRemainCnt;
 
     /***
      * @author 140024
-     * @implNote 사용시기지정시간 (REMAIN_CNT2_HH)
+     * @implNote 잔여 사용시기지정시간 (REMAIN_CNT2_HH)
      * @since 2024-09-11
      */
-    private Float fixedDutyAnnualHourTotalCnt;
+    private Float fixedDutyAnnualHourRemainCnt;
 
     /***
      * @author 140024
@@ -199,7 +199,7 @@ public class DtmPromotionDTO extends DtmSqlParamDTO {
 
         /***
      * @author 140024
-     * @implNote 취소중인 근태시간 (HHCNT_DEL_USING_CNT)
+     * @implNote 취소중인 근태시간 (HHCNT_DEL_USING_CNT / del_using_hh)
      * @since 2024-09-11
      */
     private Float ingRevokeHourCnt;

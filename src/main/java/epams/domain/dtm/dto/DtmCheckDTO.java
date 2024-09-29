@@ -40,7 +40,6 @@ public class DtmCheckDTO {
      */
     private Float afterAnnualHourUsedCnt;
 
-
     /***
      * @author 140024
      * @implNote 연차촉진/저축 체크 대상 [DTM_REASON_CD]
@@ -48,6 +47,31 @@ public class DtmCheckDTO {
      * @since 2024-08-11
      */
     private List<String> annualCheckList = Arrays.asList("1A1", "1A5", "1A6", "1F1", "1K1", "1AE", "1AG", "1AH");
+
+    /***
+     * @author 140024
+     * @implNote 취소 후 저축사용일수 (tot_used2 = tot_used*1 - daycnt_day*1)
+     * @implSpec Variable
+     * @since 2024-08-11
+     */
+    private Float afterSaveDayUsedCnt;
+
+    /***
+     * @author 140024
+     * @implNote 취소 후 저축사용시간 (tot_used_hh2 = tot_used_hh*1 - daycnt*1)
+     * @implSpec Variable
+     * @since 2024-08-11
+     */
+    private Float afterSaveHourUsedCnt;
+
+    /***
+     * @author 140024
+     * @implNote 저축 체크 대상
+     * @implSpec Constant
+     * @since 2024-08-11
+     */
+    private List<String> saveCheckList = Arrays.asList("1AB", "1AC", "1AD", "1AI", "1AJ");
+
 
     /***
      * @author 140024

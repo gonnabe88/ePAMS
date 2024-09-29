@@ -53,7 +53,7 @@ public class DtmPromotionService {
 			// 연차촉진 기간인 경우 제외자 확인
 			dtmPromotionRepo.getDtmPromotionExp(dtmPromotionDTO); //dtm010_23_03_p_01
 			if("0".equals(dtmPromotionDTO.getPromotionExp())) {
-				// 연차촉진 제외자 아닌 경우
+				// 연차촉진 대상자인 경우
 				dtmPromotionRepo.getPromotionDetail(dtmPromotionDTO); //dtm010_23_03_p_04				
 			}
 		}		

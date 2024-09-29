@@ -54,7 +54,7 @@ public ResponseEntity<String> handleNullPointerException(NullPointerException ex
     // 예외 메시지에 Controller명, 메서드명, 줄 번호를 포함하여 반환
     String message = String.format("NullPointerException occurred in %s: %s", controllerInfo, ex.getMessage());
     log.error(message);
-
+     ex.printStackTrace();
     // 404 Not Found 상태 코드와 빈 응답을 반환
     return ResponseEntity.status(HttpStatus.NOT_FOUND).body("");
 }
@@ -67,7 +67,7 @@ public ResponseEntity<Object> handleException(Exception ex) {
     // 예외 메시지에 Controller명, 메서드명, 줄 번호를 포함하여 반환
     String message = String.format("An error occurred in %s: %s", controllerInfo, ex.getMessage());
     log.error(message);
-
+    ex.printStackTrace();
     // 예외 메시지 설정
     Map<String, String> response = new ConcurrentHashMap<>();
     response.put("error", ex.getMessage());

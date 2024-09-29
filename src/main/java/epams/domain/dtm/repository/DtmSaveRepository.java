@@ -27,7 +27,7 @@ public class DtmSaveRepository {
      * @author 140024
      * @implNote dtm010_03_03_p_08 (업무기준관리 연차저축기간 및 비율조회)
      * @since 2024-09-12
-     * @param DtmSaveDTO 연차저축 DTO
+     * @param dto 연차저축 DTO
      */
     public void getSaveStandard(final DtmSaveDTO dto) {
     	final DtmSaveDTO res = sql.selectOne("DtmGetSaveStandard.getSaveStandard", dto);
@@ -41,7 +41,7 @@ public class DtmSaveRepository {
      * @author 140024
      * @implNote dtm010_03_03_p_09 (연차저축가능일수 조회)
      * @since 2024-09-12
-     * @param DtmSaveDTO 연차저축 DTO
+     * @param dto 연차저축 DTO
      */
     public void getDtmGetSavableDay(final DtmSaveDTO dto) {
     	final DtmSaveDTO res = sql.selectOne("DtmGetSavableDay.getDtmGetSavableDay", dto);

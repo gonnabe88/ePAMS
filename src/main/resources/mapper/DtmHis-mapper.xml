@@ -10,6 +10,7 @@
         <result property="start" column="STA_YMD" />
         <result property="end" column="END_YMD" />
         <result property="dtmHisId" column="DTM_HIS_ID" />
+        <result property="dtmKindCd" column="DTM_KIND_CD" />
     </resultMap>
 
     <!-- resultMap 정의 -->
@@ -67,6 +68,7 @@
         d.sta_ymd AS STA_YMD,
         d.end_ymd AS END_YMD,
         d.DTM_HIS_ID,
+        d.DTM_KIND_CD,
         x1.CD_NM AS DTM_REASON_NM
         FROM
         OHR.DTM_HIS d

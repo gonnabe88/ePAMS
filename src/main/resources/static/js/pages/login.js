@@ -84,7 +84,7 @@ const loadToastHTML = () => {
     if (toastEl) {
         // Bootstrap Toast 초기화
         const toast = new bootstrap.Toast(toastEl, {
-            delay: 3000 // 3초 후 자동으로 사라지게 설정
+            delay: 5000 // 5초 후 자동으로 사라지게 설정
         });
         // Toast 보여주기
         toast.show();

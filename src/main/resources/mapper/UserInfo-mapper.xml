@@ -22,8 +22,8 @@
             B.BBR_NM,
             A.TEM_NM,
             A.PT_C_NM,
-            NVL(OHR.F_OTM_SEL_WK('01', REPLACE(#{username}, 'K', '7'), SYSDATE, 'S1', 'KO'), 'N/A') AS STA_TIME,
-            NVL(OHR.F_OTM_SEL_WK('01', REPLACE(#{username}, 'K', '7'), SYSDATE, 'E1', 'KO'), 'N/A') AS END_TIME
+            NVL(OHR.F_DTM_ACT_TIME('01', REPLACE(#{username}, 'K', '7'), SYSDATE, '1', 'KO'), '휴무') AS STA_TIME,
+            NVL(OHR.F_DTM_ACT_TIME('01', REPLACE(#{username}, 'K', '7'), SYSDATE, '2', 'KO'), '휴무') AS END_TIME
         FROM OEHR.THURXE_CUSRLI A
         INNER JOIN OEHR.THURXE_CORGLI B
             ON A.BBR_C = B.PRLM_OGZ_C_CONE

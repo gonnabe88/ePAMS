@@ -80,30 +80,3 @@ const search = () => {
     // 검색 버튼 collapse 처리
     $('#collapseSearch').collapse('hide');
 };
-
-// 검색 폼에서 초기화를 눌렀을 때
-const resetSelect = () => {
-    $('input[name="statCdList"]').prop('checked', true); // 모든 체크박스 체크
-    $('input[name="select"]').prop('checked', false); // 모든 라디오버튼 해제
-    $('#allCategory').prop('checked', true); // '전체' 라디오버튼 체크
-    $('#list').val(''); // 셀렉트박스 초기화
-    $('#itemsPerPage').val('5'); // 페이지네이션 갯수 초기화
-    window.resetPicker(); // Datepicker 초기화
-
-    $.ajax({
-        url: "/api/commoncode/code/DTM_REASON_CD",
-        method: 'GET',
-        success: function (data) {
-            const $select = $('#list');
-            $select.empty(); // 기존 옵션 삭제
-            $select.append(new Option("전체", "")); // 기본 옵션 추가
-            data.forEach(item => {
-                $select.append(new Option(item.codeName, item.code)); // 새로운 옵션 추가
-            });
-            $select.val('').trigger('change'); // Select2 UI 갱신 및 초기화
-        },
-        error: function (xhr, status, error) {
-            console.error('Error fetching data: ', error);
-        }
-    });
-}

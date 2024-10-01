@@ -1,0 +1,27 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- dtm010_03_03_p_11(근태기타코드조회)-->
+<mapper namespace="DtmEtc">
+        <!-- TABLE Result Map 정의 -->
+        <resultMap id="dtmHisEtcMap" type="dtmHis">
+                <result property="dtmCross" column="DTM_CROSS_YN"/>
+                <result property="staHm" column="DTM_STA_HM"/>
+                <result property="endHm" column="DTM_END_HM"/>
+                <result property="baseStaHm" column="BASE_STA_HM"/>
+                <result property="baseEndHm" column="BASE_END_HM"/>
+        </resultMap> 
+
+        <select id="findDtmPeriod" parameterType="DtmHis" resultMap="dtmHisEtcMap">
+                SELECT NVL(ETC_CD9,'N') as DTM_CROSS_YN,
+                        F_DTM_TIME('01', #{empId}, NVL(#{staYmd}, SYSDATE), CD, '1', 'KO') as DTM_STA_HM,
+                        F_DTM_TIME('01', #{empId}, NVL(#{staYmd}, SYSDATE), CD, '2', 'KO') as DTM_END_HM,
+                        F_OTM_SEL_WK('01', #{empId}, NVL(#{staYmd}, SYSDATE), 'S1', 'KO')  as BASE_STA_HM,
+                        F_OTM_SEL_WK('01', #{empId}, NVL(#{staYmd}, SYSDATE), 'E1', 'KO')  as BASE_END_HM
+                FROM XFRMD2C
+                WHERE CD_KIND = 'DTM_REASON_CD'
+                        AND CD = #{dtmReasonCd}
+                        AND NVL(#{staYmd}, SYSDATE) BETWEEN STA_YMD AND END_YMD
+        </select>
+</mapper>

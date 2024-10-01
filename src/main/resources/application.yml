@@ -41,6 +41,8 @@ spring:
   web:
     resources:
       static-locations: classpath:/static/
+      cache:
+        period: 3600 # 캐시 유효시간 1시간
 
   session:
     jdbc:

@@ -168,12 +168,12 @@ public class IndexController<S extends Session> {
 
         // 빠른 근태 신청 리스트
         List<QuickApplDTO> dtmApplList = List.of(
-            new QuickApplDTO("오늘", nowDateStr, nowDateStr, today, today,"1A", "1A1", "연차휴가 1일", holidayYn),
-            new QuickApplDTO("오늘", nowDateStr, nowDateStr, today, today, "1A", "1A5", "연차휴가 오전 반차", holidayYn),
-            new QuickApplDTO("오늘", nowDateStr, nowDateStr, today, today, "1A", "1AG", "연차휴가 오전 반반차", holidayYn),
-            new QuickApplDTO("내일", tomorrowDateStr, tomorrowDateStr, tomorrow, tomorrow, "1A", "1A1", "연차휴가 1일", holidayYn2),
-            new QuickApplDTO("내일", tomorrowDateStr, tomorrowDateStr, tomorrow, tomorrow, "1A", "1A5", "연차휴가 오전 반차", holidayYn2),
-            new QuickApplDTO("내일", tomorrowDateStr, tomorrowDateStr, tomorrow, tomorrow, "1A", "1AG", "연차휴가 오전 반반차", holidayYn2)
+            new QuickApplDTO("오늘", nowDateStr, nowDateStr, today, today,"1A", "1A1", "연차휴가", "연차휴가 1일", holidayYn),
+            new QuickApplDTO("오늘", nowDateStr, nowDateStr, today, today, "1A", "1A5", "연차휴가", "연차휴가 오전 반차", holidayYn),
+            new QuickApplDTO("오늘", nowDateStr, nowDateStr, today, today, "1A", "1AG", "연차휴가", "연차휴가 오전 반반차", holidayYn),
+            new QuickApplDTO("내일", tomorrowDateStr, tomorrowDateStr, tomorrow, tomorrow, "1A", "1A1", "연차휴가", "연차휴가 1일", holidayYn2),
+            new QuickApplDTO("내일", tomorrowDateStr, tomorrowDateStr, tomorrow, tomorrow, "1A", "1A5", "연차휴가", "연차휴가 오전 반차", holidayYn2),
+            new QuickApplDTO("내일", tomorrowDateStr, tomorrowDateStr, tomorrow, tomorrow, "1A", "1AG", "연차휴가", "연차휴가 오전 반반차", holidayYn2)
         );
         model.addAttribute("list", dtmApplList);
         log.info("dtmApplList : {}", dtmApplList);

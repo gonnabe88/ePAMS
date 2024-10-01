@@ -19,6 +19,24 @@ $(document).ready(function () {
     // 화면 로드 시 항상 페이지네이션 링크 업데이트
     updatePaginationLinks();
 
+    // 검색 드롭다운 펼쳐지는 경우
+    $('#collapseSearch').on('show.bs.collapse', function() {
+        $('#toggleBtn').removeClass('btn-secondary').addClass('btn-warning').html('<i class="bi bi-capslock me-1"></i>닫기');
+        $('#collapseCard').addClass('card-warning');
+    });
+
+    // 검색 드롭다운 접히는 경우
+    $('#collapseSearch').on('hidden.bs.collapse', function() {
+        $('#toggleBtn').removeClass('btn-warning').addClass('btn-secondary').html('<i class="bi bi-search me-1"></i>검색');
+        $('#collapseCard').removeClass('card-warning');
+    });
+
+    // 검색 드롭다운 내부 닫기 클릭 시
+    $('#close-button').on('click', function() {
+            // 검색 버튼 collapse 처리
+        $('#collapseSearch').collapse('hide');
+    });
+
     // 휴가 보유현황 클릭 시 Modal 실행 이벤트 등록
     $('#openDtmStatusModal').on('click', function () {
         $('#dtmStatusModal').modal('show');

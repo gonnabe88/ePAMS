@@ -84,6 +84,7 @@
 																,data-staDateStr=${date.staDateStr}
 																,data-dtmCode=${date.dtmCode}
 																,data-dtmReasonCode=${date.dtmReasonCd}
+                                                                ,data-dtmReasonName=${date.dtmReasonNm}
                                                                 ,data-dtmDispName=${date.dtmDispName}">
                                                             <span th:if="${date.holidayYn == 'Y'}" th:text="'휴일'"></span>
                                                             <span th:if="${date.holidayYn != 'Y'}" th:text="${langList['APPL_DTM_01_BTN']}"></span>
@@ -95,6 +96,7 @@
 																,data-staDateStr=${date.staDateStr}
 																,data-dtmCode=${date.dtmCode}
 																,data-dtmReasonCode=${date.dtmReasonCd}
+                                                                ,data-dtmReasonName=${date.dtmReasonNm}
                                                                 ,data-dtmDispName=${date.dtmDispName}">
                                                             <span th:if="${date.holidayYn == 'Y'}" th:text="'휴일'"></span>
                                                             <span th:if="${date.holidayYn != 'Y'}" th:text="${langList['APPL_DTM_01_BTN']}"></span>

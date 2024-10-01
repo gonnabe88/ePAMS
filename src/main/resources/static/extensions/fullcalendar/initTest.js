@@ -9,6 +9,15 @@ $(document).ready(function () {
     const eventsRaw = JSON.parse(eventsData);
     console.log(eventsRaw);
 
+    // 근태종류(이벤트)별 CSS 스타일 적용
+    const getEventClass = (dtmKindCd) => {
+        switch(dtmKindCd.substring(0, 1)) {
+            case '1': return 'event-kind-1'; // 연차 (파랑)
+            case '2': return 'event-kind-2'; // 출장 (빨강)
+            case '4': return 'event-kind-4'; // 연수 (초록)
+            default: return 'event-default'; // 그외 (보라)
+        }
+    }
     const events = eventsRaw.map(function(event) {
         return {
             title: event.title,
@@ -16,18 +25,22 @@ $(document).ready(function () {
             end: new Date(new Date(event.end).setHours(24, 0, 0, 0)),    // 24:00 시간으로 설정
             allDay: event.allDay,
             extendedProps: {
-                dtmHisId: event.dtmHisId // 커스텀 필드는 extendedProps로 추가
-            }
+                dtmHisId: event.dtmHisId, // 커스텀 필드는 extendedProps로 추가
+                dtmKindCd: event.dtmKindCd
+            },
+            classNames: getEventClass(event.dtmKindCd)
         };
     });
+
+
 
     const holidays = calendarEl.getAttribute('data-holiDayList'); // 추가할 휴일 날짜
 
     const calendar = new FullCalendar.Calendar(calendarEl, {
         themeSystem: 'standard',
         initialView: 'dayGridMonth',
-        editable: true,
-        selectable: true,
+        editable: false,
+        selectable: false,
         scrollable: true,
         headerToolbar: {
             left: 'today',
@@ -201,5 +214,7 @@ $(document).ready(function () {
             eventContainer.innerHTML = '<span class="h7">해당일은 근태가 없습니다.</span>';
         }
     }
+
+    
 
 });

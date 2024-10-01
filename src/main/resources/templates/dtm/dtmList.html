@@ -61,8 +61,8 @@
                                 <button type="button" class="btn btn-primary btn-sm" id="openDtmStatusModal">
                                     <span th:text="${langList['DTM_STATUS']}"></span>
                                 </button>
-                                <button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="collapse" data-bs-target="#collapseSearch" aria-expanded="false" aria-controls="collapseSearch">
-                                    <i class="bi bi-search"></i><span th:text="${langList['RETRIEVE']}"></span>
+                                <button type="button" class="btn btn-secondary btn-sm" id="toggleBtn" data-bs-toggle="collapse" data-bs-target="#collapseSearch" aria-expanded="false" aria-controls="collapseSearch">
+                                    <i class="bi bi-search me-1"></i><span th:text="${langList['RETRIEVE']}"></span>
                                 </button>
                             </div>
                         </div>
@@ -74,7 +74,7 @@
                         <div class="collapse" id="collapseSearch">
                             <div class="col-12">
                                 <section class="section">
-                                    <div class="card">
+                                    <div class="card" id="collapseCard">
                                         <div class="card-body p-3">
                                             <div class="d-flex align-items-center justify-content-between mb-2">
                                                 <h6><span th:text="${langList['ELA_STAT']}"></span></h6>
@@ -116,16 +116,16 @@
                                                         <span th:text="${langList['DTM_KIND_CD_1A_S']}"></span>
                                                     </label>
 
-                                                    <!-- dtmKindCd 값이 '1B'이면 체크 -->
-                                                    <input type="radio" class="btn-check" name="category" id="1B" value="1B" autocomplete="off" th:checked="${searchDTO.dtmKindCd == '1B'}">
-                                                    <label class="btn btn-outline-primary" for="1B">
-                                                        <span th:text="${langList['DTM_KIND_CD_1B_S']}"></span>
-                                                    </label>
-
                                                     <!-- dtmKindCd 값이 '1Z'이면 체크 -->
                                                     <input type="radio" class="btn-check" name="category" id="1Z" value="1Z" autocomplete="off" th:checked="${searchDTO.dtmKindCd == '1Z'}">
                                                     <label class="btn btn-outline-primary" for="1Z">
                                                         <span th:text="${langList['DTM_KIND_CD_1Z_S']}"></span>
+                                                    </label>
+
+                                                    <!-- dtmKindCd 값이 '2(출장)'이면 체크 -->
+                                                    <input type="radio" class="btn-check" name="category" id="2" value="2" autocomplete="off" th:checked="${searchDTO.dtmKindCd == '2'}">
+                                                    <label class="btn btn-outline-primary" for="2">
+                                                        <span>출장</span>
                                                     </label>
 
                                                 </div>
@@ -162,8 +162,8 @@
 
                                         <div class="card-body p-3">
                                             <div class="d-flex flex-wrap gap-2 justify-content-end align-items-center mb-2">
-                                                <button class="btn btn-secondary btn-sm" id="reset-button">
-                                                    <span th:text="${langList['RESET']}"></span>
+                                                <button class="btn btn-secondary btn-sm" id="close-button">
+                                                    <span>닫기</span>
                                                 </button>
                                                 <button class="btn btn-primary btn-sm" id="search-button">
                                                     <span th:text="${langList['SEARCH']}"></span>
@@ -202,22 +202,22 @@
                                                     </thead>
                                                     <tbody>
                                                     <tr>
-                                                        <td>연차</td>
+                                                        <td class="h6">연차</td>
                                                         <td th:text="${dtmAnnualStatus.AnnualDayTotalCnt}">-</td>
                                                         <td th:text="${dtmAnnualStatus.AnnualDayUsedCnt}">-</td>
-                                                        <td th:text="${dtmAnnualStatus.AnnualDayNoSaveRemainCnt}">-</td>
+                                                        <td class="h6 text-primary" th:text="${dtmAnnualStatus.AnnualDayNoSaveRemainCnt}">-</td>
                                                     </tr>
                                                     <tr>
-                                                        <td>저축</td>
+                                                        <td class="h6">저축</td>
                                                         <td th:text="${dtmAnnualStatus.SaveDayTotalCnt}">-</td>
                                                         <td th:text="${dtmAnnualStatus.SaveDayTotalCnt}">-</td>
-                                                        <td th:text="${dtmAnnualStatus.ExpSaveDayTotalCnt}">-</td>
+                                                        <td class="h6 text-primary" th:text="${dtmAnnualStatus.ExpSaveDayTotalCnt}">-</td>
                                                     </tr>
                                                     <tr>
-                                                        <td>보상</td>
+                                                        <td class="h6">보상</td>
                                                         <td th:text="${dtmAnnualStatus.SaveDayTotalCnt}">-</td>
                                                         <td th:text="${dtmAnnualStatus.SaveDayTotalCnt}">-</td>
-                                                        <td th:text="${dtmAnnualStatus.ExpSaveDayTotalCnt}">-</td>
+                                                        <td class="h6 text-primary" th:text="${dtmAnnualStatus.ExpSaveDayTotalCnt}">-</td>
                                                     </tr>
                                                     </tbody>
                                                 </table>

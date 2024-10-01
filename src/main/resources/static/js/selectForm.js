@@ -25,7 +25,7 @@ $(document).ready(function () {
             $select.empty(); // 기존 옵션 삭제
             //근태 신청화면에서는 전체선택 제외
             if(window.location.pathname != '/dtm/dtmReg'){
-                $select.append(new Optemdemdfion("전체", "")); // 기본 옵션 추가
+                $select.append(new Option("전체", "")); // 기본 옵션 추가
             }else {
                 $select.append(new Option("","")) //선택 안됐을때는 null값
             }

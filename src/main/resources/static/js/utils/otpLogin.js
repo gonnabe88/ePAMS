@@ -54,7 +54,10 @@ const otpLogin = (encodedPassword, maskedPhoneNo) => {
 
     Swal.fire({
         title: MFA+" 인증",
-        html: `${MFA} 인증번호 6자리 입력 후<br>제출을 눌러주세요(<b></b>초)<p class="h7 mt-2">${maskedPhoneNo}</p>`,
+        html: `
+        <p class="text-center">인증번호가 발송되었습니다.</p>
+        <p class="text-center">${MFA} 인증번호 6자리 입력 후<br>제출을 눌러주세요(<b></b>초)</p>
+        <p class="h7 mt-2 text-center"><i class="bi bi-phone-vibrate me-1"></i>${maskedPhoneNo}</p>`,
         input: "number",
         inputPlaceholder: "인증번호(6자리)",
         inputAttributes: {

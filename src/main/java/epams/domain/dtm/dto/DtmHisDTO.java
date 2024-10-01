@@ -28,10 +28,24 @@ public class DtmHisDTO extends DtmHisVO {
 
     /***
      * @author 140024
-     * @implNote 자정 시간
+     * @implNote 교차사용 가능여부
      * @since 2024-06-09
      */
-    private final static String midnight = "2400";
+    private String dtmCross;
+
+    /***
+     * @author 140024
+     * @implNote 기본근무 시작시간
+     * @since 2024-06-09
+     */
+    private String baseStaHm;
+
+        /***
+     * @author 140024
+     * @implNote 기본근무 종료시간
+     * @since 2024-06-09
+     */
+    private String baseEndHm;
 
     /***
      * @author 140024
@@ -102,6 +116,12 @@ public class DtmHisDTO extends DtmHisVO {
         return LocalDateTime.of(super.getStaYmd().toLocalDate(), time);
     }
 
+    public LocalDateTime getBaseStartDateTime() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HHmm");
+        LocalTime time = LocalTime.parse(this.getBaseStaHm(), formatter);
+        return LocalDateTime.of(super.getStaYmd().toLocalDate(), time);
+    }
+
     /***
      * @author 140024
      * @implNote 근태종료일자시간
@@ -111,6 +131,12 @@ public class DtmHisDTO extends DtmHisVO {
     public LocalDateTime getEndDateTime() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HHmm");
         LocalTime time = LocalTime.parse(super.getEndHm(), formatter);
+        return LocalDateTime.of(super.getEndYmd().toLocalDate(), time);
+    }
+
+    public LocalDateTime getBaseEndDateTime() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HHmm");
+        LocalTime time = LocalTime.parse(this.getBaseEndHm(), formatter);
         return LocalDateTime.of(super.getEndYmd().toLocalDate(), time);
     }
 
@@ -127,14 +153,8 @@ public class DtmHisDTO extends DtmHisVO {
     public final void updateStatus(final String statCd, final LocalDateTime staYmd, final String staHm, final LocalDateTime endYmd, final String endHm) {
         final LocalDate today = LocalDate.now();  // 현재 날짜
         final LocalDate startDate = staYmd.toLocalDate();  // 시작 날짜
-        final LocalDateTime startDateTime = LocalDateTime.of(staYmd.toLocalDate(), LocalTime.parse(staHm, DateTimeFormatter.ofPattern("HHmm")));
-        final LocalDateTime endDateTime;
-
-        if ("2400".equals(endHm)) { // endHm이 2400이면 +1일 00시로 설정
-            endDateTime = LocalDateTime.of(endYmd.toLocalDate().plusDays(1), LocalTime.MIDNIGHT);
-        } else {
-            endDateTime = LocalDateTime.of(endYmd.toLocalDate(), LocalTime.parse(endHm, DateTimeFormatter.ofPattern("HHmm")));
-        }
+        final LocalDateTime startDateTime = LocalDateTime.of(staYmd.toLocalDate(), LocalTime.parse("0000", DateTimeFormatter.ofPattern("HHmm")));
+        final LocalDateTime endDateTime = LocalDateTime.of(endYmd.toLocalDate(), LocalTime.parse("2359", DateTimeFormatter.ofPattern("HHmm")));
 
         // 상태(status) 결정
         if (LocalDateTime.now().isBefore(startDateTime)) {

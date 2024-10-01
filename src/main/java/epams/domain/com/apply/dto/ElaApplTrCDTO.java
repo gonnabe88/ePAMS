@@ -30,6 +30,7 @@ public class ElaApplTrCDTO extends ElaApplTrCVO {
         this.setOrdNo(ordNo); // 결재순번
         this.setApprEmpId(empId); // 결재직원ID
         this.setModUserId(empId); // 변경자
+        //this.setApprInfo(apprCd); // 직위
         this.setApprCd(apprCd);
     }
 }

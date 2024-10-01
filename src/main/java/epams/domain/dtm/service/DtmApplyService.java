@@ -1,8 +1,10 @@
 package epams.domain.dtm.service;
 
 import java.text.DecimalFormat;
+import java.time.LocalTime;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Duration;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -104,6 +106,9 @@ public class DtmApplyService {
 		final float advAnnualDay = Float.parseFloat(constValueService.findConstValue("DTM", "DTM_CREATE_C50")); // 선연차 신청 가능일수(cons_cnt)
 		final float advAnnualHour = Float.parseFloat(constValueService.findConstValue("DTM", "DTM_CREATE_C60")); // 선연차 신청 가능시간(cons_hhcnt) (yyhhcnt?, hhCnt?)
 
+		// 1일 최소근무시간 상수값 가져오기
+		final float minWorkTime = Float.parseFloat(constValueService.findConstValue("DTM", "DTM_MIN_WORK_HOUR")); 
+
 		// 선연차 사용 동의 필요여부
 		boolean adUseYn = false;
 
@@ -113,19 +118,45 @@ public class DtmApplyService {
 		 * @since 2024-09-13
 		 */
 		for(DtmHisDTO hisDTO : hisDTOList) {
+
+			long totalWorkTime = Duration.between(hisDTO.getBaseStartDateTime(), hisDTO.getBaseEndDateTime()).toMinutes();
+			long workTime = totalWorkTime;
+			LocalDateTime lunchStart;
+			LocalDateTime lunchEnd;
+			log.warn("전체근무시간 : " + String.valueOf(totalWorkTime));
+
 			// 신청건 중 중복된 근태가 있는지 확인
-			// @TODO etc_val, getEtc(row), dtm010_03_03_p_11 로직 확인 필요
-			// @TODO w_sta_time, w_end_time, min_time(최소근무시간) 로직 확인 필요
 			if(!"D".equals(hisDTO.getModiType())) { // 취소건 비교 X
 				LocalDateTime staDateTime = hisDTO.getStartDateTime(); // 근태시작일시
 				LocalDateTime endDateTime = hisDTO.getEndDateTime(); // 근태종료일시
 				for (DtmHisDTO checkHisDTO : hisDTOList) {
 					if (hisDTO != checkHisDTO) { // 동일 객체 비교 X
-						LocalDateTime checkStaDateTime = checkHisDTO.getStartDateTime(); // 근태시작일시 (비교대상)
-						LocalDateTime checkEndDateTime = checkHisDTO.getEndDateTime(); // 근태종료일시 (비교대상)
-						if (staDateTime.isBefore(checkEndDateTime) && checkStaDateTime.isBefore(endDateTime)) { // 두 기간이 겹치는지 확인
+						if("N".equals(checkHisDTO.getDtmCross())) { // 교차신청 불가 근태인 경우
 							throw new CustomGeneralRuntimeException("중복된 근태가 있습니다.");
 						}
+						LocalDateTime checkStaDateTime = checkHisDTO.getStartDateTime(); // 근태시작일시 (비교대상)
+						LocalDateTime checkEndDateTime = checkHisDTO.getEndDateTime(); // 근태종료일시 (비교대상)
+						if (staDateTime.isBefore(checkEndDateTime) && checkStaDateTime.isBefore(endDateTime)) { // 두 시간이 겹치는지 확인
+							throw new CustomGeneralRuntimeException("중복된 근태가 있습니다.");
+						} else if (hisDTO.getEndYmd() == checkHisDTO.getStaYmd()) { // 동일날짜(기준근태 < 비교근태)
+							workTime = Duration.between(hisDTO.getEndDateTime(), checkHisDTO.getStartDateTime()).toMinutes(); // 실근무시간 (분)
+							lunchStart = LocalDateTime.of(hisDTO.getEndYmd().toLocalDate(), LocalTime.of(12,0)); // 점심시작 YYYY-MM-DD hh:mm
+							lunchEnd = LocalDateTime.of(hisDTO.getEndYmd().toLocalDate(), LocalTime.of(13,0)); // 점심종료 YYYY-MM-DD hh:mm
+							if (hisDTO.getEndYmd().isAfter(lunchStart) || checkHisDTO.getStaYmd().isBefore(lunchEnd)) {
+								workTime -= 60; // 두 근태중 하나라도 점심시간(12-13)에 겹치는 경우 1시간(60분) 차감
+							}
+							
+						} else if (hisDTO.getStaYmd() == checkHisDTO.getEndYmd()) { // 동일날짜(비교근태 < 기준근태)
+							workTime = Duration.between(checkHisDTO.getEndDateTime(), hisDTO.getStartDateTime()).toMinutes(); // 실근무시간 (분)
+							lunchStart = LocalDateTime.of(hisDTO.getStaYmd().toLocalDate(), LocalTime.of(12,0)); // 점심시작 YYYY-MM-DD hh:mm
+							lunchEnd = LocalDateTime.of(hisDTO.getStaYmd().toLocalDate(), LocalTime.of(13,0)); // 점심종료 YYYY-MM-DD hh:mm
+							if (checkHisDTO.getEndYmd().isAfter(lunchStart) || hisDTO.getStaYmd().isBefore(lunchEnd)) {
+								workTime -= 60; // 두 근태중 하나라도 점심시간(12-13)에 겹치는 경우 1시간(60분) 차감
+							}
+						}
+					}
+					if(workTime < minWorkTime) {
+						throw new CustomGeneralRuntimeException("1일 최소근무시간 이상 근무해야합니다.");
 					}
 				}
 			}

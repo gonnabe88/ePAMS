@@ -66,9 +66,16 @@ public class QuickApplDTO {
      */
     private String dtmReasonCd;
 
+        /***
+     * @author 140024
+     * @implNote 근태종류명
+     * @since 2024-06-09
+     */
+    private String dtmReasonNm;
+
     /***
      * @author 140024
-     * @implNote 근태명
+     * @implNote 근태표시명
      * @since 2024-06-09
      */
     private String dtmDispName;

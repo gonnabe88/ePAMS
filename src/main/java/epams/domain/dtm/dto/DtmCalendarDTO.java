@@ -55,4 +55,11 @@ public class DtmCalendarDTO{
      * @since 2024-08-11
      */
     private String dtmHisId;
+
+        /***
+     * @author 140024
+     * @implNote 근태유형 (dtmKindCd)
+     * @since 2024-08-11
+     */
+    private String dtmKindCd;
 }

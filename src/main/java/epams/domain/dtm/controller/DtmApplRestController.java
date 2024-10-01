@@ -24,6 +24,7 @@ import epams.domain.dtm.dto.DtmPromotionDTO;
 import epams.domain.dtm.dto.DtmSaveDTO;
 import epams.domain.dtm.service.DtmApplStatusService;
 import epams.domain.dtm.service.DtmApplyService;
+import epams.domain.dtm.service.DtmEtcService;
 import epams.domain.dtm.service.DtmPromotionService;
 import epams.domain.dtm.service.DtmSaveService;
 import epams.framework.exception.CustomGeneralRuntimeException;
@@ -70,6 +71,13 @@ public class DtmApplRestController {
      */
     private final DtmApplStatusService dtmApplStatusService;
 
+        /**
+     * @author K140024
+     * @implNote 연차저축 서비스 주입
+     * @since 2024-09-13
+     */
+    private final DtmEtcService dtmEtcService;
+
     /**
      * @author K140024
      * @implNote 현재 인증된 사용자 정보를 가져오는 메소드
@@ -92,16 +100,19 @@ public class DtmApplRestController {
      * @since 2024-09-20
      */
     @PostMapping("/check")
-    public ResponseEntity<Map<String, Object>> checkDtm(@RequestBody final DtmHisDTO dto) {
+    public ResponseEntity<Map<String, Object>> checkDtm(@RequestBody final List<DtmHisDTO> dtmHisDTOList) {
 
         // 근태 리스트 생성 (@TODO 나중에 기본적으로 DTO List를 받으면 지워도 됨)
-        List<DtmHisDTO> dtmHisDTOList = new ArrayList<>();
-        dtmHisDTOList.add(dto);
+        //List<DtmHisDTO> dtmHisDTOList = new ArrayList<>();
+        //dtmHisDTOList.add(dto);
 
-        // 사용자 ID 설정
+        // DTM_HIS 객체 세팅
         final Long empId = Long.parseLong(authentication().getName().replace('K', '7'));
-        dtmHisDTOList.forEach(dtmHisDTO -> dtmHisDTO.setEmpId(empId));
-        dtmHisDTOList.forEach(dtmHisDTO -> dtmHisDTO.setModUserId(empId));
+        dtmHisDTOList.forEach(dtmHisDTO -> {
+            dtmHisDTO.setEmpId(empId); // 신청자 ID = 현재 로그인 사용자
+            dtmHisDTO.setModUserId(empId); // 수정자 ID = 현재 로그인 사용자
+            dtmEtcService.findDtmPeriod(dtmHisDTO); // 근태별 교차신청가능여부/시작 및 종료시간 설정
+        });        
 
         // 현재 기준 년도(YYYY) 세팅 ex)2024
         LocalDate currenDate = LocalDate.now();
@@ -126,7 +137,7 @@ public class DtmApplRestController {
             final DtmApplStatusDTO statusDTO = dtmApplStatusService.getApplStatus(empId, thisYear);
 
             // 근태 체크 로직 수행
-            Boolean adUseYn = dtmApplyService.check(dtmHisDTOList, dtmPromotionDTO, dtmSaveDTO, statusDTO, sumDTO);
+            Boolean adUseYn = dtmApplyService.commonCheck(dtmHisDTOList, dtmPromotionDTO, dtmSaveDTO, statusDTO, sumDTO);
 
             // 서비스 호출 및 결과 메시지 설정
             response.put("adUseYn", adUseYn); // 선연차 사용 동의

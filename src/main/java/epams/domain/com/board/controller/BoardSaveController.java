@@ -36,7 +36,7 @@ public class BoardSaveController {
      */
     @Value("${kdb.filepath}")
     private String filepath;
-    
+
     /**
      * @author K140024
      * @implNote list 화면에 노출할 게시물 수 설정값 (application.yml)
@@ -44,7 +44,7 @@ public class BoardSaveController {
      */
     @Value("${kdb.listBrdCnt}")
     private int listBrdCnt;
-    
+
     /**
      * @author K140024
      * @implNote 모든 페이지네이션 시 노출할 최대 버튼 수 설정값 (application.yml)
@@ -83,10 +83,9 @@ public class BoardSaveController {
      */
     @PostMapping("/save")
     public ResponseEntity<String> save(@ModelAttribute final BoardDTO boardDTO) throws IOException {
-        boardDTO.setBoardWriter(authentication().getName());        
+        boardDTO.setBoardWriter(authentication().getName());
         final Long seqId = boardSaveService.save(boardDTO).getSeqId();
         final String redirectUrl = "board/" + seqId;
         return ResponseEntity.ok(redirectUrl);
     }
-
 }

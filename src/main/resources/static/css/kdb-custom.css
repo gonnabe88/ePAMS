@@ -364,6 +364,12 @@ body {
 }
 /*awesomplete 스크롤바 스타일 조정 끝*/
 
+#searchMemberIcon img {
+    width:16px;
+    height:16px;
+    margin-right:5px;
+}
+
 .searchItemHead {
     font-size: 1.0rem;
     font-family: "Nanum Gothic";
@@ -919,6 +925,10 @@ mark {
     text-align: center;
     margin-right: 0.5rem;
     margin-left: 0.5rem;
+}
+
+.dtmList .card {
+    min-height: 70px;
 }
 /************************* 근태조회(dtmCalendar) FULLCALENDAR 끝 **************************/
 

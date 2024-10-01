@@ -148,7 +148,6 @@ public class DtmApplRestController {
  /*@TODO 외부 테스트 시 주석 처리(끝) */
             response.put("dtmHisDTOList", dtmHisDTOList); // 근태신청 리스트
             return new ResponseEntity<>(response, HttpStatus.CREATED);
-
         } catch (CustomGeneralRuntimeException e) {
             // 비즈니스 로직 오류 처리
             e.printStackTrace();

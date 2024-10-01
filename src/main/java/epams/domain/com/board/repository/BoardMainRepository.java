@@ -34,8 +34,17 @@ public class BoardMainRepository {
 	 * @implNote paging 조건에 따라 모든 게시물을 조회하여 반환
 	 * @since 2024-06-09
 	 */
+	public List<BoardDTO> findAllFaq() {
+		return sql.selectList("Board.findAllFaq");
+	}
+
+	/***
+	 * @author 140024
+	 * @implNote paging 조건에 따라 모든 게시물을 조회하여 반환
+	 * @since 2024-06-09
+	 */
     public List<BoardDTO> findAll(final int offset, final int pageSize, final String sortDirection) {
-        return sql.selectList("Board.findAll", Map.of("offset", offset, "limit", pageSize, "sortDirection", sortDirection));
+        return sql.selectList("Board.findAllNotice", Map.of("offset", offset, "limit", pageSize, "sortDirection", sortDirection));
     }    
     
 	/***

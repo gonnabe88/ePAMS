@@ -16,6 +16,7 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString(callSuper = true)
 @Data
 public class BoardDTO extends BoardVO {
 

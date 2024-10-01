@@ -1,6 +1,24 @@
 -- 테이블 스페이스 할당
 ALTER USER OHR DEFAULT TABLESPACE USERS QUOTA UNLIMITED ON USERS;
 
+-- 테스트용 빈 함수 생성
+CREATE OR REPLACE FUNCTION OHR.F_DTM_ACT_TIME (
+    p_param1 VARCHAR2,
+    p_param2 VARCHAR2,
+    p_param3 VARCHAR2,
+    p_param4 VARCHAR2,
+    p_param5 VARCHAR2
+) RETURN VARCHAR2
+    IS
+BEGIN
+    -- 함수 로직을 구현하거나 기본값 'N/A'를 반환
+    RETURN 'N/A';
+EXCEPTION
+    WHEN OTHERS THEN
+        -- 예외 발생 시에도 'N/A' 반환
+        RETURN 'N/A';
+END F_DTM_ACT_TIME;
+
 -- 테스트용 휴일 테이블 생성
 CREATE TABLE "OHR"."HPS_CALENDAR"
 (

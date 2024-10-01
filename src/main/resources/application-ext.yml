@@ -6,6 +6,11 @@ kdb:
   logfile: ePAMS_logback.log
   eaiUrl: http://deaiaa11:20002/eaicall
 
+  web:
+    resources:
+      cache:
+        period: 0 # 캐시 유효시간 1시간
+
 # server port
 server:
   port: 8080

@@ -132,6 +132,41 @@ $(document).ready(() => {
         minChars: 2,
         maxItems: 50, // 최대 50개까지 검색 결과 표시
         autoFirst: false, // 기본 지정 해제
+        sort: function(a, b) {
+            const nameA = a.value.username.toLowerCase();
+            const nameB = b.value.username.toLowerCase();
+
+            const firstCharA = nameA.charAt(0); // K or O
+            const firstCharB = nameB.charAt(0); // K or O
+
+            const restA = nameA.slice(1); // 140024 등
+            const restB = nameB.slice(1); // 140024 등
+
+            const deptA = a.value.deptCode.toLowerCase();
+            const deptB = b.value.deptCode.toLowerCase();
+
+            const teamA = a.value.teamCode.toLowerCase();
+            const teamB = b.value.teamCode.toLowerCase();
+
+            // 1. 첫 글자를 기준으로 오름차순 정렬 (K > O)
+            if (firstCharA < firstCharB) return -1;
+            if (firstCharA > firstCharB) return 1;
+
+            // 2. 부서코드를 기준으로 오름차순 정렬
+            if (deptA < deptB) return -1;
+            if (deptA > deptB) return 1;
+
+            // 3. 팀코드를 기준으로 오름차순 정렬
+            if (teamA < teamB) return -1;
+            if (teamA > teamB) return 1;
+
+            // 4. 행번을 기준으로 내림차순 정렬
+            if (restA > restB) return -1;
+            if (restA < restB) return 1;
+
+            // 모든 값이 동일한 경우
+            return 0;
+        },
         list: [],
         item: function(text, input) {
             let html = text.label;
@@ -144,33 +179,6 @@ $(document).ready(() => {
 
             const itemElement = document.createElement("li");
             itemElement.innerHTML = html;
-
-            // 터치 이벤트 처리
-            // let touchTimer;
-            // let touchDuration = 500; // 터치를 길게 했을 때 인식하는 시간 (500ms)
-            // let startX, startY;
-            // itemElement.addEventListener('touchstart', function (event) {
-            //     startX = event.touches[0].clientX;
-            //     startY = event.touches[0].clientY;
-            //     touchTimer = setTimeout(function() {
-            //         event.preventDefault();
-            //         event.stopPropagation();
-            //         itemElement.click(); // 길게 터치했을 때 클릭 이벤트 발생
-            //     }, touchDuration);
-            // });
-            // itemElement.addEventListener('touchmove', function (event) {
-            //     let moveX = event.touches[0].clientX;
-            //     let moveY = event.touches[0].clientY;
-            //     if(Math.abs(moveX - startX) > 10 || Math.abs(moveY - startY) > 10) {
-            //         clearTimeout(touchTimer);
-            //     }
-            // });
-            // itemElement.addEventListener('touchend', function (event) {
-            //     clearTimeout(touchTimer);
-            // });
-            // itemElement.addEventListener('touchcancel', function (event) {
-            //     clearTimeout(touchTimer);
-            // });
 
             return itemElement;
         },
@@ -198,8 +206,7 @@ $(document).ready(() => {
 
     // 검색 결과가 나오면 키패드를 숨기고 searchDiv(직원검색 입력 폼)를 최상단에 위치시킴
     inputElement.addEventListener('awesomplete-selectcomplete', function() {
-        // 키패드를 숨김
-        inputElement.blur();
+        inputElement.blur(); // 키패드를 숨김
 
         // id가 searchDiv인 요소를 화면 최상단에 위치시킴
         const searchDiv = document.getElementById('searchDiv');
@@ -220,10 +227,6 @@ $(document).ready(() => {
         const scrollHeight = this.scrollHeight;
         const clientHeight = this.clientHeight;
 
-        //값 확인을 위한 로그 출력 (현재 시간 포함)
-        //const currentTime = new Date().toLocaleTimeString();
-        //console.log(`[${currentTime}] Scroll Event - scrollTop: ${scrollTop}, clientHeight: ${clientHeight}, scrollHeight: ${scrollHeight}`);
-
         // 상단에 도달한 경우
         if (scrollTop <= 1) {
             this.scrollTop += 1; // 상단에서 더 이상 스크롤되지 않도록 조정
@@ -234,7 +237,6 @@ $(document).ready(() => {
         if (scrollTop + clientHeight >= scrollHeight - 1) { // 오차를 약간 둠
             this.scrollTop -= 1; // 하단에서 더 이상 스크롤되지 않도록 조정
             event.preventDefault(); // 외부로 스크롤 전파를 방지
-            //console.log("preventDefault#2");
         }
 
         // 스크롤이 내부에서만 발생하도록 설정
@@ -244,10 +246,21 @@ $(document).ready(() => {
     // 터치 이벤트에서 스크롤이 외부로 전파되지 않도록 설정
     dropdown.addEventListener('touchmove', function(event) {
         event.stopPropagation();
-    }, { passive: true });
+    }, { passive: false });
+
     dropdown.addEventListener('touchstart', function(event) {
+        const target2 = $('#searchMemberCard').get(0);
+        target2.scrollIntoView({ behavior: 'smooth'});
+
+        // 키패드 숨기기 위한 처리 (포커스를 잃지 않고 readonly 처리)
+        inputElement.setAttribute('readonly', true);  // 일시적으로 readonly 설정
+        setTimeout(() => {
+            inputElement.removeAttribute('readonly');  // 키패드가 사라진 후 readonly 제거
+        }, 100);  // 약간의 지연 후 원상복구
+
         event.stopPropagation();
     }, { passive: true });
+
     dropdown.addEventListener('touchend', function(event) {
         event.stopPropagation();
     }, { passive: true });
@@ -261,9 +274,17 @@ $(document).ready(() => {
 
             if (data.teamList) {
                 data.teamList.forEach(item => {
+                    // 아이콘을 username이 K로 시작하는 경우에만 추가
+                    const iconHtml = item.username.startsWith('K')
+                        ? '<img src="/images/kdb/ICON16.ico" alt="KDB" id="searchMemberIcon">'
+                        : '';
+
+                    // itemText 구성
                     const itemText = `
-                        <span class="searchItemHead">${item.realname} ${item.positionName}</span><br> 
-                        <span class="searchItemBody">${item.deptName} ${item.teamName}</span><br>
+                        ${iconHtml}<span class="searchItemHead ms-1">${item.realname} ${item.positionName}</span>
+                        <br>
+                        <span class="searchItemBody">${item.deptName} ${item.teamName}</span>
+                        <br>
                         <span class="searchItemFooter">${item.jobDetail}</span>
                     `;
                     list.push({

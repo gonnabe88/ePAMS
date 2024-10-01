@@ -2,14 +2,18 @@ $(document).ready(function () {
 
     const calendarEl = document.getElementById('dtmCalendar');
     let selectedDate = null;
-    let selectedDateStr = null;
 
-    // div 태그에서 data-events 속성을 추출하여 JSON 데이터로 변환
+    // 오늘 날짜를 가져오기
+    const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD 형식
+
+    // 휴일 날짜를 가져오기
+    const holidays = calendarEl.getAttribute('data-holiDayList');
+
+    // 근태(이벤트) 가져오기 후 JSON 변환
     const eventsData = calendarEl.getAttribute('data-events');
     const eventsRaw = JSON.parse(eventsData);
-    console.log(eventsRaw);
 
-    // 근태종류(이벤트)별 CSS 스타일 적용
+    // 근태(이벤트) CSS 스타일 적용
     const getEventClass = (dtmKindCd) => {
         switch(dtmKindCd.substring(0, 1)) {
             case '1': return 'event-kind-1'; // 연차 (파랑)
@@ -18,27 +22,26 @@ $(document).ready(function () {
             default: return 'event-default'; // 그외 (보라)
         }
     }
+
+    // DB에서 가져온 근태(이벤트) 객체를 FullCalendar 객체에 할당
     const events = eventsRaw.map(function(event) {
         return {
             title: event.title,
             start: event.start,
-            end: new Date(new Date(event.end).setHours(24, 0, 0, 0)),    // 24:00 시간으로 설정
+            end: new Date(new Date(event.end).setHours(24, 0, 0, 0)), // 24:00 시간으로 설정
             allDay: event.allDay,
-            extendedProps: {
-                dtmHisId: event.dtmHisId, // 커스텀 필드는 extendedProps로 추가
+            extendedProps: { // 커스텀 필드는 extendedProps로 추가
+                dtmHisId: event.dtmHisId,
                 dtmKindCd: event.dtmKindCd
             },
             classNames: getEventClass(event.dtmKindCd)
         };
     });
 
-
-
-    const holidays = calendarEl.getAttribute('data-holiDayList'); // 추가할 휴일 날짜
-
     const calendar = new FullCalendar.Calendar(calendarEl, {
         themeSystem: 'standard',
         initialView: 'dayGridMonth',
+        initialDate: today, // 오늘 날짜를 기본 선택 날짜로 설정
         editable: false,
         selectable: false,
         scrollable: true,
@@ -65,8 +68,10 @@ $(document).ready(function () {
         aspectRatio: 1,
         fixedWeekCount: false,
         events: events,  // 이벤트 리스트 추가
-        dayMaxEvents: 1, // 1일에 표시할 이벤트 수 제한 (2개 이상 시 more)
+        dayMaxEvents: 2, // 1일에 표시할 이벤트 수 제한 (2개 이상 시 more)
+        dayMaxEventRows: 2, // 1일에 표시할 이벤트 행 수 제한 (2개 이상 시 more)
         moreLinkText: function(num) { // more 링크 텍스트 변경
+            //return ``;  // 원하는 형식으로 변경
             return `+${num}개`;  // 원하는 형식으로 변경
         },
         moreLinkClick: function(info) {
@@ -82,22 +87,20 @@ $(document).ready(function () {
             applButton && (applButton.className = 'btn btn-primary btn-sm fc-add-button');
             applButton && (applButton.style.visibility = 'hidden'); // 기본적으로 버튼을 숨김
 
-            // 달력이 전환될 때 fadeIn
+            // 달력이 전환될 때 fadeIn 효과
             const calendarContainer = document.querySelector('.fc-scrollgrid-sync-table');
             calendarContainer.classList.add('fc-fade');
-
             setTimeout(() => {
                 calendarContainer.classList.remove('fc-fade'); // fadeIn 완료 후 클래스 제거
             }, 500); // fadeIn 애니메이션 지속 시간
         },
-        dayCellDidMount: function(info) {
+        dayCellDidMount: function(info) { // 날짜 셀이 렌더링된 후 이벤트
             const day = info.date.getDay(); // 0: 일요일, 6: 토요일
             const dateStr = info.date.toLocaleDateString('ko-KR', {
                 year: 'numeric',
                 month: '2-digit',
                 day: '2-digit'
             }).replace(/\. /g, '-').replace('.', '');  // YYYY-MM-DD 형식으로 변환
-
             if (day === 0) {
                 // 일요일에 대한 스타일 적용 (danger #dc3545)
                 info.el.style.setProperty('color', '#dc3545');
@@ -109,18 +112,20 @@ $(document).ready(function () {
             if (holidays.includes(dateStr)) {
                 info.el.style.setProperty('color', '#dc3545'); // 휴일 글씨색 적용 (일요일처럼)
             }
+            // 오늘 날짜가 달력에 표시될 때 자동으로 선택 스타일 추가
+            if (info.dateStr === today) {
+                info.el.classList.add('selected-date');
+            }
         },
-        dayCellContent: function(arg) {
+        dayCellContent: function(arg) { // 날짜 셀에 내용을 추가
             // 날짜에서 '일'단어를 제거
             return { html: '<div class="fc-daygrid-day-number">' + arg.dayNumberText.replace('일', '') + '</div>' };
         },
-        // 날짜를 클릭했을 때 이벤트
-        dateClick: function(info) {
-            handleEventOrDateClick(info.dateStr, calendar.getEvents(), info.dateStr, '날짜');
+        dateClick: function(info) { // 날짜를 클릭했을 때 이벤트
+            handleEventOrDateClick(info.dateStr, calendar.getEvents(), info.dateStr);
         },
-        // 이벤트 클릭했을 때 이벤트
-        eventClick: function(info) {
-            handleEventOrDateClick(info.event.startStr, [info.event], info.event.startStr, '이벤트');
+        eventClick: function(info) { // 이벤트 클릭했을 때 이벤트
+            //handleEventOrDateClick(info.event.startStr, [info.event], info.event.startStr);
         },
 
     });
@@ -128,7 +133,21 @@ $(document).ready(function () {
     // 달력 렌더링
     calendar.render();
 
-    // 터치 스와이프 이벤트 추가
+    // 달력 렌더링 후 datesSet 이벤트를 트리거
+    setTimeout(function() {
+        calendar.trigger('datesSet');
+    }, 100); // DOM이 렌더링될 시간을 줌
+
+    // 달력이 렌더링된 후 오늘 날짜를 자동 선택
+    calendar.on('datesSet', function() {
+        // 오늘 날짜에 해당하는 셀을 찾아서 클릭 이벤트를 발생시킴
+        const todayCell = $(`[data-date="${today}"]`);
+        if (todayCell) {
+            handleEventOrDateClick(today, calendar.getEvents(), today);
+        }
+    });
+
+    // 터치 스와이프 이벤트 추가 (달력 넘김 기능)
     let touchStartX, touchStartY;
     calendarEl.addEventListener('touchstart', function(e) {
         touchStartX = e.touches[0].clientX;
@@ -157,14 +176,32 @@ $(document).ready(function () {
         touchStartY = null;
     });
 
-    // 공통 함수로 클릭 처리
-    const handleEventOrDateClick = (selectedDateStr, events, infoDateStr, type) => {
-        console.log(`${type} 클릭됨: ${selectedDateStr}`);
+    // 요일을 구하는 함수 (0: 일요일, 6: 토요일)
+    const getKoreanDay = (date) => {
+        const days = ['일', '월', '화', '수', '목', '금', '토'];
+        return days[date.getDay()];
+    };
+
+    // 클릭 이벤트 처리
+    const handleEventOrDateClick = (selectedDateStr, events, infoDateStr) => {
 
         selectedDate && selectedDate.classList.remove('selected-date');
         const selectedDateEl = document.querySelector(`[data-date="${infoDateStr}"]`);
         selectedDateEl && selectedDateEl.classList.add('selected-date');
         selectedDate = selectedDateEl;
+
+        // id가 selectedDate인 요소의 텍스트를 변경 (날짜를 2024-10-01(일) 형식으로 변경)
+        const selectedDateTextEl = document.getElementById('selectedDate');
+        if (selectedDateTextEl) {
+            const selectedDateObj = new Date(selectedDateStr);
+            const formattedDate = selectedDateObj.toLocaleDateString('ko-KR', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit'
+            }).replace(/\.\s?/g, '-').replace(/-$/, '');
+            const dayOfWeek = getKoreanDay(selectedDateObj); // 요일 구하기
+            selectedDateTextEl.textContent = `${formattedDate}(${dayOfWeek})`; // 날짜와 요일 설정
+        }
 
         // 신청 버튼 보이기
         const applButton = document.querySelector('.fc-add-button');
@@ -214,7 +251,4 @@ $(document).ready(function () {
             eventContainer.innerHTML = '<span class="h7">해당일은 근태가 없습니다.</span>';
         }
     }
-
-    
-
 });

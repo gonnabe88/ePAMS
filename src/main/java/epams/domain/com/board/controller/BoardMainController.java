@@ -67,7 +67,21 @@ public class BoardMainController {
      * @since 2024-04-26
      */
     private final BoardMainService boardService;
-    
+
+    /**
+     * @author K140024
+     * @implNote 페이징 처리된 게시글 목록을 보여주는 메소드
+     * @since 2024-04-26
+     */
+    @GetMapping({"/faq","/faq/list"})
+    public String findAllFaq(final Model model) {
+
+        final List<BoardDTO> boardList = boardService.findAllFaq();
+
+        model.addAttribute("boardList", boardList);
+        return "common/faqList";
+    }
+
     /**
      * @author K140024
      * @implNote 페이징 처리된 게시글 목록을 보여주는 메소드
@@ -85,7 +99,7 @@ public class BoardMainController {
         if (endPage - startPage < maxPageBtn - 1) {
             startPage = Math.max(1, endPage - maxPageBtn + 1);
         }
-                
+
         model.addAttribute("boardList", boardList);
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
@@ -101,6 +115,17 @@ public class BoardMainController {
     public String editor(final Model model) {    
     	model.addAttribute("board", new BoardDTO());
         return "common/boardEditor";
+    }
+
+    /**
+     * @author K140024
+     * @implNote 게시글 작성 화면을 보여주는 메소드
+     * @since 2024-04-26
+     */
+    @GetMapping("/faq/editor")
+    public String faqEditor(final Model model) {
+        model.addAttribute("board", new BoardDTO());
+        return "common/faqEditor";
     }
     
     /**

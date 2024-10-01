@@ -72,6 +72,16 @@ public class BoardMainService {
      * @implNote 페이지네이션으로 게시물 목록 조회
      * @since 2024-04-26
      */
+    public List<BoardDTO> findAllFaq() {
+        final List<BoardDTO> boardDTOs = boardMainRepo.findAllFaq();
+        return boardDTOs;
+    }
+
+    /**
+     * @author K140024
+     * @implNote 페이지네이션으로 게시물 목록 조회
+     * @since 2024-04-26
+     */
     public Page<BoardDTO> paging(final Pageable pageable) {
         final int page = pageable.getPageNumber() - 1; // 페이지 번호
         final int pageSize = pageable.getPageSize(); // 페이지 크기

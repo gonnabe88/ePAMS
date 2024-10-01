@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.thymeleaf.org" layout:decorate="~{common/layout/layout}">
+
+<head>
+    <!-- (start) private script -->
+    <th:block layout:fragment="css">
+    </th:block>
+    <!-- (end) private script -->
+</head>
+
+<body>
+<div layout:fragment="contents">
+    <div class="boardDetail containter">
+        <div id="main-content">
+            <div class="main-content d-flex justify-content-center">
+                <div class="row col-lg-10 col-md-12 d-flex justify-content-center">
+                    <div class="page-heading">
+                        <br>
+                        <!-- 게시글 내용 -->
+                        <div class="card">
+                            <div class="card-body">
+									<span th:if="${board.category}" th:classappend="|badge badge-sm mb-2 ${(board.category == 'IT') ? 'bg-primary' : (board.category == '인사') ? 'bg-info' : ''}|" th:text="${board.category}"></span>
+                                <h4 th:text="${board.boardTitle}"></h4>
+                                <div class="d-flex flex-row mb-3 gap-3">
+                                    <div>
+                                        <i class="bi bi-building"></i>
+                                        <h7 th:text="${board.boardWriter}"></h7>
+                                    </div>
+                                    <div>
+                                        <i class="bi bi-calendar-check"></i>
+                                        <h7 th:text="${#temporals.format(board.createdTime, 'yyyy-MM-dd')}"></h7>
+                                    </div>
+                                    <div>
+                                        <i class="bi bi-eye"></i>
+                                        <h7 th:text="${board.boardHits}"></h7>
+                                    </div>
+                                </div>
+                                <div class="scroll-multiline">
+                                    <p th:utext="${board.boardContents}"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 기존 첨부파일 목록 -->
+                        <ul class="list-unstyled mb-3">
+                            <li th:if="${board.fileAttached == '1'}" th:each="boardFile: ${boardFileList}">
+                                <div class="d-flex align-items-center p-2">
+                                    <div class="overflow-hidden ellipsis col d-flex align-items-center gap-2">
+                                        <span class="badge text-bg-primary"> 첨부 </span>
+                                        <h6 class="overflow-hidden ellipsis mb-0">
+                                            <a href="#" class=" open-pdf" th:data-pdfUrl="@{|/board/${board.seqId}/download/${boardFile.seqId}|}" th:utext="${boardFile.originalFileName}"></a>
+                                        </h6>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                        <div class="d-flex gap-2 flex-row-reverse">
+                            <a class="btn btn-primary btn-sm mt-3" sec:authorize="hasRole('EHRAD001')" type="submit" id="modify" th:href="@{|/board/update/${board.seqId}|}">수정</a>
+                            <button class="btn btn-danger btn-sm mt-3" sec:authorize="hasRole('EHRAD001')" th:attr="data-boardId=${board.seqId}" type="submit" id="delete">
+                                삭제
+                            </button>
+                            <a class="btn btn-secondary btn-sm mt-3" type="submit" id="list" th:href="@{/board/faq}">목록</a>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- PDF 보기 모달 -->
+                <div class="modal fade" id="pdfModal" tabindex="-1" aria-labelledby="pdfModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <iframe id="pdf-frame" src=""></iframe>
+                            <!-- 모달 하단에 닫기 버튼 추가 -->
+                            <div class="modal-footer p-0">
+                                <button type="button" class="btn btn-secondary btn-sm " data-bs-dismiss="modal">닫기</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- (start) private script -->
+<th:block layout:fragment="script">
+    <script src="/js/boardDelPopup.js"></script>
+    <script src="/js/detail.js"></script>
+</th:block>
+<!-- (end) private script -->
+
+</body>
+
+</html>

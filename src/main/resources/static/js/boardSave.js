@@ -1,4 +1,4 @@
-const save2 = () => {
+const save = (boardType) => {
     let header = $("meta[name='_csrf_header']").attr('content');
     let token = $("meta[name='_csrf']").attr('content');
     let seqId = /*[[${board.seqId}]]*/ "seqId";
@@ -9,9 +9,12 @@ const save2 = () => {
         formData.append('boardFile', file);
         console.log(file);
     }
-    formData.append("boardTitle", document.getElementById("title").value)
-    formData.append("boardContents", tinymce.get("open").getContent())
-    formData.append("category", document.querySelector('input[name="flexRadioDefault"]:checked').value)
+
+    formData.append("boardTitle", document.getElementById("title").value);
+    formData.append("boardContents", tinymce.get("open").getContent());
+    formData.append("category", document.querySelector('input[name="flexRadioDefault"]:checked').value);
+    formData.append("boardType", boardType); // 공지사항(01) FAQ(04)
+
     Swal.fire({
         title: "등록",
         html: "등록 하시겠습니까?",
@@ -82,9 +85,3 @@ const save2 = () => {
         }
     });
 }
-
-$(document).ready(() => {
-    console.log("click");
-    // 'save' 버튼 클릭 시 save2() 함수 호출
-    $('#save').on('click', save2);
-});

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org" layout:decorate="~{common/layout/layout}">
+
+<head>
+    <!-- (start) private script -->
+    <th:block layout:fragment="css">
+    </th:block>
+    <!-- (end) private script -->
+</head>
+
+<body>
+<div layout:fragment="contents">
+    <div class="container">
+        <div id="main-content">
+            <div class="main-content d-flex justify-content-center">
+                <div class="row col-lg-10 col-md-12 d-flex justify-content-center">
+
+                    <!-- 페이지 제목 시작 -->
+                    <div class="page-heading">
+                        <div class="align-middle">
+                            <h2>
+                                <i class="bi bi-bell-fill"></i> FAQ
+                            </h2>
+                            <br>
+                        </div>
+                    </div>
+                    <!-- 페이지 제목 끝 -->
+
+                    <!-- 게시글 목록 시작 -->
+                    <div class="row col-lg-12 col-md-12 col-sm-12">
+                        <div class="d-flex gap-2 flex-row-reverse">
+                            <a class="btn btn-primary btn-sm mb-3" sec:authorize="hasRole('EHRAD001')" type="submit"
+                               id="submit" th:href="@{/board/faq/editor}">글쓰기</a><br>
+                        </div>
+                        <div class="col-12">
+                            <div class="animate__animated animate__fadeIn animate__slow">
+                                <section class="section" th:each="board: ${boardList}">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <span th:if="${board.category}"
+                                                  th:classappend="|badge badge-sm mb-2 ${(board.category == 'IT') ? 'bg-primary' : (board.category == '인사') ? 'bg-info' : ''}|"
+                                                  th:text="${board.category}"></span>
+                                            <div class="d-flex flex-row align-items-center mb-3 gap-3">
+                                                <a th:href="@{|/board/${board.seqId}|}">
+                                                    <div class="d-flex align-items-center gap-2">
+                                                        <h4>
+                                                            <span th:text="${board.boardTitle}"> </span>
+                                                        </h4>
+                                                        <h6>
+                                                            <span th:if="${T(java.time.LocalDateTime).now().minusDays(7).isBefore(board.createdTime)}"
+                                                                  class="badge rounded-pill bg-warning text-dark">  new </span>
+                                                        </h6>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div class="d-flex flex-row mb-3 gap-3">
+                                                <div>
+                                                    <i class="bi bi-building"></i>
+                                                    <h7 th:text="${board.boardWriter}"></h7>
+                                                </div>
+                                                <div>
+                                                    <i class="bi bi-calendar-check"></i>
+                                                    <h7 th:text="${#temporals.format(board.createdTime, 'yyyy-MM-dd')}"></h7>
+                                                </div>
+                                                <div>
+                                                    <i class="bi bi-eye"></i>
+                                                    <h7 th:text="${board.boardHits}"></h7>
+                                                </div>
+                                            </div>
+                                            <div class="truncate-multiline">
+                                                <p th:utext="${board.boardContents}"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 게시글 목록 끝 -->
+
+                    <!-- 페이징처리 시작 -->
+                    <div th:if="${!boardList.isEmpty()}">
+                        <ul class="pagination justify-content-center align-items-center">
+                            <!-- Previous button -->
+                            <li class="page-item" th:classappend="${startPage == 1} ? 'disabled'">
+                                <a class="page-link" th:href="@{|?page=${startPage - 1}|}" th:if="${startPage > 1}">
+                                    <span><i class="bi bi-caret-left-fill"></i></span>
+                                </a>
+                            </li>
+                            <!-- Page numbers -->
+                            <li th:each="page : ${#numbers.sequence(startPage, endPage)}"
+                                th:classappend="${page == boardList.number + 1} ? 'active'" class="page-item mx-1">
+                                <a th:text="${page}" class="page-link" th:href="@{|?page=${page}|}"></a>
+                            </li>
+                            <!-- Next button -->
+                            <li class="page-item" th:classappend="${endPage == boardList.totalPages} ? 'disabled'"
+                                th:if="${endPage < boardList.totalPages}">
+                                <a class="page-link" th:href="@{|?page=${endPage + 1}|}">
+                                    <span><i class="bi bi-caret-right-fill"></i></span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- 페이징처리 끝 -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- (start) private script -->
+<th:block layout:fragment="script">
+</th:block>
+<!-- (end) private script -->
+</body>
+
+</html>

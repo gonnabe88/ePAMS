@@ -21,10 +21,10 @@ public class BoardVO extends BaseVO {
 
     /***
      * @author 140024
-     * @implNote [Column] 게시판타입(BLB_TYPE)
+     * @implNote [Column] 게시판타입(BLB_CLSF_C)
      * @since 2024-06-09
      */
-    private String boardType = "01";
+    private String boardType = "10";
 
     /***
      * @author 140024

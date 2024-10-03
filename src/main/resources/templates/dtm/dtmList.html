@@ -6,6 +6,8 @@
     <th:block layout:fragment="css">
         <link rel="stylesheet" href="/extensions/litepicker/litepicker.css"/>
         <link rel="stylesheet" href="/extensions/select2/select2.css"/>
+        <link rel="stylesheet" href="/extensions/swiper/swiper-bundle.min.css"/>
+        <link rel="stylesheet" href="/extensions/swiper/customSwiper.css"/>
     </th:block>
     <!-- (end) private script -->
 </head>
@@ -302,6 +304,7 @@
                                                      th:data-dtmkindcd="${dtm.dtmKindCd}"
                                                      th:data-dtmreasoncd="${dtm.dtmReasonCd}"
                                                      th:data-dtmreasonnm="${dtm.dtmReasonNm}"
+                                                     th:data-dtmrange="${dtm.dtmRange}"
                                                      id="dtmModifyBtn"
                                                      data-bs-toggle="modal" data-bs-target="#dynamicModal" >변경</div>
 
@@ -314,7 +317,8 @@
                                                      th:data-dtmkindcd="${dtm.dtmKindCd}"
                                                      th:data-dtmreasoncd="${dtm.dtmReasonCd}"
                                                      th:data-dtmreasonnm="${dtm.dtmReasonNm}"
-                                                     th:data-dtmdispname="${dtm.dtmDispName}">취소</div>
+                                                     th:data-dtmdispname="${dtm.dtmDispName}"
+                                                     th:data-dtmrange="${dtm.dtmRange}">취소</div>
                                             </div>
                                         </div>
                                     </div>                                    
@@ -328,44 +332,72 @@
                         <div class="modal fade" id="dynamicModal" tabindex="-1" aria-labelledby="dynamicModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
-                                    <div class="modal-header">
+                                    <div class="modal-header p-2">
                                         <h5 class="modal-title" id="dynamicModalLabel">근태 변경</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
-                                    <div class="modal-body">                                        
+                                    <div class="modal-body p-2">
                                         <div class="card mb-1">
-                                            <div class="card-body">
+                                            <div class="card-body pt-2 pb-2">
                                                 <div class="row">
                                                     <div class="col">
-                                                        <h6><span class="text-danger">변경 전</span> 근태</h6>
+                                                        <!-- <h6><span class="text-danger">변경 전</span> 근태</h6> -->
                                                         <div class="d-flex justify-content-start gap-1">
-                                                            <span class="text-bold" id="dtmResonNm"></span>
-                                                            <span id="beforeStaYmd"></span>
-                                                            <span class="tilde">~</span>
-                                                            <span id="beforeEndYmd"></span>
+                                                            <div class="revokeDtmNameTag">
+                                                                <h6 class="mb-0 ms-3">
+                                                                    <span class="badge badge-sm rounded-pill bg-danger">취소</span>
+                                                                    <span id="dtmResonNm"></span>
+                                                                </h6>
+                                                                <h7 class="mb-0 ms-3" id="dtmRange"></h7>  
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="card mb-1">
-                                            <div class="card-body">
-                                                <div class="row mb-3">
-                                                    <div class="col">
-                                                        <h6><span class="text-primary">변경 후</span> 근태</h6>
-                                                        <div class="date-input-container">
-                                                            <div class="date-input">
-                                                                <input type="text" id="startDate" name="startDate">
-                                                            </div>
-                                                            <span class="tilde">~</span>
-                                                            <div class="date-input">
-                                                                <input type="text" id="endDate" name="endDate">
+
+                                        <!-- start carousel (rolling image) -->
+                                        <div class="no-drag">
+                                            <!-- Swiper Banner -->
+                                            <div class="swiper mySwiper">
+                                                <div class="swiper-wrapper">
+                                                    <div class="card w-100 mb-1" id="comment">
+                                                        <div class="card-body pt-2 pb-1">
+                                                            <div class="row">
+                                                                <div class="col">
+                                                                    <div class="d-flex justify-content-center align-items-center gap-1">
+                                                                        <h7 class="mb-3 mt-3">
+                                                                            <span>새로운 근태의 기간, 종류 선택 후</span>
+                                                                            <span class="text-warning">추가</span>
+                                                                            <span>해주세요.</span>
+                                                                            <i class="bi bi-caret-down-fill text-warning"></i>
+                                                                        </h7>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                        <div id="dateWarning">오늘 이후 건만 신청가능합니다</div>
                                                     </div>
                                                 </div>
-                                                <div class="dtmAppl">
+                                                <!-- Swiper Pagination -->
+                                                <div class="swiper-pagination"></div>
+                                            </div>
+                                        </div>
+                                        <!-- end carousel (rolling image) -->
+
+                                        <div class="card card-warning mb-1">
+                                            <div class="card-body pt-2 pb-0">
+                                                <div class="date-input-container mb-2">
+                                                    <span class="h6 mb-0">근태기간</span>
+                                                    <div class="date-input">
+                                                        <input type="text" id="startDate" name="startDate">
+                                                    </div>
+                                                    <span class="tilde">~</span>
+                                                    <div class="date-input">
+                                                        <input type="text" id="endDate" name="endDate">
+                                                    </div>
+                                                </div>
+                                                <div id="dateWarning">오늘 이후 건만 신청가능합니다</div>
+                                                <div class="dtmReg">
                                                     <div class="row">
                                                         <div class="col">
                                                             <div id="calender"></div>
@@ -373,10 +405,32 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="card-body pt-2">
+                                                <div class="d-flex align-items-center justify-content-between mb-2">
+                                                    <h6><span th:text="${langList['DTM_KIND']}"></span></h6>
+                                                    <div class="btn-group btn-group-sm" role="group" aria-label="DTM Kind Code Select">          
+                                                        <!-- 연차 -->
+                                                        <input type="radio" class="btn-check" name="dtmKindCdSelect" id="dtmKindCdSelect_1A" value="1A" autocomplete="off" checked>
+                                                        <label class="btn btn-outline-primary" for="dtmKindCdSelect_1A">
+                                                            <span th:text="${langList['DTM_KIND_CD_1A_S']}"></span>
+                                                        </label>
+    
+                                                        <!-- 보상 -->
+                                                        <input type="radio" class="btn-check" name="dtmKindCdSelect" id="dtmKindCdSelect_1Z" value="1Z" autocomplete="off">
+                                                        <label class="btn btn-outline-primary" for="dtmKindCdSelect_1Z">
+                                                            <span th:text="${langList['DTM_KIND_CD_1Z_S']}"></span>
+                                                        </label>        
+                                                    </div>
+                                                </div>
+    
+                                                <select class="form-control select2" aria-label="DTM Reason Code Select" name="dtmReasonCdSelect" id="dtmReasonCdSelect">
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="modal-footer">
+                                    <div class="modal-footer p-2">
                                         <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">닫기</button>
+                                        <button type="button" class="btn btn-warning btn-sm" id="add">추가</button>
                                         <button type="button" class="btn btn-primary btn-sm" id="submit">신청</button>
                                     </div>
                                 </div>
@@ -432,12 +486,18 @@
     <script src="/extensions/fullcalendar/index.global.js"></script>
     <script src="/extensions/fullcalendar/initDtmRegCal.js"></script>
     <script src="/extensions/fullcalendar/main.min.js"></script>
+
+    <script src="/extensions/swiper/swiper-bundle.min.js"></script>
+    <script src="/extensions/swiper/initDtmApplSwiper.js"></script>
+
+
     <script src="/js/dateFormat.js"></script>
     <script src="/js/disablePastDates.js"></script>
 
     <script src="/js/dateInputValidation.js"></script>
     <script src="/js/searchForm.js"></script>
-    <script src="/js/selectForm.js"></script>
+<!--    <script src="/js/selectForm.js"></script>-->
+    <script src="/js/dtmApplSelectForm.js"></script>
     <script src="/js/utils/progressBar.js"></script>
 
     <script src="/js/quickDtmApplPopup.js"></script>

@@ -112,46 +112,60 @@ public class DtmApplyService {
 		// 선연차 사용 동의 필요여부
 		boolean adUseYn = false;
 
+
+		hisDTOList.forEach(dto -> log.warn(dto.toString()));
+
 		/***
 		 * @author 140024
 		 * @implNote 신청된 근태 유형별 합계 시간 계산 & 중복 체크
 		 * @since 2024-09-13
 		 */
 		for(DtmHisDTO hisDTO : hisDTOList) {
-
+/* @TODO 외부 테스트 시 주석 처리(시작)
 			long totalWorkTime = Duration.between(hisDTO.getBaseStartDateTime(), hisDTO.getBaseEndDateTime()).toMinutes();
 			long workTime = totalWorkTime;
 			LocalDateTime lunchStart;
 			LocalDateTime lunchEnd;
 			log.warn("전체근무시간 : " + String.valueOf(totalWorkTime));
 
+
 			// 신청건 중 중복된 근태가 있는지 확인
 			if(!"D".equals(hisDTO.getModiType())) { // 취소건 비교 X
 				LocalDateTime staDateTime = hisDTO.getStartDateTime(); // 근태시작일시
 				LocalDateTime endDateTime = hisDTO.getEndDateTime(); // 근태종료일시
 				for (DtmHisDTO checkHisDTO : hisDTOList) {
+
 					if (hisDTO != checkHisDTO) { // 동일 객체 비교 X
-						if("N".equals(checkHisDTO.getDtmCross())) { // 교차신청 불가 근태인 경우
-							throw new CustomGeneralRuntimeException("중복된 근태가 있습니다.");
-						}
+						
 						LocalDateTime checkStaDateTime = checkHisDTO.getStartDateTime(); // 근태시작일시 (비교대상)
 						LocalDateTime checkEndDateTime = checkHisDTO.getEndDateTime(); // 근태종료일시 (비교대상)
-						if (staDateTime.isBefore(checkEndDateTime) && checkStaDateTime.isBefore(endDateTime)) { // 두 시간이 겹치는지 확인
-							throw new CustomGeneralRuntimeException("중복된 근태가 있습니다.");
-						} else if (hisDTO.getEndYmd() == checkHisDTO.getStaYmd()) { // 동일날짜(기준근태 < 비교근태)
-							workTime = Duration.between(hisDTO.getEndDateTime(), checkHisDTO.getStartDateTime()).toMinutes(); // 실근무시간 (분)
-							lunchStart = LocalDateTime.of(hisDTO.getEndYmd().toLocalDate(), LocalTime.of(12,0)); // 점심시작 YYYY-MM-DD hh:mm
-							lunchEnd = LocalDateTime.of(hisDTO.getEndYmd().toLocalDate(), LocalTime.of(13,0)); // 점심종료 YYYY-MM-DD hh:mm
-							if (hisDTO.getEndYmd().isAfter(lunchStart) || checkHisDTO.getStaYmd().isBefore(lunchEnd)) {
-								workTime -= 60; // 두 근태중 하나라도 점심시간(12-13)에 겹치는 경우 1시간(60분) 차감
+
+						if("D".equals(checkHisDTO.getModiType())) { // 취소건인 경우 동일한 날짜 & 근태로 변경인지 확인
+							if(	(staDateTime.toLocalDate().equals(checkStaDateTime.toLocalDate())) &&
+								(endDateTime.toLocalDate().equals(checkEndDateTime.toLocalDate())) &&
+								(hisDTO.getDtmReasonCd().equals(checkHisDTO.getDtmReasonCd()))) {
+								throw new CustomGeneralRuntimeException("<p class=\"text-center\">중복된 근태가 있습니다.</p><p class=\"text-center\">(변경 전/후 근태 동일)</p>");
 							}
-							
-						} else if (hisDTO.getStaYmd() == checkHisDTO.getEndYmd()) { // 동일날짜(비교근태 < 기준근태)
-							workTime = Duration.between(checkHisDTO.getEndDateTime(), hisDTO.getStartDateTime()).toMinutes(); // 실근무시간 (분)
-							lunchStart = LocalDateTime.of(hisDTO.getStaYmd().toLocalDate(), LocalTime.of(12,0)); // 점심시작 YYYY-MM-DD hh:mm
-							lunchEnd = LocalDateTime.of(hisDTO.getStaYmd().toLocalDate(), LocalTime.of(13,0)); // 점심종료 YYYY-MM-DD hh:mm
-							if (checkHisDTO.getEndYmd().isAfter(lunchStart) || hisDTO.getStaYmd().isBefore(lunchEnd)) {
-								workTime -= 60; // 두 근태중 하나라도 점심시간(12-13)에 겹치는 경우 1시간(60분) 차감
+						} else {
+							if((staDateTime.toLocalDate().isBefore(checkEndDateTime.toLocalDate()) && checkStaDateTime.toLocalDate().isBefore(endDateTime.toLocalDate())) && ("N".equals(checkHisDTO.getDtmCross()))) { // 날짜가 겹치는데 교차신청 불가 근태인 경우
+								throw new CustomGeneralRuntimeException("<p class=\"text-center\">중복된 근태가 있습니다.</p><p class=\"text-center\">(교차신청 불가 근태)");
+							} else if (staDateTime.isBefore(checkEndDateTime) && checkStaDateTime.isBefore(endDateTime)) { // 두 시간이 겹치는지 확인
+								throw new CustomGeneralRuntimeException("<p class=\"text-center\">중복된 근태가 있습니다.</p><p class=\"text-center\">(근태 시간 중복)");
+							} else if (hisDTO.getEndYmd() == checkHisDTO.getStaYmd()) { // 동일날짜(기준근태 < 비교근태)
+								workTime = Duration.between(hisDTO.getEndDateTime(), checkHisDTO.getStartDateTime()).toMinutes(); // 실근무시간 (분)
+								lunchStart = LocalDateTime.of(hisDTO.getEndYmd().toLocalDate(), LocalTime.of(12,0)); // 점심시작 YYYY-MM-DD hh:mm
+								lunchEnd = LocalDateTime.of(hisDTO.getEndYmd().toLocalDate(), LocalTime.of(13,0)); // 점심종료 YYYY-MM-DD hh:mm
+								if (hisDTO.getEndYmd().isAfter(lunchStart) || checkHisDTO.getStaYmd().isBefore(lunchEnd)) {
+									workTime -= 60; // 두 근태중 하나라도 점심시간(12-13)에 겹치는 경우 1시간(60분) 차감
+								}
+								
+							} else if (hisDTO.getStaYmd() == checkHisDTO.getEndYmd()) { // 동일날짜(비교근태 < 기준근태)
+								workTime = Duration.between(checkHisDTO.getEndDateTime(), hisDTO.getStartDateTime()).toMinutes(); // 실근무시간 (분)
+								lunchStart = LocalDateTime.of(hisDTO.getStaYmd().toLocalDate(), LocalTime.of(12,0)); // 점심시작 YYYY-MM-DD hh:mm
+								lunchEnd = LocalDateTime.of(hisDTO.getStaYmd().toLocalDate(), LocalTime.of(13,0)); // 점심종료 YYYY-MM-DD hh:mm
+								if (checkHisDTO.getEndYmd().isAfter(lunchStart) || hisDTO.getStaYmd().isBefore(lunchEnd)) {
+									workTime -= 60; // 두 근태중 하나라도 점심시간(12-13)에 겹치는 경우 1시간(60분) 차감
+								}
 							}
 						}
 					}
@@ -160,6 +174,7 @@ public class DtmApplyService {
 					}
 				}
 			}
+    @TODO 외부 테스트 시 주석 처리(끝) */
 			// 근태신청시간 합계 계산을 위한 input 데이터 세팅
 			final DtmCheckDTO checkDTO = new DtmCheckDTO(
 					hisDTO.getDtmReasonCd(), // 근태종류
@@ -167,6 +182,7 @@ public class DtmApplyService {
 					hisDTO.getEndYmd(), // 근태종료일
 					hisDTO.getEmpId() // 직원행번
 			);
+			log.warn(checkDTO.toString());
 			// 근태신청시간 합계 계산
 			dtmCheckRepository.getNumberOfDay(checkDTO); // daycnt_day (dtm010_03_03_p_06, 근태신청일수)
 			dtmCheckRepository.getNumberOfHour(checkDTO); // daycnt (dtm010_03_03_p_10, 근태신청시간)
@@ -300,169 +316,14 @@ public class DtmApplyService {
 
 	}
 
-
-
-
-
-
-
-
-
-
-
-	/***
-	 * @author 140024
-	 * @implNote 근태신청 가능여부 체크로직
-	 * @since 2024-09-13
-	 */
-	public boolean check(final List<DtmHisDTO> hisDTOList, final DtmPromotionDTO proDTO, final DtmSaveDTO saveDTO, final DtmApplStatusDTO statusDTO, final DtmKindSumDTO sumDTO) {
-
-		// 사용자 화면에 숫자 표시 소숫점이 있으면 실수로, 소숫점이 없으면 정수형으로 표기
-		final DecimalFormat decimalFormat = new DecimalFormat("0.#");		
-		
-		// 선연차 상수값 가져오기
-		final float advAnnualDay = Float.parseFloat(constValueService.findConstValue("DTM", "DTM_CREATE_C50")); // cons_cnt
-		final float advAnnualHour = Float.parseFloat(constValueService.findConstValue("DTM", "DTM_CREATE_C60")); // cons_hhcnt
-
-		Boolean adUseYn = false;
-		
-		/***
-		 * @author 140024
-		 * @implNote 신청된 근태 유형별 합계 시간 계산
-		 * @since 2024-09-13
-		 */
-		for(DtmHisDTO hisDTO : hisDTOList) {
-
-			// 근태 체크를 위한 input 데이터 세팅
-			final DtmCheckDTO checkDTO = new DtmCheckDTO( 
-				hisDTO.getDtmReasonCd(), // 근태종류
-				hisDTO.getStaYmd(), // 근태시작일
-				hisDTO.getEndYmd(), // 근태종료일
-				hisDTO.getEmpId() // 직원행번
-			);
-			
-			if(checkDTO.getAnnualCheckList().contains(hisDTO.getDtmReasonCd())) { // 연차
-				// 근태 체크 대상(연차)인 경우 데이터 가져오기
-				dtmCheckRepository.getNumberOfDay(checkDTO); //daycnt_day
-				dtmCheckRepository.getNumberOfHour(checkDTO); //daycnt
-
-				// 합계 구하기
-				if(hisDTO.getStaYmd().getYear() == LocalDate.now().getYear()) {
-					sumDTO.thisAnnaulSum(checkDTO.getDayCount(), checkDTO.getHourCount()); // 올해 합계 (daycnt1)
-				} 
-				else {
-					sumDTO.nextAnnualSum(checkDTO.getDayCount(), checkDTO.getHourCount()); // 내년 합계 (daycnt8)
-				}
-			}
-		}
-
-		/***
-		 * @author 140024
-		 * @implNote 연차(당해/내년) 검증
-		 * @since 2024-09-13
-		 */
-		if(sumDTO.getNextAnnualHourSum() > 0) { // 내년 연차 사용 시 (신청된 근태의 일수의 합이 연차사용가능일수보다 크면 막음)
-			if(sumDTO.getNextAnnualHourSum() > statusDTO.getNextAnnualHourRemainCnt()) { // 내년 연차가 부족할때					
-				throw new CustomGeneralRuntimeException(
-					langService.findLangById("DTM_ERROR_003") // 내년에 사용 가능한 연차가 부족합니다
-				);
-			}
-		}
-		else { // 올해 연차 등 근태 사용 시
-			if(statusDTO.getAnnualHourTotalCnt() < advAnnualHour) { // hhCnt > cons_hhcnt 
-				if(sumDTO.getAnnualHourSum() > 0) { // 연차가 아닌경우는 체크하지않음 daycnt1
-					if((statusDTO.getAnnualHourUsedCnt() + sumDTO.getAnnualHourSum()) > (statusDTO.getAnnualHourTotalCnt() + statusDTO.getAdvAnnualHourNetUsedCnt())) { 
-						//사용한 연차수(usedHhCnt) + 신청한 연차수(daycnt1) > 연차발생일수(hhCnt) + 선사용가능연차일수(ad_use_hhcnt)
-
-						float annualHourRemainCnt = 0f; // 연차 잔여시간
-						float advAnnualHourRemainCnt = 0f; // 선연차 잔여시간
-
-						if (statusDTO.getAnnualHourTotalCnt() <= statusDTO.getAnnualHourUsedCnt()) { //연차발생일수가 사용한 연차일수와 같거나 작은 경우
-							annualHourRemainCnt = 0f;
-							advAnnualHourRemainCnt = statusDTO.getAnnualHourTotalCnt() + statusDTO.getAdvAnnualHourNetUsedCnt() - statusDTO.getAnnualHourUsedCnt();
-						} else {
-							annualHourRemainCnt = statusDTO.getAnnualHourTotalCnt() - statusDTO.getAnnualHourUsedCnt();
-							advAnnualHourRemainCnt = statusDTO.getAdvAnnualHourNetUsedCnt();
-						}
-
-						
-						throw new CustomGeneralRuntimeException(
-							String.format(
-								langService.findLangById("DTM_ERROR_001"), // 연차 사용가능 시간이 부족합니다.
-								decimalFormat.format(annualHourRemainCnt), 
-								decimalFormat.format(advAnnualHourRemainCnt), 
-								decimalFormat.format(sumDTO.getAnnualHourSum())
-								));
-					} else if(statusDTO.getAnnualHourUsedCnt() + sumDTO.getAnnualHourSum() > statusDTO.getAnnualHourTotalCnt()){
-						// 사용한 연차수 + 신청한 연차수 > 연차발생일수 => 선사용연차 사용
-						// 현재 신청된 모든 건에 대해 ad_use_yn = Y 세팅
-						hisDTOList.forEach(hisDTO -> hisDTO.setAdUseYn("Y"));
-						adUseYn = true;
-					}
-				}
-			} else {
-				if(sumDTO.getAnnualHourSum() > statusDTO.getAnnualHourRemainCnt()) { // 신청한 연차 시간이 잔여 시간보다 큰 경우
-					// 연차 사용가능 시간이 부족합니다. 잔여시간(<<remain_cnt>>),신청시간(<<app_cnt>>)
-					throw new CustomGeneralRuntimeException(
-						String.format(
-							langService.findLangById("DTM_ERROR_004"), // 연차 사용가능 시간이 부족합니다
-							decimalFormat.format(statusDTO.getAnnualHourRemainCnt()),
-							decimalFormat.format(sumDTO.getAnnualHourSum())
-						));
-				}
-			}
-		}
-
-		/***
-		 * @author 140024
-		 * @implNote 연차촉진 검증
-		 * @since 2024-09-13
-		 */
-		if("Y".equals(proDTO.getPromotionYn())){ // 연차촉진기간인 경우
-			if(sumDTO.getAnnualHourSum() > 0) { // 금번 신청된 근태에 연차가 있는 경우
-				if("Y".equals(saveDTO.getSavableYn())) {  // 저축기간인 경우
-					if("Y".equals(saveDTO.getSaveYn())) { // 저축내역이 있을경우
-						if(sumDTO.getAnnualHourSum() + saveDTO.getSaveHourCnt() < proDTO.getFixedDutyAnnualHourRemainCnt()) { // 저축+신청 < 촉진시간
-							throw new CustomGeneralRuntimeException(
-								String.format(
-									langService.findLangById("DTM_ERROR_002"), // 연차촉진시간(일수) 확인 후 연차휴가를 등록해주세요
-									decimalFormat.format(proDTO.getFixedDutyAnnualHourRemainCnt())
-								));
-						}
-					} else {  // 저축내역이 없을경우
-						if(sumDTO.getAnnualHourSum() < proDTO.getFixedDutyAnnualHourRemainCnt()) { // 연차휴가 사용시간이 의무사용연차에 미달하는 경우
-							throw new CustomGeneralRuntimeException(
-								String.format(
-									langService.findLangById("DTM_ERROR_002"), // 연차촉진시간(일수) 확인 후 연차휴가를 등록해주세요
-									decimalFormat.format(proDTO.getFixedDutyAnnualHourRemainCnt())
-							));
-						}
-					}
-				} else { // 저축기간이 아닌 경우
-					if(sumDTO.getAnnualHourSum() < proDTO.getFixedDutyAnnualHourRemainCnt()) { // 연차휴가 사용시간이 의무사용연차에 미달하는 경우
-						throw new CustomGeneralRuntimeException(
-							String.format(
-								langService.findLangById("DTM_ERROR_002"), // 연차촉진시간(일수) 확인 후 연차휴가를 등록해주세요
-								decimalFormat.format(proDTO.getFixedDutyAnnualHourRemainCnt())
-						));
-					}
-				}
-			}
-		}	
-		
-		return adUseYn;
-
-	}
-
 	/***
 	 * @author 140024
 	 * @implNote 근태신청
 	 * @since 2024-06-09
 	 */
 	@Transactional
-	public String insert(final List<DtmHisDTO> dtmHisDTOList) {
+	public String insert(final DtmHisDTO dtmHisDTO) {
 
-		for(DtmHisDTO dtmHisDTO : dtmHisDTOList) {
 		try {
 			// 사전검증 프로시저
 			final DtmApplCheckProcDTO preCheckProcDTO = new DtmApplCheckProcDTO(
@@ -532,8 +393,8 @@ public class DtmApplyService {
 			log.error("예기치 못한 오류 발생", e);
 			throw new CustomGeneralRuntimeException("신청 처리 중 오류가 발생했습니다. 관리자에게 문의하세요.");
 		}
-	}
+	
 
-	return "신청이 성공적으로 처리되었습니다.";
+		return "신청이 성공적으로 처리되었습니다.";
 	}
 }

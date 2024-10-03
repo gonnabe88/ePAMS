@@ -33,6 +33,9 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
+import java.util.Locale;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 /**
  * @author K140024
@@ -170,9 +173,30 @@ public class DtmHistoryController<S extends Session> {
             startPage = Math.max(1, endPage - maxPageBtn + 1);
         }
 
-        // dtmHisDTOList.forEach(dto -> {
-        //     log.warn(dto.toString());
-        // });
+
+        // 기타 필요한 모델 속성 설정
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        DateTimeFormatter dayOfWeekFormatter = DateTimeFormatter.ofPattern("E", Locale.KOREAN);
+        LocalDateTime staDay ;
+        LocalDateTime endDay ;
+        String dateRange; 
+        for(DtmHisDTO dto : dtmHisDTOList) {
+
+            // 근태 기간을 깔끔하게 표기하기 위한 작업
+            staDay = dto.getStaYmd();
+            endDay = dto.getEndYmd();
+            if (staDay.isEqual(endDay)) {
+                // 시작일과 종료일이 같은 경우 하나만 표기
+                dateRange = staDay.format(dateFormatter) + "(" + staDay.format(dayOfWeekFormatter) + ")";
+            } else {
+                // 시작일과 종료일이 다른 경우 두 날짜를 ~ 구분자로 표기
+                String formattedStaYmd = staDay.format(dateFormatter) + "(" + staDay.format(dayOfWeekFormatter) + ")";
+                String formattedEndYmd = endDay.format(dateFormatter) + "(" + endDay.format(dayOfWeekFormatter) + ")";
+                dateRange = formattedStaYmd + " ~ " + formattedEndYmd;
+            }
+            dto.setDtmRange(dateRange);     
+            log.warn(dto.toString());       
+        }
         
         model.addAttribute("dtmHis", dtmHisDTOList);
         model.addAttribute("searchDTO", searchDTO);

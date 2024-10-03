@@ -61,7 +61,7 @@ public class UserInfoDTO {
      * @implNote 근무시작시간
      * @since 2024-08-19
      */
-    private String staTime = "10:00";
+    private String staTime = "09:00";
 
 
     /**
@@ -69,12 +69,31 @@ public class UserInfoDTO {
      * @implNote 근무종료시간
      * @since 2024-08-19
      */
-    private String endTime = "19:00";
+    private String endTime = "18:00";
 
-    public void setTime(String staTime, String endTime) {
+        /**
+     * @author 140024
+     * @implNote 근무시작시간(내일)
+     * @since 2024-08-19
+     */
+    private String staTime2 = "09:00";
+
+
+    /**
+     * @author 140024
+     * @implNote 근무종료시간(내일)
+     * @since 2024-08-19
+     */
+    private String endTime2 = "18:00";
+
+    public void setTime(String staTime, String endTime, String staTime2, String endTime2) {
         if(!"N/A".equals(staTime) && !"N/A".equals(endTime) && staTime.length() == 4 && endTime.length() == 4 ) {
             this.staTime = staTime.substring(0, 2) + ":" + staTime.substring(2, 4);
             this.endTime = endTime.substring(0, 2) + ":" + endTime.substring(2, 4);
+        }
+        if(!"N/A".equals(staTime2) && !"N/A".equals(endTime2) && staTime2.length() == 4 && endTime2.length() == 4 ) {
+            this.staTime2 = staTime2.substring(0, 2) + ":" + staTime2.substring(2, 4);
+            this.endTime2 = endTime2.substring(0, 2) + ":" + endTime2.substring(2, 4);
         }
     }
 

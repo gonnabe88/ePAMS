@@ -28,7 +28,7 @@ public class SidebarRepository {
     /**
      * *
      * @author 140024
-     * @implNote 특정 사용자 조회
+     * @implNote 사이드바에 보여줄 사용자 기본정보/근무시간(오늘/내일) 조회
      * @since 2024-06-09
      */
     public UserInfoDTO findByUserNo(final String username) {

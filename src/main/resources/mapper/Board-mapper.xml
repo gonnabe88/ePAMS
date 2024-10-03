@@ -7,7 +7,7 @@
     <!-- BOARD TABLE Result Map 정의-->
     <resultMap id="boardMap" type="boardDTO">
         <id property="seqId" column="BLB_SNO"/>
-        <result property="boardType" column="BLB_TYPE"/>
+        <result property="boardType" column="BLB_CLSF_C"/>
         <result property="boardTitle" column="BLB_NM"/>
         <result property="boardContents" column="BLB_CONE"/>
         <result property="boardWriter" column="DUPR_ENO"/>
@@ -37,7 +37,7 @@
         </selectKey>
         INSERT INTO OEHR.THURXE_CBRDMM(
         BLB_SNO,
-        BLB_TYPE,
+        BLB_CLSF_C,
         BLB_NM,
         DUPR_ENO,
         BLB_CONE,
@@ -86,7 +86,7 @@
     <select id="findAllFaq" resultMap="boardMap">
         SELECT *
         FROM OEHR.THURXE_CBRDMM
-        WHERE BLB_TYPE = '04'
+        WHERE BLB_CLSF_C = '40'
         ORDER BY GUID_PRG_SNO ASC
     </select>
 
@@ -94,20 +94,31 @@
     <select id="findAllNotice" resultMap="boardMap">
         SELECT *
         FROM OEHR.THURXE_CBRDMM
-        WHERE BLB_TYPE = '01'
+        WHERE BLB_CLSF_C = '10'
+        ORDER BY BLB_SNO DESC
+        OFFSET #{offset} ROWS FETCH NEXT #{limit} ROWS ONLY
+    </select>
+
+    <!-- Paging 규칙에 따라 전체 게시물 조회 -->
+    <select id="findAll" resultMap="boardMap">
+        SELECT *
+        FROM OEHR.THURXE_CBRDMM
+        WHERE BLB_CLSF_C = #{boardType}
         ORDER BY BLB_SNO DESC
         OFFSET #{offset} ROWS FETCH NEXT #{limit} ROWS ONLY
     </select>
 
     <!-- 전체 데이터 개수 조회 -->
-    <select id="count" resultType="long">
+    <select id="count" parameterType="String" resultType="long">
         SELECT COUNT(*) FROM OEHR.THURXE_CBRDMM
+        WHERE BLB_CLSF_C = #{boardType}
     </select>
 
     <!-- 특정 게시물 조회 -->
     <select id="findById" parameterType="Long" resultMap="boardMap">
         SELECT
             BLB_SNO,
+            BLB_CLSF_C,
             BLB_NM,
             DUPR_ENO,
             BLB_CONE,

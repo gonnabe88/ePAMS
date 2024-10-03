@@ -82,14 +82,14 @@ public class BoardMainService {
      * @implNote 페이지네이션으로 게시물 목록 조회
      * @since 2024-04-26
      */
-    public Page<BoardDTO> paging(final Pageable pageable) {
+    public Page<BoardDTO> paging(final Pageable pageable, final String boardType) {
         final int page = pageable.getPageNumber() - 1; // 페이지 번호
         final int pageSize = pageable.getPageSize(); // 페이지 크기
         final int offset = page * pageSize; // 오프셋 계산
         // 한 페이지당 3개씩 글을 보여주고 정렬 기준은 id 기준으로 내림차순 정렬
-        final List<BoardDTO> boardDTOs = boardMainRepo.findAll(offset, pageSize, "DESC");
+        final List<BoardDTO> boardDTOs = boardMainRepo.findAll(boardType, offset, pageSize, "DESC");
         // 전체 데이터 개수 조회
-        final long totalElements = boardMainRepo.count(); // 전체 데이터 개수를 조회하는 메소드 필요
+        final long totalElements = boardMainRepo.count(boardType); // 전체 데이터 개수를 조회하는 메소드 필요
         return new PageImpl<>(boardDTOs, PageRequest.of(page, pageSize), totalElements);
     }
 

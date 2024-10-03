@@ -13,8 +13,8 @@
                 SELECT F_DTM_GET_USE_DAYCNT(
                         #{companyCd},
                         #{dtmReasonCd}, 
-                        #{staYmd}, 
-                        #{endYmd}, 
+                        #{staYmdStr}, 
+                        #{endYmdStr}, 
                         #{localeCd}, 
                         #{empId}) DAYCNT FROM DUAL
         </select>

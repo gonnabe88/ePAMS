@@ -1,3 +1,34 @@
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    color: #435ebe;
+}
+
+#dynamicModal .card-body {
+    padding: 15px;
+}
+
+.swiper-pagination-bullet-active {
+    color : white !important;
+    background : #435ebe !important;
+}
+.swiper-pagination-bullet{
+    display: inline-block !important;
+    width: 1rem !important; /* 원하는 크기로 조정 가능 */
+    height: 1rem !important; /* width와 height를 동일하게 설정 */
+    font-size: 0.7rem;
+    border-radius: 50%  !important; /* 원형으로 만들기 */
+    margin: 0 5px !important; /* 페이지네이션 간격 */
+}
+
+#loginFaq p {
+    margin-bottom: 0.5rem;
+}
+
 #toast .btn-close {
     position: absolute;
     right: 2rem;
@@ -1178,15 +1209,17 @@ mark {
     display: flex;
     justify-content: center; /* 입력 필드 가로 중앙 정렬 */
     align-items: center; /* 입력 필드 수직 중앙 정렬 */
-    width: 45%; /* 원하는 크기로 설정 */
-    height: 40px; /* 원하는 크기로 설정 */
+    width: 35%; /* 원하는 크기로 설정 */
+    max-width: 150px; /* 최대 너비 설정 */
+    height: 30px; /* 원하는 크기로 설정 */
 }
 
 .date-input input {
     width: 100%; /* 입력 필드가 전체 width 차지 */
     text-align: center; /* 입력 필드 내부 텍스트 중앙 정렬 */
-    padding: .375rem .75rem;
-    font-size: 1rem;
+    height: 100%;
+    padding: .1rem .1rem;
+    font-size: 0.9rem;
     font-weight: 400;
     line-height: 1.5;
     color: #607080;
@@ -1320,6 +1353,37 @@ label {
     margin: 0px 8px;
 }
 
+/*공통 select2 스타일 조정*/
+.select2 {
+    width: 100% !important;
+    max-width: 500px !important;
+}
+
+.select2-results li {
+    font-size: 0.9rem;
+}
+
+.select2-selection__rendered {
+    font-size: 0.9rem;
+    line-height: 35px !important;
+}
+
+.select2-container--default .select2-selection--single {
+    height: 35px !important;
+    border: 1px solid #dce7f1 !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 35px !important;
+}
+
+.select2-container--default .select2-search--dropdown .select2-search__field {
+    border: 1px solid #dce7f1 !important;
+}
+.select2-container--default .select2-search--dropdown .select2-search__field:focus {
+    border: 2px solid #dce7f1 !important;
+    outline: none;
+}
 
 /*검색폼 select2 스타일 조정*/
 .collapseSearch .select2 {

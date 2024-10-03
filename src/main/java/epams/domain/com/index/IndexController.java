@@ -10,6 +10,7 @@ import epams.domain.com.login.util.webauthn.authenticator.Authenticator;
 import epams.domain.com.login.util.webauthn.user.AppUser;
 import epams.domain.com.member.dto.IamUserDTO;
 import epams.domain.com.member.service.MemberService;
+import epams.framework.exception.CustomGeneralRuntimeException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,6 +18,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -119,72 +122,112 @@ public class IndexController<S extends Session> {
         // 현재 로그인한 사용자 정보
         final Authentication auth = authentication();
 
-        // 간편인증 등록 여부 확인
-        final AppUser existingUser = service.getUserRepo().findByUsername(auth.getName());
-        final Authenticator existingAuthUser = service.getAuthRepository().findByUser(existingUser);
+        try {
+            // 간편인증 등록 여부 확인
+            final AppUser existingUser = service.getUserRepo().findByUsername(auth.getName());
+            final Authenticator existingAuthUser = service.getAuthRepository().findByUser(existingUser);
 
-        // 간편인증 사용 여부를 모델에 추가
-        if (existingAuthUser == null) {
-            model.addAttribute("simpleauth", false);
-            log.info("Not simple auth user");
-        } else {
-            model.addAttribute("simpleauth", true);
-            log.info("simple auth user");
+            // 간편인증 사용 여부를 모델에 추가
+            if (existingAuthUser == null) {
+                model.addAttribute("simpleauth", false);
+                log.info("Not simple auth user");
+            } else {
+                model.addAttribute("simpleauth", true);
+                log.info("simple auth user");
+            }
+
+            // 사용자 정보를 모델에 추가
+            model.addAttribute("username", auth.getName());
+        } catch (CustomGeneralRuntimeException e) {
+            // 런타임 예외 처리
+            e.printStackTrace();
+        } catch (Exception e) {
+            // 기타 예외 처리
+            e.printStackTrace();
         }
 
-        // 사용자 정보를 모델에 추가
-        model.addAttribute("username", auth.getName());
-
-        // 언어목록
-        final Map<String, String> langList = langDetailService.getCodeHtmlDetail(INDEXMAIN);
-        model.addAttribute("langList", langList);
-
-        // 메인화면 공지사항 출력
-        final int currentPage = pageable.getPageNumber(); // 현재 페이지 (1-based index)
-        final Page<BoardDTO> boardList = boardService.paging(PageRequest.of(currentPage, indexBrdCnt)); // 가장 최근 게시물의 indexBrdCnt 수만큼 가져옴
-        model.addAttribute("boardList", boardList);
-
-        // 메인화면 빠른근태신청 날짜 세팅 (오늘)
-        final LocalDate today = LocalDate.now();
-        final DayOfWeek dayOfWeek = today.getDayOfWeek();
-        final String nowDateStr = today + "(" + dayOfWeek.getDisplayName(TextStyle.NARROW, Locale.KOREAN) + ")";
-        String holidayYn = "N";
-        // nowDateStr에 해당하는 날짜가 토요일 또는 일요일인지 확인
-        if (dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY) {
-            holidayYn = "Y";
+        try {
+            // 언어목록
+            final Map<String, String> langList = langDetailService.getCodeHtmlDetail(INDEXMAIN);
+            model.addAttribute("langList", langList);
+        } catch (CustomGeneralRuntimeException e) {
+            // 런타임 예외 처리
+            e.printStackTrace();
+        } catch (Exception e) {
+            // 기타 예외 처리
+            e.printStackTrace();
         }
-        model.addAttribute("nowDateStr", nowDateStr);
 
-        // 메인화면 빠른근태신청 날짜 세팅 (내일)
-        final LocalDate tomorrow = LocalDate.now().plusDays(1);
-        final DayOfWeek dayOfWeek2 = tomorrow.getDayOfWeek();
-        final String tomorrowDateStr = tomorrow + "(" + dayOfWeek2.getDisplayName(TextStyle.NARROW, Locale.KOREAN) + ")";
-        String holidayYn2 = "N";
-        // nowDateStr에 해당하는 날짜가 토요일 또는 일요일인지 확인
-        if (dayOfWeek2 == DayOfWeek.SATURDAY || dayOfWeek2 == DayOfWeek.SUNDAY) {
-            holidayYn2 = "Y";
+        try {
+            // 공지사항 출력
+            final int currentPage = pageable.getPageNumber(); // 현재 페이지 (1-based index)
+            final Page<BoardDTO> boardList = boardService.paging(PageRequest.of(currentPage, indexBrdCnt), "10"); // 가장 최근 게시물의 indexBrdCnt 수만큼 가져옴
+            model.addAttribute("boardList", boardList);
+        } catch (CustomGeneralRuntimeException e) {
+            // 런타임 예외 처리
+            e.printStackTrace();
+        } catch (Exception e) {
+            // 기타 예외 처리
+            e.printStackTrace();
         }
-        model.addAttribute("tomorrowDateStr", tomorrowDateStr);
 
-        // 빠른 근태 신청 리스트
-        List<QuickApplDTO> dtmApplList = List.of(
-            new QuickApplDTO("오늘", nowDateStr, nowDateStr, today, today,"1A", "1A1", "연차휴가", "연차휴가 1일", holidayYn),
-            new QuickApplDTO("오늘", nowDateStr, nowDateStr, today, today, "1A", "1A5", "연차휴가", "연차휴가 오전 반차", holidayYn),
-            new QuickApplDTO("오늘", nowDateStr, nowDateStr, today, today, "1A", "1AG", "연차휴가", "연차휴가 오전 반반차", holidayYn),
-            new QuickApplDTO("내일", tomorrowDateStr, tomorrowDateStr, tomorrow, tomorrow, "1A", "1A1", "연차휴가", "연차휴가 1일", holidayYn2),
-            new QuickApplDTO("내일", tomorrowDateStr, tomorrowDateStr, tomorrow, tomorrow, "1A", "1A5", "연차휴가", "연차휴가 오전 반차", holidayYn2),
-            new QuickApplDTO("내일", tomorrowDateStr, tomorrowDateStr, tomorrow, tomorrow, "1A", "1AG", "연차휴가", "연차휴가 오전 반반차", holidayYn2)
-        );
-        model.addAttribute("list", dtmApplList);
-        log.info("dtmApplList : {}", dtmApplList);
+        try {
+            // 빠른근태신청 날짜 세팅 (오늘)
+            final LocalDate today = LocalDate.now();
+            final DayOfWeek dayOfWeek = today.getDayOfWeek();
+            final String nowDateStr = today + "(" + dayOfWeek.getDisplayName(TextStyle.NARROW, Locale.KOREAN) + ")";
+            String holidayYn = "N";
+            // nowDateStr에 해당하는 날짜가 토요일 또는 일요일인지 확인
+            if (dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY) {
+                holidayYn = "Y";
+            }
+            model.addAttribute("nowDateStr", nowDateStr);
 
-        // 배너 리스트
-        List<BannerDTO> bannerList = new ArrayList<>();
-        bannerList.add(new BannerDTO("", "", "", ""));
-        bannerList.add(new BannerDTO("최근 공지사항", "시스템 점검 안내", "'24. 7. 6(일) 18:00-19:00", "<a href=\"/board/list\"><span class=\"badge text-bg-primary\">바로가기</span></a>"));
-        bannerList.add(new BannerDTO("연차 및 저축휴가", "언제 어디서든", "편하게 신청하세요", "<a href=\"/dtm/dtmAppl\"><span class=\"badge text-bg-primary\">바로가기</span></a>"));
-        bannerList.add(new BannerDTO("직원조회", "언제 어디서든", "간편하게 검색하세요", "<a href=\"#\" id=\"scrollToSearchDiv\"><span class=\"badge text-bg-primary\">바로가기</span></a>"));
-        model.addAttribute("bannerList", bannerList);
+            // 빠른근태신청 날짜 세팅 (내일)
+            final LocalDate tomorrow = LocalDate.now().plusDays(1);
+            final DayOfWeek dayOfWeek2 = tomorrow.getDayOfWeek();
+            final String tomorrowDateStr = tomorrow + "(" + dayOfWeek2.getDisplayName(TextStyle.NARROW, Locale.KOREAN) + ")";
+            String holidayYn2 = "N";
+            // nowDateStr에 해당하는 날짜가 토요일 또는 일요일인지 확인
+            if (dayOfWeek2 == DayOfWeek.SATURDAY || dayOfWeek2 == DayOfWeek.SUNDAY) {
+                holidayYn2 = "Y";
+            }
+            model.addAttribute("tomorrowDateStr", tomorrowDateStr);
+
+            // 빠른 근태 신청 리스트
+            List<QuickApplDTO> dtmApplList = List.of(
+                new QuickApplDTO("오늘", nowDateStr, nowDateStr, today, today,"1A", "1A1", "연차휴가", "연차휴가 1일", holidayYn),
+                new QuickApplDTO("오늘", nowDateStr, nowDateStr, today, today, "1A", "1A5", "연차휴가", "연차휴가 오전 반차", holidayYn),
+                new QuickApplDTO("오늘", nowDateStr, nowDateStr, today, today, "1A", "1AG", "연차휴가", "연차휴가 오전 반반차", holidayYn),
+                new QuickApplDTO("내일", tomorrowDateStr, tomorrowDateStr, tomorrow, tomorrow, "1A", "1A1", "연차휴가", "연차휴가 1일", holidayYn2),
+                new QuickApplDTO("내일", tomorrowDateStr, tomorrowDateStr, tomorrow, tomorrow, "1A", "1A5", "연차휴가", "연차휴가 오전 반차", holidayYn2),
+                new QuickApplDTO("내일", tomorrowDateStr, tomorrowDateStr, tomorrow, tomorrow, "1A", "1AG", "연차휴가", "연차휴가 오전 반반차", holidayYn2)
+            );
+            model.addAttribute("list", dtmApplList);
+            log.info("dtmApplList : {}", dtmApplList);
+        } catch (CustomGeneralRuntimeException e) {
+            // 런타임 예외 처리
+            e.printStackTrace();
+        } catch (Exception e) {
+            // 기타 예외 처리
+            e.printStackTrace();
+        }
+
+        try {
+            // 배너 리스트
+            List<BannerDTO> bannerList = new ArrayList<>();
+            bannerList.add(new BannerDTO("", "", "", ""));
+            bannerList.add(new BannerDTO("최근 공지사항", "시스템 점검 안내", "'24. 7. 6(일) 18:00-19:00", "<a href=\"/board/list\"><span class=\"badge text-bg-primary\">바로가기</span></a>"));
+            bannerList.add(new BannerDTO("연차 및 저축휴가", "언제 어디서든", "편하게 신청하세요", "<a href=\"/dtm/dtmAppl\"><span class=\"badge text-bg-primary\">바로가기</span></a>"));
+            bannerList.add(new BannerDTO("직원조회", "언제 어디서든", "간편하게 검색하세요", "<a href=\"#\" id=\"scrollToSearchDiv\"><span class=\"badge text-bg-primary\">바로가기</span></a>"));
+            model.addAttribute("bannerList", bannerList);
+        } catch (CustomGeneralRuntimeException e) {
+            // 런타임 예외 처리
+            e.printStackTrace();
+        } catch (Exception e) {
+            // 기타 예외 처리
+            e.printStackTrace();
+        }
 
         return INDEXMAIN;
     }

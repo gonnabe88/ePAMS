@@ -68,30 +68,19 @@ public class BoardMainController {
      */
     private final BoardMainService boardService;
 
-    /**
+/**
      * @author K140024
-     * @implNote 페이징 처리된 게시글 목록을 보여주는 메소드
+     * @implNote 페이징 처리된 FAQ 목록을 보여주는 메소드
      * @since 2024-04-26
      */
-    @GetMapping({"/faq","/faq/list"})
-    public String findAllFaq(final Model model) {
+    @GetMapping("/{boardType}/list")
+    public String boardPaging(
+        @PageableDefault(page = 1) final Pageable pageable, @PathVariable("boardType") final String boardType,
+        final Model model) {           
 
-        final List<BoardDTO> boardList = boardService.findAllFaq();
-
-        model.addAttribute("boardList", boardList);
-        return "common/faqList";
-    }
-
-    /**
-     * @author K140024
-     * @implNote 페이징 처리된 게시글 목록을 보여주는 메소드
-     * @since 2024-04-26
-     */
-    @GetMapping({"/","/list"})
-    public String paging(@PageableDefault(page = 1) final Pageable pageable, final Model model) {   
         final int currentPage = pageable.getPageNumber(); // 현재 페이지 (1-based index)
         final Pageable updatedPageable = PageRequest.of(currentPage, listBrdCnt);        
-        final Page<BoardDTO> boardList = boardService.paging(updatedPageable);
+        final Page<BoardDTO> boardList = boardService.paging(updatedPageable, boardType); // FAQ(40)
         final int totalPages = boardList.getTotalPages();
         int startPage = Math.max(1, currentPage - (maxPageBtn / 2));
         final int endPage = Math.min(totalPages, startPage + maxPageBtn - 1);
@@ -103,23 +92,30 @@ public class BoardMainController {
         model.addAttribute("boardList", boardList);
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
-        return "common/boardList";
+        
+        String VIEW = "";
+
+        switch (boardType) {
+            case "10": VIEW = "common/noticeList"; break; // 공지사항 
+            case "40": VIEW = "common/faqList"; break; // FAQ
+        }
+        return VIEW;
     }
 
     /**
      * @author K140024
-     * @implNote 게시글 작성 화면을 보여주는 메소드
+     * @implNote [공지사항] 게시글 작성 화면을 보여주는 메소드
      * @since 2024-04-26
      */
-    @GetMapping("/editor")
+    @GetMapping("/notice/editor")
     public String editor(final Model model) {    
     	model.addAttribute("board", new BoardDTO());
-        return "common/boardEditor";
+        return "common/noticeEditor";
     }
 
     /**
      * @author K140024
-     * @implNote 게시글 작성 화면을 보여주는 메소드
+     * @implNote [FAQ] 게시글 작성 화면을 보여주는 메소드
      * @since 2024-04-26
      */
     @GetMapping("/faq/editor")
@@ -130,7 +126,7 @@ public class BoardMainController {
     
     /**
      * @author K140024
-     * @implNote 특정 게시물에 첨부된 파일목록 반환
+     * @implNote [공통] 특정 게시물에 첨부된 파일목록 반환
      * @since 2024-06-13
      */
     @GetMapping("{boardId}/fileList")
@@ -141,12 +137,13 @@ public class BoardMainController {
     
     /**
      * @author K140024
-     * @implNote 특정 게시글 상세 정보를 보여주는 메소드
+     * @implNote [공통] 특정 게시글 상세 정보를 보여주는 메소드
      * @since 2024-04-26
      */
     @GetMapping("/{seqId}")
-    public String findById(@PathVariable("seqId") final Long seqId, final Model model,
-                           @PageableDefault(page = 1) final Pageable pageable) {
+    public String findById(@PathVariable("seqId") final Long seqId, 
+                           @PageableDefault(page = 1) final Pageable pageable,
+                           final Model model) {
         final String FILE_ATTACHED = "1"; // 상수로 리터럴 값을 추출
 
         boardService.updateHits(seqId);
@@ -167,7 +164,7 @@ public class BoardMainController {
 
     /**
      * @author K140024
-     * @implNote 파일 다운로드 처리
+     * @implNote [공통] 파일 다운로드 처리
      * @since 2024-04-26
      */
     @GetMapping("/{boardId}/download/{fileId}")

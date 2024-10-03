@@ -43,8 +43,9 @@ public class BoardMainRepository {
 	 * @implNote paging 조건에 따라 모든 게시물을 조회하여 반환
 	 * @since 2024-06-09
 	 */
-    public List<BoardDTO> findAll(final int offset, final int pageSize, final String sortDirection) {
-        return sql.selectList("Board.findAllNotice", Map.of("offset", offset, "limit", pageSize, "sortDirection", sortDirection));
+    public List<BoardDTO> findAll(final String boardType, final int offset, final int pageSize, final String sortDirection) {
+		log.warn(boardType);
+        return sql.selectList("Board.findAll", Map.of("boardType", boardType,"offset", offset, "limit", pageSize, "sortDirection", sortDirection));
     }    
     
 	/***
@@ -70,8 +71,8 @@ public class BoardMainRepository {
 	 * @implNote 전체 게시물 수를 반환
 	 * @since 2024-06-09
 	 */
-    public long count() {
-        return sql.selectOne("Board.count");
+    public long count(String boardType) {
+        return sql.selectOne("Board.count", boardType);
     }
     
 }

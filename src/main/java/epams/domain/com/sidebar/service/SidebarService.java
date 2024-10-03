@@ -31,7 +31,7 @@ public class SidebarService {
      */
     public UserInfoDTO findByUserNo(final String username) {
         final UserInfoDTO userInfoDTO = sidebarRepository.findByUserNo(username);
-        userInfoDTO.setTime(userInfoDTO.getStaTime(), userInfoDTO.getEndTime());
+        userInfoDTO.setTime(userInfoDTO.getStaTime(), userInfoDTO.getEndTime(), userInfoDTO.getStaTime2(), userInfoDTO.getEndTime2());
         return userInfoDTO;
     }
 

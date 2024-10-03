@@ -3,6 +3,7 @@ package epams.domain.dtm.dto;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Arrays;
+import java.time.format.DateTimeFormatter;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -143,5 +144,12 @@ public class DtmCheckDTO {
         this.endYmd = endYmd;
         this.empId = empId;
     }
-
+    public String getStaYmdStr() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        return this.staYmd.format(formatter);
+    }
+    public String getEndYmdStr() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");        
+        return this.endYmd.format(formatter);
+    }
 }

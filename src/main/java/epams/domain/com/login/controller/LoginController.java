@@ -1,6 +1,7 @@
 package epams.domain.com.login.controller;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -20,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import epams.framework.exception.CustomGeneralRuntimeException;
+import epams.domain.com.board.dto.BoardDTO;
+import epams.domain.com.board.service.BoardMainService;
 import epams.domain.com.login.service.LoginService;
 import epams.domain.com.login.service.MFALoginService;
 import epams.domain.com.login.util.webauthn.service.RegistrationService;
@@ -65,6 +68,13 @@ public class LoginController {
     private final MemberService memberService;
 
     /**
+     * @author K140024
+     * @implNote 게시글 관련 서비스
+     * @since 2024-04-26
+     */
+    private final BoardMainService boardService;
+
+    /**
      * 현재 인증된 사용자 정보를 가져오는 메소드
      * 
      * @return 인증된 사용자 정보 또는 null
@@ -81,6 +91,18 @@ public class LoginController {
     }
 
     /**
+     * @author K140024
+     * @implNote 페이징 처리된 게시글 목록을 보여주는 메소드
+     * @since 2024-04-26
+     */
+    @GetMapping("/login/faq")
+    public String findAllFaq(final Model model) {
+        final List<BoardDTO> boardList = boardService.findAllFaq();
+        model.addAttribute("boardList", boardList);
+        return "common/sub/loginFaq";
+    }
+
+    /**
      * 로그아웃 처리
      * 
      * @param request HttpServletRequest 객체
@@ -93,6 +115,7 @@ public class LoginController {
         session.invalidate();
         return "redirect:login";
     }
+    
 
     /**
      * 로그인 페이지 요청 처리

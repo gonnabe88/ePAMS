@@ -13,9 +13,11 @@
         <result property="positionName" column="PT_C_NM"/>
         <result property="staTime" column="STA_TIME"/>
         <result property="endTime" column="END_TIME"/>
+        <result property="staTime2" column="STA_TIME2"/>
+        <result property="endTime2" column="END_TIME2"/>
     </resultMap>
 
-    <!-- 특정 사용자ID 기준 조회 -->
+    <!-- 사이드바에 보여줄 사용자 기본정보/근무시간(오늘/내일) 조회 -->
     <select id="findByUserNo" parameterType="String" resultMap="userInfoMap">
         SELECT
             A.USR_NM,
@@ -23,7 +25,9 @@
             A.TEM_NM,
             A.PT_C_NM,
             NVL(OHR.F_DTM_ACT_TIME('01', REPLACE(#{username}, 'K', '7'), SYSDATE, '1', 'KO'), '휴무') AS STA_TIME,
-            NVL(OHR.F_DTM_ACT_TIME('01', REPLACE(#{username}, 'K', '7'), SYSDATE, '2', 'KO'), '휴무') AS END_TIME
+            NVL(OHR.F_DTM_ACT_TIME('01', REPLACE(#{username}, 'K', '7'), SYSDATE, '2', 'KO'), '휴무') AS END_TIME,
+            NVL(OHR.F_DTM_ACT_TIME('01', REPLACE(#{username}, 'K', '7'), SYSDATE+1, '1', 'KO'), '휴무') AS STA_TIME2,
+            NVL(OHR.F_DTM_ACT_TIME('01', REPLACE(#{username}, 'K', '7'), SYSDATE+1, '2', 'KO'), '휴무') AS END_TIME2
         FROM OEHR.THURXE_CUSRLI A
         INNER JOIN OEHR.THURXE_CORGLI B
             ON A.BBR_C = B.PRLM_OGZ_C_CONE

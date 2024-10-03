@@ -33,8 +33,7 @@ $(document).ready(function () {
 
     // 검색 드롭다운 내부 닫기 클릭 시
     $('#close-button').on('click', function() {
-            // 검색 버튼 collapse 처리
-        $('#collapseSearch').collapse('hide');
+        $('#collapseSearch').collapse('hide'); // 검색 버튼 collapse 처리
     });
 
     // 휴가 보유현황 클릭 시 Modal 실행 이벤트 등록
@@ -50,6 +49,7 @@ $(document).ready(function () {
     // 변경 클릭 시 Modal 실행 이벤트 등록
     $('.modifyBtn').on('click', function () {
 
+        
         let dtmHisDTOList = [];
         const button = $('#dtmModifyBtn');
         const applId = button.data('applid');
@@ -59,8 +59,9 @@ $(document).ready(function () {
         const dtmReasonCd = button.data('dtmreasoncd');
         const dtmReasonNm = button.data('dtmreasonnm');
         const beforeStaYmd = button.data('staymd');
-        const beforeEndYmd = button.data('endymd');        
-                
+        const beforeEndYmd = button.data('endymd');     
+        const dtmRange = button.data('dtmrange'); 
+
         // 변경 대상(취소) 객체 세팅
         let revokeDtmHisDTO = {
             applId: applId,
@@ -69,8 +70,9 @@ $(document).ready(function () {
             dtmKindCd: dtmKindCd,
             dtmReasonCd: dtmReasonCd,
             dtmReasonNm: dtmReasonNm,
-            staYmd: new Date(beforeStaYmd),
-            endYmd: new Date(beforeEndYmd)
+            dtmDispName: dtmReasonNm,
+            staYmd: beforeStaYmd,
+            endYmd: beforeEndYmd
         };
 
         // 서버로 전달할 전체 리스트 객체 추가
@@ -79,29 +81,73 @@ $(document).ready(function () {
         // Modal에 변경 대상(취소) 객체 보여주기
         $('#dynamicModal').modal('show');
         $('#dtmResonNm').text(dtmReasonNm);
-        $('#beforeStaYmd').text(beforeStaYmd.split('T')[0]);
-        $('#beforeEndYmd').text(beforeEndYmd.split('T')[0]);
+        $('#dtmRange').text(dtmRange);
+        dtmApplSelectForm(dtmReasonCd);
 
-        // Submit 버튼 클릭 시 기존에 등록된 이벤트 핸들러가 있다면 제거 후 등록 (중복 호출 방지)
-        $('#submit').off('click').on('click', function() {
-
+        $('#add').on('click', function() {
             // 현재 세팅된 날짜 가져오기
-            const afterStaYmd = $('#startDate').val();
-            const afterEndYmd = $('#endDate').val();
+            let afterStaYmd = $('#startDate').val();
+            let afterEndYmd = $('#endDate').val();
+            let afterDtmReasonCd = $('#dtmReasonCdSelect option:selected').val();
+            let afterDtmReasonNm = $('#dtmReasonCdSelect option:selected').text();
 
             // dtoHisDTO 객체 세팅
             let registDtmHisDTO = {
                 dtmKindCd: dtmKindCd,
-                dtmReasonCd: dtmReasonCd,
-                dtmReasonNm: dtmReasonNm,
+                dtmReasonCd: afterDtmReasonCd,
+                dtmReasonNm: afterDtmReasonNm,
+                dtmDispName: afterDtmReasonNm,
                 staYmd: new Date(afterStaYmd),
                 endYmd: new Date(afterEndYmd)
             };
             // 서버로 전달할 전체 리스트 객체 추가
             dtmHisDTOList.push(registDtmHisDTO);
+
+            let html = `
+            <div class="swiper-slide">
+                <div class="card mb-1 animate__animated animate__fadeIn animate__slow">
+                    <div class="card-body pt-2 pb-1">
+                    <!-- X 아이콘을 우측 상단에 추가 -->
+                <button class="close-btn">&times;</button>
+                        <div class="row">
+                            <div class="col">
+                                <div class="d-flex justify-content-start mb-4 gap-1">
+                                    <div class="registDtmNameTag">
+                                        <h6 class="mb-0 ms-3">
+                                            <span class="badge badge-sm rounded-pill bg-primary m-0">신규</span>
+                                            <span>${afterDtmReasonNm}</span>
+                                        </h6>
+                                        <h7 class="mb-0 ms-3">${afterStaYmd}~${afterEndYmd}</h7>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>`
+
+            if(swiper.slides.length == 0) {
+                $('#comment').remove();
+            }
+            swiper.appendSlide(html); // 아이템 추가
+            swiper.slideTo(swiper.slides.length - 1); // 마지막 아이템 이동
+            swiper.update();
+
+            // X 버튼 클릭 시 해당 슬라이드를 삭제하는 이벤트 처리
+            $(document).on('click', '.close-btn', function() {
+                // 버튼이 포함된 swiper-slide 요소를 찾음
+                const slideIndex = $(this).closest('.swiper-slide').index();
+
+                // 해당 인덱스의 슬라이드를 삭제
+                swiper.removeSlide(slideIndex);
+            });
+        });
+
+        // Submit 버튼 클릭 시 기존에 등록된 이벤트 핸들러가 있다면 제거 후 등록 (중복 호출 방지)
+        $('#submit').off('click').on('click', function() {
             
             // 신청 팝업 실행 후
-            ApplListAlertPopup(this, dtmHisDTOList);
+            ApplCheck(dtmHisDTOList);           
 
             // 모달 종료
             $('#dynamicModal').modal('hide');

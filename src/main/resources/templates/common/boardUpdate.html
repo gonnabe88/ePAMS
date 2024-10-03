@@ -75,7 +75,7 @@
 				</div>
 				<div class="d-flex gap-2 flex-row-reverse">
 					<button class="btn btn-primary btn-sm mt-3" type="submit" id="update" th:attr="data-seqId=${board.seqId}">등록</button>
-					<a class="btn btn-secondary btn-sm mt-3" type="submit" id="list" th:href="@{/board/list}">목록</a>
+					<a class="btn btn-secondary btn-sm mt-3" type="submit" id="list" th:href="@{|/board/${board.boardType}/list|}">목록</a>
 				</div>
 				<br>
 			</div>

@@ -29,8 +29,7 @@ $(document).ready(function() {
                 FORBID_ATTR: ['style']
             });
             $('#menu').html(safeHTML);
-            // 사이드바가 로드된 후에 .sidebar-item 요소를 탐색합니다
-            highlightActiveMenuItem();
+            highlightActiveMenuItem(); // 사이드바가 로드된 후 .sidebar-item 요소 탐색
         }).fail(function(error) {
             console.error('Error loading sidebar:', error);
         });
@@ -86,8 +85,16 @@ const getUserInfo = (callback) => {
             // JSON 응답에서 사용자 이름과 부서를 가져와서 HTML에 삽입
             $('#realname').text(userInfo.realname);
             $('#deptName').text(userInfo.deptName);
-            $('#todayWorkTime').text(`${userInfo.staTime} ${userInfo.endTime}`);
-            $('#tomorrowWorkTime').text(`${userInfo.staTime} ${userInfo.endTime}`);
+            if(userInfo.staTime === "휴무") {
+                $('#todayWorkTime').text(`${userInfo.staTime}`);
+            } else {
+                $('#todayWorkTime').html(`${userInfo.staTime}<br>${userInfo.endTime}`);
+            }
+            if(userInfo.staTime2 === "휴무") {
+                $('#tomorrowWorkTime').text(`${userInfo.staTime2}`);
+            } else {
+                $('#tomorrowWorkTime').html(`${userInfo.staTime2}<br>${userInfo.endTime2}`);
+            }
             callback(userInfo.isAdmin);
         },
         error: function(jqXHR, textStatus, errorThrown) { // 요청이 실패했을 때 실행되는 함수

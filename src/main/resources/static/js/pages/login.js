@@ -12,6 +12,9 @@ document.getElementById('username').addEventListener('input', function(event) {
 
 // 화면 로드 시 수행
 $(function() {
+
+    checkBrowser();
+
     const webauthnData = $('#webauthnData');
     const webauthnYn = webauthnData.data('webauthn');
 
@@ -39,6 +42,21 @@ $(function() {
         //     "안내사항",
         //     "<p>간편인증이 등록된 사용자는 자동으로 간편인증이 선택됩니다.</p> <p>간편인증 사용을 원하지 않으시면 로그인 후 간편인증 등록을 해제해주세요.</p>",
         //     "info") : null; // Webauthn 등록 사용자이고 Webauthn 선택 시 Webauthn 인증
+    });
+
+    $('#loginFaqLink').on('click', function(event) {
+        event.preventDefault();
+        $.get('/login/faq', function(html) {
+            const safeHTML = DOMPurify.sanitize(html, {
+                SAFE_FOR_TEMPLATES: true,
+                ALLOWED_TAGS: ['p', 'h7', 'h6', 'h5', 'h4', 'h3', 'h2', 'h1', 'div', 'span', 'section', 'i', 'ul', 'li', 'a'], // 필요시 추가
+                FORBID_ATTR: ['style']
+            });
+            $('#loginFaq .modal-body').html(safeHTML);
+            $('#loginFaq').modal('show');
+        }).fail(function() {
+            console.log('FAQ 호출 중 에러 발생')
+        });
     });
 
     $('#simpleAuthQ').on('click', function() { // 간편인증 등록 사용자 안내사항 클릭 시

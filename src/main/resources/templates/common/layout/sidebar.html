@@ -28,17 +28,18 @@
 								<span id="realname" class="h6 mt-2 me-1" th:text="${realname}"></span>
 								<span id="deptName" class="h7" th:text="${deptName}"></span>
 								<div class="row d-flex align-items-center">
-									<h7 class="d-flex align-items-center me-4">
+									<h7 class="col-6 d-flex align-items-center">
 										<span class="badge rounded-pill bg-primary d-flex align-items-center justify-content-center p-2 me-2">
 											<span>오늘</span>
 										</span>
-										<span class="me-2" id="todayWorkTime" th:text="${todayWorkTime}"></span>
+										<span class="me-1" id="todayWorkTime" th:text="${todayWorkTime}"></span>
+									</h7>
+									<h7 class="col-6 d-flex align-items-center">
 										<span class="badge rounded-pill bg-info d-flex align-items-center justify-content-center p-2 me-2">
 											<span class="align-items-center">내일</span>
 										</span>
 										<span class="m-0" id="tomorrowWorkTime" th:text="${tomorrowWorkTime}"></span>
-									</h7>
-									
+									</h7>									
 								</div>
 							</div>
 						</div>
@@ -76,6 +77,13 @@
 							</a>
 						</li>
 
+						<li class="sidebar-item">
+							<a href="/board/40/list" class='sidebar-link'>
+								<i class="bi bi-question-diamond-fill"></i>
+								<span>FAQ</span>
+							</a>
+						</li>
+						
 						<li class="sidebar-item">
 							<a href="/logout" class='sidebar-link' >
 								<i class="bi bi-x-octagon-fill"></i>

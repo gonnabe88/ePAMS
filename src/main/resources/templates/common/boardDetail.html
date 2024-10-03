@@ -58,7 +58,7 @@
                             <button class="btn btn-danger btn-sm mt-3" sec:authorize="hasRole('EHRAD001')" th:attr="data-boardId=${board.seqId}" type="submit" id="delete">
                                 삭제
                             </button>
-                            <a class="btn btn-secondary btn-sm mt-3" type="submit" id="list" th:href="@{/board/list}">목록</a>
+                            <a class="btn btn-secondary btn-sm mt-3" type="submit" id="list" th:href="@{|/board/${board.boardType}/list|}">목록</a>
                         </div>
 
                     </div>

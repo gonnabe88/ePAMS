@@ -65,7 +65,7 @@ public class DtmHistoryController<S extends Session> {
 
     /**
      * @author K140024
-     * @implNote DTM 서비스 주입
+     * @implNote 근태조회 서비스
      * @since 2024-06-11
      */
     private final DtmHistoryService dtmHisService;
@@ -76,6 +76,7 @@ public class DtmHistoryController<S extends Session> {
      * @since 2024-06-11
      */
     private final DtmAnnualStatusService dtmAnnualStatusService;
+
     /***
      * @author 140024
      * @implNote 휴일 서비스
@@ -105,15 +106,15 @@ public class DtmHistoryController<S extends Session> {
      * @since 2024-06-11
      */
     @GetMapping("/dtmCalendar")
-    public String dtmCalendar(@ModelAttribute final DtmSearchDTO searchDTO, final Model model) {
-
-        searchDTO.setEmpId(Long.parseLong(authentication().getName().replace('K', '7')));
+    public String dtmCalendar(final Model model) {
 
         // 언어목록
         final Map<String, String> langList = langDetailService.getCodeHtmlDetail("dtm/dtmCalendar");
         model.addAttribute("langList", langList);
 
-        // 근태목록
+        // 캘린더근태목록
+        final DtmSearchDTO searchDTO = new DtmSearchDTO();
+        searchDTO.setEmpId(Long.parseLong(authentication().getName().replace('K', '7')));
         final List<DtmCalendarDTO> dtmCalDTOList = dtmHisService.findByYears(searchDTO);
 
         // 휴일목록
@@ -127,7 +128,7 @@ public class DtmHistoryController<S extends Session> {
             objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 
             String dtmHisJson = objectMapper.writeValueAsString(dtmCalDTOList);
-            model.addAttribute("dtmHis", dtmHisJson);
+            model.addAttribute("dtmHisEvents", dtmHisJson);
             model.addAttribute("holiDayList", holiDayList);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
@@ -171,8 +172,7 @@ public class DtmHistoryController<S extends Session> {
         final int endPage = Math.min(totalPages, startPage + maxPageBtn - 1);
         if (endPage - startPage < maxPageBtn - 1) {
             startPage = Math.max(1, endPage - maxPageBtn + 1);
-        }
-
+        }        
 
         // 기타 필요한 모델 속성 설정
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -194,8 +194,27 @@ public class DtmHistoryController<S extends Session> {
                 String formattedEndYmd = endDay.format(dateFormatter) + "(" + endDay.format(dayOfWeekFormatter) + ")";
                 dateRange = formattedStaYmd + " ~ " + formattedEndYmd;
             }
-            dto.setDtmRange(dateRange);     
-            log.warn(dto.toString());       
+            dto.setDtmRange(dateRange);       
+        }
+
+        // 캘린더근태목록
+        final List<DtmCalendarDTO> dtmCalDTOList = dtmHisService.findByYears(searchDTO);
+
+        // 휴일목록
+        final List<String> holiDayList = holidayService.findholiYmd();
+
+        // Jackson을 사용하여 List<DtmCalendarDTO>를 JSON으로 변환
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            objectMapper.registerModule(new JavaTimeModule());  // Java 8 날짜 및 시간 모듈 등록
+            // 기본적으로 ISO 형식(yyyy-MM-dd)으로 변환되도록 설정
+            objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+
+            String dtmHisJson = objectMapper.writeValueAsString(dtmCalDTOList);
+            model.addAttribute("dtmHisEvents", dtmHisJson);
+            model.addAttribute("holiDayList", holiDayList);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
         }
         
         model.addAttribute("dtmHis", dtmHisDTOList);

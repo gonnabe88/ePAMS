@@ -1,13 +1,4 @@
-/**
- * dtmList.js 전용 자바스크립트(/js/dtmList.js)
- * @author K140024
- * @implements 
- *  - 근태 현황 보기 Modal
- * @since 2024-07-28
- */
-
-// 화면 로드 시 함수
-$(document).ready(function () {
+$(document).ready(() => { // 화면 로드 시 호출
 
     // Input Form Element를 가져와서 달력 초기화
     const staYmdInputEl = document.getElementById('start-input');
@@ -46,11 +37,10 @@ $(document).ready(function () {
         dtmRevokeApplPopup(this);
     });
 
-    // 변경 클릭 시 Modal 실행 이벤트 등록
+    // 변경(modifyBtn) 버튼 클릭 시
     $('.modifyBtn').on('click', function () {
-
         
-        let dtmHisDTOList = [];
+        let dtmHisDTOList = []; // 근태 List 객체 생성
         const button = $('#dtmModifyBtn');
         const applId = button.data('applid');
         const dtmHisId = button.data('dtmhisid');
@@ -62,27 +52,26 @@ $(document).ready(function () {
         const beforeEndYmd = button.data('endymd');     
         const dtmRange = button.data('dtmrange'); 
 
-        // 변경 대상(취소) 객체 세팅
+        // [취소] 근태 객체 세팅
         let revokeDtmHisDTO = {
-            applId: applId,
-            dtmHisId: dtmHisId,
-            modiType: modiType,
-            dtmKindCd: dtmKindCd,
-            dtmReasonCd: dtmReasonCd,
-            dtmReasonNm: dtmReasonNm,
-            dtmDispName: dtmReasonNm,
-            staYmd: beforeStaYmd,
-            endYmd: beforeEndYmd
+            applId: applId, // 신청서ID
+            dtmHisId: dtmHisId, // 근태ID
+            modiType: modiType, // 변경타입
+
+            dtmKindCd: dtmKindCd, // 근태종류
+            dtmReasonCd: dtmReasonCd, // 근태사유코드
+            dtmReasonNm: dtmReasonNm, // 근태사유
+            dtmDispName: dtmReasonNm, // 근태표시이름
+            staYmd: beforeStaYmd, // 근태시작일
+            endYmd: beforeEndYmd // 근태종료일
         };
 
-        // 서버로 전달할 전체 리스트 객체 추가
-        dtmHisDTOList.push(revokeDtmHisDTO);
+        dtmHisDTOList.push(revokeDtmHisDTO); // 서버로 전달할 전체 리스트 객체 추가
 
-        // Modal에 변경 대상(취소) 객체 보여주기
-        $('#dynamicModal').modal('show');
-        $('#dtmResonNm').text(dtmReasonNm);
-        $('#dtmRange').text(dtmRange);
-        dtmApplSelectForm(dtmReasonCd);
+        $('#dynamicModal').modal('show'); // Modal에 변경 대상(취소) 객체 보여주기
+        $('#dtmResonNm').text(dtmReasonNm); // 근태사유(유형) 표시
+        $('#dtmRange').text(dtmRange); // 근태기간 표시
+        dtmApplSelectForm(dtmReasonCd); // select form 세팅
 
         $('#add').on('click', function() {
             // 현재 세팅된 날짜 가져오기
@@ -91,18 +80,7 @@ $(document).ready(function () {
             let afterDtmReasonCd = $('#dtmReasonCdSelect option:selected').val();
             let afterDtmReasonNm = $('#dtmReasonCdSelect option:selected').text();
 
-            // dtoHisDTO 객체 세팅
-            let registDtmHisDTO = {
-                dtmKindCd: dtmKindCd,
-                dtmReasonCd: afterDtmReasonCd,
-                dtmReasonNm: afterDtmReasonNm,
-                dtmDispName: afterDtmReasonNm,
-                staYmd: new Date(afterStaYmd),
-                endYmd: new Date(afterEndYmd)
-            };
-            // 서버로 전달할 전체 리스트 객체 추가
-            dtmHisDTOList.push(registDtmHisDTO);
-
+            // 화면에 보여줄 html sub page
             let html = `
             <div class="swiper-slide">
                 <div class="card mb-1 animate__animated animate__fadeIn animate__slow">
@@ -126,31 +104,36 @@ $(document).ready(function () {
                 </div>
             </div>`
 
-            if(swiper.slides.length == 0) {
-                $('#comment').remove();
+            // [신규] 근태 객체 세팅
+            let registDtmHisDTO = {
+                dtmKindCd: dtmKindCd, // 근태종류
+                dtmReasonCd: afterDtmReasonCd, // 근태사유코드
+                dtmReasonNm: afterDtmReasonNm, // 근태사유
+                dtmDispName: afterDtmReasonNm, // 근태표시이름
+                staYmd: new Date(afterStaYmd), // 근태시작일 (fullcalendar에서 세팅한 날짜)
+                endYmd: new Date(afterEndYmd) // 근태종료일 (fullcalendar에서 세팅한 날짜)
+            };
+            
+            dtmHisDTOList.push(registDtmHisDTO); // 서버로 전달할 전체 리스트 객체 추가
+
+            if(swiper.slides.length == 0) { // 첫 아이템 추가 시 
+                $('#comment').remove(); // 기존 안내 코멘트 삭제
             }
             swiper.appendSlide(html); // 아이템 추가
             swiper.slideTo(swiper.slides.length - 1); // 마지막 아이템 이동
-            swiper.update();
+            swiper.update(); // swiper 업데이트
 
-            // X 버튼 클릭 시 해당 슬라이드를 삭제하는 이벤트 처리
-            $(document).on('click', '.close-btn', function() {
-                // 버튼이 포함된 swiper-slide 요소를 찾음
-                const slideIndex = $(this).closest('.swiper-slide').index();
-
-                // 해당 인덱스의 슬라이드를 삭제
-                swiper.removeSlide(slideIndex);
+            $(document).on('click', '.close-btn', function() { // X 버튼 클릭 시 해당 슬라이드를 삭제하는 이벤트 등록
+                const slideIndex = $(this).closest('.swiper-slide').index(); // 버튼이 포함된 swiper-slide 요소를 찾음
+                swiper.removeSlide(slideIndex); // 해당 인덱스의 슬라이드를 삭제
             });
         });
 
         // Submit 버튼 클릭 시 기존에 등록된 이벤트 핸들러가 있다면 제거 후 등록 (중복 호출 방지)
         $('#submit').off('click').on('click', function() {
-            
-            // 신청 팝업 실행 후
-            ApplCheck(dtmHisDTOList);           
-
-            // 모달 종료
-            $('#dynamicModal').modal('hide');
+            ApplCheck(dtmHisDTOList); // 신청 내역 체크
+            dtmHisDTOList = []; // 근태 List 객체 초기화
+            $('#dynamicModal').modal('hide'); // 모달 종료
         });
     });
 

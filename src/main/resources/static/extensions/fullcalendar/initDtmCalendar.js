@@ -1,16 +1,16 @@
-$(document).ready(function () {
+$(document).ready( () => {
 
     const calendarEl = document.getElementById('dtmCalendar');
     let selectedDate = null;
 
     // 오늘 날짜를 가져오기
-    const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD 형식
+    const todayYmd = new Date().toISOString().slice(0, 10); // YYYY-MM-DD 형식
 
     // 휴일 날짜를 가져오기
     const holidays = calendarEl.getAttribute('data-holiDayList');
 
     // 근태(이벤트) 가져오기 후 JSON 변환
-    const eventsData = calendarEl.getAttribute('data-events');
+    const eventsData = calendarEl.getAttribute('data-dtmHisEvents');
     const eventsRaw = JSON.parse(eventsData);
 
     // 근태(이벤트) CSS 스타일 적용
@@ -24,7 +24,7 @@ $(document).ready(function () {
     }
 
     // DB에서 가져온 근태(이벤트) 객체를 FullCalendar 객체에 할당
-    const events = eventsRaw.map(function(event) {
+    const events = eventsRaw.map( (event) => {
         return {
             title: event.title,
             start: event.start,
@@ -41,7 +41,7 @@ $(document).ready(function () {
     const calendar = new FullCalendar.Calendar(calendarEl, {
         themeSystem: 'standard',
         initialView: 'dayGridMonth',
-        initialDate: today, // 오늘 날짜를 기본 선택 날짜로 설정
+        initialDate: todayYmd, // 오늘 날짜를 기본 선택 날짜로 설정
         editable: false,
         selectable: false,
         scrollable: true,
@@ -54,7 +54,7 @@ $(document).ready(function () {
             add: {
                 text: '신청',
                 click: function() {
-                    window.location.href = '/dtm/dtmRegDetail';
+                    window.location.href = '/dtm/dtmReg';
                 }
             }
         },
@@ -113,7 +113,7 @@ $(document).ready(function () {
                 info.el.style.setProperty('color', '#dc3545'); // 휴일 글씨색 적용 (일요일처럼)
             }
             // 오늘 날짜가 달력에 표시될 때 자동으로 선택 스타일 추가
-            if (info.dateStr === today) {
+            if (info.dateStr === todayYmd) {
                 info.el.classList.add('selected-date');
             }
         },
@@ -141,9 +141,9 @@ $(document).ready(function () {
     // 달력이 렌더링된 후 오늘 날짜를 자동 선택
     calendar.on('datesSet', function() {
         // 오늘 날짜에 해당하는 셀을 찾아서 클릭 이벤트를 발생시킴
-        const todayCell = $(`[data-date="${today}"]`);
+        const todayCell = $(`[data-date="${todayYmd}"]`);
         if (todayCell) {
-            handleEventOrDateClick(today, calendar.getEvents(), today);
+            handleEventOrDateClick(todayYmd, calendar.getEvents(), todayYmd);
         }
     });
 

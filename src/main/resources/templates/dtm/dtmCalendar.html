@@ -1,72 +1,65 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	  xmlns:sec="http://www.thymeleaf.org" layout:decorate="~{common/layout/layout}">
-<head>
-</head>
-<body>
-<div layout:fragment="contents">
-	<div class="dtmList">
-		<div class="container">
-			<div class="main-content d-flex justify-content-center">
-				<div class="row col-lg-10 col-md-12 d-flex justify-content-center">
-
-					<!-- 페이지 제목 시작 -->
-					<div class="page-heading">
-						<div class="d-flex justify-content-between align-items-end">
-							<div class="align-middle">
-								<h2><i class="bi bi-bell-fill"></i> <span>근태조회</span></h2>
-							</div>
-							<div class="align-end">
-								<div class="dtmViewType btn-group" role="group" aria-label="DTM VIEW TYPE">
-									<input type="radio" class="btn-check" name="dtmListView" id="dtmListView" autocomplete="off">
-									<label class="btn btn-outline-primary btn-sm d-flex justify-content-between" for="dtmListView">
-										<a href="/dtm/dtmList">
-											<i class="bi bi-list-ul me-1"></i>
-											<span>목록</span>
-										</a>
-									</label>
-									<input type="radio" class="btn-check" name="dtmCalendarView" id="dtmCalendarView" autocomplete="off" checked>
-									<label class="btn btn-outline-primary btn-sm d-flex justify-content-between" for="dtmCalendarView">
-										<a href="/dtm/dtmCalendar">
-											<i class="bi bi-calendar me-1"></i>
-											<span>달력</span>
-										</a>
-									</label>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.thymeleaf.org" layout:decorate="~{common/layout/layout}">
+	<head> </head>
+	<body>
+		<div layout:fragment="contents">
+			<div class="dtmList">
+				<div class="container">
+					<div class="main-content d-flex justify-content-center">
+						<div class="row col-lg-10 col-md-12 d-flex justify-content-center">
+							<!-- 페이지 제목 시작 -->
+							<div class="page-heading">
+								<div class="d-flex justify-content-between align-items-end">
+									<div class="align-middle">
+										<h2><i class="bi bi-bell-fill"></i> <span>근태조회</span></h2>
+									</div>
+									<div class="align-end">
+										<div class="dtmViewType btn-group" role="group" aria-label="DTM VIEW TYPE">
+											<input type="radio" class="btn-check" name="dtmListView" id="dtmListView" autocomplete="off" />
+											<label class="btn btn-outline-primary btn-sm d-flex justify-content-between" for="dtmListView">
+												<a href="/dtm/dtmList">
+													<i class="bi bi-list-ul me-1"></i>
+													<span>목록</span>
+												</a>
+											</label>
+											<input type="radio" class="btn-check" name="dtmCalendarView" id="dtmCalendarView" autocomplete="off" checked />
+											<label class="btn btn-outline-primary btn-sm d-flex justify-content-between" for="dtmCalendarView">
+												<a href="/dtm/dtmCalendar">
+													<i class="bi bi-calendar me-1"></i>
+													<span>달력</span>
+												</a>
+											</label>
+										</div>
+									</div>
 								</div>
 							</div>
+							<!-- 페이지 제목 끝 -->
+
+							<!-- 캘린더 시작 -->
+							<div class="card mb-3">
+								<div class="card-body">
+									<div id="dtmCalendar" th:attr="data-dtmHisEvents=${dtmHisEvents}, data-holiDayList=${holiDayList}"></div>
+								</div>
+							</div>
+							<!-- 캘린더 끝 -->
+
+							<!-- 이벤트 시작 -->
+							<h6><i class="bi bi-calendar me-2"></i><span id="selectedDate"></span></h6>
+							<div class="card">
+								<div class="card-body d-flex align-items-center pt-1 mb-2">
+									<div id="dtmEvent"></div>
+								</div>
+							</div>
+							<!-- 이벤트 끝 -->
 						</div>
 					</div>
-					<!-- 페이지 제목 끝 -->
-
-					<!-- 캘린더 시작 -->
-					<div class="card mb-3">
-						<div class="card-body">
-							<div id="dtmCalendar"
-								 th:attr="data-events=${dtmHis}, data-holiDayList=${holiDayList}"></div>
-						</div>
-					</div>
-					<!-- 캘린더 끝 -->
-
-					<!-- 이벤트 시작 -->
-					<h6><i class="bi bi-calendar me-2"></i><span id="selectedDate"></span></h6>
-					<div class="card">
-						<div class="card-body d-flex align-items-center pt-1 mb-2">
-							<div id="dtmEvent"></div>
-						</div>
-					</div>
-					<!-- 이벤트 끝 -->
-
 				</div>
 			</div>
 		</div>
-	</div>
-</div>
 
-<th:block layout:fragment="script">
-	<script src="/extensions/fullcalendar/index.global.js"></script>
-	<script src="/extensions/fullcalendar/initTest.js"></script>
-</th:block>
-
-</body>
+		<th:block layout:fragment="script">
+			<script src="/extensions/fullcalendar/index.global.js"></script>
+			<script src="/extensions/fullcalendar/initDtmCalendar.js"></script>
+		</th:block>
+	</body>
 </html>

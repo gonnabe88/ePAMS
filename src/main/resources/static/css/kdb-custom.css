@@ -896,36 +896,35 @@ mark {
 }
 
 /*기본 이벤트 배경색*/
-.dtmList .fc-h-event {
-    background-color: #d63384; /* 변수로 배경색 적용 */
-    border: 1px solid white; /* 변수로 테두리 색상 적용 */
+.fc-h-event {
+    background-color: #d63384 !important; /* 변수로 배경색 적용 */
+    border: 1px solid white !important; /* 변수로 테두리 색상 적용 */
     display: block;
 }
 
-.dtmList .event-kind-1 {
-    background-color: #0d6efd; /* 변수로 배경색 적용 */
-    border: 1px solid white; /* 변수로 테두리 색상 적용 */
+.event-kind-1 {
+    background-color: #0d6efd !important; /* 변수로 배경색 적용 */
+    border: 1px solid white !important; /* 변수로 테두리 색상 적용 */
     display: block;
 }
 
-.dtmList .event-kind-default {
-    background-color: #9D5DB6; /* 변수로 배경색 적용 */
-    border: 1px solid white; /* 변수로 테두리 색상 적용 */
+.event-kind-default {
+    background-color: #9D5DB6 !important; /* 변수로 배경색 적용 */
+    border: 1px solid white !important; /* 변수로 테두리 색상 적용 */
     display: block;
 }
 
-.dtmList .event-kind-2 {
-    background-color: #dc3545; /* 변수로 배경색 적용 */
-    border: 1px solid white; /* 변수로 테두리 색상 적용 */
+.event-kind-2 {
+    background-color: #dc3545 !important; /* 변수로 배경색 적용 */
+    border: 1px solid white !important; /* 변수로 테두리 색상 적용 */
     display: block;
 }
 
-.dtmList .event-kind-4 {
-    background-color: #198754; /* 변수로 배경색 적용 */
-    border: 1px solid white; /* 변수로 테두리 색상 적용 */
+.event-kind-4 {
+    background-color: #198754 !important; /* 변수로 배경색 적용 */
+    border: 1px solid white !important; /* 변수로 테두리 색상 적용 */
     display: block;
 }
-
 
 /* 이벤트 타이틀 크기 조정 */
 .dtmList .fc .fc-event-title {
@@ -964,6 +963,76 @@ mark {
 /************************* 근태조회(dtmCalendar) FULLCALENDAR 끝 **************************/
 
 /************************ 근태 신청화면 full calender 시작 ************************/
+
+/*날짜와 이벤트 그리드 비율*/
+.dtmReg .fc .fc-daygrid-day-frame {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+/*이벤트 박스 이벤트명(근태명) 안보이게 설정*/
+.dtmReg .fc-h-event .fc-event-title {
+    display: none !important;
+}
+
+/*이벤트 박스 스타일 조정*/
+.dtmReg .fc .fc-daygrid-day-events {
+    width: 100%;
+    margin-bottom: 0;
+    background: white;
+}
+
+/*이벤트 박스 최소 높이 설정*/
+.dtmReg .fc .fc-daygrid-body-unbalanced .fc-daygrid-day-events {
+    min-height: 0.5em;
+    position: relative;
+}
+/*이벤트 박스 이벤트 모양(.)*/
+.dtmReg .fc-h-event {
+    background-color: var(--fc-event-bg-color);
+    border: 1px solid var(--fc-event-border-color);
+    display: flex;
+    width: 5px;
+    height: 5px;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
+
+/* 풀캘린더에서 이벤트를 점으로만 표시하고 나란히 정렬 */
+.dtmReg .fc-daygrid-day-events {
+    display: inline-grid;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+/* 날짜 박스 불필요한 여백 제거 */
+.dtmReg .fc .fc-daygrid-day-number {
+    padding: 0;
+}
+
+/* 날짜 선택 시 스타일 */
+.dtmReg .fc-day.selected-date .fc-daygrid-day-number {
+    background-color: #435ebe;
+    color: white !important;
+    border-radius: 30%;
+    width: 1.7em;
+    height: 1.5em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+/* 다일 이벤트(multiple-day event)의 시작/종료 시간 숨기기 */
+.dtmReg .fc-event-main-frame .fc-event-time {
+    display: none;
+}
+
 .dtmReg .fc {
     font-size: clamp(0.8em, 2vw, 5em); /* 최소 0.8em, 최대 5em, 기본 값은 2vw로 설정 */
     text-align: center;
@@ -1006,11 +1075,6 @@ mark {
     border: none !important;
 }
 
-/* fc-daygrid-day-events 부분 숨기기 */
-.dtmReg .fc-daygrid-day-events {
-    display: none !important; /* 강제로 숨기기 */
-}
-
 .dtmReg .fc .fc-daygrid-day-frame {
     height: 100%;
     display: flex;
@@ -1018,11 +1082,12 @@ mark {
     justify-content: center;
     align-items: center;
 }
+
+/* 날짜 기본 스타일 */
 .dtmReg .fc .fc-daygrid-day-top {
-    flex-grow: 1;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: start;
+    align-items: start;
 }
 
 .dtmReg .fc-daygrid-day-content {
@@ -1042,44 +1107,36 @@ mark {
     opacity: 1 !important; /* 투명도 제거 */
 }
 
-/* 선택된 날짜 범위에 우선 적용되는 스타일 */
-.selected-range-start,
-.selected-range-middle,
-.selected-range-end {
-    background-color: #435ebe !important; /* 선택된 날짜의 배경색이 우선 */
-    font-weight: bold !important; /* 선택된 날짜의 글꼴 두께가 우선 */
-    color: white !important;
-}
 /* 시작일과 종료일이 같은 경우 */
 .selected-single-day {
     background-color: #435ebe !important;
     font-weight: bold !important;
     color: white !important;
     border-top-left-radius: 20% !important;
-    border-bottom-left-radius: 20% !important;
+    border-bottom-left-radius: 45% !important;
     border-top-right-radius: 20% !important;
-    border-bottom-right-radius: 20% !important;
+    border-bottom-right-radius: 45% !important;
 }
 
 /* 선택된 날짜 범위의 스타일 */
-.selected-range-start {
+.selected-range-start{
     background-color: #435ebe !important;
     font-weight: bold !important;
     border-top-left-radius: 20% !important;
-    border-bottom-left-radius: 20% !important;
+    border-bottom-left-radius: 45% !important;
 }
 
-.selected-range-middle {
-    background-color: #435ebe !important;
+.selected-range-middle{
+    background-color: #99aae9 !important;
     font-weight: bold !important;
     border-radius: 0 !important;
 }
 
-.selected-range-end {
+.selected-range-end{
     background-color: #435ebe !important;
     font-weight: bold !important;
     border-top-right-radius: 20% !important;
-    border-bottom-right-radius: 20% !important;
+    border-bottom-right-radius: 45% !important;
 }
 
 /* 선택된 날짜의 숫자 색상 */

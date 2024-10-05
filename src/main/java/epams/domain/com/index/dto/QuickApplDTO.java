@@ -57,7 +57,7 @@ public class QuickApplDTO {
      * @implNote 근태코드
      * @since 2024-06-09
      */
-    private String dtmCode;
+    private String dtmKindCd;
 
     /***
      * @author 140024

@@ -1,29 +1,28 @@
-$(document).ready(() => {
+$(document).ready(() => { // 화면 로드 시 호출
 
-    // 'save' 버튼 클릭 시 save2() 함수 호출
-    $('.appl-alert-button').on('click', function () {
+    // 신청(dtmRegistBtn) 버튼 클릭 시
+    $('.dtmRegistBtn').on('click', function () {
+
+        let dtmHisDTOList = []; // 근태 List 객체 생성
         const staDate = this.getAttribute('data-staDate');
-        const staDateStr = this.getAttribute('data-staDateStr');
-        const dtmCode = this.getAttribute('data-dtmCode');
-        const dtmReasonCode = this.getAttribute('data-dtmReasonCode');
-        const dtmReasonName = this.getAttribute('data-dtmReasonName');
+        const dtmKindCd = this.getAttribute('data-dtmKindCd');
+        const dtmReasonCd = this.getAttribute('data-dtmReasonCode');
+        const dtmReasonNm = this.getAttribute('data-dtmReasonNm');
         const dtmDispName = this.getAttribute('data-dtmDispName');
     
-        // DtmHisDTO 객체 생성
-        const dtmHisDTO = {
-            dtmKindCd: dtmCode,
-            dtmReasonCd: dtmReasonCode,
-            dtmReasonNm: dtmReasonName,
-            dtmDispName: dtmDispName,
-            staYmd: new Date(staDate).toISOString(),
-            endYmd: new Date(staDate).toISOString()
+        // [신규] 근태 객체 세팅
+        let registDtmHisDTO = {
+            dtmKindCd: dtmKindCd, // 근태종류
+            dtmReasonCd: dtmReasonCd, // 근태사유코드
+            dtmReasonNm: dtmReasonNm, // 근태사유
+            dtmDispName: dtmDispName, // 근태표시이름
+            staYmd: new Date(staDate).toISOString(), // 근태시작일 (indexController에서 세팅한 날짜)
+            endYmd: new Date(staDate).toISOString() // 근태종료일 (indexController에서 세팅한 날짜)
         };
-
-        const dtmHisDTOList = [];
-        dtmHisDTOList.push(dtmHisDTO);
         
-        ApplCheck(dtmHisDTOList);
-        
+        dtmHisDTOList.push(registDtmHisDTO); // 서버로 전달할 전체 리스트 객체 추가        
+        ApplCheck(dtmHisDTOList); // 신청 내역 체크
+        dtmHisDTOList = []; // 근태 List 객체 초기화
     });
 
     // 'scrollToSearchDiv' 버튼 클릭 시 scrollToDiv() 함수 호출

@@ -226,7 +226,7 @@
 					<div class="row d-flex justify-content-center">
 						<div class="row col-lg-12">
 							<section>
-								<div class="shadow card" th:each="board : ${boardList}">
+								<div class="shadow card" id="boardCard" th:each="board : ${boardList}">
 									<div class="card-body">
 										<span th:if="${board.category}" th:classappend="|badge badge-sm mb-2 ${(board.category == 'IT') ? 'bg-primary' : (board.category == '인사') ? 'bg-info' : ''}|" th:text="${board.category}"></span>
 										<a class="card-title" th:href="@{|/board/${board.seqId}|}">
@@ -287,7 +287,7 @@
 			<script src="/js/utils/progressBar.js"></script>
 
 			<!--KDB PopUp-->
-			<script src="/js/quickDtmApplPopup.js"></script>
+			<script src="/js/dtmApplPopup.js"></script>
 			<script src="/js/utils/webauthn.js"></script>
 			<script src="/js/webauthnPopup.js"></script>
 

@@ -67,7 +67,7 @@ public class DtmHistoryService {
 
 		// 각 DTO 객체에 대해 status를 갱신
 		dtmHisDTOs.forEach(dto -> {
-			dto.updateStatus(dto.getStatCd(), dto.getStaYmd(), dto.getStaHm(), dto.getEndYmd(), dto.getEndHm());
+			dto.updateStatus(dto.getStatCd(), dto.getDtmKindCd(), dto.getStaYmd(), dto.getStaHm(), dto.getEndYmd(), dto.getEndHm());
 		});
 
 		final long totalElements = dtmHisRepo.countByCondition(searchDTO); // 전체 데이터 개수를 조회하는 메소드 필요

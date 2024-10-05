@@ -2,8 +2,10 @@ package epams.domain.dtm.controller;
 
 import epams.domain.com.commonCode.CommonCodeService;
 import epams.domain.com.holiday.HolidayService;
+import epams.domain.dtm.dto.DtmAnnualStatusDTO;
 import epams.domain.dtm.dto.DtmCalendarDTO;
 import epams.domain.dtm.dto.DtmSearchDTO;
+import epams.domain.dtm.service.DtmAnnualStatusService;
 import epams.domain.dtm.service.DtmHistoryService;
 
 import org.springframework.data.domain.Pageable;
@@ -72,6 +74,13 @@ public class DtmRegController<S extends Session> {
 
     /**
      * @author K140024
+     * @implNote DTM 서비스 주입
+     * @since 2024-06-11
+     */
+    private final DtmAnnualStatusService dtmAnnualStatusService;
+
+    /**
+     * @author K140024
      * @implNote 현재 인증된 사용자 정보를 가져오는 메소드
      * @since 2024-04-26
      */
@@ -102,6 +111,17 @@ public class DtmRegController<S extends Session> {
         final DtmSearchDTO searchDTO = new DtmSearchDTO();
         searchDTO.setEmpId(Long.parseLong(authentication().getName().replace('K', '7')));
         final List<DtmCalendarDTO> dtmCalDTOList = dtmHisService.findByYears(searchDTO);
+
+        try {
+            // 휴가보유 현황
+            final DtmAnnualStatusDTO dtmAnnualStatusDTO = dtmAnnualStatusService.getDtmAnnualStatus(searchDTO.getEmpId());
+            DtmAnnualStatusDTO.removeBracket(dtmAnnualStatusDTO);
+            model.addAttribute("dtmAnnualStatus", dtmAnnualStatusDTO);
+        } catch (Exception e) {
+            final DtmAnnualStatusDTO dtmAnnualStatusDTO = new DtmAnnualStatusDTO();
+            model.addAttribute("dtmAnnualStatus", dtmAnnualStatusDTO);
+            log.error("휴가보유 현황 조회 실패", e);
+        }
 
         // 휴일목록
         final List<String> holiDayList = holidayService.findholiYmd();

@@ -964,9 +964,18 @@ mark {
 
 /************************ 근태 신청화면 full calender 시작 ************************/
 
+.dtmReg .fc-daygrid-body {
+    width: auto !important;
+}
+
+.dtmReg .fc-daygrid-day-bottom {
+    display: none;
+}
+
 /*날짜와 이벤트 그리드 비율*/
 .dtmReg .fc .fc-daygrid-day-frame {
     height: 100%;
+    max-width: 400px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -985,7 +994,7 @@ mark {
 
 /*이벤트 박스 최소 높이 설정*/
 .dtmReg .fc .fc-daygrid-body-unbalanced .fc-daygrid-day-events {
-    min-height: 0.5em;
+    min-height: 0.6em;
     position: relative;
 }
 /*이벤트 박스 이벤트 모양(.)*/
@@ -1003,8 +1012,9 @@ mark {
 
 /* 풀캘린더에서 이벤트를 점으로만 표시하고 나란히 정렬 */
 .dtmReg .fc-daygrid-day-events {
-    display: inline-grid;
-    flex-wrap: wrap;
+    display: flex;
+    flex-wrap: nowrap; /*한줄로 표시*/
+    white-space: nowrap; /*한줄로 표시*/
     justify-content: center;
     align-items: center;
     overflow: hidden;
@@ -1034,7 +1044,8 @@ mark {
 }
 
 .dtmReg .fc {
-    font-size: clamp(0.8em, 2vw, 5em); /* 최소 0.8em, 최대 5em, 기본 값은 2vw로 설정 */
+    /*font-size: clamp(0.8em, 2vw, 5em); !* 최소 0.8em, 최대 5em, 기본 값은 2vw로 설정 *!*/
+    max-width: 400px;
     text-align: center;
     border: none;
 }
@@ -1086,8 +1097,10 @@ mark {
 /* 날짜 기본 스타일 */
 .dtmReg .fc .fc-daygrid-day-top {
     display: flex;
-    justify-content: start;
-    align-items: start;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 2px;
 }
 
 .dtmReg .fc-daygrid-day-content {
@@ -1098,8 +1111,8 @@ mark {
 }
 
 /* 선택된 범위에만 스타일 적용 */
-.selected-day,
-.selected-range {
+.dtmReg .selected-day,
+.dtmReg .selected-range {
     background-color: #435ebe !important;
     /*color: white !important;*/
     font-weight: bold;
@@ -1108,35 +1121,35 @@ mark {
 }
 
 /* 시작일과 종료일이 같은 경우 */
-.selected-single-day {
+.dtmReg .selected-single-day .fc-daygrid-day-top{
     background-color: #435ebe !important;
     font-weight: bold !important;
     color: white !important;
     border-top-left-radius: 20% !important;
-    border-bottom-left-radius: 45% !important;
+    border-bottom-left-radius: 20% !important;
     border-top-right-radius: 20% !important;
-    border-bottom-right-radius: 45% !important;
+    border-bottom-right-radius: 20% !important;
 }
 
 /* 선택된 날짜 범위의 스타일 */
-.selected-range-start{
+.dtmReg .selected-range-start .fc-daygrid-day-top{
     background-color: #435ebe !important;
     font-weight: bold !important;
     border-top-left-radius: 20% !important;
-    border-bottom-left-radius: 45% !important;
+    border-bottom-left-radius: 20% !important;
 }
 
-.selected-range-middle{
+.dtmReg .selected-range-middle .fc-daygrid-day-top{
     background-color: #99aae9 !important;
     font-weight: bold !important;
     border-radius: 0 !important;
 }
 
-.selected-range-end{
+.dtmReg .selected-range-end .fc-daygrid-day-top{
     background-color: #435ebe !important;
     font-weight: bold !important;
     border-top-right-radius: 20% !important;
-    border-bottom-right-radius: 45% !important;
+    border-bottom-right-radius: 20% !important;
 }
 
 /* 선택된 날짜의 숫자 색상 */
@@ -1146,7 +1159,6 @@ mark {
 .selected-range-end .fc-daygrid-day-number {
     color: white !important;
 }
-
 
 /*fullcalendar 오늘 강조 표시*/
 .dtmReg .fc-day-today.fc-daygrid-day {
@@ -1218,13 +1230,13 @@ mark {
 /* 휴가현황 카드 끝 */
 
 
-/* 휴가현황 테이블 시작*/
+/* 휴가현황 테이블 시작
 .dtmReg table {
     border-collapse: collapse;
     width: 100%;
 }
 .dtmReg th, .dtmReg td {
-    border: 1px solid #000; /* 테두리 색상을 검정색으로 변경 */
+    border: 1px solid #000;
     text-align: center;
 }
 
@@ -1235,11 +1247,10 @@ mark {
 .dtmReg th {
     background-color: #f2f7ff;
 }
-/* 휴가현황 테이블 끝*/
+휴가현황 테이블 끝*/
 
 .dtmReg .card {
     width: 100%;
-    padding: 1rem;
     display: flex;
     justify-content: center;
 }
@@ -1258,7 +1269,7 @@ mark {
 
 .date-input-container {
     display: flex;
-    justify-content: space-between; /* 양끝으로 배치 */
+    justify-content: start; /* 양끝으로 배치 */
     align-items: center; /* 수직 가운데 정렬 */
 }
 
@@ -1697,42 +1708,42 @@ html, body {
 }
 
 /* 리스트나 미리보기 화면에서 큰 컨텐츠가 오버플로되는 것을 방지 */
-.card-body, .list-unstyled {
+#boardCard .card-body, .list-unstyled {
     max-width: 300px;
 }
 
 @media (min-width: 370px) {
-    .card-body, .list-unstyled {
+    #boardCard .card-body, .list-unstyled {
         max-width: 340px;
     }
 }
 
 @media (min-width: 420px) {
-    .card-body, .list-unstyled {
+    #boardCard .card-body, .list-unstyled {
         max-width: 390px;
     }
 }
 
 @media (min-width: 470px) {
-    .card-body, .list-unstyled {
+    #boardCard .card-body, .list-unstyled {
         max-width: 440px;
     }
 }
 
 @media (min-width: 520px) {
-    .card-body, .list-unstyled {
+    #boardCard .card-body, .list-unstyled {
         max-width: 490px;
     }
 }
 
 @media (min-width: 576px) {
-    .card-body, .list-unstyled {
+    #boardCard .card-body, .list-unstyled {
         max-width: 540px;
     }
 }
 
 @media (min-width: 768px) {
-    .card-body, .list-unstyled {
+    #boardCard .card-body, .list-unstyled {
         max-width: 100%;
     }
 }

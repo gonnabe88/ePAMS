@@ -143,7 +143,6 @@ $(document).ready( () => {
                 updateDates(startDate, endDate);
                 addDateRangeHighlight(startDate, endDate);
             }
-
         },
     });
 

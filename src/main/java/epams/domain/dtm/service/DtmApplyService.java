@@ -121,7 +121,7 @@ public class DtmApplyService {
 		 * @since 2024-09-13
 		 */
 		for(DtmHisDTO hisDTO : hisDTOList) {
-/* @TODO 외부 테스트 시 주석 처리(시작) */
+/* @TODO 외부 테스트 시 주석 처리(시작)
 			long totalWorkTime = Duration.between(hisDTO.getBaseStartDateTime(), hisDTO.getBaseEndDateTime()).toMinutes();
 			long workTime = totalWorkTime;
 			LocalDateTime lunchStart;
@@ -174,7 +174,7 @@ public class DtmApplyService {
 					}
 				}
 			}
-/* @TODO 외부 테스트 시 주석 처리(끝) */
+ @TODO 외부 테스트 시 주석 처리(끝) */
 			// 근태신청시간 합계 계산을 위한 input 데이터 세팅
 			final DtmCheckDTO checkDTO = new DtmCheckDTO(
 					hisDTO.getDtmReasonCd(), // 근태종류

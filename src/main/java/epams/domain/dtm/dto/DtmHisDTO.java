@@ -111,7 +111,7 @@ public class DtmHisDTO extends DtmHisVO {
      * @since 2024-09-28
      * @return LocalDateTime
      */
-    /* @TODO 외부 테스트 시 주석 처리(시작) */
+    /* @TODO 외부 테스트 시 주석 처리(시작)
     public LocalDateTime getStartDateTime() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HHmm");
         LocalTime time = LocalTime.parse(super.getStaHm(), formatter);
@@ -123,7 +123,7 @@ public class DtmHisDTO extends DtmHisVO {
         LocalTime time = LocalTime.parse(this.getBaseStaHm(), formatter);
         return LocalDateTime.of(super.getStaYmd().toLocalDate(), time);
     }
- /* @TODO 외부 테스트 시 주석 처리(끝) */
+  @TODO 외부 테스트 시 주석 처리(끝) */
 
     /***
      * @author 140024
@@ -131,7 +131,7 @@ public class DtmHisDTO extends DtmHisVO {
      * @since 2024-09-28
      * @return LocalDateTime
      */
-    /* @TODO 외부 테스트 시 주석 처리(시작) */
+    /* @TODO 외부 테스트 시 주석 처리(시작)
     public LocalDateTime getEndDateTime() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HHmm");
         LocalTime time = LocalTime.parse(super.getEndHm(), formatter);
@@ -143,7 +143,7 @@ public class DtmHisDTO extends DtmHisVO {
         LocalTime time = LocalTime.parse(this.getBaseEndHm(), formatter);
         return LocalDateTime.of(super.getEndYmd().toLocalDate(), time);
     }
-    /* @TODO 외부 테스트 시 주석 처리(끝) */
+     @TODO 외부 테스트 시 주석 처리(끝) */
     /***
      * @author 140024
      * @implNote 경과여부 (과거/진행중/예정) 세팅
@@ -154,7 +154,7 @@ public class DtmHisDTO extends DtmHisVO {
      * @param endHm 종료시간
      * @return String 타입의 예정, 과거, 진행
      */
-    public final void updateStatus(final String statCd, final LocalDateTime staYmd, final String staHm, final LocalDateTime endYmd, final String endHm) {
+    public final void updateStatus(final String statCd, final String dtmKindCd, final LocalDateTime staYmd, final String staHm, final LocalDateTime endYmd, final String endHm) {
         final LocalDate today = LocalDate.now();  // 현재 날짜
         final LocalDate startDate = staYmd.toLocalDate();  // 시작 날짜
         final LocalDateTime startDateTime = LocalDateTime.of(staYmd.toLocalDate(), LocalTime.parse("0000", DateTimeFormatter.ofPattern("HHmm")));
@@ -169,15 +169,19 @@ public class DtmHisDTO extends DtmHisVO {
             this.status = "진행";  // 현재 시간이 시작과 종료 사이면 '진행'
         }
 
-        // 취소 가능 여부 결정 (날짜만 기준으로 비교, statCd가 132이어야 함)
-        if ("132".equals(statCd) && (startDate.isAfter(today) || startDate.isEqual(today))) {
+        // 취소 가능 여부 결정 (오늘 이후, 결재완료, 연차/보상만 가능)
+        if ("132".equals(statCd) &&
+            ("1A".equals(dtmKindCd) || "1Z".equals(dtmKindCd)) &&
+            (startDate.isAfter(today) || startDate.isEqual(today))) {
             this.isRevocable = true;
         } else {
             this.isRevocable = false;
         }
 
-        // 수정 가능 여부 결정 (날짜만 기준으로 비교, statCd가 132이어야 함)
-        if ("132".equals(statCd) && (startDate.isAfter(today) || startDate.isEqual(today))) {
+        // 수정 가능 여부 결정 (오늘 이후, 결재완료, 연차/보상만 가능)
+        if ("132".equals(statCd) &&
+            ("1A".equals(dtmKindCd) || "1Z".equals(dtmKindCd)) &&
+            (startDate.isAfter(today) || startDate.isEqual(today))) {
             this.isModifiable = true;
         } else {
             this.isModifiable = false;

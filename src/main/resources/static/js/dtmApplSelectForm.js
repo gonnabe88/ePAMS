@@ -8,12 +8,16 @@
  * @since 2024-07-28
  */
 
-const dtmApplSelectForm = (dtmReasonCd) => {
+const dtmApplSelectForm = (dtmReasonCd, pageType) => {
     console.log("dtmApplSelectForm");
-    // Select2 초기화
-    $('#dtmReasonCdSelect').select2({
-        dropdownParent: $('#dynamicModal') // 모달 내부에서 동작하도록 설정
-    });
+    if(pageType === "modal"){
+        // Select2 초기화
+        $('#dtmReasonCdSelect').select2({
+            dropdownParent: $('#dynamicModal') // 모달 내부에서 동작하도록 설정
+        });
+    } else {
+        $('#dtmReasonCdSelect').select2();
+    }
     let selectedValue = $('input[name="dtmKindCdSelect"]').val();
     let url = "/api/commoncode/code/DTM_REASON_CD/" + selectedValue;
 

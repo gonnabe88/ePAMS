@@ -71,7 +71,7 @@ $(document).ready(() => { // 화면 로드 시 호출
         $('#dynamicModal').modal('show'); // Modal에 변경 대상(취소) 객체 보여주기
         $('#dtmResonNm').text(dtmReasonNm); // 근태사유(유형) 표시
         $('#dtmRange').text(dtmRange); // 근태기간 표시
-        dtmApplSelectForm(dtmReasonCd); // select form 세팅
+        dtmApplSelectForm(dtmReasonCd, "modal"); // select form 세팅
 
         $('#add').on('click', function() {
             // 현재 세팅된 날짜 가져오기
@@ -79,6 +79,7 @@ $(document).ready(() => { // 화면 로드 시 호출
             let afterEndYmd = $('#endDate').val();
             let afterDtmReasonCd = $('#dtmReasonCdSelect option:selected').val();
             let afterDtmReasonNm = $('#dtmReasonCdSelect option:selected').text();
+            let afterdtmKindCd = $('input[name="dtmKindCdSelect"]:checked').val();
 
             // 화면에 보여줄 html sub page
             let html = `
@@ -106,7 +107,7 @@ $(document).ready(() => { // 화면 로드 시 호출
 
             // [신규] 근태 객체 세팅
             let registDtmHisDTO = {
-                dtmKindCd: dtmKindCd, // 근태종류
+                dtmKindCd: afterdtmKindCd, // 근태종류
                 dtmReasonCd: afterDtmReasonCd, // 근태사유코드
                 dtmReasonNm: afterDtmReasonNm, // 근태사유
                 dtmDispName: afterDtmReasonNm, // 근태표시이름

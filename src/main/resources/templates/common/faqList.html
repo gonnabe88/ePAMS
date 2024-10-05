@@ -36,7 +36,7 @@
                         <div class="col-12">
                             <div class="animate__animated animate__fadeIn animate__slow">
                                 <section class="section" th:each="board: ${boardList}">
-                                    <div class="card">
+                                    <div class="card" id="boardCard">
                                         <div class="card-body">
                                             <span th:if="${board.category}"
                                                   th:classappend="|badge badge-sm mb-2 ${(board.category == 'IT') ? 'bg-primary' : (board.category == '인사') ? 'bg-info' : ''}|"

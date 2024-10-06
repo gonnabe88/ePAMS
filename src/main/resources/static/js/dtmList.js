@@ -6,9 +6,8 @@ $(document).ready(() => { // 화면 로드 시 호출
     const startDateEl = document.getElementById('start-date');
     const endDateEl = document.getElementById('end-date');
     initializePicker(staYmdInputEl, endYmdInputEl, startDateEl, endDateEl);
-
-    // 화면 로드 시 항상 페이지네이션 링크 업데이트
-    updatePaginationLinks();
+    dtmApplSelectForm("1A1", "normal","dtmSearchKindCdSelect", "#dtmSearchReasonCdSelect");  // select form 세팅 (기본세팅 : 연차)
+    updatePaginationLinks();// 화면 로드 시 항상 페이지네이션 링크 업데이트
 
     // 검색 드롭다운 펼쳐지는 경우
     $('#collapseSearch').on('show.bs.collapse', function() {
@@ -71,8 +70,7 @@ $(document).ready(() => { // 화면 로드 시 호출
         $('#dynamicModal').modal('show'); // Modal에 변경 대상(취소) 객체 보여주기
         $('#dtmResonNm').text(dtmReasonNm); // 근태사유(유형) 표시
         $('#dtmRange').text(dtmRange); // 근태기간 표시
-        dtmApplSelectForm(dtmReasonCd, "modal"); // select form 세팅
-
+        dtmApplSelectForm(dtmReasonCd, "modal","dtmKindCdSelect", "#dtmReasonCdSelect");  // select form 세팅 (기본세팅 : 연차)
         $('#add').on('click', function() {
             // 현재 세팅된 날짜 가져오기
             let afterStaYmd = $('#startDate').val();
@@ -146,12 +144,6 @@ $(document).ready(() => { // 화면 로드 시 호출
     // (목록수) itemsPerPage Select Box 선택 시 목록 갱신
     $('#itemsPerPage').on('change', function() {
         search();
-    });
-
-    // (검색폼) 초기화 버튼 클릭 시 폼 초기화 후 목록 갱신
-    $('#reset-button').on('click', function() {
-        resetSelect(); // Select2 초기화
-        search(); // 목록 갱신
     });
 
 });

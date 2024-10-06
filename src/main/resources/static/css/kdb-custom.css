@@ -1050,6 +1050,10 @@ mark {
     border: none;
 }
 
+.dtmReg .fc-header-toolbar {
+    margin-bottom: 0.5em !important;
+}
+
 .dtmReg .fc-fade {
     animation: fadeIn 0.5s ease-in-out;
     opacity: 1;
@@ -1277,7 +1281,7 @@ mark {
     display: flex;
     justify-content: center; /* 입력 필드 가로 중앙 정렬 */
     align-items: center; /* 입력 필드 수직 중앙 정렬 */
-    width: 35%; /* 원하는 크기로 설정 */
+    width: 33%; /* 원하는 크기로 설정 */
     max-width: 150px; /* 최대 너비 설정 */
     height: 30px; /* 원하는 크기로 설정 */
 }
@@ -1297,6 +1301,10 @@ mark {
     background-clip: padding-box;
     border: 1px solid #dce7f1;
     border-radius: .25rem;
+}
+
+.date-input input::placeholder {
+    font-size: 0.7rem;
 }
 
 label {
@@ -2129,11 +2137,15 @@ caption {
     color: #7c8db5
 }
 
+.date-input .form-control {
+    height: 30px;
+}
+
 .form-control {
     display: block;
     width: 100%;
-    padding: .375rem .75rem;
-    font-size: 1rem;
+    padding: .3rem .3rem;
+    font-size: 0.9rem;
     font-weight: 400;
     line-height: 1.5;
     color: #607080;
@@ -2145,7 +2157,6 @@ caption {
     border-radius: .25rem;
     transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out
 }
-
 
 .form-control:focus {
     color: #607080;

@@ -148,6 +148,7 @@ public class DtmHistoryController<S extends Session> {
         final String DTMLIST = "dtm/dtmList";
         searchDTO.setEmpId(Long.parseLong(authentication().getName().replace('K', '7')));
 
+        log.warn(searchDTO.toString());
         try {
             // 휴가보유 현황
             final DtmAnnualStatusDTO dtmAnnualStatusDTO = dtmAnnualStatusService.getDtmAnnualStatus(searchDTO.getEmpId());

@@ -91,8 +91,8 @@
                     <div class="card-body">
                         <div class="row mb-3">
                             <div class="col">
-                                <div class="date-input-container mb-2">
-                                    <span class="h6 mb-0 me-3" th:text="${langList['DTM_PERIOD']}"></span>
+                                <div class="date-input-container mb-2 gap-1">
+                                    <span class="h6 mb-0 me-2" th:text="${langList['DTM_PERIOD']}"></span>
                                     <div class="date-input">
                                         <input type="text" id="startDate" name="startDate">
                                     </div>
@@ -134,7 +134,7 @@
                                         </label>
                                     </div>
                                 </div>
-                                <select class="form-control select2" aria-label="DTM Reason Code Select" name="dtmReasonCdSelect" id="dtmReasonCdSelect"></select>
+                                <select class="form-control" aria-label="DTM Reason Code Select" name="dtmReasonCdSelect" id="dtmReasonCdSelect"></select>
                             </div>
                         </div>
                     </div>
@@ -160,7 +160,6 @@
 
     <script src="/js/dtmStatus.js"></script>
     <script src="/js/dateFormat.js"></script>
-    <script src="/js/selectForm.js"></script>
     <script src="/js/disablePastDates.js"></script>
     <script src="/js/utils/progressBar.js"></script>
     <script src="/js/dtmApplSelectForm.js"></script>

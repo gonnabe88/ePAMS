@@ -43,7 +43,7 @@ public class CommonCodeRestController {
      * @implNote 코드유형에 해당하는 코드 목록 조회
      * @since 2024-06-09
      */
-    @GetMapping("/code/{codeKind}")
+    @GetMapping("/code/{codeKind}/")
     public ResponseEntity<List<CommonCodeDTO>> findByCodeKind(@PathVariable("codeKind") String codeKind) throws IOException {
         final List<CommonCodeDTO> dtos = commonCodeService.findByCodeKind(new CommonCodeDTO(codeKind));
         return ResponseEntity.ok(dtos);

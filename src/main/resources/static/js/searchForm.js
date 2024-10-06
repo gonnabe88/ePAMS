@@ -18,8 +18,8 @@ const updatePaginationLinks = () => {
     $('input[name="statCdList"]:checked').each(function() {
         statCdList.push($(this).attr('id'));
     });
-    const dtmReasonCd = $('#list').data('dtmreasoncd') || ''; // 근태유형 (undefined 처리)
-    const dtmKindCd = $('input[name="category"]:checked').val()|| ''; //근태종류 undefined 처리
+    const dtmReasonCd = $('#dtmSearchReasonCdSelect').data('dtmreasoncd') || ''; // 근태유형 (undefined 처리)
+    const dtmKindCd = $('input[name="dtmSearchKindCdSelect"]:checked').val() || ''; //근태종류 undefined 처리
     const staYmdInput = $('#start-input').val(); // 근태기간(시작일)
     const endYmdInput = $('#end-input').val(); // 근태기간(종료일)
     const itemsPerPage = $('#itemsPerPage').val(); // 페이지 아이템수
@@ -61,8 +61,8 @@ const search = () => {
     $('input[name="statCdList"]:checked').each(function() {
         statCdList.push($(this).attr('id'));
     });
-    const dtmReasonCd = $('#list option:selected').val() || ''; // undefined 처리
-    const dtmKindCd = $('input[name="category"]:checked').val()|| ''; // undefined 처리
+    const dtmReasonCd = $('#dtmSearchReasonCdSelect option:selected').val() || ''; // undefined 처리
+    const dtmKindCd = $('input[name="dtmSearchKindCdSelect"]:checked').val()|| ''; // undefined 처리
     const staYmdInput = $('#start-input').val();
     const endYmdInput = $('#end-input').val();
     const itemsPerPage = $('#itemsPerPage').val();

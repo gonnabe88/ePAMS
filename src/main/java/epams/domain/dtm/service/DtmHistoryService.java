@@ -40,10 +40,6 @@ public class DtmHistoryService {
 
 		// MyBatis 쿼리를 통해 데이터 조회
 		final List<DtmCalendarDTO> dtmCalDTOs = dtmHisRepo.findByYears(searchDTO);
-		log.warn("/dtmList/dtmCalendar");
-		for (DtmCalendarDTO dto : dtmCalDTOs) {
-			log.warn(dto.toString());
-		}
 		return dtmCalDTOs;
 	}
 

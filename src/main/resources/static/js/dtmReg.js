@@ -4,8 +4,7 @@ $(document).ready( () => {
     const reasonSelect = document.getElementById('list');
     const startDateInput = document.getElementById('startDate');
     const endDateInput = document.getElementById('endDate');
-
-    dtmApplSelectForm("1A1", "normal");  // select form 세팅 (기본세팅 : 연차)
+    dtmApplSelectForm("1A1", "normal","dtmKindCdSelect", "#dtmReasonCdSelect");  // select form 세팅 (기본세팅 : 연차)
 
     //신청하기 버튼 클릭시
     submitButton.addEventListener('click', function () {
@@ -46,5 +45,7 @@ $(document).ready( () => {
     $('#openDtmStatusModal').on('click', function () {
         $('#dtmStatusModal').modal('show');
     });
+
+
 
 });

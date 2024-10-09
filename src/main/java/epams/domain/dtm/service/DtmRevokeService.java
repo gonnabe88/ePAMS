@@ -24,7 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 
 /***
  * @author 140024
- * @implNote Service
+ * @implNote 근태취소 Service
  * @since 2024-06-09
  */
 @Slf4j
@@ -54,7 +54,7 @@ public class DtmRevokeService {
 	 */
 	private final ElaApplTrCRepository elaApplTrCRepo;
 
-	    /***
+	/***
 	 * @author 140024
 	 * @implNote Repository 객체 생성
 	 * @since 2024-06-09
@@ -159,7 +159,9 @@ public class DtmRevokeService {
 
 			// 신청서 추가 (DTM03 근태취소신청서 / 121 결재중)
 			final ElaApplCDTO elaApplCDTO = new ElaApplCDTO(dtmHisDTO.getEmpId(), "DTM03", "121"); // ElaApplCDTO(신청서) 객체 생성
-			final long applId = elaApplCRepo.insert(elaApplCDTO); // 신청서 추가 후 applId 반환
+
+			// [INSERT] 신청서 추가 후 applId 반환
+			final long applId = elaApplCRepo.insert(elaApplCDTO); 
 
 			// 근태이력 추가 (D 삭제 / DTM_HIS_ID 삭제대상 / 121 결재중)
 			dtmHisDTO.setApplId(applId); // DtmHisDTO(근태신청) 객체에 신청서 ID 설정
@@ -167,9 +169,12 @@ public class DtmRevokeService {
 			dtmHisDTO.setModiType("D");
 			dtmHisDTO.setStatCd("121");
 			dtmHisDTO.setModiReason("ePAMS Test");
-			dtmHisRepo.insert(dtmHisDTO); // 근태신청 추가
 
-			// 신청서결재내역 추가 (201 결재요청)
+			log.warn(dtmHisDTO.toString());
+			// [INSERT] 근태신청 추가
+			dtmHisRepo.insert(dtmHisDTO); 
+
+			// [INSERT] 신청서결재내역 추가 (201 결재요청)
 			final ElaApplTrCDTO elaApplTrCDTO = new ElaApplTrCDTO(dtmHisDTO.getEmpId(), "1", applId, 1, "201"); // ElaApplTrCDTO(신청서결재내역) 객체 생성
 			elaApplTrCRepo.insert(elaApplTrCDTO); // 신청서결재내역 추가
 
@@ -178,27 +183,30 @@ public class DtmRevokeService {
 				dtmHisDTO.getApplId(),
 				dtmHisDTO.getModUserId()
 			); // DtmApplCheckProcDTO(검증) 객체 생성
-			log.warn(dtmApplElaCheckProcDTO.toString());
-			dtmRevokeRepo.callRevokeCheckProc(dtmApplElaCheckProcDTO); // 프로시저 호출
-			log.warn(dtmApplElaCheckProcDTO.getResultMsg());
+
+			// [CALL] 프로시저 호출
+			dtmRevokeRepo.callRevokeCheckProc(dtmApplElaCheckProcDTO);
+
 			// 프로시저 실패 시 예외 처리
 			if ("FAILURE!".equals(dtmApplElaCheckProcDTO.getResultCode())) {
 				throw new CustomGeneralRuntimeException(dtmApplElaCheckProcDTO.getResultMsg());
 			}
 
-			// 신청서 업데이트
+			// [UPDATE] 신청서 업데이트
 			elaApplCDTO.setStatCd("132"); // 결재완료 상태 세팅
 			elaApplCRepo.update(elaApplCDTO); // 결재완료 상태로 업데이트
 			
-			// 근태이력 업데이트
+			log.warn(dtmHisDTO.toString());
+			// [UPDATE] 근태이력 업데이트
 			dtmHisDTO.setStatCd("132"); // 결재완료 상태 세팅
 			dtmHisRepo.updateByApplId(dtmHisDTO); // 결재완료 상태로 업데이트
 			
-			// 신청서결재내역 업데이트
+			// [UPDATE] 신청서결재내역 업데이트
 			elaApplTrCDTO.setApprCd("202"); // 결재완료 상태 세팅
 			elaApplTrCRepo.updateByApplId(elaApplTrCDTO); // 결재완료 상태로 업데이트
 
-			dtmRevokeRepo.callRevokeCheckProc(dtmApplElaCheckProcDTO); // 프로시저 호출
+			// [CALL] 프로시저 호출
+			dtmRevokeRepo.callRevokeCheckProc(dtmApplElaCheckProcDTO); 
 			// 프로시저 실패 시 예외 처리
 			if ("FAILURE!".equals(dtmApplElaCheckProcDTO.getResultCode())) {
 				throw new CustomGeneralRuntimeException(dtmApplElaCheckProcDTO.getResultMsg());

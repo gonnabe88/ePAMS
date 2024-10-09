@@ -9,7 +9,9 @@ $(document).ready( () => {
     //신청하기 버튼 클릭시
     submitButton.addEventListener('click', function () {
 
-        let dtmHisDTOList = []; // 근태 List 객체 생성
+        let revokeDTOList = []; // 근태 취소 List 객체 생성
+        let registDTOList = []; // 근태 신청 List 객체 생성
+
         const startDate = startDateInput.value;
         const endDate = endDateInput.value;
         //const dtmReasonCd = reasonSelect.value;
@@ -27,17 +29,19 @@ $(document).ready( () => {
         } else {
             // DtmHisDTO 객체 생성
             const registDtmHisDTO = {
-                dtmKindCd: dtmKindCd,
-                dtmReasonCd: dtmReasonCd,
-                dtmReasonNm: dtmReasonNm,
+                dtmKindCd: dtmKindCd, // 근태종류
+                dtmReasonCd: dtmReasonCd, // 근태코드
+                dtmReasonNm: dtmReasonNm, // 근태명
+                dtmReason: dtmReasonNm, // 근태사유
                 dtmDispName: dtmReasonNm,
                 staYmd: new Date(startDate).toISOString(),
                 endYmd: new Date(endDate).toISOString()
             };
 
-            console.log(registDtmHisDTO);
-            dtmHisDTOList.push(registDtmHisDTO); // 서버로 전달할 전체 리스트 객체 추가
-            ApplCheck(dtmHisDTOList); // 신청 내역 체크
+            registDTOList.push(registDtmHisDTO); // 서버로 전달할 전체 리스트 객체 추가
+            ApplCheck(revokeDTOList, registDTOList); // 신청 내역 체크
+            revokeDTOList = []; // 근태 취소 List 객체 초기화
+            registDTOList = []; // 근태 신청 List 객체 초기화
         }
     });
 

@@ -3,26 +3,30 @@ $(document).ready(() => { // 화면 로드 시 호출
     // 신청(dtmRegistBtn) 버튼 클릭 시
     $('.dtmRegistBtn').on('click', function () {
 
-        let dtmHisDTOList = []; // 근태 List 객체 생성
+        let revokeDTOList = []; // 근태 취소 List 객체 생성
+        let registDTOList = []; // 근태 신청 List 객체 생성
+
         const staDate = this.getAttribute('data-staDate');
         const dtmKindCd = this.getAttribute('data-dtmKindCd');
-        const dtmReasonCd = this.getAttribute('data-dtmReasonCode');
+        const dtmReasonCd = this.getAttribute('data-dtmReasonCd');
         const dtmReasonNm = this.getAttribute('data-dtmReasonNm');
         const dtmDispName = this.getAttribute('data-dtmDispName');
     
         // [신규] 근태 객체 세팅
         let registDtmHisDTO = {
             dtmKindCd: dtmKindCd, // 근태종류
-            dtmReasonCd: dtmReasonCd, // 근태사유코드
-            dtmReasonNm: dtmReasonNm, // 근태사유
+            dtmReasonCd: dtmReasonCd, // 근태코드
+            dtmReasonNm: dtmReasonNm, // 근태명
+            dtmReason: dtmReasonNm, // 근태사유
             dtmDispName: dtmDispName, // 근태표시이름
             staYmd: new Date(staDate).toISOString(), // 근태시작일 (indexController에서 세팅한 날짜)
             endYmd: new Date(staDate).toISOString() // 근태종료일 (indexController에서 세팅한 날짜)
         };
         
-        dtmHisDTOList.push(registDtmHisDTO); // 서버로 전달할 전체 리스트 객체 추가        
-        ApplCheck(dtmHisDTOList); // 신청 내역 체크
-        dtmHisDTOList = []; // 근태 List 객체 초기화
+        registDTOList.push(registDtmHisDTO); // 서버로 전달할 전체 리스트 객체 추가        
+        ApplCheck(revokeDTOList, registDTOList); // 신청 내역 체크        
+        revokeDTOList = []; // 근태 취소 List 객체 초기화
+        registDTOList = []; // 근태 신청 List 객체 초기화
     });
 
     // 'scrollToSearchDiv' 버튼 클릭 시 scrollToDiv() 함수 호출

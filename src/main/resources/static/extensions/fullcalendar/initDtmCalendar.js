@@ -4,7 +4,11 @@ $(document).ready( () => {
     let selectedDate = null;
 
     // 오늘 날짜를 가져오기
-    const todayYmd = new Date().toISOString().slice(0, 10); // YYYY-MM-DD 형식
+    const todayYmd = new Date().toLocaleDateString('ko-KR', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit'
+    }).replace(/\.\s?/g, '-').replace(/-$/, '');
 
     // 휴일 날짜를 가져오기
     const holidays = calendarEl.getAttribute('data-holiDayList');

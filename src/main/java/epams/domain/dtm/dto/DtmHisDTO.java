@@ -105,13 +105,27 @@ public class DtmHisDTO extends DtmHisVO {
      */
     private String dtmKindNm;
 
+        /***
+     * @author 140024
+     * @implNote 근태시작일(Localdate)
+     * @since 2024-06-09
+     */
+    private LocalDate staDate;
+
+        /***
+     * @author 140024
+     * @implNote 근태종료일(Localdate)
+     * @since 2024-06-09
+     */
+    private LocalDate endDate;
+
     /***
      * @author 140024
      * @implNote 근태시작일자시간
      * @since 2024-09-28
      * @return LocalDateTime
      */
-    /* @TODO 외부 테스트 시 주석 처리(시작)
+    /* @TODO 외부 테스트 시 주석 처리(시작) */
     public LocalDateTime getStartDateTime() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HHmm");
         LocalTime time = LocalTime.parse(super.getStaHm(), formatter);
@@ -123,7 +137,8 @@ public class DtmHisDTO extends DtmHisVO {
         LocalTime time = LocalTime.parse(this.getBaseStaHm(), formatter);
         return LocalDateTime.of(super.getStaYmd().toLocalDate(), time);
     }
-  @TODO 외부 테스트 시 주석 처리(끝) */
+    
+/* @TODO 외부 테스트 시 주석 처리(끝) */
 
     /***
      * @author 140024
@@ -131,7 +146,7 @@ public class DtmHisDTO extends DtmHisVO {
      * @since 2024-09-28
      * @return LocalDateTime
      */
-    /* @TODO 외부 테스트 시 주석 처리(시작)
+    /* @TODO 외부 테스트 시 주석 처리(시작) */
     public LocalDateTime getEndDateTime() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HHmm");
         LocalTime time = LocalTime.parse(super.getEndHm(), formatter);
@@ -143,7 +158,8 @@ public class DtmHisDTO extends DtmHisVO {
         LocalTime time = LocalTime.parse(this.getBaseEndHm(), formatter);
         return LocalDateTime.of(super.getEndYmd().toLocalDate(), time);
     }
-     @TODO 외부 테스트 시 주석 처리(끝) */
+
+    /* @TODO 외부 테스트 시 주석 처리(끝) */
     /***
      * @author 140024
      * @implNote 경과여부 (과거/진행중/예정) 세팅

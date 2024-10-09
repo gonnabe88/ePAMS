@@ -148,16 +148,15 @@ public class DtmHistoryController<S extends Session> {
         final String DTMLIST = "dtm/dtmList";
         searchDTO.setEmpId(Long.parseLong(authentication().getName().replace('K', '7')));
 
-        log.warn(searchDTO.toString());
         try {
             // 휴가보유 현황
             final DtmAnnualStatusDTO dtmAnnualStatusDTO = dtmAnnualStatusService.getDtmAnnualStatus(searchDTO.getEmpId());
             DtmAnnualStatusDTO.removeBracket(dtmAnnualStatusDTO);
+            dtmAnnualStatusDTO.formatter();
             model.addAttribute("dtmAnnualStatus", dtmAnnualStatusDTO);
         } catch (Exception e) {
             final DtmAnnualStatusDTO dtmAnnualStatusDTO = new DtmAnnualStatusDTO();
             model.addAttribute("dtmAnnualStatus", dtmAnnualStatusDTO);
-            log.error("휴가보유 현황 조회 실패", e);
         }
 
         // 언어목록 조회

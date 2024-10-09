@@ -116,11 +116,11 @@ public class DtmRegController<S extends Session> {
             // 휴가보유 현황
             final DtmAnnualStatusDTO dtmAnnualStatusDTO = dtmAnnualStatusService.getDtmAnnualStatus(searchDTO.getEmpId());
             DtmAnnualStatusDTO.removeBracket(dtmAnnualStatusDTO);
+            dtmAnnualStatusDTO.formatter();
             model.addAttribute("dtmAnnualStatus", dtmAnnualStatusDTO);
         } catch (Exception e) {
             final DtmAnnualStatusDTO dtmAnnualStatusDTO = new DtmAnnualStatusDTO();
             model.addAttribute("dtmAnnualStatus", dtmAnnualStatusDTO);
-            log.error("휴가보유 현황 조회 실패", e);
         }
 
         // 휴일목록

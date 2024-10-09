@@ -44,9 +44,11 @@ public class DtmPopupController<S extends Session> {
 
 
     @PostMapping("/dtmApplListPopup")
-    public String dtmListApplPopup(@RequestBody List<DtmHisDTO> dtmHisDTOList, final Model model) {
+    public String dtmListApplPopup(@RequestBody Map<String, List<DtmHisDTO>> dtmHisDTOLists, final Model model) {
 
         final String VIEW = "dtm/dtmApplListPopup";
+        final List<DtmHisDTO> revokeDTOList = dtmHisDTOLists.get("revoke");
+        final List<DtmHisDTO> registDTOList = dtmHisDTOLists.get("regist");
 
         // 기타 필요한 모델 속성 설정
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -55,10 +57,24 @@ public class DtmPopupController<S extends Session> {
         LocalDateTime endDay ;
         String dateRange; 
 
-        final List<DtmHisDTO> revokeDtmHisDTOList = new ArrayList<>();
-        final List<DtmHisDTO> registDtmHisDTOList = new ArrayList<>();
+        for(DtmHisDTO dto : revokeDTOList) {
 
-        for(DtmHisDTO dto : dtmHisDTOList) {
+            // 근태 기간을 깔끔하게 표기하기 위한 작업
+            staDay = dto.getStaYmd();
+            endDay = dto.getEndYmd();
+            if (staDay.isEqual(endDay)) {
+                // 시작일과 종료일이 같은 경우 하나만 표기
+                dateRange = staDay.format(dateFormatter) + "(" + staDay.format(dayOfWeekFormatter) + ")";
+            } else {
+                // 시작일과 종료일이 다른 경우 두 날짜를 ~ 구분자로 표기
+                String formattedStaYmd = staDay.format(dateFormatter) + "(" + staDay.format(dayOfWeekFormatter) + ")";
+                String formattedEndYmd = endDay.format(dateFormatter) + "(" + endDay.format(dayOfWeekFormatter) + ")";
+                dateRange = formattedStaYmd + " ~ " + formattedEndYmd;
+            }
+            dto.setDtmRange(dateRange);        
+        }
+
+        for(DtmHisDTO dto : registDTOList) {
 
             // 근태 기간을 깔끔하게 표기하기 위한 작업
             staDay = dto.getStaYmd();
@@ -73,17 +89,10 @@ public class DtmPopupController<S extends Session> {
                 dateRange = formattedStaYmd + " ~ " + formattedEndYmd;
             }
             dto.setDtmRange(dateRange);
-
-            
-            if ("D".equals(dto.getModiType())) {
-                revokeDtmHisDTOList.add(dto); // 취소 근태인 경우
-            } else {
-                registDtmHisDTOList.add(dto); // 신규 근태인 경우 (취소가 아닌 경우)
-            }
         }
 
-        model.addAttribute("revokeDtmHisDTOList", revokeDtmHisDTOList);
-        model.addAttribute("registDtmHisDTOList", registDtmHisDTOList);
+        model.addAttribute("revokeDTOList", revokeDTOList);
+        model.addAttribute("registDTOList", registDTOList);
 
         return VIEW; // View 이름 반환
     }

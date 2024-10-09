@@ -27,64 +27,71 @@
                 </div>
 
                 <!-- (시작) 사용가능 휴가 현황 Modal -->
-                <div class="modal fade" id="dtmStatusModal" tabindex="-1" aria-labelledby="dtmStatusModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="dtmStatusModalLabel">
-                                    <span th:text="${langList['DTM_STATUS']}"></span>
-                                </h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <!-- Original Content -->
-                                <section class="section">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <table class="table">
-                                                <thead>
-                                                <tr>
-                                                    <th></th>
-                                                    <th>전체</th>
-                                                    <th>사용</th>
-                                                    <th>보유</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr>
-                                                    <td class="h6">연차</td>
-                                                    <td th:text="${dtmAnnualStatus.AnnualDayTotalCnt}">-</td>
-                                                    <td th:text="${dtmAnnualStatus.AnnualDayUsedCnt}">-</td>
-                                                    <td class="h6 text-primary" th:text="${dtmAnnualStatus.AnnualDayNoSaveRemainCnt}">-</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="h6">저축</td>
-                                                    <td th:text="${dtmAnnualStatus.SaveDayTotalCnt}">-</td>
-                                                    <td th:text="${dtmAnnualStatus.SaveDayTotalCnt}">-</td>
-                                                    <td class="h6 text-primary" th:text="${dtmAnnualStatus.ExpSaveDayTotalCnt}">-</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="h6">보상</td>
-                                                    <td th:text="${dtmAnnualStatus.SaveDayTotalCnt}">-</td>
-                                                    <td th:text="${dtmAnnualStatus.SaveDayTotalCnt}">-</td>
-                                                    <td class="h6 text-primary" th:text="${dtmAnnualStatus.ExpSaveDayTotalCnt}">-</td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </section>
-                                <!-- End of Original Content -->
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">
-                                    <span th:text="${langList['CLOSE']}"></span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- (끝) 사용가능 휴가 현황 Modal -->
+							<div class="modal fade" id="dtmStatusModal" tabindex="-1" aria-labelledby="dtmStatusModalLabel" aria-hidden="true">
+								<div class="modal-dialog modal-lg">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title" id="dtmStatusModalLabel">
+												<span th:text="${langList['DTM_STATUS']}"></span>
+											</h5>
+											<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+										</div>
+										<div class="modal-body">
+											<!-- Original Content -->
+											<section class="section">
+												<div class="card">
+													<div class="card-body">
+														<table class="table">
+															<thead>
+																<tr>
+																	<th class="w-20"></th>
+																	<th><h6 class="text-center m-0">전체</h6></th>
+																	<th><h6 class="text-center m-0">사용</h6></th>
+																	<th><h6 class="text-center m-0">보유</h6></th>
+																</tr>
+															</thead>
+															<tbody>
+																<tr>
+																	<td><h6 class="text-center m-0">연차</h6></td>
+																	<td class="text-right" th:text="${dtmAnnualStatus.AnnualDayTotalCnt}">-</td>
+																	<td class="text-right" th:text="${dtmAnnualStatus.AnnualDayUsedCnt}">-</td>
+																	<td class="h6 text-primary text-right" th:text="${dtmAnnualStatus.AnnualDayNoSaveRemainCnt}">-</td>
+																</tr>
+																<tr>
+																	<td><h6 class="text-center m-0">보상</h6></td>
+																	<td class="text-right" th:text="${dtmAnnualStatus.rewardDayTotalStr}+'일'">-</td>
+																	<td class="text-right" th:text="${dtmAnnualStatus.rewartDayUsedStr}+'일'">-</td>
+																	<td class="h6 text-primary text-right" th:text="${dtmAnnualStatus.rewardDayRemainStr}+'일'">-</td>
+																</tr>
+																<tr>
+																	<td><h6 class="text-center m-0">저축<h7 class="text-center">(과거)</h7></h6></td>
+																	<td></td>
+																	<td></td>
+																	<td class="h6 text-primary text-right" th:text="${dtmAnnualStatus.SaveDayTotalStr}+'일'">-</td>
+																</tr>
+																<tr>
+																	<td><h6 class="text-center m-0">저축<h7 class="text-center">(금년)</h7></h6></td>
+																	<td></td>
+																	<td></td>
+																	<td class="h6 text-secondary text-right" th:text="${dtmAnnualStatus.SaveDayTotalStr}+'일'">-</td>
+																</tr>
+															</tbody>
+														</table>
+														
+													</div>
+												</div>
+											</section>
+											<!-- End of Original Content -->
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">
+												<span th:text="${langList['CLOSE']}"></span>
+											</button>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- (끝) 사용가능 휴가 현황 Modal -->
 
                 <!--실제 근태 신청-->
                 <div class="card mb-3">

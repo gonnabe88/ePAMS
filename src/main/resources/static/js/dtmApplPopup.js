@@ -1,5 +1,5 @@
 // [1] 사전검증
-const ApplCheck = (dtmHisDTO) => {
+const ApplCheck = (revokeDTOList, registDTOList) => {
     const header = $('meta[name="_csrf_header"]').attr('content'); // CSRF 헤더
     const token = $('meta[name="_csrf"]').attr('content'); // CSRF 토큰
 
@@ -10,7 +10,10 @@ const ApplCheck = (dtmHisDTO) => {
             'Content-Type': 'application/json',
             [header]: token // CSRF 토큰 헤더 설정
         },
-        data: JSON.stringify(dtmHisDTO), // 전송 DATA
+        data: JSON.stringify({
+            revoke: revokeDTOList,
+            regist: registDTOList
+        }), // 전송 DATA
         success: (data) => { // 성공 (HTTP 상태코드 20X)
 
             if(data.adUseYn){
@@ -28,13 +31,11 @@ const ApplCheck = (dtmHisDTO) => {
                     confirmButtonText: "신청하겠습니다.",
                 }).then((result) => {
                     if(result.isConfirmed) {
-                        console.log("선연차 신청 : ", data.dtmHisDTOList);
-                        ApplListAlertPopup(this, data.dtmHisDTOList);
+                        ApplListAlertPopup(data.revokeDTOList ,data.registDTOList);
                     }
                 });
             } else {
-                console.log("일반연차 신청 : ", data.dtmHisDTOList);
-                ApplListAlertPopup(this, data.dtmHisDTOList);
+                ApplListAlertPopup(data.revokeDTOList, data.registDTOList);
             }
            
         },
@@ -47,7 +48,7 @@ const ApplCheck = (dtmHisDTO) => {
 }
 
 // [2] 근태 신청 팝업
-const ApplListAlertPopup = (element, dtmHisDTO) => {
+const ApplListAlertPopup = (revokeDTOList, registDTOList) => {
     const header = $('meta[name="_csrf_header"]').attr('content'); // CSRF 헤더
     const token = $('meta[name="_csrf"]').attr('content'); // CSRF 토큰
     $.ajax({
@@ -57,7 +58,10 @@ const ApplListAlertPopup = (element, dtmHisDTO) => {
             'Content-Type': 'application/json',
             [header]: token // CSRF 토큰 헤더 설정
         },
-        data: JSON.stringify(dtmHisDTO), // 전송 DATA
+        data: JSON.stringify({
+            revoke: revokeDTOList,
+            regist: registDTOList
+        }), // 전송 DATA
         success: (data) => { // 성공 (HTTP 상태코드 20X)
 
             Swal.fire({
@@ -82,7 +86,6 @@ const ApplListAlertPopup = (element, dtmHisDTO) => {
                 },
                 preConfirm: () => {
                     const isChecked = $('#agreeCheck').is(':checked');
-                    console.log(isChecked);
                     if(!isChecked) {
                         Swal.showValidationMessage('동의 후 진행 가능합니다.');
                         return false;
@@ -92,7 +95,7 @@ const ApplListAlertPopup = (element, dtmHisDTO) => {
             }).then((result) => {
                 if (result.isConfirmed) {
                     // POST 요청 함수 호출
-                    postDtmHisDTO(dtmHisDTO);
+                    postDtmHisDTO(revokeDTOList, registDTOList);
                 }
             });
         },
@@ -106,7 +109,7 @@ const ApplListAlertPopup = (element, dtmHisDTO) => {
 };
 
 // [3] 근태 신청
-const postDtmHisDTO = async (dtmHisDTO) => {
+const postDtmHisDTO = async (revokeDTOList, registDTOList) => {
     const header = $('meta[name="_csrf_header"]').attr('content'); // CSRF 헤더
     const token = $('meta[name="_csrf"]').attr('content'); // CSRF 토큰
 
@@ -124,14 +127,15 @@ const postDtmHisDTO = async (dtmHisDTO) => {
                 'Content-Type': 'application/json',
                 [header]: token // CSRF 토큰 헤더 설정
             },
-            data: JSON.stringify(dtmHisDTO), // 전송 DATA
+            data: JSON.stringify({
+                revoke: revokeDTOList,
+                regist: registDTOList
+            }), // 전송 DATA
             beforeSend: async () => {
                 // 진행률 40%에서 80%까지 증가
                 await controlProgressBar(0, 80);
             },
             success: async (data) => { // 성공 (HTTP 상태코드 20X)
-
-                console.log(data);
 
                 const progressBar = document.getElementById('progressBar');
                 progressBar.classList.add('bg-success'); // 색상 변경
@@ -142,7 +146,7 @@ const postDtmHisDTO = async (dtmHisDTO) => {
 
                 // 신청 완료 팝업
                 popupBtnReHtmlMsg('신청되었습니다.','', 'success', '근태조회', '/dtm/dtmList');
-                console.log('Success:', data);
+                
             },
             error: async (error) => { // 실패 (HTTP 상태코드 40X, 50X)
                 const progressBar = document.getElementById('progressBar');

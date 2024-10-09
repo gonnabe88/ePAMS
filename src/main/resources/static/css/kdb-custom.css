@@ -1,3 +1,15 @@
+.text-right {
+    text-align: end !important;
+}
+
+.w-20 {
+    width: 20% !important;
+}
+
+.w-40 {
+    width: 40% !important;
+}
+
 .close-btn {
     position: absolute;
     top: 10px;
@@ -12,6 +24,9 @@
     padding: 15px;
 }
 
+.dtmModifyModal .swiper-pagination {
+    position: relative;
+}
 .swiper-pagination-bullet-active {
     color : white !important;
     background : #435ebe !important;
@@ -1104,7 +1119,6 @@ mark {
     justify-content: center;
     align-items: center;
     width: 100%;
-    padding: 2px;
 }
 
 .dtmReg .fc-daygrid-day-content {

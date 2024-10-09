@@ -6,6 +6,13 @@
 <mapper namespace="DtmAnnualStatus">
         <!-- TABLE Result Map 정의 -->
         <resultMap id="DtmAnnualStatusDTO" type="dtmAnnualStatusDTO">
+
+                <!-- 보상휴가 사용현황 데이터 추가 (2024-10-07 / K140024) -->
+                <result property="rewardDayTotalCnt" column="OTM_CNV_CNT"/>
+                <result property="rewardDayRemainCnt" column="OTM_CNV_REMAIN_CNT"/>
+                <result property="rewartDayUsedCnt" column="OTM_CNV_USED_CNT"/>
+
+                <!-- 기본 -->
                 <result property="AnnualDayTotalCnt" column="yycnt"/>
                 <result property="AnnualHourTotalCnt" column="hhcnt"/>
                 <result property="AdAnnualDayTotalCnt" column="ad_use_yycnt"/>
@@ -52,7 +59,7 @@
                         , yycnt_used_cnt
                         , HHCNT_USED_CNT 
                         , CASE WHEN SAVE_APPL_YN = 'Y' THEN EXP_CNT
-                                ELSE '(0일)' END AS EXP_CNT
+                                ELSE 0 END AS EXP_CNT
                         , CASE WHEN SAVE_APPL_YN = 'Y' THEN EXP_HHCNT
                                 ELSE '0시간' END AS EXP_HHCNT
                         , '('||TO_CHAR(TRUNC(YYCNT_REMAIN_CNT)
@@ -92,19 +99,23 @@
                         ,'('||FLOOR(4*NVL(YEAR2,0)/(NVL(STD_TIME,8)))/4||'일)' AS YY_YEAR2
                         ,'('||FLOOR(4*NVL(YEAR1,0)/(NVL(STD_TIME,8)))/4||'일)' AS YY_YEAR1
                         , STD_TIME
-                        ,S_YEAR ,N_SAVE_HHCNT
+                        , S_YEAR 
+                        , N_SAVE_HHCNT
+                        , OHR.F_DTM_GET_REMAIN_CNT('01', 7210058, 'KO', 'F1') AS OTM_CNV_CNT
+                        , OHR.F_DTM_GET_REMAIN_CNT('01', 7210058, 'KO', 'F') AS OTM_CNV_REMAIN_CNT
+                        , OHR.F_DTM_GET_REMAIN_CNT('01', 7210058, 'KO', 'F2') AS OTM_CNV_USED_CNT
                 FROM (     
                         SELECT '('||yycnt||'일)' as yycnt
                                 , hhcnt||'시간' as hhcnt
                                 , '('||ad_use_yycnt||'일)' AS ad_use_yycnt 
                                 , ad_use_hhcnt||'시간' AS ad_use_hhcnt
-                                , '('||SAVE_YYCNT||'일)' as SAVE_YYCNT
+                                , SAVE_YYCNT as SAVE_YYCNT
                                 , SAVE_HHCNT||'시간' as SAVE_HHCNT
                                 , '('||yycnt_used_cnt||'일)' AS yycnt_used_cnt
                                 , HHCNT_USED_CNT||'시간' AS HHCNT_USED_CNT
-                                , '('||CASE WHEN TO_CHAR(SYSDATE,'YYYY') = DTM.YY THEN CASE WHEN PROMOTION_YN = 'Y' AND SAVE_YN = 'Y' AND SAVE_APPL_YN ='Y' AND EXP_CNT-yycnt_used_cnt > 0 THEN EXP_CNT-yycnt_used_cnt 
+                                , CASE WHEN TO_CHAR(SYSDATE,'YYYY') = DTM.YY THEN CASE WHEN PROMOTION_YN = 'Y' AND SAVE_YN = 'Y' AND SAVE_APPL_YN ='Y' AND EXP_CNT-yycnt_used_cnt > 0 THEN EXP_CNT-yycnt_used_cnt 
                                                                                         ELSE 0 END 
-                                        ELSE NVL((SELECT SAVE_YYCNT FROM OHR.DTM_SAVE_MGR WHERE YY = DTM.YY AND EMP_ID = DTM.EMP_ID),0) END||'일)'  AS EXP_CNT
+                                        ELSE NVL((SELECT SAVE_YYCNT FROM OHR.DTM_SAVE_MGR WHERE YY = DTM.YY AND EMP_ID = DTM.EMP_ID),0) END AS EXP_CNT
                                 , CASE WHEN TO_CHAR(SYSDATE,'YYYY') = DTM.YY THEN CASE WHEN PROMOTION_YN = 'Y' AND SAVE_YN = 'Y' AND SAVE_APPL_YN ='Y' AND EXP_HHCNT-HHCNT_USED_CNT > 0 THEN EXP_HHCNT-HHCNT_USED_CNT 
                                                                                         ELSE 0 END
                                         ELSE NVL((SELECT SAVE_HHCNT FROM OHR.DTM_SAVE_MGR WHERE YY = DTM.YY AND EMP_ID = DTM.EMP_ID),0) END ||'시간' AS EXP_HHCNT
@@ -232,14 +243,13 @@
                                         , D.YEAR1
                                         , (D.YEAR10+D.YEAR9+D.YEAR8+D.YEAR7+D.YEAR6+D.YEAR5+D.YEAR4+D.YEAR3+D.YEAR2+D.YEAR1) S_YEAR
                                         , F_DTM_WORK_TIME(A.EMP_ID, LEAST(SYSDATE,A.YY||'1231')) AS STD_TIME
-                                        , (SELECT CASE WHEN COUNT(*) > 0 THEN 'Y'
-                                                        ELSE 'N' END
-                                        FROM OHR.DTM_HIS    
-                                        WHERE STA_YMD BETWEEN A.YY||'0101' AND A.YY||'1231'
-                                        AND DTM_STORE_YN = '1'
-                                        AND EMP_ID = A.EMP_ID) AS SAVE_APPL_YN
-                                from OHR.dtm_ym_rest a
-                                        LEFT OUTER JOIN (SELECT MAX(DECODE(YY,TO_CHAR(ADD_MONTHS(SYSDATE,-12),'YYYY'),SAVE_USE_HHCNT - NVL(SHARE_SAVE_HHCNT,0),0)) AS YEAR10
+                                        , (SELECT CASE WHEN COUNT(*) > 0 THEN 'Y' ELSE 'N' END
+                                                FROM OHR.DTM_HIS    
+                                                WHERE STA_YMD BETWEEN A.YY||'0101' AND A.YY||'1231'
+                                                AND DTM_STORE_YN = '1'
+                                                AND EMP_ID = A.EMP_ID) AS SAVE_APPL_YN
+                                        from OHR.dtm_ym_rest a
+                                                LEFT OUTER JOIN (SELECT MAX(DECODE(YY,TO_CHAR(ADD_MONTHS(SYSDATE,-12),'YYYY'),SAVE_USE_HHCNT - NVL(SHARE_SAVE_HHCNT,0),0)) AS YEAR10
                                                                 , MAX(DECODE(YY,TO_CHAR(ADD_MONTHS(SYSDATE,-24),'YYYY'),SAVE_USE_HHCNT - NVL(SHARE_SAVE_HHCNT,0),0)) AS YEAR9
                                                                 , MAX(DECODE(YY,TO_CHAR(ADD_MONTHS(SYSDATE,-36),'YYYY'),SAVE_USE_HHCNT - NVL(SHARE_SAVE_HHCNT,0),0)) AS YEAR8
                                                                 , MAX(DECODE(YY,TO_CHAR(ADD_MONTHS(SYSDATE,-48),'YYYY'),SAVE_USE_HHCNT - NVL(SHARE_SAVE_HHCNT,0),0)) AS YEAR7

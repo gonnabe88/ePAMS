@@ -5,9 +5,6 @@ $(document).ready( () => {
     var calendarEl = document.getElementById('calender');
     var selectedDates = [];
 
-    // 오늘 날짜를 가져오기
-    const todayYmd = new Date().toISOString().slice(0, 10); // YYYY-MM-DD 형식
-
     // 휴일 날짜를 가져오기
     const holidays = calendarEl.getAttribute('data-holiDayList');
 
@@ -43,7 +40,6 @@ $(document).ready( () => {
             };
             events.push(eventClone);
         }
-        console.log(events);
         return events;
     }
 
@@ -64,8 +60,15 @@ $(document).ready( () => {
     });
 
     // 페이지 로드 시 날짜 입력 필드에 오늘 날짜 설정
-    var today=new Date()
+    var today=new Date();
     updateDates(today, today);
+    
+    // 오늘 날짜 YYYY-MM-DD (그냥 toISOString 시 UTC+0 기준으로 바뀜)
+    const todayYmd = today.toLocaleDateString('ko-KR', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit'
+    }).replace(/\.\s?/g, '-').replace(/-$/, '');
 
     calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth',
@@ -93,7 +96,7 @@ $(document).ready( () => {
             calendarContainer.classList.add('fc-fade');
             setTimeout(() => {
                 calendarContainer.classList.remove('fc-fade'); // fadeIn 완료 후 클래스 제거
-                let cell = document.querySelector(`[data-date='${today.toISOString().split('T')[0]}']`);
+                let cell = document.querySelector(`[data-date='${todayYmd}']`);
                 if (cell) {
                     cell.classList.add('selected-single-day'); // 오늘 날짜에 클래스 추가
                 }
@@ -116,10 +119,6 @@ $(document).ready( () => {
             // 휴일 목록에 있는 날짜에 대해 스타일 적용 (danger #dc3545)
             if (holidays.includes(dateStr)) {
                 info.el.style.setProperty('color', '#dc3545'); // 휴일 글씨색 적용 (일요일처럼)
-            }
-            // 오늘 날짜가 달력에 표시될 때 자동으로 선택 스타일 추가
-            if (info.dateStr === todayYmd) {
-                info.el.classList.add('selected-date');
             }
         },
         dayCellContent: function (arg) {

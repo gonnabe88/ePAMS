@@ -9,7 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 
 /***
  * @author 140024
- * @implNote 근태별 시작/종료 시간을 가져오는 레파지토리
+ * @implNote 근태 기타코드레파지토리
  * @since 2024-09-13
  */
 @Slf4j
@@ -31,7 +31,9 @@ public class DtmEtcRepository {
      * @param dto DtmHisDTO
      */
     public void findDtmPeriod(final DtmHisDTO dto) {
+        log.warn(dto.toString());
     	final DtmHisDTO res = sql.selectOne("DtmEtc.findDtmPeriod", dto);
+        log.warn(res.toString());
         if(res != null) {
             dto.setDtmCross(res.getDtmCross());
             dto.setStaHm(res.getStaHm());

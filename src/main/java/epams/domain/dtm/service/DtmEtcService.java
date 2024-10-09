@@ -3,10 +3,7 @@ package epams.domain.dtm.service;
 import org.springframework.stereotype.Service;
 
 import epams.domain.dtm.dto.DtmHisDTO;
-import epams.domain.dtm.dto.DtmPromotionDTO;
 import epams.domain.dtm.repository.DtmEtcRepository;
-import epams.domain.dtm.repository.DtmPromotionRepository;
-import epams.domain.dtm.repository.DtmSaveRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
@@ -33,11 +30,10 @@ public class DtmEtcService {
 	 * @author 140024
 	 * @implNote 근태시간 체크
 	 * @since 2024-09-11
-	 * @param empId 행번(7140024)
+	 * @param empId   행번(7140024)
 	 * @param stdYear 기준년도(2024)
 	 */
 	public void findDtmPeriod(final DtmHisDTO dto) {
-		dtmEtcRepo.findDtmPeriod(dto); //dtm010_23_03_p_01
-		log.warn(dto.toString());
+		dtmEtcRepo.findDtmPeriod(dto); // dtm010_23_03_p_01
 	}
 }

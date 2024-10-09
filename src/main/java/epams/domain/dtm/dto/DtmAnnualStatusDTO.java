@@ -1,6 +1,7 @@
 package epams.domain.dtm.dto;
 
 import java.lang.reflect.Field;
+import java.text.DecimalFormat;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,6 +22,31 @@ import lombok.extern.slf4j.Slf4j;
 @NoArgsConstructor
 @Data
 public class DtmAnnualStatusDTO {
+
+
+    /***
+     * @author 140024
+     * @implNote 보상휴가 발생일수 (OHR.F_DTM_GET_REMAIN_CNT('01', 7210058, 'KO', 'F1'))
+     * @since 2024-09-11
+     */
+    private float rewardDayTotalCnt;
+    private String rewardDayTotalStr;
+
+    /***
+     * @author 140024
+     * @implNote 보상휴가 잔여일수 (OHR.F_DTM_GET_REMAIN_CNT('01', 7210058, 'KO', 'F'))
+     * @since 2024-09-11
+     */
+    private float rewardDayRemainCnt; 
+    private String rewardDayRemainStr; 
+
+    /***
+     * @author 140024
+     * @implNote 보상휴가 사용일수 (OHR.F_DTM_GET_REMAIN_CNT('01', 7210058, 'KO', 'F2'))
+     * @since 2024-09-11
+     */
+    private float rewartDayUsedCnt; 
+    private String rewartDayUsedStr; 
 
     /***
      * @author 140024
@@ -52,10 +78,26 @@ public class DtmAnnualStatusDTO {
 
     /***
      * @author 140024
+     * @implNote 연차저축예외일수(EXP_CNT)
+     * @since 2024-09-11
+     */
+    private float ExpSaveDayTotalCnt;
+    private String ExpSaveDayTotalStr;
+
+    /***
+     * @author 140024
+     * @implNote 연차저축예외시간(EXP_HHCNT)
+     * @since 2024-09-11
+     */
+    private String ExpSaveHourTotalCnt;
+
+    /***
+     * @author 140024
      * @implNote 연차저축일수(SAVE_YYCNT)
      * @since 2024-09-11
      */
-    private String SaveDayTotalCnt;
+    private float SaveDayTotalCnt;
+    private String SaveDayTotalStr;
 
     /***
      * @author 140024
@@ -207,20 +249,6 @@ public class DtmAnnualStatusDTO {
 
     /***
      * @author 140024
-     * @implNote 연차저축예외일수(EXP_CNT)
-     * @since 2024-09-11
-     */
-    private String ExpSaveDayTotalCnt;
-
-    /***
-     * @author 140024
-     * @implNote 연차저축예외시간(EXP_HHCNT)
-     * @since 2024-09-11
-     */
-    private String ExpSaveHourTotalCnt;
-
-    /***
-     * @author 140024
      * @implNote 사용 예정 연차잔여일수(AF_YYCNT_USED_CNT)
      * @since 2024-09-11
      */
@@ -286,5 +314,21 @@ public class DtmAnnualStatusDTO {
                 }
             }
         }
+    }
+
+    /***
+     * @author 140024
+     * @implNote 실수형을 보기 좋게 변환 (0.0 > 0, 3.20 > 3.2 등)
+     * @since 2024-09-11
+     */
+    public void formatter() {
+        DecimalFormat decimalFormat = new DecimalFormat("#.##");
+
+        this.rewardDayTotalStr = decimalFormat.format(this.rewardDayTotalCnt);
+        this.rewardDayRemainStr = decimalFormat.format(this.rewardDayRemainCnt);
+        this.rewartDayUsedStr = decimalFormat.format(this.rewartDayUsedCnt);
+
+        this.SaveDayTotalStr = decimalFormat.format(this.SaveDayTotalCnt);
+        this.ExpSaveDayTotalStr = decimalFormat.format(this.ExpSaveDayTotalCnt);
     }
 }

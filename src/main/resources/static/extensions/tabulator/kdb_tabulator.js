@@ -43,6 +43,10 @@ function createTable(selectableRange, columns, url) {
 
     table = new Tabulator("#example-table", {
         ajaxURL: url,
+        ajaxResponse: function(url, params, response) {
+            console.log("Server response:", response); // 서버 응답 로그
+            return response; // 서버에서 받은 데이터를 그대로 반환
+        },
         height: "900px",
         layout: "fitColumns",
         placeholder: "No Data Set",
@@ -53,8 +57,8 @@ function createTable(selectableRange, columns, url) {
         paginationCounter: "rows",
 
         resizableRows: true,
-        resizableRowGuide: true,
-        resizableColumnGuid: true,
+        //resizableRowGuide: true,
+        //resizableColumnGuid: true,
 
         //enable range selection
         selectableRange: selectableRange,
@@ -251,7 +255,7 @@ function createTable(selectableRange, columns, url) {
     document.getElementById("toggle-selectable").addEventListener("click", function () {
         var currentSetting = table.options.selectableRange;
         table.destroy();
-        createTable(!currentSetting, window.columns, window.url);
+        createTable(!currentSetting, window.tabulator.columns, window.tabulator.url);
     });
 
     // CSV 다운로드 기능

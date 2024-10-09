@@ -61,13 +61,6 @@ public class AdminRestController {
     @GetMapping("/member")
     public ResponseEntity<List<IamUserDTO>> searchAllMember(final Model model) throws IOException {
         final List<IamUserDTO> memberList = memberService2.findAll();
-        final Map<String, Object> data = new ConcurrentHashMap<>();
-        data.put("data", memberList);
-
-        // 마지막 페이지 및 데이터 설정
-        final Map<String, Object> response = new ConcurrentHashMap<>();
-        //response.put("last_page", 10);
-        response.put("data", memberList);
 
         return ResponseEntity.ok(memberList);
     }

@@ -1,70 +1,68 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" layout:decorate="~{common/layout/layout}">
+<html layout:decorate="~{common/layout/layout}" xmlns="http://www.w3.org/1999/html" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.thymeleaf.org" xmlns:th="http://www.thymeleaf.org">
 <head></head>
 <body>
 <div layout:fragment="contents">
     <div class="loginManager">
-        <div class="container">
-            <div class="main-content d-flex justify-content-center">
-                <div class="row col-lg-10 col-md-12 d-flex justify-content-center">
+        <div class="main-content col-lg-10 offset-lg-1 d-flex justify-content-center">
 
-                    <!-- 페이지 제목 시작 -->
-                    <div class="page-heading">
-                        <div class="d-flex justify-content-between align-items-end">
-                            <div class="align-middle">
-                                <h2><i class="bi bi-file-lock2-fill"></i> <span>인증관리</span></h2>
-                            </div>
-                        </div>
+            <!-- 페이지 제목 시작 -->
+            <div class="page-heading">
+                <div class="d-flex justify-content-between align-items-end">
+                    <div class="align-middle">
+                        <h2><i class="bi bi-file-lock2-fill"></i> <span>인증관리</span></h2>
                     </div>
-                    <!-- 페이지 제목 끝 -->
+                </div>
+            </div>
+            <!-- 페이지 제목 끝 -->
 
-                    <!-- 간편인증 시작 -->
-                    <div class="card">
-                        <div class="card-header">
+            <!-- 간편인증 시작 -->
+            <div class="col-lg-3">
+            <div class="card">
+                <div class="card-header">
                             <span th:if="${webauthnYn}">
 								<div class="d-flex gap-3 align-items-center mb-3">
 									<h5 class="m-0">간편인증</h5>
 									<span class="badge bg-success">사용중</span>
 								</div>
 							</span>
-                            <span class="" th:if="${!webauthnYn}">
+                    <span class="" th:if="${!webauthnYn}">
 								<div class="d-flex gap-3 align-items-center mb-3">
 									<h5 class="m-0">간편인증</h5>
 									<span class="badge bg-danger">미등록</span>
 								</div>
 							</span>
-                            <div class="d-flex gap-3 align-items-center mb-3">
+                    <div class="d-flex gap-3 align-items-center mb-3">
 								<span class="" th:if="${webauthnYn}">
 									<div class="webauthnImage">
-										<img src="/images/webauthn/FIDO_Passkey_mark_A.jpg" alt="FIDO Passkey" class="img-thumbnail">
+										<img alt="FIDO Passkey" class="img-thumbnail" src="/images/webauthn/FIDO_Passkey_mark_A.jpg">
 										<span class="bottom-left-text" th:text="'등록일 : '+${#temporals.format(webauthnRegDate, 'yyyy-MM-dd HH:mm:ss')}"></span>
 									</div>
 								</span>
-								<span class="" th:if="${!webauthnYn}">
+                        <span class="" th:if="${!webauthnYn}">
 									<div class="noWebauthnImage">
-										<img src="/images/webauthn/FIDO_Passkey_mark_A_gray.jpg" alt="FIDO Passkey" class="img-thumbnail">
+										<img alt="FIDO Passkey" class="img-thumbnail" src="/images/webauthn/FIDO_Passkey_mark_A_gray.jpg">
 										<span class="bottom-left-text">미등록</span>
 									</div>
 								</span>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="d-flex justify-content-end">
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="d-flex justify-content-end">
 									<span th:if="${webauthnYn}">
 										<button class="btn btn-danger btn-sm" id="webauthnRevokeBtn">해제</button>
 									</span>
-                                    <span th:if="!${webauthnYn}">
+                            <span th:if="!${webauthnYn}">
 										<button class="btn btn-primary btn-sm" id="webauthnRegBtn">등록</button>
 									</span>
-                                </div>
-                            </div>
                         </div>
                     </div>
-                    <!-- 간편인증 끝 -->
-
                 </div>
             </div>
+            </div>
+            <!-- 간편인증 끝 -->
+
         </div>
     </div>
 </div>

@@ -252,7 +252,7 @@ $(document).ready( () => {
             `;
             }).join('');
         } else {
-            eventContainer.innerHTML = '<span class="h7">해당일은 근태가 없습니다.</span>';
+            eventContainer.innerHTML = '<span class="h7 ms-3">해당일은 근태가 없습니다.</span>';
         }
     }
 });

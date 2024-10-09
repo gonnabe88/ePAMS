@@ -1,5 +1,6 @@
-window.url = "/api/admin/viewlog"
-window.columns = [
+window.tabulator = window.tabulator || {}; // 네임스페이스 생성
+window.tabulator.url = "/api/admin/viewlog"
+window.tabulator.columns = [
     { title: "호출시간", field: "createdTime", sorter: "string", minWidth: 100 },
     { title: "요청URL", field: "requestUrl", sorter: "string", minWidth: 100 },
     { title: "사용자IP", field: "clientIp", sorter: "string" },
@@ -9,5 +10,5 @@ window.columns = [
 ]
 
 document.addEventListener("DOMContentLoaded", function() {
-    createTable(false, window.columns, window.url);
+    createTable(false, window.tabulator.columns, window.tabulator.url);
 });

@@ -1,225 +1,166 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.thymeleaf.org" layout:decorate="~{common/layout/layout}">
+<html layout:decorate="~{common/layout/layout}" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.thymeleaf.org" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-<!-- (start) private script -->
-<th:block layout:fragment="css">
-	<link rel="stylesheet" href="/extensions/tabulator/tabulator_modern.min.css">
-	<link rel="stylesheet" href="/extensions/tabulator/kdb_tabulator.css">
-	<style>
-		/* CSS 코드 */
-		.org-closed {
-			display: none;
-			padding-inline-start: 5px;
-		}
-
-		.org {
-			padding-inline-start: 5px;
-		}
-
-		.org-item.has-sub > a::after {
-			padding-inline-start: 5px;
-			content: "\25BC"; /* 화살표 아이콘 (아래 방향) */
-			float: right;
-			margin-left: 5px;
-		}
-
-		.org-item.has-sub.open > a::after {
-			padding-inline-start: 5px;
-			content: "\25B2"; /* 화살표 아이콘 (위 방향) */
-		}
-
-		.org-item.has-sub .org {
-			display: none;
-			padding-inline-start: 5px;
-			animation: slideDown 0.5s forwards;
-		}
-
-		.org-item.has-sub.open .org {
-			display: block;
-			padding-inline-start: 5px;
-			animation: slideDown 0.5s forwards;
-		}
-
-		@keyframes slideDown {
-			from {
-				max-height: 0;
-				opacity: 0;
-			}
-			to {
-				max-height: 500px; /* 원하는 최대 높이로 설정 */
-				opacity: 1;
-			}
-		}
-
-		ul.orghead, ul.orghead li {
-			/* Marker 안보이게 수정 */
-			list-style-type: none;
-			padding-inline-start: 5px;
-		}
-
-		.org-item a::marker {
-			/* Marker 안보이게 수정 */
-			content: "";
-		}
-
-	</style>
-</th:block>
-<!-- (end) private script -->
+    <!-- (start) private script -->
+    <th:block layout:fragment="css">
+        <link href="/extensions/tabulator/tabulator_modern.min.css" rel="stylesheet">
+        <link href="/extensions/tabulator/kdb_tabulator.css" rel="stylesheet">
+        <style>
+        </style>
+    </th:block>
+    <!-- (end) private script -->
 </head>
 
 <body>
-	<div layout:fragment="contents">
-		<div id="main-content">
-			<div class="d-flex justify-content-center">
-				<div class="row col-lg-10 col-md-12 d-flex justify-content-center">
-					<div class="page-heading">
-						<div class="align-middle">
-							<h2>
-								<i class="bi bi-bell-fill"></i> 역할관리
-							</h2>
-							<br>
-							<div class="d-flex flex-wrap gap-2 justify-content-start align-items-center mb-3">
-								<div class="col-auto">
-									<input class="form-control form-control-sm" type="text" id="search-input" placeholder="검색">
-								</div>
-								<button class="btn btn-primary btn-sm" id="search-button">조회</button>
-								<button class="btn btn-primary btn-sm" id="reset-button">초기화</button>
-								<div class="form-check form-switch">
-									<input class="form-check-input" type="checkbox" role="switch" id="toggle-selectable"> <label class="form-check-label" for="flexSwitchCheckDefault">범위선택</label>
-								</div>
-							</div>
-							
-							<div class="d-flex flex-wrap justify-content-end gap-2 mb-3">
-								<div class="custom-file-input-wrapper">
-									<input class="form-control form-control-sm" id="formFileSm" type="file">
-								</div>
-								<button class="btn btn-primary btn-sm" id="upload-csv">업로드</button>
-								<button class="btn btn-primary btn-sm" id="download-csv">다운로드</button>
-							</div>
-							
-							<div class="d-flex flex-wrap justify-content-end gap-2 mb-3">
-								<button class="btn btn-primary btn-sm" id="reload">새로고침</button>
-								<button class="btn btn-primary btn-sm" id="add-row">행추가</button>
-								<button class="btn btn-primary btn-sm" id="del-row">삭제</button>
-								<button class="btn btn-primary btn-sm" id="save">저장</button>
-							</div>
-							<div class="d-flex justify-content-center">
-								<div class="no-drag" id="example-table"></div>
-							</div>
+<div layout:fragment="contents">
+    <div id="role">
+        <div class="main-content col-lg-10 offset-lg-1 d-flex justify-content-center">
+
+            <div class="page-heading">
+                <div class="align-middle">
+                    <h2>
+                        <i class="bi bi-bell-fill"></i> 역할관리 </h2>                            <br>
+                    <div class="d-flex flex-wrap gap-2 justify-content-start align-items-center mb-3">
+                        <div class="col-auto">
+                            <input class="form-control form-control-sm" id="search-input" placeholder="검색" type="text">
+                        </div>
+                        <button class="btn btn-primary btn-sm" id="search-button">조회</button>
+                        <button class="btn btn-primary btn-sm" id="reset-button">초기화</button>
+						<div class="form-check form-switch d-flex align-items-center">
+							<input class="form-check-input ms-0 me-2" id="toggle-selectable" role="switch" type="checkbox">
+							<label class="form-check-label m-0" for="toggle-selectable">범위선택</label>
 						</div>
+                    </div>
 
-					</div>
-				</div>
-			</div>
-		</div>
+                    <div class="d-flex flex-wrap justify-content-end gap-2 mb-3">
+                        <div class="custom-file-input-wrapper">
+                            <input class="form-control form-control-sm" id="formFileSm" type="file">
+                        </div>
+                        <button class="btn btn-primary btn-sm" id="upload-csv">업로드</button>
+                        <button class="btn btn-primary btn-sm" id="download-csv">다운로드</button>
+                    </div>
 
-		<!-- Modal for user search -->
-		<div class="modal fade" id="userSearchModal" tabindex="-1" role="dialog" aria-labelledby="userSearchModalLabel" aria-hidden="true">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="userSearchModalLabel">사용자 검색</h5>
-						<button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<div class="modal-body">
-						<div class="row">
-							<div class="col-6">
-								<ul class="orghead">
-									<li class="org-item has-sub">
-										<a href="#" class="org-link">
-											<i class="bi bi-collection-fill"></i>
-											<span>수석부행장</span>
-										</a>
-										<ul class="org org-closed">
-											<li class="org-item has-sub">
-												<a href="extra-component-avatar.html" class="org-link">리스크관리부문</a>
-												<ul class="org org-closed">
-													<li class="org-item has-sub">
-														<a href="extra-component-avatar.html" class="org-link">리스크관리본부</a>
-														<ul class="org org-closed">
-															<li class="org-item">
-																<a href="extra-component-avatar.html" class="org-link">리스크관리팀</a>
-															</li>
-														</ul>
-													</li>
-													<li class="org-item has-sub">
-														<a href="extra-component-avatar.html" class="org-link">IDT본부</a>
-														<ul class="org org-closed">
-															<li class="org-item">
-																<a href="extra-component-avatar.html" class="org-link">IT기획부</a>
-															</li>
-															<li class="org-item">
-																<a href="extra-component-avatar.html" class="org-link">디지털금융부</a>
-															</li>
-															<li class="org-item">
-																<a href="extra-component-avatar.html" class="org-link">코어금융부</a>
-															</li>
-														</ul>
-													</li>
-												</ul>
-											</li>
-											<li class="org-item has-sub">
-												<a href="extra-component-comment.html" class="org-link">경영관리부문</a>
-												<ul class="org org-closed">
-													<li class="org-item has-sub">
-														<a href="extra-component-avatar.html" class="org-link">리스크관리본부</a>
-														<ul class="org org-closed">
-															<li class="org-item">
-																<a href="extra-component-avatar.html" class="org-link">리스크관리팀</a>
-															</li>
-														</ul>
-													</li>
-													<li class="org-item has-sub">
-														<a href="extra-component-avatar.html" class="org-link">IDT본부</a>
-														<ul class="org org-closed">
-															<li class="org-item">
-																<a href="extra-component-avatar.html" class="org-link">IT기획부</a>
-															</li>
-															<li class="org-item">
-																<a href="extra-component-avatar.html" class="org-link">디지털금융부</a>
-															</li>
-															<li class="org-item">
-																<a href="extra-component-avatar.html" class="org-link">코어금융부</a>
-															</li>
-														</ul>
-													</li>
-												</ul>
-											</li>
-										</ul>
-									</li>
-								</ul>
-							</div>
-							<div class="col-6">
-								<input type="text" id="searchUserInput" class="form-control" placeholder="Search user...">
-								<ul id="userSearchResults" class="list-group mt-3">
-									<!-- Results will be appended here -->
-								</ul>
-							</div>
-						</div>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+                    <div class="d-flex flex-wrap justify-content-end gap-2 mb-3">
+                        <button class="btn btn-primary btn-sm" id="reload">새로고침</button>
+                        <button class="btn btn-primary btn-sm" id="add-row">행추가</button>
+                        <button class="btn btn-primary btn-sm" id="del-row">삭제</button>
+                        <button class="btn btn-primary btn-sm" id="save">저장</button>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <div class="no-drag" id="example-table"></div>
+                    </div>
+                </div>
 
+            </div>
+        </div>
+    </div>
+</div>
 
-	<!-- (start) private script -->
-	<th:block layout:fragment="script">
-		<script src="/extensions/tabulator/tabulator.min.js"></script>
-		<script src="/extensions/papaparse/papaparse.min.js"></script>
-		<script src="/extensions/luxon/luxon.js"></script>
-		<script src="/extensions/tabulator/kdb_tabulator.js"></script>
-		<script src="/extensions/tabulator/kdb_tabulator_membersearch.js"></script>
-		<script src="/js/role.js"></script>
-	</th:block>
+<!-- Modal for user search -->
+<div aria-hidden="true" aria-labelledby="userSearchModalLabel" class="modal fade" id="userSearchModal" role="dialog" tabindex="-1">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="userSearchModalLabel">사용자 검색</h5>
+                <button aria-label="Close" class="close" data-bs-dismiss="modal" type="button">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-6">
+                        <ul class="orghead">
+                            <li class="org-item has-sub">
+                                <a class="org-link" href="#">
+                                    <i class="bi bi-collection-fill"></i>
+                                    <span>수석부행장</span>
+                                </a>
+                                <ul class="org org-closed">
+                                    <li class="org-item has-sub">
+                                        <a class="org-link" href="extra-component-avatar.html">리스크관리부문</a>
+                                        <ul class="org org-closed">
+                                            <li class="org-item has-sub">
+                                                <a class="org-link" href="extra-component-avatar.html">리스크관리본부</a>
+                                                <ul class="org org-closed">
+                                                    <li class="org-item">
+                                                        <a class="org-link" href="extra-component-avatar.html">리스크관리팀</a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="org-item has-sub">
+                                                <a class="org-link" href="extra-component-avatar.html">IDT본부</a>
+                                                <ul class="org org-closed">
+                                                    <li class="org-item">
+                                                        <a class="org-link" href="extra-component-avatar.html">IT기획부</a>
+                                                    </li>
+                                                    <li class="org-item">
+                                                        <a class="org-link" href="extra-component-avatar.html">디지털금융부</a>
+                                                    </li>
+                                                    <li class="org-item">
+                                                        <a class="org-link" href="extra-component-avatar.html">코어금융부</a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="org-item has-sub">
+                                        <a class="org-link" href="extra-component-comment.html">경영관리부문</a>
+                                        <ul class="org org-closed">
+                                            <li class="org-item has-sub">
+                                                <a class="org-link" href="extra-component-avatar.html">리스크관리본부</a>
+                                                <ul class="org org-closed">
+                                                    <li class="org-item">
+                                                        <a class="org-link" href="extra-component-avatar.html">리스크관리팀</a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="org-item has-sub">
+                                                <a class="org-link" href="extra-component-avatar.html">IDT본부</a>
+                                                <ul class="org org-closed">
+                                                    <li class="org-item">
+                                                        <a class="org-link" href="extra-component-avatar.html">IT기획부</a>
+                                                    </li>
+                                                    <li class="org-item">
+                                                        <a class="org-link" href="extra-component-avatar.html">디지털금융부</a>
+                                                    </li>
+                                                    <li class="org-item">
+                                                        <a class="org-link" href="extra-component-avatar.html">코어금융부</a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-6">
+                        <input class="form-control" id="searchUserInput" placeholder="Search user..." type="text">
+                        <ul class="list-group mt-3" id="userSearchResults">
+                            <!-- Results will be appended here -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
-	<!-- (end) private script -->
+<!-- (start) private script -->
+<th:block layout:fragment="script">
+    <script src="/extensions/tabulator/tabulator.min.js"></script>
+    <script src="/extensions/papaparse/papaparse.min.js"></script>
+    <script src="/extensions/luxon/luxon.js"></script>
+    <script src="/extensions/tabulator/kdb_tabulator.js"></script>
+    <script src="/extensions/tabulator/kdb_tabulator_membersearch.js"></script>
+    <script src="/js/role.js"></script>
+</th:block>
+
+<!-- (end) private script -->
 </body>
 
 </html>

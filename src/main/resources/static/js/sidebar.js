@@ -120,25 +120,10 @@ class Sidebar {
         let startX = 0; // 드래그 시작 위치
         let endX = 0; // 드래그 종료 위치
 
+
+
         const noDragElement = document.querySelector('.no-drag');
 
-        // PC에서 마우스 클릭 시작 이벤트 (드래그)
-        $(document).on("mousedown", (event) => {
-            if (noDragElement && noDragElement.contains(event.target)) return;
-            startX = event.pageX; // 마우스 드래그 시작 위치 저장
-            endX = 0; // 드래그 시작 시 endX 초기화
-        });
-
-        // PC에서 마우스 클릭 종료 이벤트 (드래그)
-        $(document).on("mouseup", (event) => {
-            if (noDragElement && noDragElement.contains(event.target)) return;
-            endX = event.pageX; // 마우스 드래그 끝 위치 저장
-            if ((window.innerWidth < DESKTOP_SIZE) && (startX + 100 < endX)) {
-                this.show(); // 오른쪽으로 드래그된 경우
-            } else if ((window.innerWidth < DESKTOP_SIZE) && (startX > endX + 100)) {
-                this.hide(); // 왼쪽으로 드래그된 경우
-            }
-        });
 
         // 모바일 터치 시작 이벤트 (스와이프)
         $(document).on("touchstart", (event) => {
@@ -160,6 +145,7 @@ class Sidebar {
 
         // 햄버거 버튼 및 사이드바 숨김 버튼 클릭 이벤트 등록
         $(".burger-btn, .sidebar-hide").on("click", this.toggle.bind(this));
+
         // 창 크기 변경 이벤트 등록
         $(window).on("resize", this.onResize.bind(this));
 
@@ -281,9 +267,11 @@ const initializeSidebar = (element) => {
     if (!element) return; // 요소가 존재하지 않으면 종료
 
     if (window.innerWidth > DESKTOP_SIZE) {
-        element.classList.add("inactive", "sidebar-desktop"); // 데스크톱 모드 설정
+        // 데스크톱에서도 기본적으로 사이드바를 보이게 처리
+        element.classList.add("sidebar-desktop"); // 데스크톱 모드 설정
+        // 사이드바를 항상 보이도록 설정
+        element.classList.add("active");
     }
-
     // 추가적인 초기화 코드 필요시 추가
 };
 

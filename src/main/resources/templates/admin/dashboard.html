@@ -1,22 +1,21 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:sec="http://www.thymeleaf.org" layout:decorate="~{common/layout/layout}">
+<html layout:decorate="~{common/layout/layout}" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.thymeleaf.org" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <!-- (start) private script -->
     <th:block layout:fragment="css">
-        <link rel="stylesheet" href="/extensions/apexcharts/apexcharts.css">
+        <link href="/extensions/apexcharts/apexcharts.css" rel="stylesheet">
     </th:block>
     <!-- (end) private script -->
 </head>
 
 <body>
 <div layout:fragment="contents">
-    <div class="container">
-        <div id="main-content">
+    <div id="dashboard">
+        <div class="main-content col-lg-10 offset-lg-1 d-flex justify-content-center">
+
             <h2>
-                <i class="bi bi-bell-fill"></i> 대시보드
-            </h2>
+                <i class="bi bi-bell-fill"></i> 대시보드 </h2>
             <div class="row">
                 <div class="col-md-6">
                     <div class="card">
@@ -68,7 +67,7 @@
 
 <!-- (start) private script -->
 <th:block layout:fragment="script">
-    <script src="/extensions/apexcharts/apexcharts.js" ></script>
+    <script src="/extensions/apexcharts/apexcharts.js"></script>
     <script src="/js/dashboard.js"></script>
 </th:block>
 <!-- (end) private script -->

@@ -40,7 +40,30 @@ $(document).ready(function () {
                     show: false
                 }
             },
-            colors: ['#2d8cda', '#c96363'],
+            colors: undefined,
+            legend: {
+                show: true,
+                position: 'bottom',
+                horizontalAlign: 'center',
+                fontSize: '14px',
+                fontFamily: 'Nanum Gothic',
+                markers: {
+                    size: 10, // 마커 크기를 설정
+                    shape: 'circle', // 마커 모양을 원형으로 설정
+                    fillColors: undefined, // 시리즈 색상을 자동으로 적용
+                    strokeWidth: 0, // 마커의 외곽선 두께를 설정 (0으로 설정해 외곽선 없음)
+                },
+                itemMargin: {
+                    horizontal: 5,
+                    vertical: 0
+                },
+                onItemClick: {
+                    toggleDataSeries: true
+                },
+                onItemHover: {
+                    highlightDataSeries: true
+                }
+            },
             dataLabels: {
                 enabled: true,
             },
@@ -108,7 +131,33 @@ $(document).ready(function () {
                     show: false
                 }
             },
-            colors: ['#2d8cda', '#c96363'],
+            colors: undefined,
+            legend: {
+                show: true,
+                position: 'bottom',
+                horizontalAlign: 'center',
+                fontSize: '14px',
+                fontFamily: 'Nanum Gothic',
+                markers: {
+                    size: 10, // 마커 크기를 설정
+                    shape: 'circle', // 마커 모양을 원형으로 설정
+                    fillColors: undefined, // 시리즈 색상을 자동으로 적용
+                    strokeWidth: 0, // 마커의 외곽선 두께를 설정 (0으로 설정해 외곽선 없음)
+                },
+                itemMargin: {
+                    horizontal: 5,
+                    vertical: 0
+                },
+                onItemClick: {
+                    toggleDataSeries: true
+                },
+                onItemHover: {
+                    highlightDataSeries: true
+                }
+            },
+            tooltip: {
+                enabled: true
+            },
             dataLabels: {
                 enabled: true,
             },
@@ -169,9 +218,37 @@ $(document).ready(function () {
                     show: false
                 }
             },
-            colors: ['#2d8cda'],
+            legend: {
+                show: true,
+                position: 'bottom',
+                horizontalAlign: 'center',
+                fontSize: '14px',
+                fontFamily: 'Nanum Gothic',
+                markers: {
+                    size: 10, // 마커 크기를 설정
+                    shape: 'circle', // 마커 모양을 원형으로 설정
+                    fillColors: undefined, // 시리즈 색상을 자동으로 적용
+                    strokeWidth: 0, // 마커의 외곽선 두께를 설정 (0으로 설정해 외곽선 없음)
+                },
+                itemMargin: {
+                    horizontal: 5,
+                    vertical: 0
+                },
+                onItemClick: {
+                    toggleDataSeries: true
+                },
+                onItemHover: {
+                    highlightDataSeries: true
+                }
+            },
             dataLabels: {
                 enabled: true,
+            },
+            tooltip: {
+                enabled: true
+            },
+            dataLabels: {
+                enabled: true
             },
             stroke: {
                 curve: 'smooth'
@@ -209,24 +286,45 @@ $(document).ready(function () {
             series: series,
             chart: {
                 id: 'login-type-chart',
-                width: 380,
                 type: 'pie',
             },
             labels: labels,
-            responsive: [{
-                breakpoint: 480,
-                options: {
-                    chart: {
-                        width: 200
-                    },
-                    legend: {
-                        position: 'bottom'
-                    }
+            colors: undefined, // ApexCharts가 자동으로 색상을 지정
+            legend: {
+                show: true,
+                position: 'bottom',
+                horizontalAlign: 'center',
+                fontSize: '14px',
+                fontFamily: 'Nanum Gothic',
+                markers: {
+                    size: 10, // 마커 크기를 설정
+                    shape: 'circle', // 마커 모양을 원형으로 설정
+                    fillColors: undefined, // 시리즈 색상을 자동으로 적용
+                    strokeWidth: 0, // 마커의 외곽선 두께를 설정 (0으로 설정해 외곽선 없음)
+                },
+                itemMargin: {
+                    horizontal: 5,
+                    vertical: 0
+                },
+                onItemClick: {
+                    toggleDataSeries: true
+                },
+                onItemHover: {
+                    highlightDataSeries: true
                 }
-            }]
+            },
+            dataLabels: {
+                enabled: true,
+            },
+            tooltip: {
+                enabled: true
+            }
         };
 
         let chart = new ApexCharts(document.querySelector("#login-type-chart"), options);
         chart.render();
     });
+
+
+
 });

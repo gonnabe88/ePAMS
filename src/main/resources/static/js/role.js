@@ -1,5 +1,6 @@
-window.url = "/api/admin/role";
-window.columns = [
+window.tabulator = window.tabulator || {}; // 네임스페이스 생성
+window.tabulator.url = "/api/admin/role";
+window.tabulator.columns = [
     { title: "행번", field: "username", sorter: "string", editor: userSearchEditor, minWidth: 100 },
     { title: "역할", field: "roleId", sorter: "string", minWidth: 100, editor:"list", editorParams:{values:{"ROLE_ADMIN":"최고관리자", "ROLE_NORMAL":"일반사용자"}}},
     { title: "변경일자", field: "updatedTime", sorter: "date", minWidth: 100 },
@@ -7,7 +8,7 @@ window.columns = [
 ];
 
 document.addEventListener("DOMContentLoaded", function() {
-    createTable(false, window.columns, window.url);
+    createTable(false, window.tabulator.columns, window.tabulator.url);
 });
 
 // JavaScript 코드

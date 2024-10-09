@@ -118,9 +118,9 @@ public class DtmApplRestController {
             dtmHisDTO.setModUserId(empId); // 수정자 ID = 현재 로그인 사용자
             dtmHisDTO.setStaDate(dtmHisDTO.getStaYmd().toLocalDate());
             dtmHisDTO.setEndDate(dtmHisDTO.getEndYmd().toLocalDate());
-            /* @TODO 외부 테스트 시 주석 처리(시작) */
+            /* @TODO 외부 테스트 시 주석 처리(시작)
             dtmEtcService.findDtmPeriod(dtmHisDTO); // 근태별 교차신청가능여부/시작 및 종료시간 설정
-            /*@TODO 외부 테스트 시 주석 처리(끝) */
+            @TODO 외부 테스트 시 주석 처리(끝) */
         });
 
         registDTOList.forEach(dtmHisDTO -> {
@@ -128,9 +128,9 @@ public class DtmApplRestController {
             dtmHisDTO.setModUserId(empId); // 수정자 ID = 현재 로그인 사용자
             dtmHisDTO.setStaDate(dtmHisDTO.getStaYmd().toLocalDate());
             dtmHisDTO.setEndDate(dtmHisDTO.getEndYmd().toLocalDate());
-            /* @TODO 외부 테스트 시 주석 처리(시작) */
+            /* @TODO 외부 테스트 시 주석 처리(시작)
             dtmEtcService.findDtmPeriod(dtmHisDTO); // 근태별 교차신청가능여부/시작 및 종료시간 설정
-            /*@TODO 외부 테스트 시 주석 처리(끝) */
+            @TODO 외부 테스트 시 주석 처리(끝) */
         });  
 
         // 현재 기준 년도(YYYY) 세팅 ex)2024
@@ -142,7 +142,7 @@ public class DtmApplRestController {
 
         try {
             
-/* @TODO 외부 테스트 시 주석 처리(시작) */
+/* @TODO 외부 테스트 시 주석 처리(시작)
 
             // 근태 유형별 합계 시간 데이터 저장용 객체 생성
             final DtmKindSumDTO sumDTO = new DtmKindSumDTO();
@@ -166,7 +166,7 @@ public class DtmApplRestController {
             response.put("annualUsedCnt", statusDTO.getAnnualDayUsedCnt()); // 기 사용시간
             response.put("annualTotalCnt", statusDTO.getAnnualDayTotalCnt()); // 총 보유시간
 
-  /* @TODO 외부 테스트 시 주석 처리(끝) */
+   @TODO 외부 테스트 시 주석 처리(끝) */
  
             response.put("registDTOList", registDTOList); // 근태신청 리스트
             response.put("revokeDTOList", revokeDTOList); // 근태신청 리스트

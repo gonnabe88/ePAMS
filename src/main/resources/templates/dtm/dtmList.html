@@ -1,479 +1,502 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.thymeleaf.org" layout:decorate="~{common/layout/layout}">
-	<head>
-		<!-- (start) private script -->
-		<th:block layout:fragment="css">
-			<link rel="stylesheet" href="/extensions/litepicker/litepicker.css" />
-			<link rel="stylesheet" href="/extensions/select2/select2.css" />
-			<link rel="stylesheet" href="/extensions/swiper/swiper-bundle.min.css" />
-			<link rel="stylesheet" href="/extensions/swiper/customSwiper.css" />
-		</th:block>
-		<!-- (end) private script -->
-	</head>
+<html layout:decorate="~{common/layout/layout}" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.thymeleaf.org" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- (start) private script -->
+    <th:block layout:fragment="css">
+        <link href="/extensions/litepicker/litepicker.css" rel="stylesheet"/>
+        <link href="/extensions/select2/select2.css" rel="stylesheet"/>
+        <link href="/extensions/swiper/swiper-bundle.min.css" rel="stylesheet"/>
+        <link href="/extensions/swiper/customSwiper.css" rel="stylesheet"/>
+    </th:block>
+    <!-- (end) private script -->
+</head>
 
-	<body>
-		<div layout:fragment="contents">
-			<div class="container">
-				<div id="main-content">
-					<div class="main-content d-flex justify-content-center">
-						<div class="row d-flex justify-content-center">
-							<!-- (시작) 페이지 제목 -->
-							<div class="page-heading">
-								<div class="d-flex justify-content-between align-items-end">
-									<div class="align-middle">
-										<h2>
-											<i class="bi bi-bell-fill"></i>
-											<span th:text="${langList['DTM_LIST']}"></span>
-										</h2>
-									</div>
-									<div class="align-end">
-										<div class="dtmViewType btn-group" role="group" aria-label="DTM VIEW TYPE">
-											<input type="radio" class="btn-check" name="dtmListView" id="dtmListView" autocomplete="off" checked />
-											<label class="btn btn-outline-primary btn-sm d-flex justify-content-between" for="dtmListView">
-												<a href="/dtm/dtmList">
-													<i class="bi bi-list-ul"></i>
-													<span>목록</span>
-												</a>
-											</label>
-											<input type="radio" class="btn-check" name="dtmCalendarView" id="dtmCalendarView" autocomplete="off" />
-											<label class="btn btn-outline-primary btn-sm d-flex justify-content-between" for="dtmCalendarView">
-												<a href="/dtm/dtmCalendar">
-													<i class="bi bi-calendar"></i>
-													<span>달력</span>
-												</a>
-											</label>
-										</div>
-									</div>
-								</div>
-							</div>
-							<!-- (끝) 페이지 제목 -->
+<body>
+<div layout:fragment="contents">
+    <div id="dtmList">
+        <div class="main-content col-lg-10 offset-lg-1 d-flex justify-content-center">
+            <!-- (시작) 페이지 제목 -->
+            <div class="page-heading">
+                <div class="d-flex justify-content-between align-items-end">
+                    <div class="align-middle">
+                        <h2>
+                            <i class="bi bi-bell-fill"></i>
+                            <span th:text="${langList['DTM_LIST']}"></span>
+                        </h2>
+                    </div>
+                    <div class="align-end">
+                        <div aria-label="DTM VIEW TYPE" class="dtmViewType btn-group" role="group">
+                            <input autocomplete="off" checked class="btn-check" id="dtmListView" name="dtmListView" type="radio"/>
+                            <label class="btn btn-outline-primary btn-sm d-flex justify-content-between" for="dtmListView">
+                                <a href="/dtm/dtmList">
+                                    <i class="bi bi-list-ul"></i>
+                                    <span>목록</span>
+                                </a>
+                            </label>
+                            <input autocomplete="off" class="btn-check" id="dtmCalendarView" name="dtmCalendarView" type="radio"/>
+                            <label class="btn btn-outline-primary btn-sm d-flex justify-content-between" for="dtmCalendarView">
+                                <a href="/dtm/dtmCalendar">
+                                    <i class="bi bi-calendar"></i>
+                                    <span>달력</span>
+                                </a>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- (끝) 페이지 제목 -->
 
-							<!-- (시작) 페이지당 아이템 수 Dropdown/Default -->
-							<div id="dropdownContainer" class="row col-lg-12 col-md-12 col-sm-12 m-3">
-								<div class="d-flex justify-content-between align-items-center">
-									<!-- Select Dropdown on the Left -->
-									<select id="itemsPerPage" class="form-select form-select-sm w-auto" aria-label="Items per page">
-										<option value="5" th:selected="${itemsPerPage == 5}">5개</option>
-										<option value="10" th:selected="${itemsPerPage == 10}">10개</option>
-										<option value="20" th:selected="${itemsPerPage == 20}">20개</option>
-										<option value="50" th:selected="${itemsPerPage == 50}">50개</option>
-									</select>
+            <!-- (시작) 페이지당 아이템 수 Dropdown/Default -->
+            <div class="row mb-3" id="dropdownContainer">
+                <div class="d-flex justify-content-between align-items-center">
+                    <!-- Select Dropdown on the Left -->
+                    <select aria-label="Items per page" class="form-select form-select-sm w-auto" id="itemsPerPage">
+                        <option th:selected="${itemsPerPage == 5}" value="5">5개</option>
+                        <option th:selected="${itemsPerPage == 10}" value="10">10개</option>
+                        <option th:selected="${itemsPerPage == 20}" value="20">20개</option>
+                        <option th:selected="${itemsPerPage == 50}" value="50">50개</option>
+                    </select>
 
-									<!-- Button Group on the Right -->
-									<div class="ms-auto">
-										<button type="button" class="btn btn-primary btn-sm" id="openDtmStatusModal">
-											<span th:text="${langList['DTM_STATUS']}"></span>
-										</button>
-										<button type="button" class="btn btn-secondary btn-sm" id="toggleBtn" data-bs-toggle="collapse" data-bs-target="#collapseSearch" aria-expanded="false" aria-controls="collapseSearch"><i class="bi bi-search me-1"></i><span th:text="${langList['RETRIEVE']}"></span></button>
-									</div>
-								</div>
-							</div>
-							<!-- (끝) 페이지당 아이템 수 Dropdown/Default -->
+                    <!-- Button Group on the Right -->
+                    <div class="ms-auto">
+                        <button class="btn btn-primary btn-sm" id="openDtmStatusModal" type="button">
+                            <span th:text="${langList['DTM_STATUS']}"></span>
+                        </button>
+                        <button aria-controls="collapseSearch" aria-expanded="false" class="btn btn-secondary btn-sm" data-bs-target="#collapseSearch" data-bs-toggle="collapse" id="toggleBtn" type="button">
+                            <i class="bi bi-search me-1"></i><span th:text="${langList['RETRIEVE']}"></span></button>
+                    </div>
+                </div>
+            </div>
+            <!-- (끝) 페이지당 아이템 수 Dropdown/Default -->
 
-							<!-- (시작) 검색 Dropdown/Select2 -->
-							<div id="collapseContainer" class="collapseSearch row col-lg-12 col-md-12 col-sm-12">
-								<div class="collapse" id="collapseSearch">
-									<div class="col-12">
-										<section class="section">
-											<div class="card" id="collapseCard">
-												<div class="card-body p-2">
-													<div class="d-flex align-items-center justify-content-between mb-2">
-														<h6>
-															<span th:text="${langList['ELA_STAT']}"></span>
-														</h6>
-														<div class="btn-group btn-group-sm" role="group" aria-label="Basic radio toggle button group">
-															<!-- 체크박스 121 진행(결재중)-->
-															<input type="checkbox" class="btn-check" name="statCdList" id="121" autocomplete="off" th:checked="${#lists.contains(searchDTO.statCdList, '121')}" />
-															<label class="btn btn-outline-primary" for="121"><span th:text="${langList['ELA_STAT_CD_121_S']}"></span></label>
+            <!-- (시작) 검색 Dropdown/Select2 -->
+            <div class="collapseSearch row mb-1" id="collapseContainer">
+                <div class="collapse" id="collapseSearch">
+                    <div class="col-12">
+                        <section class="section">
+                            <div class="card" id="collapseCard">
+                                <div class="card-body p-2">
+                                    <div class="d-flex align-items-center justify-content-between mb-2">
+                                        <h6>
+                                            <span th:text="${langList['ELA_STAT']}"></span>
+                                        </h6>
+                                        <div aria-label="Basic radio toggle button group" class="btn-group btn-group-sm" role="group">
+                                            <!-- 체크박스 121 진행(결재중)-->
+                                            <input autocomplete="off" class="btn-check" id="121" name="statCdList" th:checked="${#lists.contains(searchDTO.statCdList, '121')}" type="checkbox"/>
+                                            <label class="btn btn-outline-primary" for="121"><span th:text="${langList['ELA_STAT_CD_121_S']}"></span></label>
 
-															<!-- 체크박스 132 결재완료-->
-															<input type="checkbox" class="btn-check" name="statCdList" id="132" autocomplete="off" th:checked="${#lists.contains(searchDTO.statCdList, '132')}" />
-															<label class="btn btn-outline-primary" for="132"><span th:text="${langList['ELA_STAT_CD_132_S']}"></span></label>
+                                            <!-- 체크박스 132 결재완료-->
+                                            <input autocomplete="off" class="btn-check" id="132" name="statCdList" th:checked="${#lists.contains(searchDTO.statCdList, '132')}" type="checkbox"/>
+                                            <label class="btn btn-outline-primary" for="132"><span th:text="${langList['ELA_STAT_CD_132_S']}"></span></label>
 
-															<!-- 체크박스 131 반려-->
-															<input type="checkbox" class="btn-check" name="statCdList" id="131" autocomplete="off" th:checked="${#lists.contains(searchDTO.statCdList, '131')}" />
-															<label class="btn btn-outline-primary" for="131"><span th:text="${langList['ELA_STAT_CD_131_S']}"></span></label>
+                                            <!-- 체크박스 131 반려-->
+                                            <input autocomplete="off" class="btn-check" id="131" name="statCdList" th:checked="${#lists.contains(searchDTO.statCdList, '131')}" type="checkbox"/>
+                                            <label class="btn btn-outline-primary" for="131"><span th:text="${langList['ELA_STAT_CD_131_S']}"></span></label>
 
-															<!-- 체크박스 141 취소-->
-															<input type="checkbox" class="btn-check" name="statCdList" id="141" autocomplete="off" th:checked="${#lists.contains(searchDTO.statCdList, '141')}" />
-															<label class="btn btn-outline-primary" for="141"><span th:text="${langList['ELA_STAT_CD_141_S']}"></span></label>
-														</div>
-													</div>
-												</div>
+                                            <!-- 체크박스 141 취소-->
+                                            <input autocomplete="off" class="btn-check" id="141" name="statCdList" th:checked="${#lists.contains(searchDTO.statCdList, '141')}" type="checkbox"/>
+                                            <label class="btn btn-outline-primary" for="141"><span th:text="${langList['ELA_STAT_CD_141_S']}"></span></label>
+                                        </div>
+                                    </div>
+                                </div>
 
-												<div class="card-body p-2">
-													<div class="d-flex align-items-center justify-content-between mb-2">
-														<h6>
-															<span th:text="${langList['DTM_KIND']}"></span>
-														</h6>
-														<div class="btn-group btn-group-sm" role="group" aria-label="DTM Kind Code Select">
-															<!-- 값이 비어 있으면 allCategory 체크 -->
-															<input type="radio" class="btn-check" name="dtmSearchKindCdSelect" id="dtmSearchKindCdSelect_all" value="" autocomplete="off" th:checked="${searchDTO.dtmKindCd == null || searchDTO.dtmKindCd.isEmpty()}" />
-															<label class="btn btn-outline-primary" for="dtmSearchKindCdSelect_all">
-																<span th:text="${langList['ENTIRE']}"></span>
-															</label>
+                                <div class="card-body p-2">
+                                    <div class="d-flex align-items-center justify-content-between mb-2">
+                                        <h6>
+                                            <span th:text="${langList['DTM_KIND']}"></span>
+                                        </h6>
+                                        <div aria-label="DTM Kind Code Select" class="btn-group btn-group-sm" role="group">
+                                            <!-- 값이 비어 있으면 allCategory 체크 -->
+                                            <input autocomplete="off" class="btn-check" id="dtmSearchKindCdSelect_all" name="dtmSearchKindCdSelect" th:checked="${searchDTO.dtmKindCd == null || searchDTO.dtmKindCd.isEmpty()}" type="radio" value=""/>
+                                            <label class="btn btn-outline-primary" for="dtmSearchKindCdSelect_all">
+                                                <span th:text="${langList['ENTIRE']}"></span>
+                                            </label>
 
-															<!-- dtmKindCd 값이 '1A'이면 체크 -->
-															<input type="radio" class="btn-check" name="dtmSearchKindCdSelect" id="dtmSearchKindCdSelect_1A" value="1A" autocomplete="off" th:checked="${searchDTO.dtmKindCd == '1A'}" />
-															<label class="btn btn-outline-primary" for="dtmSearchKindCdSelect_1A">
-																<span th:text="${langList['DTM_KIND_CD_1A_S']}"></span>
-															</label>
+                                            <!-- dtmKindCd 값이 '1A'이면 체크 -->
+                                            <input autocomplete="off" class="btn-check" id="dtmSearchKindCdSelect_1A" name="dtmSearchKindCdSelect" th:checked="${searchDTO.dtmKindCd == '1A'}" type="radio" value="1A"/>
+                                            <label class="btn btn-outline-primary" for="dtmSearchKindCdSelect_1A">
+                                                <span th:text="${langList['DTM_KIND_CD_1A_S']}"></span>
+                                            </label>
 
-															<!-- dtmKindCd 값이 '1Z'이면 체크 -->
-															<input type="radio" class="btn-check" name="dtmSearchKindCdSelect" id="dtmSearchKindCdSelect_1Z" value="1Z" autocomplete="off" th:checked="${searchDTO.dtmKindCd == '1Z'}" />
-															<label class="btn btn-outline-primary" for="dtmSearchKindCdSelect_1Z">
-																<span th:text="${langList['DTM_KIND_CD_1Z_S']}"></span>
-															</label>
+                                            <!-- dtmKindCd 값이 '1Z'이면 체크 -->
+                                            <input autocomplete="off" class="btn-check" id="dtmSearchKindCdSelect_1Z" name="dtmSearchKindCdSelect" th:checked="${searchDTO.dtmKindCd == '1Z'}" type="radio" value="1Z"/>
+                                            <label class="btn btn-outline-primary" for="dtmSearchKindCdSelect_1Z">
+                                                <span th:text="${langList['DTM_KIND_CD_1Z_S']}"></span>
+                                            </label>
 
-															<!-- dtmKindCd 값이 '2(출장)'이면 체크 -->
-															<input type="radio" class="btn-check" name="dtmSearchKindCdSelect" id="dtmSearchKindCdSelect_2" value="2" autocomplete="off" th:checked="${searchDTO.dtmKindCd == '2'}" />
-															<label class="btn btn-outline-primary" for="dtmSearchKindCdSelect_2">
-																<span>출장</span>
-															</label>
-														</div>
-													</div>
+                                            <!-- dtmKindCd 값이 '2(출장)'이면 체크 -->
+                                            <input autocomplete="off" class="btn-check" id="dtmSearchKindCdSelect_2" name="dtmSearchKindCdSelect" th:checked="${searchDTO.dtmKindCd == '2'}" type="radio" value="2"/>
+                                            <label class="btn btn-outline-primary" for="dtmSearchKindCdSelect_2">
+                                                <span>출장</span>
+                                            </label>
+                                        </div>
+                                    </div>
 
-													<select class="form-control" aria-label="DTM Reason Code Select" name="dtmSearchReasonCdSelect" id="dtmSearchReasonCdSelect" th:attr="data-dtmReasonCd=${searchDTO.dtmReasonCd}"></select>
-												</div>
+                                    <select aria-label="DTM Reason Code Select" class="form-control" id="dtmSearchReasonCdSelect" name="dtmSearchReasonCdSelect" th:attr="data-dtmReasonCd=${searchDTO.dtmReasonCd}"></select>
+                                </div>
 
-												<div class="card-body p-2">
-													<div class="date-input-container mb-2 gap-1">
-														<span class="h6 mb-0 me-2" th:text="${langList['DTM_PERIOD']}"></span>
-														<!-- 시작 날짜 -->
-														<div class="date-input">
-															<input type="text" name="start-input" id="start-input" placeholder="YYYY-MM-DD" th:value="${searchDTO.staYmdInput}" />
-														</div>
-														<span class="tilde">~</span>
-														<!-- 종료 날짜 -->
-														<div class="date-input">
-															<input type="text" name="end-input" id="end-input" placeholder="YYYY-MM-DD" th:value="${searchDTO.endYmdInput}" />
-														</div>
-													</div>
+                                <div class="card-body p-2">
+                                    <div class="date-input-container mb-2 gap-1">
+                                        <span class="h6 mb-0 me-2" th:text="${langList['DTM_PERIOD']}"></span>
+                                        <!-- 시작 날짜 -->
+                                        <div class="date-input">
+                                            <input id="start-input" name="start-input" placeholder="YYYY-MM-DD" th:value="${searchDTO.staYmdInput}" type="text"/>
+                                        </div>
+                                        <span class="tilde">~</span>
+                                        <!-- 종료 날짜 -->
+                                        <div class="date-input">
+                                            <input id="end-input" name="end-input" placeholder="YYYY-MM-DD" th:value="${searchDTO.endYmdInput}" type="text"/>
+                                        </div>
+                                    </div>
 
-													<!-- 아래 필드는 추가적인 날짜 입력 필드로 보여짐 -->
-													<div class="d-flex justify-content-center">
-														<label for="start-date">
-															<input type="text" class="form-control start-date" id="start-date" />
-														</label>
-														<label for="end-date">
-															<input type="text" class="form-control end-date" id="end-date" />
-														</label>
-													</div>
-												</div>
+                                    <!-- 아래 필드는 추가적인 날짜 입력 필드로 보여짐 -->
+                                    <div class="d-flex justify-content-center">
+                                        <label for="start-date">
+                                            <input class="form-control start-date" id="start-date" type="text"/>
+                                        </label>
+                                        <label for="end-date">
+                                            <input class="form-control end-date" id="end-date" type="text"/>
+                                        </label>
+                                    </div>
+                                </div>
 
-												<div class="card-body p-2">
-													<div class="d-flex flex-wrap gap-2 justify-content-end align-items-center mb-2">
-														<button class="btn btn-secondary btn-sm" id="close-button">
-															<span>닫기</span>
-														</button>
-														<button class="btn btn-primary btn-sm" id="search-button">
-															<span th:text="${langList['SEARCH']}"></span>
-														</button>
-													</div>
-												</div>
-											</div>
-										</section>
-									</div>
-								</div>
-							</div>
-							<!-- (끝) 검색 Dropdown/select2 -->
+                                <div class="card-body p-2">
+                                    <div class="d-flex flex-wrap gap-2 justify-content-end align-items-center mb-2">
+                                        <button class="btn btn-secondary btn-sm" id="close-button">
+                                            <span>닫기</span>
+                                        </button>
+                                        <button class="btn btn-primary btn-sm" id="search-button">
+                                            <span th:text="${langList['SEARCH']}"></span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+            <!-- (끝) 검색 Dropdown/select2 -->
 
-							<!-- (시작) 사용가능 휴가 현황 Modal -->
-							<div class="modal fade" id="dtmStatusModal" tabindex="-1" aria-labelledby="dtmStatusModalLabel" aria-hidden="true">
-								<div class="modal-dialog modal-lg">
-									<div class="modal-content">
-										<div class="modal-header">
-											<h5 class="modal-title" id="dtmStatusModalLabel">
-												<span th:text="${langList['DTM_STATUS']}"></span>
-											</h5>
-											<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-										</div>
-										<div class="modal-body">
-											<!-- Original Content -->
-											<section class="section">
-												<div class="card">
-													<div class="card-body">
-														<table class="table">
-															<thead>
-																<tr>
-																	<th class="w-20"></th>
-																	<th><h6 class="text-center m-0">전체</h6></th>
-																	<th><h6 class="text-center m-0">사용</h6></th>
-																	<th><h6 class="text-center m-0">보유</h6></th>
-																</tr>
-															</thead>
-															<tbody>
-																<tr>
-																	<td><h6 class="text-center m-0">연차</h6></td>
-																	<td class="text-right" th:text="${dtmAnnualStatus.AnnualDayTotalCnt}">-</td>
-																	<td class="text-right" th:text="${dtmAnnualStatus.AnnualDayUsedCnt}">-</td>
-																	<td class="h6 text-primary text-right" th:text="${dtmAnnualStatus.AnnualDayNoSaveRemainCnt}">-</td>
-																</tr>
-																<tr>
-																	<td><h6 class="text-center m-0">보상</h6></td>
-																	<td class="text-right" th:text="${dtmAnnualStatus.rewardDayTotalStr}+'일'">-</td>
-																	<td class="text-right" th:text="${dtmAnnualStatus.rewartDayUsedStr}+'일'">-</td>
-																	<td class="h6 text-primary text-right" th:text="${dtmAnnualStatus.rewardDayRemainStr}+'일'">-</td>
-																</tr>
-																<tr>
-																	<td><h6 class="text-center m-0">저축<h7 class="text-center">(과거)</h7></h6></td>
-																	<td></td>
-																	<td></td>
-																	<td class="h6 text-primary text-right" th:text="${dtmAnnualStatus.SaveDayTotalStr}+'일'">-</td>
-																</tr>
-																<tr>
-																	<td><h6 class="text-center m-0">저축<h7 class="text-center">(금년)</h7></h6></td>
-																	<td></td>
-																	<td></td>
-																	<td class="h6 text-secondary text-right" th:text="${dtmAnnualStatus.SaveDayTotalStr}+'일'">-</td>
-																</tr>
-															</tbody>
-														</table>
-														
-													</div>
-												</div>
-											</section>
-											<!-- End of Original Content -->
-										</div>
-										<div class="modal-footer">
-											<button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">
-												<span th:text="${langList['CLOSE']}"></span>
-											</button>
-										</div>
-									</div>
-								</div>
-							</div>
-							<!-- (끝) 사용가능 휴가 현황 Modal -->
+            <!-- (시작) 사용가능 휴가 현황 Modal -->
+            <div aria-hidden="true" aria-labelledby="dtmStatusModalLabel" class="modal fade" id="dtmStatusModal" tabindex="-1">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="dtmStatusModalLabel">
+                                <span th:text="${langList['DTM_STATUS']}"></span>
+                            </h5>
+                            <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button>
+                        </div>
+                        <div class="modal-body">
+                            <!-- Original Content -->
+                            <section class="section">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <table class="table">
+                                            <thead>
+                                            <tr>
+                                                <th class="w-20"></th>
+                                                <th><h6 class="text-center m-0">전체</h6></th>
+                                                <th><h6 class="text-center m-0">사용</h6></th>
+                                                <th><h6 class="text-center m-0">보유</h6></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td><h6 class="text-center m-0">연차</h6></td>
+                                                <td class="text-right" th:text="${dtmAnnualStatus.AnnualDayTotalCnt}">
+                                                    -
+                                                </td>
+                                                <td class="text-right" th:text="${dtmAnnualStatus.AnnualDayUsedCnt}">-
+                                                </td>
+                                                <td class="h6 text-primary text-right" th:text="${dtmAnnualStatus.AnnualDayNoSaveRemainCnt}">
+                                                    -
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><h6 class="text-center m-0">보상</h6></td>
+                                                <td class="text-right" th:text="${dtmAnnualStatus.rewardDayTotalStr}+'일'">
+                                                    -
+                                                </td>
+                                                <td class="text-right" th:text="${dtmAnnualStatus.rewartDayUsedStr}+'일'">
+                                                    -
+                                                </td>
+                                                <td class="h6 text-primary text-right" th:text="${dtmAnnualStatus.rewardDayRemainStr}+'일'">
+                                                    -
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <h6 class="text-center m-0">저축
+                                                        <h7 class="text-center">(과거)</h7>
+                                                    </h6>
+                                                </td>
+                                                <td></td>
+                                                <td></td>
+                                                <td class="h6 text-primary text-right" th:text="${dtmAnnualStatus.SaveDayTotalStr}+'일'">
+                                                    -
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <h6 class="text-center m-0">저축
+                                                        <h7 class="text-center">(금년)</h7>
+                                                    </h6>
+                                                </td>
+                                                <td></td>
+                                                <td></td>
+                                                <td class="h6 text-secondary text-right" th:text="${dtmAnnualStatus.SaveDayTotalStr}+'일'">
+                                                    -
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
 
-							<!-- (시작) 근태 목록 + 페이지네이션 Modal -->
-							<div id="dtmListContainer" class="row col-lg-12 col-md-12 col-sm-12">
-								<!-- (시작) 근태 목록 Card 시작 -->
-								<div class="col-12">
-									<div class="animate__animated animate__fadeIn animate__slow">
-										<section class="section" th:each="dtm: ${dtmHis}">
-											<div class="card">
-												<div class="card-body">
-													<div class="d-flex flex-row justify-content-start align-items-center gap-2">
-														<!-- 상태뱃지(결재 완료인 경우만 표시) -->
-														<div th:if="${dtm.statCd} == '132'">
-															<!-- 상태 (예정/진행/과거/취소) -->
-															<div th:switch="${dtm.status}">
-																<!-- 과거 -->
-																<span th:case="${langList['DTM_STATUS_PAST']}" class="badge badge-sm bg-secondary">
+                                    </div>
+                                </div>
+                            </section>
+                            <!-- End of Original Content -->
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary btn-sm" data-bs-dismiss="modal" type="button">
+                                <span th:text="${langList['CLOSE']}"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- (끝) 사용가능 휴가 현황 Modal -->
+
+            <!-- (시작) 근태 목록 + 페이지네이션 Modal -->
+            <div class="row" id="dtmListContainer">
+                <!-- (시작) 근태 목록 Card 시작 -->
+                <div class="animate__animated animate__fadeIn animate__slow">
+                    <section class="section" th:each="dtm: ${dtmHis}">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex flex-row justify-content-start align-items-center gap-2">
+                                    <!-- 상태뱃지(결재 완료인 경우만 표시) -->
+                                    <div th:if="${dtm.statCd} == '132'">
+                                        <!-- 상태 (예정/진행/과거/취소) -->
+                                        <div th:switch="${dtm.status}">
+                                            <!-- 과거 -->
+                                            <span class="badge badge-sm bg-secondary" th:case="${langList['DTM_STATUS_PAST']}">
 																	<span th:text="${dtm.status}"></span>
 																</span>
-																<!-- 예정 -->
-																<span th:case="${langList['DTM_STATUS_DUE']}">
-																	<span th:text="${dtm.status}" class="badge badge-sm bg-primary"></span>
+                                            <!-- 예정 -->
+                                            <span th:case="${langList['DTM_STATUS_DUE']}">
+																	<span class="badge badge-sm bg-primary" th:text="${dtm.status}"></span>
 																</span>
-																<!-- 진행 -->
-																<span th:case="${langList['DTM_STATUS_NOW']}">
-																	<span th:text="${dtm.status}" class="badge badge-sm bg-warning"></span>
+                                            <!-- 진행 -->
+                                            <span th:case="${langList['DTM_STATUS_NOW']}">
+																	<span class="badge badge-sm bg-warning" th:text="${dtm.status}"></span>
 																</span>
-															</div>
-														</div>
-														<!-- 휴가명 (연차휴가 등) -->
-														<h6 class="m-0">
-															<span th:text="${dtm.dtmReasonNm}"></span>
-														</h6>
-													</div>
+                                        </div>
+                                    </div>
+                                    <!-- 휴가명 (연차휴가 등) -->
+                                    <h6 class="m-0">
+                                        <span th:text="${dtm.dtmReasonNm}"></span>
+                                    </h6>
+                                </div>
 
-													<!--근태기간-->
-													<div class="d-flex flex-row align-items-center mt-3 gap-3">
-														<div class="d-flex align-items-center gap-2">
-															<h6 class="m-0">
-																<span th:text="${#temporals.format(dtm.staYmd, 'yyyy-MM-dd')}"> </span>
-																~
-																<span th:text="${#temporals.format(dtm.endYmd, 'yyyy-MM-dd')}"> </span>
-															</h6>
-														</div>
-													</div>
+                                <!--근태기간-->
+                                <div class="d-flex flex-row align-items-center mt-3 gap-3">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <h6 class="m-0">
+                                            <span th:text="${#temporals.format(dtm.staYmd, 'yyyy-MM-dd')}"> </span>
+                                            ~
+                                            <span th:text="${#temporals.format(dtm.endYmd, 'yyyy-MM-dd')}"> </span>
+                                        </h6>
+                                    </div>
+                                </div>
 
-													<!--신청일, 결재상태-->
-													<div class="d-flex flex-row mt-3 gap-3">
-														<div>
-															<i class="bi bi-calendar-check"></i>
-															<h7 th:text="${#temporals.format(dtm.tzDate, 'yyyy-MM-dd')}"></h7>
-														</div>
-														<div>
-															<i class="bi bi-lightbulb"></i>
-															<h7 th:text="${dtm.statCdNm}"></h7>
-														</div>
-													</div>
-													<!--변경/취소-->
-													<div class="d-flex flex-row justify-content-end mt-3 gap-1">
-														<!-- 결재완료인 경우 변경 버튼 -->
-														<div th:if="${dtm.isModifiable}" class="modifyBtn btn btn-primary btn-sm" th:data-applid="${dtm.applId}" th:data-dtmhisid="${dtm.dtmHisId}" th:data-staymd="${dtm.staYmd}" th:data-endymd="${dtm.endYmd}" th:data-dtmkindcd="${dtm.dtmKindCd}" th:data-dtmreasoncd="${dtm.dtmReasonCd}" th:data-dtmreasonnm="${dtm.dtmReasonNm}" th:data-dtmrange="${dtm.dtmRange}" id="dtmModifyBtn" data-bs-toggle="modal" data-bs-target="#dynamicModal">변경</div>
+                                <!--신청일, 결재상태-->
+                                <div class="d-flex flex-row mt-3 gap-3">
+                                    <div>
+                                        <i class="bi bi-calendar-check"></i>
+                                        <h7 th:text="${#temporals.format(dtm.tzDate, 'yyyy-MM-dd')}"></h7>
+                                    </div>
+                                    <div>
+                                        <i class="bi bi-lightbulb"></i>
+                                        <h7 th:text="${dtm.statCdNm}"></h7>
+                                    </div>
+                                </div>
+                                <!--변경/취소-->
+                                <div class="d-flex flex-row justify-content-end mt-3 gap-1">
+                                    <!-- 결재완료인 경우 변경 버튼 -->
+                                    <div class="modifyBtn btn btn-primary btn-sm" data-bs-target="#dynamicModal" data-bs-toggle="modal" id="dtmModifyBtn" th:data-applid="${dtm.applId}" th:data-dtmhisid="${dtm.dtmHisId}" th:data-dtmkindcd="${dtm.dtmKindCd}" th:data-dtmrange="${dtm.dtmRange}" th:data-dtmreasoncd="${dtm.dtmReasonCd}" th:data-dtmreasonnm="${dtm.dtmReasonNm}" th:data-endymd="${dtm.endYmd}" th:data-staymd="${dtm.staYmd}" th:if="${dtm.isModifiable}">
+                                        변경
+                                    </div>
 
-														<!-- 결재완료인 경우 취소 버튼 -->
-														<div th:if="${dtm.isRevocable}" class="cancelBtn btn btn-danger btn-sm" th:data-applid="${dtm.applId}" th:data-dtmhisid="${dtm.dtmHisId}" th:data-staymd="${dtm.staYmd}" th:data-endymd="${dtm.endYmd}" th:data-dtmkindcd="${dtm.dtmKindCd}" th:data-dtmreasoncd="${dtm.dtmReasonCd}" th:data-dtmreasonnm="${dtm.dtmReasonNm}" th:data-dtmdispname="${dtm.dtmDispName}" th:data-dtmrange="${dtm.dtmRange}">취소</div>
-													</div>
-												</div>
-											</div>
-										</section>
-									</div>
-								</div>
-								<!-- (끝) 근태 목록 Card -->
+                                    <!-- 결재완료인 경우 취소 버튼 -->
+                                    <div class="cancelBtn btn btn-danger btn-sm" th:data-applid="${dtm.applId}" th:data-dtmdispname="${dtm.dtmDispName}" th:data-dtmhisid="${dtm.dtmHisId}" th:data-dtmkindcd="${dtm.dtmKindCd}" th:data-dtmrange="${dtm.dtmRange}" th:data-dtmreasoncd="${dtm.dtmReasonCd}" th:data-dtmreasonnm="${dtm.dtmReasonNm}" th:data-endymd="${dtm.endYmd}" th:data-staymd="${dtm.staYmd}" th:if="${dtm.isRevocable}">
+                                        취소
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                <!-- (끝) 근태 목록 Card -->
 
-								<!-- (시작) 근태 변경 Modal -->
-								<div class="dtmModifyModal">
-									<div class="modal fade" id="dynamicModal" tabindex="-1" aria-labelledby="dynamicModalLabel" aria-hidden="true">
-										<div class="modal-dialog modal-lg">
-											<div class="modal-content">
-												<div class="modal-header p-2">
-													<h5 class="modal-title" id="dynamicModalLabel">근태 변경</h5>
-													<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-												</div>
-												<div class="modal-body p-2">
-													<!-- (시작) 취소/변경전 근태 Card -->
-													<div class="card mb-1">
-														<div class="card-body pt-2 pb-2">
-															<div class="row">
-																<div class="col">
-																	<div class="d-flex justify-content-start gap-1">
-																		<div class="revokeDtmNameTag">
-																			<h6 class="mb-0 ms-3">
-																				<span class="badge badge-sm rounded-pill bg-danger">취소</span>
-																				<span id="dtmResonNm"></span>
-																			</h6>
-																			<h7 class="mb-0 ms-3" id="dtmRange"></h7>
-																		</div>
-																	</div>
-																</div>
-															</div>
-														</div>
-													</div>
-													<!-- (끝) 취소/변경전 근태 Card -->
+                <!-- (시작) 근태 변경 Modal -->
+                <div class="dtmModifyModal">
+                    <div aria-hidden="true" aria-labelledby="dynamicModalLabel" class="modal fade" id="dynamicModal" tabindex="-1">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header p-2">
+                                    <h5 class="modal-title" id="dynamicModalLabel">근태 변경</h5>
+                                    <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button>
+                                </div>
+                                <div class="modal-body p-2">
+                                    <!-- (시작) 취소/변경전 근태 Card -->
+                                    <div class="card mb-1">
+                                        <div class="card-body pt-2 pb-2">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div class="d-flex justify-content-start gap-1">
+                                                        <div class="revokeDtmNameTag">
+                                                            <h6 class="mb-0 ms-3">
+                                                                <span class="badge badge-sm rounded-pill bg-danger">취소</span>
+                                                                <span id="dtmResonNm"></span>
+                                                            </h6>
+                                                            <h7 class="mb-0 ms-3" id="dtmRange"></h7>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- (끝) 취소/변경전 근태 Card -->
 
-													<!-- (시작) 신규/변경후 근태 Carousel-->
-													<div class="no-drag">
-														<!-- Swiper Banner 시작-->
-														<div class="swiper mySwiper">
-															<div class="swiper-wrapper">
-															<!-- Swiper items -->
-															</div>															
-															<div class="swiper-pagination mt-1">
-															<!-- Swiper Pagination -->
-															</div> 
-														</div>
-													<!-- Swiper Banner 끝-->
-													</div>
-													<!-- (끝) 신규/변경후 근태 Carousel -->
+                                    <!-- (시작) 신규/변경후 근태 Carousel-->
+                                    <div class="no-drag">
+                                        <!-- Swiper Banner 시작-->
+                                        <div class="swiper mySwiper">
+                                            <div class="swiper-wrapper">
+                                                <!-- Swiper items -->
+                                            </div>
+                                            <div class="swiper-pagination mt-1">
+                                                <!-- Swiper Pagination -->
+                                            </div>
+                                        </div>
+                                        <!-- Swiper Banner 끝-->
+                                    </div>
+                                    <!-- (끝) 신규/변경후 근태 Carousel -->
 
-													<!-- (시작) 근태신청 Form -->
-													<div class="card card-warning mb-1">
-														<div class="card-body pt-2 pb-0">
-															<div class="date-input-container mb-2">
-																<span class="h6 mb-0 me-3">근태기간</span>
-																<div class="date-input">
-																	<input type="text" id="startDate" name="startDate" />
-																</div>
-																<span class="tilde">~</span>
-																<div class="date-input">
-																	<input type="text" id="endDate" name="endDate" />
-																</div>
-															</div>
-															<div id="dateWarning">오늘 이후 건만 신청가능합니다</div>
-															<div class="dtmReg">
-																<div class="row">
-																	<div class="col">
-																		<div id="calender" th:attr="data-dtmHisEvents=${dtmHisEvents}, data-holiDayList=${holiDayList}"></div>
-																	</div>
-																</div>
-															</div>
-														</div>
-														<div class="card-body pt-2">
-															<div class="d-flex align-items-center justify-content-between">
-																<h6>
-																	<span th:text="${langList['DTM_KIND']}"></span>
-																</h6>
-																<div class="btn-group btn-group-sm" role="group" aria-label="DTM Kind Code Select">
-																	<!-- 연차 -->
-																	<input type="radio" class="btn-check" name="dtmKindCdSelect" id="dtmKindCdSelect_1A" value="1A" autocomplete="off" checked />
-																	<label class="btn btn-outline-primary" for="dtmKindCdSelect_1A">
-																		<span th:text="${langList['DTM_KIND_CD_1A_S']}"></span>
-																	</label>
+                                    <!-- (시작) 근태신청 Form -->
+                                    <div class="card card-warning mb-1">
+                                        <div class="card-body pt-2 pb-0">
+                                            <div class="date-input-container mb-2">
+                                                <span class="h6 mb-0 me-3">근태기간</span>
+                                                <div class="date-input">
+                                                    <input id="startDate" name="startDate" type="text"/>
+                                                </div>
+                                                <span class="tilde">~</span>
+                                                <div class="date-input">
+                                                    <input id="endDate" name="endDate" type="text"/>
+                                                </div>
+                                            </div>
+                                            <div id="dateWarning">오늘 이후 건만 신청가능합니다</div>
+                                            <div class="dtmReg">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <div id="calender" th:attr="data-dtmHisEvents=${dtmHisEvents}, data-holiDayList=${holiDayList}"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-body pt-2">
+                                            <div class="d-flex align-items-center justify-content-between">
+                                                <h6>
+                                                    <span th:text="${langList['DTM_KIND']}"></span>
+                                                </h6>
+                                                <div aria-label="DTM Kind Code Select" class="btn-group btn-group-sm" role="group">
+                                                    <!-- 연차 -->
+                                                    <input autocomplete="off" checked class="btn-check" id="dtmKindCdSelect_1A" name="dtmKindCdSelect" type="radio" value="1A"/>
+                                                    <label class="btn btn-outline-primary" for="dtmKindCdSelect_1A">
+                                                        <span th:text="${langList['DTM_KIND_CD_1A_S']}"></span>
+                                                    </label>
 
-																	<!-- 보상 -->
-																	<input type="radio" class="btn-check" name="dtmKindCdSelect" id="dtmKindCdSelect_1Z" value="1Z" autocomplete="off" />
-																	<label class="btn btn-outline-primary" for="dtmKindCdSelect_1Z">
-																		<span th:text="${langList['DTM_KIND_CD_1Z_S']}"></span>
-																	</label>
-																</div>
-															</div>
+                                                    <!-- 보상 -->
+                                                    <input autocomplete="off" class="btn-check" id="dtmKindCdSelect_1Z" name="dtmKindCdSelect" type="radio" value="1Z"/>
+                                                    <label class="btn btn-outline-primary" for="dtmKindCdSelect_1Z">
+                                                        <span th:text="${langList['DTM_KIND_CD_1Z_S']}"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
 
-															<select class="form-control" aria-label="DTM Reason Code Select" name="dtmReasonCdSelect" id="dtmReasonCdSelect"></select>
-														</div>
-													</div>
-												</div>
-                        <!-- (끝) 근태신청 Form -->
+                                            <select aria-label="DTM Reason Code Select" class="form-control" id="dtmReasonCdSelect" name="dtmReasonCdSelect"></select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- (끝) 근태신청 Form -->
 
-                        <!-- (시작) Modal Footer -->
-												<div class="modal-footer p-2">
-													<button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">닫기</button>
-													<button type="button" class="btn btn-warning btn-sm" id="add">추가</button>
-													<button type="button" class="btn btn-primary btn-sm" id="submit">다음</button>
-												</div>
-                        <!-- (끝) Modal Footer -->
-											</div>
-										</div>
-									</div>
-								</div>
-								<!-- (끝) 근태 변경 Modal -->
+                                <!-- (시작) Modal Footer -->
+                                <div class="modal-footer p-2">
+                                    <button class="btn btn-secondary btn-sm" data-bs-dismiss="modal" type="button">닫기
+                                    </button>
+                                    <button class="btn btn-warning btn-sm" id="add" type="button">추가</button>
+                                    <button class="btn btn-primary btn-sm" id="submit" type="button">다음</button>
+                                </div>
+                                <!-- (끝) Modal Footer -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- (끝) 근태 변경 Modal -->
 
-								<!-- (시작) 페이징처리 -->
-								<div th:if="${!dtmHis.isEmpty()}">
-									<ul class="pagination pagination-primary justify-content-center align-items-center">
-										<!-- Previous button -->
-										<li class="page-item" th:classappend="${startPage == 1} ? 'disabled'">
-											<a class="first page-link" id="first-page-link" th:data-startPage="${startPage - 1}" th:href="@{|?page=${startPage - 1}&statCdList=${statCdList}&dtmReasonCd=${dtmReasonCd}&dtmKindCd=${dtmKindCd}&staYmdInput=${staYmdInput}&endYmdInput=${endYmdInput}&itemsPerPage=${itemsPerPage}|}" th:if="${startPage > 1}">
-												<span><i class="bi bi-caret-left-fill"></i></span>
-											</a>
-										</li>
-										<!-- Page numbers -->
-										<li th:each="page : ${#numbers.sequence(startPage, endPage)}" th:classappend="${page == dtmHis.number + 1} ? 'active'" class="page-item mx-1">
-											<a th:text="${page}" class="page-link" th:href="@{|?page=${page}|}"></a>
-										</li>
-										<!-- Next button -->
-										<li class="page-item" th:classappend="${endPage == dtmHis.totalPages} ? 'disabled'" th:if="${endPage < dtmHis.totalPages}">
-											<a class="last page-link" id="end-page-link" th:data-endPage="${endPage + 1}" th:href="@{|?page=${endPage + 1}&statCdList=${statCdList}&dtmReasonCd=${dtmReasonCd}&dtmKindCd=${dtmKindCd}&staYmdInput=${staYmdInput}&endYmdInput=${endYmdInput}&itemsPerPage=${itemsPerPage}|}">
-												<span><i class="bi bi-caret-right-fill"></i></span>
-											</a>
-										</li>
-									</ul>
-								</div>
-								<!-- (끝) 페이징처리 -->
-							</div>
-							<!-- (끝) 근태 목록 + 페이지네이션 Modal -->
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+                <!-- (시작) 페이징처리 -->
+                <div th:if="${!dtmHis.isEmpty()}">
+                    <ul class="pagination pagination-primary justify-content-center align-items-center">
+                        <!-- Previous button -->
+                        <li class="page-item" th:classappend="${startPage == 1} ? 'disabled'">
+                            <a class="first page-link" id="first-page-link" th:data-startPage="${startPage - 1}" th:href="@{|?page=${startPage - 1}&statCdList=${statCdList}&dtmReasonCd=${dtmReasonCd}&dtmKindCd=${dtmKindCd}&staYmdInput=${staYmdInput}&endYmdInput=${endYmdInput}&itemsPerPage=${itemsPerPage}|}" th:if="${startPage > 1}">
+                                <span><i class="bi bi-caret-left-fill"></i></span>
+                            </a>
+                        </li>
+                        <!-- Page numbers -->
+                        <li class="page-item mx-1" th:classappend="${page == dtmHis.number + 1} ? 'active'" th:each="page : ${#numbers.sequence(startPage, endPage)}">
+                            <a class="page-link" th:href="@{|?page=${page}|}" th:text="${page}"></a>
+                        </li>
+                        <!-- Next button -->
+                        <li class="page-item" th:classappend="${endPage == dtmHis.totalPages} ? 'disabled'" th:if="${endPage < dtmHis.totalPages}">
+                            <a class="last page-link" id="end-page-link" th:data-endPage="${endPage + 1}" th:href="@{|?page=${endPage + 1}&statCdList=${statCdList}&dtmReasonCd=${dtmReasonCd}&dtmKindCd=${dtmKindCd}&staYmdInput=${staYmdInput}&endYmdInput=${endYmdInput}&itemsPerPage=${itemsPerPage}|}">
+                                <span><i class="bi bi-caret-right-fill"></i></span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- (끝) 페이징처리 -->
+            </div>
+            <!-- (끝) 근태 목록 + 페이지네이션 Modal -->
+        </div>
+    </div>
+</div>
 
-		<!-- (start) private script -->
-		<th:block layout:fragment="script">
-			<script src="/extensions/litepicker/bundle.js"></script>
-			<script src="/extensions/litepicker/mobilefriendly.js"></script>
-			<script src="/extensions/litepicker/initLitepicker.js"></script>
-			<script src="/extensions/select2/select2.full.js"></script>
-			<script src="/extensions/fullcalendar/index.global.js"></script>
-			<script src="/extensions/fullcalendar/initDtmRegCal.js"></script>
-			<script src="/extensions/fullcalendar/main.min.js"></script>
-			<script src="/extensions/swiper/swiper-bundle.min.js"></script>
-			<script src="/extensions/swiper/initDtmApplSwiper.js"></script>
+<!-- (start) private script -->
+<th:block layout:fragment="script">
+    <script src="/extensions/litepicker/bundle.js"></script>
+    <script src="/extensions/litepicker/mobilefriendly.js"></script>
+    <script src="/extensions/litepicker/initLitepicker.js"></script>
+    <script src="/extensions/select2/select2.full.js"></script>
+    <script src="/extensions/fullcalendar/index.global.js"></script>
+    <script src="/extensions/fullcalendar/initDtmRegCal.js"></script>
+    <script src="/extensions/fullcalendar/main.min.js"></script>
+    <script src="/extensions/swiper/swiper-bundle.min.js"></script>
+    <script src="/extensions/swiper/initDtmApplSwiper.js"></script>
 
-			<script src="/js/dateFormat.js"></script>
-			<script src="/js/disablePastDates.js"></script>
-			<script src="/js/dateInputValidation.js"></script>
-			<script src="/js/searchForm.js"></script>
-			<script src="/js/dtmApplSelectForm.js"></script>
-			<script src="/js/utils/progressBar.js"></script>
-			<script src="/js/dtmApplPopup.js"></script>
-			<script src="/js/dtmRevokeApplPopup.js"></script>
+    <script src="/js/dateFormat.js"></script>
+    <script src="/js/disablePastDates.js"></script>
+    <script src="/js/dateInputValidation.js"></script>
+    <script src="/js/searchForm.js"></script>
+    <script src="/js/dtmApplSelectForm.js"></script>
+    <script src="/js/utils/progressBar.js"></script>
+    <script src="/js/dtmApplPopup.js"></script>
+    <script src="/js/dtmRevokeApplPopup.js"></script>
 
-			<script src="/js/dtmList.js"></script>
-		</th:block>
-		<!-- (end) private script -->
-	</body>
+    <script src="/js/dtmList.js"></script>
+</th:block>
+<!-- (end) private script -->
+</body>
 </html>

@@ -1,5 +1,6 @@
-window.url = "/api/admin/lang"
-window.columns = [
+window.tabulator = window.tabulator || {}; // 네임스페이스 생성
+window.tabulator.url = "/api/admin/lang"
+window.tabulator.columns = [
     { title: "코드", field: "lang", sorter: "string", editor: "input"},
     { title: "코드명", field: "langName", sorter: "string", editor: "textarea", formatter:"textarea", minWidth: 100, widthGrow: 2},
     { title: "코드타입", field: "langType", sorter: "string", editor: "input" },
@@ -8,5 +9,5 @@ window.columns = [
 ]
 
 document.addEventListener("DOMContentLoaded", function() {
-    createTable(false, window.columns, window.url);
+    createTable(false, window.tabulator.columns, window.tabulator.url);
 });

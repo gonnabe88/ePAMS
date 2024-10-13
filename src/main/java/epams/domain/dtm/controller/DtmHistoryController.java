@@ -148,9 +148,13 @@ public class DtmHistoryController<S extends Session> {
         final String DTMLIST = "dtm/dtmList";
         searchDTO.setEmpId(Long.parseLong(authentication().getName().replace('K', '7')));
 
+        // 현재 기준 년도(YYYY) 세팅 ex)2024
+        LocalDate currenDate = LocalDate.now();
+        String thisYear = String.valueOf(currenDate.getYear());
+        
         try {
             // 휴가보유 현황
-            final DtmAnnualStatusDTO dtmAnnualStatusDTO = dtmAnnualStatusService.getDtmAnnualStatus(searchDTO.getEmpId());
+            final DtmAnnualStatusDTO dtmAnnualStatusDTO = dtmAnnualStatusService.getDtmAnnualStatus(searchDTO.getEmpId(), thisYear);
             DtmAnnualStatusDTO.removeBracket(dtmAnnualStatusDTO);
             dtmAnnualStatusDTO.formatter();
             model.addAttribute("dtmAnnualStatus", dtmAnnualStatusDTO);

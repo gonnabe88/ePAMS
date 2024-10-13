@@ -1,8 +1,10 @@
 package epams.domain.dtm.controller;
 
 import java.io.IOException;
+import java.lang.reflect.Member;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -16,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import epams.domain.com.member.service.MemberService;
+import epams.domain.com.sidebar.dto.UserInfoDTO;
 import epams.domain.dtm.dto.DtmApplStatusDTO;
 import epams.domain.dtm.dto.DtmHisDTO;
 import epams.domain.dtm.dto.DtmKindSumDTO;
@@ -86,6 +90,13 @@ public class DtmApplRestController {
 
     /**
      * @author K140024
+     * @implNote 멤버 서비스 주입
+     * @since 2024-09-13
+     */
+    private final MemberService memberService;
+
+    /**
+     * @author K140024
      * @implNote 현재 인증된 사용자 정보를 가져오는 메소드
      * @since 2024-04-26
      */
@@ -111,27 +122,41 @@ public class DtmApplRestController {
         final Long empId = Long.parseLong(authentication().getName().replace('K', '7'));
         final List<DtmHisDTO> revokeDTOList = dtmHisDTOLists.get("revoke");
         final List<DtmHisDTO> registDTOList = dtmHisDTOLists.get("regist");
+        final List<DtmHisDTO> dtmHisDTOList = new ArrayList<>();
+        /* @TODO 외부 테스트 시 주석 처리(시작)
+        final String phoneNo = memberService.findMPhoneNo(empId); // 휴대폰 연락처 가져오기
+        @TODO 외부 테스트 시 주석 처리(끝) */
+        
+        if(!revokeDTOList.isEmpty()) {
+            revokeDTOList.forEach(dtmHisDTO -> {
+                dtmHisDTO.setEmpId(empId); // 신청자 ID = 현재 로그인 사용자
+                dtmHisDTO.setModUserId(empId); // 수정자 ID = 현재 로그인 사용자
+                dtmHisDTO.setStaDate(dtmHisDTO.getStaYmd().toLocalDate());
+                dtmHisDTO.setEndDate(dtmHisDTO.getEndYmd().toLocalDate());
+                /* @TODO 외부 테스트 시 주석 처리(시작)
+                dtmHisDTO.setTelno(phoneNo); // 연락처 설정 = 현재 로그인한 사용자 연락처
+                dtmEtcService.findDtmPeriod(dtmHisDTO); // 근태별 교차신청가능여부/시작 및 종료시간 설정
+                 @TODO 외부 테스트 시 주석 처리(끝) */
+                log.warn("취소 : " + dtmHisDTO.toString());
+            });            
+        }
 
-        // DTM_HIS 객체 세팅
-        revokeDTOList.forEach(dtmHisDTO -> {
-            dtmHisDTO.setEmpId(empId); // 신청자 ID = 현재 로그인 사용자
-            dtmHisDTO.setModUserId(empId); // 수정자 ID = 현재 로그인 사용자
-            dtmHisDTO.setStaDate(dtmHisDTO.getStaYmd().toLocalDate());
-            dtmHisDTO.setEndDate(dtmHisDTO.getEndYmd().toLocalDate());
-            /* @TODO 외부 테스트 시 주석 처리(시작)
-            dtmEtcService.findDtmPeriod(dtmHisDTO); // 근태별 교차신청가능여부/시작 및 종료시간 설정
-            @TODO 외부 테스트 시 주석 처리(끝) */
-        });
+        if(!registDTOList.isEmpty()) {
+            registDTOList.forEach(dtmHisDTO -> {
+                dtmHisDTO.setEmpId(empId); // 신청자 ID = 현재 로그인 사용자
+                dtmHisDTO.setModUserId(empId); // 수정자 ID = 현재 로그인 사용자
+                dtmHisDTO.setStaDate(dtmHisDTO.getStaYmd().toLocalDate());
+                dtmHisDTO.setEndDate(dtmHisDTO.getEndYmd().toLocalDate());
+                /* @TODO 외부 테스트 시 주석 처리(시작)
+                dtmHisDTO.setTelno(phoneNo); // 연락처 설정 = 현재 로그인한 사용자 연락처
+                dtmEtcService.findDtmPeriod(dtmHisDTO); // 근태별 교차신청가능여부/시작 및 종료시간 설정
+                 @TODO 외부 테스트 시 주석 처리(끝) */
+                log.warn("신청 : " + dtmHisDTO.toString());
+            });  
+        }
 
-        registDTOList.forEach(dtmHisDTO -> {
-            dtmHisDTO.setEmpId(empId); // 신청자 ID = 현재 로그인 사용자
-            dtmHisDTO.setModUserId(empId); // 수정자 ID = 현재 로그인 사용자
-            dtmHisDTO.setStaDate(dtmHisDTO.getStaYmd().toLocalDate());
-            dtmHisDTO.setEndDate(dtmHisDTO.getEndYmd().toLocalDate());
-            /* @TODO 외부 테스트 시 주석 처리(시작)
-            dtmEtcService.findDtmPeriod(dtmHisDTO); // 근태별 교차신청가능여부/시작 및 종료시간 설정
-            @TODO 외부 테스트 시 주석 처리(끝) */
-        });  
+        dtmHisDTOList.addAll(dtmHisDTOLists.get("revoke"));
+        dtmHisDTOList.addAll(dtmHisDTOLists.get("regist"));
 
         // 현재 기준 년도(YYYY) 세팅 ex)2024
         LocalDate currenDate = LocalDate.now();
@@ -157,16 +182,15 @@ public class DtmApplRestController {
             final DtmApplStatusDTO statusDTO = dtmApplStatusService.getApplStatus(empId, thisYear);
 
             // 근태 체크 로직 수행
-            Boolean revokeAdUseYn = dtmCheckService.commonCheck(revokeDTOList, dtmPromotionDTO, dtmSaveDTO, statusDTO, sumDTO);
-            Boolean registAdUseYn = dtmCheckService.commonCheck(registDTOList, dtmPromotionDTO, dtmSaveDTO, statusDTO, sumDTO);
+            Boolean adUseYn = dtmCheckService.commonCheck(dtmHisDTOList, dtmPromotionDTO, dtmSaveDTO, statusDTO, sumDTO);
 
             // 서비스 호출 및 결과 메시지 설정
-            response.put("adUseYn", registAdUseYn); // 선연차 사용 동의
+            response.put("adUseYn", adUseYn); // 선연차 사용 동의
             response.put("annualSum", sumDTO.getAnnualDaySum()); // 신청시간
             response.put("annualUsedCnt", statusDTO.getAnnualDayUsedCnt()); // 기 사용시간
             response.put("annualTotalCnt", statusDTO.getAnnualDayTotalCnt()); // 총 보유시간
 
-   @TODO 외부 테스트 시 주석 처리(끝) */
+    @TODO 외부 테스트 시 주석 처리(끝) */
  
             response.put("registDTOList", registDTOList); // 근태신청 리스트
             response.put("revokeDTOList", revokeDTOList); // 근태신청 리스트

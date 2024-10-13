@@ -9,6 +9,8 @@ import epams.domain.com.apply.dto.ElaApplCDTO;
 import epams.domain.com.apply.dto.ElaApplTrCDTO;
 import epams.domain.com.apply.repository.ElaApplCRepository;
 import epams.domain.com.apply.repository.ElaApplTrCRepository;
+import epams.domain.com.member.service.MemberService;
+import epams.domain.com.sidebar.dto.UserInfoDTO;
 import epams.domain.dtm.dto.DtmApplElaCheckProcDTO;
 import epams.domain.dtm.dto.DtmCheckDTO;
 import epams.domain.dtm.dto.DtmHisDTO;
@@ -67,6 +69,13 @@ public class DtmRevokeService {
 	 * @since 2024-09-13
 	 */
 	private final DtmCheckRepository dtmCheckRepository;
+
+	/***
+	 * @author 140024
+	 * @implNote Service 객체 생성
+	 * @since 2024-09-13
+	 */
+	private final MemberService memberService;
 
 	/***
 	 * @author 140024
@@ -168,14 +177,21 @@ public class DtmRevokeService {
 			dtmHisDTO.setModiDtmHisId(dtmHisDTO.getDtmHisId());
 			dtmHisDTO.setModiType("D");
 			dtmHisDTO.setStatCd("121");
-			dtmHisDTO.setModiReason("ePAMS Test");
+			dtmHisDTO.setModiReason(dtmHisDTO.getDtmReason());
 
 			log.warn(dtmHisDTO.toString());
 			// [INSERT] 근태신청 추가
-			dtmHisRepo.insert(dtmHisDTO); 
+			dtmHisRepo.insert(dtmHisDTO);
+
+			UserInfoDTO userInfoDTO = new UserInfoDTO();
+
+			/* @TODO 외부 테스트 시 주석 처리(시작)
+			// 결재자(신청자) 정보(직위) 가져오기
+			userInfoDTO = memberService.findUsrDeptInfoByUserNo(dtmHisDTO.getEmpId());
+			@TODO 외부 테스트 시 주석 처리(끝) */
 
 			// [INSERT] 신청서결재내역 추가 (201 결재요청)
-			final ElaApplTrCDTO elaApplTrCDTO = new ElaApplTrCDTO(dtmHisDTO.getEmpId(), "1", applId, 1, "201"); // ElaApplTrCDTO(신청서결재내역) 객체 생성
+			final ElaApplTrCDTO elaApplTrCDTO = new ElaApplTrCDTO(dtmHisDTO.getEmpId(), "1", applId, 1, "201", userInfoDTO.getPositionName()); // ElaApplTrCDTO(신청서결재내역) 객체 생성
 			elaApplTrCRepo.insert(elaApplTrCDTO); // 신청서결재내역 추가
 
 			// 사후검증 프로시저

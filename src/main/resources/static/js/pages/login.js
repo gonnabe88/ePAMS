@@ -23,9 +23,10 @@ $(function() {
             $('#webauthn').prop('checked', true); // Webauthn 인증방식 자동 체크
             $('#passwordDiv').addClass('hidden'); // 패스워드 입력창 hidden
             setCookie("MFA", 'webauthn', 30); // 쿠키 갱신
-        } else {
-            $('#webauthn').prop('disabled', true);
-        }
+        } 
+        // else {
+        //     $('#webauthn').prop('disabled', true);
+        // }
     }
 
     const setPasswordInput = () => {// 패스워드 입력창을 숨기거나 보여주는 함수
@@ -35,9 +36,28 @@ $(function() {
 
     $('input[name="MFA"]').change(function() { // MFA 라디오 버튼 변경 시
         let MFA = $('input[name="MFA"]:checked').val(); // MFA 라디오 버튼 값 확인
+        const username = $('#username').val();
+
         setCookie("MFA", MFA, 30); // 쿠키 갱신
         setPasswordInput(); // 패스워드 입력창을 숨기거나 보여줌
         webauthnYn === 'Y' && MFA !== 'webauthn' ? loadToastHTML() : null;
+        if(MFA === 'webauthn') {
+            $.get(`/api/login/isWebauthn?username=${username}`, function(data) {
+                if(data.isWebauthn === 'N') {
+                    $('input[name="MFA"]').prop('checked', false);
+                    $('#webauthn').blur(); // focus 해제 (해제 안하면 잔상 남음)
+                    rememberAuthType(data.isWebauthn);
+                    setPasswordInput(); // 인증방식에 따른 패스워드 입력창 세팅
+                    popupHtmlMsg("미등록 사용자", 
+                        "<p class='text-left'>간편인증을 등록하지 않은 계정입니다. <span class='h6'>카카오톡</span> 또는 <span class='h6'>SMS</span> 로그인 후 간편인증을 등록해주세요.</p>" +
+                        "<p class='text-left h6'>로그인 계정 : " + username + "</p>",
+                         "info");
+                }                    
+            }).fail(function() {
+                console.log('webauth 사용자 확인 중 에러 발생');
+            });
+
+        }
         //  간편인증 사용자가 다른 인증을 선택하면 토스트 메시지 출력
         //     "안내사항",
         //     "<p>간편인증이 등록된 사용자는 자동으로 간편인증이 선택됩니다.</p> <p>간편인증 사용을 원하지 않으시면 로그인 후 간편인증 등록을 해제해주세요.</p>",

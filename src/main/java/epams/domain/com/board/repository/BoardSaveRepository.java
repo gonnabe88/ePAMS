@@ -32,7 +32,6 @@ public class BoardSaveRepository {
 	 * @since 2024-06-09
 	 */
     public Long save(final BoardDTO boardDTO) {
-		log.warn("boardDTO : {}", boardDTO.toString());
 		sql.insert("Board.save", boardDTO);
     	return boardDTO.getSeqId();
     }

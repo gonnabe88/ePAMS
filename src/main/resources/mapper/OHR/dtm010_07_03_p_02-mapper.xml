@@ -101,9 +101,9 @@
                         , STD_TIME
                         , S_YEAR 
                         , N_SAVE_HHCNT
-                        , OHR.F_DTM_GET_REMAIN_CNT('01', 7210058, 'KO', 'F1') AS OTM_CNV_CNT
-                        , OHR.F_DTM_GET_REMAIN_CNT('01', 7210058, 'KO', 'F') AS OTM_CNV_REMAIN_CNT
-                        , OHR.F_DTM_GET_REMAIN_CNT('01', 7210058, 'KO', 'F2') AS OTM_CNV_USED_CNT
+                        , OHR.F_DTM_GET_REMAIN_CNT('01', #{empId}, 'KO', 'F1') AS OTM_CNV_CNT
+                        , OHR.F_DTM_GET_REMAIN_CNT('01', #{empId}, 'KO', 'F') AS OTM_CNV_REMAIN_CNT
+                        , OHR.F_DTM_GET_REMAIN_CNT('01', #{empId}, 'KO', 'F2') AS OTM_CNV_USED_CNT
                 FROM (     
                         SELECT '('||yycnt||'일)' as yycnt
                                 , hhcnt||'시간' as hhcnt

@@ -6,13 +6,13 @@
 <div id="memberList">
     <div class="divider">
         <div class="divider-text">
-            <h5 class="card-title">
+            <h5 class="card-title mb-0">
                 <span>조회결과</span>
             </h5>
         </div>
     </div>
 
-    <section class="section" th:each="member: ${memberList}">
+    <section class="section ms-2" th:each="member: ${memberList}">
         <div class="animate__animated animate__fadeIn animate__slow">
             <p class="h6" th:utext="${member.realname}+' '+${member.positionName}"></p>
             <div class="d-flex align-items-center justify-content-start gap-3 mt-3">
@@ -24,8 +24,18 @@
                 <span class="h7 m-0"  th:text="${member.teamName}"></span>
             </div>
             <div class="d-flex align-items-center justify-content-start gap-3 mt-3">
+                <i class="bi bi-calculator-fill"></i>
+                <span class="h7 m-0"  th:text="${member.simpleInlineNo}"></span>
+            </div>
+            <div class="d-flex align-items-center justify-content-start gap-3 mt-3">
                 <i class="bi bi-telephone-fill"></i>
-                <span class="h7 m-0"  th:text="${member.inlineNumber}"></span>
+                <span class="h7 m-0"  th:text="${member.inlineNo}"></span>
+                <a class="badge rounded-pill bg-info me-1" th:href="'tel:' + ${member.inlineNo}"><span>CALL</span></a>
+            </div>
+            <div class="d-flex align-items-center justify-content-start gap-3 mt-3">
+                <i class="bi bi-phone-fill"></i>
+                <span class="h7 m-0"  th:text="${member.phoneNo}"></span>
+                <a class="badge rounded-pill bg-primary me-1" th:href="'tel:' + ${member.phoneNo}"><span>CALL</span></a>
             </div>
             <div class="d-flex align-items-center justify-content-start gap-3 mt-3">
                 <i class="bi bi-briefcase-fill"></i>
@@ -34,13 +44,18 @@
 
             <div class="d-flex justify-content-around mt-5">
                 <div class="text-center searchResultIcon p-0 d-flex flex-column justify-content-center align-items-center" id="search">
-                    <h3 class="m-0"><i class="bi bi-binoculars-fill"></i></h3>
+                    <h4 class="m-0"><i class="bi bi-binoculars-fill"></i></h4>
                     <small>다시검색</small>
                 </div>
-                <div class="text-center searchResultIcon p-0 d-flex flex-column justify-content-center align-items-center" id="contact">
-                    <a id="inlineNumber" class="inlineNumber" th:href="'tel:' + ${member.inlineNumber}"></a>
-                    <h3 class="m-0"><i class="bi bi-telephone-outbound-fill"></i></h3>
-                    <small>연락하기</small>
+                <div class="text-center searchResultIcon p-0 d-flex flex-column justify-content-center align-items-center" id="contactInline">
+                    <a id="inlineNumber" class="contact" th:href="'tel:' + ${member.inlineNo}"></a>
+                    <h4 class="m-0"><i class="bi bi-telephone-outbound-fill"></i></h4>
+                    <small>회사전화</small>
+                </div>
+                <div class="text-center searchResultIcon p-0 d-flex flex-column justify-content-center align-items-center" id="contactPhone">
+                    <a id="phoneNo" class="contact" th:href="'tel:' + ${member.phoneNo}"></a>
+                    <h4 class="m-0"><i class="bi bi-phone-vibrate-fill"></i></h4>
+                    <small>휴대폰</small>
                 </div>
             </div>
         </div>

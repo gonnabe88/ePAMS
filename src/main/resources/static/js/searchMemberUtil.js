@@ -14,7 +14,7 @@ const searchMember = () => {
 
     $.ajax({
         type: "POST",
-        url: "/searchMember",
+        url: "/index/searchMember",
         data: {
             "text": selectedItem ? selectedItem.username : "" // 선택된 항목의 실제 값을 사용
         },
@@ -24,7 +24,8 @@ const searchMember = () => {
         },
         complete: function(data) {
             // 서버로부터 받은 데이터를 memberList에 넣음
-            $("#memberList").html(data.responseText);
+            $("#memberList").html(data.responseText);            
+            $('#noResultDiv').remove();
             // AJAX 후에 이벤트 바인딩
             setupEventListeners();
 
@@ -51,8 +52,19 @@ const setupEventListeners = () => {
         });
 
         // 연락하기 아이콘 클릭 시 전화 걸기
-        document.getElementById('contact').addEventListener('click', function () {
+        document.getElementById('contactInline').addEventListener('click', function () {
             const phoneLink = document.getElementById('inlineNumber');
+            if (phoneLink && phoneLink.getAttribute('href') !== 'tel:') {
+                // 타임리프에서 설정된 전화번호로 전화 걸기
+                phoneLink.click();
+            } else {
+                popupMsg("입력 오류", "전화번호를 찾을 수 없습니다.", "error");
+            }
+        });
+
+        // 연락하기 아이콘 클릭 시 전화 걸기
+        document.getElementById('contactPhone').addEventListener('click', function () {
+            const phoneLink = document.getElementById('phoneNo');
             if (phoneLink && phoneLink.getAttribute('href') !== 'tel:') {
                 // 타임리프에서 설정된 전화번호로 전화 걸기
                 phoneLink.click();
@@ -85,13 +97,18 @@ $(document).ready(() => {
     let isFocused = false; // input이 포커스되었는지 여부를 저장하는 변수
     let isTyping = false;  // 타이핑 애니메이션이 실행 중인지 여부를 저장하는 변수
 
+    let startX = 0; // 드래그 시작 위치
+    let startY = 0; // 드래그 시작 위치
+    let endX = 0; // 드래그 종료 위치
+    let endY = 0; // 드래그 종료 위치
+
     function typePlaceholder() {
         if (!isFocused && charIndex < placeholders[placeholderIndex].length) {
             inputElement.setAttribute("placeholder", placeholders[placeholderIndex].substring(0, charIndex + 1));
             charIndex++;
         } else {
             clearInterval(typingInterval);
-            typingInterval = null; // 타이핑이 완료되면 interval 변수 초기화
+            typingInterval = null; // 타이핑이 완료되면 interval 변수 초기화x
             isTyping = false; // 타이핑 상태를 false로 설정
             if (!isFocused) { // focus 상태가 아닐 때만 타이핑 재개
                 setTimeout(startTypingEffect, 2000); // 2초 동안 전체 텍스트를 유지한 후 다음 placeholder로 넘어감
@@ -118,6 +135,8 @@ $(document).ready(() => {
         inputElement.setAttribute("placeholder", "");
         isFocused = true;  // 포커스 상태를 true로 설정
         scrollToSearchMemberCard(); // 검색 폼으로 스크롤 이동
+        
+        awesomplete.evaluate(); // 입력폼이 포커스 되었을 때 라이브 검색 결과가 보이도록 설정
     });
 
     // searchMember 입력 필드가 포커스를 잃었을 때 애니메이션 재개
@@ -179,6 +198,21 @@ $(document).ready(() => {
 
             const itemElement = document.createElement("li");
             itemElement.innerHTML = html;
+
+            // 사용자의 조작 실수로 조금 움직인 경우 그냥 클릭으로 간주
+            itemElement.addEventListener('touchstart', function(event) {
+                startX = event.touches[0].clientX;
+                startY = event.touches[0].clientY;
+            }, {passive: true});
+        
+            // 사용자의 조작 실수로 조금 움직인 경우 그냥 클릭으로 간주
+            itemElement.addEventListener('touchend', function(event) {
+                endX = event.changedTouches[0].clientX;
+                endY = event.changedTouches[0].clientY;        
+                if(Math.abs(endX-startX) < 5 && Math.abs(endY-startY) < 5) {
+                    itemElement.click();
+                }
+            }, {passive: true});
 
             return itemElement;
         },
@@ -263,17 +297,21 @@ $(document).ready(() => {
 
     dropdown.addEventListener('touchend', function(event) {
         event.stopPropagation();
+        if(Math.abs(endX-startX) < 5 && Math.abs(endY-startY) < 5) {
+
+        }
+
     }, { passive: true });
 
     $.ajax({
-        url: "api/index/getDeptList",
+        url: "api/index/getUserList",
         method: 'GET',
         dataType: "json",
         success: function(data) {
             const list = [];
 
-            if (data.teamList) {
-                data.teamList.forEach(item => {
+            if (data.userList) {
+                data.userList.forEach(item => {
                     // 아이콘을 username이 K로 시작하는 경우에만 추가
                     const iconHtml = item.username.startsWith('K')
                         ? '<img src="/images/kdb/ICON16.ico" alt="KDB" id="searchMemberIcon">'

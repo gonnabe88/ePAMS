@@ -39,7 +39,7 @@ $(document).ready(() => { // 화면 로드 시 호출
         let revokeDTOList = []; // 근태 취소 List 객체 생성
         let registDTOList = []; // 근태 신청 List 객체 생성
 
-        const button = $('#dtmModifyBtn');
+        const button = $(this).closest('div');;
         const dtmHisId = button.data('dtmhisid');
         const dtmKindCd = button.data('dtmkindcd');
         const dtmReasonCd = button.data('dtmreasoncd');
@@ -54,7 +54,8 @@ $(document).ready(() => { // 화면 로드 시 호출
 
             dtmKindCd: dtmKindCd, // 근태종류
             dtmReasonCd: dtmReasonCd, // 근태사유코드
-            dtmReasonNm: dtmReasonNm, // 근태사유
+            dtmReasonNm: dtmReasonNm, // 근태명
+            dtmReason: "근태취소", // 근태사유
             dtmDispName: dtmReasonNm, // 근태표시이름
             staYmd: beforeStaYmd, // 근태시작일
             endYmd: beforeEndYmd // 근태종료일
@@ -97,7 +98,7 @@ $(document).ready(() => { // 화면 로드 시 호출
         let revokeDTOList = []; // 근태 취소 List 객체 생성
         let registDTOList = []; // 근태 신청 List 객체 생성
 
-        const button = $('#dtmModifyBtn');
+        const button = $(this).closest('div');
         const applId = button.data('applid');
         const dtmHisId = button.data('dtmhisid');
         const dtmKindCd = button.data('dtmkindcd');
@@ -115,7 +116,8 @@ $(document).ready(() => { // 화면 로드 시 호출
 
             dtmKindCd: dtmKindCd, // 근태종류
             dtmReasonCd: dtmReasonCd, // 근태사유코드
-            dtmReasonNm: dtmReasonNm, // 근태사유
+            dtmReasonNm: dtmReasonNm, // 근태명
+            dtmReason: "근태변경", // 근태사유
             dtmDispName: dtmReasonNm, // 근태표시이름
             staYmd: beforeStaYmd, // 근태시작일
             endYmd: beforeEndYmd // 근태종료일

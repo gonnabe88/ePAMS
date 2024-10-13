@@ -45,12 +45,14 @@ public class DtmApplyService {
 		String resultMessage = "";
 		
 		try {
-
-			for(DtmHisDTO dto : revokeDTOList) {
-				resultMessage = dtmRevokeService.revoke(dto); // 근태 취소
-            }
-
-			resultMessage = dtmRegistService.regist(empId, registDTOList); // 근태 신청
+			if(!revokeDTOList.isEmpty()) {
+				for(DtmHisDTO dto : revokeDTOList) {
+					resultMessage = dtmRevokeService.revoke(dto); // 근태 취소
+				}
+			}
+			if(!registDTOList.isEmpty()) {
+				resultMessage = dtmRegistService.regist(empId, registDTOList); // 근태 신청
+			}
 		} catch (CustomGeneralRuntimeException e) {
 			log.error("[신청 불가] {}", e.getMessage());
 			throw e; // 커스텀 예외를 그대로 던져서 컨트롤러에서 처리하게 합니다.

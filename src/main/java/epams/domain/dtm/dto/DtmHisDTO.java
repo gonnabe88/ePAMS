@@ -138,7 +138,7 @@ public class DtmHisDTO extends DtmHisVO {
         return LocalDateTime.of(super.getStaYmd().toLocalDate(), time);
     }
     
- @TODO 외부 테스트 시 주석 처리(끝) */
+     @TODO 외부 테스트 시 주석 처리(끝) */
 
     /***
      * @author 140024
@@ -159,7 +159,7 @@ public class DtmHisDTO extends DtmHisVO {
         return LocalDateTime.of(super.getEndYmd().toLocalDate(), time);
     }
 
-     @TODO 외부 테스트 시 주석 처리(끝) */
+      @TODO 외부 테스트 시 주석 처리(끝) */
     /***
      * @author 140024
      * @implNote 경과여부 (과거/진행중/예정) 세팅

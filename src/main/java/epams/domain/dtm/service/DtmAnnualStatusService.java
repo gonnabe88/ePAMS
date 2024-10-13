@@ -34,8 +34,8 @@ public class DtmAnnualStatusService {
 	 * @since 2024-09-11
 	 * @param empId 행번(7140024)
 	 */
-	public DtmAnnualStatusDTO getDtmAnnualStatus(final Long empId) {
-		final DtmSqlParamDTO paramDTO = new DtmSqlParamDTO(empId, "2024", "01", "KO"); 
+	public DtmAnnualStatusDTO getDtmAnnualStatus(final Long empId, final String thisYear) {
+		final DtmSqlParamDTO paramDTO = new DtmSqlParamDTO(empId, thisYear, "01", "KO"); 
 		return dtmAnnualStatusRepository.getDtmAnnualStatus(paramDTO);
 	} 
 }

@@ -3,11 +3,12 @@ package epams.domain.com.member.service;
 import java.util.List;
 
 import epams.domain.com.index.dto.DeptSearchDTO;
-import epams.domain.com.index.dto.TeamSearchDTO;
+import epams.domain.com.index.dto.UserSearchDTO;
 import epams.domain.com.login.util.MaskPhoneNoUtil;
 import epams.domain.com.member.dto.RoleDTO;
 import epams.domain.com.member.dto.IamUserDTO;
 import epams.domain.com.member.repository.MemberRepository;
+import epams.domain.com.sidebar.dto.UserInfoDTO;
 
 import org.springframework.stereotype.Service;
 
@@ -29,6 +30,16 @@ public class MemberService {
      */
     private final MemberRepository memberRepository;
 
+    /**
+     * *
+     * @author 140024
+     * @implNote 특정 사용자 조직 및 직책 정보 조회
+     * @return 부점, 파견부점, 부점지역, 파견부점지역 등
+     * @since 2024-10-11
+     */
+    public UserInfoDTO findUsrDeptInfoByUserNo(final Long empId) {
+        return memberRepository.findUsrDeptInfoByUserNo(empId);
+    }
 
     /**
      * *
@@ -48,7 +59,7 @@ public class MemberService {
      * @return 마스킹된 휴대폰 번호
      * @since 2024-09-05
      */
-    public String findMaskedPhoneNo(final String username) {
+    public String findMaskedPhoneNo(final Long username) {
         String phoneNo = memberRepository.findPhoneNo(username);        
         return MaskPhoneNoUtil.maskPhoneNo(phoneNo);
     }
@@ -60,7 +71,7 @@ public class MemberService {
      * @return 휴대폰 번호
      * @since 2024-09-05
      */
-    public String findMPhoneNo(final String username) {    
+    public String findMPhoneNo(final Long username) {    
         return memberRepository.findPhoneNo(username); 
     }
 
@@ -71,7 +82,12 @@ public class MemberService {
      * @return 검색된 회원 목록
      */
     public List<IamUserDTO> findBySearchValue(final String searchValue) {
-        return memberRepository.findBySearchValue(searchValue);
+        List<IamUserDTO> iamUserDTOList = memberRepository.findBySearchValue(searchValue);
+        for (IamUserDTO iamUserDTO : iamUserDTOList) {
+            iamUserDTO.formatContactNumber(iamUserDTO.getPhoneNo(), iamUserDTO.getInlineNo(), "KR");
+            log.warn(iamUserDTO.toString());
+        }
+        return iamUserDTOList;
     }
 
     /**
@@ -90,8 +106,8 @@ public class MemberService {
      * @param searchValue 검색 값
      * @return 검색된 회원 목록
      */
-    public List<TeamSearchDTO> findAllTeam() {
-        return memberRepository.findAllTeam();
+    public List<UserSearchDTO> findAllUser() {
+        return memberRepository.findAllUser();
     }
 
     /**

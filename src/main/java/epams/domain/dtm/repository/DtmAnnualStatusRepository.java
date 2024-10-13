@@ -35,7 +35,6 @@ public class DtmAnnualStatusRepository {
      * @since 2024-09-09
      */
     public DtmAnnualStatusDTO getDtmAnnualStatus(final DtmSqlParamDTO dto) {
-
     	return sql.selectOne("DtmAnnualStatus.findDtmAnnualStatus", dto);
     }
 }

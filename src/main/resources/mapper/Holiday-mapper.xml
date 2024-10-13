@@ -9,6 +9,7 @@
         <result property="holiYmd" column="YMD"/>
         <result property="holiDay" column="WEEK"/>
         <result property="holiNm" column="NOTE"/>
+        <result property="minus" column="MINUS_DD"/>
     </resultMap>
 
     <!-- 모든 휴일 데이터 조회 -->
@@ -22,7 +23,7 @@
     <!-- 휴일 날짜 데이터 조회 -->
     <select id="findholiYmd" resultMap="holidayMap">
         SELECT CAL.YMD 
-        FROM OHR.HPS_CALENDAR CAL
+        FROM OHR.HPS_CALENDAR CAL 
         WHERE MINUS_DD = '0'
             AND (TO_CHAR(CAL.YMD,'YYYY') = EXTRACT(YEAR FROM ADD_MONTHS(SYSDATE, -12)) 
             OR TO_CHAR(CAL.YMD,'YYYY') = EXTRACT(YEAR FROM SYSDATE)

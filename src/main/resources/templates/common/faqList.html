@@ -35,28 +35,11 @@
                                     <div class="d-flex flex-row align-items-center mb-3 gap-3">
                                         <a th:href="@{|/board/${board.seqId}|}">
                                             <div class="d-flex align-items-center gap-2">
-                                                <h4>
+                                                <h5>
                                                     <span th:text="${board.boardTitle}"> </span>
-                                                </h4>
-                                                <h6>
-                                                            <span class="badge rounded-pill bg-warning text-dark" th:if="${T(java.time.LocalDateTime).now().minusDays(7).isBefore(board.createdTime)}">  new </span>
-                                                </h6>
+                                                </h5>
                                             </div>
                                         </a>
-                                    </div>
-                                    <div class="d-flex flex-row mb-3 gap-3">
-                                        <div>
-                                            <i class="bi bi-building"></i>
-                                            <h7 th:text="${board.boardWriter}"></h7>
-                                        </div>
-                                        <div>
-                                            <i class="bi bi-calendar-check"></i>
-                                            <h7 th:text="${#temporals.format(board.createdTime, 'yyyy-MM-dd')}"></h7>
-                                        </div>
-                                        <div>
-                                            <i class="bi bi-eye"></i>
-                                            <h7 th:text="${board.boardHits}"></h7>
-                                        </div>
                                     </div>
                                     <div class="truncate-multiline">
                                         <p th:utext="${board.boardContents}"></p>

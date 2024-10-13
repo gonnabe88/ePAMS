@@ -9,7 +9,6 @@ $(document).ready(function() {
         // flexSwitchCheckAdmin의 체크 상태 설정
         if(isAdmin) {
             if(isChecked.match("true")) {
-                console.log("admin : " + isAdmin + " " + isChecked);
                 $('#flexSwitchCheckAdmin').prop('checked', true);
                 url = '/common/layout/renderSidebarAdmin';
             } else {
@@ -37,17 +36,44 @@ $(document).ready(function() {
 
     // 현재 페이지 경로와 일치하는 사이드바 항목에 'active' 클래스를 추가하는 함수
     function highlightActiveMenuItem() {
-        // 현재 URL의 경로 가져오기
-        const currentPath = window.location.pathname;
+        const currentPath = window.location.pathname; // 현재 페이지의 경로를 가져옴
+        const currentHash = window.location.hash; // 현재 URL의 해시(#searchDiv 등) 가져오기
+        console.log(currentPath);
+        console.log(currentHash);
 
-        console.log("currentPath: " + currentPath);
+        // 모든 .submenu-item 요소를 순회하며 현재 페이지와 일치하는 항목에 'active' 클래스 추가
+        $(".submenu-item").each((_, submenuItem) => {
+            const submenuLink = $(submenuItem).find("a");
+            const submenuLinkPath = submenuLink.attr("href");
+
+            // 현재 URL 경로와 서브메뉴의 링크가 일치하는 경우
+            if (submenuLinkPath === currentPath) {
+                $(submenuItem).addClass("active"); // 일치하는 submenu-item에 'active' 클래스 추가
+
+                // 상위의 sidebar-item에도 'active' 클래스 추가
+                $(submenuItem).closest(".sidebar-item").addClass("active");
+            }
+        });
+
         // 모든 .sidebar-item 요소를 순회하며 현재 페이지와 일치하는 항목에 'active' 클래스 추가
         $(".sidebar-item").each((_, item) => {
             const link = $(item).find(".sidebar-link");
-            const linkPath = link.attr("href");
-            // 현재 URL 경로와 링크의 경로가 일치하는 경우 'active' 클래스 추가
-            if (linkPath === currentPath) {
-                $(item).addClass("active"); // 일치하는 항목에 'active' 클래스 추가
+            const fullLinkPath = link.attr("href");
+
+            // 링크 경로에서 해시를 분리
+            const linkUrl = fullLinkPath.split('#')[0];  // 경로만 추출
+            const linkHash = fullLinkPath.includes('#') ? '#' + fullLinkPath.split('#')[1] : ''; // #을 포함한 해시 추출
+
+            console.log("linkUrl : " + linkUrl);
+            console.log("linkHash : " + linkHash);
+
+            // 직원검색 처리: 경로는 동일하고 해시(#searchDiv)까지 일치할 경우 'active' 클래스 추가
+            if (linkUrl === currentPath && linkHash === currentHash) {
+                // 직원검색에만 'active' 추가
+                $(item).addClass("active");
+            } else if (linkUrl === currentPath && linkHash === undefined) {
+                // 직원검색에만 'active' 추가
+                $(item).addClass("active");
             }
         });
     }
@@ -58,7 +84,6 @@ $('#flexSwitchCheckAdmin').on('change', function () {
     let isChecked = $(this).prop('checked');
     let url = isChecked ? '/common/layout/renderSidebarAdmin' : '/common/layout/renderSidebarNormal';
     setCookie("adminView", isChecked, 30);
-    console.log("url: " + url);
 
     // 서버에 요청을 보내어 해당 템플릿을 받아옴
     $.get(url, function(html) {
@@ -119,11 +144,7 @@ class Sidebar {
         // 드래그(스와이프) 이벤트를 위한 변수 초기화
         let startX = 0; // 드래그 시작 위치
         let endX = 0; // 드래그 종료 위치
-
-
-
         const noDragElement = document.querySelector('.no-drag');
-
 
         // 모바일 터치 시작 이벤트 (스와이프)
         $(document).on("touchstart", (event) => {
@@ -146,28 +167,32 @@ class Sidebar {
         // 햄버거 버튼 및 사이드바 숨김 버튼 클릭 이벤트 등록
         $(".burger-btn, .sidebar-hide").on("click", this.toggle.bind(this));
 
+
         // 창 크기 변경 이벤트 등록
         $(window).on("resize", this.onResize.bind(this));
 
         // 서브메뉴를 토글하는 함수 정의
         const toggleSubmenu = submenu => {
-            $(submenu).toggleClass("submenu-open submenu-closed");
+            if ($(submenu).hasClass("submenu-open")) {
+                $(submenu).removeClass("submenu-open").addClass("submenu-closed");
+            } else {
+                $(submenu).removeClass("submenu-closed").addClass("submenu-open");
+            }
         };
 
         // 서브메뉴가 있는 사이드바 항목을 클릭했을 때 이벤트 설정
-        $(".sidebar-item.has-sub").each((_, item) => {
-            $(item).find(".sidebar-link").on("click", (event) => {
-                if (event.cancelable) event.preventDefault(); // 기본 동작 방지
-                toggleSubmenu($(item).find(".submenu")); // 서브메뉴 토글
-            });
+        $(document).on("click", ".sidebar-item.has-sub .sidebar-link", function(event) {
+            if (event.cancelable) event.preventDefault(); // 기본 동작 방지
+            const submenu = $(this).closest(".sidebar-item").find(".submenu");
+            toggleSubmenu(submenu); // 서브메뉴 토글
+        });
 
-            // 서브 서브메뉴가 있는 항목을 클릭했을 때 이벤트 설정
-            $(item).find(".submenu-item.has-sub").each((_, submenuItem) => {
-                $(submenuItem).on("click", () => {
-                    toggleSubmenu($(submenuItem).find(".submenu")); // 서브 서브메뉴 토글
-                    this.ensureSubmenuVisibility($(submenuItem).parent()); // 서브메뉴 가시성 보장
-                });
-            });
+        // 서브 서브메뉴가 있는 항목을 클릭했을 때 이벤트 설정
+        $(document).on("click", ".submenu-item.has-sub", function() {
+            const submenuItem = $(this);
+            const parentSubmenu = submenuItem.parent();  // 현재 서브메뉴의 부모
+            toggleSubmenu(submenuItem.find(".submenu")); // 서브 서브메뉴 토글
+            ensureSubmenuVisibility(parentSubmenu); // 서브메뉴 가시성 보장
         });
 
         // PerfectScrollbar 플러그인 사용 설정
@@ -188,6 +213,16 @@ class Sidebar {
         if (this.options.recalculateHeight) {
             recalculateSidebarHeight(this.sidebarElement);
         }
+
+        // 직원검색 클릭 시 사이드바를 닫고 이동
+        $(document).on('click', '#memberSearch', (e) => { 
+            e.preventDefault();
+            e.stopPropagation();
+            if(window.innerWidth < DESKTOP_SIZE) {
+                this.hide();
+            }
+            window.location.href = $('#memberSearch').attr('href');
+        });
     }
 
     // 창 크기 변경 시 처리할 동작 정의

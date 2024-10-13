@@ -33,7 +33,7 @@ public class BaseVO {
      * @implNote [Column] GUID 거래ID 진행 일련번호(시스템 공통 컬럼 - Nexcore)
      * @since 2024-06-09
      */
-    private int guidPrgSno;
+    private Integer guidPrgSno;
 
     /***
      * @author 140024

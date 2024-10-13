@@ -77,6 +77,8 @@ public class DtmCheckService {
 
 		//hisDTOList.forEach(dto -> log.warn(dto.toString()));
 
+		final DtmCheckDTO checkDTO = new DtmCheckDTO();
+
 		/***
 		 * @author 140024
 		 * @implNote 신청된 근태 유형별 합계 시간 계산 & 중복 체크
@@ -89,7 +91,6 @@ public class DtmCheckService {
 			LocalDateTime lunchStart;
 			LocalDateTime lunchEnd;
 			log.warn("전체근무시간 : " + String.valueOf(totalWorkTime));
-
 
 			// 신청건 중 중복된 근태가 있는지 확인
 			if(!"D".equals(hisDTO.getModiType())) { // 취소건 비교 X
@@ -135,15 +136,14 @@ public class DtmCheckService {
 					}
 				}
 			}
- @TODO 외부 테스트 시 주석 처리(끝) */
-			// 근태신청시간 합계 계산을 위한 input 데이터 세팅
-			final DtmCheckDTO checkDTO = new DtmCheckDTO(
-					hisDTO.getDtmReasonCd(), // 근태종류
-					hisDTO.getStaYmd(), // 근태시작일
-					hisDTO.getEndYmd(), // 근태종료일
-					hisDTO.getEmpId() // 직원행번
-			);
-			log.warn(checkDTO.toString());
+  @TODO 외부 테스트 시 주석 처리(끝) */
+
+			// 금번 근태신청시간 합계 계산을 위한 input 데이터 세팅
+			checkDTO.setEmpId(hisDTO.getEmpId()); // 직원행번
+			checkDTO.setStaYmd(hisDTO.getStaYmd()); // 근태시작일
+			checkDTO.setEndYmd(hisDTO.getEndYmd()); // 근태종료일
+			checkDTO.setDtmReasonCd(hisDTO.getDtmReasonCd()); // 근태종류
+
 			// 근태신청시간 합계 계산
 			dtmCheckRepository.getNumberOfDay(checkDTO); // daycnt_day (dtm010_03_03_p_06, 근태신청일수)
 			dtmCheckRepository.getNumberOfHour(checkDTO); // daycnt (dtm010_03_03_p_10, 근태신청시간)
@@ -165,6 +165,11 @@ public class DtmCheckService {
 					sumDTO.thisSaveSum(checkDTO.getDayCount(), checkDTO.getHourCount()); // 합계 (시간 daycnt10)
 				}
 			}
+
+			log.warn("금번 근태신청시간 합계 : " + checkDTO.toString());
+			log.warn("전체 근태신청시간 합계 : " + sumDTO.toString());
+			log.warn("촉진 : " + proDTO.toString());
+			log.warn("저축 : " + saveDTO.toString());
 		}
 
 		/***
@@ -190,10 +195,9 @@ public class DtmCheckService {
 						langService.findLangById("DTM_ERROR_003") // 내년에 사용 가능한 연차가 부족합니다
 				);
 			}
-		}
-		else { // 올해 연차 등 근태 사용 시
+		} else { // 올해 연차 등 근태 사용 시
 			if(statusDTO.getAnnualHourTotalCnt() < advAnnualHour) { // 연차발생시간(hhCnt) < 선연차기준시간(cons_hhcnt) @TODO 이거 왜 선연차 상수랑 비교하는지 모르겠음
-				if(sumDTO.getAnnualHourSum() > 0) { // 연차신청시간합계(daycnt1, to_cnt) : 연차가 아닌경우는 체크하지않음
+				if(sumDTO.getAnnualHourSum() != 0) { // 연차신청시간합계(daycnt1, to_cnt) : 연차가 아닌경우는 체크하지않음
 					if((statusDTO.getAnnualHourUsedCnt() + sumDTO.getAnnualHourSum()) > (statusDTO.getAnnualHourTotalCnt() + statusDTO.getAdvAnnualHourNetUsedCnt())) {
 						//사용한 연차수(usedHhCnt / used_hhcnt) + 신청한 연차수(daycnt1, to_cnt) > 연차발생시간(hhCnt) + 선사용가능연차시간(ad_use_hhcnt)
 
@@ -224,13 +228,13 @@ public class DtmCheckService {
 					}
 				}
 			} else { // 연차발생시간(hhCnt) >= 선연차기준시간(cons_hhcnt)
-				if(sumDTO.getAnnualHourSum() > statusDTO.getAnnualHourRemainCnt()) { // 신청한 연차 시간이 잔여 시간보다 큰 경우
+				if(sumDTO.getAnnualHourSum() > statusDTO.getAnnualHourRemainCnt()) { // 신청시간(연차) > 잔여시간(연차)
 					// 연차 사용가능 시간이 부족합니다. 잔여시간(<<remain_cnt>>),신청시간(<<app_cnt>>)
 					throw new CustomGeneralRuntimeException(
 							String.format(
 									langService.findLangById("DTM_ERROR_004"), // 연차 사용가능 시간이 부족합니다
-									decimalFormat.format(statusDTO.getAnnualHourRemainCnt()),
-									decimalFormat.format(sumDTO.getAnnualHourSum())
+									decimalFormat.format(statusDTO.getAnnualDayRemainDayCnt()),
+									decimalFormat.format(sumDTO.getAnnualDaySum())
 							));
 				}
 			}
@@ -242,10 +246,12 @@ public class DtmCheckService {
 		 * @since 2024-09-13
 		 */
 		if("Y".equals(proDTO.getPromotionYn()) && "0".equals(proDTO.getPromotionExp())){ // 연차촉진기간인 경우
-			if(sumDTO.getAnnualHourSum() > 0) { // 금번 신청된 근태에 연차가 있는 경우 (daycnt1 > 0)
+			if(sumDTO.getAnnualHourSum() != 0) { // 금번 신청으로 인해 연차 사용일수에 변화가 있는 경우 (daycnt1 != 0)
 				if("Y".equals(saveDTO.getSavableYn())) {  // 저축기간인 경우
+
+
 					if("Y".equals(saveDTO.getSaveYn())) { // 저축내역이 있을경우
-						if(sumDTO.getAnnualHourSum() + saveDTO.getSaveHourCnt() < proDTO.getFixedDutyAnnualHourRemainCnt()) { // 신청(금번) + 저축(전체) < 잔여 촉진시간
+						if(proDTO.getAnnualHourUsedCnt() + sumDTO.getAnnualHourSum() + saveDTO.getSaveHourCnt() < proDTO.getDutyAnnualHourTotalCnt()) { // 연차(기존) + 연차(금번) + 저축(전체) < 연차 촉진시간
 							throw new CustomGeneralRuntimeException(
 									String.format(
 											langService.findLangById("DTM_ERROR_002"), // 연차촉진시간(일수) 확인 후 연차휴가를 등록해주세요
@@ -253,20 +259,26 @@ public class DtmCheckService {
 									));
 						}
 					} else {  // 저축내역이 없을경우
-						if(sumDTO.getAnnualHourSum() < proDTO.getFixedDutyAnnualHourRemainCnt()) { // 연차휴가 사용시간이 의무사용연차에 미달하는 경우
+						if(proDTO.getAnnualHourUsedCnt() + sumDTO.getAnnualHourSum() < proDTO.getDutyAnnualHourTotalCnt()) { // 연차(기존) + 연차(금번) < 연차 촉진시간
 							throw new CustomGeneralRuntimeException(
 									String.format(
 											langService.findLangById("DTM_ERROR_002"), // 연차촉진시간(일수) 확인 후 연차휴가를 등록해주세요
 											decimalFormat.format(proDTO.getFixedDutyAnnualHourRemainCnt())
 									));
-						}
+						} 
 					}
+
+					if(proDTO.getDutyAnnualHourTotalCnt() < saveDTO.getSaveHourCnt()) {
+						// 촉진시간 < 저축시간 인 경우 저축가능시간은 촉진시간 이하가 되어야함
+						saveDTO.setSaveHourCnt(proDTO.getDutyAnnualHourTotalCnt());
+					}
+
 				} else { // 저축기간이 아닌 경우
-					if(sumDTO.getAnnualHourSum() < proDTO.getFixedDutyAnnualHourRemainCnt()) { // 연차휴가 사용시간이 의무사용연차에 미달하는 경우
+					if(proDTO.getAnnualHourUsedCnt() + sumDTO.getAnnualHourSum() < proDTO.getDutyAnnualHourTotalCnt()) { // 연차(기존) + 연차(금번) < 연차 촉진시간
 						throw new CustomGeneralRuntimeException(
 								String.format(
 										langService.findLangById("DTM_ERROR_002"), // 연차촉진시간(일수) 확인 후 연차휴가를 등록해주세요
-										decimalFormat.format(proDTO.getFixedDutyAnnualHourRemainCnt())
+										decimalFormat.format(proDTO.getDutyAnnualHourTotalCnt())
 								));
 					}
 				}

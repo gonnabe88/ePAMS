@@ -3,6 +3,8 @@ package epams.domain.com.index;
 import epams.domain.com.admin.service.HtmlLangDetailService;
 import epams.domain.com.board.dto.BoardDTO;
 import epams.domain.com.board.service.BoardMainService;
+import epams.domain.com.holiday.HolidayDTO;
+import epams.domain.com.holiday.HolidayService;
 import epams.domain.com.index.dto.BannerDTO;
 import epams.domain.com.index.dto.QuickApplDTO;
 import epams.domain.com.login.util.webauthn.service.RegistrationService;
@@ -13,6 +15,7 @@ import epams.domain.com.member.service.MemberService;
 import epams.framework.exception.CustomGeneralRuntimeException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -28,15 +31,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.TextStyle;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+
+import com.google.i18n.phonenumbers.NumberParseException;
+import com.google.i18n.phonenumbers.PhoneNumberUtil;
+import com.google.i18n.phonenumbers.Phonenumber.PhoneNumber;
 
 /**
  * @author K140024
@@ -46,6 +55,7 @@ import java.util.Map;
 @Slf4j
 @Controller
 @RequiredArgsConstructor
+@RequestMapping("/index")
 public class IndexController<S extends Session> {
 
     /**
@@ -85,6 +95,13 @@ public class IndexController<S extends Session> {
 
     /**
      * @author K140024
+     * @implNote 휴일 서비스 주입
+     * @since 2024-10-13
+     */
+    private final HolidayService holidayService;
+
+    /**
+     * @author K140024
      * @implNote 현재 인증된 사용자 정보를 반환하는 메서드
      * @since 2024-06-11
      */
@@ -101,20 +118,10 @@ public class IndexController<S extends Session> {
 
     /**
      * @author K140024
-     * @implNote 팝업 화면을 반환하는 메서드
-     * @since 2024-06-11
-     */
-    @GetMapping("/popup")
-    public String popup() {
-        return "common/popup";
-    }
-
-    /**
-     * @author K140024
      * @implNote 메인 화면을 반환하는 메서드
      * @since 2024-06-11
      */
-    @GetMapping("/index")
+    @GetMapping({"", "/"})
     public String indexMain(@PageableDefault(page = 1) final Pageable pageable, final Model model) {
 
         final String INDEXMAIN = "common/index";
@@ -177,8 +184,13 @@ public class IndexController<S extends Session> {
             final DayOfWeek dayOfWeek = today.getDayOfWeek();
             final String nowDateStr = today + "(" + dayOfWeek.getDisplayName(TextStyle.NARROW, Locale.KOREAN) + ")";
             String holidayYn = "N";
-            // nowDateStr에 해당하는 날짜가 토요일 또는 일요일인지 확인
-            if (dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY) {
+            //휴일정보 받아오기
+            List<String> holidays=holidayService.findholiYmd();
+            //오늘
+            HolidayDTO todayDTO=new HolidayDTO(today,null, null, null, null);
+            System.err.println("날짜 : "+todayDTO.getHoliYmd());
+            //오늘 휴일이면 비활성화
+            if(holidays.contains(todayDTO)){
                 holidayYn = "Y";
             }
             model.addAttribute("nowDateStr", nowDateStr);
@@ -188,8 +200,10 @@ public class IndexController<S extends Session> {
             final DayOfWeek dayOfWeek2 = tomorrow.getDayOfWeek();
             final String tomorrowDateStr = tomorrow + "(" + dayOfWeek2.getDisplayName(TextStyle.NARROW, Locale.KOREAN) + ")";
             String holidayYn2 = "N";
-            // nowDateStr에 해당하는 날짜가 토요일 또는 일요일인지 확인
-            if (dayOfWeek2 == DayOfWeek.SATURDAY || dayOfWeek2 == DayOfWeek.SUNDAY) {
+            //내일
+            HolidayDTO tomorrowDTO=new HolidayDTO(tomorrow,null, null, null, null);
+            //내일 휴일이면 비활성화
+            if(holidays.contains(tomorrowDTO)){
                 holidayYn2 = "Y";
             }
             model.addAttribute("tomorrowDateStr", tomorrowDateStr);
@@ -217,9 +231,7 @@ public class IndexController<S extends Session> {
             // 배너 리스트
             List<BannerDTO> bannerList = new ArrayList<>();
             bannerList.add(new BannerDTO("", "", "", ""));
-            bannerList.add(new BannerDTO("최근 공지사항", "시스템 점검 안내", "'24. 7. 6(일) 18:00-19:00", "<a href=\"/board/list\"><span class=\"badge text-bg-primary\">바로가기</span></a>"));
-            bannerList.add(new BannerDTO("연차 및 저축휴가", "언제 어디서든", "편하게 신청하세요", "<a href=\"/dtm/dtmAppl\"><span class=\"badge text-bg-primary\">바로가기</span></a>"));
-            bannerList.add(new BannerDTO("직원조회", "언제 어디서든", "간편하게 검색하세요", "<a href=\"#\" id=\"scrollToSearchDiv\"><span class=\"badge text-bg-primary\">바로가기</span></a>"));
+            bannerList.add(new BannerDTO("직원조회", "언제 어디서든", "간편하게 검색하세요", "<a href=\"#\" id=\"scrollToSearchDiv2\"><span class=\"badge text-bg-primary\">바로가기</span></a>"));
             model.addAttribute("bannerList", bannerList);
         } catch (CustomGeneralRuntimeException e) {
             // 런타임 예외 처리

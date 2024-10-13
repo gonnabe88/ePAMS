@@ -23,8 +23,9 @@
         <result property="deptName" column="BBR_NM"/>
         <result property="positionName" column="PT_C_NM"/>
         <result property="jobDetail" column="DTS_DTL_CONE"/>
-        <result property="inlineNumber" column="INLE_NO"/>
+        <result property="inlineNo" column="INLE_NO"/>
         <result property="phoneNo" column="CADR_TPN"/>
+        <result property="simpleInlineNo" column="BANK_IN_NO"/>
     </resultMap>
 
     <!-- Result Map 정의 -->
@@ -38,7 +39,8 @@
         <result property="deptName" column="BBR_NM"/>
         <result property="positionName" column="PT_C_NM"/>
         <result property="jobDetail" column="DTS_DTL_CONE"/>
-        <result property="inlineNumber" column="INLE_NO"/>
+        <result property="inlineNo" column="INLE_NO"/>
+        <result property="phoneNo" column="CADR_TPN"/>
     </resultMap>
 
     <!-- 특정 사용자 조회 -->
@@ -61,10 +63,11 @@
     </select>
 
     <!-- 휴대폰 번호 조회 -->
-    <select id="findPhoneNo" parameterType="String" resultType="String">
-        SELECT A.CADR_TPN 
+    <select id="findPhoneNo" parameterType="Long" resultType="String">
+        <!-- SELECT A.CADR_TPN 
         FROM OEHR.THURXE_CUSRLI A 
-        WHERE A.ENO = #{username}
+        WHERE A.ENO = #{username} -->
+        SELECT HP_NO FROM OHR.PHM_PRIVATE WHERE EMP_ID = #{username}
     </select>
 
     <!-- 모든 데이터 조회 -->
@@ -103,7 +106,8 @@
         WHERE
         A.ENO = #{username} AND
         A.USR_ECY_PWD = #{password} AND
-        A.DEL_YN = 'N'
+        A.DEL_YN = 'N' AND
+        #{username} IN ('K210058','K140024','K990406','K160068','K230028','K200086','K080257','K020185','K010308','K912006','K970480','K925009','K930624')
     </select>
 
     <!-- ID 일치 사용자 조회 -->
@@ -115,7 +119,7 @@
     </select>
 
     <!-- 특정 사용자 조회 -->
-    <select id="findByUserNo" parameterType="String" resultMap="teamSearchMap">
+    <select id="findByUserNo" parameterType="String" resultMap="iamUserMap">
         SELECT A.USR_NM,
                A.ENO,
                A.BBR_C,
@@ -124,8 +128,8 @@
                A.TEM_NM,
                A.PT_C_NM,
                A.DTS_DTL_CONE,
-               A.INLE_NO
-        --A.INLE_NO
+               A.INLE_NO,
+               A.CADR_TPN
         FROM OEHR.THURXE_CUSRLI A
                  INNER JOIN OEHR.THURXE_CORGLI B ON A.BBR_C = B.PRLM_OGZ_C_CONE
         WHERE

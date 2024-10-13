@@ -2,9 +2,6 @@ package epams.domain.dtm.service;
 
 import java.util.List;
 
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,6 +9,8 @@ import epams.domain.com.apply.dto.ElaApplCDTO;
 import epams.domain.com.apply.dto.ElaApplTrCDTO;
 import epams.domain.com.apply.repository.ElaApplCRepository;
 import epams.domain.com.apply.repository.ElaApplTrCRepository;
+import epams.domain.com.member.service.MemberService;
+import epams.domain.com.sidebar.dto.UserInfoDTO;
 import epams.domain.dtm.dto.DtmApplCheckProcDTO;
 import epams.domain.dtm.dto.DtmApplElaCheckProcDTO;
 import epams.domain.dtm.dto.DtmHisDTO;
@@ -58,6 +57,13 @@ public class DtmRegistService {
 	 * @since 2024-08-04
 	 */
 	private final DtmApplProcRepository proCheckProcRepo;
+	
+	/***
+	 * @author 140024
+	 * @implNote Service 객체 생성
+	 * @since 2024-09-13
+	 */
+	private final MemberService memberService;
 
 	/***
 	 * @author 140024
@@ -91,8 +97,15 @@ public class DtmRegistService {
 			final ElaApplCDTO elaApplCDTO = new ElaApplCDTO(empId, "DTM01", "121"); // ElaApplCDTO(신청서) 객체 생성
 			final long applId = elaApplCRepo.insert(elaApplCDTO); // 신청서 추가 후 applId 반환
 
+			UserInfoDTO userInfoDTO = new UserInfoDTO();
+
+			/* @TODO 외부 테스트 시 주석 처리(시작)
+			// 결재자(신청자) 정보(직위) 가져오기
+			userInfoDTO = memberService.findUsrDeptInfoByUserNo(dtmHisDTO.getEmpId());
+			@TODO 외부 테스트 시 주석 처리(끝) */
+
 			// [INSERT] 신청서결재내역 추가
-			final ElaApplTrCDTO elaApplTrCDTO = new ElaApplTrCDTO(empId, "1", applId, 1, "201"); // ElaApplTrCDTO(신청서결재내역) 객체 생성
+			final ElaApplTrCDTO elaApplTrCDTO = new ElaApplTrCDTO(empId, "1", applId, 1, "201", userInfoDTO.getPositionName()); // ElaApplTrCDTO(신청서결재내역) 객체 생성
 			elaApplTrCRepo.insert(elaApplTrCDTO); // 신청서결재내역 추가
 
 			for(DtmHisDTO dtmHisDTO : dtmHisDTOList) {

@@ -7,10 +7,19 @@
     <!-- Result Map 정의 -->
     <resultMap id="userInfoMap" type="userInfoDTO">
         <result property="username" column="ENO"/>
+        <result property="empId" column="EMP_NO"/>
         <result property="realname" column="USR_NM"/>
         <result property="deptName" column="BBR_NM"/>
+        <result property="deptCode" column="BBR_CD"/>
+        <result property="deptArea" column="ORG_AREA_CD"/>
+        <result property="dispatchName" column="DISPATCH_ORG_NM"/>
+        <result property="dispatcCode" column="DISPATCH_ORG_CD"/>
+        <result property="dispatcArea" column="DISPATCH_AREA_CD"/>
         <result property="teamName" column="TEM_NM"/>
+        <result property="teamCode" column="TEM_CD"/>
+        <result property="gradeName" column="POS_GRD_NM"/>
         <result property="positionName" column="PT_C_NM"/>
+        <result property="inOfficeNm" column="IN_OFFI_NM"/>
         <result property="staTime" column="STA_TIME"/>
         <result property="endTime" column="END_TIME"/>
         <result property="staTime2" column="STA_TIME2"/>
@@ -32,6 +41,46 @@
         INNER JOIN OEHR.THURXE_CORGLI B
             ON A.BBR_C = B.PRLM_OGZ_C_CONE
         WHERE A.ENO = #{username}
+    </select>
+
+    <!-- 사용자 조직 정보 조회 -->
+    <select id="findUsrDeptInfoByUserNo" parameterType="Long" resultMap="userInfoMap">
+        SELECT EMP_NO
+            , EMP_NM AS USR_NM
+            , ORG_NM AS BBR_NM
+            , ORG_CD AS BBR_CD
+            , (SELECT AREA_CD FROM OHR.ORM_ADDR_C ORG WHERE ORG.ORG_CD = C.ORG_CD AND SYSDATE BETWEEN ORG.STA_YMD AND ORG.END_YMD) AS ORG_AREA_CD
+            , DISPATCH_ORG_NM
+            , DISPATCH_ORG_CD
+            , (SELECT AREA_CD FROM OHR.ORM_ADDR_C ORG WHERE ORG.ORG_CD = C.DISPATCH_ORG_CD AND SYSDATE BETWEEN ORG.STA_YMD AND ORG.END_YMD) AS DISPATCH_AREA_CD
+            , TEAM_CD AS TEM_CD
+            , TEAM_NM AS TEM_NM
+            , POS_GRD_NM
+            , POS_NM AS PT_C_NM
+            , IN_OFFI_NM
+        FROM (     
+                SELECT SUBSTR(CAM.EMP_ID,2) AS EMP_NO
+                    , F_PHM_EMP_NM_C(CAM.EMP_ID,CAM.STA_YMD,'1') AS EMP_NM
+                    , CAM.ORG_CD
+                    , F_ORM_ORG_NM_C('01', CAM.ORG_CD, CAM.STA_YMD, '1', 'KO', NULL) AS ORG_NM
+                    , CAM.TEAM_CD
+                    , F_ORM_ORG_NM_C('01', CAM.TEAM_CD, CAM.STA_YMD, '1', 'KO', NULL) AS TEAM_NM
+                    , CAM.POS_GRD_CD
+                    , F_FRM_CODE_NM_C('01', 'PHM_POS_GRD_CD', POS_GRD_CD, CAM.STA_YMD, '1', 'KO') AS POS_GRD_NM
+                    , CAM.DUTY_CD
+                    , F_FRM_CODE_NM_C('01', 'PHM_POS_CD', CAM.DUTY_CD, CAM.STA_YMD, '1', 'KO') AS POS_NM
+                    , CAM.IN_OFFI_CD
+                    , F_FRM_CODE_NM_C('01', 'PHM_IN_OFFI_CD', CAM.IN_OFFI_CD, CAM.STA_YMD, '1', 'KO') IN_OFFI_NM
+                    , CAM.DISPATCH_ORG_CD
+                    , F_ORM_ORG_NM_C('01', CAM.DISPATCH_ORG_CD, CAM.STA_YMD, '1', 'KO', NULL) AS DISPATCH_ORG_NM
+                    , CAM.STA_YMD
+                    , CAM.EMP_ID
+                    , CAM.WK_AREA_CD
+            FROM CAM_HISTORY_C CAM
+            WHERE CAM.CAM_LAST_YN = '1'
+            AND SYSDATE BETWEEN CAM.STA_YMD AND CAM.END_YMD
+            AND EMP_ID = ${empId}
+            ) C
     </select>
 
 </mapper>

@@ -1,19 +1,16 @@
 package epams.domain.com.index;
 
-import epams.domain.com.commonCode.CommonCodeDTO;
-import epams.domain.com.commonCode.CommonCodeService;
-import epams.domain.com.index.dto.DeptSearchDTO;
-import epams.domain.com.index.dto.TeamSearchDTO;
+import epams.domain.com.index.dto.UserSearchDTO;
 import epams.domain.com.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.IOException;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -26,7 +23,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/index/")
+@RequestMapping("/api/index")
 public class IndexRestController {
 
     /***
@@ -41,19 +38,27 @@ public class IndexRestController {
      * @implNote 모든 코드 데이터를 검색
      * @since 2024-06-09
      */
-    @GetMapping("/getDeptList")
-    public ResponseEntity<Map<String, Object>> getDeptAndTeamLists() {
-        // 부서와 팀 목록을 가져옴
-        //final List<DeptSearchDTO> deptDtos = memberService.findAllDept();
-        final List<TeamSearchDTO> teamDtos = memberService.findAllTeam();
+    @GetMapping("/getUserList")
+    public ResponseEntity<Map<String, Object>> getUserLists() {
+        // 사용자 목록을 가져옴
+        final List<UserSearchDTO> userDTOs = memberService.findAllUser();
 
         // Map을 생성하여 두 리스트를 담음
         Map<String, Object> response = new ConcurrentHashMap<>();
-        //response.put("deptList", deptDtos);
-        response.put("teamList", teamDtos);
+        response.put("userList", userDTOs);
 
         // Map을 응답으로 반환
         return ResponseEntity.ok(response);
+    }
+
+    /***
+     * @author 140024
+     * @implNote 현재 시간을 UTC로 반환
+     * @since 2024-10-13
+     */
+    @GetMapping("/current-utc-time")
+    public ResponseEntity<ZonedDateTime> getCurrentUtcTime() {
+        return ResponseEntity.ok(ZonedDateTime.now(ZoneOffset.UTC)); // 현재 시간을 UTC로 반환
     }
 
 }

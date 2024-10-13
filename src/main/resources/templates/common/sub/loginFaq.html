@@ -1,22 +1,23 @@
 
-<div id="main-content">
+<div id="loginFaq">
     <div class="d-flex justify-content-center">
         <div class="row d-flex justify-content-center w-100">
             <!-- 게시글 목록 시작 -->
             <div class="animate__animated animate__fadeIn animate__slow">
-                <section class="section" th:each="board: ${boardList}">
+                <!-- th:each에서 게시글 순서 인덱스 사용 -->
+                <section class="section" th:each="board, iterStat : ${boardList}">
                     <div class="card">
                         <div class="card-body">                                    
                             <div class="d-flex flex-row align-items-center gap-3">
                                 <a th:href="@{|/board/${board.seqId}|}">
                                     <div class="d-flex align-items-center gap-2">
                                         <h6>
-                                            <span th:text="${board.boardTitle}"> </span>
+                                            <span th:text="|Q${iterStat.index + 1}. ${board.boardTitle}|"> </span>
                                         </h6>
                                     </div>
                                 </a>
                             </div>
-                            <span th:utext="${board.boardContents}"></span>
+                            <span class="small" th:utext="${board.boardContents}"></span>
                         </div>
                     </div>
                 </section>

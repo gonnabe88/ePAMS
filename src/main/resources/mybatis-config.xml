@@ -28,7 +28,7 @@
 
         <!-- [COM] 직원검색(메인화면) DTO -->
         <typeAlias type="epams.domain.com.index.dto.DeptSearchDTO" alias="deptSearchDTO"></typeAlias>
-        <typeAlias type="epams.domain.com.index.dto.TeamSearchDTO" alias="teamSearchDTO"></typeAlias>
+        <typeAlias type="epams.domain.com.index.dto.UserSearchDTO" alias="teamSearchDTO"></typeAlias>
 
         <!-- [COM] 사용자 정보(사이드바) DTO -->
         <typeAlias type="epams.domain.com.sidebar.dto.UserInfoDTO" alias="userInfoDTO"></typeAlias>

@@ -16,10 +16,25 @@ public class UserInfoDTO {
 
     /**
      * @author 140024
-     * @implNote 사원번호
+     * @implNote 사원번호 (K행번)
      * @since 2024-06-09
      */
     private String username;
+
+    /**
+     * @author 140024
+     * @implNote 사원번호 (7행번)
+     * @since 2024-06-09
+     */
+    private Long empId;
+
+    /***
+     * 사용자명(EMP_NM)
+     * 
+     * @author 140024
+     * @since 2024-06-30
+     */
+    private String realname;
 
     /**
      * @author 140024
@@ -30,31 +45,80 @@ public class UserInfoDTO {
 
     /**
      * @author 140024
-     * @implNote 직원명
-     * @since 2024-06-09
-     */
-    private String realname = "N/A";
-
-    /**
-     * @author 140024
      * @implNote 부점명
      * @since 2024-08-19
      */
     private String deptName = "N/A";
 
-        /**
+    /**
+     * @author 140024
+     * @implNote 부점코드
+     * @since 2024-08-19
+     */
+    private String deptCode;
+
+    /**
+     * @author 140024
+     * @implNote 부점지역코드
+     * @since 2024-08-19
+     */
+    private String deptArea;
+
+    /**
+     * @author 140024
+     * @implNote 파견부점명
+     * @since 2024-08-19
+     */
+    private String dispatchName = "N/A";
+
+    /**
+     * @author 140024
+     * @implNote 파견부점코드
+     * @since 2024-08-19
+     */
+    private String dispatcCode;
+
+    /**
+     * @author 140024
+     * @implNote 파견부점지역코드
+     * @since 2024-08-19
+     */
+    private String dispatcArea;
+
+    /**
+     * @author 140024
+     * @implNote 팀코드
+     * @since 2024-06-09
+     */
+    private String teamCode;
+
+    /**
      * @author 140024
      * @implNote 팀명
      * @since 2024-08-19
      */
     private String teamName = "N/A";
 
+        /**
+     * @author 140024
+     * @implNote 직급명
+     * @since 2024-08-19
+     */
+    private String gradeName = "N/A";
+
     /**
      * @author 140024
-     * @implNote 직위코드명
+     * @implNote 직위명
      * @since 2024-08-19
      */
     private String positionName = "N/A";
+
+    /**
+     * @author 140024
+     * @implNote 재직여부
+     * @since 2024-08-19
+     */
+    private String inOfficeNm = "재직";
 
     /**
      * @author 140024
@@ -62,7 +126,6 @@ public class UserInfoDTO {
      * @since 2024-08-19
      */
     private String staTime = "09:00";
-
 
     /**
      * @author 140024

@@ -13,6 +13,7 @@ const save = (boardType) => {
     formData.append("boardTitle", document.getElementById("title").value);
     formData.append("boardContents", tinymce.get("open").getContent());
     formData.append("category", document.querySelector('input[name="flexRadioDefault"]:checked').value);
+    formData.append("guidPrgSno", document.getElementById("guidPrgSno").value);
     formData.append("boardType", boardType); // 공지사항(01) FAQ(04)
 
     Swal.fire({

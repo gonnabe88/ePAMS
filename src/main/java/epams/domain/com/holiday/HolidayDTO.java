@@ -1,10 +1,12 @@
 package epams.domain.com.holiday;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -13,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
  * @implNote 근태 이력 데이터 정의 DTO
  * @since 2024-06-09
  */
+@Getter
 @Slf4j
 @EqualsAndHashCode
 @AllArgsConstructor
@@ -25,7 +28,7 @@ public class HolidayDTO {
      * @implNote [OUTPUT] 휴일 날짜
      * @since 2024-09-19
      */
-    private LocalDateTime holiYmd;
+    private LocalDate holiYmd;
 
     /***
      * @author 140024

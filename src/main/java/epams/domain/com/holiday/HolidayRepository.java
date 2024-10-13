@@ -3,6 +3,7 @@ package epams.domain.com.holiday;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import lombok.RequiredArgsConstructor;
@@ -31,5 +32,6 @@ public class HolidayRepository {
 	public List<String> findholiYmd() {
 		return sql.selectList("Holiday.findholiYmd");
 	}
+
 
 }

@@ -42,6 +42,7 @@ public class DtmApplStatusRepository {
             dto.setAnnualDayUsedCnt(res.getAnnualDayUsedCnt()); 
             dto.setAdvAnnualHourNetUsedCnt(res.getAdvAnnualHourNetUsedCnt()); //AD_USE_HHCNT
             dto.setAnnualHourRemainCnt(res.getAnnualHourRemainCnt()); //remain_hhcnt
+            dto.setAnnualDayRemainDayCnt(res.getAnnualDayRemainDayCnt()); // remain_cnt
             dto.setSaveHourCnt(res.getSaveHourCnt()); //dtm_save_hhcnt, save_hhcnt
         }
     }

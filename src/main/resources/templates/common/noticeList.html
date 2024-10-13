@@ -34,9 +34,9 @@
                                     <div class="d-flex flex-row align-items-center mb-3 gap-3">
                                         <a th:href="@{|/board/${board.seqId}|}">
                                             <div class="d-flex align-items-center gap-2">
-                                                <h4>
+                                                <h5>
                                                     <span th:text="${board.boardTitle}"> </span>
-                                                </h4>
+                                                </h5>
                                                 <h6>
                                                     <span class="badge rounded-pill bg-warning text-dark" th:if="${T(java.time.LocalDateTime).now().minusDays(7).isBefore(board.createdTime)}">  new </span>
                                                 </h6>

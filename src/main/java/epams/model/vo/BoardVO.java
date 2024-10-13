@@ -68,4 +68,5 @@ public class BoardVO extends BaseVO {
      * @since 2024-06-09
      */
     private String fileAttached;
+
 }

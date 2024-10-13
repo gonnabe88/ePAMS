@@ -116,6 +116,11 @@ const postDtmHisDTO = async (revokeDTOList, registDTOList) => {
     // AJAX로 모달 HTML 로드
     $.get('/dtm/dtmApplProcessModal', async function(modalHtml) {
 
+        if ($('#dynamicModal').length) {
+            // 모달이 존재하면 종료
+            $('#dynamicModal').modal('hide');
+        }
+
         $('body').append(modalHtml); // 모달을 페이지에 동적으로 삽입
         $('#processModal').modal({backdrop: 'static'}) // 모달 배경 클릭 시 닫히지 않도록 설정
         $('#processModal').modal('show');// 모달 표시

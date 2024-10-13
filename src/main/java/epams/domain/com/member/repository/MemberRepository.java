@@ -5,12 +5,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import epams.domain.com.index.dto.DeptSearchDTO;
-import epams.domain.com.index.dto.TeamSearchDTO;
+import epams.domain.com.index.dto.UserSearchDTO;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import epams.domain.com.member.dto.IamUserDTO;
 import epams.domain.com.member.dto.RoleDTO;
+import epams.domain.com.sidebar.dto.UserInfoDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -47,10 +48,20 @@ public class MemberRepository {
     /**
      * *
      * @author 140024
+     * @implNote 특정 사용자 조직 및 직책 정보 조회
+     * @since 2024-09-05
+     */
+    public UserInfoDTO findUsrDeptInfoByUserNo(Long empId) {
+        return sql.selectOne("UserInfo.findUsrDeptInfoByUserNo", empId);
+    }
+
+    /**
+     * *
+     * @author 140024
      * @implNote 직원 휴대폰 번호 조회
      * @since 2024-09-05
      */
-    public String findPhoneNo(String username) {
+    public String findPhoneNo(Long username) {
         return sql.selectOne("IamUser.findPhoneNo", username);
     }
 
@@ -77,10 +88,10 @@ public class MemberRepository {
     /**
      * *
      * @author 140024
-     * @implNote 모든 부서/팀 조회
+     * @implNote 모든 사용자 조회
      * @since 2024-06-09
      */
-    public List<TeamSearchDTO> findAllTeam() {
+    public List<UserSearchDTO> findAllUser() {
         return sql.selectList("IamUser.findAllMember");
     }
 

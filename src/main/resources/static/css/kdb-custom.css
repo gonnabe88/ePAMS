@@ -1,3 +1,8 @@
+#guidPrgSno {
+    width: 80px;
+    height: 30px;
+}
+
 .apexcharts-legend-marker {
     display: inline-block !important;
     width: 12px !important;
@@ -73,6 +78,10 @@
     margin-bottom: 0.5rem;
 }
 
+#loginFaq .card {
+    margin-bottom: 1rem;
+}
+
 #toast .btn-close {
     position: absolute;
     right: 2rem;
@@ -139,7 +148,7 @@
 }
 
 #pdf-frame{
-    height: 90vh;
+    height: 85vh;
 }
 
 .webauthnImage {
@@ -248,13 +257,13 @@
     display: flex !important;
 }
 
-.inlineNumber {
+.contact {
     display: none;
 }
 
 .searchResultIcon {
-    width: 5rem;
-    height: 5rem;
+    width: 4rem;
+    height: 4rem;
     background: aliceblue;
     border-radius: 50%;
     transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
@@ -264,6 +273,9 @@
     justify-content: center;
     align-items: center;
     text-align: center;
+}
+.searchResultIcon small{
+    font-size: .7rem;
 }
 
 .searchResultIcon:active {
@@ -483,18 +495,18 @@ mark {
     outline: none; /* 기본 outline 제거 */
 }
 
-.boardUpdate .badge {
+#boardUpdate .badge {
     font-weight: 400;
 }
 
-.boardUpdate .h6 {
+#boardUpdate .h6 {
     width: auto;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
-.boardUpdate .categoryRadioBtn {
+#boardUpdate .categoryRadioBtn {
     display: flex;
     align-items: center;
     gap: 1rem;
@@ -591,13 +603,19 @@ mark {
 
 
 /* 게시판 상세화면 */
-.boardDetail .card {
+#boardDetail .card {
     min-height: 400px;
 }
 
-.boardDetail .badge {
+#boardDetail .badge {
     --bs-badge-padding-x:.35rem;
     font-weight: 400;
+}
+
+@media (min-width: 992px) {
+    #boardDetail .modal-lg, #boardDetail .modal-xl {
+        --bs-modal-width: 80vw;
+    }
 }
 
 .ellipsis {
@@ -1637,14 +1655,24 @@ label {
     line-height: 1;
 }
 
-/*직원검색 결과 card 스타일 조정*/
-.awesomplete-result .card-body {
-    background-color: #f2f7ff;
+#noResultDiv {
+    height : 200px;
 }
 
+#searchWayBtn {
+    height : 30px;
+}
 
 .small-text {
     font-size: 15px;
+    color: #435ebe;
+    font-weight: 700;
+}
+
+.small-text2 {
+    font-size: 12px;
+    color: #435ebe;
+    font-weight: 700;
 }
 
 .small-badge {
@@ -4644,10 +4672,6 @@ textarea.form-control.is-invalid {
 .navbar {
     height: var(--navbar-height);
     padding: 1.0rem
-}
-
-.navbar .align-items-center{
-    align-items: baseline !important;
 }
 
 .navbar .navbar-brand img {

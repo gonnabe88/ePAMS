@@ -95,5 +95,19 @@ public class IamUserVO {
      * @implNote 내선번호
      * @since 2024-08-19
      */
-    private String inlineNumber;
+    private String inlineNo;
+
+    /***
+     * @author 140024
+     * @implNote 휴대폰 번호
+     * @since 2024-09-05
+     */
+    private String phoneNo = "";
+
+    /**
+     * @author 140024
+     * @implNote 내선번호(4자리)
+     * @since 2024-08-19
+     */
+    private String simpleInlineNo;
 }

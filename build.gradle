@@ -48,7 +48,10 @@ repositories {
 
 // 프로젝트 의존성 설정
 dependencies {
-    
+
+    // libphonenumber 라이브러리
+    implementation files('libs/libphonenumber-8.13.47.jar')
+
     // JSONObject 라이브러리
     implementation files('libs/json-simple-1.1.1.jar')
 

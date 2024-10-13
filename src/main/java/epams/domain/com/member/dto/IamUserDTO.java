@@ -1,5 +1,8 @@
 package epams.domain.com.member.dto;
 
+import com.google.i18n.phonenumbers.NumberParseException;
+import com.google.i18n.phonenumbers.PhoneNumberUtil;
+import com.google.i18n.phonenumbers.Phonenumber;
 import groovy.transform.builder.Builder;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,13 +27,6 @@ import epams.model.vo.IamUserVO;
 public class IamUserDTO extends IamUserVO {
 
     /***
-     * @author 140024
-     * @implNote 휴대폰 번호
-     * @since 2024-09-05
-     */
-    private String phoneNo = "";
-
-    /***
      * 2차인증 유형
      * 
      * @author 140024
@@ -46,4 +42,26 @@ public class IamUserDTO extends IamUserVO {
      */
     private boolean isAdmin = false;
 
+    /***
+     * 구글 libphonenumber을 이용한 전화번호 포맷팅
+     *
+     * @author 140024
+     * @since 2024-10-12
+     */
+    public void formatContactNumber(String phoneNo, String inlineNo, String regionCode) {
+        PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
+        try {
+            Phonenumber.PhoneNumber phoneNumber = phoneUtil.parse(phoneNo, regionCode);
+            Phonenumber.PhoneNumber inlineNumber = phoneUtil.parse(phoneNo, regionCode);
+
+            if(phoneUtil.isValidNumber(phoneNumber)) {
+                this.setPhoneNo(phoneUtil.format(phoneNumber, PhoneNumberUtil.PhoneNumberFormat.NATIONAL));
+            }
+            if(phoneUtil.isValidNumber(inlineNumber)) {
+                this.setInlineNo(phoneUtil.format(inlineNumber, PhoneNumberUtil.PhoneNumberFormat.NATIONAL));
+            }
+        } catch (NumberParseException e) {
+            e.printStackTrace();
+        }
+    }
 }

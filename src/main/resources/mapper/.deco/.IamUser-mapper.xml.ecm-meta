@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<deco> 
+    <fileData filename="IamUser-mapper.xml" filepath="/src/main/resources/mapper" ischanged="0" lastversion="5" tstversion="0" devver="1" realver="2" itemid="000002269422" ecmMd5sum="ad77517b87c9266f0a41e814be24b93c" ecmTstmd5sum="ad77517b87c9266f0a41e814be24b93c" lastChangedDate="1729868852000" editor="박종훈:k140024" lastUser="박종훈:k140024" filestatus="체크인완료:B" islock="0" isAuthority="1" rsrccd="A7" rsrccdcodename="소스파일" rsrcinfo="0100000000110000000010010000010000000000100000001010000001000000000000000000000000" jobcd="HUR04" jobname="ePAMS" syscd="00853" sysmsg="ePAMS" srid=""/> 
+</deco>

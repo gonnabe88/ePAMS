@@ -38,8 +38,69 @@
 			</div>
 			<!-- end carousel (rolling image) -->
 
+			<!--start 직원검색-->
+			<div class="main-content" id="searchDiv">
+				<div class="container">
+					<!-- 직원검색 제목 -->
+					<div class="row d-flex justify-content-start mb-2">
+						<h5 class="text-start"><i class="bi bi-search"></i> <span th:text="${langList['SEARCH_EMP_TTL']}"></span></h5>
+					</div>
+
+					<!-- 직원검색 내용 -->
+					<div class="row d-flex justify-content-center">
+						<div class="row col-lg-12">
+							<section class="awesomplete section">
+								<div class="mainCard shadow card mb-0" id="awesomplete-result">
+									<div class="card-header pb-2">
+										<p class="h4" th:text="${langList['SEARCH_EMP_01_STMT']}"></p>
+										<p class="h7">검색을 원하는 키워드 입력 후</p>
+										<p class="h7">검색된 결과에서 한명을 선택해주세요.</p>
+									</div>
+
+									<div class="card-content" id="searchMemberCard">
+										<div class="card-body pb-0 pt-0">
+											<div class="row">
+												<div class="col-12 mb-0">
+													<div class="input-with-icon d-flex align-items-center">
+														<i class="bi bi-search"></i>
+														<input id="searchMember" class="awesomplete" placeholder="이름, 팀/부서, 업무" autocomplete="off" />
+														<button id="clearSearch" class="clear-btn" type="button" hidden>&times;</button>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<div class="awesomplete-result d-flex justify-content-center mb-3" >
+										<div class="row col-12">
+											<div class="col-12 justify-self-center">												
+												<div id="memberListArea"></div>												
+											</div>
+										</div>
+										
+									</div>
+									<div class="ms-3 me-3" id="searchGuideArea">
+										
+									</div>
+									
+								</div>
+							</section>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--end 직원검색-->
+
+			<!--start divider-->
+			<div class="divider">
+				<div class="divider-text">
+					<img class="divider-text" src="/images/kdb/epams_r_cw_action.gif" />
+				</div>
+			</div>
+			<!--end divider-->
+
 			<!--start 빠른 근태신청-->
-			<div class="main-content">
+			<div class="main-content" id="quickapplDiv">
 				<div class="quickappl container">
 					<div class="row d-flex justify-content-start mb-1">
 						<h5 class="text-start"><i class="bi bi-stars"></i> <span th:text="${langList['QUICK_APPL_TTL']}"></span></h5>
@@ -58,17 +119,21 @@
 										<section class="section">
 											<div class="shadow card">
 												<div class="card-body align-content-center">
+													<!-- (오늘) 연차휴가 1일 -->
+													<div class="col-12 mb-0 align-content-center">
+														<h6 class="mb-1">
+															<span th:if="${date.applDateType == '오늘'}" class="badge rounded-pill bg-primary me-1">
+																<span th:text="${langList['TDY_DTM_01_BTN']}"></span>
+															</span>
+															<span th:if="${date.applDateType == '내일'}" class="badge rounded-pill bg-info me-1">
+																<span th:text="${langList['TMR_DTM_01_BTN']}"></span>
+															</span>
+															<span th:utext="${date.dtmDispName}"></span>
+														</h6>
+													</div>
+													<!-- 2024-10-16(수)  [신청] -->
 													<div class="d-flex justify-content-center">
 														<div class="col-10 mb-0 align-content-center">
-															<h6 class="mb-0">
-																<span th:if="${date.applDateType == '오늘'}" class="badge rounded-pill bg-primary me-1">
-																	<span th:text="${langList['TDY_DTM_01_BTN']}"></span>
-																</span>
-																<span th:if="${date.applDateType == '내일'}" class="badge rounded-pill bg-info me-1">
-																	<span th:text="${langList['TMR_DTM_01_BTN']}"></span>
-																</span>
-																<span th:text="${date.dtmDispName}"></span>
-															</h6>
 															<span th:if="${date.applDateType == '오늘'}" class="h7 appldate" id="today-date"></span>
 															<span th:if="${date.applDateType == '내일'}" class="h7 appldate" id="tomorrow-date"></span>
 														</div>
@@ -121,113 +186,7 @@
 					<img class="divider-text" src="/images/kdb/epams_r_cw_action.gif" />
 				</div>
 			</div>
-			<!--end divider-->
-
-			<!--start 직원검색-->
-			<div class="main-content" id="searchDiv">
-				<div class="container">
-					<!-- 직원검색 제목 -->
-					<div class="row d-flex justify-content-start mb-2">
-						<h5 class="text-start"><i class="bi bi-search"></i> <span th:text="${langList['SEARCH_EMP_TTL']}"></span></h5>
-					</div>
-
-					<!-- 직원검색 내용 -->
-					<div class="row d-flex justify-content-center">
-						<div class="row col-lg-12">
-							<section class="awesomplete section">
-								<div class="mainCard shadow card" id="awesomplete-result">
-									<div class="card-header pb-2">
-										<p class="h4" th:text="${langList['SEARCH_EMP_01_STMT']}"></p>
-										<p class="h7">검색을 원하는 키워드 입력 후</p>
-										<p class="h7">검색된 결과에서 한명을 선택해주세요.</p>
-									</div>
-
-									<div class="card-content" id="searchMemberCard">
-										<div class="card-body pb-0">
-											<div class="row">
-												<div class="col-12 mb-0">
-													<div class="input-with-icon d-flex align-items-center mb-3">
-														<i class="bi bi-search"></i>
-														<input id="searchMember" class="awesomplete" placeholder="이름, 팀/부서, 업무" autocomplete="off" />
-														<button id="clearSearch" class="clear-btn" type="button" hidden>&times;</button>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-
-									<div class="awesomplete-result d-flex justify-content-center mb-3" >
-										<div class="row col-12">
-											<div class="col-12 justify-self-center">
-												<button aria-controls="collapseSearch" aria-expanded="false" class="btn btn-primary btn-sm" data-bs-target="#collapseSearch" data-bs-toggle="collapse" id="searchWayBtn" type="button">
-													<i class="bi bi-question-lg me-1"></i><span>검색방법</span>
-												</button>
-
-												<div class="collapseSearch row mt-3 mb-1" id="collapseContainer">
-													<div class="collapse" id="collapseSearch">
-														<section class="section"></section>
-														<div class="card" id="collapseCard">
-															<div class="card-body p-2">
-																<h6 class="d-flex align-items-center gap-2">
-																	<i class="bi bi-binoculars-fill"></i>
-																	<span> 검색 방법 </span>
-																</h6>
-																<p><span class="h7" th:utext="${langList['SEARCH_EMP_02_STMT']}"></span></p>
-
-																<!--start divider-->
-																<div class="divider">
-																	<div class="divider-text p-0"></div>
-																</div>
-																<!--end divider-->
-
-																<h6 class="d-flex align-items-center gap-2">
-																	<i class="bi bi-1-square-fill"></i>
-																	<span> 단일 검색 </span>
-																</h6>
-																<p class="h7">예시) "홍길동" 입력 후 선택</p>
-																<p class="h7">예시) "단신부임" 입력 후 선택</p>
-
-																<!--start divider-->
-																<div class="divider">
-																	<div class="divider-text p-0"></div>
-																</div>
-																<!--end divider-->
-
-																<h6 class="d-flex align-items-center gap-2">
-																	<i class="bi bi-2-square-fill"></i>
-																	<span> 복합 검색 </span>
-																</h6>
-																<p class="h7">예시) "디지털&nbsp;&nbsp;&nbsp;업무지원" 입력 후 선택</p>
-																<p class="h7">예시) "인사부&nbsp;&nbsp;&nbsp;통할" 입력 후 선택</p>
-															</div>
-														</div>
-													</div>
-												</div>
-												<div id="memberList"></div>
-												
-											</div>
-										</div>
-										
-									</div>
-									<div class="d-flex align-items-center justify-content-center" id="noResultDiv">
-										<h7 class="text-center mb-0" id="noResult">검색결과가 없습니다</h7>
-									</div>
-									
-								</div>
-							</section>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!--end 직원검색-->
-
-			<!--start divider-->
-			<div class="divider">
-				<div class="divider-text">
-					<img class="divider-text" src="/images/kdb/epams_r_cw_action.gif" />
-				</div>
-			</div>
-			<!--end divider-->
+			<!--end divider-->			
 
 			<!--start 최근 공지사항-->
 			<div class="main-content">
@@ -236,7 +195,7 @@
 						<h5 class="text-start"><i class="bi bi-bell-fill"></i> <span th:text="${langList['RECENT_NOTICE_TTL']}"></span></h5>
 					</div>
 					<div class="row d-flex justify-content-end mb-1">
-						<a href="/board/list" class="link d-flex justify-content-end align-items-top">
+						<a href="/board/10/list" class="link d-flex justify-content-end align-items-top">
 							<h6><span>더보기</span> <i class="bi bi-arrow-right-circle-fill ms-1"></i></h6>
 						</a>
 					</div>

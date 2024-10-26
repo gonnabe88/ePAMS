@@ -46,12 +46,21 @@ public class SessionRestController {
         log.warn(session.getAttributeNames().toString());
 
         try {
-            if (authentication().getName() != null) {
-                response.put("sessionValid", true);
-            }
-            else {
-                response.put("sessionValid", false);
-            }
+        	Authentication tempNullableVar = authentication();
+        	if(tempNullableVar != null) {
+	            if (tempNullableVar.getName() != null) {
+	                response.put("sessionValid", true);
+	            }
+	            else {
+	                response.put("sessionValid", false);
+	            }
+        	} else {
+        		response.put("sessionValid", false);
+        	}
+        } catch (CustomGeneralRuntimeException e) {
+            // 런타임 예외 처리
+            // e.printStackTrace();
+        	return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         } catch(Exception e) {
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }       

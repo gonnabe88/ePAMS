@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import epams.domain.dtm.dto.DtmHisDTO;
 import epams.domain.dtm.dto.DtmPromotionDTO;
 import epams.domain.dtm.dto.DtmSaveDTO;
+import epams.domain.dtm.dto.DtmSearchDTO;
 import epams.domain.dtm.service.DtmPromotionService;
 import epams.domain.dtm.service.DtmRevokeService;
 import epams.domain.dtm.service.DtmSaveService;
@@ -86,7 +88,10 @@ public class DtmModifyRestController<S extends Session> {
      public ResponseEntity<Map<String, String>> dtmModify(@RequestBody final DtmHisDTO dto) throws IOException {
 
         // 사용자 ID 설정
-        final Long empId = Long.parseLong(authentication().getName().replace('K', '7'));
+        String empIdStr = Optional.ofNullable(authentication())
+        		.map(Authentication::getName)
+        		.orElse("K000000");
+        final Long empId = Long.parseLong(empIdStr.replace('K', '7'));
         dto.setEmpId(empId);
         dto.setModUserId(empId);
 

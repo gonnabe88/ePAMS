@@ -1,4 +1,3 @@
-
 // awesomplete에서 선택된 항목 데이터를 저장할 전역 변수
 let selectedItem = null; // 선택된 항목을 저장할 변수
 
@@ -24,7 +23,7 @@ const searchMember = () => {
         },
         complete: function(data) {
             // 서버로부터 받은 데이터를 memberList에 넣음
-            $("#memberList").html(data.responseText);            
+            $("#memberListArea").html(data.responseText);            
             $('#noResultDiv').remove();
             // AJAX 후에 이벤트 바인딩
             setupEventListeners();
@@ -33,6 +32,38 @@ const searchMember = () => {
             $('#searchMember').val('');
             $('#clearSearch').attr("hidden", true);
 
+        },
+        error: function(error) {
+            popupMsg("입력 오류", 'Error fetching data : '+error, "error");
+        }
+    });
+};
+
+// 직원검색 초기화 버튼 클릭 시 이벤트
+const resetSearchMember = () => {
+    $.ajax({
+        type: "GET",
+        url: "/index/searchGuide",
+        complete: function(data) {
+            // 서버로부터 받은 데이터를 memberList에 넣음
+            $("#searchGuideArea").html(data.responseText);            
+            $('#memberList').remove();            
+
+            // 검색방법 드롭다운 펼쳐지는 경우
+            $('#collapseSearch').on('show.bs.collapse', function() {
+                $('#searchWayBtn').removeClass('btn-primary').addClass('btn-warning').html('<i class="bi bi-capslock me-1"></i>닫기');
+                $('#collapseCard').addClass('card-warning');
+            });
+
+            // 검색방법 드롭다운 접히는 경우
+            $('#collapseSearch').on('hidden.bs.collapse', function() {
+                $('#searchWayBtn').removeClass('btn-warning').addClass('btn-primary').html('<i class="bi bi-question-lg me-1"></i><span>검색방법</span>');
+                $('#collapseCard').removeClass('card-warning');
+            });
+
+            // 입력폼 값 및 X 버튼 삭제
+            $('#searchMember').val('');
+            $('#clearSearch').attr("hidden", true);
         },
         error: function(error) {
             popupMsg("입력 오류", 'Error fetching data : '+error, "error");
@@ -49,6 +80,11 @@ const setupEventListeners = () => {
             if (searchInput) {
                 searchInput.focus();
             }
+        });
+
+        // 다시검색 아이콘 클릭 시 searchMember 인풋에 포커스
+        document.getElementById('reset').addEventListener('click', function () {
+            resetSearchMember();
         });
 
         // 연락하기 아이콘 클릭 시 전화 걸기
@@ -76,6 +112,12 @@ const setupEventListeners = () => {
 }
 
 // 직원 검색 폼으로 스크롤 이동
+const scrollToQuickapplDiv = () => {
+    const target = $('#quickapplDiv').get(0);
+    target.scrollIntoView({ behavior: 'smooth'});
+};
+
+// 직원 검색 폼으로 스크롤 이동
 const scrollToDiv = () => {
     const target = $('#searchDiv').get(0);
     target.scrollIntoView({ behavior: 'smooth'});
@@ -83,7 +125,7 @@ const scrollToDiv = () => {
 
 // 직원 검색 폼으로 스크롤 이동
 const scrollToSearchMemberCard = () => {
-    const target = $('#searchMemberCard').get(0);
+    const target = $('#searchDiv').get(0);
     target.scrollIntoView({ behavior: 'smooth'});
 };
 
@@ -147,9 +189,16 @@ $(document).ready(() => {
         }
     });
 
+    // searchMember 입력 필드에서 공백 2개 입력 방지
+    inputElement.addEventListener('input', () => {
+        let value = inputElement.value;
+        value = value.replace(/\s{2,}/g, ' ');
+        inputElement.value = value;
+    });
+
     const awesomplete = new Awesomplete(inputElement, {
         minChars: 2,
-        maxItems: 50, // 최대 50개까지 검색 결과 표시
+        maxItems: Infinity, // 최대 50개까지 검색 결과 표시
         autoFirst: false, // 기본 지정 해제
         sort: function(a, b) {
             const nameA = a.value.username.toLowerCase();
@@ -158,14 +207,14 @@ $(document).ready(() => {
             const firstCharA = nameA.charAt(0); // K or O
             const firstCharB = nameB.charAt(0); // K or O
 
-            const restA = nameA.slice(1); // 140024 등
-            const restB = nameB.slice(1); // 140024 등
-
             const deptA = a.value.deptCode.toLowerCase();
             const deptB = b.value.deptCode.toLowerCase();
 
-            const teamA = a.value.teamCode.toLowerCase();
-            const teamB = b.value.teamCode.toLowerCase();
+            const teamA = a.value.teamCode;
+            const teamB = b.value.teamCode;
+
+            const realnameA = a.value.realname.toLowerCase();
+            const realnameB = b.value.realname.toLowerCase();
 
             // 1. 첫 글자를 기준으로 오름차순 정렬 (K > O)
             if (firstCharA < firstCharB) return -1;
@@ -179,21 +228,27 @@ $(document).ready(() => {
             if (teamA < teamB) return -1;
             if (teamA > teamB) return 1;
 
-            // 4. 행번을 기준으로 내림차순 정렬
-            if (restA > restB) return -1;
-            if (restA < restB) return 1;
+            // 4. 이름을 기준으로 오름차순 정렬
+            if (realnameA < realnameB) return -1;
+            if (realnameA > realnameB) return 1;
 
             // 모든 값이 동일한 경우
             return 0;
         },
         list: [],
         item: function(text, input) {
+            
             let html = text.label;
             const terms = input.trim().toLowerCase().split(/\s+/);
 
             terms.forEach(term => {
                 const regex = new RegExp(`(${term})`, 'gi');
-                html = html.replace(regex, '<mark>$1</mark>');
+                // HTML 태그 보호 및 텍스트 하이라이트
+                html = html.replace(/(<[^>]+>)/g, '\0$1\0') // HTML 태그 보호
+                            .split('\0').map(part => {
+                                if(part.startsWith('<')) return part; // HTML 태그 유지
+                                return part.replace(regex, '<mark>$1</mark>'); // 텍스트 하이라이트
+                            }).join('');
             });
 
             const itemElement = document.createElement("li");
@@ -209,49 +264,32 @@ $(document).ready(() => {
             itemElement.addEventListener('touchend', function(event) {
                 endX = event.changedTouches[0].clientX;
                 endY = event.changedTouches[0].clientY;        
-                if(Math.abs(endX-startX) < 5 && Math.abs(endY-startY) < 5) {
+                if(Math.abs(endX-startX) < 10 && Math.abs(endY-startY) < 10) {
                     itemElement.click();
                 }
             }, {passive: true});
 
             return itemElement;
         },
-        replace: function(text) {
+        replace: function(text) { // 검색 결과가 나오면 키패드를 숨기고 searchDiv(직원검색 입력 폼)를 최상단에 위치시킴
             selectedItem = text.value;  // 전체 객체를 전역변수 selectedItem에 저장
             searchMember(); // 검색 함수 호출
-
-            // 키패드를 숨김
-            inputElement.blur();
+            inputElement.blur(); // 키패드를 숨김
 
             // id가 searchDiv인 요소를 화면 최상단에 위치시킴
             const searchDiv = document.getElementById('searchDiv');
             const offset = searchDiv.offsetTop;
-
-            // 스크롤 애니메이션으로 searchDiv를 최상단에 위치시킴
             $('html, body').animate({
                 scrollTop: offset
             }, 300); // 300ms의 애니메이션 지속 시간
         },
         filter: function(text, input) {
+            const plainText = text.label.replace(/<[^>]*/g, '').toLowerCase(); // HTML 제거 및 순수 텍스트만 검색 대상으로 반환
             const terms = input.trim().toLowerCase().split(/\s+/);
-            return terms.every(term => text.label.toLowerCase().includes(term));
+            return terms.every(term => plainText.toLowerCase().includes(term));
         }
     });
-
-    // 검색 결과가 나오면 키패드를 숨기고 searchDiv(직원검색 입력 폼)를 최상단에 위치시킴
-    inputElement.addEventListener('awesomplete-selectcomplete', function() {
-        inputElement.blur(); // 키패드를 숨김
-
-        // id가 searchDiv인 요소를 화면 최상단에 위치시킴
-        const searchDiv = document.getElementById('searchDiv');
-        const offset = searchDiv.offsetTop;
-
-        // 스크롤 애니메이션으로 searchDiv를 최상단에 위치시킴
-        $('html, body').animate({
-            scrollTop: offset
-        }, 300); // 300ms의 애니메이션 지속 시간
-    });
-
+    
     // 드롭다운 내부 스크롤이 외부 스크롤로 전파되지 않도록 설정
     const dropdown = document.getElementById('awesomplete_list_2');
 
@@ -279,13 +317,9 @@ $(document).ready(() => {
 
     // 터치 이벤트에서 스크롤이 외부로 전파되지 않도록 설정
     dropdown.addEventListener('touchmove', function(event) {
-        event.stopPropagation();
-    }, { passive: false });
-
-    dropdown.addEventListener('touchstart', function(event) {
+        // 모바일 라이브서치 결과에서 터치 move 시 키패드를 내림
         const target2 = $('#searchMemberCard').get(0);
         target2.scrollIntoView({ behavior: 'smooth'});
-
         // 키패드 숨기기 위한 처리 (포커스를 잃지 않고 readonly 처리)
         inputElement.setAttribute('readonly', true);  // 일시적으로 readonly 설정
         setTimeout(() => {
@@ -293,14 +327,14 @@ $(document).ready(() => {
         }, 100);  // 약간의 지연 후 원상복구
 
         event.stopPropagation();
+    }, { passive: false });
+
+    dropdown.addEventListener('touchstart', function(event) {
+        event.stopPropagation();
     }, { passive: true });
 
     dropdown.addEventListener('touchend', function(event) {
         event.stopPropagation();
-        if(Math.abs(endX-startX) < 5 && Math.abs(endY-startY) < 5) {
-
-        }
-
     }, { passive: true });
 
     $.ajax({
@@ -314,16 +348,21 @@ $(document).ready(() => {
                 data.userList.forEach(item => {
                     // 아이콘을 username이 K로 시작하는 경우에만 추가
                     const iconHtml = item.username.startsWith('K')
-                        ? '<img src="/images/kdb/ICON16.ico" alt="KDB" id="searchMemberIcon">'
-                        : '';
+                        ? '<img src="/images/kdb/ICON48.ico" alt="KDB" id="searchMemberIcon">'
+                        : '<i id="liveSearchIcon" class="bi bi-file-person-fill"></i>';
 
                     // itemText 구성
                     const itemText = `
-                        ${iconHtml}<span class="searchItemHead ms-1">${item.realname} ${item.positionName}</span>
+                        ${iconHtml}<span class="searchItemHead ms-1">
+                            ${item.realname} 
+                            ${item.positionName ? item.positionName : ''}</span>
                         <br>
-                        <span class="searchItemBody">${item.deptName} ${item.teamName}</span>
+                        <span class="searchItemBody">
+                            ${item.deptName ? item.deptName : ''} 
+                            ${item.teamName ? item.teamName : ''}
+                            </span>
                         <br>
-                        <span class="searchItemFooter">${item.jobDetail}</span>
+                        <span class="searchItemFooter">${item.jobDetail ? item.jobDetail : ''}</span>
                     `;
                     list.push({
                         label: itemText,

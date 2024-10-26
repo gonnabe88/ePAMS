@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
  * @since 2024-06-11
  */
 @Slf4j
- @Repository
+@Repository
 @RequiredArgsConstructor
 public class LoginRepository {
 
@@ -24,15 +24,22 @@ public class LoginRepository {
      */
     private final SqlSessionTemplate sql;
 
+    
     /**
      * @author K140024
      * @implNote 로그인 정보를 확인하고 사용자 정보를 반환하는 메서드
      * @since 2024-06-11
      */
-    public IamUserDTO login(final IamUserDTO iamUserDTO) {
+    public IamUserDTO pwLogin(final IamUserDTO iamUserDTO) {
         if(log.isWarnEnabled()){
             log.warn("{} {} 로그인 정보 확인", iamUserDTO.getUsername(), iamUserDTO.getPassword());
         }
+        
+        IamUserDTO userYn = sql.selectOne("IamUser.findByUserId", iamUserDTO);
+        if(userYn == null) {
+            log.warn("{} 로그인 계정 또는 권한 없음", iamUserDTO.getUsername());
+        }
+
         return sql.selectOne("IamUser.login", iamUserDTO);
     }
 

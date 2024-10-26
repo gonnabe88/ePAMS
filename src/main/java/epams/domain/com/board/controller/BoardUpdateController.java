@@ -19,6 +19,7 @@ import epams.domain.com.board.dto.BoardDTO;
 import epams.domain.com.board.dto.BoardFileDTO;
 import epams.domain.com.board.service.BoardMainService;
 import epams.domain.com.board.service.BoardUpdateService;
+import epams.framework.exception.CustomGeneralRuntimeException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -94,7 +95,12 @@ public class BoardUpdateController {
      */
     @PostMapping("/update")
     public String update(@ModelAttribute final BoardDTO boardDTO, final Model model) throws IOException {
-        boardDTO.setBoardWriter(authentication().getName());
+    	Authentication tempNullableVar = authentication();
+    	if(tempNullableVar != null) {
+    		boardDTO.setBoardWriter(tempNullableVar.getName());
+    	} else {
+    		throw new CustomGeneralRuntimeException("로그인이 만료되었습니다. 로그인 후 사용해주세요");
+    	}
         final BoardDTO board = boardUpdateServ.update(boardDTO);
         model.addAttribute("board", board);
         return "common/boardDetail";

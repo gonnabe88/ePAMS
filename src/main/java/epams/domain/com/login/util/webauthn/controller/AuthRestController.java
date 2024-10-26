@@ -3,6 +3,8 @@ package epams.domain.com.login.util.webauthn.controller;
 import epams.domain.com.login.util.webauthn.service.AuthDeleteService;
 import epams.domain.com.login.util.webauthn.service.AuthRegistService;
 import epams.domain.com.login.util.webauthn.service.AuthService;
+import epams.framework.exception.CustomGeneralRuntimeException;
+
 import org.owasp.encoder.Encode;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -205,6 +207,12 @@ public class AuthRestController {
         try {
             authDeleteService.deleteByUsername();
             return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (CustomGeneralRuntimeException e) {
+            // 런타임 예외 처리
+            // e.printStackTrace();
+        	response.put("error", "인증정보 삭제 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.");
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        	
         } catch (Exception e) {
             response.put("error", "인증정보 삭제 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.");
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);

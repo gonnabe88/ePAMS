@@ -6,8 +6,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import epams.domain.dtm.dto.DtmHisDTO;
+
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 /***
  * @author 140024
@@ -17,7 +20,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/commoncode/")
+@RequestMapping("/api/commoncode")
 public class CommonCodeRestController {
 
     /***
@@ -54,9 +57,9 @@ public class CommonCodeRestController {
      * @implNote 코드유형 & 코드에 해당하는 코드 목록 조회
      * @since 2024-06-09
      */
-    @GetMapping("/code/{codeKind}/{code}")
-    public ResponseEntity<List<CommonCodeDTO>> findByCodeKindAndCode(@PathVariable("codeKind") String codeKind, @PathVariable("code") String code) throws IOException {
-        final List<CommonCodeDTO> dtos = commonCodeService.findByCodeKindAndCode(new CommonCodeDTO(codeKind, code));
+    @PostMapping("/code")
+    public ResponseEntity<List<CommonCodeDTO>> findByCodeKindAndCode(@RequestBody final CommonCodeDTO commonCodeDTO) throws IOException {
+        final List<CommonCodeDTO> dtos = commonCodeService.findByCodeKindAndCode(commonCodeDTO);
         return ResponseEntity.ok(dtos);
     }
 

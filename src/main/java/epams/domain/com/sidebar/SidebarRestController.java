@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import epams.domain.com.sidebar.dto.UserInfoDTO;
 import epams.domain.com.sidebar.service.SidebarService;
+import epams.framework.exception.CustomGeneralRuntimeException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -62,24 +63,26 @@ public class SidebarRestController {
 
         // 현재 로그인한 사용자 정보
         final Authentication auth = authentication();
+        if( auth != null) {
+        	// 사용자 인적사항 정보를 가져오는 로직
+            UserInfoDTO userInfo = sidebarService.findByUserNo(auth.getName());
+            // 관리자 여부를 세팅하는 로직
+            Collection<? extends GrantedAuthority> authorities = auth.getAuthorities();
+            final Boolean isAdmin = authorities.stream().anyMatch(role -> role.getAuthority().equals("ROLE_EHRAD001"));
+            userInfo.setIsAdmin(isAdmin);
+            if(isAdmin) {
+                log.info("isAdmin : True");
+            } else {
+                log.info("isAdmin : False");
+            }
 
-        // 사용자 인적사항 정보를 가져오는 로직
-        UserInfoDTO userInfo = sidebarService.findByUserNo(auth.getName());
-
-        // 관리자 여부를 세팅하는 로직
-        Collection<? extends GrantedAuthority> authorities = auth.getAuthorities();
-        final Boolean isAdmin = authorities.stream().anyMatch(role -> role.getAuthority().equals("ROLE_EHRAD001"));
-        userInfo.setIsAdmin(isAdmin);
-        if(isAdmin) {
-            log.info("isAdmin : True");
+            // 사용자 정보 객체 전달 
+            Map<String, UserInfoDTO> userInfoMap = new ConcurrentHashMap<>();
+            userInfoMap.put("userInfo", userInfo);
+            return ResponseEntity.ok(userInfoMap);
         } else {
-            log.info("isAdmin : False");
-        }
-
-        // 사용자 정보 객체 전달 
-        Map<String, UserInfoDTO> userInfoMap = new ConcurrentHashMap<>();
-        userInfoMap.put("userInfo", userInfo);
-        return ResponseEntity.ok(userInfoMap);
+        	throw new CustomGeneralRuntimeException("로그인이 만료되었습니다. 로그인 후 사용해주세요");
+        }       
     }
 
 }

@@ -7,6 +7,7 @@ import epams.domain.dtm.dto.DtmCalendarDTO;
 import epams.domain.dtm.dto.DtmSearchDTO;
 import epams.domain.dtm.service.DtmAnnualStatusService;
 import epams.domain.dtm.service.DtmHistoryService;
+import epams.framework.exception.CustomGeneralRuntimeException;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -27,6 +28,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.time.LocalDate;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -110,7 +112,12 @@ public class DtmRegController<S extends Session> {
         
         // 근태목록
         final DtmSearchDTO searchDTO = new DtmSearchDTO();
-        searchDTO.setEmpId(Long.parseLong(authentication().getName().replace('K', '7')));
+        String empIdStr = Optional.ofNullable(authentication())
+        		.map(Authentication::getName)
+        		.orElse("K000000");
+        final Long empId = Long.parseLong(empIdStr.replace('K', '7'));
+        searchDTO.setEmpId(empId);
+        
         final List<DtmCalendarDTO> dtmCalDTOList = dtmHisService.findByYears(searchDTO);
 
         // 현재 기준 년도(YYYY) 세팅 ex)2024
@@ -122,6 +129,11 @@ public class DtmRegController<S extends Session> {
             final DtmAnnualStatusDTO dtmAnnualStatusDTO = dtmAnnualStatusService.getDtmAnnualStatus(searchDTO.getEmpId(), thisYear);
             DtmAnnualStatusDTO.removeBracket(dtmAnnualStatusDTO);
             dtmAnnualStatusDTO.formatter();
+            model.addAttribute("dtmAnnualStatus", dtmAnnualStatusDTO);
+        } catch (CustomGeneralRuntimeException e) {
+            // 런타임 예외 처리
+            // e.printStackTrace();
+        	final DtmAnnualStatusDTO dtmAnnualStatusDTO = new DtmAnnualStatusDTO();
             model.addAttribute("dtmAnnualStatus", dtmAnnualStatusDTO);
         } catch (Exception e) {
             final DtmAnnualStatusDTO dtmAnnualStatusDTO = new DtmAnnualStatusDTO();

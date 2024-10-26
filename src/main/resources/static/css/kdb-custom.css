@@ -1,3 +1,38 @@
+@media (prefers-color-scheme:dark){
+    html, body{
+        filter:none !important;
+        -webkit-filter: none !important;
+    }
+    img {
+        filter: none !important;
+        -webkit-filter: none !important;
+    }
+}
+
+
+#liveSearchIcon {
+    position: relative;
+    font-size: 16px;
+    color: #9D5DB6;
+    pointer-events: none;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    transform: none;
+}
+
+#loginTitleBg {
+    background-color: rgb(157 93 182 / 15%) !important;
+    color: #25396f;
+}
+.text-bg-info {
+    color: white !important;
+}
+
+#collapseContainer small {
+    font-style: italic;
+}
+
 #guidPrgSno {
     width: 80px;
     height: 30px;
@@ -340,10 +375,6 @@ body {
     overflow-x: visible; /* X축 방향의 오버플로를 보이도록 설정 */
 }
 
-#searchDiv .mainCard {
-    min-height: 470px;
-}
-
 /*직원검색 card 스타일 조정*/
 #memberList .card {
     background-color: #F2F7FF;
@@ -452,10 +483,11 @@ body {
 }
 /*awesomplete 스크롤바 스타일 조정 끝*/
 
-#searchMemberIcon img {
+/* 직원 검색 시 KDB 직원이름 앞에 보여주는 KDB CI 이미지 */
+#searchMemberIcon {
     width:16px;
     height:16px;
-    margin-right:5px;
+    margin-right:0;
 }
 
 .searchItemHead {
@@ -483,7 +515,7 @@ mark {
 
 .awesomplete > input {
     height: 38px;
-    border: 1px solid #dce7f1;
+    border: 1px solid #435ebe;
     border-radius: 25rem;
 }
 
@@ -1060,8 +1092,10 @@ mark {
 
 /*이벤트 박스 최소 높이 설정*/
 .dtmReg .fc .fc-daygrid-body-unbalanced .fc-daygrid-day-events {
-    min-height: 0.6em;
+    min-height: 20px;
     position: relative;
+    display: flex;
+    align-items: flex-start;
 }
 /*이벤트 박스 이벤트 모양(.)*/
 .dtmReg .fc-h-event {
@@ -1088,7 +1122,12 @@ mark {
 
 /* 날짜 박스 불필요한 여백 제거 */
 .dtmReg .fc .fc-daygrid-day-number {
-    padding: 0;
+    padding: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    height: 25px;
 }
 
 /* 날짜 선택 시 스타일 */
@@ -1117,7 +1156,7 @@ mark {
 }
 
 .dtmReg .fc-header-toolbar {
-    margin-bottom: 0.5em !important;
+    margin-bottom: 0 !important;
 }
 
 .dtmReg .fc-fade {
@@ -1387,15 +1426,39 @@ label {
 }
 
 @keyframes blink {
-    0%, 100% { opacity: 1; } /* 처음과 끝은 보이는 상태 */
-    50% { opacity: 0; } /* 중간에 잠깐 사라짐 */
+    0%, 40%, 100% { opacity: 1; } /* 처음과 끝은 보이는 상태 */
+    60% { opacity: 0; } /* 중간에 잠깐 사라짐 */
 }
 
 #dateWarning {
     display: none; /* 기본적으로는 숨긴 상태 */
+    position: absolute;
+    top:0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     color: red;
+    z-index: 999;
+    justify-content: center;
+    align-items: center;
+    background-image: repeating-linear-gradient(
+        45deg,
+        rgba(82, 160, 234, 0.3),
+        rgba(82, 160, 234, 0.3) 2px,
+        transparent 2px,
+        transparent 4px
+    );
+}
+.warning-box{
+    background-color: rgba(255,255,255,0.9);
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: bold;
     text-align: center;
-    animation: blink 0.5s ease-in-out;
+    justify-content: center;
+    align-items: center;
+    color: red;
+    animation: blink 2s ease-in-out infinite;
 }
 /*근태신청화면 콤보*/
 
@@ -1653,10 +1716,6 @@ label {
 /*직원검색 아이콘 높이 조정*/
 .awesomplete .bi {
     line-height: 1;
-}
-
-#noResultDiv {
-    height : 200px;
 }
 
 #searchWayBtn {
@@ -2099,7 +2158,7 @@ h6, .h6, h5, .h5, h4, .h4, h3, .h3, h2, .h2, h1, .h1 {
 }
 
 h1, .auth-subtitle {
-    font-family: "Nunito";
+    font-family: "Na";
     font-size: calc(1.5rem + 1.5vh);
 }
 
@@ -4533,7 +4592,7 @@ textarea.form-control.is-invalid {
 }
 
 .sidebar-wrapper .menu .submenu .submenu-item a {
-    padding: .7rem 2rem;
+    padding: .7rem 1rem;
     display: block;
     color: #25396f;
     font-size: .85rem;
@@ -5554,4 +5613,9 @@ a {
 
 .z-1 {
     z-index: 1
+}
+
+#worktime{
+    font-size: 0.8em;
+    color : #808080;
 }

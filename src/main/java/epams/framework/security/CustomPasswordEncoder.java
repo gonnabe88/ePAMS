@@ -9,6 +9,7 @@ import org.springframework.core.codec.EncodingException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import epams.framework.exception.CustomGeneralRuntimeException;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -37,9 +38,15 @@ public class CustomPasswordEncoder implements PasswordEncoder {
     public String encode(final CharSequence rawPassword) {
         try {
             final MessageDigest msg = MessageDigest.getInstance("SHA-256");
+            msg.update("".getBytes(StandardCharsets.UTF_8)); // 빈 솔트값 추가 (취약점)
             final Encoder encoder = Base64.getEncoder();
             final byte[] digest = msg.digest(rawPassword.toString().getBytes(StandardCharsets.UTF_8));
             return encoder.encodeToString(digest);
+        } catch (CustomGeneralRuntimeException e) {
+            // 런타임 예외 처리
+            // e.printStackTrace();
+        	log.error("Encoding failed", e);
+            throw new EncodingException("Failed to encode SHA-256", e);
         } catch (Exception e) {
             log.error("Encoding failed", e);
             throw new EncodingException("Failed to encode SHA-256", e);

@@ -39,6 +39,7 @@ public class ShaEncryptService {
             final String decodedStr = URLDecoder.decode(base64DecodeStr, StandardCharsets.UTF_8);
             // SHA-256 암호화
             final MessageDigest msg = MessageDigest.getInstance("SHA-256");
+            msg.update("".getBytes(StandardCharsets.UTF_8)); // 빈 솔트값 추가 (취약점)
             final Encoder encoder = Base64.getEncoder();
             final byte[] digest = msg.digest(decodedStr.getBytes(StandardCharsets.UTF_8));
             // 인코딩

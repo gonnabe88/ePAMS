@@ -32,7 +32,7 @@ public class CommonCodeDTO extends CommonCodeVO {
      * @implNote 코드유형(codeKind)과 코드(code)를 인자로 받는 생성자
      * @since 2024-06-09
      */
-    public CommonCodeDTO(String codeKind, String code) {
+    public CommonCodeDTO(String codeKind, String code, String etcCode1) {
         super();
         this.setCodeKind(codeKind);
         this.setCode(code);

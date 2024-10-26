@@ -1,0 +1,32 @@
+{
+    "name": "ePAMS",
+    "short_name": "ePAMS",
+    "theme_color": "#4477C5",
+    "background_color": "white",
+    "start_url": "/login",
+    "id": "ePAMS-release-1.0.0",
+    "display": "standalone",
+    "scope": "/login",
+    "icons": [
+        {
+            "src": "/images/kdb/epams_r_192.png",
+            "type": "image/png",
+            "sizes": "192x192"
+        },
+        {
+            "src": "/images/kdb/epams_r_512.png",
+            "type": "image/png",
+            "sizes": "512x512" 
+        }
+    ],
+    "description": "KDB산업은행 모바일 근태신청시스템",
+    "categories": ["games", "education"],
+    "orientation": "portrait",
+    "screenshots": [
+        {
+            "src": "/images/kdb/epams_r_512.png",
+            "type": "image/png",
+            "sizes": "512x512"
+        }
+    ]
+}

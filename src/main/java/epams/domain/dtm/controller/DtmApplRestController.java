@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.springframework.http.HttpStatus;
@@ -117,15 +118,19 @@ public class DtmApplRestController {
      * @since 2024-09-20
      */
     @PostMapping("/check")
-    public ResponseEntity<Map<String, Object>> checkDtm(@RequestBody final Map<String, List<DtmHisDTO>> dtmHisDTOLists) {
-
-        final Long empId = Long.parseLong(authentication().getName().replace('K', '7'));
+    public ResponseEntity<Map<String, Object>> checkDtm(@RequestBody final Map<String, List<DtmHisDTO>> dtmHisDTOLists) {        
+        
+        String empIdStr = Optional.ofNullable(authentication())
+        		.map(Authentication::getName)
+        		.orElse("K000000");
+        final Long empId = Long.parseLong(empIdStr.replace('K', '7'));
+        
         final List<DtmHisDTO> revokeDTOList = dtmHisDTOLists.get("revoke");
         final List<DtmHisDTO> registDTOList = dtmHisDTOLists.get("regist");
         final List<DtmHisDTO> dtmHisDTOList = new ArrayList<>();
-        /* @TODO 외부 테스트 시 주석 처리(시작)
+        /* @TODO 외부 테스트 시 주석 처리(시작) */
         final String phoneNo = memberService.findMPhoneNo(empId); // 휴대폰 연락처 가져오기
-        @TODO 외부 테스트 시 주석 처리(끝) */
+        /* @TODO 외부 테스트 시 주석 처리(끝) */
         
         if(!revokeDTOList.isEmpty()) {
             revokeDTOList.forEach(dtmHisDTO -> {
@@ -133,10 +138,10 @@ public class DtmApplRestController {
                 dtmHisDTO.setModUserId(empId); // 수정자 ID = 현재 로그인 사용자
                 dtmHisDTO.setStaDate(dtmHisDTO.getStaYmd().toLocalDate());
                 dtmHisDTO.setEndDate(dtmHisDTO.getEndYmd().toLocalDate());
-                /* @TODO 외부 테스트 시 주석 처리(시작)
+                /* @TODO 외부 테스트 시 주석 처리(시작) */
                 dtmHisDTO.setTelno(phoneNo); // 연락처 설정 = 현재 로그인한 사용자 연락처
                 dtmEtcService.findDtmPeriod(dtmHisDTO); // 근태별 교차신청가능여부/시작 및 종료시간 설정
-                 @TODO 외부 테스트 시 주석 처리(끝) */
+                 /* @TODO 외부 테스트 시 주석 처리(끝) */
                 log.warn("취소 : " + dtmHisDTO.toString());
             });            
         }
@@ -147,10 +152,10 @@ public class DtmApplRestController {
                 dtmHisDTO.setModUserId(empId); // 수정자 ID = 현재 로그인 사용자
                 dtmHisDTO.setStaDate(dtmHisDTO.getStaYmd().toLocalDate());
                 dtmHisDTO.setEndDate(dtmHisDTO.getEndYmd().toLocalDate());
-                /* @TODO 외부 테스트 시 주석 처리(시작)
+                /* @TODO 외부 테스트 시 주석 처리(시작) */
                 dtmHisDTO.setTelno(phoneNo); // 연락처 설정 = 현재 로그인한 사용자 연락처
                 dtmEtcService.findDtmPeriod(dtmHisDTO); // 근태별 교차신청가능여부/시작 및 종료시간 설정
-                 @TODO 외부 테스트 시 주석 처리(끝) */
+                /* @TODO 외부 테스트 시 주석 처리(끝) */
                 log.warn("신청 : " + dtmHisDTO.toString());
             });  
         }
@@ -167,7 +172,7 @@ public class DtmApplRestController {
 
         try {
             
-/* @TODO 외부 테스트 시 주석 처리(시작)
+/* @TODO 외부 테스트 시 주석 처리(시작) */
 
             // 근태 유형별 합계 시간 데이터 저장용 객체 생성
             final DtmKindSumDTO sumDTO = new DtmKindSumDTO();
@@ -190,7 +195,7 @@ public class DtmApplRestController {
             response.put("annualUsedCnt", statusDTO.getAnnualDayUsedCnt()); // 기 사용시간
             response.put("annualTotalCnt", statusDTO.getAnnualDayTotalCnt()); // 총 보유시간
 
-    @TODO 외부 테스트 시 주석 처리(끝) */
+    /* @TODO 외부 테스트 시 주석 처리(끝) */
  
             response.put("registDTOList", registDTOList); // 근태신청 리스트
             response.put("revokeDTOList", revokeDTOList); // 근태신청 리스트
@@ -221,7 +226,12 @@ public class DtmApplRestController {
     @PostMapping("/appl")
     public ResponseEntity<Map<String, String>> applyDtm(@RequestBody final Map<String, List<DtmHisDTO>> dtmHisDTOLists) throws IOException {    
 
-        final Long empId = Long.parseLong(authentication().getName().replace('K', '7'));
+
+        String empIdStr = Optional.ofNullable(authentication())
+        		.map(Authentication::getName)
+        		.orElse("K000000");
+        final Long empId = Long.parseLong(empIdStr.replace('K', '7'));
+
         final List<DtmHisDTO> revokeDTOList = dtmHisDTOLists.get("revoke");
         final List<DtmHisDTO> registDTOList = dtmHisDTOLists.get("regist");
 

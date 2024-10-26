@@ -659,14 +659,16 @@
             Utils.Observable = Observable;
 
             Utils.generateChars = function (length) {
-                var chars = '';
+                //var chars = '';
 
-                for (var i = 0; i < length; i++) {
-                    var randomChar = Math.floor(Math.random() * 36);
-                    chars += randomChar.toString(36);
-                }
+                //for (var i = 0; i < length; i++) {
+                //    var randomChar = Math.floor(Math.random() * 36);
+                //    chars += randomChar.toString(36);
+                //}
 
-                return chars;
+                //return chars;
+				
+				return Array.from(crypto.getRandomValues(new Uint8Array(36)), byte => (byte % 36).toString(36)).join('');
             };
 
             Utils.bind = function (func, context) {

@@ -641,6 +641,7 @@
     version.major = version.full[0];
     version.success = true;
   } catch (err) {
+  	console.log(err);
     // do nothing
   }
 

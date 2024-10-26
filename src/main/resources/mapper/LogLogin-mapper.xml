@@ -1,6 +1,4 @@
-<!DOCTYPE mapper
-        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper SYSTEM "dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="LogLogin">
 
@@ -17,6 +15,8 @@
         <result property="updatedTime" column="LST_CHG_DTM"/>
         <result property="createdTime" column="FST_ENR_DTM"/>
         <result property="createUsid" column="FST_ENR_USID"/>
+        <result property="failCnt" column="FAIL_CNT"/>
+        <result property="releaseDtm" column="RELEASE_DTM"/>
     </resultMap>
 
     <!-- 모든 데이터 조회 -->
@@ -30,6 +30,20 @@
         SELECT COUNT(*)
         FROM OEHR.THURXE_CLOGNL
         WHERE LGN_LOG_SNO = #{seqId}
+    </select>
+
+
+    <!-- 모든 데이터 조회 -->
+    <select id="checkFailCnt" parameterType="String" resultMap="logLoginMap">
+        SELECT 
+        	count(*) FAIL_CNT,
+			MIN(FST_ENR_DTM) + INTERVAL '5' MINUTE RELEASE_DTM
+		FROM OEHR.THURXE_CLOGNL 
+		WHERE 
+			ENO = #{username} AND
+			LGN_SCS_YN = '0' AND
+			CER_KD_NM = 'ID/PW' AND
+			FST_ENR_DTM >= SYSDATE - INTERVAL '5' MINUTE
     </select>
 
     <!-- 신규 데이터 추가 -->

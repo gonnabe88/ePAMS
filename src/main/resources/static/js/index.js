@@ -1,5 +1,7 @@
 $(document).ready(() => { // 화면 로드 시 호출
 
+    resetSearchMember();
+
     function formatDate(date) {
         const days = ['일', '월', '화', '수', '목', '금', '토'];  // 요일 배열
 
@@ -69,18 +71,6 @@ $(document).ready(() => { // 화면 로드 시 호출
         }
     });
 
-    // 검색방법 드롭다운 펼쳐지는 경우
-    $('#collapseSearch').on('show.bs.collapse', function() {
-        $('#searchWayBtn').removeClass('btn-primary').addClass('btn-warning').html('<i class="bi bi-capslock me-1"></i>닫기');
-        $('#collapseCard').addClass('card-warning');
-    });
-
-    // 검색방법 드롭다운 접히는 경우
-    $('#collapseSearch').on('hidden.bs.collapse', function() {
-        $('#searchWayBtn').removeClass('btn-warning').addClass('btn-primary').html('<i class="bi bi-question-lg me-1"></i><span>검색방법</span>');
-        $('#collapseCard').removeClass('card-warning');
-    });
-
     // 신청(dtmRegistBtn) 버튼 클릭 시
     $('.dtmRegistBtn').on('click', function () {
 
@@ -119,6 +109,16 @@ $(document).ready(() => { // 화면 로드 시 호출
     // 'scrollToSearchDiv' 버튼 클릭 시 scrollToDiv() 함수 호출
     $('#scrollToSearchDiv2').on('click', function () {
         scrollToDiv();
+    });
+
+    // 'scrollToSearchDiv' 버튼 클릭 시 scrollToDiv() 함수 호출
+    $('.scrollToQuickapplDiv').on('click', function () {
+        scrollToQuickapplDiv();
+    });
+
+    // 'scrollToSearchDiv' 버튼 클릭 시 scrollToDiv() 함수 호출
+    $('#scrollToQuickapplDiv').on('click', function () {
+        scrollToQuickapplDiv();
     });
 
     // 직원검색 입력폼에 입력값이 있는 경우 X 버튼 표시 (값 없는 경우 X 미표시)

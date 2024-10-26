@@ -1,6 +1,7 @@
 package epams.domain.com.admin.repository;
 
 import epams.domain.com.admin.dto.LogLoginDTO;
+import epams.domain.com.member.dto.IamUserDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -23,7 +24,16 @@ public class LogRepository {
 	 * @since 2024-06-09
 	 */
     private final SqlSessionTemplate sql;
-
+    
+    /**
+     * @author K140024
+     * @implNote 로그인 정보를 확인하고 사용자 정보를 반환하는 메서드
+     * @since 2024-06-11
+     */
+    public LogLoginDTO checkFailCnt(final String username) {        
+        return sql.selectOne("LogLogin.checkFailCnt", username);
+    }
+    
     /***
      * @author 140024
      * @implNote Login Log 조회(전체 로그)

@@ -1,18 +1,7 @@
-<!DOCTYPE mapper
-        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper SYSTEM "dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="IamUser">
 
-    <!-- Result Map 정의
-    <resultMap id="iamUserMap" type="iamUserDTO">
-        <id property="username" column="EMP_NO"/>
-        <result property="realname" column="EMP_NM"/>
-        <result property="password" column="EMP_PWD"/>
-        <result property="createdDate" column="TZ_DATE"/>
-    </resultMap>-->
-
-    <!-- Result Map 정의 -->
     <resultMap id="iamUserMap" type="iamUserDTO">
         <result property="username" column="ENO"/>
         <result property="realname" column="USR_NM"/>
@@ -64,9 +53,6 @@
 
     <!-- 휴대폰 번호 조회 -->
     <select id="findPhoneNo" parameterType="Long" resultType="String">
-        <!-- SELECT A.CADR_TPN 
-        FROM OEHR.THURXE_CUSRLI A 
-        WHERE A.ENO = #{username} -->
         SELECT HP_NO FROM OHR.PHM_PRIVATE WHERE EMP_ID = #{username}
     </select>
 
@@ -85,16 +71,51 @@
     <select id="findAllMember" resultMap="teamSearchMap">
         SELECT A.USR_NM,
                A.ENO,
-               A.BBR_C,
-               B.BBR_NM,
-               A.TEM_C,
-               A.TEM_NM,
-               A.PT_C_NM,
-               A.DTS_DTL_CONE,
-               A.INLE_NO
-        FROM OEHR.THURXE_CUSRLI A
+               CASE WHEN plc.LABOR_POS_CD IS NOT NULL THEN '000'
+                    ELSE A.BBR_C END BBR_C,
+               CASE WHEN plc.LABOR_POS_CD IS NOT NULL THEN '노동조합'
+                    WHEN pec.ORG_CD ='01000' THEN '임원'
+                    ELSE B.BBR_NM END BBR_NM,
+               CASE WHEN plc.LABOR_POS_CD IS NOT NULL THEN '00000'
+                    ELSE A.TEM_C END TEM_C,
+               CASE WHEN A.TEM_NM='해당없음' THEN ''
+                    WHEN plc.LABOR_POS_CD IS NOT NULL THEN ''
+                    ELSE A.TEM_NM END TEM_NM,
+               CASE WHEN plc.LABOR_POS_CD IS NOT NULL THEN F_FRM_CODE_NM_C('01','PHM_LABOR_POS_CD',plc.LABOR_POS_CD,sysdate,'1','KO')
+                    ELSE A.PT_C_NM END PT_C_NM,
+               CASE WHEN plc.LABOR_POS_CD IS NOT NULL THEN ''
+                    ELSE A.DTS_DTL_CONE END DTS_DTL_CONE
+        FROM OEHR.THURXE_CUSRLI A 
         INNER JOIN OEHR.THURXE_CORGLI B ON A.BBR_C = B.PRLM_OGZ_C_CONE
+            LEFT OUTER JOIN PHM_LABOR_CHIEF plc ON substr(plc.emp_id,2,7)=substr(a.eno,2,7) AND sysdate BETWEEN plc.STA_YMD AND PLC.END_YMD and LABOR_POS_CD!='4'
+            LEFT OUTER JOIN PHM_EMP_C pec ON substr(pec.emp_id,2,7)=substr(a.eno,2,7) AND pec.ORG_CD ='01000'
         ORDER BY A.ENO ASC
+    </select>
+
+        <!-- 특정 사용자 조회 -->
+    <select id="findByUserNo" parameterType="String" resultMap="iamUserMap">
+        SELECT A.USR_NM,
+               A.ENO,
+               A.BBR_C,
+               CASE WHEN plc.LABOR_POS_CD IS NOT NULL THEN '노동조합'
+                    WHEN pec.ORG_CD ='01000' THEN '임원'
+                    ELSE B.BBR_NM END BBR_NM,
+               A.TEM_C,
+               CASE WHEN A.TEM_NM='해당없음' THEN ''
+                    WHEN plc.LABOR_POS_CD IS NOT NULL THEN ''
+                    ELSE A.TEM_NM END TEM_NM,
+               CASE WHEN plc.LABOR_POS_CD IS NOT NULL THEN F_FRM_CODE_NM_C('01','PHM_LABOR_POS_CD',plc.LABOR_POS_CD,sysdate,'1','KO')
+                    ELSE A.PT_C_NM END PT_C_NM,
+               CASE WHEN plc.LABOR_POS_CD IS NOT NULL THEN ''
+                    ELSE A.DTS_DTL_CONE END DTS_DTL_CONE,
+               A.INLE_NO,
+               A.CADR_TPN
+        FROM OEHR.THURXE_CUSRLI A 
+        INNER JOIN OEHR.THURXE_CORGLI B ON A.BBR_C = B.PRLM_OGZ_C_CONE
+            LEFT OUTER JOIN PHM_LABOR_CHIEF plc ON substr(plc.emp_id,2,7)=substr(a.eno,2,7) AND sysdate BETWEEN plc.STA_YMD AND PLC.END_YMD and LABOR_POS_CD!='4'
+            LEFT OUTER JOIN PHM_EMP_C pec ON substr(pec.emp_id,2,7)=substr(a.eno,2,7) AND pec.ORG_CD ='01000'
+        WHERE
+            A.ENO = #{searchValue}
     </select>
 
     <!-- ID/PW 일치 사용자 조회 -->
@@ -107,7 +128,16 @@
         A.ENO = #{username} AND
         A.USR_ECY_PWD = #{password} AND
         A.DEL_YN = 'N' AND
-        #{username} IN ('K210058','K140024','K990406','K160068','K230028','K200086','K080257','K020185','K010308','K912006','K970480','K925009','K930624')
+        (#{username} IN ('K210058','K140024','K990406','K160068','K230028', -- 지식정보팀
+	        'K080257','K020185','K010308','K912006','K970480','K925009','K930624', -- 디지털금융부 팀장/부장, IDT본부장
+	        'K930796', -- 오현정 팀장
+	        'K930608', -- 박찬호 부행장
+            'K901323', -- 서경희 위원님
+            'O2000316', -- 황성현 책임
+            'O2400106', -- 고상열 수석
+            'K135020' -- 김현정 과장 
+        ) OR
+        A.TEM_C IN('16001','16002','16003','16005','16006','16050')) -- 인사부 각팀
     </select>
 
     <!-- ID 일치 사용자 조회 -->
@@ -115,25 +145,18 @@
         SELECT *
         FROM OEHR.THURXE_CUSRLI A
         WHERE
-        A.ENO = #{username}
-    </select>
-
-    <!-- 특정 사용자 조회 -->
-    <select id="findByUserNo" parameterType="String" resultMap="iamUserMap">
-        SELECT A.USR_NM,
-               A.ENO,
-               A.BBR_C,
-               B.BBR_NM,
-               A.TEM_C,
-               A.TEM_NM,
-               A.PT_C_NM,
-               A.DTS_DTL_CONE,
-               A.INLE_NO,
-               A.CADR_TPN
-        FROM OEHR.THURXE_CUSRLI A
-                 INNER JOIN OEHR.THURXE_CORGLI B ON A.BBR_C = B.PRLM_OGZ_C_CONE
-        WHERE
-            A.ENO = #{searchValue}
+        A.ENO = #{username} AND
+        A.DEL_YN = 'N' AND
+        (#{username} IN ('K210058','K140024','K990406','K160068','K230028', -- 지식정보팀
+	        'K080257','K020185','K010308','K912006','K970480','K925009','K930624', -- 디지털금융부 팀장/부장, IDT본부장
+	        'K930796', -- 오현정 팀장
+	        'K930608', -- 박찬호 부행장
+            'K901323', -- 서경희 위원님
+            'O2000316', -- 황성현 책임
+            'O2400106', -- 고상열 수석
+            'K135020' -- 김현정 과장
+        ) OR
+        A.TEM_C IN('16001','16002','16003','16005','16006','16050')) -- 인사부 각팀
     </select>
 
 </mapper>

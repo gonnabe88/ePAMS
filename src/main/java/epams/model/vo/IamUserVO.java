@@ -102,7 +102,7 @@ public class IamUserVO {
      * @implNote 휴대폰 번호
      * @since 2024-09-05
      */
-    private String phoneNo = "";
+    private String phoneNo;
 
     /**
      * @author 140024

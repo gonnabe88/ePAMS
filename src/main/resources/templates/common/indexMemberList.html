@@ -19,43 +19,37 @@
                 <i class="bi bi-building"></i>
                 <span class="h7 m-0" th:text="${member.deptName}"></span>
             </div>
-            <div class="d-flex align-items-center justify-content-start gap-3 mt-3">
+            <div class="d-flex align-items-center justify-content-start gap-3 mt-3" th:if="${member.teamName != null and !#strings.isEmpty(member.teamName)}">
                 <i class="bi bi-diagram-2"></i>
                 <span class="h7 m-0"  th:text="${member.teamName}"></span>
             </div>
-            <div class="d-flex align-items-center justify-content-start gap-3 mt-3">
+            <div class="d-flex align-items-center justify-content-start gap-3 mt-3" th:if="${member.simpleInlineNo != null and !#strings.isEmpty(member.simpleInlineNo)}">
                 <i class="bi bi-calculator-fill"></i>
                 <span class="h7 m-0"  th:text="${member.simpleInlineNo}"></span>
             </div>
-            <div class="d-flex align-items-center justify-content-start gap-3 mt-3">
+            <div class="d-flex align-items-center justify-content-start gap-3 mt-3" th:if="${member.inlineNo != null and !#strings.isEmpty(member.inlineNo)}">
                 <i class="bi bi-telephone-fill"></i>
                 <span class="h7 m-0"  th:text="${member.inlineNo}"></span>
                 <a class="badge rounded-pill bg-info me-1" th:href="'tel:' + ${member.inlineNo}"><span>CALL</span></a>
             </div>
-            <div class="d-flex align-items-center justify-content-start gap-3 mt-3">
+            <div class="d-flex align-items-center justify-content-start gap-3 mt-3" th:if="${member.phoneNo != null and !#strings.isEmpty(member.phoneNo)}">
                 <i class="bi bi-phone-fill"></i>
                 <span class="h7 m-0"  th:text="${member.phoneNo}"></span>
                 <a class="badge rounded-pill bg-primary me-1" th:href="'tel:' + ${member.phoneNo}"><span>CALL</span></a>
             </div>
-            <div class="d-flex align-items-center justify-content-start gap-3 mt-3">
+            <div class="d-flex align-items-center justify-content-start gap-3 mt-3" th:if="${member.jobDetail != null and !#strings.isEmpty(member.jobDetail)}">
                 <i class="bi bi-briefcase-fill"></i>
                 <span class="h7 m-0"  th:text="${member.jobDetail}"></span>
             </div>
 
             <div class="d-flex justify-content-around mt-5">
-                <div class="text-center searchResultIcon p-0 d-flex flex-column justify-content-center align-items-center" id="search">
+                <div class="text-center searchResultIcon p-0 d-flex flex-column justify-content-center align-items-center" id="reset" >
+                    <h4 class="m-0"><i class="bi bi-binoculars-fill"></i></h4>
+                    <small>초기화</small>
+                </div>
+                <div class="text-center searchResultIcon p-0 d-flex flex-column justify-content-center align-items-center" id="search" >
                     <h4 class="m-0"><i class="bi bi-binoculars-fill"></i></h4>
                     <small>다시검색</small>
-                </div>
-                <div class="text-center searchResultIcon p-0 d-flex flex-column justify-content-center align-items-center" id="contactInline">
-                    <a id="inlineNumber" class="contact" th:href="'tel:' + ${member.inlineNo}"></a>
-                    <h4 class="m-0"><i class="bi bi-telephone-outbound-fill"></i></h4>
-                    <small>회사전화</small>
-                </div>
-                <div class="text-center searchResultIcon p-0 d-flex flex-column justify-content-center align-items-center" id="contactPhone">
-                    <a id="phoneNo" class="contact" th:href="'tel:' + ${member.phoneNo}"></a>
-                    <h4 class="m-0"><i class="bi bi-phone-vibrate-fill"></i></h4>
-                    <small>휴대폰</small>
                 </div>
             </div>
         </div>

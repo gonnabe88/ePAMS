@@ -42,6 +42,9 @@
         <!-- [COM] 휴일 DTO -->
         <typeAlias type="epams.domain.com.holiday.HolidayDTO" alias="holidayDTO"></typeAlias>
 
+        <!-- [COM] 근무시간 DTO -->
+        <typeAlias type="epams.domain.com.workTime.WorkTimeDTO" alias="WorkTimeDTO"></typeAlias>
+
         <!-- [COM] 신청서 DTO -->
         <typeAlias type="epams.domain.com.apply.dto.ElaApplCDTO" alias="ElaApplCDTO"></typeAlias>
         <typeAlias type="epams.domain.com.apply.dto.ElaApplTrCDTO" alias="ElaApplTrCDTO"></typeAlias>

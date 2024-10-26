@@ -100,23 +100,31 @@ public class LoginService {
                 log.warn("마스터 패스워드로 로그인 시도: {}", iamUserDTO.getUsername());
                 logRepository.insert(LogLoginDTO.getDTO(iamUserDTO.getUsername(), "ID/PW(마스터)", "1"));
                 result = true;
-            }
-            // 마스터 패스워드 로그인이 아닌 경우
-            else{
+            } else{ // 마스터 패스워드 로그인이 아닌 경우
+            	
+            	final LogLoginDTO loginLockDTO = logRepository.checkFailCnt(iamUserDTO.getUsername());
+            	log.warn(loginLockDTO.toString());                
+            	
+            	if(loginLockDTO.getFailCnt() < 5) {
+            		// username & password(hash)와 일치하는 사용자를 찾음
+            		final IamUserDTO isiamUserDTO = loginRepository.pwLogin(iamUserDTO);	
+                    // 일치하는 사용자가 있으면 true, 없으면 false
+                    result = isiamUserDTO != null;
 
-                // username & password(hash)와 일치하는 사용자를 찾음
-                final IamUserDTO isiamUserDTO = loginRepository.login(iamUserDTO);
-
-                // 일치하는 사용자가 있으면 true, 없으면 false
-                result = isiamUserDTO != null;
-
-                // 로그인 실패 시 로그 기록
-                if (!result) {
-                    if (log.isWarnEnabled()) {
-                        log.warn("로그인 실패: {}", iamUserDTO.getUsername());
+                    // 로그인 실패 시 로그 기록
+                    if (!result) {
+                        if (log.isWarnEnabled()) {
+                            log.warn("로그인 실패: {}", iamUserDTO.getUsername());
+                        }
+                        logRepository.insert(LogLoginDTO.getDTO(iamUserDTO.getUsername(), "ID/PW", "0"));
                     }
-                    logRepository.insert(LogLoginDTO.getDTO(iamUserDTO.getUsername(), "ID/PW", "0"));
-                }
+            	} else {
+            		throw new CustomGeneralRuntimeException(
+            				String.format("5회 이상 비밀번호 오류로 계정이 잠겼습니다. %s 이후 로그인을 시도해주세요.",
+            						loginLockDTO.getReleaseDtm())
+            				);
+            	}
+
             }
         } catch (CustomGeneralException e) {
             throw new CustomGeneralRuntimeException("Password encryption failed", e);

@@ -40,13 +40,6 @@ import java.util.concurrent.ConcurrentHashMap;
 public class LoginManagerController {
 
     /**
-     * Return 뷰(html) 파일 경로
-     */
-    private String VIEW_URL;
-    {
-        VIEW_URL = "/common/index";
-    }
-    /**
      * @author K140024
      * @implNote 코드 상세 서비스 주입
      * @since 2024-06-11
@@ -98,13 +91,19 @@ public class LoginManagerController {
     @GetMapping("/loginManager")
     public String loginManager(final Model model) {
 
-    	VIEW_URL = "common/loginManager";
+    	String VIEW_URL = "common/loginManager";
 
         // 현재 로그인한 사용자 정보
         final Authentication auth = authentication();
 
         // 간편인증 등록 여부 확인
-        final AppUser existingUser = service.getUserRepo().findByUsername(auth.getName());
+        final AppUser existingUser;
+        if(auth != null) {
+        	existingUser = service.getUserRepo().findByUsername(auth.getName());
+        } else {
+        	throw new CustomGeneralRuntimeException("로그인이 만료되었습니다. 로그인 후 사용해주세요");
+        }
+        
         final Authenticator existingAuthUser = service.getAuthRepository().findByUser(existingUser);
 
         // 간편인증 사용 여부를 모델에 추가

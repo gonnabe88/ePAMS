@@ -185,10 +185,10 @@ public class DtmRevokeService {
 
 			UserInfoDTO userInfoDTO = new UserInfoDTO();
 
-			/* @TODO 외부 테스트 시 주석 처리(시작)
+			/* @TODO 외부 테스트 시 주석 처리(시작) */
 			// 결재자(신청자) 정보(직위) 가져오기
 			userInfoDTO = memberService.findUsrDeptInfoByUserNo(dtmHisDTO.getEmpId());
-			@TODO 외부 테스트 시 주석 처리(끝) */
+			/* @TODO 외부 테스트 시 주석 처리(끝) */
 
 			// [INSERT] 신청서결재내역 추가 (201 결재요청)
 			final ElaApplTrCDTO elaApplTrCDTO = new ElaApplTrCDTO(dtmHisDTO.getEmpId(), "1", applId, 1, "201", userInfoDTO.getPositionName()); // ElaApplTrCDTO(신청서결재내역) 객체 생성

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import epams.domain.com.board.dto.BoardDTO;
 import epams.domain.com.board.service.BoardSaveService;
+import epams.framework.exception.CustomGeneralRuntimeException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -83,7 +84,13 @@ public class BoardSaveController {
      */
     @PostMapping("/save")
     public ResponseEntity<String> save(@ModelAttribute final BoardDTO boardDTO) throws IOException {
-        boardDTO.setBoardWriter(authentication().getName());
+        Authentication tempNullableVar = authentication();
+        if(tempNullableVar != null) {
+        	boardDTO.setBoardWriter(tempNullableVar.getName());
+        } else {
+        	throw new CustomGeneralRuntimeException("로그인이 만료되었습니다. 로그인 후 사용해주세요");
+        }
+        
         final Long seqId = boardSaveService.save(boardDTO).getSeqId();
         final String redirectUrl = "board/" + seqId;
         return ResponseEntity.ok(redirectUrl);

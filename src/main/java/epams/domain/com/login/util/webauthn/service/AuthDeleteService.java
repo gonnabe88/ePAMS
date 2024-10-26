@@ -1,6 +1,8 @@
 package epams.domain.com.login.util.webauthn.service;
 
 import com.yubico.webauthn.RelyingParty;
+
+import epams.framework.exception.CustomGeneralRuntimeException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -58,7 +60,12 @@ public class AuthDeleteService {
      */
     @Transactional
     public void deleteByUsername() {
-        service.getAuthRepository().deleteAllByUser_Username(authentication().getName());
-        service.getUserRepo().deleteByUsername(authentication().getName());
+        Authentication tempNullableVar = authentication();
+        if(tempNullableVar != null) {
+        	 service.getAuthRepository().deleteAllByUser_Username(tempNullableVar.getName());
+        	 service.getUserRepo().deleteByUsername(tempNullableVar.getName());
+        } else {
+        	throw new CustomGeneralRuntimeException("로그인이 만료되었습니다. 로그인 후 사용해주세요");
+        }
     }
 }

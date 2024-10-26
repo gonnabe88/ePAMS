@@ -98,7 +98,7 @@ public class HolidayRestController {
 
         } catch (Exception e) {
             // 일반 예외 처리
-            e.printStackTrace();
+            // e.printStackTrace();
             response.put("error", "서버 내부 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.");
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }

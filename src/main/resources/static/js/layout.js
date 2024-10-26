@@ -4,7 +4,7 @@ $(document).ready(function() {
     // 현재 페이지가 '/index'인지 확인합니다.
     if (currentPath === '/index') {
         // /index 페이지일 경우
-        $('.scrollToSearchDiv').removeAttr("hidden"); // scrollToSearchDiv를 보여줌
+        $('.scrollToQuickapplDiv').removeAttr("hidden"); // quickappl 보여줌
     } else {
         // /index 페이지가 아닐 경우
         $('#goToHome').removeAttr("hidden");         // goToHome을 보여줌

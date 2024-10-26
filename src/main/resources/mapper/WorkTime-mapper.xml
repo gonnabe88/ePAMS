@@ -1,0 +1,37 @@
+<!DOCTYPE mapper SYSTEM "dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="WorkTime">
+
+    <resultMap id="workTimeMap" type="workTimeDTO">
+      <result property="empId" column="EMP_NO"/>
+      <result property="empNm" column="EMP_NM"/>
+      <result property="ymd" column="YMD"/>
+      <result property="week" column="WEEK"/>
+      <result property="workType" column="WORK_TYPE"/>
+      <result property="staTime" column="STIME"/>
+      <result property="endTime" column="ETIME"/>
+    </resultMap>
+    
+    <select id="findWorkTime" resultMap="workTimeMap">
+    SELECT EMP_NO
+         , EMP_NM
+         , YMD
+         , WEEK
+         , F_OTM_SEL_WK('01', EMP_ID, YMD, '2', 'KO') AS WORK_TYPE
+         , F_DTM_ACT_TIME('01', EMP_ID, YMD, '1', 'KO')  AS STIME
+         , F_DTM_ACT_TIME('01', EMP_ID, YMD, '2', 'KO') AS ETIME
+    FROM (
+        SELECT EMP_ID
+             , EMP_NO
+             , EMP_NM
+             , YMD
+             , WEEK
+        FROM HPS_CALENDAR CAL
+               LEFT OUTER JOIN PHM_EMP_C PHM
+                                      ON EMP_ID = #{empId}
+                                     AND IN_OFFI_CD = 'AA'
+        WHERE CAL.YMD = #{ymd}
+          AND CAL.MINUS_DD = 1
+        )   
+    </select>
+</mapper>

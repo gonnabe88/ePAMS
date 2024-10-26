@@ -142,6 +142,8 @@ $(document).ready( () => {
                 updateDates(startDate, endDate);
                 addDateRangeHighlight(startDate, endDate);
             }
+
+
         },
     });
 
@@ -153,8 +155,10 @@ $(document).ready( () => {
     }
 
     function updateDates(start, end) {
-        document.getElementById('startDate').value = formatDate(start);
-        document.getElementById('endDate').value = formatDate(end);
+        //document.getElementById('startDate').value = formatDate(start);
+        $('#startDate').val(formatDate(start));
+        //document.getElementById('endDate').value = formatDate(end);
+        $('#endDate').val(formatDate(end)).trigger('change');
     }
 
     //날짜 2개 선택시 시작 종료일
@@ -166,6 +170,7 @@ $(document).ready( () => {
             startDate = date2;
             endDate = date1;
         }
+        
         updateDates(startDate, endDate);
         addDateRangeHighlight(startDate, endDate);
     }

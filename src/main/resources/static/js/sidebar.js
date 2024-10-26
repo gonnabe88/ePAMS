@@ -38,8 +38,6 @@ $(document).ready(function() {
     function highlightActiveMenuItem() {
         const currentPath = window.location.pathname; // 현재 페이지의 경로를 가져옴
         const currentHash = window.location.hash; // 현재 URL의 해시(#searchDiv 등) 가져오기
-        console.log(currentPath);
-        console.log(currentHash);
 
         // 모든 .submenu-item 요소를 순회하며 현재 페이지와 일치하는 항목에 'active' 클래스 추가
         $(".submenu-item").each((_, submenuItem) => {
@@ -63,9 +61,6 @@ $(document).ready(function() {
             // 링크 경로에서 해시를 분리
             const linkUrl = fullLinkPath.split('#')[0];  // 경로만 추출
             const linkHash = fullLinkPath.includes('#') ? '#' + fullLinkPath.split('#')[1] : ''; // #을 포함한 해시 추출
-
-            console.log("linkUrl : " + linkUrl);
-            console.log("linkHash : " + linkHash);
 
             // 직원검색 처리: 경로는 동일하고 해시(#searchDiv)까지 일치할 경우 'active' 클래스 추가
             if (linkUrl === currentPath && linkHash === currentHash) {

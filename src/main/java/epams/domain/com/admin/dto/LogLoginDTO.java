@@ -1,5 +1,7 @@
 package epams.domain.com.admin.dto;
 
+import java.time.LocalDateTime;
+
 import epams.model.vo.LogLoginVO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -14,6 +16,21 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class LogLoginDTO extends LogLoginVO {
+	
+    /***
+     * @author 140024
+     * @implNote 실패횟수(FAIL_CNT)
+     * @since 2024-10-20
+     */
+    private int failCnt;
+    
+    /***
+     * @author 140024
+     * @implNote 잠김해제시간(RELEASE_DTM)
+     * @since 2024-10-20
+     */
+    private LocalDateTime releaseDtm;
+    
 
     /***
      * @author 140024

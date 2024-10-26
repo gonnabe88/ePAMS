@@ -1,13 +1,18 @@
 package epams.domain.dtm.controller;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Optional;
 
-import epams.domain.com.admin.service.HtmlLangDetailService;
-import epams.domain.com.holiday.HolidayService;
-import epams.domain.dtm.dto.*;
-import epams.domain.dtm.service.DtmAnnualStatusService;
-import epams.domain.dtm.service.DtmHistoryService;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -23,19 +28,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.fasterxml.jackson.databind.SerializationFeature;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.List;
-import java.util.Map;
-import java.util.Locale;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
+import epams.domain.com.admin.service.HtmlLangDetailService;
+import epams.domain.com.holiday.HolidayService;
+import epams.domain.com.workTime.WorkTimeDTO;
+import epams.domain.com.workTime.WorkTimeService;
+import epams.domain.dtm.dto.DtmAnnualStatusDTO;
+import epams.domain.dtm.dto.DtmCalendarDTO;
+import epams.domain.dtm.dto.DtmHisDTO;
+import epams.domain.dtm.dto.DtmSearchDTO;
+import epams.domain.dtm.service.DtmAnnualStatusService;
+import epams.domain.dtm.service.DtmHistoryService;
+import epams.framework.exception.CustomGeneralRuntimeException;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author K140024
@@ -69,7 +74,7 @@ public class DtmHistoryController<S extends Session> {
      * @since 2024-06-11
      */
     private final DtmHistoryService dtmHisService;
-    
+
     /**
      * @author K140024
      * @implNote DTM 서비스 주입
@@ -83,6 +88,13 @@ public class DtmHistoryController<S extends Session> {
      * @since 2024-06-09
      */
     private final HolidayService holidayService;
+
+    /***
+     * @author 210058
+     * @implNote 근무시간 서비스
+     * @since 2024-10-13
+     */
+    private final WorkTimeService workTimeService;
 
     /**
      * @author K140024
@@ -114,22 +126,37 @@ public class DtmHistoryController<S extends Session> {
 
         // 캘린더근태목록
         final DtmSearchDTO searchDTO = new DtmSearchDTO();
-        searchDTO.setEmpId(Long.parseLong(authentication().getName().replace('K', '7')));
+        String empIdStr = Optional.ofNullable(authentication())
+        		.map(Authentication::getName)
+        		.orElse("K000000");
+        final Long empId = Long.parseLong(empIdStr.replace('K', '7'));
+        searchDTO.setEmpId(empId);
+        
         final List<DtmCalendarDTO> dtmCalDTOList = dtmHisService.findByYears(searchDTO);
 
         // 휴일목록
         final List<String> holiDayList = holidayService.findholiYmd();
 
+        // 근무시간 불러오기
+        final WorkTimeDTO workTimeList = workTimeService
+                .findWorkTime(empId, LocalDate.now().toString());
+        // WorkTimeDTO wk = workTimeList.get(0);
+        // System.out.println("근무유형 : "+ workTimeList);
+        // String wkText = timeFormat(wk.getStaTime()) + " ~ " +
+        // timeFormat(wk.getEndTime());
+
         // Jackson을 사용하여 List<DtmCalendarDTO>를 JSON으로 변환
         ObjectMapper objectMapper = new ObjectMapper();
         try {
-            objectMapper.registerModule(new JavaTimeModule());  // Java 8 날짜 및 시간 모듈 등록
+            objectMapper.registerModule(new JavaTimeModule()); // Java 8 날짜 및 시간 모듈 등록
             // 기본적으로 ISO 형식(yyyy-MM-dd)으로 변환되도록 설정
             objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 
             String dtmHisJson = objectMapper.writeValueAsString(dtmCalDTOList);
             model.addAttribute("dtmHisEvents", dtmHisJson);
             model.addAttribute("holiDayList", holiDayList);
+            model.addAttribute("empId", empId);// 근무시간 목록
+            // model.addAttribute("workTime", wkText);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
@@ -143,20 +170,32 @@ public class DtmHistoryController<S extends Session> {
      * @since 2024-06-11
      */
     @GetMapping("/dtmList")
-    public String dtmList(@PageableDefault(page = 1) final Pageable pageable, @ModelAttribute final DtmSearchDTO searchDTO, final Model model) {
+    public String dtmList(@PageableDefault(page = 1) final Pageable pageable,
+            @ModelAttribute final DtmSearchDTO searchDTO, final Model model) {
 
         final String DTMLIST = "dtm/dtmList";
-        searchDTO.setEmpId(Long.parseLong(authentication().getName().replace('K', '7')));
+        
+        String empIdStr = Optional.ofNullable(authentication())
+        		.map(Authentication::getName)
+        		.orElse("K000000");
+        final Long empId = Long.parseLong(empIdStr.replace('K', '7'));
+        searchDTO.setEmpId(empId);        
 
         // 현재 기준 년도(YYYY) 세팅 ex)2024
         LocalDate currenDate = LocalDate.now();
         String thisYear = String.valueOf(currenDate.getYear());
-        
+
         try {
             // 휴가보유 현황
-            final DtmAnnualStatusDTO dtmAnnualStatusDTO = dtmAnnualStatusService.getDtmAnnualStatus(searchDTO.getEmpId(), thisYear);
+            final DtmAnnualStatusDTO dtmAnnualStatusDTO = dtmAnnualStatusService
+                    .getDtmAnnualStatus(searchDTO.getEmpId(), thisYear);
             DtmAnnualStatusDTO.removeBracket(dtmAnnualStatusDTO);
             dtmAnnualStatusDTO.formatter();
+            model.addAttribute("dtmAnnualStatus", dtmAnnualStatusDTO);
+        } catch (CustomGeneralRuntimeException e) {
+            // 런타임 예외 처리
+            // e.printStackTrace();
+            final DtmAnnualStatusDTO dtmAnnualStatusDTO = new DtmAnnualStatusDTO();
             model.addAttribute("dtmAnnualStatus", dtmAnnualStatusDTO);
         } catch (Exception e) {
             final DtmAnnualStatusDTO dtmAnnualStatusDTO = new DtmAnnualStatusDTO();
@@ -176,15 +215,15 @@ public class DtmHistoryController<S extends Session> {
         final int endPage = Math.min(totalPages, startPage + maxPageBtn - 1);
         if (endPage - startPage < maxPageBtn - 1) {
             startPage = Math.max(1, endPage - maxPageBtn + 1);
-        }        
+        }
 
         // 기타 필요한 모델 속성 설정
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         DateTimeFormatter dayOfWeekFormatter = DateTimeFormatter.ofPattern("E", Locale.KOREAN);
-        LocalDateTime staDay ;
-        LocalDateTime endDay ;
-        String dateRange; 
-        for(DtmHisDTO dto : dtmHisDTOList) {
+        LocalDateTime staDay;
+        LocalDateTime endDay;
+        String dateRange;
+        for (DtmHisDTO dto : dtmHisDTOList) {
 
             // 근태 기간을 깔끔하게 표기하기 위한 작업
             staDay = dto.getStaYmd();
@@ -198,7 +237,7 @@ public class DtmHistoryController<S extends Session> {
                 String formattedEndYmd = endDay.format(dateFormatter) + "(" + endDay.format(dayOfWeekFormatter) + ")";
                 dateRange = formattedStaYmd + " ~ " + formattedEndYmd;
             }
-            dto.setDtmRange(dateRange);       
+            dto.setDtmRange(dateRange);
         }
 
         // 캘린더근태목록
@@ -210,7 +249,7 @@ public class DtmHistoryController<S extends Session> {
         // Jackson을 사용하여 List<DtmCalendarDTO>를 JSON으로 변환
         ObjectMapper objectMapper = new ObjectMapper();
         try {
-            objectMapper.registerModule(new JavaTimeModule());  // Java 8 날짜 및 시간 모듈 등록
+            objectMapper.registerModule(new JavaTimeModule()); // Java 8 날짜 및 시간 모듈 등록
             // 기본적으로 ISO 형식(yyyy-MM-dd)으로 변환되도록 설정
             objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 
@@ -220,7 +259,7 @@ public class DtmHistoryController<S extends Session> {
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
-        
+
         model.addAttribute("dtmHis", dtmHisDTOList);
         model.addAttribute("searchDTO", searchDTO);
         model.addAttribute("startPage", startPage);

@@ -124,9 +124,9 @@ function createTable(selectableRange, columns, url) {
     table.on("rowAdded", function (row) {
         var rowData = row.getData();
         
-        // ID가 없으면 고유한 ID 생성
+        // ID가 없으면 고유한 ID 생성 (36자)
         if (!rowData.id) {
-            rowData.id = 'row-' + Math.random().toString(36).substr(2, 9);
+            rowData.id = 'row-' + Array.from(crypto.getRandomValues(new Uint8Array(36)), byte => (byte % 36).toString(36)).join('');
             row.update(rowData);
         }
     
@@ -140,8 +140,8 @@ function createTable(selectableRange, columns, url) {
 
     document.getElementById("add-row").addEventListener("click", function () {
         table.addRow({}, false).then(function(row) {
-            // 고유한 ID 생성
-            var uniqueId = 'row-' + Math.random().toString(36).substr(2, 9);
+            // 고유한 ID 생성 (36자)
+            var uniqueId = 'row-' + Array.from(crypto.getRandomValues(new Uint8Array(36)), byte => (byte % 36).toString(36)).join('');
             row.update({ id: uniqueId }); // 행에 고유한 ID 할당
     
             // 새 행을 첫 번째 위치로 이동

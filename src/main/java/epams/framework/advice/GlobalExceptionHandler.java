@@ -67,7 +67,7 @@ public ResponseEntity<Object> handleException(Exception ex) {
     // 예외 메시지에 Controller명, 메서드명, 줄 번호를 포함하여 반환
     String message = String.format("An error occurred in %s: %s", controllerInfo, ex.getMessage());
     log.error(message);
-    ex.printStackTrace();
+    // ex.printStackTrace();
     // 예외 메시지 설정
     Map<String, String> response = new ConcurrentHashMap<>();
     response.put("error", ex.getMessage());
@@ -93,6 +93,7 @@ private String getControllerMethodInfo(Exception ex) {
             }
         } catch (ClassNotFoundException e) {
             // 예외 처리 중 클래스 로드에 실패한 경우, 아무 것도 하지 않음 (continue loop)
+        	log.warn(e.getMessage());
         }
     }
     // Controller 정보를 찾지 못한 경우 기본 메시지 반환

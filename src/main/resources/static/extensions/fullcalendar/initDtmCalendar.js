@@ -218,6 +218,35 @@ $(document).ready( () => {
             return start <= selectedDate && selectedDate <= end;
         });
 
+        //근무유형 출력
+        const workTime=document.getElementById('worktime');//근무시간 컬럼
+        var emp = document.getElementById('empId').value;//행번
+        var wk="";
+        $.ajax({
+            url: '/api/workTime/findWorkTime',
+            type: 'get',
+            data:{
+                empno:emp,
+                ymd:selectedDateStr
+            },
+            success : function(response){
+                updateTime(response.staTime,response.endTime)
+            },
+            error:function(error){
+                console.error('근무시간 오류')
+            }
+        });
+        
+        function updateTime(staTime,endTime){
+            if(staTime && endTime){
+                var staTimeformat = staTime.substring(0,2) +':'+staTime.substring(2,4);
+                var endTimeformat = endTime.substring(0,2) +':'+staTime.substring(2,4);
+                workTime.textContent =` 출근 : ${staTimeformat}, 퇴근 : ${endTimeformat}`;
+            }else {
+                workTime.textContent ="";
+            }
+        }
+
         // 이벤트 출력 영역
         const eventContainer = document.getElementById('dtmEvent');
         if (selectedEvents.length > 0) { // 이벤트가 있는 경우

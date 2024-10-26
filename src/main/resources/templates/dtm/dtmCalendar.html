@@ -42,7 +42,13 @@
             <!-- 캘린더 끝 -->
 
             <!-- 이벤트 시작 -->
-            <h6><i class="bi bi-calendar me-2"></i><span id="selectedDate"></span></h6>
+        <h6>
+            <i class="bi bi-calendar me-2"></i>
+            <span id="selectedDate"></span>
+            <input type="hidden" id="empId" th:value="${empId}"><!--행번 컨트롤러에서 전달-->
+            <span id="worktime"></span>
+            <!-- <span id="workTime" th:text="${workTime}"></span> -->
+        </h6>
             <div class="card">
                 <div class="card-body d-flex align-items-center pt-1 mb-2">
                     <div id="dtmEvent"></div>

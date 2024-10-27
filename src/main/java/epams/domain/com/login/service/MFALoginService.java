@@ -60,7 +60,7 @@ public class MFALoginService {
      * @implNote 멀티 팩터 인증 요청을 처리하는 메서드
      * @since 2024-06-11
      */
-    public Map<String, String> requestMFA(final IamUserDTO iamUserDTO) throws NoSuchAlgorithmException {
+    public Map<String, String> requestMFA(final IamUserDTO iamUserDTO) {
 
 
         final LoginOTPDTO loginOTPDTO = new LoginOTPDTO();

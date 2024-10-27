@@ -19,29 +19,70 @@ const passwordLogin = (e, encodedPassword) => {
     })
         .then(response => {
             // 서버에서 보내준 exception 처리 메시지 출력
-            if (!response.ok) {
+            if (!response.ok) {          
                 return response.json().then(errorData => {
-                    const errorMessage = errorData.error;
-                    throw new Error(errorMessage);
+                    console.log(errorData.flag);
+                    if(errorData.flag === "LOCKED") {
+                        releaseLock(errorData.message);
+                    } else {
+                        popupReHtmlMsg("인증 오류", errorData.message, "error","/login");                        
+                    }
+                    hideSpinnerButton(); // 스피너 제거 및 버튼 복구     
                 });
+            } else {
+                return response.json();
             }
-            return response.json();
         })
         .then(data => {
             if (data.result) {
                 // 패스워드 인증 성공 시 OTP 인증화면 호출
                 otpLogin(encodedPassword, data.maskedPhoneNo);
             } else {
+                console.log("2");
                 // 패스워드 인증 실패 시 팝업
                 popupMsg("인증 실패", data.message, "error");
             }
             hideSpinnerButton(); // 스피너 제거 및 버튼 복구
-        })
-        .catch(error => {
-            // 패스워드 인증 실패 시 팝업
-            popupReHtmlMsg("인증 오류", error.message, "error","/login");
-            hideSpinnerButton(); // 스피너 제거 및 버튼 복구
         });
+}
+
+// 잠금해제 (카카오, SMS)
+const releaseLock = (html) => {
+    const username = document.getElementById("username").value.toUpperCase();
+    const MFA = $('input[name="MFA"]:checked').val();
+    const header = $("meta[name='_csrf_header']").attr('content');
+    const token = $("meta[name='_csrf']").attr('content');
+
+    console.log("releaseLock");
+
+    Swal.fire({
+        title: "계정 잠김",
+        html: html,
+        input: "number",
+        inputPlaceholder: "인증번호(6자리)",
+        inputAttributes: {
+            autocapitalize: "off",
+            autofocus : "on",
+            autocomplete: "one-time-code"
+        },
+        timer: 300000,
+        timerProgressBar: true,
+        didOpen: () => {
+            const timer = Swal.getPopup().querySelector("b");
+            timerInterval = setInterval(() => {timer.textContent = (`${Swal.getTimerLeft()}`/1000).toFixed();}, 10);},
+        willClose: () => {
+            clearInterval(timerInterval);
+        },
+        showCancelButton: true,
+        confirmButtonText: "제출",
+        cancelButtonText: "취소",
+        showLoaderOnConfirm: true,
+        preConfirm: async () => {},
+        allowOutsideClick: () => !Swal.isLoading()
+    }).then((result) => {
+        if (result.isConfirmed) {
+        }
+    })
 }
 
 // OTP 인증 (카카오, SMS)

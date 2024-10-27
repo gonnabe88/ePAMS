@@ -100,7 +100,13 @@
 								<div class="container col-xl-12 col-lg-12 col-12">
 									<input type="hidden" id="credential" name="credential">
 									<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-									<button id="login" class="btn btn-primary btn-block btn-lg shadow-lg mt-2" type="submit">로그인</button>
+									<div>
+										<button id="login" class="btn btn-primary btn-block btn-lg shadow-lg mt-2" type="submit" 
+											th:if="${!loginLock}">로그인</button>
+										
+										<button id="unlock" class="btn btn-warning btn-block btn-lg shadow-lg mt-2" type="submit" 
+											th:if="${loginLock}">잠김해제</button>
+									</div>
 								</div>
 							</div>
 						</form>

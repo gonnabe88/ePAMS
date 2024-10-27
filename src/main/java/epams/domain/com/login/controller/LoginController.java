@@ -21,6 +21,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import epams.framework.exception.CustomGeneralRuntimeException;
+import epams.framework.exception.CustomLoginFailException;
+import epams.domain.com.admin.dto.LogLoginDTO;
+import epams.domain.com.admin.repository.LogRepository;
+import epams.domain.com.admin.service.LogService;
 import epams.domain.com.board.dto.BoardDTO;
 import epams.domain.com.board.service.BoardMainService;
 import epams.domain.com.login.service.LoginService;
@@ -129,8 +133,11 @@ public class LoginController {
         final Authentication auth = authentication();
         final AppUser existingUser = service.getUserRepo().findByUsername(username);
         final Authenticator existingAuthUser = service.getAuthRepository().findByUser(existingUser);
+        final Boolean loginLock = loginService.checkLoginLock(username);
+        model.addAttribute("loginLock", loginLock);
+        
         if (existingAuthUser == null) {
-            model.addAttribute("webauthn", "N");
+            model.addAttribute("webauthn", "N");            
             log.info("Not simple auth user");
         } else {
             model.addAttribute("webauthn", "Y");
@@ -187,8 +194,8 @@ public class LoginController {
             // PW 로그인 성공 시 MFA 로그인 진행
             try {
 				restapiservice.requestMFA(iamUserDTO);
-			} catch (NoSuchAlgorithmException e) {
-	            throw new CustomGeneralRuntimeException("NoSuchAlgorithmException : restapiservice.requestMFA(iamUserDTO)", e);
+			} catch (CustomLoginFailException e) {
+	            throw new CustomLoginFailException("NoSuchAlgorithmException : restapiservice.requestMFA(iamUserDTO)", e);
 			}
             // 로그인 성공 시 추가 인증 단계로 넘어가기 위해 성공 여부를 반환
             res.put("result", true);
@@ -201,9 +208,7 @@ public class LoginController {
             }
 
         } else {
-            // 로그인 실패 시 실패 여부를 반환
-            //res.put("result", false);
-            throw new CustomGeneralRuntimeException("인증 정보가 유효하지 않습니다.");
+            throw new CustomLoginFailException("인증 정보가 유효하지 않습니다.");
         }
         return res;
     }

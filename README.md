@@ -11,7 +11,7 @@ ex) 프로젝트가 D:\workspace\ePAMS\ 경로에 있는 경우
 C:\Windows\System32>mklink /D "D:\workspace\ePAMS\js" "D:\workspace\ePAMS\src\main\resources\static\js"
 D:\workspace\ePAMS\js <<===>> D:\workspace\ePAMS\src\main\resources\static\js에 대한 기호화된 링크를 만들었습니다.
 
-C:\Windows\System32>mklink /D "D:\workspace\ePAMS\extentions" "D:\workspace\ePAMS\src\main\resources\static\extensions"
+C:\Windows\System32>mklink /D "D:\workspace\ePAMS\extensions" "D:\workspace\ePAMS\src\main\resources\static\extensions"
 D:\workspace\ePAMS\extentions <<===>> D:\workspace\ePAMS\src\main\resources\static\extensions에 대한 기호화된 링크를 만들었습니다.
 
 C:\Windows\System32>mklink /D "D:\workspace\ePAMS\css" "D:\workspace\ePAMS\src\main\resources\static\css"

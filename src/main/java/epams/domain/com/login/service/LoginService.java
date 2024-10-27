@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import epams.framework.exception.CustomGeneralException;
 import epams.framework.exception.CustomGeneralRuntimeException;
+import epams.framework.exception.CustomLoginLockException;
 import epams.domain.com.login.dto.LoginOTPDTO;
 import epams.domain.com.login.repository.LoginOTPRepository;
 import epams.domain.com.login.repository.LoginRepository;
@@ -79,6 +80,12 @@ public class LoginService {
 
     }
 
+
+    public boolean checkLoginLock(final String username) {
+        final LogLoginDTO loginLockDTO = logRepository.checkFailCnt(username);
+        return loginLockDTO.getFailCnt() >= 5;
+    }
+
     /**
      * 패스워드 로그인 처리
      * 
@@ -119,7 +126,7 @@ public class LoginService {
                         logRepository.insert(LogLoginDTO.getDTO(iamUserDTO.getUsername(), "ID/PW", "0"));
                     }
             	} else {
-            		throw new CustomGeneralRuntimeException(
+            		throw new CustomLoginLockException(
             				String.format("5회 이상 비밀번호 오류로 계정이 잠겼습니다. %s 이후 로그인을 시도해주세요.",
             						loginLockDTO.getReleaseDtm())
             				);

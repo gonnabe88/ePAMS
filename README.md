@@ -25,7 +25,7 @@ D:\workspace\ePAMS\images <<===>> D:\workspace\ePAMS\src\main\resources\static\i
 ### Local : Oracle XE 18c
 ### Production : Oracle 19c
 
-# 사용자 정보 Import 방법 테스트
+# 사용자 정보 Import 방법 테스트222
 1) OHR 스키마 생성
 2) OHR Table 생성
  - create user ohr identified by "kdb1234!";

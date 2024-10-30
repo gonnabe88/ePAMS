@@ -39,7 +39,7 @@ const searchMember = () => {
     });
 };
 
-// 직원검색 초기화 버튼 클릭 시 이벤트
+// 직원검색 초기화 버튼 클릭 시 이벤트 
 const resetSearchMember = () => {
     $.ajax({
         type: "GET",
@@ -85,17 +85,6 @@ const setupEventListeners = () => {
         // 다시검색 아이콘 클릭 시 searchMember 인풋에 포커스
         document.getElementById('reset').addEventListener('click', function () {
             resetSearchMember();
-        });
-
-        // 연락하기 아이콘 클릭 시 전화 걸기
-        document.getElementById('contactInline').addEventListener('click', function () {
-            const phoneLink = document.getElementById('inlineNumber');
-            if (phoneLink && phoneLink.getAttribute('href') !== 'tel:') {
-                // 타임리프에서 설정된 전화번호로 전화 걸기
-                phoneLink.click();
-            } else {
-                popupMsg("입력 오류", "전화번호를 찾을 수 없습니다.", "error");
-            }
         });
 
         // 연락하기 아이콘 클릭 시 전화 걸기

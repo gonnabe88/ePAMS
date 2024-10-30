@@ -211,11 +211,8 @@ public class IndexController<S extends Session> {
             //휴일정보 받아오기
             List<String> holidays=holidayService.findholiYmd();
             
-            log.warn(holidays.toString());
-            
             //오늘
             HolidayDTO todayDTO=new HolidayDTO(today,null, null, null, null);
-            System.err.println("날짜 : "+todayDTO.getHoliYmd());
             //오늘 휴일이면 비활성화
             if(holidays.contains(todayDTO)){
                 holidayYn = "Y";
@@ -233,8 +230,6 @@ public class IndexController<S extends Session> {
             if(holidays.contains(tomorrowDTO)){
                 holidayYn2 = "Y";
             }
-            System.out.println(holidays);
-            System.out.println("내일 :" +tomorrow+" 휴일여부 : "+holidayYn2);
             model.addAttribute("tomorrowDateStr", tomorrowDateStr);
 
             // 사용자 인적사항 정보를 가져오는 로직
@@ -286,7 +281,7 @@ public class IndexController<S extends Session> {
                         new QuickApplDTO("내일", "1A", "1A1", "연차휴가", "연차휴가 1일", holidayYn2),
                         new QuickApplDTO("내일", "1A", "1A5", "연차휴가", "연차휴가 오전 반차", holidayYn2),
                         new QuickApplDTO("내일", "1A", "1AG", "연차휴가", "연차휴가 오전 반반차", holidayYn2),
-                        new QuickApplDTO("모레", "1A", "1A6", "연차휴가", "연차휴가 오후 반차", holidayYn2),
+                        new QuickApplDTO("내일", "1A", "1A6", "연차휴가", "연차휴가 오후 반차", holidayYn2),
                         new QuickApplDTO("내일", "1A", "1A61", "연차휴가", "연차휴가 오후 반차 <h7>(휴게 X)</h7>", holidayYn2),
                         new QuickApplDTO("내일", "1A", "1A63", "연차휴가", "연차휴가 오후 반반차", holidayYn2)
                     );
@@ -335,7 +330,8 @@ public class IndexController<S extends Session> {
 
         // 메인화면 직원조회 출력
         final List<IamUserDTO> memberList = memberservice.findBySearchValue(text);
-        model.addAttribute("memberList", memberList);;
+        model.addAttribute("memberList", memberList);
+        System.out.println(memberList);
 
         return "common/indexMemberList";
     }

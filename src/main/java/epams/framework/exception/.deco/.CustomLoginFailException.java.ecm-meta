@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<deco> 
+    <fileData filename="CustomLoginFailException.java" filepath="/src/main/java/epams/framework/exception" ischanged="0" lastversion="1" tstversion="0" devver="0" realver="1" itemid="000002287071" ecmMd5sum="1607c4ff2a50d6de55b43bccfd418690" ecmTstmd5sum="1607c4ff2a50d6de55b43bccfd418690" lastChangedDate="1730086916000" editor="박종훈:k140024" lastUser="박종훈:k140024" filestatus="운영중:0" islock="1" isAuthority="1" rsrccd="A7" rsrccdcodename="소스파일" rsrcinfo="0100000000110000000010010000010000000000100000001010000001000000000000000000000000" jobcd="HUR04" jobname="ePAMS" syscd="00853" sysmsg="ePAMS" srid=""/> 
+</deco>

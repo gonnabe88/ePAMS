@@ -1,4 +1,5 @@
 $(document).ready(function() {
+      
     // 현재 URL 경로를 가져옵니다.
     var currentPath = window.location.pathname;
     // 현재 페이지가 '/index'인지 확인합니다.

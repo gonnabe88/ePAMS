@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<deco>
-    <fileData filename="IamUserVO.java" filepath="/src/main/java/epams/model/vo" ischanged="0" lastversion="1" tstversion="0" devver="1" realver="0" itemid="000002269514" ecmMd5sum="357d49b3dcb06f5ca7f3b214065fe142" ecmTstmd5sum="357d49b3dcb06f5ca7f3b214065fe142" lastChangedDate="1729821373000" editor="관리자:MASTER" lastUser="관리자:MASTER" filestatus="운영중:0" islock="1" isAuthority="1" rsrccd="A7" rsrccdcodename="소스파일" rsrcinfo="0100000000110000000010010000010000000000100000001010000001000000000000000000000000" jobcd="HUR04" jobname="ePAMS" syscd="00853" sysmsg="ePAMS" srid=""/>
+<deco> 
+    <fileData filename="IamUserVO.java" filepath="/src/main/java/epams/model/vo" ischanged="0" lastversion="2" tstversion="0" devver="0" realver="1" itemid="000002269514" ecmMd5sum="85cef94f692d2e32973fb443185258e9" ecmTstmd5sum="85cef94f692d2e32973fb443185258e9" lastChangedDate="1730189726000" editor="박종훈:k140024" lastUser="박종훈:k140024" filestatus="운영중:0" islock="1" isAuthority="1" rsrccd="A7" rsrccdcodename="소스파일" rsrcinfo="0100000000110000000010010000010000000000100000001010000001000000000000000000000000" jobcd="HUR04" jobname="ePAMS" syscd="00853" sysmsg="ePAMS" srid=""/> 
 </deco>

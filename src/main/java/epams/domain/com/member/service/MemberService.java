@@ -84,7 +84,7 @@ public class MemberService {
     public List<IamUserDTO> findBySearchValue(final String searchValue) {
         List<IamUserDTO> iamUserDTOList = memberRepository.findBySearchValue(searchValue);
         for (IamUserDTO iamUserDTO : iamUserDTOList) {
-            iamUserDTO.formatContactNumber(iamUserDTO.getPhoneNo(), iamUserDTO.getInlineNo(), "KR");
+            iamUserDTO.formatContactNumber(iamUserDTO.getPhoneNo(), iamUserDTO.getInlineNo(), iamUserDTO.getStartTime(), iamUserDTO.getEndTime(),"KR");
             log.warn(iamUserDTO.toString());
         }
         return iamUserDTOList;

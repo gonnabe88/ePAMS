@@ -1,6 +1,6 @@
 $(document).ready(() => { // 화면 로드 시 호출
 
-    resetSearchMember();
+    resetSearchMember(); // 직원검색 폼 초기화
 
     function formatDate(date) {
         const days = ['일', '월', '화', '수', '목', '금', '토'];  // 요일 배열

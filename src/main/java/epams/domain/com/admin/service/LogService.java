@@ -35,4 +35,13 @@ public class LogService {
     	return logRepository.findAll();
     }
 
+		/***
+	 * @author 140024
+	 * @implNote logRepository 객체의 findLoginLogAll 호출하여 LogLoginEntity 리스트 반환
+	 * @since 2024-06-09
+	 */
+    public void insert(final LogLoginDTO logLoginDTO) {
+    	logRepository.insert(logLoginDTO);
+    }
+
 }

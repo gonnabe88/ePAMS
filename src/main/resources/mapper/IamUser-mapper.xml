@@ -15,6 +15,8 @@
         <result property="inlineNo" column="INLE_NO"/>
         <result property="phoneNo" column="CADR_TPN"/>
         <result property="simpleInlineNo" column="BANK_IN_NO"/>
+        <result property="startTime" column="START_TIME"/>
+        <result property="endTime" column="END_TIME"/>
     </resultMap>
 
     <!-- Result Map 정의 -->
@@ -53,7 +55,9 @@
 
     <!-- 휴대폰 번호 조회 -->
     <select id="findPhoneNo" parameterType="Long" resultType="String">
-        SELECT HP_NO FROM OHR.PHM_PRIVATE WHERE EMP_ID = #{username}
+        SELECT HP_NO 
+        FROM OHR.PHM_PRIVATE PP
+        WHERE PP.EMP_ID = #{username}
     </select>
 
     <!-- 모든 데이터 조회 -->
@@ -92,7 +96,7 @@
         ORDER BY A.ENO ASC
     </select>
 
-        <!-- 특정 사용자 조회 -->
+        <!-- 특정 사용자 조회  -->
     <select id="findByUserNo" parameterType="String" resultMap="iamUserMap">
         SELECT A.USR_NM,
                A.ENO,
@@ -109,7 +113,10 @@
                CASE WHEN plc.LABOR_POS_CD IS NOT NULL THEN ''
                     ELSE A.DTS_DTL_CONE END DTS_DTL_CONE,
                A.INLE_NO,
-               A.CADR_TPN
+               CASE WHEN A.PT_C NOT IN ('A10X', 'A20X', 'A30X', 'A40X', 'C8K', 'A45X', 'A50X' ,'A55X','A85X') THEN A.CADR_TPN
+                    ELSE '' END CADR_TPN,
+                F_DTM_ACT_TIME('01', '7'||substr(a.eno,2,7), sysdate, '1', 'KO')  AS START_TIME,
+                F_DTM_ACT_TIME('01', '7'||substr(a.eno,2,7), sysdate, '2', 'KO') AS END_TIME
         FROM OEHR.THURXE_CUSRLI A 
         INNER JOIN OEHR.THURXE_CORGLI B ON A.BBR_C = B.PRLM_OGZ_C_CONE
             LEFT OUTER JOIN PHM_LABOR_CHIEF plc ON substr(plc.emp_id,2,7)=substr(a.eno,2,7) AND sysdate BETWEEN plc.STA_YMD AND PLC.END_YMD and LABOR_POS_CD!='4'
@@ -131,11 +138,17 @@
         (#{username} IN ('K210058','K140024','K990406','K160068','K230028', -- 지식정보팀
 	        'K080257','K020185','K010308','K912006','K970480','K925009','K930624', -- 디지털금융부 팀장/부장, IDT본부장
 	        'K930796', -- 오현정 팀장
+            'K230119', -- 김복규 부행장
 	        'K930608', -- 박찬호 부행장
+            'K930347', -- 이근환 부행장
             'K901323', -- 서경희 위원님
             'O2000316', -- 황성현 책임
             'O2400106', -- 고상열 수석
-            'K135020' -- 김현정 과장 
+            'K135020', -- 김현정 과장
+            'K912022',-- 김미덕 본부장
+            'K960401', --김덕종 부장
+            'K921264',-- 박선주 부장
+            'K890041' --김형진 부장 
         ) OR
         A.TEM_C IN('16001','16002','16003','16005','16006','16050')) -- 인사부 각팀
     </select>
@@ -150,11 +163,17 @@
         (#{username} IN ('K210058','K140024','K990406','K160068','K230028', -- 지식정보팀
 	        'K080257','K020185','K010308','K912006','K970480','K925009','K930624', -- 디지털금융부 팀장/부장, IDT본부장
 	        'K930796', -- 오현정 팀장
+            'K230119', -- 김복규 부행장
 	        'K930608', -- 박찬호 부행장
+            'K930347', -- 이근환 부행장
             'K901323', -- 서경희 위원님
             'O2000316', -- 황성현 책임
             'O2400106', -- 고상열 수석
-            'K135020' -- 김현정 과장
+            'K135020', -- 김현정 과장
+            'K912022',-- 김미덕 본부장
+            'K960401', --김덕종 부장
+            'K921264',-- 박선주 부장
+            'K890041' --김형진 부장 
         ) OR
         A.TEM_C IN('16001','16002','16003','16005','16006','16050')) -- 인사부 각팀
     </select>

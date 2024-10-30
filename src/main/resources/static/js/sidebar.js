@@ -62,6 +62,8 @@ $(document).ready(function() {
             const linkUrl = fullLinkPath.split('#')[0];  // 경로만 추출
             const linkHash = fullLinkPath.includes('#') ? '#' + fullLinkPath.split('#')[1] : ''; // #을 포함한 해시 추출
 
+            console.log(linkUrl + " " + linkHash);
+
             // 직원검색 처리: 경로는 동일하고 해시(#searchDiv)까지 일치할 경우 'active' 클래스 추가
             if (linkUrl === currentPath && linkHash === currentHash) {
                 // 직원검색에만 'active' 추가

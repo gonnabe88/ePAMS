@@ -50,7 +50,7 @@ public class IamUserDTO extends IamUserVO {
      * @author 140024
      * @since 2024-10-12
      */
-    public void formatContactNumber(String phoneNo, String inlineNo, String regionCode) {
+    public void formatContactNumber(String phoneNo, String inlineNo, String startTime, String endTime, String regionCode) {
         PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
         try {
             Phonenumber.PhoneNumber phoneNumber = phoneUtil.parse(phoneNo, regionCode);
@@ -71,5 +71,12 @@ public class IamUserDTO extends IamUserVO {
         } catch (NumberParseException e) {
             e.printStackTrace();
         }
+
+        // 출퇴근시간 포맷팅
+        // @author 210058
+        // @since 2024-10-28
+        this.setStartTime(startTime.substring(0,2) +" : " +startTime.substring(2,4));
+        System.out.println(startTime.substring(0,2) +" : " +startTime.substring(2,4));
+        this.setEndTime(endTime.substring(0,2) +" : " +endTime.substring(2,4));
     }
 }

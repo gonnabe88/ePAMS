@@ -2076,3 +2076,4 @@
 .bi-suitcase2-fill::before { content: "\f901"; }
 .bi-suitcase2::before { content: "\f902"; }
 .bi-vignette::before { content: "\f903"; }
+.bi-workclock-fill::before {content : "\f904"}

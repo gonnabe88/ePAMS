@@ -7,7 +7,7 @@
     <div class="divider">
         <div class="divider-text">
             <h5 class="card-title mb-0">
-                <span>조회결과</span>
+                <span>조회결과</span> 
             </h5>
         </div>
     </div>
@@ -41,14 +41,26 @@
                 <i class="bi bi-briefcase-fill"></i>
                 <span class="h7 m-0"  th:text="${member.jobDetail}"></span>
             </div>
+            <div class="d-flex align-items-center justify-content-start gap-3 mt-3" th:if="${member.startTime != null and !#strings.isEmpty(member.startTime)}">
+                <!-- <i class="bi bi-clock-history"></i> -->
+                <img src="/extensions/feather-icons/icons/time-management.svg" alt="Icon Description">
+                <span class="h7 m-0" th:text="${member.startTime}"></span>~
+                <span class="h7 m-0" th:text="${member.endTime}"></span>
+            </div>
 
             <div class="d-flex justify-content-around mt-5">
                 <div class="text-center searchResultIcon p-0 d-flex flex-column justify-content-center align-items-center" id="reset" >
-                    <h4 class="m-0"><i class="bi bi-binoculars-fill"></i></h4>
+                    <h4 class="m-0">
+                        <i class="bi bi-binoculars-fill"></i>
+                        <!-- <img src="/extensions/feather-icons/icons/reset.svg" alt="Icon Description"> -->
+                    </h4>
                     <small>초기화</small>
                 </div>
                 <div class="text-center searchResultIcon p-0 d-flex flex-column justify-content-center align-items-center" id="search" >
-                    <h4 class="m-0"><i class="bi bi-binoculars-fill"></i></h4>
+                    <h4 class="m-0">
+                        <i class="bi bi-binoculars-fill"></i>
+                        <!-- <img src="/extensions/feather-icons/icons/personsearch.svg" alt="Icon Description"> -->
+                    </h4>
                     <small>다시검색</small>
                 </div>
             </div>

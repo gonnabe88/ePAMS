@@ -56,8 +56,20 @@
         SELECT * 
         FROM OHR.XFRMD2C
         WHERE CD_KIND = #{codeKind}
-          AND CD LIKE #{code} || '%'
-          AND SYSDATE BETWEEN STA_YMD AND END_YMD
+            AND CD LIKE #{code} || '%'
+            AND SYSDATE BETWEEN STA_YMD AND END_YMD
+            <if test="etcCode1 != null and etcCode1 != ''">
+            AND ETC_CD1 LIKE #{etcCode1}
+            </if>
+            <if test="etcCode2 != null and etcCode2 != ''">
+            AND ETC_CD2 LIKE #{etcCode2}
+            </if>
+            <if test="etcCode3 != null and etcCode3 != ''">
+            AND ETC_CD3 LIKE #{etcCode3}
+            </if>
+            <if test="etcCode4 != null and etcCode4 != ''">
+            AND ETC_CD4 LIKE #{etcCode4}
+            </if>
     </select>
 
     <!-- 코드유형 & 코드에 해당하는 코드 정보 조회 -->

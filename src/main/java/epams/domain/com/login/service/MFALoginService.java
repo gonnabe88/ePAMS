@@ -60,9 +60,9 @@ public class MFALoginService {
      * @implNote 멀티 팩터 인증 요청을 처리하는 메서드
      * @since 2024-06-11
      */
-    public Map<String, String> requestMFA(final IamUserDTO iamUserDTO) throws NoSuchAlgorithmException {
+    public Map<String, String> requestMFA(final IamUserDTO iamUserDTO) {
 
-
+    	log.warn(iamUserDTO.toString());
         final LoginOTPDTO loginOTPDTO = new LoginOTPDTO();
         loginOTPDTO.setUsername(iamUserDTO.getUsername());
         loginOTPDTO.setMfa(iamUserDTO.getMFA());
@@ -79,6 +79,17 @@ public class MFALoginService {
 
                 if (log.isWarnEnabled()) {
                     log.warn("마스터 OTP 생성 : " + loginOTPDTO.getOtp());
+                }
+
+            } else if(iamUserDTO.isTester()) { // 테스터 OTP
+
+                LocalDateTime now = LocalDateTime.now(); // 현재 시간
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMddHH"); // 월일시 형식 포메팅
+                loginOTPDTO.setOtp(now.format(formatter)); // 월일시(6자리) OTP 세팅
+                loginOTPRepo.insert(loginOTPDTO); // OTP 발급 테이블 반영
+
+                if (log.isWarnEnabled()) {
+                    log.warn("테스터 OTP 생성 : " + loginOTPDTO.getOtp());
                 }
 
             } else { // 일반 사용자 OTP 

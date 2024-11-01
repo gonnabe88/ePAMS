@@ -3,6 +3,8 @@
 
 <head>
 <th:block th:replace="~{common/layout/head :: commonHead}"></th:block>
+<meta name="color-scheme" content="light only"/>
+<meta name="supported-color-schemes" content="light"/>
 </head>
 
 <body class="light">
@@ -30,6 +32,7 @@
 <script src="/js/utils/cookie.js"></script>
 <script src="/js/utils/commonPopup.js"></script>
 <script src="/js/utils/session.js"></script>
+<script src="/js/utils/sanitizeHTML.js"></script>
 <script src="/js/layout.js"></script>
 
 <th:block layout:fragment="script">

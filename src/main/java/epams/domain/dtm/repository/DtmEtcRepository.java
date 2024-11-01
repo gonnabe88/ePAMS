@@ -33,7 +33,6 @@ public class DtmEtcRepository {
     public void findDtmPeriod(final DtmHisDTO dto) {
         log.warn(dto.toString());
     	final DtmHisDTO res = sql.selectOne("DtmEtc.findDtmPeriod", dto);
-        log.warn(res.toString());
         if(res != null) {
             dto.setDtmCross(res.getDtmCross());
             dto.setStaHm(res.getStaHm());

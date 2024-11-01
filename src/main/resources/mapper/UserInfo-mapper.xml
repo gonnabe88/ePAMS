@@ -28,16 +28,22 @@
     <select id="findByUserNo" parameterType="String" resultMap="userInfoMap">
         SELECT
             A.USR_NM,
-            B.BBR_NM,
-            A.TEM_NM,
-            A.PT_C_NM,
+            CASE WHEN plc.LABOR_POS_CD IS NOT NULL THEN '노동조합'
+                    WHEN pec.ORG_CD ='01000' THEN '임원'
+                    ELSE B.BBR_NM END BBR_NM,
+            CASE WHEN A.TEM_NM='해당없음' THEN ''
+                    WHEN plc.LABOR_POS_CD IS NOT NULL THEN ''
+                    ELSE A.TEM_NM END TEM_NM,
+            CASE WHEN plc.LABOR_POS_CD IS NOT NULL THEN F_FRM_CODE_NM_C('01','PHM_LABOR_POS_CD',plc.LABOR_POS_CD,sysdate,'1','KO')
+                    ELSE A.PT_C_NM END PT_C_NM,
             NVL(OHR.F_DTM_ACT_TIME('01', REPLACE(#{username}, 'K', '7'), SYSDATE, '1', 'KO'), '휴무') AS STA_TIME,
             NVL(OHR.F_DTM_ACT_TIME('01', REPLACE(#{username}, 'K', '7'), SYSDATE, '2', 'KO'), '휴무') AS END_TIME,
             NVL(OHR.F_DTM_ACT_TIME('01', REPLACE(#{username}, 'K', '7'), SYSDATE+1, '1', 'KO'), '휴무') AS STA_TIME2,
             NVL(OHR.F_DTM_ACT_TIME('01', REPLACE(#{username}, 'K', '7'), SYSDATE+1, '2', 'KO'), '휴무') AS END_TIME2
         FROM OEHR.THURXE_CUSRLI A
-        INNER JOIN OEHR.THURXE_CORGLI B
-            ON A.BBR_C = B.PRLM_OGZ_C_CONE
+        INNER JOIN OEHR.THURXE_CORGLI B ON A.BBR_C = B.PRLM_OGZ_C_CONE
+            LEFT outer JOIN PHM_LABOR_CHIEF plc ON substr(plc.emp_id,2,7)=substr(a.eno,2,7) AND sysdate BETWEEN plc.STA_YMD AND PLC.END_YMD and LABOR_POS_CD!='4'
+            LEFT OUTER JOIN PHM_EMP_C pec ON substr(pec.emp_id,2,7)=substr(a.eno,2,7) AND pec.ORG_CD ='01000'
         WHERE A.ENO = #{username}
     </select>
 

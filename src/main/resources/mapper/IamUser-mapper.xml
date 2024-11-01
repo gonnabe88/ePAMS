@@ -15,6 +15,8 @@
         <result property="inlineNo" column="INLE_NO"/>
         <result property="phoneNo" column="CADR_TPN"/>
         <result property="simpleInlineNo" column="BANK_IN_NO"/>
+        <result property="startTime" column="START_TIME"/>
+        <result property="endTime" column="END_TIME"/>
     </resultMap>
 
     <!-- Result Map 정의 -->
@@ -53,10 +55,9 @@
 
     <!-- 휴대폰 번호 조회 -->
     <select id="findPhoneNo" parameterType="Long" resultType="String">
-        <!-- SELECT A.CADR_TPN 
-        FROM OEHR.THURXE_CUSRLI A 
-        WHERE A.ENO = #{username} -->
-        SELECT HP_NO FROM OHR.PHM_PRIVATE WHERE EMP_ID = #{username}
+        SELECT HP_NO 
+        FROM OHR.PHM_PRIVATE PP
+        WHERE PP.EMP_ID = #{username}
     </select>
 
     <!-- 모든 데이터 조회 -->
@@ -74,62 +75,28 @@
     <select id="findAllMember" resultMap="teamSearchMap">
         SELECT A.USR_NM,
                A.ENO,
-               A.BBR_C,
+               CASE WHEN plc.LABOR_POS_CD IS NOT NULL THEN '000'
+                    ELSE A.BBR_C END BBR_C,
                CASE WHEN plc.LABOR_POS_CD IS NOT NULL THEN '노동조합'
                     WHEN pec.ORG_CD ='01000' THEN '임원'
                     ELSE B.BBR_NM END BBR_NM,
-               A.TEM_C,
+               CASE WHEN plc.LABOR_POS_CD IS NOT NULL THEN '00000'
+                    ELSE A.TEM_C END TEM_C,
                CASE WHEN A.TEM_NM='해당없음' THEN ''
                     WHEN plc.LABOR_POS_CD IS NOT NULL THEN ''
                     ELSE A.TEM_NM END TEM_NM,
                CASE WHEN plc.LABOR_POS_CD IS NOT NULL THEN F_FRM_CODE_NM_C('01','PHM_LABOR_POS_CD',plc.LABOR_POS_CD,sysdate,'1','KO')
                     ELSE A.PT_C_NM END PT_C_NM,
                CASE WHEN plc.LABOR_POS_CD IS NOT NULL THEN ''
-                    ELSE A.DTS_DTL_CONE END DTS_DTL_CONE,
-               A.INLE_NO
+                    ELSE A.DTS_DTL_CONE END DTS_DTL_CONE
         FROM OEHR.THURXE_CUSRLI A 
         INNER JOIN OEHR.THURXE_CORGLI B ON A.BBR_C = B.PRLM_OGZ_C_CONE
-            LEFT outer JOIN PHM_LABOR_CHIEF plc ON substr(plc.emp_id,2,7)=substr(a.eno,2,7) AND sysdate BETWEEN plc.STA_YMD AND PLC.END_YMD and LABOR_POS_CD!='4'
+            LEFT OUTER JOIN PHM_LABOR_CHIEF plc ON substr(plc.emp_id,2,7)=substr(a.eno,2,7) AND sysdate BETWEEN plc.STA_YMD AND PLC.END_YMD and LABOR_POS_CD!='4'
             LEFT OUTER JOIN PHM_EMP_C pec ON substr(pec.emp_id,2,7)=substr(a.eno,2,7) AND pec.ORG_CD ='01000'
         ORDER BY A.ENO ASC
     </select>
 
-    <!-- ID/PW 일치 사용자 조회 -->
-    <select id="login" parameterType="iamUserDTO" resultMap="iamUserMap">
-        SELECT
-        A.ENO,
-        A.USR_ECY_PWD
-        FROM OEHR.THURXE_CUSRLI A
-        WHERE
-        A.ENO = #{username} AND
-        A.USR_ECY_PWD = #{password} AND
-        A.DEL_YN = 'N' AND
-        #{username} IN ('K210058','K140024','K990406','K160068','K230028', -- 지식정보팀
-        'K080257','K020185','K010308','K912006','K970480','K925009','K930624', -- 디지털금융부 팀장/부장, IDT본부장
-        'K930796', -- 오현정 팀장
-        'K990288','K080097','K160025','K180031','K100494','K140057','K200086', -- 인사팀
-        'K210092','K080752','K050454','K110688','K150027','K130074', --인사기획팀
-        'K115020','K130068','K190068','K190064','K170019','K109893','K150036' --노조
-        ) 
-    </select>
-
-    <!-- ID 일치 사용자 조회 -->
-    <select id="findByUserId" parameterType="iamUserDTO" resultMap="iamUserMap">
-        SELECT *
-        FROM OEHR.THURXE_CUSRLI A
-        WHERE
-        A.ENO = #{username} AND
-        A.DEL_YN = 'N' AND
-        #{username} IN ('K210058','K140024','K990406','K160068','K230028', -- 지식정보팀
-        'K901424','K080257','K020185','K010308','K912006','K970480','K925009','K930624', -- 디지털금융부 팀장/부장, IDT본부장
-        'K930796', -- 오현정 팀장
-        'K990288','K080097','K160025','K180031','K100494','K140057','K200086', --인사팀
-        'K210092','K080752','K050454','K110688','K150027','K130074', --인사기획팀
-        'K115020','K130068','K190068','K190064','K170019','K109893','K150036' --노조
-        ) 
-    </select>
-
-    <!-- 특정 사용자 조회 -->
+        <!-- 특정 사용자 조회  -->
     <select id="findByUserNo" parameterType="String" resultMap="iamUserMap">
         SELECT A.USR_NM,
                A.ENO,
@@ -145,13 +112,72 @@
                     ELSE A.PT_C_NM END PT_C_NM,
                CASE WHEN plc.LABOR_POS_CD IS NOT NULL THEN ''
                     ELSE A.DTS_DTL_CONE END DTS_DTL_CONE,
-               A.INLE_NO
+               A.INLE_NO,
+               CASE WHEN A.PT_C NOT IN ('A10X', 'A20X', 'A30X', 'A40X', 'C8K', 'A45X', 'A50X' ,'A55X','A85X') THEN A.CADR_TPN
+                    ELSE '' END CADR_TPN,
+                NVL(F_DTM_ACT_TIME('01', '7'||substr(a.eno,2,7), sysdate, '1', 'KO'),' ')  AS START_TIME,
+                NVL(F_DTM_ACT_TIME('01', '7'||substr(a.eno,2,7), sysdate, '2', 'KO'),' ')  AS END_TIME
         FROM OEHR.THURXE_CUSRLI A 
         INNER JOIN OEHR.THURXE_CORGLI B ON A.BBR_C = B.PRLM_OGZ_C_CONE
-            LEFT outer JOIN PHM_LABOR_CHIEF plc ON substr(plc.emp_id,2,7)=substr(a.eno,2,7) AND sysdate BETWEEN plc.STA_YMD AND PLC.END_YMD and LABOR_POS_CD!='4'
+            LEFT OUTER JOIN PHM_LABOR_CHIEF plc ON substr(plc.emp_id,2,7)=substr(a.eno,2,7) AND sysdate BETWEEN plc.STA_YMD AND PLC.END_YMD and LABOR_POS_CD!='4'
             LEFT OUTER JOIN PHM_EMP_C pec ON substr(pec.emp_id,2,7)=substr(a.eno,2,7) AND pec.ORG_CD ='01000'
         WHERE
             A.ENO = #{searchValue}
+    </select>
+
+    <!-- ID/PW 일치 사용자 조회 -->
+    <select id="login" parameterType="iamUserDTO" resultMap="iamUserMap">
+        SELECT
+        A.ENO,
+        A.USR_ECY_PWD
+        FROM OEHR.THURXE_CUSRLI A
+        WHERE
+        A.ENO = #{username} AND
+        A.USR_ECY_PWD = #{password} AND
+        A.DEL_YN = 'N' AND
+        (#{username} IN ('K210058','K140024','K990406','K160068','K230028', -- 지식정보팀
+	        'K080257','K020185','K010308','K912006','K970480','K925009','K930624', -- 디지털금융부 팀장/부장, IDT본부장
+	        'K930796', -- 오현정 팀장
+            'K230119', -- 김복규 부행장
+	        'K930608', -- 박찬호 부행장
+            'K930347', -- 이근환 부행장
+            'K901323', -- 서경희 위원님
+            'O2000316', -- 황성현 책임
+            'O2400106', -- 고상열 수석
+            'K135020', -- 김현정 과장
+            'K912022',-- 김미덕 본부장
+            'K960401', --김덕종 부장
+            'K921264',-- 박선주 부장
+            'K890041', --김형진 부장 
+            'K901479' --노경아 위원님
+        ) OR
+        A.TEM_C IN('16001','16002','16003','16005','16006','16050')) -- 인사부 각팀
+    </select>
+
+    <!-- ID 일치 사용자 조회 -->
+    <select id="findByUserId" parameterType="iamUserDTO" resultMap="iamUserMap">
+        SELECT *
+        FROM OEHR.THURXE_CUSRLI A
+        WHERE
+        A.ENO = #{username} AND
+        A.DEL_YN = 'N' AND
+        (#{username} IN ('K210058','K140024','K990406','K160068','K230028', -- 지식정보팀
+	        'K080257','K020185','K010308','K912006','K970480','K925009','K930624', -- 디지털금융부 팀장/부장, IDT본부장
+	        'K930796', -- 오현정 팀장
+            'K230119', -- 김복규 부행장
+	        'K930608', -- 박찬호 부행장
+            'K930347', -- 이근환 부행장
+            'K901323', -- 서경희 위원님
+            'O2000316', -- 황성현 책임
+            'O2400106', -- 고상열 수석
+            'K135020', -- 김현정 과장
+            'K912022',-- 김미덕 본부장
+            'K960401', --김덕종 부장
+            'K921264',-- 박선주 부장
+            'K890041', --김형진 부장 
+            'K901479' --노경아 위원님
+        ) OR
+        A.TEM_C IN('16001','16002','16003','16005','16006','16050')) -- 인사부 각팀
     </select>
 
 </mapper>

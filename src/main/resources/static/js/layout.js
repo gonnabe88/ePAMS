@@ -9,10 +9,14 @@ $(document).ready(function() {
         // /index 페이지가 아닐 경우
         $('#goToHome').removeAttr("hidden");         // goToHome을 보여줌
     }
+    
+    // 15분(900초)마다 checkSessionAuth 호출 (세션체크)
+    setInterval(checkSessionAuth, 900 * 1000);
 });
 
+// 페이지가 보여질 때마다 checkSessionAuth 호출 (세션체크)
 $(document).on("visibilitychange", function() {
-    if(document.visibilityState === "visible") {
+    if (document.visibilityState === "visible") {
         checkSessionAuth();
     }
 });

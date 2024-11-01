@@ -102,7 +102,7 @@ public class IamUserVO {
      * @implNote 휴대폰 번호
      * @since 2024-09-05
      */
-    private String phoneNo = "";
+    private String phoneNo;
 
     /**
      * @author 140024
@@ -110,4 +110,18 @@ public class IamUserVO {
      * @since 2024-08-19
      */
     private String simpleInlineNo;
+
+    /**
+     * @author 210058
+     * @implNote 출근시간
+     * @since 2024-10-28
+     */
+    private String startTime;
+
+    /**
+     * @author 210058
+     * @implNote 퇴근시간
+     * @since 2024-10-28
+     */
+    private String endTime;
 }

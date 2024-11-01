@@ -1,3 +1,4 @@
+
 var editedData = [];
 var addedData = [];
 var deletedData = [];
@@ -56,7 +57,7 @@ function createTable(selectableRange, columns, url) {
         movableColumns: true,
         paginationCounter: "rows",
 
-        resizableRows: true,
+        //resizableRows: true,
         //resizableRowGuide: true,
         //resizableColumnGuid: true,
 

@@ -90,7 +90,7 @@ public class DtmRegistService {
 
 				// 사전검증 실패 시 예외 처리
 				if ("FAILURE!".equals(dtmApplCheckProcDTO.getResultCode())) {
-					throw new CustomGeneralRuntimeException(dtmApplCheckProcDTO.getResultMsg());
+					throw new CustomGeneralRuntimeException(dtmApplCheckProcDTO.getResultMsg());				
 				}				
 			}
 			// [INSERT] 신청서 추가
@@ -161,7 +161,7 @@ public class DtmRegistService {
 
 			
 		} catch (CustomGeneralRuntimeException e) {
-			log.error("[신청 불가] {}", e.getMessage());
+			log.error("[신청 불가] {}", e);
 			throw e; // 커스텀 예외를 그대로 던져서 컨트롤러에서 처리하게 합니다.
 		} catch (Exception e) {
 			log.error("예기치 못한 오류 발생", e);

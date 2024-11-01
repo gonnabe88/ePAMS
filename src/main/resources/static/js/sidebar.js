@@ -15,19 +15,12 @@ $(document).ready(function() {
                 url = '/common/layout/renderSidebarNormal';
             }
         } else {
-            console.log("normal : " + isAdmin + " " + isChecked);
             url = '/common/layout/renderSidebarNormal';
         }
 
         // 서버에 요청을 보내어 사용자 또는 관리자 sidebar 템플릿을 받아옴
-        $.get(url, function(html) {
-            // 2024-08-17 CWE-79(Cross-site Scripting (XSS)) 취약점 조치
-            const safeHTML = DOMPurify.sanitize(html, {
-                SAFE_FOR_TEMPLATES: true,
-                ALLOWED_TAGS: ['h7', 'h6', 'h5', 'h4', 'h3', 'h2', 'h1', 'div', 'span', 'section', 'i', 'ul', 'li', 'a'], // 필요시 추가
-                FORBID_ATTR: ['style']
-            });
-            $('#menu').html(safeHTML);
+        $.get(url, function(html) {            
+            $('#menu').html(sanitizeHTML(html)); // 2024-08-17 CWE-79(Cross-site Scripting (XSS)) 취약점 조치
             highlightActiveMenuItem(); // 사이드바가 로드된 후 .sidebar-item 요소 탐색
         }).fail(function(error) {
             console.error('Error loading sidebar:', error);
@@ -38,8 +31,6 @@ $(document).ready(function() {
     function highlightActiveMenuItem() {
         const currentPath = window.location.pathname; // 현재 페이지의 경로를 가져옴
         const currentHash = window.location.hash; // 현재 URL의 해시(#searchDiv 등) 가져오기
-        console.log(currentPath);
-        console.log(currentHash);
 
         // 모든 .submenu-item 요소를 순회하며 현재 페이지와 일치하는 항목에 'active' 클래스 추가
         $(".submenu-item").each((_, submenuItem) => {
@@ -64,9 +55,6 @@ $(document).ready(function() {
             const linkUrl = fullLinkPath.split('#')[0];  // 경로만 추출
             const linkHash = fullLinkPath.includes('#') ? '#' + fullLinkPath.split('#')[1] : ''; // #을 포함한 해시 추출
 
-            console.log("linkUrl : " + linkUrl);
-            console.log("linkHash : " + linkHash);
-
             // 직원검색 처리: 경로는 동일하고 해시(#searchDiv)까지 일치할 경우 'active' 클래스 추가
             if (linkUrl === currentPath && linkHash === currentHash) {
                 // 직원검색에만 'active' 추가
@@ -87,13 +75,7 @@ $('#flexSwitchCheckAdmin').on('change', function () {
 
     // 서버에 요청을 보내어 해당 템플릿을 받아옴
     $.get(url, function(html) {
-        // 2024-08-17 CWE-79(Cross-site Scripting (XSS)) 취약점 조치
-        const safeHTML = DOMPurify.sanitize(html, {
-            SAFE_FOR_TEMPLATES: true,
-            ALLOWED_TAGS: ['h7', 'h6', 'h5', 'h4', 'h3', 'h2', 'h1', 'div', 'span', 'section', 'i', 'ul', 'li', 'a'], // 필요시 추가
-            FORBID_ATTR: ['style']
-        });
-        $('#menu').html(safeHTML);
+        $('#menu').html(sanitizeHTML(html));
     }).fail(function(error) {
         console.error('Error loading sidebar:', error);
     });
@@ -113,12 +95,12 @@ const getUserInfo = (callback) => {
             if(userInfo.staTime === "휴무") {
                 $('#todayWorkTime').text(`${userInfo.staTime}`);
             } else {
-                $('#todayWorkTime').html(`${userInfo.staTime}<br>${userInfo.endTime}`);
+                $('#todayWorkTime').html(sanitizeHTML(`${userInfo.staTime}<br>${userInfo.endTime}`));
             }
             if(userInfo.staTime2 === "휴무") {
                 $('#tomorrowWorkTime').text(`${userInfo.staTime2}`);
             } else {
-                $('#tomorrowWorkTime').html(`${userInfo.staTime2}<br>${userInfo.endTime2}`);
+                $('#tomorrowWorkTime').html(sanitizeHTML(`${userInfo.staTime2}<br>${userInfo.endTime2}`));
             }
             callback(userInfo.isAdmin);
         },

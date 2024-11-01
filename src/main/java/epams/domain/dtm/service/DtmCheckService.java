@@ -255,7 +255,7 @@ public class DtmCheckService {
 							throw new CustomGeneralRuntimeException(
 									String.format(
 											langService.findLangById("DTM_ERROR_002"), // 연차촉진시간(일수) 확인 후 연차휴가를 등록해주세요
-											decimalFormat.format(proDTO.getFixedDutyAnnualHourRemainCnt())
+											decimalFormat.format(proDTO.getDutyAnnualDayTotalCnt()) // 촉진일수
 									));
 						}
 					} else {  // 저축내역이 없을경우
@@ -263,7 +263,7 @@ public class DtmCheckService {
 							throw new CustomGeneralRuntimeException(
 									String.format(
 											langService.findLangById("DTM_ERROR_002"), // 연차촉진시간(일수) 확인 후 연차휴가를 등록해주세요
-											decimalFormat.format(proDTO.getFixedDutyAnnualHourRemainCnt())
+											decimalFormat.format(proDTO.getDutyAnnualDayTotalCnt()) // 촉진일수
 									));
 						} 
 					}

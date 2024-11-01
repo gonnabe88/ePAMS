@@ -26,11 +26,17 @@ public class LogLoginDTO extends LogLoginVO {
     
     /***
      * @author 140024
-     * @implNote 잠김해제시간(RELEASE_DTM)
+     * @implNote 잠김해제시간(RELEASE_DTM) 
      * @since 2024-10-20
      */
     private LocalDateTime releaseDtm;
     
+    /***
+     * @author 140024
+     * @implNote 사용자 이름 
+     * @since 2024-10-31
+     */
+    private String realname;
 
     /***
      * @author 140024

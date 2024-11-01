@@ -17,12 +17,22 @@
         <result property="createUsid" column="FST_ENR_USID"/>
         <result property="failCnt" column="FAIL_CNT"/>
         <result property="releaseDtm" column="RELEASE_DTM"/>
+
+        <result property="realname" column="USR_NM"/>
     </resultMap>
 
     <!-- 모든 데이터 조회 -->
     <select id="findAll" resultMap="logLoginMap">
-        SELECT * FROM OEHR.THURXE_CLOGNL
-        ORDER BY FST_ENR_DTM DESC
+        SELECT 
+            LOGIN.ENO,
+            LOGIN.CER_KD_NM,
+            LOGIN.LGN_SCS_YN,
+            LOGIN.FST_ENR_USID,
+            LOGIN.FST_ENR_DTM,
+            USR.USR_NM
+        FROM OEHR.THURXE_CLOGNL LOGIN
+        INNER JOIN OEHR.THURXE_CUSRLI USR ON LOGIN.ENO = USR.ENO
+        ORDER BY LOGIN.FST_ENR_DTM DESC
     </select>
 
     <!-- 기본키 데이터 중복여부 조회 -->
@@ -35,15 +45,23 @@
 
     <!-- 모든 데이터 조회 -->
     <select id="checkFailCnt" parameterType="String" resultMap="logLoginMap">
-        SELECT 
-        	count(*) FAIL_CNT,
-			MIN(FST_ENR_DTM) + INTERVAL '5' MINUTE RELEASE_DTM
-		FROM OEHR.THURXE_CLOGNL 
-		WHERE 
-			ENO = #{username} AND
-			LGN_SCS_YN = '0' AND
-			CER_KD_NM = 'ID/PW' AND
-			FST_ENR_DTM >= SYSDATE - INTERVAL '5' MINUTE
+        WITH recent_failures AS (
+            SELECT LGN_SCS_YN,  FST_ENR_DTM, ROWNUM AS rn
+            FROM (
+                SELECT LGN_SCS_YN, FST_ENR_DTM
+                FROM OEHR.THURXE_CLOGNL
+                WHERE 
+                    ENO = #{username}
+                    AND FST_ENR_DTM &gt;= SYSDATE - INTERVAL '5' MINUTE
+                ORDER BY FST_ENR_DTM DESC
+            )
+            WHERE ROWNUM &lt;= 5
+        )
+        SELECT count(*) FAIL_CNT, MIN(FST_ENR_DTM) + INTERVAL '5' MINUTE RELEASE_DTM
+        FROM recent_failures
+        WHERE LGN_SCS_YN = 0
+        AND (rn &gt; (SELECT NVL(MIN(rn), 5) FROM recent_failures WHERE LGN_SCS_YN = 1) 
+            OR NOT EXISTS (SELECT 1 FROM recent_failures WHERE LGN_SCS_YN = 1))
     </select>
 
     <!-- 신규 데이터 추가 -->

@@ -150,6 +150,8 @@ public class BoardMainController {
         final BoardDTO boardDTO = boardService.findById(seqId);
         model.addAttribute("board", boardDTO);
         model.addAttribute("page", pageable.getPageNumber());
+
+        model.addAttribute("nonce", "nonce-kdb");
         
         // 파일이 첨부된 경우 첨부파일 리스트 반환
         if (FILE_ATTACHED.equals(boardDTO.getFileAttached())) {

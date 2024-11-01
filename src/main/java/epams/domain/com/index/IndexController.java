@@ -12,6 +12,9 @@ import epams.domain.com.login.util.webauthn.authenticator.Authenticator;
 import epams.domain.com.login.util.webauthn.user.AppUser;
 import epams.domain.com.member.dto.IamUserDTO;
 import epams.domain.com.member.service.MemberService;
+import epams.domain.com.sidebar.dto.UserInfoDTO;
+import epams.domain.com.sidebar.service.SidebarService;
+import epams.domain.dtm.dto.DtmHisDTO;
 import epams.framework.exception.CustomGeneralRuntimeException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,6 +28,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.session.Session;
 import org.springframework.stereotype.Controller;
@@ -35,9 +39,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.DayOfWeek;
+import java.time.LocalTime;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.TextStyle;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -100,6 +106,13 @@ public class IndexController<S extends Session> {
      */
     private final HolidayService holidayService;
 
+    /***
+     * @author 140024
+     * @implNote 코드 서비스
+     * @since 2024-06-09
+     */
+    private final SidebarService sidebarService;
+
     /**
      * @author K140024
      * @implNote 현재 인증된 사용자 정보를 반환하는 메서드
@@ -115,6 +128,15 @@ public class IndexController<S extends Session> {
         }
         return result;
     }
+    /**
+     * @author K140024
+     * @implNote 현재 인증된 사용자 권한을 체크하는 메서드
+     * @since 2024-06-11
+     */
+    private Boolean hasRole(Authentication auth, String role) {
+        return auth.getAuthorities().stream()
+            .anyMatch(grantedAuthority -> grantedAuthority.equals(new SimpleGrantedAuthority(role)));
+    }
 
     /**
      * @author K140024
@@ -128,7 +150,7 @@ public class IndexController<S extends Session> {
 
         // 현재 로그인한 사용자 정보
         final Authentication auth = authentication();
-
+        
         try {
             // 간편인증 등록 여부 확인
             final AppUser existingUser;
@@ -198,9 +220,9 @@ public class IndexController<S extends Session> {
             String holidayYn = "N";
             //휴일정보 받아오기
             List<String> holidays=holidayService.findholiYmd();
+            
             //오늘
             HolidayDTO todayDTO=new HolidayDTO(today,null, null, null, null);
-            System.err.println("날짜 : "+todayDTO.getHoliYmd());
             //오늘 휴일이면 비활성화
             if(holidays.contains(todayDTO)){
                 holidayYn = "Y";
@@ -220,17 +242,69 @@ public class IndexController<S extends Session> {
             }
             model.addAttribute("tomorrowDateStr", tomorrowDateStr);
 
-            // 빠른 근태 신청 리스트
-            List<QuickApplDTO> dtmApplList = List.of(
-                new QuickApplDTO("오늘", nowDateStr, nowDateStr, today, today,"1A", "1A1", "연차휴가", "연차휴가 1일", holidayYn),
-                new QuickApplDTO("오늘", nowDateStr, nowDateStr, today, today, "1A", "1A5", "연차휴가", "연차휴가 오전 반차", holidayYn),
-                new QuickApplDTO("오늘", nowDateStr, nowDateStr, today, today, "1A", "1AG", "연차휴가", "연차휴가 오전 반반차", holidayYn),
-                new QuickApplDTO("내일", tomorrowDateStr, tomorrowDateStr, tomorrow, tomorrow, "1A", "1A1", "연차휴가", "연차휴가 1일", holidayYn2),
-                new QuickApplDTO("내일", tomorrowDateStr, tomorrowDateStr, tomorrow, tomorrow, "1A", "1A5", "연차휴가", "연차휴가 오전 반차", holidayYn2),
-                new QuickApplDTO("내일", tomorrowDateStr, tomorrowDateStr, tomorrow, tomorrow, "1A", "1AG", "연차휴가", "연차휴가 오전 반반차", holidayYn2)
-            );
+            if(auth != null) {
+            	// 사용자 인적사항 정보를 가져오는 로직
+                UserInfoDTO userInfo = sidebarService.findByUserNo(auth.getName()); // 근무시작시간(HH:mm) 가져오기
+            
+            
+            final LocalTime now = LocalTime.now(); // 현재시간(localTime)
+            //final LocalTime now = LocalTime.of(15,30); // 현재시간(localTime)
+            DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm"); // 포메터 설정
+
+            List<QuickApplDTO> dtmApplList = new ArrayList<QuickApplDTO>();
+
+            if("휴무".equals(userInfo.getStaTime())) { // 오늘이 휴무(휴일, 근태)인 경우
+                log.warn("오늘 휴일 (내일 6개) " + holidayYn2);
+                 // 빠른 근태 신청 리스트
+                dtmApplList = List.of(
+                    new QuickApplDTO("내일", "1A", "1A1", "연차휴가", "연차휴가 1일", holidayYn2),
+                    new QuickApplDTO("내일", "1A", "1A5", "연차휴가", "연차휴가 오전 반차", holidayYn2),
+                    new QuickApplDTO("내일", "1A", "1AG", "연차휴가", "연차휴가 오전 반반차", holidayYn2),
+                    new QuickApplDTO("내일", "1A", "1A6", "연차휴가", "연차휴가 오후 반차", holidayYn2),
+                    new QuickApplDTO("내일", "1A", "1AE", "연차휴가", "연차휴가 오후 반차 <h7>(휴게 X)</h7>", holidayYn2),
+                    new QuickApplDTO("내일", "1A", "1AH", "연차휴가", "연차휴가 오후 반반차", holidayYn2)
+                );
+            } else { // 오늘 근무인 경우
+                LocalTime staTime = LocalTime.parse(userInfo.getStaTime(), timeFormatter); // 근무시작시간(localTime)
+                LocalTime endTime = LocalTime.parse(userInfo.getEndTime(), timeFormatter); // 근무종료시간(localTime)
+                if(now.isBefore(staTime)) { // 근무시간 전 (오늘 6개)
+                    log.warn("근무시간 전 (오늘 6개) " + holidayYn);
+                     // 빠른 근태 신청 리스트
+                    dtmApplList = List.of(
+                        new QuickApplDTO("오늘", "1A", "1A1", "연차휴가", "연차휴가 1일", holidayYn),
+                        new QuickApplDTO("오늘", "1A", "1A5", "연차휴가", "연차휴가 오전 반차", holidayYn),
+                        new QuickApplDTO("오늘",  "1A", "1AG", "연차휴가", "연차휴가 오전 반반차", holidayYn),
+                        new QuickApplDTO("오늘", "1A", "1A6", "연차휴가", "연차휴가 오후 반차", holidayYn),
+                        new QuickApplDTO("오늘", "1A", "1AE", "연차휴가", "연차휴가 오후 반차 <h7>(휴게 X)</h7>", holidayYn),
+                        new QuickApplDTO("오늘",  "1A", "1AH", "연차휴가", "연차휴가 오후 반반차", holidayYn)
+                    );
+                } else if(now.isBefore(endTime)) { // 근무시간 중 (오늘오후 3개 / 내일오전 3개)
+                    log.warn("근무시간 중 (오늘오후 3개 / 내일오전 3개) " + holidayYn + holidayYn2);
+                    dtmApplList = List.of(
+                        new QuickApplDTO("오늘", "1A", "1A6", "연차휴가", "연차휴가 오후 반차", holidayYn),
+                        new QuickApplDTO("오늘", "1A", "1AE", "연차휴가", "연차휴가 오후 반차 <h7>(휴게 X)</h7>", holidayYn),
+                        new QuickApplDTO("오늘",  "1A", "1AH", "연차휴가", "연차휴가 오후 반반차", holidayYn),
+                        new QuickApplDTO("내일", "1A", "1A1", "연차휴가", "연차휴가 1일", holidayYn2),
+                        new QuickApplDTO("내일", "1A", "1A5", "연차휴가", "연차휴가 오전 반차", holidayYn2),
+                        new QuickApplDTO("내일", "1A", "1AG", "연차휴가", "연차휴가 오전 반반차", holidayYn2)
+                    );
+                } else { // 근무종료 후 (내일 6개)
+                    log.warn("근무종료 후 (내일 6개)" + holidayYn2);
+                    dtmApplList = List.of(
+                        new QuickApplDTO("내일", "1A", "1A1", "연차휴가", "연차휴가 1일", holidayYn2),
+                        new QuickApplDTO("내일", "1A", "1A5", "연차휴가", "연차휴가 오전 반차", holidayYn2),
+                        new QuickApplDTO("내일", "1A", "1AG", "연차휴가", "연차휴가 오전 반반차", holidayYn2),
+                        new QuickApplDTO("내일", "1A", "1A6", "연차휴가", "연차휴가 오후 반차", holidayYn2),
+                        new QuickApplDTO("내일", "1A", "1AE", "연차휴가", "연차휴가 오후 반차 <h7>(휴게 X)</h7>", holidayYn2),
+                        new QuickApplDTO("내일", "1A", "1AH", "연차휴가", "연차휴가 오후 반반차", holidayYn2)
+                    );
+                }
+            } 
+
             model.addAttribute("list", dtmApplList);
-            log.info("dtmApplList : {}", dtmApplList);
+            } else {
+            	throw new CustomGeneralRuntimeException("로그인이 만료되었습니다. 로그인 후 사용해주세요");
+            }
         } catch (CustomGeneralRuntimeException e) {
             // 런타임 예외 처리
             // e.printStackTrace();
@@ -245,9 +319,13 @@ public class IndexController<S extends Session> {
             // 배너 리스트
             List<BannerDTO> bannerList = new ArrayList<>();
             //bannerList.add(new BannerDTO("", "", "", ""));
-            bannerList.add(new BannerDTO("연차 및 저축휴가", "언제 어디서든", "편하게 신청하세요", 
-            "<a href=\"#\" id=\"scrollToQuickapplDiv\"><span class=\"badge text-bg-primary me-2\">빠른신청</span></a>" + 
-            "<a href=\"dtm/dtmReg\" id=\"scrollToQuickapplDiv\"><span class=\"badge text-bg-info\">직접신청</span></a>"));
+
+            bannerList.add(new BannerDTO("직원조회", "언제 어디서든", "간편하게 검색하세요", ""));
+            if(hasRole(auth, "ROLE_EHRZZ000")){
+                bannerList.add(new BannerDTO("연차 및 저축휴가", "언제 어디서든", "편하게 신청하세요", 
+                "<a href=\"#\" id=\"scrollToQuickapplDiv\"><span class=\"badge text-bg-primary me-2\">빠른신청</span></a>" + 
+                "<a href=\"dtm/dtmReg\" id=\"scrollToQuickapplDiv\"><span class=\"badge text-bg-info\">직접신청</span></a>"));
+            }
             model.addAttribute("bannerList", bannerList);
         } catch (CustomGeneralRuntimeException e) {
             // 런타임 예외 처리
@@ -272,8 +350,34 @@ public class IndexController<S extends Session> {
 
         // 메인화면 직원조회 출력
         final List<IamUserDTO> memberList = memberservice.findBySearchValue(text);
-        model.addAttribute("memberList", memberList);;
+        model.addAttribute("memberList", memberList);
+        System.out.println(memberList);
 
         return "common/indexMemberList";
+    }
+
+    /**
+     * @author K140024
+     * @implNote 초기 화면 반환(직원검색 검색방법)
+     * @since 2024-06-11
+     */
+    @GetMapping("/searchGuide")
+    public String searchGuide(final Model model) {
+        
+        try {
+            // 언어목록
+            final Map<String, String> langList = langDetailService.getCodeHtmlDetail("common/index");
+            model.addAttribute("langList", langList);
+        } catch (CustomGeneralRuntimeException e) {
+            // 런타임 예외 처리
+            // e.printStackTrace();
+        	log.warn(e.getMessage());
+        } catch (Exception e) {
+            // 기타 예외 처리
+            // e.printStackTrace();
+        	log.warn(e.getMessage());
+        }
+
+        return "common/indexSearchGuide";
     }
 }

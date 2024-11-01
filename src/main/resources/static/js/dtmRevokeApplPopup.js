@@ -28,7 +28,7 @@ const dtmModifyApplPopup = (element) => {
     // HTML 파일을 불러오기 (쿼리 스트링과 함께 GET 요청)
     $.get(`/dtm/dtmModifyPopup?${queryString}`, function(htmlContent) {
         // 모달 바디에 동적으로 불러온 HTML을 삽입
-        $('#dynamicModal .modal-body').html(htmlContent);
+        $('#dynamicModal .modal-body').html(sanitizeHTML(htmlContent)); //취약점 조치
         $('#dynamicModal').modal('show');
 
         // 동적으로 필요한 스크립트 로드

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html layout:decorate="~{common/layout/layout}" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.thymeleaf.org" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- (start) private script -->
+    <th:block layout:fragment="css"></th:block>
+    <!-- (end) private script -->
+</head>
+
+<body>
+<div layout:fragment="contents">
+    <div id="weddingFuneral">
+        <div class="main-content col-lg-10 offset-lg-1 d-flex justify-content-center">
+            <!-- 페이지 제목 시작 -->
+            <div class="page-heading">
+                <div class="align-middle">
+                    <h2>
+                        <i class="bi bi-bell-fill"></i> 경조사 </h2><br>
+                </div>
+            </div>
+            <!-- 페이지 제목 끝 -->
+
+            <!--list시작-->
+            <div>
+                <div th:each="subject : ${eventList}" class="card" id="boardCard">
+                    <div class="card-body" th:text="${subject}">
+                        부고1
+                    </div>
+                </div>
+            </div>
+            <!--list끝-->
+        </div>
+    </div>
+</div>
+
+<!-- (start) private script -->
+<th:block layout:fragment="script"></th:block>
+<!-- (end) private script -->
+</body>
+
+</html>

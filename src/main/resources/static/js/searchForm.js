@@ -67,9 +67,6 @@ const search = () => {
     const endYmdInput = $('#end-input').val();
     const itemsPerPage = $('#itemsPerPage').val();
 
-    console.log("검색폼");
-    console.log(statCdList, dtmReasonCd, dtmKindCd, staYmdInput, endYmdInput, itemsPerPage);
-
     // 검색 조건에 맞는 데이터를 포함한 새로운 URL을 만듭니다.
     let baseUrl = '/dtm/dtmList';
     let newUrl = `${baseUrl}?&statCdList=${statCdList.join(',')}&dtmReasonCd=${dtmReasonCd}&dtmKindCd=${dtmKindCd}&staYmdInput=${staYmdInput}&endYmdInput=${endYmdInput}&itemsPerPage=${itemsPerPage}`;

@@ -1,4 +1,3 @@
-
 // awesomplete에서 선택된 항목 데이터를 저장할 전역 변수
 let selectedItem = null; // 선택된 항목을 저장할 변수
 
@@ -24,8 +23,9 @@ const searchMember = () => {
         },
         complete: function(data) {
             // 서버로부터 받은 데이터를 memberList에 넣음
-            $("#memberList").html(data.responseText);            
+            $("#memberListArea").html(sanitizeHTML(data.responseText));  
             $('#noResultDiv').remove();
+            
             // AJAX 후에 이벤트 바인딩
             setupEventListeners();
 
@@ -33,6 +33,38 @@ const searchMember = () => {
             $('#searchMember').val('');
             $('#clearSearch').attr("hidden", true);
 
+        },
+        error: function(error) {
+            popupMsg("입력 오류", 'Error fetching data : '+error, "error");
+        }
+    });
+};
+
+// 직원검색 초기화 버튼 클릭 시 이벤트 
+const resetSearchMember = () => {
+    $.ajax({
+        type: "GET",
+        url: "/index/searchGuide",
+        complete: function(data) {
+            // 서버로부터 받은 데이터를 memberList에 넣음
+            $("#searchGuideArea").html(sanitizeHTML(data.responseText));            
+            $('#memberList').remove();            
+
+            // 검색방법 드롭다운 펼쳐지는 경우
+            $('#collapseSearch').on('show.bs.collapse', function() {
+                $('#searchWayBtn').removeClass('btn-primary').addClass('btn-warning').html('<i class="bi bi-capslock me-1"></i>닫기');
+                $('#collapseCard').addClass('card-warning');
+            });
+
+            // 검색방법 드롭다운 접히는 경우
+            $('#collapseSearch').on('hidden.bs.collapse', function() {
+                $('#searchWayBtn').removeClass('btn-warning').addClass('btn-primary').html('<i class="bi bi-question-lg me-1"></i><span>검색방법</span>');
+                $('#collapseCard').removeClass('card-warning');
+            });
+
+            // 입력폼 값 및 X 버튼 삭제
+            $('#searchMember').val('');
+            $('#clearSearch').attr("hidden", true);
         },
         error: function(error) {
             popupMsg("입력 오류", 'Error fetching data : '+error, "error");
@@ -51,15 +83,9 @@ const setupEventListeners = () => {
             }
         });
 
-        // 연락하기 아이콘 클릭 시 전화 걸기
-        document.getElementById('contactInline').addEventListener('click', function () {
-            const phoneLink = document.getElementById('inlineNumber');
-            if (phoneLink && phoneLink.getAttribute('href') !== 'tel:') {
-                // 타임리프에서 설정된 전화번호로 전화 걸기
-                phoneLink.click();
-            } else {
-                popupMsg("입력 오류", "전화번호를 찾을 수 없습니다.", "error");
-            }
+        // 다시검색 아이콘 클릭 시 searchMember 인풋에 포커스
+        document.getElementById('resetForm').addEventListener('click', function () {
+            resetSearchMember();
         });
 
         // 연락하기 아이콘 클릭 시 전화 걸기
@@ -228,25 +254,21 @@ $(document).ready(() => {
             itemElement.addEventListener('touchend', function(event) {
                 endX = event.changedTouches[0].clientX;
                 endY = event.changedTouches[0].clientY;        
-                if(Math.abs(endX-startX) < 5 && Math.abs(endY-startY) < 5) {
+                if(Math.abs(endX-startX) < 10 && Math.abs(endY-startY) < 10) {
                     itemElement.click();
                 }
             }, {passive: true});
 
             return itemElement;
         },
-        replace: function(text) {
+        replace: function(text) { // 검색 결과가 나오면 키패드를 숨기고 searchDiv(직원검색 입력 폼)를 최상단에 위치시킴
             selectedItem = text.value;  // 전체 객체를 전역변수 selectedItem에 저장
             searchMember(); // 검색 함수 호출
-
-            // 키패드를 숨김
-            inputElement.blur();
+            inputElement.blur(); // 키패드를 숨김
 
             // id가 searchDiv인 요소를 화면 최상단에 위치시킴
             const searchDiv = document.getElementById('searchDiv');
             const offset = searchDiv.offsetTop;
-
-            // 스크롤 애니메이션으로 searchDiv를 최상단에 위치시킴
             $('html, body').animate({
                 scrollTop: offset
             }, 300); // 300ms의 애니메이션 지속 시간
@@ -257,22 +279,7 @@ $(document).ready(() => {
             return terms.every(term => plainText.toLowerCase().includes(term));
         }
     });
-
     
-    // 검색 결과가 나오면 키패드를 숨기고 searchDiv(직원검색 입력 폼)를 최상단에 위치시킴
-    inputElement.addEventListener('awesomplete-selectcomplete', function() {
-        inputElement.blur(); // 키패드를 숨김
-
-        // id가 searchDiv인 요소를 화면 최상단에 위치시킴
-        const searchDiv = document.getElementById('searchDiv');
-        const offset = searchDiv.offsetTop;
-
-        // 스크롤 애니메이션으로 searchDiv를 최상단에 위치시킴
-        $('html, body').animate({
-            scrollTop: offset
-        }, 300); // 300ms의 애니메이션 지속 시간
-    });
-
     // 드롭다운 내부 스크롤이 외부 스크롤로 전파되지 않도록 설정
     const dropdown = document.getElementById('awesomplete_list_2');
 
@@ -300,13 +307,9 @@ $(document).ready(() => {
 
     // 터치 이벤트에서 스크롤이 외부로 전파되지 않도록 설정
     dropdown.addEventListener('touchmove', function(event) {
-        event.stopPropagation();
-    }, { passive: false });
-
-    dropdown.addEventListener('touchstart', function(event) {
+        // 모바일 라이브서치 결과에서 터치 move 시 키패드를 내림
         const target2 = $('#searchMemberCard').get(0);
         target2.scrollIntoView({ behavior: 'smooth'});
-
         // 키패드 숨기기 위한 처리 (포커스를 잃지 않고 readonly 처리)
         inputElement.setAttribute('readonly', true);  // 일시적으로 readonly 설정
         setTimeout(() => {
@@ -314,14 +317,14 @@ $(document).ready(() => {
         }, 100);  // 약간의 지연 후 원상복구
 
         event.stopPropagation();
+    }, { passive: false });
+
+    dropdown.addEventListener('touchstart', function(event) {
+        event.stopPropagation();
     }, { passive: true });
 
     dropdown.addEventListener('touchend', function(event) {
         event.stopPropagation();
-        if(Math.abs(endX-startX) < 5 && Math.abs(endY-startY) < 5) {
-
-        }
-
     }, { passive: true });
 
     $.ajax({
@@ -333,11 +336,10 @@ $(document).ready(() => {
 
             if (data.userList) {
                 data.userList.forEach(item => {
-                    console.log("이름 : ",item);
                     // 아이콘을 username이 K로 시작하는 경우에만 추가
                     const iconHtml = item.username.startsWith('K')
-                        ? '<img src="/images/kdb/ICON16.ico" alt="KDB" id="searchMemberIcon">'
-                        : '';
+                        ? '<img src="/images/kdb/ICON48.ico" alt="KDB" id="searchMemberIcon">'
+                        : '<i id="liveSearchIcon" class="bi bi-file-person-fill"></i>';
 
                     // itemText 구성
                     const itemText = `

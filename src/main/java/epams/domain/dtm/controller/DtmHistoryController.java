@@ -217,6 +217,10 @@ public class DtmHistoryController<S extends Session> {
             startPage = Math.max(1, endPage - maxPageBtn + 1);
         }
 
+        System.out.println("total : "+dtmHisDTOList.getTotalElements());//56개?
+        // List<DtmHisDTO> allDtmHis = dtmHisService.findByYears(searchDTO);
+        System.out.println("end : "+endPage);
+
         // 기타 필요한 모델 속성 설정
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         DateTimeFormatter dayOfWeekFormatter = DateTimeFormatter.ofPattern("E", Locale.KOREAN);

@@ -11,7 +11,7 @@
 
 .carousel-img-1{
     /*background-image: linear-gradient(to right top, #baa0f2, #c5aff6, #d1bff9, #dccefc, #e8deff);*/
-    background-image: url(/images/kdb/banner/epams_banner_04_P.png);
+    background-image: url(/images/kdb/banner/epams_banner_02_P.png);
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center; /* 이미지가 정 중앙에 오도록 설정 */
@@ -22,7 +22,7 @@
 @media (max-width: 1100px) {
     .carousel-img-1{
         /*background-image: linear-gradient(to right top, #baa0f2, #c5aff6, #d1bff9, #dccefc, #e8deff);*/
-        background-image: url(/images/kdb/banner/epams_banner_04_T.png);
+        background-image: url(/images/kdb/banner/epams_banner_02_T.png);
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center; /* 이미지가 정 중앙에 오도록 설정 */
@@ -34,7 +34,7 @@
 @media (max-width: 550px) {
     .carousel-img-1{
         /*background-image: linear-gradient(to right top, #baa0f2, #c5aff6, #d1bff9, #dccefc, #e8deff);*/
-        background-image: url(/images/kdb/banner/epams_banner_04_M.png);
+        background-image: url(/images/kdb/banner/epams_banner_02_M.png);
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center; /* 이미지가 정 중앙에 오도록 설정 */
@@ -46,7 +46,7 @@
 
 .carousel-img-2{
     /*background-image: linear-gradient(to right top, #80abfe, #96bdff, #afceff, #c8dfff, #e4f0ff);*/
-    background-image: url(/images/kdb/banner/epams_banner_01_P.png);
+    background-image: url(/images/kdb/banner/epams_banner_04_P.png);
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center; /* 이미지가 정 중앙에 오도록 설정 */
@@ -58,7 +58,7 @@
 @media (max-width: 1100px) {
     .carousel-img-2{
         /*background-image: linear-gradient(to right top, #80abfe, #96bdff, #afceff, #c8dfff, #e4f0ff);*/
-        background-image: url(/images/kdb/banner/epams_banner_01_T.png);
+        background-image: url(/images/kdb/banner/epams_banner_04_T.png);
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center; /* 이미지가 정 중앙에 오도록 설정 */
@@ -71,7 +71,7 @@
 @media (max-width: 550px) {
     .carousel-img-2{
         /*background-image: linear-gradient(to right top, #80abfe, #96bdff, #afceff, #c8dfff, #e4f0ff);*/
-        background-image: url(/images/kdb/banner/epams_banner_01_M.png);
+        background-image: url(/images/kdb/banner/epams_banner_04_M.png);
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center; /* 이미지가 정 중앙에 오도록 설정 */
@@ -120,7 +120,7 @@
 
 .carousel-img-4{
     /*background-image: linear-gradient(to right top, #f9f871, #f9fa8f, #f9fcab, #fafec6, #fcffe0);*/
-    background-image: url(/images/kdb/banner/epams_banner_02_P.png);
+    background-image: url(/images/kdb/banner/epams_banner_01_P.png);
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center; /* 이미지가 정 중앙에 오도록 설정 */
@@ -132,7 +132,7 @@
 @media (max-width: 1100px) {
     .carousel-img-4{
         /*background-image: linear-gradient(to right top, #f9f871, #f9fa8f, #f9fcab, #fafec6, #fcffe0);*/
-        background-image: url(/images/kdb/banner/epams_banner_02_T.png);
+        background-image: url(/images/kdb/banner/epams_banner_01_T.png);
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center; /* 이미지가 정 중앙에 오도록 설정 */
@@ -145,7 +145,7 @@
 @media (max-width: 550px) {
     .carousel-img-4{
         /*background-image: linear-gradient(to right top, #f9f871, #f9fa8f, #f9fcab, #fafec6, #fcffe0);*/
-        background-image: url(/images/kdb/banner/epams_banner_02_M.png);
+        background-image: url(/images/kdb/banner/epams_banner_01_M.png);
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center; /* 이미지가 정 중앙에 오도록 설정 */

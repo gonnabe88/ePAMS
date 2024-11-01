@@ -99,12 +99,13 @@ public class SecurityConfig{
 				"default-src 'self'; " + // 기본 출처를 동일 출처로 제한
 				"font-src 'self' data:;" + // 폰트는 동일 출처와 data:만 허용
 				"img-src 'self'  data: blob:; " + // 이미지는 동일 출처와 data:만 허용
-				"style-src 'self' 'nonce-kdb'; " + // 스타일은 동일 출처와 nonce-kdb만 허용
+				"style-src 'self' 'unsafe-inline'; " + // 스타일은 동일 출처와 nonce-kdb만 허용
 				"script-src 'self' %s; " + // 스크립트는 동일 출처와 nonce-kdb만 허용
 				"object-src 'none'; " + // 'none'으로 설정하여 객체 삽입을 차단
 				"connect-src 'self'; " + // 연결은 동일 출처만 허용
 				"frame-ancestors 'self'; " + // 프레임 조상은 동일 출처만 허용
-				"form-action 'self';", // 폼 작업은 동일 출처만 허용
+				"form-action 'self';" + // 폼 작업은 동일 출처만 허용
+				"manifest-src 'self';", // manifest는 동일 출처만 허용    
 				cookieDomain
 		);
 
@@ -131,7 +132,8 @@ public class SecurityConfig{
 					authorizeRequests
 							.requestMatchers(
 									"/actuator/prometheus",
-									"/manifest.webmanifest", "/login/**", "/logout",
+									"/app.webmanifest", "/app.js", "/dummy-sw.js",
+									"/login/**", "/logout",
 									"/api/**",
 									"/css/**",
 									"/js/**",

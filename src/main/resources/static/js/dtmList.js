@@ -1,13 +1,12 @@
 $(document).ready(() => { // 화면 로드 시 호출
 
-
     // Input Form Element를 가져와서 달력 초기화
     const staYmdInputEl = document.getElementById('start-input');
     const endYmdInputEl = document.getElementById('end-input');
     const startDateEl = document.getElementById('start-date');
     const endDateEl = document.getElementById('end-date');
     initializePicker(staYmdInputEl, endYmdInputEl, startDateEl, endDateEl);
-    dtmApplSelectForm("1A1", "normal","dtmSearchKindCdSelect", "#dtmSearchReasonCdSelect");  // select form 세팅 (기본세팅 : 연차)
+    dtmApplSelectForm("1A1", "normal", "dtmSearchKindCdSelect", "#dtmSearchReasonCdSelect");  // select form 세팅 (기본세팅 : 연차)
     updatePaginationLinks();// 화면 로드 시 항상 페이지네이션 링크 업데이트
 
     // 검색 드롭다운 펼쳐지는 경우
@@ -128,7 +127,7 @@ $(document).ready(() => { // 화면 로드 시 호출
         $('#dynamicModal').modal('show'); // Modal에 변경 대상(취소) 객체 보여주기
         $('#dtmResonNm').text(dtmReasonNm); // 근태사유(유형) 표시
         $('#dtmRange').text(dtmRange); // 근태기간 표시
-        dtmApplSelectForm(dtmReasonCd, "modal","dtmKindCdSelect", "#dtmReasonCdSelect");  // select form 세팅 (기본세팅 : 연차)
+        dtmApplSelectForm(dtmReasonCd, "modal", "dtmKindCdSelect", "#dtmReasonCdSelect");  // select form 세팅 (기본세팅 : 연차)
         $('#add').off('click').on('click', function() {            
 
             calendar.destroy();
@@ -178,7 +177,7 @@ $(document).ready(() => { // 화면 로드 시 호출
             </div>`
 
             registDTOList.push(registDtmHisDTO); // 서버로 전달할 전체 리스트 객체 추가
-            console.log(registDTOList);
+            console.table(registDTOList);
 
             if(swiper.slides.length == 0) { // 첫 아이템 추가 시 
                 $('#comment').remove(); // 기존 안내 코멘트 삭제

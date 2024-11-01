@@ -49,7 +49,7 @@
 					<!-- 직원검색 내용 -->
 					<div class="row d-flex justify-content-center">
 						<div class="row col-lg-12">
-							<section class="awesomplete section">
+							<section class="awesomplete section p-0">
 								<div class="mainCard shadow card mb-0" id="awesomplete-result">
 									<div class="card-header pb-2">
 										<p class="h4" th:text="${langList['SEARCH_EMP_01_STMT']}"></p>
@@ -74,59 +74,13 @@
 									<div class="awesomplete-result d-flex justify-content-center mb-3" >
 										<div class="row col-12">
 											<div class="col-12 justify-self-center">												
-												<div id="memberList"></div>												
+												<div id="memberListArea"></div>												
 											</div>
 										</div>
 										
 									</div>
-									<div class="ms-3 me-3" id="noResultDiv">
-										<button aria-controls="collapseSearch" aria-expanded="false" class="btn btn-primary btn-sm" data-bs-target="#collapseSearch" data-bs-toggle="collapse" id="searchWayBtn" type="button">
-											<i class="bi bi-question-lg me-1"></i><span>검색방법</span>
-										</button>
-
-										<div class="collapseSearch row mt-3 mb-3" id="collapseContainer">
-											<div class="collapse" id="collapseSearch">
-												<section class="section"></section>
-												<div class="card" id="collapseCard">
-													<div class="card-body p-3">
-														<h6 class="d-flex align-items-center gap-2">
-															<i class="bi bi-binoculars-fill"></i>
-															<span> 검색 방법 </span>
-														</h6>
-														<p><span class="h7" th:utext="${langList['SEARCH_EMP_02_STMT']}"></span></p>
-
-														<!--start divider-->
-														<div class="divider">
-															<div class="divider-text p-0"></div>
-														</div>
-														<!--end divider-->
-
-														<h6 class="d-flex align-items-center gap-2">
-															<i class="bi bi-1-square-fill"></i>
-															<span> 단일 검색 </span>
-														</h6>
-														<p class="h7">예시) "홍길동" 입력 후 선택</p>
-														<p class="h7">예시) "단신부임" 입력 후 선택</p>
-
-														<!--start divider-->
-														<div class="divider">
-															<div class="divider-text p-0"></div>
-														</div>
-														<!--end divider-->
-
-														<h6 class="d-flex align-items-center gap-2">
-															<i class="bi bi-2-square-fill"></i>
-															<span> 복합 검색 </span>
-														</h6>
-														<p class="h7">예시) "디지털&nbsp;&nbsp;&nbsp;업무지원" 입력 후 선택</p>
-														<p class="h7">예시) "인사부&nbsp;&nbsp;&nbsp;통할" 입력 후 선택</p>
-													</div>
-												</div>
-											</div>
-											<small>#김산은&nbsp;&nbsp;#인사정보시스템</small>
-											<small>#디지털금융부&nbsp;&nbsp;#인사부&nbsp;&nbsp;#지식정보팀</small>
-											<small>#디지털금융부&nbsp;업무지원&nbsp;&nbsp;#인사부&nbsp;근태</small>
-										</div>
+									<div class="ms-3 me-3" id="searchGuideArea">
+										
 									</div>
 									
 								</div>
@@ -146,7 +100,7 @@
 			<!--end divider-->
 
 			<!--start 빠른 근태신청-->
-			<div class="main-content" id="quickapplDiv">
+			<div class="main-content" id="quickapplDiv" sec:authorize="hasRole('EHRZZ000')">
 				<div class="quickappl container">
 					<div class="row d-flex justify-content-start mb-1">
 						<h5 class="text-start"><i class="bi bi-stars"></i> <span th:text="${langList['QUICK_APPL_TTL']}"></span></h5>
@@ -159,23 +113,27 @@
 
 					<div class="d-flex justify-content-center">
 						<div class="row col-lg-12 col-md-12 d-flex justify-content-center">
-							<div class="row col-lg-12 col-md-12 col-sm-12">
+							<div class="row col-lg-12 col-md-12 col-sm-12 p-0">
 								<div th:each="date : ${list}" class="col-lg-4">
 									<div data-aos="fade-up" data-aos-offset="50" data-aos-easing="ease-out-cubic" data-aos-duration="1000">
 										<section class="section">
 											<div class="shadow card">
 												<div class="card-body align-content-center">
+													<!-- (오늘) 연차휴가 1일 -->
+													<div class="col-12 mb-0 align-content-center">
+														<h6 class="mb-1">
+															<span th:if="${date.applDateType == '오늘'}" class="badge rounded-pill bg-primary me-1">
+																<span th:text="${langList['TDY_DTM_01_BTN']}"></span>
+															</span>
+															<span th:if="${date.applDateType == '내일'}" class="badge rounded-pill bg-info me-1">
+																<span th:text="${langList['TMR_DTM_01_BTN']}"></span>
+															</span>
+															<span th:utext="${date.dtmDispName}"></span>
+														</h6>
+													</div>
+													<!-- 2024-10-16(수)  [신청] -->
 													<div class="d-flex justify-content-center">
 														<div class="col-10 mb-0 align-content-center">
-															<h6 class="mb-0">
-																<span th:if="${date.applDateType == '오늘'}" class="badge rounded-pill bg-primary me-1">
-																	<span th:text="${langList['TDY_DTM_01_BTN']}"></span>
-																</span>
-																<span th:if="${date.applDateType == '내일'}" class="badge rounded-pill bg-info me-1">
-																	<span th:text="${langList['TMR_DTM_01_BTN']}"></span>
-																</span>
-																<span th:text="${date.dtmDispName}"></span>
-															</h6>
 															<span th:if="${date.applDateType == '오늘'}" class="h7 appldate" id="today-date"></span>
 															<span th:if="${date.applDateType == '내일'}" class="h7 appldate" id="tomorrow-date"></span>
 														</div>
@@ -223,7 +181,7 @@
 			<!--end 빠른 근태신청-->
 
 			<!--start divider-->
-			<div class="divider">
+			<div class="divider" sec:authorize="hasRole('EHRZZ000')">
 				<div class="divider-text">
 					<img class="divider-text" src="/images/kdb/epams_r_cw_action.gif" />
 				</div>
@@ -237,13 +195,13 @@
 						<h5 class="text-start"><i class="bi bi-bell-fill"></i> <span th:text="${langList['RECENT_NOTICE_TTL']}"></span></h5>
 					</div>
 					<div class="row d-flex justify-content-end mb-1">
-						<a href="/board/list" class="link d-flex justify-content-end align-items-top">
-							<h6><span>더보기</span> <i class="bi bi-arrow-right-circle-fill ms-1"></i></h6>
+						<a href="/board/10/list" class="link d-flex justify-content-end align-items-top">
+							<h6><span>더보기</span> <i class="bi bi-arrow-right-circle-fill ms-1"></i></h6>     
 						</a>
 					</div>
-					<div class="row d-flex justify-content-center">
+					<div class="row d-flex justify-content-center"> 
 						<div class="row col-lg-12">
-							<section>
+							<section class="p-0">
 								<div class="shadow card" id="boardCard" th:each="board : ${boardList}">
 									<div class="card-body">
 										<span th:if="${board.category}" th:classappend="|badge badge-sm mb-2 ${(board.category == 'IT') ? 'bg-primary' : (board.category == '인사') ? 'bg-info' : ''}|" th:text="${board.category}"></span>

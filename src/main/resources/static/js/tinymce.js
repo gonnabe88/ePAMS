@@ -5,7 +5,11 @@ const isSmallScreen = window.matchMedia('(max-width: 1023.5px)').matches;
 
 tinymce.init({
   selector: 'textarea#open',
-  plugins: 'preview importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media codesample table charmap pagebreak nonbreaking anchor insertdatetime advlist lists wordcount help charmap quickbars emoticons accordion',
+  script_nonce: 'nonce-kdb',
+  extended_valid_elements: "a[href|target=_blank],img[src|alt|width|height]", // XSS 공격 방지 (필터링)
+  valid_elements: "p,h1,h2,h3,h4,h5,h6,blockquote,strong/b,em,i,a[href|target=_blank],ul,ol,li,img[src|alt|width|height],table,tr,td,th", // XSS 공격 방지 (필터링)
+  valid_children: "+body[style],+p[strong|em|span|a]", // XSS 공격 방지 (필터링)
+  plugins: 'no_script preview importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media codesample table charmap pagebreak nonbreaking anchor insertdatetime advlist lists wordcount help charmap quickbars emoticons accordion',
   editimage_cors_hosts: ['picsum.photos'],
   menubar: 'file edit view insert format tools table help',
   toolbar: "undo redo | accordion accordionremove | blocks fontfamily fontsize | bold italic underline strikethrough | align numlist bullist | link image | table media | lineheight outdent indent| forecolor backcolor removeformat | charmap emoticons | code fullscreen preview | save print | pagebreak anchor codesample | ltr rtl",

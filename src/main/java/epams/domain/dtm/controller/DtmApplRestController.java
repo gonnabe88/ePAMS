@@ -1,10 +1,9 @@
 package epams.domain.dtm.controller;
 
 import java.io.IOException;
-import java.lang.reflect.Member;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
@@ -20,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import epams.domain.com.member.service.MemberService;
-import epams.domain.com.sidebar.dto.UserInfoDTO;
 import epams.domain.dtm.dto.DtmApplStatusDTO;
 import epams.domain.dtm.dto.DtmHisDTO;
 import epams.domain.dtm.dto.DtmKindSumDTO;
@@ -243,8 +241,17 @@ public class DtmApplRestController {
             return new ResponseEntity<>(response, HttpStatus.CREATED);
 
         } catch (CustomGeneralRuntimeException e) {
-            // 비즈니스 로직 오류 처리
-            response.put("error", e.getMessage());
+            
+            // 비즈니스 로직 오류 처리            
+			String res;
+			
+			if(e.getMessage().contains("[207]")){
+				res = "보상휴가 일수가 부족합니다.";
+			} else {
+				res = e.getMessage();
+			}
+
+            response.put("error", res);
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
 
         } catch (Exception e) {

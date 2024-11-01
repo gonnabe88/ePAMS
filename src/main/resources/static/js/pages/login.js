@@ -5,9 +5,53 @@ $(document).on("visibilitychange", function() {
     }
 });
 
-// ID 입력 시 수행
-document.getElementById('username').addEventListener('input', function(event) {
-    event.target.value = event.target.value.toUpperCase(); // 대문자 변환
+const usernameField = document.getElementById('username');
+let isComposing = false;
+
+// IME 입력 시작 시 설정
+usernameField.addEventListener('compositionstart', function() {
+    isComposing = true;
+});
+
+// IME 입력 완료 시 설정
+usernameField.addEventListener('compositionend', function(event) {
+    isComposing = false;
+    filterUsernameInput(event);  // IME 입력이 끝난 후 필터링 수행
+});
+
+// 일반 입력 시 필터링
+usernameField.addEventListener('input', function(event) {
+    if (!isComposing) {  // IME 입력 중이 아닐 때만 필터링 수행
+        filterUsernameInput(event);
+    }
+});
+
+// ID 입력 값 필터링
+function filterUsernameInput(event) {
+    const inputField = event.target;
+    const originalValue = inputField.value;
+    
+    // 한글 및 공백만 제거
+    inputField.value = originalValue.replace(/[\u3131-\u318E\uAC00-\uD7A3\s]/g, '');
+
+    // 입력값이 변경되었으면 (허용되지 않는 값이 있었음을 의미) 토스트 표시
+    if (inputField.value !== originalValue) {
+        loadToastHTML("공백과 한글은 입력할 수 없습니다.");
+    }
+}
+
+// 패스워드 값 필터링
+document.getElementById('password').addEventListener('input', function(event) {
+    const inputField = event.target;
+    const originalValue = inputField.value;
+
+    // 한글 및 공백을 제외한 값으로 필터링
+    event.target.value = event.target.value.replace(/[\u3131-\u318E\uAC00-\uD7A3\s]/g, '')
+
+    // 입력값이 변경되었으면 (허용되지 않는 값이 있었음을 의미) 토스트 표시
+    if (inputField.value !== originalValue) {
+        loadToastHTML("공백은 입력할 수 없습니다.");
+    }
 });
 
 // 화면 로드 시 수행
@@ -42,7 +86,8 @@ $(function() {
 
         setCookie("MFA", MFA, 30); // 쿠키 갱신
         setPasswordInput(); // 패스워드 입력창을 숨기거나 보여줌
-        webauthnYn === 'Y' && MFA !== 'webauthn' ? loadToastHTML() : null; // 간편인증 사용자가 OTP 인증을 고르는 경우
+
+        webauthnYn === 'Y' && MFA !== 'webauthn' ? loadToastHTML("<p>간편인증이 등록된 사용자는 자동으로 간편인증이 선택됩니다.</p> <p>간편인증 사용을 원하지 않으시면 로그인 후 간편인증 등록을 해제해주세요.</p>") : null; // 간편인증 사용자가 OTP 인증을 고르는 경우
         if(MFA === 'webauthn') { // 간편인증을 선택한 경우
             $.get(`/api/login/isWebauthn?username=${username}`, function(data) { // 서버에서 간편인증 사용자인지 체크
                 if(data.isWebauthn === 'N') { // 간편인증 미등록 사용자인 경우
@@ -124,15 +169,42 @@ $(function() {
     setWebauthnRadio(); // Webauthn 인증 등록 사용자 Webauthn 라디오 버튼 자동 세팅
 });
 
-const loadToastHTML = () => {
-    // Toast 엘리먼트를 가져옴
-    const toastEl = document.querySelector('.toast');
-    if (toastEl) {
-        // Bootstrap Toast 초기화
-        const toast = new bootstrap.Toast(toastEl, {
-            delay: 5000 // 5초 후 자동으로 사라지게 설정
-        });
-        // Toast 보여주기
-        toast.show();
+const loadToastHTML = (message) => {
+    // 기존 토스트가 있다면 삭제
+    const existingToast = document.querySelector('.toast-container');
+    if (existingToast) {
+        existingToast.parentNode.removeChild(existingToast);
     }
-}
+
+    // 토스트 HTML을 변수로 정의, 메시지를 동적으로 삽입
+    const toastHtml = `
+        <div aria-live="polite" aria-atomic="true" class="toast-container p-3" style="position: fixed; bottom: 1rem; right: 1rem; z-index: 1050;">
+            <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header d-flex align-items-center gap-2">
+                    <img src="/images/kdb/epams_r_192.png" class="rounded me-2" width="20" height="20" alt="logo">
+                    <span class="h6 m-0">ePAMS 안내사항</span>
+                    <small>방금</small>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                    ${message}
+                </div>
+            </div>
+        </div>
+    `;
+
+    // 새 토스트 HTML을 body에 추가
+    document.body.insertAdjacentHTML('beforeend', toastHtml);
+
+    // 추가된 토스트 요소를 가져와 부트스트랩 토스트로 초기화 및 표시
+    const toastElement = document.querySelector('.toast:last-child');
+    const toast = new bootstrap.Toast(toastElement, { delay: 0 , autohide: false });
+    toast.show();
+
+    // 토스트가 숨겨지면 자동으로 제거
+    toastElement.addEventListener('hidden.bs.toast', () => {
+        if (toastElement.parentNode) {  // parentNode가 존재할 때만 제거
+            toastElement.parentNode.removeChild(toastElement);
+        }
+    });
+};

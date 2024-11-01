@@ -9,7 +9,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import lombok.extern.slf4j.Slf4j;
 import epams.model.vo.IamUserVO;
 
 /***
@@ -19,7 +18,6 @@ import epams.model.vo.IamUserVO;
  * @implNote 사용자
  * @since 2024-06-30
  */
-@Slf4j
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
@@ -50,33 +48,20 @@ public class IamUserDTO extends IamUserVO {
      * @author 140024
      * @since 2024-10-12
      */
-    public void formatContactNumber(String phoneNo, String inlineNo, String startTime, String endTime, String regionCode) {
+    public void formatContactNumber(String phoneNo, String inlineNo, String regionCode) {
         PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
         try {
             Phonenumber.PhoneNumber phoneNumber = phoneUtil.parse(phoneNo, regionCode);
+            Phonenumber.PhoneNumber inlineNumber = phoneUtil.parse(inlineNo, regionCode);
+
             if(phoneUtil.isValidNumber(phoneNumber)) {
-                log.warn("변환 전 phoneNo : " + phoneNo);
                 this.setPhoneNo(phoneUtil.format(phoneNumber, PhoneNumberUtil.PhoneNumberFormat.NATIONAL));
             }
-        } catch (NumberParseException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            Phonenumber.PhoneNumber inlineNumber = phoneUtil.parse(inlineNo, regionCode);
             if(phoneUtil.isValidNumber(inlineNumber)) {
-                log.warn("변환 전 inlineNumber : " + inlineNo);
                 this.setInlineNo(phoneUtil.format(inlineNumber, PhoneNumberUtil.PhoneNumberFormat.NATIONAL));
             }
         } catch (NumberParseException e) {
             e.printStackTrace();
         }
-
-        // 출퇴근시간 포맷팅
-        // @author 210058
-        // @since 2024-10-28
-        this.setStartTime(startTime.substring(0,2) +" : " +startTime.substring(2,4));
-        System.out.println(startTime.substring(0,2) +" : " +startTime.substring(2,4));
-        this.setEndTime(endTime.substring(0,2) +" : " +endTime.substring(2,4));
     }
 }

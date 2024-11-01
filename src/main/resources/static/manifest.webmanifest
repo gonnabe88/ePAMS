@@ -1,0 +1,23 @@
+{
+  "name": "ePAMS", 
+  "icons": [
+    {
+      "src": "/images/kdb/epams_r_192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/kdb/epams_r_512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ], 
+  "display": "standalone", 
+  "start_url": "/login", 
+
+  "description": "KDB산업은행 모바일 근태신청시스템",
+  "background_color": "white",
+  "short_name": "ePAMS", 
+  "theme_color": "#4477C5", 
+  "orientation": "portrait" 
+}

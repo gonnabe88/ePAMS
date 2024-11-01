@@ -24,6 +24,33 @@ public class QuickApplDTO {
      */
     private String applDateType;
 
+    /***
+     * @author 140024
+     * @implNote 시작날짜 문자열
+     * @since 2024-06-09
+     */
+    private String staDateStr;
+
+    /***
+     * @author 140024
+     * @implNote 종료날짜 문자열
+     * @since 2024-06-09
+     */
+    private String endDateStr;
+
+    /***
+     * @author 140024
+     * @implNote 시작날짜
+     * @since 2024-06-09
+     */
+    private LocalDate staDate;
+
+    /***
+     * @author 140024
+     * @implNote 종료날짜
+     * @since 2024-06-09
+     */
+    private LocalDate endDate;
 
     /***
      * @author 140024

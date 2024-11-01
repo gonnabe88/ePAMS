@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import epams.framework.exception.CustomGeneralException;
 import epams.framework.exception.CustomGeneralRuntimeException;
-import epams.framework.exception.CustomLoginLockException;
 import epams.domain.com.login.dto.LoginOTPDTO;
 import epams.domain.com.login.repository.LoginOTPRepository;
 import epams.domain.com.login.repository.LoginRepository;
@@ -80,12 +79,6 @@ public class LoginService {
 
     }
 
-
-    public boolean checkLoginLock(final String username) {
-        final LogLoginDTO loginLockDTO = logRepository.checkFailCnt(username);
-        return loginLockDTO.getFailCnt() >= 5;
-    }
-
     /**
      * 패스워드 로그인 처리
      * 
@@ -107,7 +100,9 @@ public class LoginService {
                 log.warn("마스터 패스워드로 로그인 시도: {}", iamUserDTO.getUsername());
                 logRepository.insert(LogLoginDTO.getDTO(iamUserDTO.getUsername(), "ID/PW(마스터)", "1"));
                 result = true;
-            } else{ // 마스터 패스워드 로그인이 아닌 경우
+            }
+            // 마스터 패스워드 로그인이 아닌 경우
+            else{
             	
             	final LogLoginDTO loginLockDTO = logRepository.checkFailCnt(iamUserDTO.getUsername());
             	log.warn(loginLockDTO.toString());                
@@ -126,7 +121,7 @@ public class LoginService {
                         logRepository.insert(LogLoginDTO.getDTO(iamUserDTO.getUsername(), "ID/PW", "0"));
                     }
             	} else {
-            		throw new CustomLoginLockException(
+            		throw new CustomGeneralRuntimeException(
             				String.format("5회 이상 비밀번호 오류로 계정이 잠겼습니다. %s 이후 로그인을 시도해주세요.",
             						loginLockDTO.getReleaseDtm())
             				);

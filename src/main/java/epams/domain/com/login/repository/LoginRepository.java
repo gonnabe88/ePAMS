@@ -27,7 +27,7 @@ public class LoginRepository {
     
     /**
      * @author K140024
-     * @implNote 로그인 정보를 확인하고 사용자 정보를 반환하는 메서드 
+     * @implNote 로그인 정보를 확인하고 사용자 정보를 반환하는 메서드
      * @since 2024-06-11
      */
     public IamUserDTO pwLogin(final IamUserDTO iamUserDTO) {

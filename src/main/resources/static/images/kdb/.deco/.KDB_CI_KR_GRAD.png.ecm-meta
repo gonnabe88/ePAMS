@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-
-<deco> 
-    <fileData filename="KDB_CI_KR_GRAD.png" filepath="/src/main/resources/static/images/kdb" ischanged="0" lastversion="1" tstversion="0" devver="0" realver="1" itemid="000002300222" ecmMd5sum="ab8a97b67bf9bc4a2108333907845eb3" ecmTstmd5sum="ab8a97b67bf9bc4a2108333907845eb3" lastChangedDate="1730115563000" editor="박종훈:k140024" lastUser="박종훈:k140024" filestatus="운영중:0" islock="1" isAuthority="1" rsrccd="A7" rsrccdcodename="소스파일" rsrcinfo="0100000000110000000010010000010000000000100000001010000001000000000000000000000000" jobcd="HUR04" jobname="ePAMS" syscd="00853" sysmsg="ePAMS" srid=""/> 
-</deco>

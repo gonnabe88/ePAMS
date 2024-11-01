@@ -1,21 +1,25 @@
 package epams.framework.advice;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
-import epams.framework.exception.CustomLoginFailException;
-import epams.framework.exception.CustomLoginLockException;
-import lombok.extern.slf4j.Slf4j;
+import epams.framework.exception.CustomGeneralException;
+
+import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Slf4j
 @ControllerAdvice
@@ -41,25 +45,6 @@ public class GlobalExceptionHandler {
     //     model.addAttribute("error", ex.getMessage());
     //     return new ModelAndView("error/403"); // 'src/main/resources/templates/error/403.html'
     // }
-
-@ExceptionHandler(CustomLoginLockException.class)
-@ResponseBody
-public ResponseEntity<Map<String, Object>> loginLockException(CustomLoginLockException ex) {
-    log.warn("111");
-    Map<String, Object> response = new ConcurrentHashMap<>();
-    response.put("flag", "LOCKED");
-    response.put("message", ex.getMessage());
-    return ResponseEntity.status(HttpStatus.LOCKED).body(response);
-}
-
-@ExceptionHandler(CustomLoginFailException.class)
-@ResponseBody
-public ResponseEntity<Map<String, Object>> loginFailException(CustomLoginFailException ex) {
-    Map<String, Object> response = new ConcurrentHashMap<>();
-    response.put("flag", "FAIL");
-    response.put("message", ex.getMessage());
-    return ResponseEntity.status(HttpStatus.LOCKED).body(response);
-}
 
  @ExceptionHandler(NullPointerException.class)
 public ResponseEntity<String> handleNullPointerException(NullPointerException ex) {

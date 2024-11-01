@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-
-<deco> 
-    <fileData filename="sidebar.html" filepath="/src/main/resources/templates/common/layout" ischanged="0" lastversion="2" tstversion="0" devver="0" realver="1" itemid="000002268688" ecmMd5sum="467146a71a659308e3eb06e1e1410a62" ecmTstmd5sum="467146a71a659308e3eb06e1e1410a62" lastChangedDate="1730115416000" editor="박종훈:k140024" lastUser="박종훈:k140024" filestatus="운영중:0" islock="1" isAuthority="1" rsrccd="A7" rsrccdcodename="소스파일" rsrcinfo="0100000000110000000010010000010000000000100000001010000001000000000000000000000000" jobcd="HUR04" jobname="ePAMS" syscd="00853" sysmsg="ePAMS" srid=""/> 
-</deco>

@@ -104,8 +104,7 @@ public class SecurityConfig{
 				"object-src 'none'; " + // 'none'으로 설정하여 객체 삽입을 차단
 				"connect-src 'self'; " + // 연결은 동일 출처만 허용
 				"frame-ancestors 'self'; " + // 프레임 조상은 동일 출처만 허용
-				"form-action 'self';" + // 폼 작업은 동일 출처만 허용
-				"manifest-src 'self';", // manifest는 동일 출처만 허용    
+				"form-action 'self';", // 폼 작업은 동일 출처만 허용
 				cookieDomain
 		);
 
@@ -132,8 +131,7 @@ public class SecurityConfig{
 					authorizeRequests
 							.requestMatchers(
 									"/actuator/prometheus",
-									"/app.webmanifest", "/app.js", "/dummy-sw.js",
-									"/login/**", "/logout",
+									"/manifest.webmanifest", "/login/**", "/logout",
 									"/api/**",
 									"/css/**",
 									"/js/**",

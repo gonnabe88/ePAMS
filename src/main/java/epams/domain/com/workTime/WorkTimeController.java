@@ -13,12 +13,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-/***
- * @author 210058
- * @implNote 근무시간 controller
- * @since 2024-09-18
- */
-
 @Slf4j
 @RestController
 @RequiredArgsConstructor

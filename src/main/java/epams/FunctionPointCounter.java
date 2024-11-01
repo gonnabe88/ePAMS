@@ -39,12 +39,13 @@ public class FunctionPointCounter implements CommandLineRunner {
             }
 
             if(originalClass.getPackage() != null) {
-                // 패키지 이름이 특정 경로로 시작하는지 확인
-                if (originalClass.getPackage().getName().startsWith(basePackage)) {
-                    Method[] methods = originalClass.getDeclaredMethods();
-                    int classMethodCount = methods.length == 0 ? 1 : methods.length; // 메소드 수가 0이면 1로 설정
-                    methodCount += classMethodCount;
-                }
+            // 패키지 이름이 특정 경로로 시작하는지 확인
+	            if (originalClass.getPackage().getName().startsWith(basePackage)) {
+	                Method[] methods = originalClass.getDeclaredMethods();
+	                int classMethodCount = methods.length == 0 ? 1 : methods.length; // 메소드 수가 0이면 1로 설정
+	                methodCount += classMethodCount;	
+	                //System.out.println(originalClass.getName() + " - Java Class 메소드 수: " + classMethodCount);
+	            }
             }
         }
 
@@ -53,77 +54,13 @@ public class FunctionPointCounter implements CommandLineRunner {
         File jsDirectory = new File(jsDirectoryPath);
         jsFunctionCount = countJavaScriptFunctions(jsDirectory);
 
-        // JavaScript 파일 수 카운트
-        int jsFileCount = countFilesInDirectory(jsDirectory, ".js");
+        // 메소드와 함수의 총 수 출력
+        methodCount = methodCount == 0 ? 1 : methodCount; // 총 메소드 수가 0이면 1로 설정
+        jsFunctionCount = jsFunctionCount == 0 ? 1 : jsFunctionCount; // 총 함수 수가 0이면 1로 설정
 
-        // extentions 파일 수 카운트
-        String extensionsDirectoryPath = "src/main/resources/static/extensions";
-        File extensionsDirectory = new File(extensionsDirectoryPath);
-        int extentionsFileCount = countFilesInDirectory(extensionsDirectory, "");
-
-        // extentions 파일 수 카운트
-        String extensionsJsDirectoryPath = "src/main/resources/static/extensions";
-        File extensionsJsDirectory = new File(extensionsJsDirectoryPath);
-        int extensionsJsFileCount = countFilesInDirectory(extensionsJsDirectory, ".js");
-
-        // extentions 파일 수 카운트
-        String extensionsCssDirectoryPath = "src/main/resources/static/extensions";
-        File extensionsCssDirectory = new File(extensionsCssDirectoryPath);
-        int extensionsCssFileCount = countFilesInDirectory(extensionsCssDirectory, ".css");
-
-        // HTML 파일 수 카운트
-        String htmlDirectoryPath = "src/main/resources/templates";
-        File htmlDirectory = new File(htmlDirectoryPath);
-        int htmlFileCount = countFilesInDirectory(htmlDirectory, ".html");
-
-        // Java 파일 수 카운트
-        String javaDirectoryPath = "src/main/java";
-        File javaDirectory = new File(javaDirectoryPath);
-        int javaFileCount = countFilesInDirectory(javaDirectory, ".java");
-
-        // CSS 파일 수 카운트
-        String cssDirectoryPath = "src/main/resources/static/css";
-        File cssDirectory = new File(cssDirectoryPath);
-        int cssFileCount = countFilesInDirectory(cssDirectory, "");
-
-        // 리소스이미지 파일 수 카운트
-        String imgDirectoryPath = "src/main/resources/static/images";
-        File imgDirectory = new File(imgDirectoryPath);
-        int imgFileCount = countFilesInDirectory(imgDirectory, "");
-
-        // mapper 파일 수 카운트
-        String mapperDirectoryPath = "src/main/resources/mapper";
-        File mapperDirectory = new File(mapperDirectoryPath);
-        int mapperFileCount = countFilesInDirectory(mapperDirectory, ".xml");
-
-        // yml 파일 수 카운트
-        String ymlDirectoryPath = "src/main/resources";
-        File ymlDirectory = new File(ymlDirectoryPath);
-        int ymlFileCount = countFilesInDirectory(ymlDirectory, ".yml");
-
-        // 모든 파일 수 카운트(resources 전체)
-        String resourcesDirectoryPath = "src/main/resources";
-        File resourcesDirectory = new File(resourcesDirectoryPath);
-        int resourcesFileCount = countFilesInDirectory(resourcesDirectory, "");
-
-        // 메소드, 함수, 파일의 총 수 출력
-        int sum = javaFileCount+jsFileCount+extensionsJsFileCount+htmlFileCount+extensionsCssFileCount+mapperFileCount+ymlFileCount;
-        System.out.println("# 모든 프로그램(JAVA+JS+CSS+XML+YML) 수: " + sum);
-        System.out.println(" - Java 파일 수: " + javaFileCount);
-        System.out.println(" - JavaScript 파일 수: " + jsFileCount);
-        System.out.println(" - 외부 JavaScript 파일 수: " + extensionsJsFileCount);
-        System.out.println(" - CSS 파일 수: " + cssFileCount);
-        System.out.println(" - 외부 CSS 파일 수: " + extensionsCssFileCount);
-        System.out.println(" - HTML 파일 수: " + htmlFileCount);
-        System.out.println(" - Mapper 파일 수: " + mapperFileCount);
-        System.out.println(" - YML 파일 수: " + ymlFileCount);
-        int fp = methodCount+jsFunctionCount;
-        System.out.println("# 기능 수 : " + fp);
-        System.out.println(" - Java Class 메소드 수 : " + methodCount);
-        System.out.println(" - JavaScript 함수 수 : " + jsFunctionCount);        
-        System.out.println("# 모든 리소스(HTML, JS, CSS 등) 파일 수: " + resourcesFileCount);
-        System.out.println("# 외부 라이브러리(HTML, JS, CSS 등) 파일 수: " + extentionsFileCount);
-        }
+        System.out.println("Java Class 메소드 수(합계) : " + methodCount);
+        System.out.println("JavaScript 함수 수(합계) : " + jsFunctionCount);
+    }
 
     /**
      * 주어진 디렉토리의 JavaScript 파일에서 함수 수를 카운트합니다.
@@ -143,6 +80,7 @@ public class FunctionPointCounter implements CommandLineRunner {
                     int functionCount = countFunctionsInFile(file);
                     functionCount = functionCount == 0 ? 1 : functionCount; // 함수 수가 0이면 1로 설정
                     totalFunctionCount += functionCount;
+                    //System.out.println(file.getName() + " - 함수 수: " + functionCount);
                 }
             }
         }
@@ -172,33 +110,5 @@ public class FunctionPointCounter implements CommandLineRunner {
         }
 
         return count;
-    }
-
-    /**
-     * 주어진 디렉토리에서 특정 확장자를 가진 파일의 수를 카운트합니다.
-     *
-     * @param directory 검사할 디렉토리
-     * @param extension 검사할 파일 확장자 (예: ".html", ".java")
-     * @return 디렉토리 내 특정 확장자를 가진 파일의 총 수
-     */
-    private int countFilesInDirectory(File directory, String extension) {
-        int fileCount = 0;
-
-        if (directory.isDirectory()) {
-            File[] files = directory.listFiles(); 
-
-            if (files != null) {
-                for (File file : files) {
-                    if (file.isDirectory()) {
-                        fileCount += countFilesInDirectory(file, extension);
-                    } else if (file.getName().endsWith(extension)) {
-                        // System.out.println(file.getName());
-                        fileCount++;
-                    }
-                }
-            }
-        }
-
-        return fileCount;
     }
 }

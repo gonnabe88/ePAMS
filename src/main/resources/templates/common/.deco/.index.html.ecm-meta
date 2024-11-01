@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-
-<deco> 
-    <fileData filename="index.html" filepath="/src/main/resources/templates/common" ischanged="0" lastversion="5" tstversion="0" devver="0" realver="2" itemid="000002267709" ecmMd5sum="f6e38617e1bacd80ab4c4ee00878b6dd" ecmTstmd5sum="f6e38617e1bacd80ab4c4ee00878b6dd" lastChangedDate="1730106565000" editor="박종훈:k140024" lastUser="박종훈:k140024" filestatus="운영중:0" islock="1" isAuthority="1" rsrccd="A7" rsrccdcodename="소스파일" rsrcinfo="0100000000110000000010010000010000000000100000001010000001000000000000000000000000" jobcd="HUR04" jobname="ePAMS" syscd="00853" sysmsg="ePAMS" srid=""/> 
-</deco>

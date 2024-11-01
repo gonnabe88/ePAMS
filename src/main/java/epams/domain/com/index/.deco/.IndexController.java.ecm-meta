@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-
-<deco> 
-    <fileData filename="IndexController.java" filepath="/src/main/java/epams/domain/com/index" ischanged="0" lastversion="6" tstversion="0" devver="0" realver="5" itemid="000002269400" ecmMd5sum="96ee10ea63c6b690e56d96bcd4e7cd31" ecmTstmd5sum="96ee10ea63c6b690e56d96bcd4e7cd31" lastChangedDate="1730189638000" editor="박종훈:k140024" lastUser="박종훈:k140024" filestatus="운영중:0" islock="1" isAuthority="1" rsrccd="A7" rsrccdcodename="소스파일" rsrcinfo="0100000000110000000010010000010000000000100000001010000001000000000000000000000000" jobcd="HUR04" jobname="ePAMS" syscd="00853" sysmsg="ePAMS" srid=""/> 
-</deco>

@@ -35,23 +35,15 @@
 
     <!-- 모든 데이터 조회 -->
     <select id="checkFailCnt" parameterType="String" resultMap="logLoginMap">
-        WITH recent_failures AS (
-            SELECT LGN_SCS_YN,  FST_ENR_DTM, ROWNUM AS rn
-            FROM (
-                SELECT LGN_SCS_YN, FST_ENR_DTM
-                FROM OEHR.THURXE_CLOGNL
-                WHERE 
-                    ENO = #{username}
-                    AND FST_ENR_DTM &gt;= SYSDATE - INTERVAL '5' MINUTE
-                ORDER BY FST_ENR_DTM DESC
-            )
-            WHERE ROWNUM &lt;= 5
-        )
-        SELECT count(*) FAIL_CNT, MIN(FST_ENR_DTM) + INTERVAL '5' MINUTE RELEASE_DTM
-        FROM recent_failures
-        WHERE LGN_SCS_YN = 0
-        AND (rn &gt; (SELECT NVL(MIN(rn), 5) FROM recent_failures WHERE LGN_SCS_YN = 1) 
-            OR NOT EXISTS (SELECT 1 FROM recent_failures WHERE LGN_SCS_YN = 1))
+        SELECT 
+        	count(*) FAIL_CNT,
+			MIN(FST_ENR_DTM) + INTERVAL '5' MINUTE RELEASE_DTM
+		FROM OEHR.THURXE_CLOGNL 
+		WHERE 
+			ENO = #{username} AND
+			LGN_SCS_YN = '0' AND
+			CER_KD_NM = 'ID/PW' AND
+			FST_ENR_DTM >= SYSDATE - INTERVAL '5' MINUTE
     </select>
 
     <!-- 신규 데이터 추가 -->

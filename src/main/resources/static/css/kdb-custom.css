@@ -1,18 +1,3 @@
-#liveSearchIcon {
-    position: relative;
-    font-size: 16px;
-    color: #9D5DB6;
-    pointer-events: none;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    transform: none;
-}
-
-#loginTitleBg {
-    background-color: rgb(157 93 182 / 15%) !important;
-    color: #25396f;
-}
 .text-bg-info {
     color: white !important;
 }
@@ -343,8 +328,7 @@
     right: 10px; /* 사이드바 바깥으로 30px 튀어나오게 */
     width: 50px; /* 네모 버튼의 가로 길이 */
     height: 30px; /* 네모 버튼의 세로 길이 */
-    color: #435ebe; /* 버튼색 */
-    background-color: transparent; /* 배경색 */
+    background-color: white; /* 예시 배경색 */
     border-radius: 0.5rem;
     border: none; /* 버튼의 테두리 제거 */
     z-index: 1000; /* 다른 요소 위에 표시 */
@@ -472,11 +456,10 @@ body {
 }
 /*awesomplete 스크롤바 스타일 조정 끝*/
 
-/* 직원 검색 시 KDB 직원이름 앞에 보여주는 KDB CI 이미지 */
-#searchMemberIcon {
+#searchMemberIcon img {
     width:16px;
     height:16px;
-    margin-right:0;
+    margin-right:5px;
 }
 
 .searchItemHead {
@@ -1081,10 +1064,8 @@ mark {
 
 /*이벤트 박스 최소 높이 설정*/
 .dtmReg .fc .fc-daygrid-body-unbalanced .fc-daygrid-day-events {
-    min-height: 20px;
+    min-height: 0.6em;
     position: relative;
-    display: flex;
-    align-items: flex-start;
 }
 /*이벤트 박스 이벤트 모양(.)*/
 .dtmReg .fc-h-event {
@@ -1111,12 +1092,7 @@ mark {
 
 /* 날짜 박스 불필요한 여백 제거 */
 .dtmReg .fc .fc-daygrid-day-number {
-    padding: 0px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    line-height: 1;
-    height: 25px;
+    padding: 0;
 }
 
 /* 날짜 선택 시 스타일 */
@@ -1145,7 +1121,7 @@ mark {
 }
 
 .dtmReg .fc-header-toolbar {
-    margin-bottom: 0 !important;
+    margin-bottom: 0.5em !important;
 }
 
 .dtmReg .fc-fade {
@@ -1635,7 +1611,6 @@ label {
 /*사이드바 로고 스타일 조정*/
 .sidebar-desktop .sidebar-header .logo {
     height:1.6rem;
-    filter: brightness(1.7) contrast(0.5);
 }
 
 /*사이드바 로고 스타일 조정*/
@@ -4464,7 +4439,7 @@ textarea.form-control.is-invalid {
 }
 
 .sidebar-wrapper .sidebar-header img {
-    height: 1.7rem
+    height: 1.2rem
 }
 
 .sidebar-wrapper .sidebar-toggler.x {

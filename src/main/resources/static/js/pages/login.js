@@ -5,6 +5,10 @@ $(document).on("visibilitychange", function() {
     }
 });
 
+
+/** 
+ * (시작) ID/PW 입력값 필터링 처리
+ */ 
 const usernameField = document.getElementById('username');
 let isComposing = false;
 
@@ -32,7 +36,7 @@ function filterUsernameInput(event) {
     const originalValue = inputField.value;
     
     // 한글 및 공백만 제거
-    inputField.value = originalValue.replace(/[\u3131-\u318E\uAC00-\uD7A3\s]/g, '');
+    inputField.value = originalValue.toUpperCase().replace(/[\u3131-\u318E\uAC00-\uD7A3\s]/g, '');
 
     // 입력값이 변경되었으면 (허용되지 않는 값이 있었음을 의미) 토스트 표시
     if (inputField.value !== originalValue) {
@@ -53,6 +57,11 @@ document.getElementById('password').addEventListener('input', function(event) {
         loadToastHTML("공백은 입력할 수 없습니다.");
     }
 });
+
+/** 
+ * (끝) ID/PW 입력값 필터링 처리
+ */ 
+
 
 // 화면 로드 시 수행
 $(function() {
@@ -127,7 +136,7 @@ $(function() {
     });
 
     $('#loginForm').on('submit', function(e) { // 로그인 버튼 클릭 시
-        console.log("클릭");
+        console.log("클릭 loginLockYn : " + loginLockYn);
         e.preventDefault(); // Prevent form's default submission
         let MFA = $('input[name="MFA"]:checked').val(); // 선택된 MFA 값 가져오기
 
@@ -198,7 +207,7 @@ const loadToastHTML = (message) => {
 
     // 추가된 토스트 요소를 가져와 부트스트랩 토스트로 초기화 및 표시
     const toastElement = document.querySelector('.toast:last-child');
-    const toast = new bootstrap.Toast(toastElement, { delay: 0 , autohide: false });
+    const toast = new bootstrap.Toast(toastElement, { delay: 5000 , autohide: true });
     toast.show();
 
     // 토스트가 숨겨지면 자동으로 제거

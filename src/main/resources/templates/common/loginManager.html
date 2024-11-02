@@ -1,86 +1,120 @@
 <!DOCTYPE html>
-<html layout:decorate="~{common/layout/layout}" xmlns="http://www.w3.org/1999/html" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.thymeleaf.org" xmlns:th="http://www.thymeleaf.org">
-<head></head>
+<html layout:decorate="~{common/layout/layout}" xmlns="http://www.w3.org/1999/html"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.thymeleaf.org"
+    xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- 데이터테이블(tabulator) -->
+    <link href="/extensions/tabulator/tabulator_modern.min.css" rel="stylesheet">
+    <link href="/extensions/tabulator/kdb_tabulator.css" rel="stylesheet">
+</head>
+
 <body>
-<div layout:fragment="contents">
-    <div class="loginManager">
-        <div class="main-content col-lg-10 offset-lg-1 d-flex justify-content-center">
+    <div layout:fragment="contents">
+        <div class="loginManager">
+            <div class="main-content col-lg-10 offset-lg-1">
 
-            <!-- 페이지 제목 시작 -->
-            <div class="page-heading">
-                <div class="d-flex justify-content-between align-items-end">
-                    <div class="align-middle">
-                        <h2><i class="bi bi-file-lock2-fill"></i> <span>인증관리</span></h2>
-                    </div>
-                </div>
-            </div>
-            <!-- 페이지 제목 끝 -->
-
-            <!-- 간편인증 시작 -->
-            <div class="col-lg-3">
-            <div class="card">
-                <div class="card-header">
-                            <span th:if="${webauthnYn}">
-								<div class="d-flex gap-3 align-items-center mb-3">
-									<h5 class="m-0">간편인증</h5>
-									<span class="badge bg-success">사용중</span>
-								</div>
-							</span>
-                    <span class="" th:if="${!webauthnYn}">
-								<div class="d-flex gap-3 align-items-center mb-3">
-									<h5 class="m-0">간편인증</h5>
-									<span class="badge bg-danger">미등록</span>
-								</div>
-							</span>
-                    <div class="d-flex gap-3 align-items-center mb-3">
-								<span class="" th:if="${webauthnYn}">
-									<div class="webauthnImage">
-										<img alt="FIDO Passkey" class="img-thumbnail" src="/images/webauthn/FIDO_Passkey_mark_A.jpg">
-										<span class="bottom-left-text" th:text="'등록일 : '+${#temporals.format(webauthnRegDate, 'yyyy-MM-dd HH:mm:ss')}"></span>
-									</div>
-								</span>
-                        <span class="" th:if="${!webauthnYn}">
-									<div class="noWebauthnImage">
-										<img alt="FIDO Passkey" class="img-thumbnail" src="/images/webauthn/FIDO_Passkey_mark_A_gray.jpg">
-										<span class="bottom-left-text">미등록</span>
-									</div>
-								</span>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="d-flex justify-content-end">
-									<span th:if="${webauthnYn}">
-										<button class="btn btn-danger btn-sm" id="webauthnRevokeBtn">해제</button>
-									</span>
-                            <span th:if="!${webauthnYn}">
-										<button class="btn btn-primary btn-sm" id="webauthnRegBtn">등록</button>
-									</span>
+                <!-- 페이지 제목 시작 -->
+                <div class="page-heading">
+                    <div class="d-flex justify-content-between align-items-end">
+                        <div class="align-middle">
+                            <h2><i class="bi bi-file-lock2-fill"></i> <span>인증관리</span></h2>
                         </div>
                     </div>
                 </div>
-            </div>
-            </div>
-            <!-- 간편인증 끝 -->
+                <!-- 페이지 제목 끝 -->
 
+                <div class="row">
+                    <!-- 간편인증 시작 -->
+                    <div class="col-lg-4 mb-4">
+                        <div class="card">
+                            <div class="card-header">
+                                <span th:if="${webauthnYn}">
+                                    <div class="d-flex gap-3 align-items-center mb-3">
+                                        <h5 class="m-0">간편인증</h5>
+                                        <span class="badge bg-success">사용중</span>
+                                    </div>
+                                </span>
+                                <span class="" th:if="${!webauthnYn}">
+                                    <div class="d-flex gap-3 align-items-center mb-3">
+                                        <h5 class="m-0">간편인증</h5>
+                                        <span class="badge bg-danger">미등록</span>
+                                    </div>
+                                </span>
+                                <div class="d-flex gap-3 align-items-center mb-3">
+                                    <span class="" th:if="${webauthnYn}">
+                                        <div class="webauthnImage">
+                                            <img alt="FIDO Passkey" class="img-thumbnail"
+                                                src="/images/webauthn/FIDO_Passkey_mark_A.jpg">
+                                            <span class="bottom-left-text"
+                                                th:text="'등록일 : '+${#temporals.format(webauthnRegDate, 'yyyy-MM-dd HH:mm:ss')}"></span>
+                                        </div>
+                                    </span>
+                                    <span class="" th:if="${!webauthnYn}">
+                                        <div class="noWebauthnImage">
+                                            <img alt="FIDO Passkey" class="img-thumbnail"
+                                                src="/images/webauthn/FIDO_Passkey_mark_A_gray.jpg">
+                                            <span class="bottom-left-text">미등록</span>
+                                        </div>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="d-flex justify-content-end">
+                                        <span th:if="${webauthnYn}">
+                                            <button class="btn btn-danger btn-sm" id="webauthnRevokeBtn">해제</button>
+                                        </span>
+                                        <span th:if="!${webauthnYn}">
+                                            <button class="btn btn-primary btn-sm" id="webauthnRegBtn">등록</button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 간편인증 끝 -->
+
+                    <!-- 로그인 로그 시작 -->
+                    <div class="col-lg-8 mb-4">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="d-flex gap-3 align-items-center">
+                                    <h5 class="m-0">로그인 이력</h5>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="no-drag" id="user-table"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 로그인 로그 끝 -->
+                </div>
+            </div>
         </div>
     </div>
-</div>
 
-<th:block layout:fragment="script">
-    <div id="authData" th:attr="data-username=${username}"></div>
+    <th:block layout:fragment="script">
+        <div id="authData" th:attr="data-username=${username}"></div>
 
-    <!--3rd Party Library-->
-    <script src="/extensions/webauthn/js/base64js.min.js"></script>
-    <script src="/extensions/webauthn/js/custom.js"></script>
+        <!--간편인증(webauthn)-->
+        <script src="/extensions/webauthn/js/base64js.min.js"></script>
+        <script src="/extensions/webauthn/js/custom.js"></script>
 
-    <!--KDB Utility-->
-    <script src="/js/utils/webauthn.js"></script>
-    <script src="/js/webauthnPopup.js"></script>
+        <!--데이터테이블(tabulator)-->
+        <script src="/extensions/tabulator/tabulator.min.js"></script>
+        <script src="/extensions/papaparse/papaparse.min.js"></script>
+        <script src="/extensions/luxon/luxon.js"></script>
+        <script src="/extensions/tabulator/kdb_user_tabulator.js"></script>
 
-    <!--KDB Page-->
-    <script src="/js/pages/loginManager.js"></script>
-</th:block>
+        <!--KDB Utility-->
+        <script src="/js/utils/webauthn.js"></script>
+        <script src="/js/webauthnPopup.js"></script>
+
+        <!--KDB Page-->
+        <script src="/js/pages/loginManager.js"></script>
+    </th:block>
 
 </body>
+
 </html>

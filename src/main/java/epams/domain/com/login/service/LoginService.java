@@ -88,6 +88,7 @@ public class LoginService {
 
     public boolean checkLoginLock(final String username) {
         final LogLoginDTO loginLockDTO = logRepository.checkFailCnt(username);
+        log.warn(String.valueOf(loginLockDTO.getFailCnt()) + " username: " + username);
         return loginLockDTO.getFailCnt() >= 5;
     }
 

@@ -134,11 +134,13 @@ public class LoginController {
     @GetMapping({ "/", "/login" })
     public String login(final HttpServletResponse response, @CookieValue(value = "USERNAME", required = false) final String username, final Model model) {
     	String VIEW = "common/login";
+
         final Authentication auth = authentication();
         final AppUser existingUser = service.getUserRepo().findByUsername(username);
         final Authenticator existingAuthUser = service.getAuthRepository().findByUser(existingUser);
         final Boolean loginLock = loginService.checkLoginLock(username);
         model.addAttribute("loginLock", loginLock);
+        log.warn("loginLock : " + loginLock);
         
         if (existingAuthUser == null) {
             model.addAttribute("webauthn", "N");            
@@ -234,7 +236,7 @@ public class LoginController {
         }
 
         final Map<String, Object> res = new ConcurrentHashMap<>();
-
+        log.warn(param.toString());
         // 사용자 정보 가져오기
         final IamUserDTO iamUserDTO = memberService.findUserByUserNo(Objects.requireNonNull(param).getUsername());
         iamUserDTO.setMFA(param.getMFA());

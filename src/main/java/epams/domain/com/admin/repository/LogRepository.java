@@ -24,7 +24,16 @@ public class LogRepository {
 	 * @since 2024-06-09
 	 */
     private final SqlSessionTemplate sql;
-    
+
+    /**
+     * @author K140024
+     * @implNote 특정 사용자의 로그인 로그 조회
+     * @since 2024-11-02
+     */
+    public List<LogLoginDTO> findAllByUsername(final String username) {        
+      return sql.selectList("LogLogin.findAllByUsername", username);
+  }
+
     /**
      * @author K140024
      * @implNote 로그인 정보를 확인하고 사용자 정보를 반환하는 메서드 

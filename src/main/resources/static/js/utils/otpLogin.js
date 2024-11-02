@@ -124,9 +124,9 @@ const releaseLock = (e) => {
     const header = $("meta[name='_csrf_header']").attr('content');
     const token = $("meta[name='_csrf']").attr('content');
 
-    console.log("releaseLock");
+    console.log("releaseLock : " + username);
     const formData = new FormData(e.target);
-
+    console.log("releaseLock : " + formData.get("username"));
     fetch('/login/unlock/sendOtp', {
         method: 'POST',
         headers: {
@@ -165,7 +165,7 @@ const otpUnlockPopup = (maskedPhoneNo) => {
     const MFA = $('input[name="MFA"]:checked').val();
     const header = $("meta[name='_csrf_header']").attr('content');
     const token = $("meta[name='_csrf']").attr('content');
-
+    console.log("ID : " + username);
     Swal.fire({
         title: MFA+" 인증",
         html: `

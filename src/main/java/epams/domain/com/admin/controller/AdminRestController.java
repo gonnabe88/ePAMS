@@ -1,21 +1,20 @@
 package epams.domain.com.admin.controller;
 
-import epams.domain.com.admin.dto.LogLoginDTO;
-import epams.domain.com.admin.service.LogService;
-import epams.domain.com.member.dto.IamUserDTO;
-import epams.domain.com.member.service.MemberService;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import java.io.IOException;
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import epams.domain.com.admin.dto.LogLoginDTO;
+import epams.domain.com.admin.service.LogService;
+import epams.domain.com.member.dto.IamUserDTO;
+import epams.domain.com.member.service.MemberService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 /***
  * @author 140024

@@ -21,6 +21,21 @@
         <result property="realname" column="USR_NM"/>
     </resultMap>
 
+    <!-- 특정 사용자의 로그인 로그 조회 -->
+    <select id="findAllByUsername" parameterType="String" resultMap="logLoginMap">
+        SELECT 
+            LOGIN.ENO,
+            LOGIN.CER_KD_NM,
+            LOGIN.LGN_SCS_YN,
+            LOGIN.FST_ENR_USID,
+            LOGIN.FST_ENR_DTM,
+            USR.USR_NM
+        FROM OEHR.THURXE_CLOGNL LOGIN
+        INNER JOIN OEHR.THURXE_CUSRLI USR ON LOGIN.ENO = USR.ENO
+        WHERE LOGIN.ENO = #{username}
+        ORDER BY LOGIN.FST_ENR_DTM DESC
+    </select>
+
     <!-- 모든 데이터 조회 -->
     <select id="findAll" resultMap="logLoginMap">
         SELECT 

@@ -1,79 +1,85 @@
- /* tabulator custom */
- /* 그리드가 반응형으로 동작하면서 발생하는 오류(컬럼 너비가 계속 늘어남) 조치 */
+/* tabulator custom */
+/* 그리드가 반응형으로 동작하면서 발생하는 오류(컬럼 너비가 계속 늘어남) 조치 */
+
+#user-table {
+    width: 100%;
+    font-size: 13px;
+}
+
 #example-table {
-	width: 100%;
+    width: 100%;
 }
 
 @media screen and (max-width: 500px) {
-	#example-table {
-		width: 300px;
-	}
+    #example-table {
+        width: 300px;
+    }
 }
 
 @media screen and (min-width: 500px) {
-	#example-table {
-		width: 500px;
-	}
+    #example-table {
+        width: 500px;
+    }
 }
 
 @media screen and (min-width: 800px) {
-	#example-table {
-		width: 100%;
-	}
+    #example-table {
+        width: 100%;
+    }
 }
 
- .tabulator-row.tabulator-selectable:hover .tabulator-cell {
-	 background-color: #435ebe !important; /* 배경색을 기본 색상으로 설정 */
-	 color: white !important; /* 텍스트 색상을 흰색으로 설정 */
- }
+.tabulator-row.tabulator-selectable:hover .tabulator-cell {
+    background-color: #435ebe !important; /* 배경색을 기본 색상으로 설정 */
+    color: white !important; /* 텍스트 색상을 흰색으로 설정 */
+}
 
 .highlight-cell {
-	background-color: aliceblue !important; /* 수정/추가된 행의 배경색 */
+    background-color: aliceblue !important; /* 수정/추가된 행의 배경색 */
 }
 
- .tabulator-row .tabulator-cell.tabulator-editing {
-	 border: none;
-	 background-color: aliceblue;
- }
+.tabulator-row .tabulator-cell.tabulator-editing {
+    border: none;
+    background-color: aliceblue;
+}
 
- /* 행에 마우스를 올렸을 때 배경 색상을 변경 (우선순위 강제) */
- .tabulator-row:hover {
-	 background-color: #f0f0f0 !important; /* !important로 우선순위 강제 */
- }
+/* 행에 마우스를 올렸을 때 배경 색상을 변경 (우선순위 강제) */
+.tabulator-row:hover {
+    background-color: #f0f0f0 !important; /* !important로 우선순위 강제 */
+}
 
- /* 행에 마우스를 올렸을 때 텍스트 색상을 변경하고 싶을 경우 */
- .tabulator-row:hover .tabulator-cell {
-	 color: #333 !important; /* 텍스트 색상 변경에 대해 우선순위 강제 */
- }
+/* 행에 마우스를 올렸을 때 텍스트 색상을 변경하고 싶을 경우 */
+.tabulator-row:hover .tabulator-cell {
+    color: #333 !important; /* 텍스트 색상 변경에 대해 우선순위 강제 */
+}
 
- .d-flex.align-items-center {
-	 height: 100%;
- }
- .btn-primary.btn-sm {
-	 height: 100%; /* Adjust button height to match input height */
-	 align-self: center; /* Ensure the button is vertically centered */
- }
+.d-flex.align-items-center {
+    height: 100%;
+}
+.btn-primary.btn-sm {
+    height: 100%; /* Adjust button height to match input height */
+    align-self: center; /* Ensure the button is vertically centered */
+}
 
- /*스크롤바 스타일 변경*/
- .tabulator-tableholder::-webkit-scrollbar {
-	 width: 5px;
-	 height: 5px;
- }
- .tabulator-tableholder::-webkit-scrollbar-thumb {
-	 background-color: rgba(206, 212, 218, 0.5); /* 흐린 색상 */
-	 border-radius: 10px;
-	 transition: background-color 1.0s ease; /* 색상 전환에 대한 부드러운 트랜지션 */
- }
- .tabulator-tableholder::-webkit-scrollbar-track {
-	 background-color: rgba(255, 255, 255, 0.5); /* 흐린 색상 */
-	 border-radius: 10px;
-	 box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.5); /* 흐린 색상 */
-	 transition: background-color 1.0s ease, box-shadow 1.0s ease; /* 색상 전환에 대한 부드러운 트랜지션 */
- }
- .tabulator-tableholder:hover::-webkit-scrollbar-thumb {
-	 background-color: #ced4da; /* 현재 색상 */
- }
- .tabulator-tableholder:hover::-webkit-scrollbar-track {
-	 background-color: #fff; /* 현재 색상 */
-	 box-shadow: inset 0 0 5px white; /* 현재 색상 */
- }
+/*스크롤바 스타일 변경*/
+.tabulator-tableholder::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+.tabulator-tableholder::-webkit-scrollbar-thumb {
+    background-color: rgba(206, 212, 218, 0.5); /* 흐린 색상 */
+    border-radius: 10px;
+    transition: background-color 1s ease; /* 색상 전환에 대한 부드러운 트랜지션 */
+}
+.tabulator-tableholder::-webkit-scrollbar-track {
+    background-color: rgba(255, 255, 255, 0.5); /* 흐린 색상 */
+    border-radius: 10px;
+    box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.5); /* 흐린 색상 */
+    transition: background-color 1s ease, box-shadow 1s ease; /* 색상 전환에 대한 부드러운 트랜지션 */
+}
+.tabulator-tableholder:hover::-webkit-scrollbar-thumb {
+    background-color: #ced4da; /* 현재 색상 */
+}
+.tabulator-tableholder:hover::-webkit-scrollbar-track {
+    background-color: #fff; /* 현재 색상 */
+    box-shadow: inset 0 0 5px white; /* 현재 색상 */
+}

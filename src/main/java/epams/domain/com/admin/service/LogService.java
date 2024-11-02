@@ -25,7 +25,16 @@ public class LogService {
 	 * @since 2024-06-09
 	 */
 	private final LogRepository logRepository;
-    
+
+	/***
+	 * @author 140024
+	 * @implNote 특정 사용자의 로그인 로그 조회
+	 * @since 2024-06-09
+	 */
+    public List<LogLoginDTO> findAllByUsername(String username) {
+    	return logRepository.findAllByUsername(username);
+    }
+
 	/***
 	 * @author 140024
 	 * @implNote logRepository 객체의 findLoginLogAll 호출하여 LogLoginEntity 리스트 반환

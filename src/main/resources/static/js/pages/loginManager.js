@@ -19,6 +19,8 @@ window.tabulator.columns = [
     { title: "결과", field: "loginResult", sorter: "number", hozAlign: "center", formatter: "tickCross", widthGrow: 1 },
     { title: "인증방식", field: "loginType", sorter: "string", widthGrow: 2 },
 ];
+
 document.addEventListener("DOMContentLoaded", function () {
-    createTable(false, window.tabulator.columns, window.tabulator.url);
+    // 테이블 생성
+    createTable(false, window.tabulator.columns, window.tabulator.url, "user");
 });

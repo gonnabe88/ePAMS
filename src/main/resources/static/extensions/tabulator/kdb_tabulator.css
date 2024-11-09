@@ -1,31 +1,9 @@
 /* tabulator custom */
 /* 그리드가 반응형으로 동작하면서 발생하는 오류(컬럼 너비가 계속 늘어남) 조치 */
 
-#user-table {
+#tabulator-table {
     width: 100%;
-    font-size: 13px;
-}
-
-#example-table {
-    width: 100%;
-}
-
-@media screen and (max-width: 500px) {
-    #example-table {
-        width: 300px;
-    }
-}
-
-@media screen and (min-width: 500px) {
-    #example-table {
-        width: 500px;
-    }
-}
-
-@media screen and (min-width: 800px) {
-    #example-table {
-        width: 100%;
-    }
+    font-size: 0.9rem;
 }
 
 .tabulator-row.tabulator-selectable:hover .tabulator-cell {

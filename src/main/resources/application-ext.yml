@@ -4,6 +4,7 @@ kdb:
   filepath: C:/epams/ # 첨부파일, 이미지 등 저장할 filesystem 경로
   logpath: C:/epams/ # 로그 파일 저장 경로
   logfile: ePAMS_logback.log
+  actuatorfile: ePAMS_actuator.log
   eaiUrl: http://deaiaa11:20002/eaicall
 
   web:
@@ -21,12 +22,7 @@ server:
       persistent: true
       tracking-modes: cookie
       cookie:
-        domain: epams.duckdns.org
-        http-only: true
-        path: /
-        max-age: -1 # infinite
-        secure: true # https only allowed
-        sameSite: strict
+        domain: localhost # 로컬 개발 환경
   error:
     whitelabel:
       enabled: false # Spring Boot 기본 에러 경로를 비활성화하고 사용자 정의 컨트롤러를 사용할 수 있도록 설정
@@ -35,17 +31,17 @@ server:
 authn:
   display: ePAMS
   hostname: ${server.servlet.session.cookie.domain}
-  origin: https://${server.servlet.session.cookie.domain}
+  origin: http://localhost:8080
 
 # spring
 spring:
-  devtools.livereload.enabled: true  # 로컬 개발 환경에서 livereload 활성화
+  devtools.livereload.enabled: true # 로컬 개발 환경에서 livereload 활성화
 
   datasource:
     driver-class-name: oracle.jdbc.OracleDriver
     url: jdbc:oracle:thin:@localhost:1521/XE
     username: EHR
-    password: kdb1234!  # 시스템 환경변수 kdb1234! 세팅
+    password: kdb1234! # 시스템 환경변수 kdb1234! 세팅
     hikari:
       connection-timeout: 60000 # 1분(커넥션 풀에서 커넥션을 가져오는데 최대 대기 시간)
       idle-timeout: 300000 # 5분(커넥션 풀에 유휴 커넥션이 유지되는 시간)

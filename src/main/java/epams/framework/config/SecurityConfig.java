@@ -4,14 +4,18 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationDetailsSource;
+import org.springframework.security.authorization.AuthorizationDecision;
+import org.springframework.security.authorization.AuthorizationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.intercept.RequestAuthorizationContext;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import epams.domain.com.login.repository.LoginRepository;
 import epams.framework.exception.CustomGeneralException;
@@ -109,6 +113,14 @@ public class SecurityConfig{
 				cookieDomain
 		);
 
+		AuthorizationManager<RequestAuthorizationContext> ipAuthorizationManager = (auth, context) -> {
+            HttpServletRequest request = context.getRequest();
+            String clientIp = request.getRemoteAddr();
+			boolean allowed = "192.168.0.10".equals(clientIp); // 허용할 IP 주소
+			log.warn(clientIp);
+            return new AuthorizationDecision(allowed);
+		};
+		
 		http
 		    // 세션 관리 설정
 		    .sessionManagement((auth) -> auth
@@ -129,9 +141,9 @@ public class SecurityConfig{
 
 		    // URL별 접근 권한 설정
 			.authorizeHttpRequests((authorizeRequests) ->
-					authorizeRequests
+				authorizeRequests
+							.requestMatchers(new AntPathRequestMatcher("/actuator/prometheus")).access(ipAuthorizationManager) // IP 제한 적용
 							.requestMatchers(
-									"/actuator/prometheus",
 									"/app.webmanifest", "/app.js", "/dummy-sw.js",
 									"/login/**", "/logout",
 									"/api/**",
